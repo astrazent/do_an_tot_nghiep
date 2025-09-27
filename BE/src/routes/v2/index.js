@@ -1,6 +1,6 @@
 /**
  * Folder routes/v1:
- * Chức năng: 
+ * Chức năng:
  *  - Chứa endpoint API phiên bản 2 (nâng cấp/tối ưu/thay đổi logic so với v1)
  *  - Giúp phát triển API mới mà không ảnh hưởng đến client đang dùng v1
  * Tạo file mới:

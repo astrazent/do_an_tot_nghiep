@@ -5,8 +5,8 @@ const Router = express.Router()
 
 // /v1/boards
 Router.route('/')
-//   .get(boardController.getBoards)      // Lấy danh sách boards
-  .post(boardValidation.createBoard, boardController.createBoard)   // Tạo mới board
+    //   .get(boardController.getBoards)      // Lấy danh sách boards
+    .post(boardValidation.createBoard, boardController.createBoard) // Tạo mới board
 
 // /v1/boards/:id
 // Router.route('/:id')
@@ -14,4 +14,4 @@ Router.route('/')
 //   .put(boardController.updateBoard)    // Cập nhật board
 //   .delete(boardController.deleteBoard) // Xóa board
 
-export default Router;
+export default Router

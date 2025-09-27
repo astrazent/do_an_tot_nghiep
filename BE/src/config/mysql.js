@@ -1,10 +1,10 @@
 /**
  * Chức năng: Cấu hình kết nối mySQL (URL, options, khởi tạo connection)
  */
-import mysql from "mysql2/promise";
-import { env } from "./environment.js";
+import mysql from 'mysql2/promise'
+import { env } from './environment.js'
 
-let connection = null;
+let connection = null
 
 export const createConnection = async () => {
     try {
@@ -14,26 +14,26 @@ export const createConnection = async () => {
             user: env.DB_USER,
             password: env.DB_PASSWORD,
             database: env.DB_NAME,
-        });
+        })
 
-        console.log("✅ Connected to MySQL database successfully!");
-        return connection;
+        console.log('✅ Connected to MySQL database successfully!')
+        return connection
     } catch (error) {
-        console.error("❌ MySQL connection failed:", error);
-        throw error;
+        console.error('❌ MySQL connection failed:', error)
+        throw error
     }
-};
+}
 
 export const closeConnection = async () => {
     if (connection) {
-        await connection.end();
-        console.log("✅ MySQL connection closed successfully!");
+        await connection.end()
+        console.log('✅ MySQL connection closed successfully!')
     }
-};
+}
 
 export const getConnection = () => {
     if (!connection) {
-        throw new Error("MySQL connection not established");
+        throw new Error('MySQL connection not established')
     }
-    return connection;
-};
+    return connection
+}

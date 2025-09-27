@@ -4,9 +4,9 @@
  *   - Khi có entity/module riêng cần validation (userValidation.js, productValidation.js, orderValidation.js)
  *   - Khi muốn gom các rule validation cho từng chức năng để dễ bảo trì
  */
-import Joi from "joi";
-import { StatusCodes } from "http-status-codes";
-import ApiError from "~/utils/ApiError";
+import Joi from 'joi'
+import { StatusCodes } from 'http-status-codes'
+import ApiError from '~/utils/ApiError'
 
 const createBoard = async (req, res, next) => {
     /**
@@ -20,20 +20,24 @@ const createBoard = async (req, res, next) => {
      */
     const correctCondition = Joi.object({
         title: Joi.string().required().min(3).max(50).trim().strict(),
-        description: Joi.string().required().min(3).max(256).trim().strict()
-    });
+    })
 
     try {
-        console.log("req.body: ", req.body)
+        console.log('req.body: ', req.body)
         // Chỉ định abortEarly: false để nó trả về toàn bộ lỗi thay vì chỉ trả về lỗi vừa gặp
-        await correctCondition.validateAsync(req.body, { abortEarly: false });
+        await correctCondition.validateAsync(req.body, { abortEarly: false })
         //Validate dữ liệu hợp lệ --> controller
         next()
     } catch (error) {
-        next(new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message))
+        next(
+            new ApiError(
+                StatusCodes.UNPROCESSABLE_ENTITY,
+                new Error(error).message
+            )
+        )
     }
-};
+}
 
 export const boardValidation = {
     createBoard,
-};
+}
