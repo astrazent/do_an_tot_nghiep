@@ -9,11 +9,11 @@ services:
       - MYSQL_ROOT_PASSWORD=55555
       - MYSQL_DATABASE=bep_sach_viet
     ports:
-      - "55555:3306"
+      - "3307:3306"
     volumes:
       - mariadb_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin", "-uroot", "-p123456", "ping", "-h", "localhost"]
+      test: ["CMD", "mysqladmin", "-uroot", "-p55555", "ping", "-h", "localhost"]
       interval: 10s
       retries: 5
       start_period: 10s
