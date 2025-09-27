@@ -5,21 +5,20 @@
  *   - Khi có chức năng độc lập (Auth, Report, Dashboard...) không gắn trực tiếp với entity nào (authController.js)
  */
 import { StatusCodes } from 'http-status-codes'
-import ApiError from '~/utils/ApiError';
-import { boardService } from '~/services/boardService';
+import { boardService } from '~/services/boardService'
 
 const createBoard = async (req, res, next) => {
     try {
-        // console.log("req.body: ", req.body)
-        // throw new ApiError(StatusCodes.BAD_GATEWAY, 'testing error')
         // Điều hướng dữ liệu sang tầng Service
         const createBoard = await boardService.createBoard(req.body)
-
+        console.log('check')
         // Có kết quả thì trả về phía Client
         res.status(StatusCodes.CREATED).json(createBoard)
-    } catch (error) { next(error) }
-};
+    } catch (error) {
+        next(error)
+    }
+}
 
 export const boardController = {
-    createBoard
+    createBoard,
 }

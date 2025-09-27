@@ -1,4 +1,4 @@
-version: "3.9"
+version: '3.9'
 
 services:
   mariadb:
@@ -20,4 +20,4 @@ services:
       timeout: 5s
 
 volumes:
-  mariadb_data:
+    mariadb_data:

@@ -1,12 +1,13 @@
 /**
  * Folder routes/v1:
- * Chức năng: 
+ * Chức năng:
  *  - Chứa định nghĩa các endpoint API phiên bản 1
  *  - Mapping URL -> controller tương ứng
  * Tạo file mới: mỗi entity/chức năng có file route riêng (userRoutes.js, productRoutes.js, orderRoutes.js...)
  */
 import express from 'express'
 import boardRoutes from './boardRoute.js'
+import { StatusCodes } from 'http-status-codes'
 // import columnRoutes from './columnRoute.js'
 // import cardRoutes from './cardRoute.js'
 
