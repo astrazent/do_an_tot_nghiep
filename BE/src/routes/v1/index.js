@@ -7,6 +7,7 @@
  */
 import express from 'express'
 import boardRoutes from './boardRoute.js'
+import authRoutes from './authRoute.js'
 import { StatusCodes } from 'http-status-codes'
 // import columnRoutes from './columnRoute.js'
 // import cardRoutes from './cardRoute.js'
@@ -22,6 +23,7 @@ Router.get('/ping', (req, res) => {
  * Tổng hợp tất cả routes v1
  */
 Router.use('/boards', boardRoutes)
+Router.use('/auth', authRoutes)
 // Router.use('/columns', columnRoutes)
 // Router.use('/cards', cardRoutes)
 

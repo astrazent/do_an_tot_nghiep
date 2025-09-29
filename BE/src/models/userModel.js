@@ -61,18 +61,18 @@ const UsersModel = {
         const [result] = await conn.execute(
             `INSERT INTO ${USERS_TABLE_NAME} 
             (username, password_hash, email, phone, full_name, address, city, district, ward, avatar_url, status) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
                 value.username,
                 value.password_hash,
                 value.email,
                 value.phone,
                 value.full_name,
-                value.address || null,
-                value.city || null,
-                value.district || null,
-                value.ward || null,
-                value.avatar_url || null,
+                value.address || "",
+                value.city || "",
+                value.district || "",
+                value.ward || "",
+                value.avatar_url || "",
                 value.status || 1,
             ]
         )
