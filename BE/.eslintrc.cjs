@@ -17,6 +17,7 @@ module.exports = {
 
     // Cấu hình cho parser
     parserOptions: {
+        requireConfigFile: false,
         ecmaVersion: 'latest', // Dùng phiên bản ECMAScript mới nhất
         sourceType: 'module', // Cho phép dùng import/export
         allowImportExportEverywhere: true, // Cho phép import/export ở bất kỳ đâu
