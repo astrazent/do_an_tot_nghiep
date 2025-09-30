@@ -26,7 +26,7 @@ const PRODUCTS_SCHEMA = Joi.object({
     rate_count: Joi.number().integer().min(0).default(0),
     stock_qty: Joi.number().integer().min(0).default(0),
     low_stock_threshold: Joi.number().integer().min(0).default(0),
-    last_restock_at: Joi.date().default(() => new Date(), 'current timestamp'),
+    last_restock_at: Joi.date().default(() => new Date()),
     status: Joi.number().integer().valid(0, 1).default(1),
     category_id: Joi.number().integer().required().messages({
         'number.base': 'Category ID phải là số',
