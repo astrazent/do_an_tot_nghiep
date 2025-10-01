@@ -1,12 +1,15 @@
 import express from 'express'
-import * as commentController from '../../controllers/commentController.js'
+import {
+    createComment,
+    getProductComments,
+} from '../../controllers/commentController.js'
 
 const Router = express.Router()
 
 // API thêm comment
-Router.post('/:productId/comments', commentController.createComment)
+Router.post('/', createComment)
 
 // API lấy danh sách comment + thống kê
-Router.get('/:productId/comments', commentController.getProductComments)
+Router.get('/:productId', getProductComments)
 
 export default Router

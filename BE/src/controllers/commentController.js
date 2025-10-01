@@ -3,9 +3,14 @@ import * as commentService from '../services/commentService.js'
 
 export const createComment = async (req, res, next) => {
     try {
-        const { productId } = req.params
-        const { rate, content } = req.body
-        const userId = req.user?.id || 1 // TODO: lấy từ auth middleware
+        const { productId, rate, content } = req.body
+        const userId = req.user?.id || 1 // TODO: thay bằng user từ middleware auth
+
+        if (!productId) {
+            return res
+                .status(StatusCodes.BAD_REQUEST)
+                .json({ message: 'ProductId is required' })
+        }
 
         if (!rate || rate < 1 || rate > 5) {
             return res
