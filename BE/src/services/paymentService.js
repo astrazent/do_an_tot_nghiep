@@ -39,6 +39,17 @@ const getAllPaymentsService = async () => {
     return payments
 }
 
+const getActivePaymentService = async () => {
+    const activePayment = await PaymentsModel.getActivePayments()
+    if(!activePayment){
+        throw new ApiError(
+            StatusCodes.NOT_FOUND,
+            'Không tìm thấy phương thức thanh toán nào đang hoạt động'
+        )
+    }
+    return activePayment
+}
+
 const updatePaymentService = async (id, method, status) => {
     if (!id) {
         throw new ApiError(StatusCodes.BAD_REQUEST, 'Thiếu ID phương thức thanh toán')
@@ -68,5 +79,6 @@ export const paymentService = {
     getAllPaymentsService,
     updatePaymentService,
     getPaymentByIdService,
-    deletePaymentService
+    deletePaymentService,
+    getActivePaymentService
 }

@@ -56,6 +56,18 @@ const getPaymentById = async (req, res, next) => {
     }
 }
 
+const getActivePayment = async (req, res, next) => {
+    try {
+        const data = await paymentService.getActivePaymentService()
+        return res.status(StatusCodes.OK).json({
+            message: 'Lấy phương thức thanh toán đang hoạt động thành công',
+            data,
+        })
+    } catch (error) {
+        return next(error)
+    }
+}
+
 const deletePayment = async (req, res, next) => {
     try {
         const data = await paymentService.deletePaymentService(req.query.paymentId)
@@ -72,4 +84,5 @@ export const paymentController = {
     updatePayment,
     getPaymentById,
     deletePayment,
+    getActivePayment
 }

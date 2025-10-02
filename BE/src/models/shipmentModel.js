@@ -93,11 +93,10 @@ const ShipmentsModel = {
     },
 
     // Lấy danh sách shipment
-    async listShipments(limit = 50, offset = 0) {
+    async listShipments() {
         const conn = getConnection()
         const [rows] = await conn.execute(
-            `SELECT * FROM ${SHIPMENTS_TABLE_NAME} ORDER BY status DESC, id ASC LIMIT ? OFFSET ?`,
-            [limit, offset]
+            `SELECT * FROM ${SHIPMENTS_TABLE_NAME} ORDER BY status DESC, id ASC`
         )
         return rows
     },

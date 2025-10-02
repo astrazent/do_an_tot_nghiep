@@ -26,7 +26,16 @@ const PaymentsModel = {
         )
         return rows
     },
-    
+
+    // Lấy tất cả payments có status = 1
+    async getActivePayments() {
+        const conn = getConnection()
+        const [rows] = await conn.execute(
+            `SELECT * FROM ${PAYMENTS_TABLE_NAME} WHERE status = 1 ORDER BY created_at DESC`
+        )
+        return rows
+    },
+
     // Tạo payment mới
     async createPayment(data) {
         const { error, value } = PAYMENTS_SCHEMA.validate(data, {
