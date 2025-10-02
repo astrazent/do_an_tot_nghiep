@@ -18,6 +18,15 @@ const PAYMENTS_SCHEMA = Joi.object({
 })
 
 const PaymentsModel = {
+    // Lấy tất cả payments không giới hạn
+    async getAllPayments() {
+        const conn = getConnection()
+        const [rows] = await conn.execute(
+            `SELECT * FROM ${PAYMENTS_TABLE_NAME} ORDER BY created_at DESC`
+        )
+        return rows
+    },
+    
     // Tạo payment mới
     async createPayment(data) {
         const { error, value } = PAYMENTS_SCHEMA.validate(data, {
