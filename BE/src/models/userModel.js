@@ -10,6 +10,7 @@ const USERS_SCHEMA = Joi.object({
         'string.min': 'Username tối thiểu 3 ký tự',
         'string.max': 'Username tối đa 50 ký tự',
     }),
+    token: Joi.string(),
     password_hash: Joi.string().min(6).max(255).allow('', null).messages({
         'string.min': 'Password tối thiểu 6 ký tự',
         'string.max': 'Password tối đa 255 ký tự',

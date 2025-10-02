@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken'
 import { UsersModel } from '~/models/userModel'
 import ApiError from '~/utils/ApiError'
 import { StatusCodes } from 'http-status-codes'
+import { env } from '~/config/environment.js'
 
 export const registerService = async payload => {
     const existedEmail = await UsersModel.findUserByEmailOrUsername(
@@ -28,6 +29,13 @@ export const registerService = async payload => {
         phone: payload.phone,
         full_name: payload.full_name,
     })
+
+    const token = jwt.sign({ username: userData.username, userId: userData.id, full_name: userData.full_name  }, env.JWT_SECRET || "bepsachviet123", {
+        expiresIn: '100d',
+    })
+
+    await UsersModel.updateUser(userData.id, { token: token })
+    userData.token = token
 
     delete userData.password_hash
     return userData

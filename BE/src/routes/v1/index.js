@@ -8,6 +8,7 @@
 import express from 'express'
 import boardRoutes from './boardRoute.js'
 import authRoutes from './authRoute.js'
+import cartItemRoutes from './cartItemRoute.js'
 import { StatusCodes } from 'http-status-codes'
 // import columnRoutes from './columnRoute.js'
 // import cardRoutes from './cardRoute.js'
@@ -24,6 +25,7 @@ Router.get('/ping', (req, res) => {
  */
 Router.use('/boards', boardRoutes)
 Router.use('/auth', authRoutes)
+Router.use('/cart', cartItemRoutes)
 // Router.use('/columns', columnRoutes)
 // Router.use('/cards', cardRoutes)
 
