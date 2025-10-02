@@ -39,6 +39,15 @@ const ShipmentsModel = {
 
         return { id: result.insertId, ...value }
     },
+    // Lấy shipment theo name
+    async getShipmentByName(name) {
+        const conn = getConnection()
+        const [rows] = await conn.execute(
+            `SELECT * FROM ${SHIPMENTS_TABLE_NAME} WHERE name = ? LIMIT 1`,
+            [name]
+        )
+        return rows[0] || null
+    },
 
     // Lấy shipment theo ID
     async getShipmentById(id) {
