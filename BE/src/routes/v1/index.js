@@ -14,6 +14,7 @@ import shipmentRoutes from "./shipmentRoute.js"
 import discountRoutes from "./discountRoute.js"
 import discountProductRoutes from "./discountProductRoute.js"
 import transactionRoutes from "./transactionRoute.js"
+import orderItemRoutes from "./oderItemRoute.js"
 import { StatusCodes } from 'http-status-codes'
 // import columnRoutes from './columnRoute.js'
 // import cardRoutes from './cardRoute.js'
@@ -36,6 +37,7 @@ Router.use('/shipment', shipmentRoutes)
 Router.use('/discount', discountRoutes)
 Router.use('/discount_product', discountProductRoutes)
 Router.use('/transaction', transactionRoutes)
+Router.use('/order_item', orderItemRoutes)
 // Router.use('/columns', columnRoutes)
 // Router.use('/cards', cardRoutes)
 
