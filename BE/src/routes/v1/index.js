@@ -11,6 +11,7 @@ import authRoutes from './authRoute.js'
 import cartItemRoutes from './cartItemRoute.js'
 import paymentRoutes from './paymentRoute.js'
 import shipmentRoutes from "./shipmentRoute.js"
+import discountRoutes from "./discountRoute.js"
 import { StatusCodes } from 'http-status-codes'
 // import columnRoutes from './columnRoute.js'
 // import cardRoutes from './cardRoute.js'
@@ -30,6 +31,7 @@ Router.use('/auth', authRoutes)
 Router.use('/cart', cartItemRoutes)
 Router.use('/payment', paymentRoutes)
 Router.use('/shipment', shipmentRoutes)
+Router.use('/discount', discountRoutes)
 // Router.use('/columns', columnRoutes)
 // Router.use('/cards', cardRoutes)
 
