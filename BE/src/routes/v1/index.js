@@ -7,6 +7,7 @@
  */
 import express from 'express'
 import boardRoutes from './boardRoute.js'
+import adminRoutes from "./adminRoute.js"
 import authRoutes from './authRoute.js'
 import cartItemRoutes from './cartItemRoute.js'
 import paymentRoutes from './paymentRoute.js'
@@ -31,12 +32,13 @@ Router.get('/ping', (req, res) => {
  */
 Router.use('/boards', boardRoutes)
 Router.use('/auth', authRoutes)
+Router.use('/admin', adminRoutes)
 Router.use('/cart', cartItemRoutes)
 Router.use('/payment', paymentRoutes)
 Router.use('/shipment', shipmentRoutes)
 Router.use('/discount', discountRoutes)
 Router.use('/discount_product', discountProductRoutes)
-Router.use('/transaction', transactionRoutes)
+Router.use('/transaction', transactionRoutes)   
 Router.use('/order_item', orderItemRoutes)
 // Router.use('/columns', columnRoutes)
 // Router.use('/cards', cardRoutes)

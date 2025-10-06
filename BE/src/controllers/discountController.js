@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes'
 
 const addDiscount = async (req, res, next) => {
     try {
-        const data = await discountService.addDiscountService(req.body)
+        const data = await discountService.addDiscountService(req.validated)
         return res.status(StatusCodes.OK).json({
             message: "Tạo mã giảm giá thành công",
             data

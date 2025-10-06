@@ -30,9 +30,7 @@ export const registerService = async payload => {
         full_name: payload.full_name,
     })
 
-    const token = jwt.sign({ username: userData.username, userId: userData.id, full_name: userData.full_name  }, env.JWT_SECRET || "bepsachviet123", {
-        expiresIn: '100d',
-    })
+    const token = jwt.sign({ username: userData.username, userId: userData.id, full_name: userData.full_name  }, env.JWT_SECRET || "bepsachviet123")
 
     await UsersModel.updateUser(userData.id, { token: token })
     userData.token = token
