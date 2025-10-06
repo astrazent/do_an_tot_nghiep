@@ -34,7 +34,6 @@ Router.get('/ping', (req, res) => {
  * Tổng hợp tất cả routes v1
  */
 Router.use('/boards', boardRoutes)
-
 Router.use('/auth', authRoutes)
 Router.use('/admin', adminRoutes)
 Router.use('/cart', cartItemRoutes)
@@ -44,11 +43,9 @@ Router.use('/discount', discountRoutes)
 Router.use('/discount_product', discountProductRoutes)
 Router.use('/transaction', transactionRoutes)   
 Router.use('/order_item', orderItemRoutes)
-
 Router.use('/orders', orderDetailRoutes)
 Router.use('/comments', commentRoutes)
 Router.use('/products', productRoutes)
-
 // Router.use('/columns', columnRoutes)
 // Router.use('/cards', cardRoutes)
 
