@@ -18,7 +18,7 @@ const SLIDERS_SCHEMA = Joi.object({
 })
 
 const SlidersModel = {
-    // Tạo slider mới
+    
     async createSlider(data) {
         const { error, value } = SLIDERS_SCHEMA.validate(data, {
             abortEarly: false,
@@ -34,7 +34,7 @@ const SlidersModel = {
         return { id: result.insertId, ...value }
     },
 
-    // Lấy slider theo ID
+    
     async getSliderById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -44,7 +44,7 @@ const SlidersModel = {
         return rows[0] || null
     },
 
-    // Cập nhật slider theo ID
+    
     async updateSlider(id, data) {
         const schema = SLIDERS_SCHEMA.fork(
             Object.keys(SLIDERS_SCHEMA.describe().keys),
@@ -67,7 +67,7 @@ const SlidersModel = {
         return this.getSliderById(id)
     },
 
-    // Xóa slider theo ID
+    
     async deleteSlider(id) {
         const conn = getConnection()
         const [result] = await conn.execute(
@@ -77,7 +77,7 @@ const SlidersModel = {
         return result.affectedRows > 0
     },
 
-    // Lấy danh sách slider
+    
     async listSliders(limit = 50, offset = 0) {
         const conn = getConnection()
         const [rows] = await conn.execute(

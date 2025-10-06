@@ -19,7 +19,7 @@ const CATEGORIES_SCHEMA = Joi.object({
 })
 
 const CategoriesModel = {
-    // Tạo category mới
+    
     async createCategory(data) {
         const { error, value } = CATEGORIES_SCHEMA.validate(data, {
             abortEarly: false,
@@ -36,7 +36,7 @@ const CategoriesModel = {
         return { id: result.insertId, ...value }
     },
 
-    // Lấy category theo ID
+    
     async getCategoryById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -46,7 +46,7 @@ const CategoriesModel = {
         return rows[0] || null
     },
 
-    // Cập nhật category theo ID
+    
     async updateCategory(id, data) {
         const schema = CATEGORIES_SCHEMA.fork(
             Object.keys(CATEGORIES_SCHEMA.describe().keys),
@@ -69,7 +69,7 @@ const CategoriesModel = {
         return this.getCategoryById(id)
     },
 
-    // Xóa category theo ID
+    
     async deleteCategory(id) {
         const conn = getConnection()
         const [result] = await conn.execute(
@@ -79,7 +79,7 @@ const CategoriesModel = {
         return result.affectedRows > 0
     },
 
-    // Lấy danh sách category
+    
     async listCategories(limit = 50, offset = 0) {
         const conn = getConnection()
         const [rows] = await conn.execute(

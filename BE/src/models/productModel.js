@@ -35,7 +35,7 @@ const PRODUCTS_SCHEMA = Joi.object({
 })
 
 const ProductsModel = {
-    // Tạo product mới
+    
     async createProduct(data) {
         const { error, value } = PRODUCTS_SCHEMA.validate(data, {
             abortEarly: false,
@@ -66,7 +66,7 @@ const ProductsModel = {
         return { id: result.insertId, ...value }
     },
 
-    // Lấy product theo ID
+    
     async getProductById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -76,7 +76,7 @@ const ProductsModel = {
         return rows[0] || null
     },
 
-    // Cập nhật product theo ID
+    
     async updateProduct(id, data) {
         const schema = PRODUCTS_SCHEMA.fork(
             Object.keys(PRODUCTS_SCHEMA.describe().keys),
@@ -99,7 +99,7 @@ const ProductsModel = {
         return this.getProductById(id)
     },
 
-    // Xóa product theo ID
+    
     async deleteProduct(id) {
         const conn = getConnection()
         const [result] = await conn.execute(
@@ -109,7 +109,7 @@ const ProductsModel = {
         return result.affectedRows > 0
     },
 
-    // Lấy danh sách product
+    
     async listProducts(limit = 50, offset = 0) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -119,7 +119,7 @@ const ProductsModel = {
         return rows
     },
 
-    // Lấy sản phẩm theo category
+    
     async getProductsByCategory(category_id) {
         const conn = getConnection()
         const [rows] = await conn.execute(

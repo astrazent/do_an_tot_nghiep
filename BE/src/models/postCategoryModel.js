@@ -16,7 +16,7 @@ const POST_CATEGORIES_SCHEMA = Joi.object({
 })
 
 const PostCategoriesModel = {
-    // Tạo liên kết post-category
+    
     async createLink(data) {
         const { error, value } = POST_CATEGORIES_SCHEMA.validate(data, {
             abortEarly: false,
@@ -32,7 +32,7 @@ const PostCategoriesModel = {
         return { id: result.insertId, ...value }
     },
 
-    // Lấy liên kết theo ID
+    
     async getLinkById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -42,7 +42,7 @@ const PostCategoriesModel = {
         return rows[0] || null
     },
 
-    // Cập nhật liên kết theo ID
+    
     async updateLink(id, data) {
         const schema = POST_CATEGORIES_SCHEMA.fork(
             Object.keys(POST_CATEGORIES_SCHEMA.describe().keys),
@@ -65,7 +65,7 @@ const PostCategoriesModel = {
         return this.getLinkById(id)
     },
 
-    // Xóa liên kết theo ID
+    
     async deleteLink(id) {
         const conn = getConnection()
         const [result] = await conn.execute(
@@ -75,7 +75,7 @@ const PostCategoriesModel = {
         return result.affectedRows > 0
     },
 
-    // Lấy danh sách liên kết
+    
     async listLinks(limit = 50, offset = 0) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -85,7 +85,7 @@ const PostCategoriesModel = {
         return rows
     },
 
-    // Lấy tất cả category của một post
+    
     async getCategoriesByPost(post_id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -95,7 +95,7 @@ const PostCategoriesModel = {
         return rows
     },
 
-    // Lấy tất cả post của một category
+    
     async getPostsByCategory(category_id) {
         const conn = getConnection()
         const [rows] = await conn.execute(

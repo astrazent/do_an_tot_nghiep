@@ -25,7 +25,7 @@ const PRODUCT_IMAGES_SCHEMA = Joi.object({
 })
 
 const ProductImagesModel = {
-    // Tạo product image mới
+    
     async createProductImage(data) {
         const { error, value } = PRODUCT_IMAGES_SCHEMA.validate(data, {
             abortEarly: false,
@@ -41,7 +41,7 @@ const ProductImagesModel = {
         return { id: result.insertId, ...value }
     },
 
-    // Lấy product image theo ID
+    
     async getProductImageById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -51,7 +51,7 @@ const ProductImagesModel = {
         return rows[0] || null
     },
 
-    // Cập nhật product image theo ID
+    
     async updateProductImage(id, data) {
         const schema = PRODUCT_IMAGES_SCHEMA.fork(
             Object.keys(PRODUCT_IMAGES_SCHEMA.describe().keys),
@@ -74,7 +74,7 @@ const ProductImagesModel = {
         return this.getProductImageById(id)
     },
 
-    // Xóa product image theo ID
+    
     async deleteProductImage(id) {
         const conn = getConnection()
         const [result] = await conn.execute(
@@ -84,7 +84,7 @@ const ProductImagesModel = {
         return result.affectedRows > 0
     },
 
-    // Lấy danh sách product images
+    
     async listProductImages(limit = 50, offset = 0) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -94,7 +94,7 @@ const ProductImagesModel = {
         return rows
     },
 
-    // Lấy tất cả images của một product
+    
     async getImagesByProduct(product_id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -104,7 +104,7 @@ const ProductImagesModel = {
         return rows
     },
 
-    // Lấy tất cả images của một slider
+    
     async getImagesBySlider(slider_id) {
         const conn = getConnection()
         const [rows] = await conn.execute(

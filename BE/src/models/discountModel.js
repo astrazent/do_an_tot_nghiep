@@ -30,7 +30,7 @@ const DISCOUNTS_SCHEMA = Joi.object({
 })
 
 const DiscountsModel = {
-    // Tạo discount mới
+    
     async createDiscount(data) {
         const { error, value } = DISCOUNTS_SCHEMA.validate(data, {
             abortEarly: false,
@@ -56,7 +56,7 @@ const DiscountsModel = {
         return { id: result.insertId, ...value }
     },
 
-    // Lấy discount theo ID
+    
     async getDiscountById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -66,7 +66,7 @@ const DiscountsModel = {
         return rows[0] || null
     },
 
-    // Cập nhật discount theo ID
+    
     async updateDiscount(id, data) {
         const schema = DISCOUNTS_SCHEMA.fork(
             Object.keys(DISCOUNTS_SCHEMA.describe().keys),
@@ -89,7 +89,7 @@ const DiscountsModel = {
         return this.getDiscountById(id)
     },
 
-    // Xóa discount theo ID
+    
     async deleteDiscount(id) {
         const conn = getConnection()
         const [result] = await conn.execute(
@@ -99,7 +99,7 @@ const DiscountsModel = {
         return result.affectedRows > 0
     },
 
-    // Lấy danh sách discount
+    
     async listDiscounts(limit = 50, offset = 0) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -109,7 +109,7 @@ const DiscountsModel = {
         return rows
     },
 
-    // Lấy discount đang hoạt động tại thời điểm hiện tại
+    
     async getActiveDiscounts() {
         const now = new Date()
         const conn = getConnection()

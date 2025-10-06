@@ -51,7 +51,7 @@ const USERS_SCHEMA = Joi.object({
 })
 
 const UsersModel = {
-    // Tạo user mới
+    
     async createUser(data) {
         const { error, value } = USERS_SCHEMA.validate(data, {
             abortEarly: false,
@@ -81,7 +81,7 @@ const UsersModel = {
         return { id: result.insertId, ...value }
     },
 
-    // Lấy user theo ID
+    
     async getUserById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -91,7 +91,7 @@ const UsersModel = {
         return rows[0] || null
     },
 
-    // Cập nhật user theo ID
+    
     async updateUser(id, data) {
         const schema = USERS_SCHEMA.fork(
             Object.keys(USERS_SCHEMA.describe().keys),
@@ -114,7 +114,7 @@ const UsersModel = {
         return this.getUserById(id)
     },
 
-    // Xóa user theo ID
+    
     async deleteUser(id) {
         const conn = getConnection()
         const [result] = await conn.execute(
@@ -124,7 +124,7 @@ const UsersModel = {
         return result.affectedRows > 0
     },
 
-    // Lấy danh sách user
+    
     async listUsers(limit = 50, offset = 0) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -134,7 +134,7 @@ const UsersModel = {
         return rows
     },
 
-    // Tìm user theo email hoặc username
+    
     async findUserByEmailOrUsername(identifier) {
         const conn = getConnection()
         const [rows] = await conn.execute(

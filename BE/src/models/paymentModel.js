@@ -52,7 +52,7 @@ const PaymentsModel = {
         return { id: result.insertId, ...value }
     },
 
-    // Lấy payment theo ID
+    
     async getPaymentById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -62,7 +62,7 @@ const PaymentsModel = {
         return rows[0] || null
     },
 
-    // Cập nhật payment theo ID
+    
     async updatePayment(id, data) {
         const schema = PAYMENTS_SCHEMA.fork(
             Object.keys(PAYMENTS_SCHEMA.describe().keys),
@@ -85,7 +85,7 @@ const PaymentsModel = {
         return this.getPaymentById(id)
     },
 
-    // Xóa payment theo ID
+    
     async deletePayment(id) {
         const conn = getConnection()
         const [result] = await conn.execute(
@@ -95,7 +95,7 @@ const PaymentsModel = {
         return result.affectedRows > 0
     },
 
-    // Lấy danh sách payment
+    
     async listPayments(limit = 50, offset = 0) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -105,7 +105,7 @@ const PaymentsModel = {
         return rows
     },
 
-    // Lấy payment theo method
+    
     async getPaymentsByMethod(method) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -115,7 +115,7 @@ const PaymentsModel = {
         return rows
     },
 
-    // Lấy payment theo status
+    
     async getPaymentsByStatus(status) {
         const conn = getConnection()
         const [rows] = await conn.execute(

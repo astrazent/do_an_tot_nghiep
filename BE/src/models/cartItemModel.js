@@ -25,7 +25,7 @@ const CART_ITEMS_SCHEMA = Joi.object({
 })
 
 const CartItemsModel = {
-    // Tạo cart item mới
+    
     async createCartItem(data) {
         const { error, value } = CART_ITEMS_SCHEMA.validate(data, {
             abortEarly: false,
@@ -48,7 +48,7 @@ const CartItemsModel = {
         return { id: result.insertId, ...value }
     },
 
-    // Lấy cart item theo ID
+    
     async getCartItemById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -58,7 +58,7 @@ const CartItemsModel = {
         return rows[0] || null
     },
 
-    // Cập nhật cart item theo ID
+    
     async updateCartItem(id, data) {
         const schema = CART_ITEMS_SCHEMA.fork(
             Object.keys(CART_ITEMS_SCHEMA.describe().keys),
@@ -81,7 +81,7 @@ const CartItemsModel = {
         return this.getCartItemById(id)
     },
 
-    // Xóa cart item theo ID
+    
     async deleteCartItem(id) {
         const conn = getConnection()
         const [result] = await conn.execute(
@@ -91,7 +91,7 @@ const CartItemsModel = {
         return result.affectedRows > 0
     },
 
-    // Lấy danh sách cart item
+    
     async listCartItems(limit = 50, offset = 0) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -101,7 +101,7 @@ const CartItemsModel = {
         return rows
     },
 
-    // Lấy tất cả cart item của một user
+    
     async getCartItemsByUser(user_id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -111,7 +111,7 @@ const CartItemsModel = {
         return rows
     },
 
-    // Lấy tất cả cart item của một product
+    
     async getCartItemsByProduct(product_id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
