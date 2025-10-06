@@ -1,8 +1,9 @@
 import express from 'express'
 import { discountProductController } from '~/controllers/discountProductController'
+import { discountProductValidation } from '~/validations/discountProductValidation'
 const Router = express.Router()
 
-Router.route('/').post(discountProductController.addDiscountProduct) 
+Router.route('/').post(discountProductValidation.validateDiscountProduct, discountProductController.addDiscountProduct) 
 
 Router.route('/').get(discountProductController.getDiscountProductById) 
 

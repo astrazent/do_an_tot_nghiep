@@ -1,8 +1,9 @@
 import express from 'express'
 import { transactionController } from '~/controllers/transactionController'
+import { transactionValidation } from '~/validations/transactionValidation'
 const Router = express.Router()
 
-Router.route('/').post(transactionController.addTransaction) 
+Router.route('/').post(transactionValidation.validateTransaction, transactionController.addTransaction) 
 
 Router.route('/').get(transactionController.getTransactionById) 
 

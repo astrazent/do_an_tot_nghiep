@@ -1,8 +1,9 @@
 import express from 'express'
 import { paymentController } from '~/controllers/paymentController'
+import { paymentValidation } from '~/validations/paymentValidation'
 const Router = express.Router()
 
-Router.route('/').post(paymentController.addPayment) 
+Router.route('/').post(paymentValidation.validatePayment, paymentController.addPayment) 
 
 Router.route('/').get(paymentController.getPaymentById)
 

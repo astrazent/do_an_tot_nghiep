@@ -34,10 +34,6 @@ const updateQuantityCartItemsService = async (cartItemId, quantity) => {
             'Không tìm thấy sản phẩm trong giỏ hàng'
         )
     }
-    const product = await ProductsModel.getProductById(cartItem.product_id)
-    if (!product) {
-        throw new ApiError(StatusCodes.NOT_FOUND, 'Sản phẩm không tồn tại')
-    }
     const newQuantity = cartItem.qty_total + quantity
     const newPriceTotal = product.price * newQuantity
     const updatedCartItem = await CartItemsModel.updateCartItem(cartItemId, {

@@ -1,8 +1,9 @@
 import express from 'express'
 import { orderItemController } from '~/controllers/orderItemController'
+import { orderItemValidation } from '~/validations/orderItemValidation'
 const Router = express.Router()
 
-Router.route('/').post(orderItemController.addOrderItem) 
+Router.route('/').post(orderItemValidation.validateOrderItem, orderItemController.addOrderItem) 
 
 Router.route('/').get(orderItemController.getOrderItemById) 
 

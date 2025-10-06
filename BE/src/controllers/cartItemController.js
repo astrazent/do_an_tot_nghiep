@@ -6,6 +6,12 @@ const getCartItems = async (req, res, next) => {
     try {
         const token = req.headers.authorization.split(' ')[1];
         const userId = jwt.verify(token, process.env.JWT_SECRET || "bepsachviet123").userId;
+        console.log(userId)
+        if(!userId){
+            return res.status(StatusCodes.BAD_REQUEST).json({
+                message: "Lỗi token không tìm thấy user"
+            })
+        }
         const data = await cartItemService.getCartItemsService(userId)
         return res.status(StatusCodes.OK).json({
             message: 'Lấy giỏ hàng thành công',
