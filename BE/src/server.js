@@ -15,7 +15,7 @@ const START_SERVER = () => {
     // Cấu hình CORS để cho phép các origin cụ thể
     app.use(
         cors({
-            origin: 'http://localhost', // Chỉ cho phép yêu cầu từ localhost
+            origin: 'http://localhost:5173', // Chỉ cho phép yêu cầu từ localhost
             methods: ['GET', 'POST', 'PUT', 'DELETE'], // Các phương thức HTTP được phép
             allowedHeaders: ['Content-Type', 'Authorization'], // Các header được phép
             credentials: true, // Cho phép gửi cookie qua CORS
