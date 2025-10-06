@@ -17,7 +17,7 @@ const BOARDS_SCHEMA = Joi.object({
 })
 
 const BoardsModel = {
-    // Tạo board mới
+    
     async createBoard(data) {
         const { error, value } = BOARDS_SCHEMA.validate(data, {
             abortEarly: false,
@@ -33,7 +33,7 @@ const BoardsModel = {
         return { board_id: result.insertId, ...value }
     },
 
-    // Lấy board theo ID
+    
     async getBoardById(board_id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -43,7 +43,7 @@ const BoardsModel = {
         return rows[0] || null
     },
 
-    // Cập nhật board theo ID
+    
     async updateBoard(board_id, data) {
         const schema = BOARDS_SCHEMA.fork(
             Object.keys(BOARDS_SCHEMA.describe().keys),
@@ -66,7 +66,7 @@ const BoardsModel = {
         return this.getBoardById(board_id)
     },
 
-    // Xóa board theo ID
+    
     async deleteBoard(board_id) {
         const conn = getConnection()
         const [result] = await conn.execute(
@@ -76,7 +76,7 @@ const BoardsModel = {
         return result.affectedRows > 0
     },
 
-    // Lấy danh sách board
+    
     async listBoards(limit = 50, offset = 0) {
         const conn = getConnection()
         const [rows] = await conn.execute(

@@ -9,10 +9,10 @@ import { boardService } from '~/services/boardService'
 
 const createBoard = async (req, res, next) => {
     try {
-        // Điều hướng dữ liệu sang tầng Service
+        
         const createBoard = await boardService.createBoard(req.body)
         console.log('check')
-        // Có kết quả thì trả về phía Client
+        
         res.status(StatusCodes.CREATED).json(createBoard)
     } catch (error) {
         next(error)

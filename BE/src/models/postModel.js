@@ -33,7 +33,7 @@ const POSTS_SCHEMA = Joi.object({
 })
 
 const PostsModel = {
-    // Tạo post mới
+    
     async createPost(data) {
         const { error, value } = POSTS_SCHEMA.validate(data, {
             abortEarly: false,
@@ -58,7 +58,7 @@ const PostsModel = {
         return { id: result.insertId, ...value }
     },
 
-    // Lấy post theo ID
+    
     async getPostById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -68,7 +68,7 @@ const PostsModel = {
         return rows[0] || null
     },
 
-    // Cập nhật post theo ID
+    
     async updatePost(id, data) {
         const schema = POSTS_SCHEMA.fork(
             Object.keys(POSTS_SCHEMA.describe().keys),
@@ -91,7 +91,7 @@ const PostsModel = {
         return this.getPostById(id)
     },
 
-    // Xóa post theo ID
+    
     async deletePost(id) {
         const conn = getConnection()
         const [result] = await conn.execute(
@@ -101,7 +101,7 @@ const PostsModel = {
         return result.affectedRows > 0
     },
 
-    // Lấy danh sách post
+    
     async listPosts(limit = 50, offset = 0) {
         const conn = getConnection()
         const [rows] = await conn.execute(

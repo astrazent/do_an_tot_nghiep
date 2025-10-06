@@ -16,7 +16,7 @@ const ROLES_SCHEMA = Joi.object({
 })
 
 const RolesModel = {
-    // Tạo role mới
+    
     async createRole(data) {
         const { error, value } = ROLES_SCHEMA.validate(data, {
             abortEarly: false,
@@ -32,7 +32,7 @@ const RolesModel = {
         return { id: result.insertId, ...value }
     },
 
-    // Lấy role theo ID
+    
     async getRoleById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -42,7 +42,7 @@ const RolesModel = {
         return rows[0] || null
     },
 
-    // Cập nhật role theo ID
+    
     async updateRole(id, data) {
         const schema = ROLES_SCHEMA.fork(
             Object.keys(ROLES_SCHEMA.describe().keys),
@@ -65,7 +65,7 @@ const RolesModel = {
         return this.getRoleById(id)
     },
 
-    // Xóa role theo ID
+    
     async deleteRole(id) {
         const conn = getConnection()
         const [result] = await conn.execute(
@@ -75,7 +75,7 @@ const RolesModel = {
         return result.affectedRows > 0
     },
 
-    // Lấy danh sách role
+    
     async listRoles(limit = 50, offset = 0) {
         const conn = getConnection()
         const [rows] = await conn.execute(

@@ -21,8 +21,8 @@ const DISCOUNTS_SCHEMA = Joi.object({
         'number.base': 'Min price phải là số',
         'number.min': 'Min price tối thiểu 0',
     }),
-    start_date: Joi.date().default(() => new Date(), 'current timestamp'),
-    end_date: Joi.date().default(() => new Date(), 'current timestamp'),
+    start_date: Joi.date().default(() => new Date()),
+    end_date: Joi.date().default(() => new Date()),
     status: Joi.number().integer().valid(0, 1).default(0).messages({
         'number.base': 'Status phải là số',
         'any.only': 'Status phải là 0 hoặc 1',
@@ -30,7 +30,7 @@ const DISCOUNTS_SCHEMA = Joi.object({
 })
 
 const DiscountsModel = {
-    // Tạo discount mới
+    
     async createDiscount(data) {
         const { error, value } = DISCOUNTS_SCHEMA.validate(data, {
             abortEarly: false,
@@ -40,8 +40,8 @@ const DiscountsModel = {
         const conn = getConnection()
         const [result] = await conn.execute(
             `INSERT INTO ${DISCOUNTS_TABLE_NAME} 
-            (name, description, value, min_price, start_date, end_date, status)
-            VALUES (?, ?, ?, ?, ?, ?, ?)`,
+                (name, description, value, min_price, start_date, end_date, status)
+                VALUES (?, ?, ?, ?, ?, ?, ?)`,
             [
                 value.name,
                 value.description,
@@ -56,7 +56,7 @@ const DiscountsModel = {
         return { id: result.insertId, ...value }
     },
 
-    // Lấy discount theo ID
+    
     async getDiscountById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -66,7 +66,7 @@ const DiscountsModel = {
         return rows[0] || null
     },
 
-    // Cập nhật discount theo ID
+    
     async updateDiscount(id, data) {
         const schema = DISCOUNTS_SCHEMA.fork(
             Object.keys(DISCOUNTS_SCHEMA.describe().keys),
@@ -89,7 +89,7 @@ const DiscountsModel = {
         return this.getDiscountById(id)
     },
 
-    // Xóa discount theo ID
+    
     async deleteDiscount(id) {
         const conn = getConnection()
         const [result] = await conn.execute(
@@ -99,7 +99,7 @@ const DiscountsModel = {
         return result.affectedRows > 0
     },
 
-    // Lấy danh sách discount
+    
     async listDiscounts(limit = 50, offset = 0) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -109,14 +109,14 @@ const DiscountsModel = {
         return rows
     },
 
-    // Lấy discount đang hoạt động tại thời điểm hiện tại
+    
     async getActiveDiscounts() {
         const now = new Date()
         const conn = getConnection()
         const [rows] = await conn.execute(
             `SELECT * FROM ${DISCOUNTS_TABLE_NAME} 
-            WHERE status = 1 AND start_date <= ? AND end_date >= ? 
-            ORDER BY start_date ASC`,
+                WHERE status = 1 AND start_date <= ? AND end_date >= ? 
+                ORDER BY start_date ASC`,
             [now, now]
         )
         return rows

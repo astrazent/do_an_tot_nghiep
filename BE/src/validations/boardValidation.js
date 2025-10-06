@@ -24,9 +24,9 @@ const createBoard = async (req, res, next) => {
 
     try {
         console.log('req.body: ', req.body)
-        // Chỉ định abortEarly: false để nó trả về toàn bộ lỗi thay vì chỉ trả về lỗi vừa gặp
+        
         await correctCondition.validateAsync(req.body, { abortEarly: false })
-        //Validate dữ liệu hợp lệ --> controller
+        
         next()
     } catch (error) {
         next(

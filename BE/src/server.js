@@ -12,7 +12,7 @@ import orderRoutes from './routes/v1/orderDetailRoutes.js'
 const START_SERVER = () => {
     const app = express()
 
-    // Cấu hình CORS để cho phép các origin cụ thể
+    
     app.use(
         cors({
             origin: 'http://localhost:5173', // Chỉ cho phép yêu cầu từ localhost
@@ -22,40 +22,40 @@ const START_SERVER = () => {
         })
     )
 
-    // Config cookie middleware
+    
     app.use(cookieParser())
 
-    // Config req.body middleware
-    app.use(express.json()) // For JSON data
-    app.use(express.urlencoded({ extended: true })) // For form data
+    
+    app.use(express.json()) 
+    app.use(express.urlencoded({ extended: true })) 
 
-    // Use APIs
+    
     app.use('/v1', APIs_V1)
     app.use('/v2', APIs_V2)
     // app.get('/orders', orderRoutes)
 
-    // Middleware xử lý lỗi tập trung
+    
     app.use(errorHandlingMiddleware)
 
-    // Start server
+    
     const server = app.listen(env.APP_PORT, env.APP_HOST, () => {
         console.log(
             `3. Hi ${env.AUTHOR}, Back-end Server is running successfully at Host: ${env.APP_HOST} and Port: ${env.APP_PORT}`
         )
     })
 
-    // Thực hiện các tác vụ cleanup trước khi tắt server
+    
     exitHook(() => {
         console.log('4. Server is shutting down...')
-        closeConnection() // Đóng kết nối MySQL
+        closeConnection() 
         console.log('5. Disconnected from MySQL Database')
     })
 
-    return server // Trả về server instance để có thể đóng từ bên ngoài
+    return server 
 }
 
 // Kết nối Database trước khi start Server
-createConnection() // Kết nối MySQL
+createConnection() 
     .then(() => console.log('1. Connected to MySQL Database!'))
     .then(() => console.log('2. Starting server...'))
     .then(() => START_SERVER())

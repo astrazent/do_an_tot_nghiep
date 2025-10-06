@@ -24,7 +24,7 @@ const SHIPMENTS_SCHEMA = Joi.object({
 })
 
 const ShipmentsModel = {
-    // Tạo shipment mới
+    
     async createShipment(data) {
         const { error, value } = SHIPMENTS_SCHEMA.validate(data, {
             abortEarly: false,
@@ -39,8 +39,17 @@ const ShipmentsModel = {
 
         return { id: result.insertId, ...value }
     },
+    // Lấy shipment theo name
+    async getShipmentByName(name) {
+        const conn = getConnection()
+        const [rows] = await conn.execute(
+            `SELECT * FROM ${SHIPMENTS_TABLE_NAME} WHERE name = ? LIMIT 1`,
+            [name]
+        )
+        return rows[0] || null
+    },
 
-    // Lấy shipment theo ID
+    
     async getShipmentById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -50,7 +59,7 @@ const ShipmentsModel = {
         return rows[0] || null
     },
 
-    // Cập nhật shipment theo ID
+    
     async updateShipment(id, data) {
         const schema = SHIPMENTS_SCHEMA.fork(
             Object.keys(SHIPMENTS_SCHEMA.describe().keys),
@@ -73,7 +82,7 @@ const ShipmentsModel = {
         return this.getShipmentById(id)
     },
 
-    // Xóa shipment theo ID
+    
     async deleteShipment(id) {
         const conn = getConnection()
         const [result] = await conn.execute(
@@ -83,17 +92,21 @@ const ShipmentsModel = {
         return result.affectedRows > 0
     },
 
+<<<<<<< HEAD
     // Lấy danh sách shipment
+    async listShipments() {
+=======
+    
     async listShipments(limit = 50, offset = 0) {
+>>>>>>> 7abbceedcd7fd131180ec16073a60da310cf897c
         const conn = getConnection()
         const [rows] = await conn.execute(
-            `SELECT * FROM ${SHIPMENTS_TABLE_NAME} ORDER BY status DESC, id ASC LIMIT ? OFFSET ?`,
-            [limit, offset]
+            `SELECT * FROM ${SHIPMENTS_TABLE_NAME} ORDER BY status DESC, id ASC`
         )
         return rows
     },
 
-    // Lấy shipment đang hoạt động
+    
     async getActiveShipments() {
         const conn = getConnection()
         const [rows] = await conn.execute(

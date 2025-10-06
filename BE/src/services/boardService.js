@@ -9,16 +9,16 @@ import ApiError from '~/utils/ApiError'
 import { slugify } from '~/utils/formatters'
 import { BoardsModel } from '~/models/boardModel'
 const createBoard = async reqBody => {
-    // Tạo slug từ title
+    
     const boardData = {
         ...reqBody,
         slug: slugify(reqBody.title),
     }
-    // Gọi đến tầng Model để xử lý lưu bản ghi newBoard vào trong database
+    
     const newBoard = await BoardsModel.createBoard(boardData)
     console.log(newBoard)
-    // Bắn email, notification về cho admin,...vv
-    //Luôn phải trả kết quả về trong service
+    
+    
     return newBoard
 }
 export const boardService = {
