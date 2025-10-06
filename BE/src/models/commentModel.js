@@ -26,7 +26,7 @@ const COMMENTS_SCHEMA = Joi.object({
 })
 
 const CommentsModel = {
-    // Tạo comment mới
+    
     async createComment(data) {
         const { error, value } = COMMENTS_SCHEMA.validate(data, {
             abortEarly: false,
@@ -42,7 +42,7 @@ const CommentsModel = {
         return { id: result.insertId, ...value }
     },
 
-    // Lấy comment theo ID
+    
     async getCommentById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -52,7 +52,7 @@ const CommentsModel = {
         return rows[0] || null
     },
 
-    // Cập nhật comment theo ID
+    
     async updateComment(id, data) {
         const schema = COMMENTS_SCHEMA.fork(
             Object.keys(COMMENTS_SCHEMA.describe().keys),
@@ -75,7 +75,7 @@ const CommentsModel = {
         return this.getCommentById(id)
     },
 
-    // Xóa comment theo ID
+    
     async deleteComment(id) {
         const conn = getConnection()
         const [result] = await conn.execute(
@@ -85,7 +85,7 @@ const CommentsModel = {
         return result.affectedRows > 0
     },
 
-    // Lấy danh sách comment
+    
     async listComments(limit = 50, offset = 0) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -95,7 +95,7 @@ const CommentsModel = {
         return rows
     },
 
-    // Lấy tất cả comment của một product
+    
     async getCommentsByProduct(product_id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -105,7 +105,7 @@ const CommentsModel = {
         return rows
     },
 
-    // Lấy tất cả comment của một user
+    
     async getCommentsByUser(user_id) {
         const conn = getConnection()
         const [rows] = await conn.execute(

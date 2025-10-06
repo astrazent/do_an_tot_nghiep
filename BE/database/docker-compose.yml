@@ -18,7 +18,7 @@ services:
                     'CMD',
                     'mysqladmin',
                     '-uroot',
-                    '-p123456',
+                    '-p55555',
                     'ping',
                     '-h',
                     'localhost',

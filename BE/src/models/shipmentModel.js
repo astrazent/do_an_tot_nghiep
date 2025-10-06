@@ -24,7 +24,7 @@ const SHIPMENTS_SCHEMA = Joi.object({
 })
 
 const ShipmentsModel = {
-    // Tạo shipment mới
+    
     async createShipment(data) {
         const { error, value } = SHIPMENTS_SCHEMA.validate(data, {
             abortEarly: false,
@@ -40,7 +40,7 @@ const ShipmentsModel = {
         return { id: result.insertId, ...value }
     },
 
-    // Lấy shipment theo ID
+    
     async getShipmentById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -50,7 +50,7 @@ const ShipmentsModel = {
         return rows[0] || null
     },
 
-    // Cập nhật shipment theo ID
+    
     async updateShipment(id, data) {
         const schema = SHIPMENTS_SCHEMA.fork(
             Object.keys(SHIPMENTS_SCHEMA.describe().keys),
@@ -73,7 +73,7 @@ const ShipmentsModel = {
         return this.getShipmentById(id)
     },
 
-    // Xóa shipment theo ID
+    
     async deleteShipment(id) {
         const conn = getConnection()
         const [result] = await conn.execute(
@@ -83,7 +83,7 @@ const ShipmentsModel = {
         return result.affectedRows > 0
     },
 
-    // Lấy danh sách shipment
+    
     async listShipments(limit = 50, offset = 0) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -93,7 +93,7 @@ const ShipmentsModel = {
         return rows
     },
 
-    // Lấy shipment đang hoạt động
+    
     async getActiveShipments() {
         const conn = getConnection()
         const [rows] = await conn.execute(

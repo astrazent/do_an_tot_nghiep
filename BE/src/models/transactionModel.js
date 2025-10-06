@@ -32,7 +32,7 @@ const TRANSACTIONS_SCHEMA = Joi.object({
 })
 
 const TransactionsModel = {
-    // Tạo transaction mới
+    
     async createTransaction(data) {
         const { error, value } = TRANSACTIONS_SCHEMA.validate(data, {
             abortEarly: false,
@@ -68,7 +68,7 @@ const TransactionsModel = {
         return { id: result.insertId, ...value }
     },
 
-    // Lấy transaction theo ID
+    
     async getTransactionById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -78,7 +78,7 @@ const TransactionsModel = {
         return rows[0] || null
     },
 
-    // Cập nhật transaction theo ID
+    
     async updateTransaction(id, data) {
         const schema = TRANSACTIONS_SCHEMA.fork(
             Object.keys(TRANSACTIONS_SCHEMA.describe().keys),
@@ -101,7 +101,7 @@ const TransactionsModel = {
         return this.getTransactionById(id)
     },
 
-    // Xóa transaction theo ID
+    
     async deleteTransaction(id) {
         const conn = getConnection()
         const [result] = await conn.execute(
@@ -111,7 +111,7 @@ const TransactionsModel = {
         return result.affectedRows > 0
     },
 
-    // Lấy danh sách transaction
+    
     async listTransactions(limit = 50, offset = 0) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -121,7 +121,7 @@ const TransactionsModel = {
         return rows
     },
 
-    // Lấy transactions theo user
+    
     async getTransactionsByUser(user_id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -131,7 +131,7 @@ const TransactionsModel = {
         return rows
     },
 
-    // Lấy transactions theo trạng thái
+    
     async getTransactionsByStatus(status) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -141,7 +141,7 @@ const TransactionsModel = {
         return rows
     },
 
-    // Lấy transactions theo shipment_status
+    
     async getTransactionsByShipmentStatus(shipment_status) {
         const conn = getConnection()
         const [rows] = await conn.execute(

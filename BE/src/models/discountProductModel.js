@@ -16,7 +16,7 @@ const DISCOUNT_PRODUCTS_SCHEMA = Joi.object({
 })
 
 const DiscountProductsModel = {
-    // Tạo liên kết discount-product
+    
     async createLink(data) {
         const { error, value } = DISCOUNT_PRODUCTS_SCHEMA.validate(data, {
             abortEarly: false,
@@ -32,7 +32,7 @@ const DiscountProductsModel = {
         return { id: result.insertId, ...value }
     },
 
-    // Lấy liên kết theo ID
+    
     async getLinkById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -42,7 +42,7 @@ const DiscountProductsModel = {
         return rows[0] || null
     },
 
-    // Cập nhật liên kết theo ID
+    
     async updateLink(id, data) {
         const schema = DISCOUNT_PRODUCTS_SCHEMA.fork(
             Object.keys(DISCOUNT_PRODUCTS_SCHEMA.describe().keys),
@@ -65,7 +65,7 @@ const DiscountProductsModel = {
         return this.getLinkById(id)
     },
 
-    // Xóa liên kết theo ID
+    
     async deleteLink(id) {
         const conn = getConnection()
         const [result] = await conn.execute(
@@ -75,7 +75,7 @@ const DiscountProductsModel = {
         return result.affectedRows > 0
     },
 
-    // Lấy danh sách liên kết
+    
     async listLinks(limit = 50, offset = 0) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -85,7 +85,7 @@ const DiscountProductsModel = {
         return rows
     },
 
-    // Lấy tất cả products của một discount
+    
     async getProductsByDiscount(discount_id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -95,7 +95,7 @@ const DiscountProductsModel = {
         return rows
     },
 
-    // Lấy tất cả discounts của một product
+    
     async getDiscountsByProduct(product_id) {
         const conn = getConnection()
         const [rows] = await conn.execute(

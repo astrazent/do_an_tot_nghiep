@@ -2,7 +2,7 @@
  * Chức năng: Quản lý biến môi trường, load từ .env và chuẩn hóa cho toàn dự án
  */
 import dotenv from 'dotenv'
-dotenv.config() // Load biến môi trường từ file .env
+dotenv.config() 
 
 export const env = {
     DB_HOST: process.env.DB_HOST || 'localhost',

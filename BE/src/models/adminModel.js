@@ -40,7 +40,7 @@ const ADMINS_SCHEMA = Joi.object({
 })
 
 const AdminsModel = {
-    // Tạo admin mới
+    
     async createAdmin(data) {
         const { error, value } = ADMINS_SCHEMA.validate(data, {
             abortEarly: false,
@@ -65,7 +65,7 @@ const AdminsModel = {
         return { id: result.insertId, ...value }
     },
 
-    // Lấy admin theo ID
+    
     async getAdminById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -75,7 +75,7 @@ const AdminsModel = {
         return rows[0] || null
     },
 
-    // Cập nhật admin theo ID
+    
     async updateAdmin(id, data) {
         const schema = ADMINS_SCHEMA.fork(
             Object.keys(ADMINS_SCHEMA.describe().keys),
@@ -98,7 +98,7 @@ const AdminsModel = {
         return this.getAdminById(id)
     },
 
-    // Xóa admin theo ID
+    
     async deleteAdmin(id) {
         const conn = getConnection()
         const [result] = await conn.execute(
@@ -108,7 +108,7 @@ const AdminsModel = {
         return result.affectedRows > 0
     },
 
-    // Lấy danh sách admin
+    
     async listAdmins(limit = 50, offset = 0) {
         const conn = getConnection()
         const [rows] = await conn.execute(
