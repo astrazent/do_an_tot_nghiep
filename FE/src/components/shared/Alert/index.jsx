@@ -53,6 +53,6 @@ const Alert = ({ message, type = 'success', duration = 2000, onClose }) => {
         </div>,
         document.body
     );
-};
+    };
 
 export default Alert;

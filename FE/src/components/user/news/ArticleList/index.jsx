@@ -1,8 +1,16 @@
 //src/components/ArticleList.jsx
 import React from 'react'
+import { Link } from 'react-router-dom' // --- [1] IMPORT COMPONENT Link ---
+
+// --- [2] ĐỊNH NGHĨA ROUTE CƠ SỞ CHO BÀI BÁO ---
+const BASE_ARTICLE_ROUTE = '/news-detail'
 
 const ArticleListItem = ({ article }) => (
-    <div className="group grid grid-cols-1 md:grid-cols-3 gap-6 items-center cursor-pointer">
+    // --- [3] BỌC COMPONENT TRONG THẺ Link VÀ DI CHUYỂN CÁC CLASS ---
+    <Link
+        to={`${BASE_ARTICLE_ROUTE}/${article.slug}`}
+        className="group grid grid-cols-1 md:grid-cols-3 gap-6 items-center"
+    >
         <div className="overflow-hidden rounded-md h-[150px]">
             <img
                 src={article.imageUrl}
@@ -25,15 +33,16 @@ const ArticleListItem = ({ article }) => (
                 {article.summary}
             </p>
         </div>
-    </div>
+    </Link>
 )
 
 const ArticleList = ({ articles }) => {
+    // Logic gom nhóm bài viết theo danh mục (giữ nguyên)
     const grouped = articles.reduce((acc, article) => {
         if (!acc[article.category]) acc[article.category] = []
         acc[article.category].push(article)
         return acc
-    })
+    }, {})
 
     return (
         <section className="space-y-12">

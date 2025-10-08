@@ -1,5 +1,6 @@
 import React from 'react'
 import { FaBell, FaUser, FaShoppingBag } from 'react-icons/fa'
+import { NavLink } from 'react-router-dom'
 
 const UserSidebar = () => {
     const menuItems = [
@@ -7,21 +8,21 @@ const UserSidebar = () => {
             id: 1,
             icon: FaBell,
             label: 'Thông báo',
-            onClick: () => console.log('Thông báo clicked'),
+            path: '/user/notifications',
             color: 'text-red-500',
         },
         {
             id: 2,
             icon: FaUser,
             label: 'Tài khoản của tôi',
-            onClick: () => console.log('Tài khoản clicked'),
+            path: '/user/profile',
             color: 'text-blue-500',
         },
         {
             id: 3,
             icon: FaShoppingBag,
             label: 'Đơn mua',
-            onClick: () => console.log('Đơn mua clicked'),
+            path: '/user/purchase',
             color: 'text-green-500',
         },
     ]
@@ -36,10 +37,18 @@ const UserSidebar = () => {
                     {menuItems.map(item => {
                         const IconComponent = item.icon
                         return (
-                            <button
+                            // 3. Sử dụng NavLink thay cho button
+                            <NavLink
                                 key={item.id}
-                                onClick={item.onClick}
-                                className="w-full flex items-center gap-3 p-3 text-left rounded-md hover:bg-gray-100 transition-colors duration-200 border border-transparent hover:border-gray-200"
+                                to={item.path}
+                                // 4. Thêm style cho trạng thái 'active'
+                                className={({ isActive }) =>
+                                    `w-full flex items-center gap-3 p-3 text-left rounded-md transition-colors duration-200 border ${
+                                        isActive
+                                            ? 'bg-gray-100 border-gray-200 text-blue-600'
+                                            : 'border-transparent hover:bg-gray-100 hover:border-gray-200'
+                                    }`
+                                }
                             >
                                 <IconComponent
                                     className={`text-lg ${item.color}`}
@@ -47,7 +56,7 @@ const UserSidebar = () => {
                                 <span className="text-sm font-medium text-gray-700">
                                     {item.label}
                                 </span>
-                            </button>
+                            </NavLink>
                         )
                     })}
                 </div>

@@ -38,7 +38,7 @@ function MainHeader({ login, handleLogout, cartItemCount = 0 }) {
                     <input
                         type="text"
                         placeholder="Tìm sản phẩm ..."
-                        className="border border-green-500 rounded-full py-2 pl-10 pr-4 w-full focus:outline-none focus:ring-2 focus:ring-green-400"
+                        className="border border-green-500 rounded-full py-2 pl-10 pr-4 w-full focus:outline-none focus:ring-1 focus:ring-green-400"
                     />
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <FaSearch className="text-gray-400" />

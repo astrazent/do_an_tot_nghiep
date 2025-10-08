@@ -23,7 +23,6 @@ const LatestNews = ({
                         <h2 className="text-3xl font-bold text-green-800 uppercase">
                             {title}
                         </h2>
-
                         <div className="flex-1 h-px bg-green-500 max-w-32"></div>
                     </div>
                 </div>
@@ -36,6 +35,7 @@ const LatestNews = ({
                                 image={article.image}
                                 title={article.title}
                                 date={article.date}
+                                slug={article.slug}
                             />
                         ))}
                     </div>

@@ -38,7 +38,7 @@ const ProductCard = ({
     }
 
     return (
-        <div className="relative w-56 h-96 flex flex-col bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow p-3 font-sans border border-gray-100">
+        <div className="relative w-56 h-96 flex flex-col bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow p-3 font-sans border border-gray-100 cursor-pointer">
             <div className="w-full h-48 mb-2">
                 <img
                     src={image}

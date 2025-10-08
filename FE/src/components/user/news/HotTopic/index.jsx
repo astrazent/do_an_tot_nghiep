@@ -1,5 +1,6 @@
 //src/components/HotTopics.jsx
 import React from 'react'
+import { Link } from 'react-router-dom' // --- [1] IMPORT COMPONENT Link ---
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination, Autoplay } from 'swiper/modules'
 import 'swiper/css'
@@ -7,8 +8,12 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import './hotTopic.scss'
 
+// --- [2] ĐỊNH NGHĨA ROUTE CƠ SỞ CHO BÀI BÁO ---
+const BASE_ARTICLE_ROUTE = '/news-detail'
+
 const HotTopicItem = ({ article }) => (
-    <div className="group cursor-pointer">
+    // --- [3] BỌC TOÀN BỘ COMPONENT TRONG THẺ Link VÀ TẠO URL ĐỘNG ---
+    <Link to={`${BASE_ARTICLE_ROUTE}/${article.slug}`} className="group">
         <div className="overflow-hidden rounded-md">
             <img
                 src={article.imageUrl}
@@ -19,7 +24,7 @@ const HotTopicItem = ({ article }) => (
         <h3 className="mt-2 font-bold text-gray-800 group-hover:text-green-600">
             {article.title}
         </h3>
-    </div>
+    </Link>
 )
 
 const HotTopic = ({ articles }) => {
