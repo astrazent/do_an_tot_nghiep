@@ -489,7 +489,7 @@ const articlesData = [
         slug: 'moc-vit-mot-dac-san-khac-cua-van-dinh-chua-nhieu-nguoi-biet-den-8',
     },
 ]
-const home = () => {
+const Home = () => {
     const [currentPage, setCurrentPage] = useState(1)
     const articlesPerPage = 8
     const totalPages = Math.ceil(articlesData.length / articlesPerPage)
@@ -548,4 +548,4 @@ const home = () => {
     )
 }
 
-export default home
+export default Home

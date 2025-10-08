@@ -50,8 +50,12 @@ const SortBar = ({ sortBy, onSortChange }) => {
                         <option value="" disabled>
                             Đánh giá
                         </option>
-                        <option value="rating-desc">Đánh giá: Cao đến Thấp</option>
-                        <option value="rating-asc">Đánh giá: Thấp đến Cao</option>
+                        <option value="rating-desc">
+                            Đánh giá: Cao đến Thấp
+                        </option>
+                        <option value="rating-asc">
+                            Đánh giá: Thấp đến Cao
+                        </option>
                     </select>
 
                     <IoChevronDownSharp className="absolute right-2 top-1/2 -translate-y-1/2 text-green-700 text-xl pointer-events-none" />

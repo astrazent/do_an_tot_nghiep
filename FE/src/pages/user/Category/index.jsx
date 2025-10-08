@@ -1,5 +1,3 @@
-// src/pages/user/ProductLists.jsx
-
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import ProductList from '~/components/user/product/ProductList'
@@ -8,16 +6,12 @@ import SortBar from '~/components/shared/SortBar'
 
 const PRODUCTS_PER_LOAD = 8
 
-// --- [1] CẬP NHẬT ĐỐI TƯỢNG MAPPING: KEY LÀ SLUG TỪ URL ---
 const CATEGORY_DATA = {
-    'sale': { title: 'Sản phẩm khuyến mãi' },
+    sale: { title: 'Sản phẩm khuyến mãi' },
     'san-pham-ocop-3-sao': { title: 'Sản phẩm OCOP 3 Sao' },
     'san-pham-ocop-4-sao': { title: 'Sản phẩm OCOP 4 Sao' },
-    'san-pham-tu-vit': { title: 'Sản phẩm từ vịt' }
-    // Thêm các slug và title khác ở đây
+    'san-pham-tu-vit': { title: 'Sản phẩm từ vịt' },
 }
-
-// --- [2] CẬP NHẬT DỮ LIỆU MẪU ĐỂ CÓ THỂ LỌC THEO SLUG ---
 const sampleProducts = Array.from({ length: 30 }, (_, i) => ({
     id: i + 1,
     image: taiHeoUTuong,
@@ -28,8 +22,7 @@ const sampleProducts = Array.from({ length: 30 }, (_, i) => ({
     rating: Math.floor(Math.random() * 5) + 1,
     reviewCount: Math.floor(Math.random() * 100),
     isPromotion: Math.random() > 0.7,
-    // Thêm trường này để lọc theo danh mục sản phẩm
-    categorySlug: i % 4 === 0 ? 'san-pham-tu-vit' : 'san-pham-tu-heo'
+    categorySlug: i % 4 === 0 ? 'san-pham-tu-vit' : 'san-pham-tu-heo',
 }))
 
 const parsePrice = priceString => {
@@ -37,25 +30,20 @@ const parsePrice = priceString => {
 }
 
 function ProductLists() {
-    // --- [3] DÙNG useParams ĐỂ LẤY `slug` TỪ URL ---
     const { slug } = useParams()
-    const currentSlug = slug || 'all' // Nếu không có slug, coi như là 'all'
+    const currentSlug = slug || 'all'
 
     const [search, setSearch] = useState('')
     const [productsToShow, setProductsToShow] = useState(PRODUCTS_PER_LOAD)
     const [sortBy, setSortBy] = useState('newest')
-
-    // Lấy title động từ slug, nếu không có thì hiển thị title mặc định
     const title = CATEGORY_DATA[currentSlug]?.title || 'Tất cả sản phẩm'
 
     useEffect(() => {
         setProductsToShow(PRODUCTS_PER_LOAD)
     }, [search, sortBy, currentSlug])
 
-    // --- [4] CẬP NHẬT LOGIC LỌC DỰA TRÊN `currentSlug` ---
     const finalProducts = sampleProducts
         .filter(product => {
-            // Lọc theo slug trước
             switch (currentSlug) {
                 case 'sale':
                     return product.isPromotion
@@ -77,10 +65,14 @@ function ProductLists() {
         .sort((a, b) => {
             // Logic sắp xếp giữ nguyên
             switch (sortBy) {
-                case 'price-asc': return parsePrice(a.price) - parsePrice(b.price)
-                case 'price-desc': return parsePrice(b.price) - parsePrice(a.price)
-                case 'rating-desc': return b.rating - a.rating
-                case 'rating-asc': return a.rating - b.rating
+                case 'price-asc':
+                    return parsePrice(a.price) - parsePrice(b.price)
+                case 'price-desc':
+                    return parsePrice(b.price) - parsePrice(a.price)
+                case 'rating-desc':
+                    return b.rating - a.rating
+                case 'rating-asc':
+                    return a.rating - b.rating
                 case 'newest':
                 default:
                     return b.id - a.id
@@ -97,8 +89,12 @@ function ProductLists() {
     return (
         <div className="App">
             <div className="text-center mb-6">
-                <h2 className="text-3xl font-bold text-green-800 uppercase">{title}</h2>
-                {title && <div className="mt-2 w-24 h-1 bg-green-500 mx-auto"></div>}
+                <h2 className="text-3xl font-bold text-green-800 uppercase">
+                    {title}
+                </h2>
+                {title && (
+                    <div className="mt-2 w-24 h-1 bg-green-500 mx-auto"></div>
+                )}
             </div>
             <div className="container mx-auto space-y-6">
                 <div className="flex flex-col md:flex-row items-center justify-between gap-4">
@@ -128,7 +124,9 @@ function ProductLists() {
                         onClick={handleLoadMore}
                         className="px-6 py-2 bg-green-600 text-white font-semibold rounded-full hover:bg-green-700 transition duration-300 shadow-md"
                     >
-                        Xem thêm sản phẩm ({finalProducts.length - productsToShow} sản phẩm còn lại)
+                        Xem thêm sản phẩm (
+                        {finalProducts.length - productsToShow} sản phẩm còn
+                        lại)
                     </button>
                 </div>
             )}

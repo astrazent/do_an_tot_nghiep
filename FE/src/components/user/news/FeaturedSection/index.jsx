@@ -1,13 +1,9 @@
 //src/components/FeaturedSection.jsx
 import React from 'react'
 import { Link } from 'react-router-dom'
-
-// --- [1] ĐỊNH NGHĨA ROUTE CƠ SỞ CHO CÁC BÀI BÁO ---
-// Dễ dàng thay đổi tất cả các đường dẫn nếu cần sau này
 const BASE_ARTICLE_ROUTE = '/news-detail'
 
 const FeaturedArticleMain = ({ article }) => (
-    // --- [2] SỬ DỤNG TEMPLATE STRING ĐỂ TẠO URL ĐỘNG ---
     <Link to={`${BASE_ARTICLE_ROUTE}/${article.slug}`} className="group">
         <div className="overflow-hidden rounded-md">
             <img
@@ -24,7 +20,6 @@ const FeaturedArticleMain = ({ article }) => (
 )
 
 const FeaturedArticleSide = ({ article }) => (
-    // --- [3] ÁP DỤNG TƯƠNG TỰ CHO CÁC BÀI BÁO PHỤ ---
     <Link to={`${BASE_ARTICLE_ROUTE}/${article.slug}`} className="group">
         <div className="flex flex-col">
             <div className="w-full overflow-hidden rounded-md">

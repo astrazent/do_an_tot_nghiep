@@ -47,9 +47,9 @@ const ProductCollection = ({
                             autoplay={
                                 autoPlay
                                     ? {
-                                        delay: 4000,
-                                        disableOnInteraction: false,
-                                    }
+                                          delay: 4000,
+                                          disableOnInteraction: false,
+                                      }
                                     : false
                             }
                             loop={true}

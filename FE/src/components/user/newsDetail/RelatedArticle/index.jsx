@@ -13,7 +13,10 @@ const RelatedArticle = ({ title = 'Bài viết liên quan', articles = [] }) => 
     const totalPages = Math.ceil(articles.length / articlesPerPage)
     const indexOfLastArticle = currentPage * articlesPerPage
     const indexOfFirstArticle = indexOfLastArticle - articlesPerPage
-    const currentArticles = articles.slice(indexOfFirstArticle, indexOfLastArticle)
+    const currentArticles = articles.slice(
+        indexOfFirstArticle,
+        indexOfLastArticle
+    )
 
     // 3. Hàm để xử lý khi người dùng chuyển trang
     const handlePageChange = pageNumber => {
@@ -40,7 +43,7 @@ const RelatedArticle = ({ title = 'Bài viết liên quan', articles = [] }) => 
                             title={article.title}
                             date={article.date}
                             hoverEffect={false}
-                            imageHeight='h-40'
+                            imageHeight="h-40"
                         />
                     ))}
                 </div>

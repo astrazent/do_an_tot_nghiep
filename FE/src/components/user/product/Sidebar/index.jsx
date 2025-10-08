@@ -3,17 +3,15 @@ import { useState } from 'react'
 import { FaChevronDown, FaSearch } from 'react-icons/fa'
 import ReactSlider from 'react-slider'
 import './sidebar.scss'
-import { Link, useNavigate } from 'react-router-dom' // Import thêm useNavigate
+import { Link, useNavigate } from 'react-router-dom'
 import { slugify } from '~/utils/slugify'
 
-// Import các hình ảnh sản phẩm
 import chanVitRutXuongUXiDau from '~/assets/image/shared/product/chan-vit-rut-xuong-u-xi-dau.png'
 import pateGanVit from '~/assets/image/shared/product/pate-gan-vit.jpg'
 import gaDongTaoUMuoi from '~/assets/image/shared/product/dong-tao-u-muoi.png'
 import gaUMuoi from '~/assets/image/shared/product/ga-u-muoi.png'
 import gaUXiDau from '~/assets/image/shared/product/ga-u-xi-dau.jpg'
 
-// Import component ProductListSection từ file riêng
 import ProductListSection from '../ProductListSection'
 
 const productCategories = [
@@ -27,22 +25,20 @@ const productCategories = [
     'Các loại ruốc',
     'Thực phẩm khác',
 ]
-
-// --- Dữ liệu giả định (giữ nguyên) ---
 const hotProductsData = [
-    { 
-        id: 1, 
-        name: 'Pate gan vịt', 
-        price: '180,000 VND', 
+    {
+        id: 1,
+        name: 'Pate gan vịt',
+        price: '180,000 VND',
         imageUrl: pateGanVit,
-        slug: slugify('Pate gan vịt')
+        slug: slugify('Pate gan vịt'),
     },
     {
         id: 2,
         name: 'Gà Đông Tảo ủ muối',
         price: '350,000 VND',
         imageUrl: gaDongTaoUMuoi,
-        slug: slugify('Gà Đông Tảo ủ muối')
+        slug: slugify('Gà Đông Tảo ủ muối'),
     },
     {
         id: 3,
@@ -50,35 +46,35 @@ const hotProductsData = [
         imageUrl: gaDongTaoUMuoi,
         price: '450.000đ',
         discountPrice: '360.000đ',
-        slug: slugify('Combo Gà Đông Tảo - Sale sốc')
+        slug: slugify('Combo Gà Đông Tảo - Sale sốc'),
     },
-    { 
-        id: 4, 
-        name: 'Gà ủ xì dầu', 
-        price: '280,000 VND', 
+    {
+        id: 4,
+        name: 'Gà ủ xì dầu',
+        price: '280,000 VND',
         imageUrl: gaUXiDau,
-        slug: slugify('Gà ủ xì dầu')
+        slug: slugify('Gà ủ xì dầu'),
     },
-    { 
-        id: 5, 
-        name: 'Pate gan vịt', 
-        price: '180,000 VND', 
+    {
+        id: 5,
+        name: 'Pate gan vịt',
+        price: '180,000 VND',
         imageUrl: pateGanVit,
-        slug: slugify('Pate gan vịt')
+        slug: slugify('Pate gan vịt'),
     },
     {
         id: 6,
         name: 'Gà Đông Tảo ủ muối',
         price: '350,000 VND',
         imageUrl: gaDongTaoUMuoi,
-        slug: slugify('Gà Đông Tảo ủ muối')
+        slug: slugify('Gà Đông Tảo ủ muối'),
     },
-    { 
-        id: 7, 
-        name: 'Gà ủ xì dầu', 
-        price: '280,000 VND', 
+    {
+        id: 7,
+        name: 'Gà ủ xì dầu',
+        price: '280,000 VND',
         imageUrl: gaUXiDau,
-        slug: slugify('Gà ủ xì dầu')
+        slug: slugify('Gà ủ xì dầu'),
     },
 ]
 
@@ -88,7 +84,7 @@ const featuredProductsData = [
         name: 'Chân Vịt Rút Xương',
         price: '150,000 VND',
         imageUrl: chanVitRutXuongUXiDau,
-        slug: slugify('Chân Vịt Rút Xương')
+        slug: slugify('Chân Vịt Rút Xương'),
     },
     {
         id: 2,
@@ -96,28 +92,28 @@ const featuredProductsData = [
         imageUrl: pateGanVit,
         price: '120.000đ',
         discountPrice: '120.000đ',
-        slug: slugify('Pate gan vịt - Mua 1 tặng 1')
+        slug: slugify('Pate gan vịt - Mua 1 tặng 1'),
     },
-    { 
-        id: 3, 
-        name: 'Gà ủ muối', 
-        price: '260,000 VND', 
+    {
+        id: 3,
+        name: 'Gà ủ muối',
+        price: '260,000 VND',
         imageUrl: gaUMuoi,
-        slug: slugify('Gà ủ muối')
+        slug: slugify('Gà ủ muối'),
     },
     {
         id: 4,
         name: 'Hạt Điều Rang Củi',
         price: '250,000 VND',
         imageUrl: gaDongTaoUMuoi,
-        slug: slugify('Hạt Điều Rang Củi')
+        slug: slugify('Hạt Điều Rang Củi'),
     },
-    { 
-        id: 5, 
-        name: 'Cá Cơm Sấy Giòn', 
-        price: '95,000 VND', 
+    {
+        id: 5,
+        name: 'Cá Cơm Sấy Giòn',
+        price: '95,000 VND',
         imageUrl: gaUMuoi,
-        slug: slugify('Cá Cơm Sấy Giòn')
+        slug: slugify('Cá Cơm Sấy Giòn'),
     },
     {
         id: 6,
@@ -125,7 +121,7 @@ const featuredProductsData = [
         imageUrl: gaDongTaoUMuoi,
         price: '450.000đ',
         discountPrice: '360.000đ',
-        slug: slugify('Combo Gà Đông Tảo - Sale sốc')
+        slug: slugify('Combo Gà Đông Tảo - Sale sốc'),
     },
 ]
 
@@ -138,17 +134,12 @@ const Sidebar = ({
         isPromotion = true,
     } = {},
 } = {}) => {
-    // --- State cho các giá trị tìm kiếm ---
     const [priceValues, setPriceValues] = useState([0, 500000])
-    // Lấy danh mục đầu tiên làm giá trị mặc định
     const [selectedCategory, setSelectedCategory] = useState(
-        slugify(productCategories[0]) 
+        slugify(productCategories[0])
     )
     const navigate = useNavigate()
-
-    // --- Hàm xử lý tìm kiếm ---
     const handleSearch = () => {
-        // Tạo URL và điều hướng đến trang tìm kiếm
         const searchUrl = `/search?category=${selectedCategory}&minPrice=${priceValues[0]}&maxPrice=${priceValues[1]}`
         navigate(searchUrl)
     }
