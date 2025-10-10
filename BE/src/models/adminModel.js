@@ -75,7 +75,27 @@ const AdminsModel = {
         return rows[0] || null
     },
 
-    
+    // Lấy admin theo Username
+    async getAdminByUsername(username) {
+        const conn = getConnection()
+        const [rows] = await conn.execute(
+            `SELECT * FROM ${ADMINS_TABLE_NAME} WHERE username = ? LIMIT 1`,
+            [username]
+        )
+        return rows[0] || null
+    },
+
+    // Lấy admin theo Email
+    async getAdminByEmail(email) {
+        const conn = getConnection()
+        const [rows] = await conn.execute(
+            `SELECT * FROM ${ADMINS_TABLE_NAME} WHERE email = ? LIMIT 1`,
+            [email]
+        )
+        return rows[0] || null
+    },
+
+    // Cập nhật admin theo ID
     async updateAdmin(id, data) {
         const schema = ADMINS_SCHEMA.fork(
             Object.keys(ADMINS_SCHEMA.describe().keys),

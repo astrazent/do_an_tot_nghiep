@@ -7,6 +7,7 @@ import { env } from '~/config/environment.js'
 import { APIs_V1 } from '~/routes/index.js'
 import { APIs_V2 } from '~/routes/index.js'
 import { errorHandlingMiddleware } from './middlewares/errorHandling'
+import orderRoutes from './routes/v1/orderDetailRoutes.js'
 
 const START_SERVER = () => {
     const app = express()
@@ -31,6 +32,7 @@ const START_SERVER = () => {
     
     app.use('/v1', APIs_V1)
     app.use('/v2', APIs_V2)
+    // app.get('/orders', orderRoutes)
 
     
     app.use(errorHandlingMiddleware)
