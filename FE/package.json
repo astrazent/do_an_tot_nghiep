@@ -28,6 +28,7 @@
         "react-router-dom": "^7.9.3",
         "react-slider": "^2.0.6",
         "react-sticky-box": "^2.0.5",
+        "recharts": "^3.2.1",
         "swiper": "^12.0.2"
     },
     "devDependencies": {

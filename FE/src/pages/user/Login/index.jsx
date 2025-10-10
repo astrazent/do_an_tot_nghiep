@@ -1,4 +1,3 @@
-//src/pages/User/Login.jsx
 import React from 'react'
 import LoginForm from '~/components/user/auth/LoginForm'
 import AuthTheme from '~/components/user/auth/AuthTheme'

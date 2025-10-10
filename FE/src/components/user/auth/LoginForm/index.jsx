@@ -3,14 +3,14 @@ import Button from '~/components/shared/Button'
 import InputField from '~/components/shared/InputField'
 import './loginForm.scss'
 
-//Import icons
+// Import icons
 import { FcGoogle } from 'react-icons/fc'
 import { FaApple } from 'react-icons/fa'
 import { HiOutlineMail } from 'react-icons/hi'
 import { RiLockPasswordLine } from 'react-icons/ri'
 import { AiOutlineEyeInvisible } from 'react-icons/ai'
 
-const LoginForm = () => {
+const LoginForm = ({ isAdmin = false }) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
@@ -33,7 +33,7 @@ const LoginForm = () => {
                     type="email"
                     placeholder="Địa chỉ email"
                     value={email}
-                    onChange={e => setEmail(e.targe.value)}
+                    onChange={e => setEmail(e.target.value)}
                     icon={<HiOutlineMail />}
                     required
                 />
@@ -56,9 +56,11 @@ const LoginForm = () => {
                 </Button>
             </form>
 
-            <p className="signup-link">
-                Chưa có tài khoản? <a href="#">Đăng kí ngay</a>
-            </p>
+            {!isAdmin && (
+                <p className="signup-link">
+                    Chưa có tài khoản? <a href="#">Đăng kí ngay</a>
+                </p>
+            )}
         </div>
     )
 }
