@@ -2,6 +2,7 @@ import React from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination, Autoplay } from 'swiper/modules'
 import ProductCard from '~/components/shared/ProductCard'
+import { Link } from 'react-router-dom'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
@@ -46,9 +47,9 @@ const ProductCollection = ({
                             autoplay={
                                 autoPlay
                                     ? {
-                                        delay: 4000,
-                                        disableOnInteraction: false,
-                                    }
+                                          delay: 4000,
+                                          disableOnInteraction: false,
+                                      }
                                     : false
                             }
                             loop={true}
@@ -73,15 +74,22 @@ const ProductCollection = ({
                             {products.map(product => (
                                 <SwiperSlide key={product.id}>
                                     <div className="flex justify-center items-center h-full">
-                                        <ProductCard
-                                            image={product.image}
-                                            name={product.name}
-                                            price={product.price}
-                                            oldPrice={product.oldPrice}
-                                            ocop={product.ocop}
-                                            rating={product.rating}
-                                            reviewCount={product.reviewCount}
-                                        />
+                                        <Link
+                                            to={`/product/${product.id}`}
+                                            className="block w-full" // block để cả card có thể click
+                                        >
+                                            <ProductCard
+                                                image={product.image}
+                                                name={product.name}
+                                                price={product.price}
+                                                oldPrice={product.oldPrice}
+                                                ocop={product.ocop}
+                                                rating={product.rating}
+                                                reviewCount={
+                                                    product.reviewCount
+                                                }
+                                            />
+                                        </Link>
                                     </div>
                                 </SwiperSlide>
                             ))}

@@ -6,7 +6,7 @@ import { useAlert } from '~/contexts/AlertContext'
 import { updateUser } from '~/Redux/reducers/userReducer'
 import './loginForm.scss'
 
-//Import icons
+// Import icons
 import { FcGoogle } from 'react-icons/fc'
 import { FaApple } from 'react-icons/fa'
 import { HiOutlineUser } from 'react-icons/hi'

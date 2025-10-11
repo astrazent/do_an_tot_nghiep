@@ -1,6 +1,8 @@
 import React from 'react'
+import { Link } from 'react-router-dom' // BƯỚC 1: Import Link
 
 const ProductListSection = ({ title, products, isPromotion = false }) => {
+    // Logic kiểm tra props không thay đổi
     if (!title || !products || products.length === 0) return null
 
     return (
@@ -10,10 +12,11 @@ const ProductListSection = ({ title, products, isPromotion = false }) => {
             </h3>
             <div className="mt-4 space-y-4">
                 {products.map(product => (
-                    <a
-                        href="#"
+                    // BƯỚC 2: Thay thế <a> bằng <Link> và href bằng to
+                    <Link
+                        to={product.slug ? `/product/${product.slug}` : '#'} // Sử dụng href từ dữ liệu sản phẩm
                         key={product.id}
-                        className="flex items-center gap-4 p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                        className="flex items-center gap-4 p-2 rounded-lg hover:bg-gray-100 transition-colors group"
                     >
                         <img
                             src={product.imageUrl}
@@ -21,7 +24,7 @@ const ProductListSection = ({ title, products, isPromotion = false }) => {
                             className="w-16 h-16 rounded-md object-cover flex-shrink-0"
                         />
                         <div className="flex-1 min-w-0">
-                            <h5 className="text-sm font-semibold text-gray-800 truncate">
+                            <h5 className="text-sm font-semibold text-gray-800 truncate group-hover:text-green-700 transition-colors">
                                 {product.name}
                             </h5>
 
@@ -40,7 +43,7 @@ const ProductListSection = ({ title, products, isPromotion = false }) => {
                                 </p>
                             )}
                         </div>
-                    </a>
+                    </Link>
                 ))}
             </div>
         </div>

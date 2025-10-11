@@ -41,7 +41,7 @@ function NavigationBar() {
                     </li>
                     <li className="relative group">
                         <NavLink
-                            to="/san-pham"
+                            to="/category/all"
                             className={getProductNavLinkClass}
                         >
                             SẢN PHẨM
@@ -88,7 +88,7 @@ function NavigationBar() {
                     </li>
                 </ul>
                 <NavLink
-                    to="/sale"
+                    to="/category/sale"
                     className={({ isActive }) =>
                         isActive
                             ? 'font-semibold relative mr-10 text-orange-400 transition-colors duration-300'

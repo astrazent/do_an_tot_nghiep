@@ -1,8 +1,13 @@
-//src/components/ArticleList.jsx
 import React from 'react'
+import { Link } from 'react-router-dom'
+
+const BASE_ARTICLE_ROUTE = '/news-detail'
 
 const ArticleListItem = ({ article }) => (
-    <div className="group grid grid-cols-1 md:grid-cols-3 gap-6 items-center cursor-pointer">
+    <Link
+        to={`${BASE_ARTICLE_ROUTE}/${article.slug}`}
+        className="group grid grid-cols-1 md:grid-cols-3 gap-6 items-center"
+    >
         <div className="overflow-hidden rounded-md h-[150px]">
             <img
                 src={article.imageUrl}
@@ -25,7 +30,7 @@ const ArticleListItem = ({ article }) => (
                 {article.summary}
             </p>
         </div>
-    </div>
+    </Link>
 )
 
 const ArticleList = ({ articles }) => {

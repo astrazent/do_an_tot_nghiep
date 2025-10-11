@@ -437,51 +437,59 @@ const articlesData = [
         title: 'Tại Sao Nên Mua Gà Ủ Muối Tại Bếp Sạch Việt?',
         date: '25/09/2025',
         image: news1,
+        slug: 'tai-sao-nen-mua-ga-u-muoi-tai-bep-sach-viet-1',
     },
     {
         id: 2,
         title: '5 lý do tại Sao Bạn Nên Chọn Mua Chả Vịt Từ Bếp Sạch Việt?',
         date: '24/09/2025',
         image: news2,
+        slug: '5-ly-do-tai-sao-ban-nen-chon-mua-cha-vit-tu-bep-sach-viet-2',
     },
     {
         id: 3,
         title: 'Ăn Uống Lành Mạnh Với Hạt Và Trái Cây Sấy – Bí Quyết Dinh Dưỡng Từ Bếp Sạch Việt',
         date: '23/09/2025',
         image: news3,
+        slug: 'an-uong-lanh-manh-voi-hat-va-trai-cay-say-bi-quyet-dinh-duong-tu-bep-sach-viet-3',
     },
     {
         id: 4,
         title: 'Hành trình gìn giữ hương vị Việt cùng Bếp sạch Việt',
         date: '22/09/2025',
         image: news4,
+        slug: 'hanh-trinh-gin-giu-huong-vi-viet-cung-bep-sach-viet-4',
     },
     {
         id: 5,
         title: 'Chả vịt Thúy Mạnh được tôn vinh Thương hiệu Vàng nông nghiệp Việt Nam năm 2023',
         date: '19/09/2025',
         image: news5,
+        slug: 'cha-vit-thuy-manh-duoc-ton-vinh-thuong-hieu-vang-nong-nghiep-viet-nam-2023-5',
     },
     {
         id: 6,
         title: 'Festival nông sản Hà nội lần 2 tại Ứng Hòa',
         date: '18/09/2025',
         image: news6,
+        slug: 'festival-nong-san-ha-noi-lan-2-tai-ung-hoa-6',
     },
     {
         id: 7,
         title: 'Món mới: Chả chân vịt Thúy Mạnh',
         date: '17/09/2025',
         image: news7,
+        slug: 'mon-moi-cha-chan-vit-thuy-manh-7',
     },
     {
         id: 8,
         title: 'Mọc vịt – một đặc sản khác của Vân Đình chưa nhiều người biết đến',
         date: '16/09/2025',
         image: news8,
+        slug: 'moc-vit-mot-dac-san-khac-cua-van-dinh-chua-nhieu-nguoi-biet-den-8',
     },
 ]
-const home = () => {
+const Home = () => {
     const [currentPage, setCurrentPage] = useState(1)
     const articlesPerPage = 8
     const totalPages = Math.ceil(articlesData.length / articlesPerPage)
@@ -540,4 +548,4 @@ const home = () => {
     )
 }
 
-export default home
+export default Home

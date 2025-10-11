@@ -1,5 +1,5 @@
-//src/components/HotTopics.jsx
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination, Autoplay } from 'swiper/modules'
 import 'swiper/css'
@@ -7,8 +7,10 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import './hotTopic.scss'
 
+const BASE_ARTICLE_ROUTE = '/news-detail'
+
 const HotTopicItem = ({ article }) => (
-    <div className="group cursor-pointer">
+    <Link to={`${BASE_ARTICLE_ROUTE}/${article.slug}`} className="group">
         <div className="overflow-hidden rounded-md">
             <img
                 src={article.imageUrl}
@@ -19,7 +21,7 @@ const HotTopicItem = ({ article }) => (
         <h3 className="mt-2 font-bold text-gray-800 group-hover:text-green-600">
             {article.title}
         </h3>
-    </div>
+    </Link>
 )
 
 const HotTopic = ({ articles }) => {

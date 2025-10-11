@@ -28,8 +28,6 @@ import nemLuiNhaTrang from '~/assets/image/shared/product/nem-lui-nha-trang.jpg'
 import xucXichCom from '~/assets/image/shared/product/xuc-xich-com.png'
 //Nhóm Heo & Đặc sản khác
 import chanGioGiaCay from '~/assets/image/shared/product/chan-gio-gia-cay.jpg'
-import khauNhucLangSon from '~/assets/image/shared/product/khau-nhuc-lang-son.jpg'
-import taiHeoUMuoi from '~/assets/image/shared/product/tai-heo-u-muoi.png'
 import taiHeoUXiDau from '~/assets/image/shared/product/tai-heo-u-xi-dau.png'
 import taiHeoUTuong from '~/assets/image/shared/product/tai-heo-u-tuong.png'
 
@@ -43,8 +41,8 @@ const articles = [
         category: 'Gà, Vịt',
         timestamp: '1 giờ trước',
         type: 'featured_main',
+        slug: 'dac-san-van-dinh-vit-u-xi-dau',
     },
-
     {
         id: 2,
         title: 'Đặc Sản Vân Đình Chả Vịt Thủy Mãn',
@@ -53,6 +51,7 @@ const articles = [
         category: 'Gà, Vịt',
         timestamp: '2 giờ trước',
         type: 'featured_side',
+        slug: 'dac-san-van-dinh-cha-vit-thuy-man',
     },
     {
         id: 3,
@@ -63,6 +62,7 @@ const articles = [
         category: 'Gà, Vịt',
         timestamp: '3 giờ trước',
         type: 'featured_side',
+        slug: 'dac-san-moc-vit-van-dinh',
     },
     {
         id: 4,
@@ -73,6 +73,7 @@ const articles = [
         category: 'Gà, Vịt',
         timestamp: '4 giờ trước',
         type: 'hot_topic',
+        slug: 'chan-vit-rut-xuong-u-muoi',
     },
     {
         id: 5,
@@ -82,6 +83,7 @@ const articles = [
         category: 'Gà, Vịt',
         timestamp: '5 giờ trước',
         type: 'hot_topic',
+        slug: 'chan-vit-rut-xuong-u-xi-dau',
     },
     {
         id: 6,
@@ -91,6 +93,7 @@ const articles = [
         category: 'Gà, Vịt',
         timestamp: '6 giờ trước',
         type: 'hot_topic',
+        slug: 'pate-gan-vit',
     },
     {
         id: 7,
@@ -101,6 +104,7 @@ const articles = [
         category: 'Gà, Vịt',
         timestamp: '7 giờ trước',
         type: 'list_item',
+        slug: 'ga-dong-tao-u-muoi',
     },
     {
         id: 8,
@@ -110,6 +114,7 @@ const articles = [
         category: 'Gà, Vịt',
         timestamp: '8 giờ trước',
         type: 'list_item',
+        slug: 'ga-u-muoi',
     },
     {
         id: 9,
@@ -119,6 +124,7 @@ const articles = [
         category: 'Gà, Vịt',
         timestamp: '9 giờ trước',
         type: 'list_item',
+        slug: 'ga-u-xi-dau',
     },
     {
         id: 10,
@@ -128,6 +134,7 @@ const articles = [
         category: 'Chả & Nem',
         timestamp: '10 giờ trước',
         type: 'hot_topic',
+        slug: 'dac-san-cha-chan-vit',
     },
     {
         id: 11,
@@ -137,6 +144,7 @@ const articles = [
         category: 'Chả & Nem',
         timestamp: '11 giờ trước',
         type: 'list_item',
+        slug: 'cha-ca-thac-lac-tuoi',
     },
     {
         id: 12,
@@ -146,6 +154,7 @@ const articles = [
         category: 'Chả & Nem',
         timestamp: '12 giờ trước',
         type: 'list_item',
+        slug: 'cha-ca-thac-lac-hau-giang',
     },
     {
         id: 13,
@@ -156,6 +165,7 @@ const articles = [
         category: 'Chả & Nem',
         timestamp: '13 giờ trước',
         type: 'list_item',
+        slug: 'cha-ca-thac-lac-tuoi-tam-gia-vi',
     },
     {
         id: 14,
@@ -165,6 +175,7 @@ const articles = [
         category: 'Chả & Nem',
         timestamp: '14 giờ trước',
         type: 'hot_topic',
+        slug: 'dac-san-cha-chia-hai-phong',
     },
     {
         id: 15,
@@ -174,6 +185,7 @@ const articles = [
         category: 'Chả & Nem',
         timestamp: '15 giờ trước',
         type: 'list_item',
+        slug: 'dac-san-cha-com-ha-noi',
     },
     {
         id: 16,
@@ -183,6 +195,7 @@ const articles = [
         category: 'Chả & Nem',
         timestamp: '16 giờ trước',
         type: 'list_item',
+        slug: 'dac-san-cha-oc',
     },
     {
         id: 17,
@@ -193,6 +206,7 @@ const articles = [
         category: 'Chả & Nem',
         timestamp: '17 giờ trước',
         type: 'list_item',
+        slug: 'dac-san-cha-sun',
     },
     {
         id: 18,
@@ -202,6 +216,7 @@ const articles = [
         category: 'Chả & Nem',
         timestamp: '18 giờ trước',
         type: 'hot_topic',
+        slug: 'moc-oc',
     },
     {
         id: 19,
@@ -212,6 +227,7 @@ const articles = [
         category: 'Chả & Nem',
         timestamp: '19 giờ trước',
         type: 'list_item',
+        slug: 'nem-ha-noi',
     },
     {
         id: 20,
@@ -221,6 +237,7 @@ const articles = [
         category: 'Chả & Nem',
         timestamp: '20 giờ trước',
         type: 'list_item',
+        slug: 'nem-lui-nha-trang',
     },
     {
         id: 21,
@@ -231,6 +248,7 @@ const articles = [
         category: 'Chả & Nem',
         timestamp: '21 giờ trước',
         type: 'list_item',
+        slug: 'xuc-xich-com',
     },
     {
         id: 22,
@@ -240,6 +258,7 @@ const articles = [
         category: 'Heo & Đặc sản khác',
         timestamp: '22 giờ trước',
         type: 'featured_main',
+        slug: 'chan-gio-gia-cay',
     },
     {
         id: 25,
@@ -249,6 +268,7 @@ const articles = [
         category: 'Heo & Đặc sản khác',
         timestamp: '1 ngày trước',
         type: 'hot_topic',
+        slug: 'tai-heo-u-xi-dau',
     },
     {
         id: 26,
@@ -258,6 +278,7 @@ const articles = [
         category: 'Heo & Đặc sản khác',
         timestamp: '1 ngày trước',
         type: 'hot_topic',
+        slug: 'tai-heo-u-tuong',
     },
 ]
 

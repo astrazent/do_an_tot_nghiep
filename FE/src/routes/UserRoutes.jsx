@@ -13,8 +13,16 @@ import UserSidebar from '~/components/user/profile/UserSidebar'
 import News from '~/pages/user/News'
 import RightSidebar from '~/components/user/news/RightSidebar'
 import TestAlert from '~/pages/user/TestAlert'
+import NewsDetail from '~/pages/user/NewsDetail'
+import Category from '~/pages/user/Category'
+import SearchPage from '~/pages/user/SearchPage'
 
 function ProtectedRoute({ children }) {
+    // Thêm logic kiểm tra xác thực người dùng ở đây
+    // Ví dụ: const isAuthenticated = checkUserAuthentication();
+    // if (!isAuthenticated) {
+    //     return <Navigate to="/login" />
+    // }
     return children
 }
 
@@ -32,7 +40,6 @@ function UserProtectedLayout() {
 //User routes
 export const userRoutes = [
     { path: '/', element: <Home /> },
-
     {
         element: <MainLayout />,
         children: [
@@ -40,13 +47,13 @@ export const userRoutes = [
             { path: '/test-alert', element: <TestAlert /> },
         ],
     },
-
     {
         element: <SidebarLayout />,
-
         children: [
-            { path: '/product', element: <Product /> },
+            { path: '/product/:slug', element: <Product /> },
+            { path: '/category/:slug', element: <Category /> },
             { path: '/about', element: <About /> },
+            { path: '/search', element: <SearchPage /> },
         ],
     },
     {
@@ -65,12 +72,13 @@ export const userRoutes = [
                 }}
             />
         ),
-        children: [{ path: '/news', element: <News /> }],
+        children: [
+            { path: '/news', element: <News /> },
+            { path: '/news-detail/:slug', element: <NewsDetail /> },
+        ],
     },
-
     { path: '/login', element: <Login /> },
     { path: '/register', element: <Register /> },
-
     {
         path: '/user',
         element: <UserProtectedLayout />,

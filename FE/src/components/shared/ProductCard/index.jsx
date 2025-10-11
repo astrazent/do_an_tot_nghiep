@@ -1,5 +1,6 @@
 import React from 'react'
-//BƯỚC 2.1: Import các icon cần thiết từ thư viện react-icons
+import { Link } from 'react-router-dom' // Bonus: Import Link để điều hướng
+import { useAlert } from '~/contexts/AlertContext' // 1. Import hook useAlert
 import { FaShoppingCart } from 'react-icons/fa'
 import { BsStarFill, BsStar } from 'react-icons/bs'
 import ocop3Star from '~/assets/icon/ocop/ocop-3-star.png'
@@ -15,8 +16,11 @@ const ProductCard = ({
     ocop,
     rating = 0,
     reviewCount = 0,
+    slug, // Bonus: Thêm slug để tạo link
 }) => {
     const dispatch = useDispatch()
+    // 2. Lấy hàm showAlert từ context
+    const { showAlert } = useAlert()
 
     const ocopMap = {
         3: ocop3Star,
@@ -26,10 +30,11 @@ const ProductCard = ({
 
     const stars = Array.from({ length: 5 }, (_, index) => {
         const starNumber = index + 1
-        if (starNumber <= rating) {
-            return <BsStarFill key={index} className="text-yellow-400" />
-        }
-        return <BsStar key={index} className="text-gray-300" />
+        return starNumber <= rating ? (
+            <BsStarFill key={index} className="text-yellow-400" />
+        ) : (
+            <BsStar key={index} className="text-gray-300" />
+        )
     })
 
     let discountPercent = 0
@@ -41,18 +46,25 @@ const ProductCard = ({
         }
     }
 
-    const handleAddCart = () => {
-        const cartItem = {
-            name: name,
-            image: image,
-            amount: 1,
-            price: price
-        }
-        dispatch(cartUserReducer.addCart(cartItem))
+    // 3. Tạo hàm xử lý sự kiện click
+    const handleAddToCart = e => {
+        // Ngăn sự kiện click lan ra thẻ Link cha, tránh việc chuyển trang
+        e.preventDefault()
+        e.stopPropagation()
+
+        // Gọi hàm hiển thị thông báo
+        showAlert('Sản phẩm đã được thêm vào Giỏ hàng', { type: 'success' })
+
+        // (Tùy chọn) Thêm logic xử lý thêm vào giỏ hàng thật ở đây
+        // console.log(`Đã thêm sản phẩm "${name}" vào giỏ hàng.`)
     }
 
     return (
-        <div className="relative w-56 h-96 flex flex-col bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow p-3 font-sans border border-gray-100">
+        // Bonus: Bọc toàn bộ thẻ bằng Link
+        <Link
+            to={`/product/${slug}`}
+            className="block relative w-56 h-96 flex flex-col bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow p-3 font-sans border border-gray-100"
+        >
             <div className="w-full h-48 mb-2">
                 <img
                     src={image}
@@ -84,11 +96,12 @@ const ProductCard = ({
                         </span>
                     )}
                 </div>
+                {/* 4. Gắn hàm handleAddToCart vào sự kiện onClick của button */}
                 <button
-                    className="group bg-gray-100 rounded-full flex items-center justify-center
+                    onClick={handleAddToCart}
+                    className="group bg-gray-100 rounded-full flex items-center justify-center p-2
                             hover:bg-green-600 transition-colors focus:outline-none focus:ring-2 focus:ring-green-400"
                     aria-label="Thêm vào giỏ hàng"
-                    onClick={handleAddCart}
                 >
                     <FaShoppingCart
                         size={18}
@@ -104,17 +117,17 @@ const ProductCard = ({
                     </span>
                 </div>
                 <div className="flex items-center gap-2 text-xs text-gray-500 mt-1 min-h-[20px]">
-                    {oldPrice && discountPercent > 0 ? (
+                    {oldPrice && discountPercent > 0 && (
                         <>
                             <span className="bg-gray-100 rounded px-1 py-0.5 border border-gray-200">
                                 -{discountPercent}%
                             </span>
                             <span className="line-through">{oldPrice}</span>
                         </>
-                    ) : null}
+                    )}
                 </div>
             </div>
-        </div>
+        </Link>
     )
 }
 

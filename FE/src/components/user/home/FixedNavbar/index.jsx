@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
+import { Link, NavLink } from 'react-router-dom'
 import logo from '~/assets/icon/logo/brand-logo.png'
 import { FaShoppingCart, FaUserCircle, FaChevronDown } from 'react-icons/fa'
+import { slugify } from '~/utils/slugify'
 
 const FixedNavbar = ({ login = true }) => {
     const [isVisible, setIsVisible] = useState(false)
@@ -11,7 +13,6 @@ const FixedNavbar = ({ login = true }) => {
         const handleScroll = () => {
             setIsVisible(window.scrollY > 200)
         }
-
         window.addEventListener('scroll', handleScroll)
         return () => window.removeEventListener('scroll', handleScroll)
     }, [])
@@ -21,25 +22,28 @@ const FixedNavbar = ({ login = true }) => {
     }
 
     const productMenuItems = [
-        { id: 1, name: 'Sản phẩm từ Vịt', href: '#' },
-        { id: 2, name: 'Sản phẩm từ Gà', href: '#' },
-        { id: 3, name: 'Các loại hạt', href: '#' },
-        { id: 4, name: 'Sản phẩm từ heo', href: '#' },
-        { id: 5, name: 'Sản phẩm từ cá', href: '#' },
-        { id: 6, name: 'Sản phẩm từ ngan', href: '#' },
-        { id: 7, name: 'Hải sản', href: '#' },
-        { id: 8, name: 'Các loại ruốc', href: '#' },
-        { id: 9, name: 'Thực phẩm khác', href: '#' },
-    ]
+        { id: 1, name: 'Sản phẩm từ Vịt' },
+        { id: 2, name: 'Sản phẩm từ Gà' },
+        { id: 3, name: 'Các loại hạt' },
+        { id: 4, name: 'Sản phẩm từ heo' },
+        { id: 5, name: 'Sản phẩm từ cá' },
+        { id: 6, name: 'Sản phẩm từ ngan' },
+        { id: 7, name: 'Hải sản' },
+        { id: 8, name: 'Các loại ruốc' },
+        { id: 9, name: 'Thực phẩm khác' },
+    ].map(item => ({
+        ...item,
+        href: `/search?category=${slugify(item.name)}`,
+    }))
+
     const userMenuItems = [
         { id: 'profile', name: 'Tài khoản của tôi', href: '/user/profile' },
         { id: 'orders', name: 'Lịch sử đơn hàng', href: '/user/orders' },
-        {
-            id: 'logout',
-            name: 'Đăng xuất',
-            isButton: true,
-        },
+        { id: 'logout', name: 'Đăng xuất', isButton: true },
     ]
+
+    const getNavLinkClass = ({ isActive }) =>
+        `py-2 transition-colors ${isActive ? 'text-green-600' : 'text-gray-700 hover:text-green-600'}`
 
     return (
         <nav
@@ -48,28 +52,22 @@ const FixedNavbar = ({ login = true }) => {
             <div className="container mx-auto px-20 py-3">
                 <div className="flex justify-between items-center">
                     <div className="flex-shrink-0">
-                        <a href="#">
+                        <Link to="/">
                             <img src={logo} alt="tab farm" className="h-12" />
-                        </a>
+                        </Link>
                     </div>
 
                     <div className="flex-grow">
                         <ul className="flex items-center justify-center font-semibold space-x-8">
                             <li>
-                                <a
-                                    href="#"
-                                    className="text-gray-700 hover:text-green-600 py-2 transition-colors"
-                                >
+                                <NavLink to="/" className={getNavLinkClass} end>
                                     TRANG CHỦ
-                                </a>
+                                </NavLink>
                             </li>
                             <li>
-                                <a
-                                    href="#"
-                                    className="text-gray-700 hover:text-green-600 py-2 transition-colors"
-                                >
+                                <NavLink to="/" className={getNavLinkClass}>
                                     GIỚI THIỆU
-                                </a>
+                                </NavLink>
                             </li>
 
                             <div
@@ -77,18 +75,11 @@ const FixedNavbar = ({ login = true }) => {
                                 onMouseEnter={() => setIsProductMenuOpen(true)}
                                 onMouseLeave={() => setIsProductMenuOpen(false)}
                             >
-                                <div
-                                    className={isProductMenuOpen ? 'pb-0' : ''}
-                                >
-                                    <a
-                                        href="#"
-                                        className="flex items-center gap-1 text-gray-700 hover:text-green-600 py-2 transition-colors"
-                                    >
-                                        SẢN PHẨM
-                                        <FaChevronDown
-                                            className={`h-3 w-3 transition-transform duration-300 ${isProductMenuOpen ? 'rotate-180' : ''}`}
-                                        />
-                                    </a>
+                                <div className="flex items-center gap-1 text-gray-700 hover:text-green-600 py-2 transition-colors cursor-pointer">
+                                    SẢN PHẨM
+                                    <FaChevronDown
+                                        className={`h-3 w-3 transition-transform duration-300 ${isProductMenuOpen ? 'rotate-180' : ''}`}
+                                    />
                                 </div>
                                 <ul
                                     className={`
@@ -101,62 +92,55 @@ const FixedNavbar = ({ login = true }) => {
                                 >
                                     {productMenuItems.map(item => (
                                         <li key={item.id}>
-                                            <a
-                                                href={item.href}
+                                            <Link
+                                                to={item.href}
                                                 className="block px-5 py-3 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200"
                                             >
                                                 {item.name}
-                                            </a>
+                                            </Link>
                                         </li>
                                     ))}
                                 </ul>
                             </div>
 
                             <li>
-                                <a
-                                    href="#"
-                                    className="text-gray-700 hover:text-green-600 py-2 transition-colors"
-                                >
+                                <NavLink to="/news" className={getNavLinkClass}>
                                     TIN TỨC
-                                </a>
+                                </NavLink>
                             </li>
                             <li>
-                                <a
-                                    href="#"
-                                    className="text-gray-700 hover:text-green-600 py-2 transition-colors"
-                                >
+                                <NavLink to="/" className={getNavLinkClass}>
                                     TUYỂN DỤNG
-                                </a>
+                                </NavLink>
                             </li>
                             <li>
-                                <a
-                                    href="#"
-                                    className="text-gray-700 hover:text-green-600 py-2 transition-colors"
-                                >
+                                <NavLink to="/" className={getNavLinkClass}>
                                     LIÊN HỆ
-                                </a>
+                                </NavLink>
                             </li>
 
                             {login && (
                                 <li>
-                                    <a
-                                        href="#"
-                                        className="text-green-600 hover:text-red-600 font-bold py-2 transition-colors"
+                                    <NavLink
+                                        to="/category/sale"
+                                        className={({ isActive }) =>
+                                            `font-bold py-2 transition-colors ${isActive ? 'text-red-600' : 'text-green-600 hover:text-red-600'}`
+                                        }
                                     >
                                         KHUYẾN MÃI
-                                    </a>
+                                    </NavLink>
                                 </li>
                             )}
                         </ul>
                     </div>
 
                     <div className="flex items-center space-x-12">
-                        <a href="#" className="relative">
+                        <Link to="/cart" className="relative">
                             <FaShoppingCart className="text-xl text-gray-600 hover:text-green-600 transition-colors" />
                             <span className="absolute -top-2 -right-2 bg-green-600 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
                                 0
                             </span>
-                        </a>
+                        </Link>
 
                         {login ? (
                             <div
@@ -169,14 +153,13 @@ const FixedNavbar = ({ login = true }) => {
                                         className={`text-2xl transition-colors duration-300 ${isUserMenuOpen ? 'text-green-600' : 'text-gray-600'}`}
                                     />
                                 </div>
-
                                 <div
                                     className={`
-                            absolute top-full -right-3 w-56 z-10
-                            origin-top-right rounded-md bg-white shadow-lg border border-gray-200/75
-                            transition-all duration-300 ease-in-out
-                            ${isUserMenuOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}
-                        `}
+                                        absolute top-full -right-3 w-56 z-10
+                                        origin-top-right rounded-md bg-white shadow-lg border border-gray-200/75
+                                        transition-all duration-300 ease-in-out
+                                        ${isUserMenuOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}
+                                    `}
                                 >
                                     <ul className="divide-y divide-gray-100">
                                         {userMenuItems.map(item => (
@@ -189,12 +172,12 @@ const FixedNavbar = ({ login = true }) => {
                                                         {item.name}
                                                     </button>
                                                 ) : (
-                                                    <a
-                                                        href={item.href}
+                                                    <Link
+                                                        to={item.href}
                                                         className="block px-4 py-3 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200"
                                                     >
                                                         {item.name}
-                                                    </a>
+                                                    </Link>
                                                 )}
                                             </li>
                                         ))}
@@ -202,9 +185,12 @@ const FixedNavbar = ({ login = true }) => {
                                 </div>
                             </div>
                         ) : (
-                            <button className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg transition-colors font-semibold">
+                            <Link
+                                to="/search"
+                                className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg transition-colors font-semibold"
+                            >
                                 ĐẶT HÀNG NGAY
-                            </button>
+                            </Link>
                         )}
                     </div>
                 </div>
