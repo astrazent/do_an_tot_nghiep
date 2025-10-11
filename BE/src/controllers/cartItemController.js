@@ -1,5 +1,6 @@
 import { cartItemService } from '~/services/cartItemService.js'
 import { StatusCodes } from 'http-status-codes'
+import ErrorService from '../utils/ErrorServer.js'
 import jwt from 'jsonwebtoken'
 
 const getCartItems = async (req, res, next) => {
@@ -18,7 +19,7 @@ const getCartItems = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return next(error)
+        return ErrorService(err,next)
     }
 }
 
@@ -36,7 +37,7 @@ const addCartItems = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return next(error)
+        return ErrorService(err,next)
     }
 }
 
@@ -52,7 +53,7 @@ const updateQuantityCartItems = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return next(error)
+        return ErrorService(err,next)
     }
 }
 
@@ -66,7 +67,7 @@ const deleteCartItems = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return next(error)
+        return ErrorService(err,next)
     }
 }
 

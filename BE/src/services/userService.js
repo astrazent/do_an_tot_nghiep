@@ -13,9 +13,7 @@ export const registerService = async payload => {
         throw new ApiError(StatusCodes.CONFLICT, 'Email đã tồn tại')
     }
 
-    const existedPhone = await UsersModel.findUserByPhone(
-        payload.phone
-    )
+    const existedPhone = await UsersModel.findUserByPhone(payload.phone)
     if (existedPhone) {
         throw new ApiError(StatusCodes.CONFLICT, 'Số điện thoại đã tồn tại')
     }
@@ -37,7 +35,14 @@ export const registerService = async payload => {
         full_name: payload.full_name,
     })
 
-    const token = jwt.sign({ username: userData.username, userId: userData.id, full_name: userData.full_name  }, env.JWT_SECRET || "bepsachviet123")
+    const token = jwt.sign(
+        {
+            username: userData.username,
+            userId: userData.id,
+            full_name: userData.full_name,
+        },
+        env.JWT_SECRET || 'bepsachviet123'
+    )
 
     await UsersModel.updateUser(userData.id, { token: token })
     userData.token = token
@@ -62,4 +67,56 @@ const loginService = async payload => {
 
     return user
 }
-export const userService = { registerService, loginService }
+
+const getByIdUserService = async data => {
+    const user = await UsersModel.getUserById(data.userId)
+
+    if(!user) {
+        throw new ApiError(StatusCodes.NOT_FOUND, 'Không tìm thấy user')
+    }
+
+    return user
+}
+
+const getListUserService = async data => {
+    const listUser = await UsersModel.listUsers(data.limit, data.offset)
+
+    if(!listUser) {
+        throw new ApiError(StatusCodes.NOT_FOUND, 'Không tìm thấy user nào')
+    }
+
+    return listUser
+}
+
+const updateUserService = async (userId, data) => {
+    const user = await UsersModel.getUserById(userId)
+
+    if(!user) {
+        throw new ApiError(StatusCodes.NOT_FOUND, 'Không tìm thấy user')
+    }
+
+    const newUpdate = await UsersModel.updateUser(userId, data)
+
+    return newUpdate
+    
+}
+
+const deleteUserService = async userId => {
+    const user = await UsersModel.getUserById(userId)
+
+    if(!user) {
+        throw new ApiError(StatusCodes.NOT_FOUND, 'Không tìm thấy user')
+    }
+    
+    await UsersModel.deleteUser(userId)
+
+    return ({message: "Xóa user thành công"})
+}
+export const userService = {
+    registerService,
+    loginService,
+    getByIdUserService,
+    getListUserService,
+    updateUserService,
+    deleteUserService,
+}

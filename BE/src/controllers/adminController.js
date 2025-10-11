@@ -1,5 +1,6 @@
 import { adminService } from '~/services/adminService'
 import { StatusCodes } from 'http-status-codes'
+import ErrorService from '../utils/ErrorServer.js'
 
 const addAmin = async (req, res, next) => {
     try {
@@ -9,7 +10,7 @@ const addAmin = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return next(error)
+        return ErrorService(err,next)
     }
 }
 
@@ -29,7 +30,7 @@ const loginAmin = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return next(error)
+        return ErrorService(err,next)
     }
 }
 

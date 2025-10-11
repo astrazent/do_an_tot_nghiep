@@ -1,5 +1,6 @@
 import { StatusCodes } from 'http-status-codes'
 import { shipmentService } from '~/services/shipmentService'
+import ErrorService from '../utils/ErrorServer.js'
 
 const addShipment = async (req, res, next) => {
     try {
@@ -9,7 +10,7 @@ const addShipment = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return next(error)
+        return ErrorService(err,next)
     }
 }
 
@@ -21,7 +22,7 @@ const getShipmentById = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return next(error)
+        return ErrorService(err,next)
     }
 }
 
@@ -33,7 +34,7 @@ const getAllShipments = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return next(error)
+        return ErrorService(err,next)
     }
 }
 
@@ -45,7 +46,7 @@ const updateShipment = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return next(error)
+        return ErrorService(err,next)
     }
 }
 
@@ -57,7 +58,7 @@ const getActiveShipment = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return next(error)
+        return ErrorService(err,next)
     }
 }
 export const shipmentController = {

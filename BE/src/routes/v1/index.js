@@ -20,6 +20,7 @@ import { StatusCodes } from 'http-status-codes'
 import orderDetailRoutes from './orderDetailRoutes.js'
 import commentRoutes from './commentRoutes.js'
 import productRoutes from './productRoute.js'
+import userRoutes from "./userRoute.js"
 // import columnRoutes from './columnRoute.js'
 // import cardRoutes from './cardRoute.js'
 
@@ -35,6 +36,7 @@ Router.get('/ping', (req, res) => {
  */
 Router.use('/boards', boardRoutes)
 Router.use('/auth', authRoutes)
+Router.use('/user', userRoutes)
 Router.use('/admin', adminRoutes)
 Router.use('/cart', cartItemRoutes)
 Router.use('/payment', paymentRoutes)
