@@ -4,13 +4,17 @@ import FloatingContactBar from '~/components/shared/FloatingContactBar'
 import NavigationBar from '~/components/shared/NavigationBar'
 import MainHeader from '~/components/shared/MainHeader'
 import TopBar from '~/components/shared/TopBar'
+import { useDispatch } from 'react-redux'
+import { remoteUser } from '~/Redux/reducers/userReducer'
 
 const Header = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(true)
     const [cartCount, setCartCount] = useState(5)
+    const dispatch = useDispatch();
 
     const handleLogout = () => {
         console.log('Đăng xuất...')
+        dispatch(remoteUser())
         setIsLoggedIn(false)
     }
 

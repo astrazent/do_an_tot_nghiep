@@ -3,7 +3,8 @@ import { BrowserRouter } from 'react-router-dom'
 import { createRoot } from 'react-dom/client'
 import App from './App'
 import { Provider } from 'react-redux'
-import { store } from '~/store'
+import { persistor, store } from './Redux/store'
+import { PersistGate } from 'redux-persist/integration/react'
 import '~/index.css'
 import { AuthProvider } from './contexts/authContext'
 import { AlertProvider } from './contexts/AlertContext'
@@ -11,13 +12,15 @@ import { AlertProvider } from './contexts/AlertContext'
 createRoot(document.getElementById('root')).render(
     <React.StrictMode>
         <Provider store={store}>
-            <AuthProvider>
-                <AlertProvider>
-                    <BrowserRouter>
-                        <App />
-                    </BrowserRouter>
-                </AlertProvider>
-            </AuthProvider>
+            <PersistGate loading={null} persistor={persistor}>
+                <AuthProvider>
+                    <AlertProvider>
+                        <BrowserRouter>
+                            <App />
+                        </BrowserRouter>
+                    </AlertProvider>
+                </AuthProvider>
+            </PersistGate>
         </Provider>
     </React.StrictMode>
 )

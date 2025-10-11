@@ -33,7 +33,7 @@ const ArticleList = ({ articles }) => {
         if (!acc[article.category]) acc[article.category] = []
         acc[article.category].push(article)
         return acc
-    })
+    }, {})
 
     return (
         <section className="space-y-12">

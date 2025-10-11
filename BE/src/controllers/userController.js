@@ -18,7 +18,7 @@ const login = async (req, res, next) => {
     try {
         const data = await userService.loginService(req.validated) 
 
-        res.cookie('token', token, {
+        res.cookie('token', data.token, {
             httpOnly: true, // không cho JS trên browser đọc cookie này
             secure: true, // chỉ gửi cookie qua HTTPS
             sameSite: 'strict', // chống CSRF (strict/lax tùy use case)

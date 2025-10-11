@@ -92,13 +92,8 @@ const ShipmentsModel = {
         return result.affectedRows > 0
     },
 
-<<<<<<< HEAD
     // Lấy danh sách shipment
     async listShipments() {
-=======
-    
-    async listShipments(limit = 50, offset = 0) {
->>>>>>> 7abbceedcd7fd131180ec16073a60da310cf897c
         const conn = getConnection()
         const [rows] = await conn.execute(
             `SELECT * FROM ${SHIPMENTS_TABLE_NAME} ORDER BY status DESC, id ASC`

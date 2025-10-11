@@ -4,6 +4,8 @@ import { FaShoppingCart } from 'react-icons/fa'
 import { BsStarFill, BsStar } from 'react-icons/bs'
 import ocop3Star from '~/assets/icon/ocop/ocop-3-star.png'
 import ocop4Star from '~/assets/icon/ocop/ocop-4-star.svg'
+import { useDispatch } from 'react-redux'
+import * as cartUserReducer from '~/Redux/reducers/cartUserReducer'
 
 const ProductCard = ({
     image,
@@ -14,6 +16,8 @@ const ProductCard = ({
     rating = 0,
     reviewCount = 0,
 }) => {
+    const dispatch = useDispatch()
+
     const ocopMap = {
         3: ocop3Star,
         4: ocop4Star,
@@ -35,6 +39,16 @@ const ProductCard = ({
         if (old > current) {
             discountPercent = Math.round(((old - current) / old) * 100)
         }
+    }
+
+    const handleAddCart = () => {
+        const cartItem = {
+            name: name,
+            image: image,
+            amount: 1,
+            price: price
+        }
+        dispatch(cartUserReducer.addCart(cartItem))
     }
 
     return (
@@ -74,6 +88,7 @@ const ProductCard = ({
                     className="group bg-gray-100 rounded-full flex items-center justify-center
                             hover:bg-green-600 transition-colors focus:outline-none focus:ring-2 focus:ring-green-400"
                     aria-label="Thêm vào giỏ hàng"
+                    onClick={handleAddCart}
                 >
                     <FaShoppingCart
                         size={18}

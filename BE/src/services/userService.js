@@ -13,6 +13,13 @@ export const registerService = async payload => {
         throw new ApiError(StatusCodes.CONFLICT, 'Email đã tồn tại')
     }
 
+    const existedPhone = await UsersModel.findUserByPhone(
+        payload.phone
+    )
+    if (existedPhone) {
+        throw new ApiError(StatusCodes.CONFLICT, 'Số điện thoại đã tồn tại')
+    }
+
     const existedUsername = await UsersModel.findUserByEmailOrUsername(
         payload.username
     )

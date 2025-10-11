@@ -51,7 +51,6 @@ const USERS_SCHEMA = Joi.object({
 })
 
 const UsersModel = {
-    
     async createUser(data) {
         const { error, value } = USERS_SCHEMA.validate(data, {
             abortEarly: false,
@@ -69,11 +68,11 @@ const UsersModel = {
                 value.email,
                 value.phone,
                 value.full_name,
-                value.address || "",
-                value.city || "",
-                value.district || "",
-                value.ward || "",
-                value.avatar_url || "",
+                value.address || '',
+                value.city || '',
+                value.district || '',
+                value.ward || '',
+                value.avatar_url || '',
                 value.status || 1,
             ]
         )
@@ -81,7 +80,6 @@ const UsersModel = {
         return { id: result.insertId, ...value }
     },
 
-    
     async getUserById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -91,7 +89,6 @@ const UsersModel = {
         return rows[0] || null
     },
 
-    
     async updateUser(id, data) {
         const schema = USERS_SCHEMA.fork(
             Object.keys(USERS_SCHEMA.describe().keys),
@@ -114,7 +111,6 @@ const UsersModel = {
         return this.getUserById(id)
     },
 
-    
     async deleteUser(id) {
         const conn = getConnection()
         const [result] = await conn.execute(
@@ -124,7 +120,6 @@ const UsersModel = {
         return result.affectedRows > 0
     },
 
-    
     async listUsers(limit = 50, offset = 0) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -134,7 +129,16 @@ const UsersModel = {
         return rows
     },
 
-    
+    // Lấy user theo phone
+    async findUserByPhone(phone) {
+        const conn = getConnection()
+        const [rows] = await conn.execute(
+            `SELECT * FROM ${USERS_TABLE_NAME} WHERE phone = ? LIMIT 1`,
+            [phone]
+        )
+        return rows[0] || null
+    },
+
     async findUserByEmailOrUsername(identifier) {
         const conn = getConnection()
         const [rows] = await conn.execute(

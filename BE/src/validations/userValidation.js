@@ -62,20 +62,23 @@ function validateRegister(req, res, next) {
 }
 
 function validateLogin(req, res, next) {
-  const { error, value } = LOGIN_SCHEMA.validate(req.body, {
-    abortEarly: false,
-    stripUnknown: true
-  })
+    const { error, value } = LOGIN_SCHEMA.validate(req.body, {
+        abortEarly: false,
+        stripUnknown: true,
+    })
 
-  if (error) {
-    console.log(error)
-    return next(
-      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, 'Định dạng không hợp lệ')
-    )
-  }
+    if (error) {
+        console.log(error)
+        return next(
+            new ApiError(
+                StatusCodes.UNPROCESSABLE_ENTITY,
+                'Định dạng không hợp lệ'
+            )
+        )
+    }
 
-  req.validated = value
-  return next()
+    req.validated = value
+    return next()
 }
 
 export const userValidation = { validateRegister, validateLogin }
