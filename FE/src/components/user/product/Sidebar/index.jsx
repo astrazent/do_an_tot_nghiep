@@ -30,17 +30,66 @@ const priceRanges = [
 ]
 
 const featuredProductsData = [
-    { id: 1, name: 'Chân Vịt Rút Xương', price: 150000, category: 'Sản phẩm từ vịt', imageUrl: chanVitRutXuongUXiDau },
-    { id: 2, name: 'Pate gan vịt - Mua 1 tặng 1', price: 120000, discountPrice: 120000, category: 'Sản phẩm từ vịt', imageUrl: pateGanVit },
-    { id: 3, name: 'Gà ủ muối', price: 260000, category: 'Sản phẩm từ gà', imageUrl: gaUMuoi },
-    { id: 4, name: 'Hạt Điều Rang Củi', price: 250000, category: 'Các loại hạt', imageUrl: gaDongTaoUMuoi },
-    { id: 5, name: 'Cá Cơm Sấy Giòn', price: 95000, category: 'Sản phẩm từ cá', imageUrl: gaUMuoi },
+    {
+        id: 1,
+        name: 'Chân Vịt Rút Xương',
+        price: 150000,
+        category: 'Sản phẩm từ vịt',
+        imageUrl: chanVitRutXuongUXiDau,
+    },
+    {
+        id: 2,
+        name: 'Pate gan vịt - Mua 1 tặng 1',
+        price: 120000,
+        discountPrice: 120000,
+        category: 'Sản phẩm từ vịt',
+        imageUrl: pateGanVit,
+    },
+    {
+        id: 3,
+        name: 'Gà ủ muối',
+        price: 260000,
+        category: 'Sản phẩm từ gà',
+        imageUrl: gaUMuoi,
+    },
+    {
+        id: 4,
+        name: 'Hạt Điều Rang Củi',
+        price: 250000,
+        category: 'Các loại hạt',
+        imageUrl: gaDongTaoUMuoi,
+    },
+    {
+        id: 5,
+        name: 'Cá Cơm Sấy Giòn',
+        price: 95000,
+        category: 'Sản phẩm từ cá',
+        imageUrl: gaUMuoi,
+    },
 ]
 
 const hotProductsData = [
-    { id: 1, name: 'Pate gan vịt', price: 180000, category: 'Sản phẩm từ vịt', imageUrl: pateGanVit },
-    { id: 2, name: 'Gà Đông Tảo ủ muối', price: 350000, category: 'Sản phẩm từ gà', imageUrl: gaDongTaoUMuoi },
-    { id: 3, name: 'Gà ủ xì dầu', price: 280000, category: 'Sản phẩm từ gà', imageUrl: gaUXiDau },
+    {
+        id: 1,
+        name: 'Pate gan vịt',
+        price: 180000,
+        category: 'Sản phẩm từ vịt',
+        imageUrl: pateGanVit,
+    },
+    {
+        id: 2,
+        name: 'Gà Đông Tảo ủ muối',
+        price: 350000,
+        category: 'Sản phẩm từ gà',
+        imageUrl: gaDongTaoUMuoi,
+    },
+    {
+        id: 3,
+        name: 'Gà ủ xì dầu',
+        price: 280000,
+        category: 'Sản phẩm từ gà',
+        imageUrl: gaUXiDau,
+    },
 ]
 
 const Sidebar = ({
@@ -63,7 +112,7 @@ const Sidebar = ({
         if (onSearch) onSearch(filters)
     }
 
-    const handleCategoryClick = (category) => {
+    const handleCategoryClick = category => {
         const updatedFilters = { ...filters, category }
         setFilters(updatedFilters)
         if (onSearch) onSearch(updatedFilters)
@@ -85,12 +134,15 @@ const Sidebar = ({
                                 <select
                                     className="w-full p-2 border border-gray-300 rounded-md bg-white appearance-none pr-8"
                                     value={filters.category}
-                                    onChange={(e) =>
-                                        setFilters({ ...filters, category: e.target.value })
+                                    onChange={e =>
+                                        setFilters({
+                                            ...filters,
+                                            category: e.target.value,
+                                        })
                                     }
                                 >
                                     <option value="">Tất cả</option>
-                                    {productCategories.map((c) => (
+                                    {productCategories.map(c => (
                                         <option key={c}>{c}</option>
                                     ))}
                                 </select>
@@ -107,12 +159,20 @@ const Sidebar = ({
                                     <select
                                         className="w-full p-2 border border-gray-300 rounded-md bg-white appearance-none pr-8"
                                         value={filters.minPrice}
-                                        onChange={(e) =>
-                                            setFilters({ ...filters, minPrice: Number(e.target.value) })
+                                        onChange={e =>
+                                            setFilters({
+                                                ...filters,
+                                                minPrice: Number(
+                                                    e.target.value
+                                                ),
+                                            })
                                         }
                                     >
-                                        {priceRanges.map((p) => (
-                                            <option key={p.value} value={p.value}>
+                                        {priceRanges.map(p => (
+                                            <option
+                                                key={p.value}
+                                                value={p.value}
+                                            >
                                                 {p.label}
                                             </option>
                                         ))}
@@ -124,12 +184,20 @@ const Sidebar = ({
                                     <select
                                         className="w-full p-2 border border-gray-300 rounded-md bg-white appearance-none pr-8"
                                         value={filters.maxPrice}
-                                        onChange={(e) =>
-                                            setFilters({ ...filters, maxPrice: Number(e.target.value) })
+                                        onChange={e =>
+                                            setFilters({
+                                                ...filters,
+                                                maxPrice: Number(
+                                                    e.target.value
+                                                ),
+                                            })
                                         }
                                     >
-                                        {priceRanges.map((p) => (
-                                            <option key={p.value} value={p.value}>
+                                        {priceRanges.map(p => (
+                                            <option
+                                                key={p.value}
+                                                value={p.value}
+                                            >
                                                 {p.label}
                                             </option>
                                         ))}
@@ -157,10 +225,12 @@ const Sidebar = ({
                     </h3>
                     <div className="mt-2">
                         <ul>
-                            {productCategories.map((category) => (
+                            {productCategories.map(category => (
                                 <li key={category}>
                                     <button
-                                        onClick={() => handleCategoryClick(category)}
+                                        onClick={() =>
+                                            handleCategoryClick(category)
+                                        }
                                         className="w-full text-left block p-3 text-sm text-gray-600 border-b hover:bg-green-50 hover:text-green-700 transition-colors"
                                     >
                                         {category}

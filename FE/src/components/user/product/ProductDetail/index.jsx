@@ -29,7 +29,9 @@ const ProductDetail = ({
             if (rating >= i) {
                 stars.push(<FaStar key={i} className="text-yellow-400" />)
             } else if (rating >= i - 0.5) {
-                stars.push(<FaStarHalfAlt key={i} className="text-yellow-400" />)
+                stars.push(
+                    <FaStarHalfAlt key={i} className="text-yellow-400" />
+                )
             } else {
                 stars.push(<FaRegStar key={i} className="text-gray-300" />)
             }
@@ -129,9 +131,7 @@ const ProductDetail = ({
                 disabled={!stockStatus}
             >
                 <FaShoppingCart />
-                <span>
-                    {stockStatus ? 'Thêm vào giỏ hàng' : 'Hết hàng'}
-                </span>
+                <span>{stockStatus ? 'Thêm vào giỏ hàng' : 'Hết hàng'}</span>
             </button>
         </div>
     )

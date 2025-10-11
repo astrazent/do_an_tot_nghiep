@@ -22,7 +22,7 @@ const ProductListSection = ({ title, products, isPromotion = false }) => {
 
             {/* Danh sách sản phẩm */}
             <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                {products.map((product) => (
+                {products.map(product => (
                     <a
                         key={product.id}
                         href={`/product/${product.id}`}
@@ -36,8 +36,10 @@ const ProductListSection = ({ title, products, isPromotion = false }) => {
                             />
                             {isPromotion && product.discountPrice && (
                                 <span className="absolute top-2 left-2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-md">
-                                    -{Math.round(
-                                        ((product.price - product.discountPrice) /
+                                    -
+                                    {Math.round(
+                                        ((product.price -
+                                            product.discountPrice) /
                                             product.price) *
                                             100
                                     )}
@@ -57,7 +59,8 @@ const ProductListSection = ({ title, products, isPromotion = false }) => {
                                         {product.price.toLocaleString()} VNĐ
                                     </span>
                                     <span className="block text-sm text-red-600 font-bold">
-                                        {product.discountPrice.toLocaleString()} VNĐ
+                                        {product.discountPrice.toLocaleString()}{' '}
+                                        VNĐ
                                     </span>
                                 </div>
                             ) : (
