@@ -120,35 +120,32 @@ INSERT INTO PostCategories (category_id, post_id) VALUES
 (9, 4);  -- 'Thông báo bảo trì hệ thống' thuộc 'Trái cây' (giả lập)
 
 -- Users
-CREATE TABLE 
+CREATE TABLE
     Users (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) UNIQUE NOT NULL,
-    password_hash VARCHAR(255),
-    token VARCHAR(512) UNIQUE DEFAULT NULL,
-    token_started_at DATETIME DEFAULT NULL,
-    token_expired_at DATETIME DEFAULT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL,
-    phone VARCHAR(20) UNIQUE NOT NULL,
-    full_name VARCHAR(100) NOT NULL,
-    address VARCHAR(255) NOT NULL,
-    city VARCHAR(100) NOT NULL,
-    district VARCHAR(100) NOT NULL,
-    ward VARCHAR(100) NOT NULL,
-    avatar_url VARCHAR(255),
-    status TINYINT NOT NULL DEFAULT 0,
-    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    INDEX idx_users_email (email),
-    INDEX idx_users_username (username)
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+        id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        username VARCHAR(50) UNIQUE NOT NULL,
+        password_hash VARCHAR(255),
+        email VARCHAR(100) UNIQUE NOT NULL,
+        phone VARCHAR(20) UNIQUE NOT NULL,
+        full_name VARCHAR(100) NOT NULL,
+        address VARCHAR(255) NOT NULL,
+        city VARCHAR(100) NOT NULL,
+        district VARCHAR(100) NOT NULL,
+        ward VARCHAR(100) NOT NULL,
+        avatar_url VARCHAR(255),
+        status TINYINT NOT NULL DEFAULT 0,
+        created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        INDEX idx_users_email (email),
+        INDEX idx_users_username (username)
+    ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
-INSERT INTO Users (username, password_hash, email, phone, full_name, address, city, district, ward, avatar_url, status, token_started_at, token_expired_at) VALUES
-('nguyen123', MD5('123456'), 'nguyen123@example.com', '0901234567', 'Nguyen Van A', '123 Le Loi', 'Ho Chi Minh', 'Quan 1', 'Phuong Ben Nghe', 'https://i.pravatar.cc/150?img=1', 1, '2025-01-01 00:00:00', '2026-01-01 00:00:00'),
-('tranthi456', MD5('abcdef'), 'tranthi456@example.com', '0902345678', 'Tran Thi B', '456 Nguyen Trai', 'Ho Chi Minh', 'Quan 3', 'Phuong 5', 'https://i.pravatar.cc/150?img=2', 1, '2025-02-01 00:00:00', '2026-02-01 00:00:00'),
-('levan789', MD5('password'), 'le.van789@example.com', '0903456789', 'Le Van C', '789 Tran Hung Dao', 'Ho Chi Minh', 'Quan 5', 'Phuong 10', 'https://i.pravatar.cc/150?img=3', 0, '2025-03-01 00:00:00', '2025-09-01 00:00:00'),
-('phamthi001', MD5('qwerty'), 'phamthi001@example.com', '0904567890', 'Pham Thi D', '1010 Cach Mang Thang 8', 'Ho Chi Minh', 'Quan Binh Thanh', 'Phuong 12', 'https://i.pravatar.cc/150?img=4', 1, '2025-04-01 00:00:00', '2026-04-01 00:00:00'),
-('hoangvan002', MD5('letmein'), 'hoangvan002@example.com', '0905678901', 'Hoang Van E', '2020 Dien Bien Phu', 'Ho Chi Minh', 'Quan Tan Binh', 'Phuong 15', 'https://i.pravatar.cc/150?img=5', 0, '2025-05-01 00:00:00', '2025-12-01 00:00:00');
+INSERT INTO Users (username, password_hash, email, phone, full_name, address, city, district, ward, avatar_url, status) VALUES
+('nguyen123', MD5('123456'), 'nguyen123@example.com', '0901234567', 'Nguyen Van A', '123 Le Loi', 'Ho Chi Minh', 'Quan 1', 'Phuong Ben Nghe', 'https://i.pravatar.cc/150?img=1', 1),
+('tranthi456', MD5('abcdef'), 'tranthi456@example.com', '0902345678', 'Tran Thi B', '456 Nguyen Trai', 'Ho Chi Minh', 'Quan 3', 'Phuong 5', 'https://i.pravatar.cc/150?img=2', 1),
+('levan789', MD5('password'), 'le.van789@example.com', '0903456789', 'Le Van C', '789 Tran Hung Dao', 'Ho Chi Minh', 'Quan 5', 'Phuong 10', 'https://i.pravatar.cc/150?img=3', 0),
+('phamthi001', MD5('qwerty'), 'phamthi001@example.com', '0904567890', 'Pham Thi D', '1010 Cach Mang Thang 8', 'Ho Chi Minh', 'Quan Binh Thanh', 'Phuong 12', 'https://i.pravatar.cc/150?img=4', 1),
+('hoangvan002', MD5('letmein'), 'hoangvan002@example.com', '0905678901', 'Hoang Van E', '2020 Dien Bien Phu', 'Ho Chi Minh', 'Quan Tan Binh', 'Phuong 15', 'https://i.pravatar.cc/150?img=5', 0);
 
 -- Products
 CREATE TABLE

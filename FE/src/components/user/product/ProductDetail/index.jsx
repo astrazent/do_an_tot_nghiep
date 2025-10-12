@@ -56,10 +56,12 @@ const ProductDetail = ({
 
             {/* Thống kê */}
             <div className="flex justify-between text-gray-600 text-sm my-5">
-                <div className="flex items-center space-x-1">
+                {/* <div className="flex items-center space-x-1">
                     <FaEye className="text-gray-500" />
                     <span>{views.toLocaleString()} lượt xem</span>
-                </div>
+                </div> */}
+                {/* //cần sửa đoạn 59 =>62 này vì views bị lỗi */}
+                
                 <div className="flex items-center space-x-1">
                     <FaShoppingCart className="text-gray-500" />
                     <span>{sold.toLocaleString()} đã bán</span>

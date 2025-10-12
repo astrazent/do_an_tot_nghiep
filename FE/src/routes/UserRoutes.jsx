@@ -45,7 +45,7 @@ export const userRoutes = [
         element: <SidebarLayout />,
 
         children: [
-            { path: '/product', element: <Product /> },
+            { path: '/products/:slug', element: <Product /> },
             { path: '/about', element: <About /> },
         ],
     },
