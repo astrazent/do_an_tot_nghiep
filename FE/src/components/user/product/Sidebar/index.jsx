@@ -9,16 +9,16 @@ import gaDongTaoUMuoi from '~/assets/image/shared/product/dong-tao-u-muoi.png'
 import gaUMuoi from '~/assets/image/shared/product/ga-u-muoi.png'
 import gaUXiDau from '~/assets/image/shared/product/ga-u-xi-dau.jpg'
 
-const productCategories = [
-    'Sản phẩm từ vịt',
-    'Sản phẩm từ gà',
-    'Các loại hạt',
-    'Sản phẩm từ heo',
-    'Sản phẩm từ cá',
-    'Sản phẩm từ ngan',
-    'Hải sản',
-    'Các loại ruốc',
-    'Thực phẩm khác',
+const productCategoriesWithSlugs = [
+    { name: 'Sản phẩm từ vịt', slug: 'san-pham-tu-vit' },
+    { name: 'Sản phẩm từ gà', slug: 'san-pham-tu-ga' },
+    { name: 'Các loại hạt', slug: 'cac-loai-hat' },
+    { name: 'Sản phẩm từ heo', slug: 'san-pham-tu-heo' },
+    { name: 'Sản phẩm từ cá', slug: 'san-pham-tu-ca' },
+    { name: 'Sản phẩm từ ngan', slug: 'san-pham-tu-ngan' },
+    { name: 'Hải sản', slug: 'hai-san' },
+    { name: 'Các loại ruốc', slug: 'cac-loai-ruoc' },
+    { name: 'Thực phẩm khác', slug: 'thuc-pham-khac' },
 ]
 
 const priceRanges = [
@@ -112,10 +112,15 @@ const Sidebar = ({
         if (onSearch) onSearch(filters)
     }
 
-    const handleCategoryClick = category => {
-        const updatedFilters = { ...filters, category }
+     const handleCategoryClick = slug => {
+        // Nếu click lần nữa vào danh mục đang chọn, thì hủy chọn (reset về rỗng)
+        const newSlug = filters.category === slug ? '' : slug;
+        
+        const updatedFilters = { ...filters, category: newSlug }
         setFilters(updatedFilters)
-        if (onSearch) onSearch(updatedFilters)
+        
+        // Gọi callback onSearch để thông báo cho component cha
+        if (onSearch) onSearch(updatedFilters) 
     }
 
     return (
@@ -133,6 +138,7 @@ const Sidebar = ({
                             <div className="relative">
                                 <select
                                     className="w-full p-2 border border-gray-300 rounded-md bg-white appearance-none pr-8"
+                                    // value = slug
                                     value={filters.category}
                                     onChange={e =>
                                         setFilters({
@@ -142,8 +148,11 @@ const Sidebar = ({
                                     }
                                 >
                                     <option value="">Tất cả</option>
-                                    {productCategories.map(c => (
-                                        <option key={c}>{c}</option>
+                                    {productCategoriesWithSlugs.map(c => (
+                                        <option key={c.slug} value={c.slug}>
+                                            {c.name}
+                                        </option>
+
                                     ))}
                                 </select>
                                 <FaChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
@@ -218,7 +227,7 @@ const Sidebar = ({
                 </div>
             )}
 
-            {categories && (
+            {/* {categories && (
                 <div className="mt-8">
                     <h3 className="text-sm font-bold text-gray-500 uppercase pb-2 border-b">
                         Danh mục sản phẩm
@@ -234,6 +243,48 @@ const Sidebar = ({
                                         className="w-full text-left block p-3 text-sm text-gray-600 border-b hover:bg-green-50 hover:text-green-700 transition-colors"
                                     >
                                         {category}
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+            )} */}
+
+            {categories && (
+                <div className="mt-8">
+                    <h3 className="text-sm font-bold text-gray-500 uppercase pb-2 border-b">
+                        Danh mục sản phẩm
+                    </h3>
+                    <div className="mt-2">
+                        <ul>
+                            {/* 🚨 Dùng nút "Tất cả" riêng để dễ quản lý */}
+                            <li>
+                                <button
+                                    onClick={() => handleCategoryClick('')}
+                                    className={`w-full text-left block p-3 text-sm border-b transition-colors 
+                                        ${filters.category === '' 
+                                            ? 'bg-green-100 text-green-700 font-bold'
+                                            : 'text-gray-600 hover:bg-green-50 hover:text-green-700'}`
+                                    }
+                                >
+                                    Tất cả Sản phẩm
+                                </button>
+                            </li>
+                            
+                            {/* Lặp qua danh mục có slug */}
+                            {productCategoriesWithSlugs.map(c => (
+                                <li key={c.slug}>
+                                    <button
+                                        // 🚨 Truyền SLUG vào hàm xử lý
+                                        onClick={() => handleCategoryClick(c.slug)} 
+                                        className={`w-full text-left block p-3 text-sm border-b transition-colors 
+                                            ${filters.category === c.slug 
+                                                ? 'bg-green-100 text-green-700 font-bold' 
+                                                : 'text-gray-600 hover:bg-green-50 hover:text-green-700'}`
+                                        }
+                                    >
+                                        {c.name}
                                     </button>
                                 </li>
                             ))}
