@@ -1,47 +1,101 @@
-import { getConnection } from '../config/mysql.js'
+import { ProductsModel } from "~/models/productModel";
+import { StatusCodes } from 'http-status-codes'
+import ApiError from '~/utils/ApiError'
 
-// ✅ Lấy danh sách sản phẩm (có phân trang + tìm kiếm + lọc category)
-export const fetchProducts = async ({
-    page = 1,
-    limit = 10,
-    keyword = '',
-    categoryId,
-}) => {
-    const db = getConnection()
-    const offset = (page - 1) * limit
+const createProductService = async (data) => {
+    const product = await ProductsModel.createProduct(data)
 
-    let query = `
-        SELECT 
-            p.id, 
-            p.name, 
-            p.description,
-            p.origin_price,
-            p.price,
-            p.buyed,
-            p.rate_point_total,
-            p.rate_count,
-            p.stock_qty,
-            p.created_at,
-            c.name AS category_name
-        FROM Products p
-        JOIN Categories c ON p.category_id = c.id
-        WHERE 1=1
-    `
-    const params = []
+    return product
+}
 
-    if (keyword) {
-        query += ` AND p.name LIKE ?`
-        params.push(`%${keyword}%`)
+const getByIdProductService = async (productId) => {
+    const product = await ProductsModel.getProductById(productId)
+
+    if(!product) {
+        throw new ApiError(
+            StatusCodes.NOT_FOUND,
+            'Không tìm thấy sản phẩm này'
+        )
     }
 
-    if (categoryId) {
-        query += ` AND p.category_id = ?`
-        params.push(categoryId)
+    return product
+}
+
+const getListProductService = async (data) => {
+    const listProduct = await ProductsModel.listProducts(data.limit, data.offset)
+
+    if(listProduct.length == 0) {
+        throw new ApiError(
+            StatusCodes.NOT_FOUND,
+            'Không tìm thấy sản phẩm nào này'
+        )
     }
 
-    query += ` ORDER BY p.created_at DESC LIMIT ? OFFSET ?`
-    params.push(Number(limit), Number(offset))
+    return listProduct
+}
 
-    const [rows] = await db.execute(query, params)
-    return rows
+const getByCategoryService = async (categoryId) => {
+    const products = await ProductsModel.getProductsByCategory(categoryId)
+
+    if(products.length == 0) {
+        throw new ApiError(
+            StatusCodes.NOT_FOUND,
+            'Không tìm thấy sản phẩm nào'
+        )
+    }
+
+    return products
+}
+
+const searchProductService = async (name) => {
+    const products = await ProductsModel.searchProductsByName(name)
+
+    if(products.length == 0) {
+        throw new ApiError(
+            StatusCodes.NOT_FOUND,
+            'Không tìm thấy sản phẩm nào trùng khớp'
+        )
+    }
+
+    return products
+}
+
+const updateProductService = async (productId, data) => {
+    const product = await ProductsModel.getProductById(productId)
+
+    if(!product) {
+        throw new ApiError(
+            StatusCodes.NOT_FOUND,
+            'Không tìm thấy sản phẩm này'
+        )
+    }
+
+    const updateProduct = await ProductsModel.updateProduct(productId, data)
+
+    return updateProduct
+}
+
+const deleteProductService = async (productId) => {
+    const product = await ProductsModel.getProductById(productId)
+
+    if(!product) {
+        throw new ApiError(
+            StatusCodes.NOT_FOUND,
+            'Không tìm thấy sản phẩm này'
+        )
+    }
+
+    await ProductsModel.deleteProduct(productId)
+
+    return ({message: "Xóa sản phẩm thành công"})
+}
+
+export const productService = {
+    createProductService,
+    getByIdProductService,
+    getByCategoryService,
+    getListProductService,
+    searchProductService,
+    updateProductService,
+    deleteProductService
 }

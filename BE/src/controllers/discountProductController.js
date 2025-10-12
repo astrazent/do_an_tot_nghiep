@@ -10,7 +10,7 @@ const addDiscountProduct = async (req, res, next) => {
             data
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 
@@ -22,7 +22,7 @@ const getDiscountProductById = async (req, res, next) => {
             data
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 
@@ -34,7 +34,7 @@ const getListDiscountProduct = async (req, res, next) => {
             data
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 
@@ -46,7 +46,7 @@ const updateDiscountProduct = async (req, res, next) => {
             data
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 
@@ -57,7 +57,7 @@ const deleteDiscountProduct = async (req, res, next) => {
             data
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 
@@ -69,7 +69,7 @@ const getProductsByDiscount = async (req, res, next) => {
             data
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 
@@ -81,7 +81,7 @@ const getDiscountsByProduct = async (req, res, next) => {
             data
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 

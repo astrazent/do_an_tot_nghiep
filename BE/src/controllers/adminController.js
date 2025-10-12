@@ -10,7 +10,7 @@ const addAmin = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 
@@ -30,7 +30,7 @@ const loginAmin = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 

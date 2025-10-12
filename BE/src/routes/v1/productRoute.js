@@ -1,9 +1,20 @@
 import express from 'express'
-import { getProducts } from '../../controllers/productController.js'
+import { productController } from '~/controllers/productController'
+const Router = express.Router()
 
-const router = express.Router()
+Router.route('/').post(productController.createProduct) 
 
-// Xem danh sách sản phẩm
-router.get('/', getProducts)
+Router.route('/').get(productController.getByIdProduct)
 
-export default router
+Router.route('/category').get(productController.getByCategory)
+
+Router.route('/list').get(productController.getListProduct)
+
+Router.route('/search').get(productController.searchProduct)
+
+Router.route('/').patch(productController.updateProduct)
+
+Router.route('/').delete(productController.deleteProduct)
+
+
+export default Router

@@ -10,7 +10,7 @@ const addShipment = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 
@@ -22,7 +22,7 @@ const getShipmentById = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 
@@ -34,7 +34,7 @@ const getAllShipments = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 
@@ -46,7 +46,7 @@ const updateShipment = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 
@@ -58,7 +58,7 @@ const getActiveShipment = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 export const shipmentController = {

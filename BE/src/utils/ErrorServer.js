@@ -1,10 +1,26 @@
-/* Hàm để trả về lỗi server nếu lỗi không nằm trong file server */
-import ApiError from '~/utils/ApiError'
-import { StatusCodes } from 'http-status-codes'
+import ApiError from './ApiError.js'
 
-const ErrorServer = (err, next) => {
-    if (err instanceof ApiError || err.isOperational) return ErrorService(err,next)
-    return next(new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, 'Lỗi server'))
+// Hàm xử lý logic lỗi chung
+function handleError(err, req, res) {
+    console.error('🔥 ErrorHandler:', err)
+
+    const statusCode = err.statusCode || 500
+    const message = err.message || 'Lỗi server nội bộ'
+
+    res.status(statusCode).json({
+        status: 'error',
+        message,
+    })
 }
 
-export default ErrorServer
+// Middleware Express để xử lý lỗi
+export default function ErrorServer(err, req, res, next) {
+    if (err instanceof ApiError || err.isOperational) {
+        return handleError(err, req, res)
+    }
+
+    return res.status(500).json({
+        status: 'error',
+        message: 'Lỗi server không xác định',
+    })
+}

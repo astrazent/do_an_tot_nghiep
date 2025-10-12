@@ -10,7 +10,7 @@ const addOrderItem = async (req, res, next) => {
             data
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 
@@ -22,7 +22,7 @@ const getOrderItemById = async (req, res, next) => {
             data
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 
@@ -34,7 +34,7 @@ const getListOrderItems = async (req, res, next) => {
             data
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 
@@ -46,7 +46,7 @@ const getItemsByTransaction = async (req, res, next) => {
             data
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 const getItemsByProduct = async (req, res, next) => {
@@ -57,7 +57,7 @@ const getItemsByProduct = async (req, res, next) => {
             data
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 const updateOrderItem = async (req, res, next) => {
@@ -68,7 +68,7 @@ const updateOrderItem = async (req, res, next) => {
             data
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 const deleteOrderItem = async (req, res, next) => {
@@ -78,7 +78,7 @@ const deleteOrderItem = async (req, res, next) => {
             data
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 export const orderItemController = {

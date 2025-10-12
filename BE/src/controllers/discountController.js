@@ -10,7 +10,7 @@ const addDiscount = async (req, res, next) => {
             data
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 
@@ -22,7 +22,7 @@ const getDiscountById = async (req, res, next) => {
             data
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 
@@ -34,7 +34,7 @@ const getAllDiscount = async (req, res, next) => {
             data
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 
@@ -46,7 +46,7 @@ const getActiveDiscount = async (req, res, next) => {
             data
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 
@@ -58,7 +58,7 @@ const updateDiscount = async (req, res, next) => {
             data
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 
@@ -69,7 +69,7 @@ const deleteDiscount = async (req, res, next) => {
             data
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 

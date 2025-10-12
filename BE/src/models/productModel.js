@@ -10,6 +10,7 @@ const PRODUCTS_SCHEMA = Joi.object({
         'string.min': 'Name tối thiểu 3 ký tự',
         'string.max': 'Name tối đa 200 ký tự',
     }),
+    slug: Joi.string(),
     description: Joi.string().max(255).allow('', null).messages({
         'string.max': 'Description tối đa 255 ký tự',
     }),
@@ -28,6 +29,7 @@ const PRODUCTS_SCHEMA = Joi.object({
     low_stock_threshold: Joi.number().integer().min(0).default(0),
     last_restock_at: Joi.date().default(() => new Date()),
     status: Joi.number().integer().valid(0, 1).default(1),
+    ocop_rating: Joi.number().integer().default(0),
     category_id: Joi.number().integer().required().messages({
         'number.base': 'Category ID phải là số',
         'any.required': 'Category ID là bắt buộc',
@@ -35,7 +37,6 @@ const PRODUCTS_SCHEMA = Joi.object({
 })
 
 const ProductsModel = {
-    
     async createProduct(data) {
         const { error, value } = PRODUCTS_SCHEMA.validate(data, {
             abortEarly: false,
@@ -45,10 +46,11 @@ const ProductsModel = {
         const conn = getConnection()
         const [result] = await conn.execute(
             `INSERT INTO ${PRODUCTS_TABLE_NAME} 
-            (name, description, origin_price, price, buyed, rate_point_total, rate_count, stock_qty, low_stock_threshold, last_restock_at, status, category_id)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            (name, slug, description, origin_price, price, buyed, rate_point_total, rate_count, stock_qty, low_stock_threshold, last_restock_at, status, ocop_rating, category_id)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
                 value.name,
+                value.slug,
                 value.description,
                 value.origin_price,
                 value.price,
@@ -59,6 +61,7 @@ const ProductsModel = {
                 value.low_stock_threshold,
                 value.last_restock_at,
                 value.status,
+                value.ocop_rating,
                 value.category_id,
             ]
         )
@@ -66,7 +69,19 @@ const ProductsModel = {
         return { id: result.insertId, ...value }
     },
 
-    
+    async searchProductsByName(keyword, limit = 50, offset = 0) {
+        const conn = getConnection()
+        const searchKeyword = `%${keyword}%`
+        const [rows] = await conn.execute(
+            `SELECT * FROM ${PRODUCTS_TABLE_NAME} 
+         WHERE name LIKE ? COLLATE utf8mb4_unicode_ci
+         ORDER BY id DESC
+         LIMIT ? OFFSET ?`,
+            [searchKeyword, limit, offset]
+        )
+        return rows
+    },
+
     async getProductById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -76,7 +91,6 @@ const ProductsModel = {
         return rows[0] || null
     },
 
-    
     async updateProduct(id, data) {
         const schema = PRODUCTS_SCHEMA.fork(
             Object.keys(PRODUCTS_SCHEMA.describe().keys),
@@ -99,7 +113,6 @@ const ProductsModel = {
         return this.getProductById(id)
     },
 
-    
     async deleteProduct(id) {
         const conn = getConnection()
         const [result] = await conn.execute(
@@ -109,7 +122,6 @@ const ProductsModel = {
         return result.affectedRows > 0
     },
 
-    
     async listProducts(limit = 50, offset = 0) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -119,7 +131,6 @@ const ProductsModel = {
         return rows
     },
 
-    
     async getProductsByCategory(category_id) {
         const conn = getConnection()
         const [rows] = await conn.execute(

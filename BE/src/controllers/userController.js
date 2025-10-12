@@ -1,6 +1,6 @@
 import { userService } from '../services/userService.js'
 import { StatusCodes } from 'http-status-codes'
-import ErrorService from '../utils/ErrorServer.js'
+import ErrorServer from '../utils/ErrorServer.js'
 
 const register = async (req, res, next) => {
     try {
@@ -10,7 +10,7 @@ const register = async (req, res, next) => {
             data,
         })
     } catch (err) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 
@@ -30,7 +30,7 @@ const login = async (req, res, next) => {
             data,
         })
     } catch (err) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 
@@ -43,7 +43,7 @@ const getByIdUser = async (req, res, next) => {
             data,
         })
     } catch (err) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 
@@ -56,7 +56,7 @@ const getListUser = async (req, res, next) => {
             data,
         })
     } catch (err) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 
@@ -69,7 +69,7 @@ const updateUser = async (req, res, next) => {
             data,
         })
     } catch (err) {
-        return next(err)
+        next(error)
     }
 }
 
@@ -81,7 +81,7 @@ const deleteUser = async (req, res, next) => {
             data,
         })
     } catch (err) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 

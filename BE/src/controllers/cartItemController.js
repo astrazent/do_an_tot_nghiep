@@ -19,7 +19,7 @@ const getCartItems = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 
@@ -37,7 +37,7 @@ const addCartItems = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 
@@ -53,7 +53,7 @@ const updateQuantityCartItems = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 
@@ -67,7 +67,7 @@ const deleteCartItems = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 

@@ -13,7 +13,7 @@ const addPayment = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 
@@ -25,7 +25,7 @@ const getAllPayments = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 
@@ -41,7 +41,7 @@ const updatePayment = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 
@@ -53,7 +53,7 @@ const getPaymentById = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 
@@ -65,7 +65,7 @@ const getActivePayment = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 
@@ -76,7 +76,7 @@ const deletePayment = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 export const paymentController = {

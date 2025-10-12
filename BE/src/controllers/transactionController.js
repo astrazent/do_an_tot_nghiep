@@ -10,7 +10,7 @@ const addTransaction = async (req, res, next) => {
             data
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 
@@ -22,7 +22,7 @@ const getTransactionById = async (req, res, next) => {
             data
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 
@@ -34,7 +34,7 @@ const getListTransactions = async (req, res, next) => {
             data
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 
@@ -46,7 +46,7 @@ const getTransactionsByUser = async (req, res, next) => {
             data
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 
@@ -58,7 +58,7 @@ const getTransactionsByStatus = async (req, res, next) => {
             data
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 
@@ -70,7 +70,7 @@ const getTransactionsByShipmentStatus = async (req, res, next) => {
             data
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 
@@ -82,7 +82,7 @@ const updateTransaction = async (req, res, next) => {
             data
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 
@@ -93,7 +93,7 @@ const deleteTransaction = async (req, res, next) => {
             data
         })
     } catch (error) {
-        return ErrorService(err,next)
+        next(error)
     }
 }
 
