@@ -23,6 +23,7 @@ import commentRoutes from './commentRoute.js'
 import postRoutes from './postRoute.js'
 import productRoutes from './productRoute.js'
 import userRoutes from "./userRoute.js"
+import postCategoryRoutes from "./postCategoryRoute.js"
 // import columnRoutes from './columnRoute.js'
 // import cardRoutes from './cardRoute.js'
 
@@ -52,6 +53,7 @@ Router.use('/orders', orderDetailRoutes)
 Router.use('/comments', commentRoutes)
 Router.use('/products', productRoutes)
 Router.use('/post', postRoutes)
+Router.use('/post_category', postCategoryRoutes)
 // Router.use('/columns', columnRoutes)
 // Router.use('/cards', cardRoutes)
 
