@@ -1,58 +1,92 @@
-import { getConnection } from '../config/mysql.js'
+import { CommentsModel } from '~/models/commentModel'
+import { StatusCodes } from 'http-status-codes'
+import ApiError from '~/utils/ApiError'
 
-// 📝 Thêm comment mới
-export const addComment = async (productId, userId, rate, content) => {
-    const db = getConnection()
-
-    const [result] = await db.execute(
-        `INSERT INTO Comments (product_id, user_id, rate, content) 
-         VALUES (?, ?, ?, ?)`,
-        [productId, userId, rate, content]
-    )
-
-    const [rows] = await db.execute(`SELECT * FROM Comments WHERE id = ?`, [
-        result.insertId,
-    ])
-
-    // Sau khi thêm comment thì cập nhật Products: rate_point_total + rate_count
-    await db.execute(
-        `UPDATE Products 
-         SET rate_point_total = rate_point_total + ?, 
-             rate_count = rate_count + 1 
-         WHERE id = ?`,
-        [rate, productId]
-    )
-
-    return rows[0]
+const createCommentService = async data => {   
+    const comment = await CommentsModel.createComment(data)
+    return comment
 }
 
-// 📝 Lấy danh sách comment theo productId
-export const getCommentsByProduct = async productId => {
-    const db = getConnection()
+const getByIdCommentService = async commentId => {
+    const comment = await CommentsModel.getCommentById(commentId)
+    if (!comment) {
+        throw new ApiError(
+            StatusCodes.NOT_FOUND,
+            `Không tìm thấy comment với id: ${commentId}`
+        )
+    }
 
-    const [rows] = await db.execute(
-        `SELECT c.id, c.user_id, c.rate, c.content, c.created_at
-         FROM Comments c
-         WHERE c.product_id = ?
-         ORDER BY c.created_at DESC`,
-        [productId]
-    )
-
-    return rows
+    return comment
 }
 
-// 📝 Lấy thống kê comment (trung bình, tổng số)
-export const getCommentStats = async productId => {
-    const db = getConnection()
+const getListCommentService = async filters => {
+    const comments = await CommentsModel.listComments(filters.limit, filters.offset)
+    if(comments.length === 0){
+        throw new ApiError(
+            StatusCodes.NOT_FOUND,
+            `Không có comment nào`
+        )
+    }
 
-    const [rows] = await db.execute(
-        `SELECT 
-            ROUND(AVG(rate), 1) AS avg_rate, 
-            COUNT(*) AS total_comments
-         FROM Comments
-         WHERE product_id = ?`,
-        [productId]
-    )
+    return comments
+}
 
-    return rows[0] || { avg_rate: 0, total_comments: 0 }
+const getListCommnetByProductService = async productId => {
+    const comments = await CommentsModel.getCommentsByProduct(productId)
+    if(comments.length === 0){
+        throw new ApiError(
+            StatusCodes.NOT_FOUND,
+            `Không có comment nào cho sản phẩm với id: ${productId}`
+        )
+    }
+
+    return comments
+}
+
+const getListCommentByUserService = async userId => {
+    const comments = await CommentsModel.getCommentsByUser(userId)
+    if(comments.length === 0){
+        throw new ApiError(
+            StatusCodes.NOT_FOUND,
+            `Không có comment nào của user với id: ${userId}`
+        )
+    }
+
+    return comments
+}
+
+const updateCommentService = async (commentId, data) => {
+    const existingComment = await CommentsModel.getCommentById(commentId)
+    if (!existingComment) {
+        throw new ApiError(
+            StatusCodes.NOT_FOUND,
+            `Không tìm thấy comment với id: ${commentId}`
+        )
+    }
+
+    const updatedComment = await CommentsModel.updateComment(commentId, data)
+    return updatedComment
+}
+
+const deleteCommentService = async commentId => {
+    const existingComment = await CommentsModel.getCommentById(commentId)
+    if (!existingComment) {
+        throw new ApiError(
+            StatusCodes.NOT_FOUND,
+            `Không tìm thấy comment với id: ${commentId}`
+        )
+    }
+
+    await CommentsModel.deleteComment(commentId)
+    return { message: 'Xóa comment thành công' }
+}
+
+export const commentService = {
+    createCommentService,
+    getByIdCommentService,
+    getListCommentService,
+    getListCommnetByProductService,
+    getListCommentByUserService,
+    updateCommentService,
+    deleteCommentService,
 }

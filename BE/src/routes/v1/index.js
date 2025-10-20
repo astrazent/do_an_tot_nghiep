@@ -19,7 +19,8 @@ import transactionRoutes from "./transactionRoute.js"
 import orderItemRoutes from "./oderItemRoute.js"
 import { StatusCodes } from 'http-status-codes'
 import orderDetailRoutes from './orderDetailRoutes.js'
-import commentRoutes from './commentRoutes.js'
+import commentRoutes from './commentRoute.js'
+import postRoutes from './postRoute.js'
 import productRoutes from './productRoute.js'
 import userRoutes from "./userRoute.js"
 // import columnRoutes from './columnRoute.js'
@@ -50,6 +51,7 @@ Router.use('/order_item', orderItemRoutes)
 Router.use('/orders', orderDetailRoutes)
 Router.use('/comments', commentRoutes)
 Router.use('/products', productRoutes)
+Router.use('/post', postRoutes)
 // Router.use('/columns', columnRoutes)
 // Router.use('/cards', cardRoutes)
 
