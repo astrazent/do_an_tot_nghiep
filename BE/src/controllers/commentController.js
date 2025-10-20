@@ -1,4 +1,5 @@
 import { StatusCodes } from 'http-status-codes'
+import ErrorServer from '~/utils/ErrorServer'
 import * as commentService from '../services/commentService.js'
 
 export const createComment = async (req, res, next) => {
@@ -33,7 +34,7 @@ export const createComment = async (req, res, next) => {
 
         res.status(StatusCodes.CREATED).json(comment)
     } catch (error) {
-        next(error)
+        return ErrorServer(error, req, res, next)
     }
 }
 
@@ -51,6 +52,6 @@ export const getProductComments = async (req, res, next) => {
             comments,
         })
     } catch (error) {
-        next(error)
+        return ErrorServer(error, req, res, next)
     }
 }

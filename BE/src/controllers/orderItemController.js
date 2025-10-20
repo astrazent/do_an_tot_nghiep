@@ -1,6 +1,6 @@
 import { orderItemService } from '~/services/orderItemService'
 import { StatusCodes } from 'http-status-codes'
-import ErrorService from '../utils/ErrorServer.js'
+import ErrorServer from '~/utils/ErrorServer'
 
 const addOrderItem = async (req, res, next) => {
     try {
@@ -10,7 +10,7 @@ const addOrderItem = async (req, res, next) => {
             data
         })
     } catch (error) {
-        next(error)
+        return ErrorServer(error, req, res, next)
     }
 }
 
@@ -22,7 +22,7 @@ const getOrderItemById = async (req, res, next) => {
             data
         })
     } catch (error) {
-        next(error)
+        return ErrorServer(error, req, res, next)
     }
 }
 
@@ -34,7 +34,7 @@ const getListOrderItems = async (req, res, next) => {
             data
         })
     } catch (error) {
-        next(error)
+        return ErrorServer(error, req, res, next)
     }
 }
 
@@ -46,7 +46,7 @@ const getItemsByTransaction = async (req, res, next) => {
             data
         })
     } catch (error) {
-        next(error)
+        return ErrorServer(error, req, res, next)
     }
 }
 const getItemsByProduct = async (req, res, next) => {
@@ -57,7 +57,7 @@ const getItemsByProduct = async (req, res, next) => {
             data
         })
     } catch (error) {
-        next(error)
+        return ErrorServer(error, req, res, next)
     }
 }
 const updateOrderItem = async (req, res, next) => {
@@ -68,7 +68,7 @@ const updateOrderItem = async (req, res, next) => {
             data
         })
     } catch (error) {
-        next(error)
+        return ErrorServer(error, req, res, next)
     }
 }
 const deleteOrderItem = async (req, res, next) => {
@@ -78,7 +78,7 @@ const deleteOrderItem = async (req, res, next) => {
             data
         })
     } catch (error) {
-        next(error)
+        return ErrorServer(error, req, res, next)
     }
 }
 export const orderItemController = {

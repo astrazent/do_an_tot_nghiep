@@ -6,6 +6,7 @@
  */
 import { StatusCodes } from 'http-status-codes'
 import { boardService } from '~/services/boardService'
+import ErrorServer from '~/utils/ErrorServer'
 
 const createBoard = async (req, res, next) => {
     try {
@@ -15,7 +16,7 @@ const createBoard = async (req, res, next) => {
         
         res.status(StatusCodes.CREATED).json(createBoard)
     } catch (error) {
-        next(error)
+        return ErrorServer(error, req, res, next)
     }
 }
 

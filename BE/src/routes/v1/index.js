@@ -10,6 +10,7 @@ import boardRoutes from './boardRoute.js'
 import adminRoutes from "./adminRoute.js"
 import authRoutes from './authRoute.js'
 import cartItemRoutes from './cartItemRoute.js'
+import categoryRoutes from './categoryRoute.js'
 import paymentRoutes from './paymentRoute.js'
 import shipmentRoutes from "./shipmentRoute.js"
 import discountRoutes from "./discountRoute.js"
@@ -39,6 +40,7 @@ Router.use('/auth', authRoutes)
 Router.use('/user', userRoutes)
 Router.use('/admin', adminRoutes)
 Router.use('/cart', cartItemRoutes)
+Router.use('/category', categoryRoutes)
 Router.use('/payment', paymentRoutes)
 Router.use('/shipment', shipmentRoutes)
 Router.use('/discount', discountRoutes)

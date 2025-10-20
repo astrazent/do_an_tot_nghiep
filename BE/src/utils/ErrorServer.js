@@ -8,7 +8,7 @@ function handleError(err, req, res) {
     const message = err.message || 'Lỗi server nội bộ'
 
     res.status(statusCode).json({
-        status: 'error',
+        status: statusCode,
         message,
     })
 }
@@ -20,7 +20,7 @@ export default function ErrorServer(err, req, res, next) {
     }
 
     return res.status(500).json({
-        status: 'error',
+        status: '500',
         message: 'Lỗi server không xác định',
     })
 }

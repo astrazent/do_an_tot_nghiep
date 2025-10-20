@@ -1,6 +1,6 @@
 import { transactionService } from "~/services/transactionService"
 import { StatusCodes } from 'http-status-codes'
-import ErrorService from '../utils/ErrorServer.js'
+import ErrorServer from '~/utils/ErrorServer'
 
 const addTransaction = async (req, res, next) => {
     try {
@@ -10,7 +10,7 @@ const addTransaction = async (req, res, next) => {
             data
         })
     } catch (error) {
-        next(error)
+        return ErrorServer(error, req, res, next)
     }
 }
 
@@ -22,7 +22,7 @@ const getTransactionById = async (req, res, next) => {
             data
         })
     } catch (error) {
-        next(error)
+        return ErrorServer(error, req, res, next)
     }
 }
 
@@ -34,7 +34,7 @@ const getListTransactions = async (req, res, next) => {
             data
         })
     } catch (error) {
-        next(error)
+        return ErrorServer(error, req, res, next)
     }
 }
 
@@ -46,7 +46,7 @@ const getTransactionsByUser = async (req, res, next) => {
             data
         })
     } catch (error) {
-        next(error)
+        return ErrorServer(error, req, res, next)
     }
 }
 
@@ -58,7 +58,7 @@ const getTransactionsByStatus = async (req, res, next) => {
             data
         })
     } catch (error) {
-        next(error)
+        return ErrorServer(error, req, res, next)
     }
 }
 
@@ -70,7 +70,7 @@ const getTransactionsByShipmentStatus = async (req, res, next) => {
             data
         })
     } catch (error) {
-        next(error)
+        return ErrorServer(error, req, res, next)
     }
 }
 
@@ -82,7 +82,7 @@ const updateTransaction = async (req, res, next) => {
             data
         })
     } catch (error) {
-        next(error)
+        return ErrorServer(error, req, res, next)
     }
 }
 
@@ -93,7 +93,7 @@ const deleteTransaction = async (req, res, next) => {
             data
         })
     } catch (error) {
-        next(error)
+        return ErrorServer(error, req, res, next)
     }
 }
 

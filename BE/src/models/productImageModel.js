@@ -25,7 +25,6 @@ const PRODUCT_IMAGES_SCHEMA = Joi.object({
 })
 
 const ProductImagesModel = {
-    
     async createProductImage(data) {
         const { error, value } = PRODUCT_IMAGES_SCHEMA.validate(data, {
             abortEarly: false,
@@ -41,7 +40,6 @@ const ProductImagesModel = {
         return { id: result.insertId, ...value }
     },
 
-    
     async getProductImageById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -51,7 +49,6 @@ const ProductImagesModel = {
         return rows[0] || null
     },
 
-    
     async updateProductImage(id, data) {
         const schema = PRODUCT_IMAGES_SCHEMA.fork(
             Object.keys(PRODUCT_IMAGES_SCHEMA.describe().keys),
@@ -74,7 +71,6 @@ const ProductImagesModel = {
         return this.getProductImageById(id)
     },
 
-    
     async deleteProductImage(id) {
         const conn = getConnection()
         const [result] = await conn.execute(
@@ -84,7 +80,6 @@ const ProductImagesModel = {
         return result.affectedRows > 0
     },
 
-    
     async listProductImages(limit = 50, offset = 0) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -94,7 +89,6 @@ const ProductImagesModel = {
         return rows
     },
 
-    
     async getImagesByProduct(product_id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -104,7 +98,20 @@ const ProductImagesModel = {
         return rows
     },
 
-    
+    async getImagesByProductIds(productIds) {
+        if (!Array.isArray(productIds) || productIds.length === 0) return []
+
+        const conn = getConnection()
+        const placeholders = productIds.map(() => '?').join(',') // "?,?,?"
+        const [rows] = await conn.execute(
+            `SELECT * FROM ${PRODUCT_IMAGES_TABLE_NAME}
+            WHERE product_id IN (${placeholders})
+            ORDER BY product_id ASC, is_main DESC, id ASC`,
+            productIds
+        )
+        return rows
+    },
+
     async getImagesBySlider(slider_id) {
         const conn = getConnection()
         const [rows] = await conn.execute(

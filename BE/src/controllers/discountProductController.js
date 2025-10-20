@@ -1,6 +1,6 @@
 import { discountProductService } from "~/services/discountProductService"
 import { StatusCodes } from 'http-status-codes'
-import ErrorService from '../utils/ErrorServer.js'
+import ErrorServer from '~/utils/ErrorServer'
 
 const addDiscountProduct = async (req, res, next) => {
     try {
@@ -10,7 +10,7 @@ const addDiscountProduct = async (req, res, next) => {
             data
         })
     } catch (error) {
-        next(error)
+        return ErrorServer(error, req, res, next)
     }
 }
 
@@ -22,7 +22,7 @@ const getDiscountProductById = async (req, res, next) => {
             data
         })
     } catch (error) {
-        next(error)
+        return ErrorServer(error, req, res, next)
     }
 }
 
@@ -34,7 +34,7 @@ const getListDiscountProduct = async (req, res, next) => {
             data
         })
     } catch (error) {
-        next(error)
+        return ErrorServer(error, req, res, next)
     }
 }
 
@@ -46,7 +46,7 @@ const updateDiscountProduct = async (req, res, next) => {
             data
         })
     } catch (error) {
-        next(error)
+        return ErrorServer(error, req, res, next)
     }
 }
 
@@ -57,7 +57,7 @@ const deleteDiscountProduct = async (req, res, next) => {
             data
         })
     } catch (error) {
-        next(error)
+        return ErrorServer(error, req, res, next)
     }
 }
 
@@ -69,7 +69,7 @@ const getProductsByDiscount = async (req, res, next) => {
             data
         })
     } catch (error) {
-        next(error)
+        return ErrorServer(error, req, res, next)
     }
 }
 
@@ -81,7 +81,7 @@ const getDiscountsByProduct = async (req, res, next) => {
             data
         })
     } catch (error) {
-        next(error)
+        return ErrorServer(error, req, res, next)
     }
 }
 

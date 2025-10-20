@@ -10,7 +10,7 @@ const createProduct = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        next(error)
+        return ErrorServer(error, req, res, next)
     }
 }
 
@@ -23,7 +23,7 @@ const getByIdProduct = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        next(error)
+        return ErrorServer(error, req, res, next)
     }
 }
 
@@ -36,7 +36,7 @@ const getListProduct = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        next(error)
+        return ErrorServer(error, req, res, next)
     }
 }
 
@@ -49,7 +49,7 @@ const getByCategory = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        next(error)
+        return ErrorServer(error, req, res, next)
     }
 }
 
@@ -62,7 +62,7 @@ const searchProduct = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        next(error)
+        return ErrorServer(error, req, res, next)
     }
 }
 
@@ -75,7 +75,7 @@ const updateProduct = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        next(error)
+        return ErrorServer(error, req, res, next)
     }
 }
 
@@ -87,7 +87,7 @@ const deleteProduct = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        next(error)
+        return ErrorServer(error, req, res, next)
     }
 }
 

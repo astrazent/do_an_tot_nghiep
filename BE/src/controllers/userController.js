@@ -1,6 +1,6 @@
 import { userService } from '../services/userService.js'
 import { StatusCodes } from 'http-status-codes'
-import ErrorServer from '../utils/ErrorServer.js'
+import ErrorServer from '~/utils/ErrorServer'
 
 const register = async (req, res, next) => {
     try {
@@ -9,8 +9,8 @@ const register = async (req, res, next) => {
             message: 'Đăng ký thành công',
             data,
         })
-    } catch (err) {
-        next(error)
+    } catch (error) {
+        return ErrorServer(error, req, res, next)
     }
 }
 
@@ -29,8 +29,8 @@ const login = async (req, res, next) => {
             message: 'Đăng nhập thành công',
             data,
         })
-    } catch (err) {
-        next(error)
+    } catch (error) {
+        return ErrorServer(error, req, res, next)
     }
 }
 
@@ -42,8 +42,8 @@ const getByIdUser = async (req, res, next) => {
             message: 'Lấy thông tin khách hàng thành công',
             data,
         })
-    } catch (err) {
-        next(error)
+    } catch (error) {
+        return ErrorServer(error, req, res, next)
     }
 }
 
@@ -55,8 +55,8 @@ const getListUser = async (req, res, next) => {
             message: 'Lấy danh sách khách hàng thành công',
             data,
         })
-    } catch (err) {
-        next(error)
+    } catch (error) {
+        return ErrorServer(error, req, res, next)
     }
 }
 
@@ -68,8 +68,8 @@ const updateUser = async (req, res, next) => {
             message: 'Cập nhật thông tin thành công',
             data,
         })
-    } catch (err) {
-        next(error)
+    } catch (error) {
+        return ErrorServer(error, req, res, next)
     }
 }
 
@@ -80,8 +80,8 @@ const deleteUser = async (req, res, next) => {
         return res.status(StatusCodes.OK).json({
             data,
         })
-    } catch (err) {
-        next(error)
+    } catch (error) {
+        return ErrorServer(error, req, res, next)
     }
 }
 

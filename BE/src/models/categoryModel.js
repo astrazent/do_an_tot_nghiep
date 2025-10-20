@@ -10,6 +10,9 @@ const CATEGORIES_SCHEMA = Joi.object({
         'string.min': 'Name tối thiểu 3 ký tự',
         'string.max': 'Name tối đa 100 ký tự',
     }),
+    slug: Joi.string().max(255).allow('', null).messages({
+        'string.max': 'Slug tối đa 255 ký tự',
+    }),
     description: Joi.string().max(255).allow('', null).messages({
         'string.max': 'Description tối đa 255 ký tự',
     }),
@@ -28,14 +31,22 @@ const CategoriesModel = {
 
         const conn = getConnection()
         const [result] = await conn.execute(
-            `INSERT INTO ${CATEGORIES_TABLE_NAME} (name, description, parent_id) 
-            VALUES (?, ?, ?)`,
-            [value.name, value.description, value.parent_id]
+            `INSERT INTO ${CATEGORIES_TABLE_NAME} (name, slug, description, parent_id) 
+            VALUES (?, ?, ?, ?)`,
+            [value.name, value.slug, value.description, value.parent_id]
         )
 
         return { id: result.insertId, ...value }
     },
 
+    async getCategoryByName(name) {
+        const conn = getConnection()
+        const [rows] = await conn.execute(
+            `SELECT * FROM ${CATEGORIES_TABLE_NAME} WHERE name = ?`,
+            [name]
+        )
+        return rows[0] || null
+    },
     
     async getCategoryById(id) {
         const conn = getConnection()
