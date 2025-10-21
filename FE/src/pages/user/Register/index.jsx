@@ -1,4 +1,3 @@
-//src/pages/User/Register.jsx
 import React from 'react'
 import AuthTheme from '~/components/user/auth/AuthTheme'
 import RegisterForm from '~/components/user/auth/RegisterForm'

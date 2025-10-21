@@ -1,6 +1,6 @@
 import React from 'react'
-import { Link } from 'react-router-dom' // Bonus: Import Link để điều hướng
-import { useAlert } from '~/contexts/AlertContext' // 1. Import hook useAlert
+import { Link } from 'react-router-dom'
+import { useAlert } from '~/contexts/AlertContext'
 import { FaShoppingCart } from 'react-icons/fa'
 import { BsStarFill, BsStar } from 'react-icons/bs'
 import ocop3Star from '~/assets/icon/ocop/ocop-3-star.png'
@@ -14,9 +14,8 @@ const ProductCard = ({
     ocop,
     rating = 0,
     reviewCount = 0,
-    slug, // Bonus: Thêm slug để tạo link
+    slug,
 }) => {
-    // 2. Lấy hàm showAlert từ context
     const { showAlert } = useAlert()
 
     const ocopMap = {
@@ -51,13 +50,9 @@ const ProductCard = ({
 
         // Gọi hàm hiển thị thông báo
         showAlert('Sản phẩm đã được thêm vào Giỏ hàng', { type: 'success' })
-
-        // (Tùy chọn) Thêm logic xử lý thêm vào giỏ hàng thật ở đây
-        // console.log(`Đã thêm sản phẩm "${name}" vào giỏ hàng.`)
     }
 
     return (
-        // Bonus: Bọc toàn bộ thẻ bằng Link
         <Link
             to={`/product/${slug}`}
             className="block relative w-56 h-96 flex flex-col bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow p-3 font-sans border border-gray-100"
@@ -93,7 +88,7 @@ const ProductCard = ({
                         </span>
                     )}
                 </div>
-                {/* 4. Gắn hàm handleAddToCart vào sự kiện onClick của button */}
+
                 <button
                     onClick={handleAddToCart}
                     className="group bg-gray-100 rounded-full flex items-center justify-center p-2

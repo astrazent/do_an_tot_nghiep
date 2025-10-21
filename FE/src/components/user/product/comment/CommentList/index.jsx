@@ -286,7 +286,7 @@ const CommentList = ({ comments }) => {
         </div>
     )
 }
-//Cách sử dụng component chính
+
 const PageComment = () => {
     return (
         <div className="container mx-auto p-4">

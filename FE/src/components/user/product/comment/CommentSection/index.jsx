@@ -10,7 +10,6 @@ import plusIcon from '~/assets/icon/stuff/positive.png'
 import minusIcon from '~/assets/icon/stuff/negative.png'
 import PageComment from '../CommentList'
 
-//Dữ liệu mẫu - Trong ứng dụng thực tế, bạn sẽ lấy dữ liệu này từ API
 const reviewData = {
     averageRating: 4.7,
     totalReviews: 283,
@@ -57,7 +56,6 @@ const reviewData = {
     ],
 }
 
-//Component con để hiển thị các ngôi sao
 const StarRating = ({ rating }) => {
     const totalStars = 5
     const fullStars = Math.floor(rating)

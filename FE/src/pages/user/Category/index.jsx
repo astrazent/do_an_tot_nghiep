@@ -55,15 +55,13 @@ function ProductLists() {
                     return product.categorySlug === 'san-pham-tu-vit'
                 case 'all':
                 default:
-                    return true // Trả về tất cả sản phẩm
+                    return true
             }
         })
         .filter(product => {
-            // Sau đó lọc theo thanh tìm kiếm
             return product.name.toLowerCase().includes(search.toLowerCase())
         })
         .sort((a, b) => {
-            // Logic sắp xếp giữ nguyên
             switch (sortBy) {
                 case 'price-asc':
                     return parsePrice(a.price) - parsePrice(b.price)

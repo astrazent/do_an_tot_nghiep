@@ -1,7 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import { FaChevronDown } from 'react-icons/fa'
 
-//Giả sử productMenuItems của bạn trông như thế này
 const productMenuItems = [
     { id: 1, name: 'Sản phẩm từ Vịt', href: '#' },
     { id: 2, name: 'Sản phẩm từ Gà', href: '#' },

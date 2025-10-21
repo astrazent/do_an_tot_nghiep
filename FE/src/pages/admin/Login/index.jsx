@@ -6,7 +6,7 @@ import icon from '~/assets/icon/logo/brand-logo.png'
 const Login = () => {
     return (
         <AuthTheme mainBgImage={background} iconImage={icon}>
-            <LoginForm isAdmin={true}/>
+            <LoginForm isAdmin={true} />
         </AuthTheme>
     )
 }

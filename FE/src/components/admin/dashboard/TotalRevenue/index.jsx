@@ -31,9 +31,15 @@ const TotalRevenue = () => {
     return (
         <div className="bg-white p-6 rounded-lg shadow-md h-full">
             <div>
-                <p className="text-sm text-gray-500">Total Revenue</p>
-                <h3 className="text-2xl font-bold text-gray-800">$346,042k</h3>
-                <p className="text-sm text-gray-400">Got From 1456 customers</p>
+                <p className="text-sm text-gray-500">
+                    Sản phẩm có doanh thu cao nhất
+                </p>
+                <h3 className="text-2xl font-bold text-gray-800">
+                    11.568.320đ
+                </h3>
+                <p className="text-sm text-gray-400">
+                    Được đặt bởi 112 khách hàng
+                </p>
             </div>
             <div className="h-40 mt-4">
                 <ResponsiveContainer width="100%" height="100%">

@@ -10,7 +10,6 @@ import {
 import gaUMuoi from '~/assets/image/shared/product/ga-u-muoi.png'
 import gaUXiDau from '~/assets/image/shared/product/ga-u-xi-dau.jpg'
 
-//Dữ liệu mẫu (thêm vài đơn hàng để thấy rõ việc lọc)
 const orders = [
     {
         id: '1',
@@ -40,7 +39,6 @@ const orders = [
     },
 ]
 
-//Component StatusBadge không thay đổi
 const StatusBadge = ({ status }) => {
     switch (status) {
         case 'Hoàn thành':
@@ -74,7 +72,6 @@ const StatusBadge = ({ status }) => {
     }
 }
 
-//Component mới cho trạng thái rỗng
 const EmptyState = () => {
     return (
         <div className="flex justify-center">

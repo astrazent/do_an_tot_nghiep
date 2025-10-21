@@ -76,7 +76,7 @@ const ProductCollection = ({
                                     <div className="flex justify-center items-center h-full">
                                         <Link
                                             to={`/product/${product.id}`}
-                                            className="block w-full" // block để cả card có thể click
+                                            className="block w-full"
                                         >
                                             <ProductCard
                                                 image={product.image}

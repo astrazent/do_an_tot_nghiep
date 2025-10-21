@@ -8,7 +8,6 @@ import pateGanVit from '~/assets/image/shared/product/pate-gan-vit.jpg'
 import gaDongTaoUMuoi from '~/assets/image/shared/product/dong-tao-u-muoi.png'
 import gaUMuoi from '~/assets/image/shared/product/ga-u-muoi.png'
 
-//Dữ liệu giả lập cho sản phẩm trong giỏ hàng
 const initialItems = [
     {
         id: 1,

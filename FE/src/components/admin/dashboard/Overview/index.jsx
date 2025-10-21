@@ -27,7 +27,7 @@ const Overview = () => {
         <div className="bg-white p-6 rounded-lg shadow-md h-full">
             <div className="flex justify-between items-center mb-4">
                 <h3 className="text-lg font-semibold text-gray-800">
-                    Overview
+                    Doanh thu tổng quan
                 </h3>
                 <button className="text-gray-400 hover:text-gray-600">
                     <HiOutlineDotsHorizontal size={24} />
@@ -49,12 +49,12 @@ const Overview = () => {
                             >
                                 <stop
                                     offset="5%"
-                                    stopColor="#FF8A8A"
+                                    stopColor="#4ADE80"
                                     stopOpacity={0.4}
-                                />
+                                />{' '}
                                 <stop
                                     offset="95%"
-                                    stopColor="#FF8A8A"
+                                    stopColor="#4ADE80"
                                     stopOpacity={0}
                                 />
                             </linearGradient>
@@ -68,7 +68,7 @@ const Overview = () => {
                         <Area
                             type="monotone"
                             dataKey="value"
-                            stroke="#F472B6"
+                            stroke="#22C55E"
                             fillOpacity={1}
                             fill="url(#colorValue)"
                             strokeWidth={2}

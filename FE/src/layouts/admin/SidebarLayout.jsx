@@ -1,29 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Header from '~/components/admin/dashboard/Header'
 import Sidebar from '~/components/admin/dashboard/Sidebar'
 import Footer from '~/components/admin/dashboard/Footer'
 import { Outlet } from 'react-router-dom'
 
 const SidebarLayout = () => {
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+
     return (
-        <div className="min-h-screen bg-gray-50 flex flex-col">
-            {/* Header nằm trên cùng, chiếm toàn bộ chiều ngang */}
-            <Header />
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 flex flex-col">
+            <Header onMenuClick={() => setIsSidebarOpen(!isSidebarOpen)} />
 
-            {/* Phần còn lại chia làm Sidebar + Content */}
             <div className="flex flex-1">
-                {/* Sidebar bên trái */}
-                <Sidebar />
+                <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
 
-                {/* Content chính */}
-                <main className="flex-1 p-5 bg-gray-100">
-                    <div className=" rounded-xl">
+                <main className="flex-1 p-4 sm:p-6 bg-gray-100 dark:bg-gray-800 lg:ml-72">
+                    <div className="rounded-xl">
                         <Outlet />
                     </div>
                 </main>
             </div>
 
-            {/* Footer nhỏ gọn */}
             <Footer />
         </div>
     )

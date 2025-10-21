@@ -166,6 +166,42 @@ VALUES (1, 'Bánh pía Sóc Trăng', 'banh-pia-soc-trang', 'Bánh pía Sóc Tră
     (104, 'Ngan Một Nắng', 'ngan-mot-nang', 'Thịt ngan được tẩm ướp gia vị rồi phơi qua một nắng, thịt dẻo, đậm vị, chiên hoặc nướng đều rất ngon.', 280000.00, 260000.00, 120, 110, 24, 140, 10, 1, NULL, 9),
     (105, 'Ngan Xông Khói', 'ngan-xong-khoi', 'Thịt ức ngan được tẩm ướp và xông khói theo quy trình nghiêm ngặt, thái lát mỏng ăn liền, hương vị hảo hạng.', 320000.00, 299000.00, 140, 130, 28, 150, 15, 1, 3, 9);
 
+-- Dữ liệu mẫu cho Coupons
+INSERT INTO Coupons 
+(code, description, type, value, max_value, min_order_value, quantity, used_count, start_date, end_date, status)
+VALUES
+('MTAY10', 'Áp dụng cho các sản phẩm đặc sản miền Tây như bánh pía, mật ong U Minh.', 1, 10, NULL, 100000, 100, 0, '2025-10-01', '2025-12-31', 1),
+
+('MBIEN20K', 'Áp dụng cho các sản phẩm hải sản vùng biển như chả mực, tôm sú.', 1, 20000, NULL, 150000, 80, 0, '2025-10-01', '2025-12-30', 1),
+
+('MTRUNGSHIP', 'Áp dụng cho các đơn hàng đặc sản miền Trung như ruốc Huế, ruốc cá.', 0, 100, NULL, 100000, 150, 0, '2025-10-05', '2025-12-31', 1),
+
+('MBAC15', 'Giảm giá các sản phẩm miền Bắc như gà Đông Tảo, gà cháy tỏi.', 1, 15, NULL, 120000, 100, 0, '2025-10-10', '2025-12-25', 1),
+
+('DINHDUONG50K', 'Giảm 50,000đ cho các loại hạt dinh dưỡng cao cấp.', 1, 50000, NULL, 200000, 200, 0, '2025-10-01', '2025-12-31', 1),
+
+('VITSHIP', 'Áp dụng miễn phí vận chuyển cho các món đặc sản từ vịt như chả vịt, pate gan vịt.', 0, 100, NULL, 80000, 120, 0, '2025-10-01', '2025-12-31', 1);
+
+-- Dữ liệu mẫu cho CouponScopes
+INSERT INTO CouponScopes (coupon_id, scope_type, category_id, product_id) VALUES
+-- Giảm 10% cho đặc sản miền Tây
+(1, 1, 1, NULL),
+
+-- Giảm 20k cho đặc sản miền biển
+(2, 1, 2, NULL),
+
+-- Miễn phí ship cho đặc sản miền Trung
+(3, 1, 3, NULL),
+
+-- Giảm 15% cho đặc sản miền Bắc
+(4, 1, 4, NULL),
+
+-- Giảm 50k cho đặc sản dinh dưỡng
+(5, 1, 5, NULL),
+
+-- Miễn phí ship cho đặc sản từ vịt
+(6, 1, 6, NULL);
+
 -- Dữ liệu mẫu cho CartItems
 INSERT INTO CartItems (qty_total, price_total, user_id, product_id) VALUES
 (1, 45000, 1, 1),
@@ -179,12 +215,12 @@ INSERT INTO CartItems (qty_total, price_total, user_id, product_id) VALUES
 (2, 130000, 2, 10);
 
 -- Dữ liệu mẫu cho Discounts
-INSERT INTO Discounts (name, description, value, min_price, start_date, end_date, status) VALUES
-('Giảm 10% mùa hè', 'Áp dụng cho tất cả đặc sản mùa hè', 10, 100000, '2025-06-01 00:00:00', '2025-08-31 23:59:59', 1),
-('Flash Sale 50k', 'Giảm trực tiếp 50.000 VND cho đơn hàng đặc sản từ 500.000 VND', 50000, 500000, '2025-09-20 00:00:00', '2025-09-25 23:59:59', 1),
-('Mua 1 tặng 1', 'Chương trình mua 1 tặng 1 cho một số đặc sản chọn lọc', 100, 0, '2025-10-01 00:00:00', '2025-10-10 23:59:59', 0),
-('Giảm 20% dịp lễ', 'Khuyến mại 20% tất cả đặc sản dịp lễ', 20, 200000, '2025-12-20 00:00:00', '2025-12-31 23:59:59', 1),
-('Free Ship 0đ', 'Miễn phí vận chuyển cho đơn hàng đặc sản trên 300.000 VND', 0, 300000, '2025-09-01 00:00:00', '2025-09-30 23:59:59', 1);
+INSERT INTO Discounts (name, description, value, start_date, end_date, status) VALUES
+('Giảm 10% mùa hè', 'Áp dụng cho tất cả đặc sản mùa hè', 10, '2025-06-01 00:00:00', '2025-08-31 23:59:59', 1),
+('Flash Sale 50k', 'Giảm trực tiếp 50.000 VND cho đơn hàng đặc sản', 50000, '2025-09-20 00:00:00', '2025-09-25 23:59:59', 1),
+('Mua 1 tặng 1', 'Chương trình mua 1 tặng 1 cho một số đặc sản chọn lọc', 100, '2025-10-01 00:00:00', '2025-10-10 23:59:59', 0),
+('Giảm 20% dịp lễ', 'Khuyến mại 20% tất cả đặc sản dịp lễ', 20, '2025-12-20 00:00:00', '2025-12-31 23:59:59', 1),
+('Free Ship 0đ', 'Miễn phí vận chuyển cho đơn hàng đặc sản', 0, '2025-09-01 00:00:00', '2025-09-30 23:59:59', 1);
 
 -- Dữ liệu mẫu cho DiscountProducts
 INSERT INTO DiscountProducts (discount_id, product_id) VALUES
@@ -200,12 +236,13 @@ INSERT INTO DiscountProducts (discount_id, product_id) VALUES
 (5, 10);
 
 -- Dữ liệu mẫu cho Sliders
-INSERT INTO Sliders (name, image_url, sort_order) VALUES
-('Khuyến mãi mùa hè', 'https://via.placeholder.com/800x300?text=Summer+Sale', 1),
-('Đặc sản bán chạy', 'https://via.placeholder.com/800x300?text=Best+Sellers', 2),
-('Mới ra mắt', 'https://via.placeholder.com/800x300?text=New+Arrivals', 3),
-('Ưu đãi cuối tuần', 'https://via.placeholder.com/800x300?text=Weekend+Deals', 4),
-('Sản phẩm nổi bật', 'https://via.placeholder.com/800x300?text=Featured+Products', 5);
+INSERT INTO Sliders (name, image_url, link_url, description, sort_order, status)
+VALUES
+('Khuyến mãi mùa hè', 'https://via.placeholder.com/800x300?text=Summer+Sale', '/sale/summer', 'Giảm giá sốc lên đến 50% cho toàn bộ sản phẩm mùa hè', 1, 1),
+('Đặc sản bán chạy', 'https://via.placeholder.com/800x300?text=Best+Sellers', '/collections/best-sellers', 'Top sản phẩm được yêu thích nhất trong tháng', 2, 1),
+('Mới ra mắt', 'https://via.placeholder.com/800x300?text=New+Arrivals', '/collections/new-arrivals', 'Khám phá bộ sưu tập sản phẩm mới nhất', 3, 1),
+('Ưu đãi cuối tuần', 'https://via.placeholder.com/800x300?text=Weekend+Deals', '/sale/weekend', 'Giảm giá đặc biệt chỉ trong cuối tuần này', 4, 1),
+('Sản phẩm nổi bật', 'https://via.placeholder.com/800x300?text=Featured+Products', '/collections/featured', 'Những sản phẩm được đánh giá cao và đáng mua nhất', 5, 1);
 
 -- Dữ liệu mẫu cho ProductImages
 INSERT INTO ProductImages (is_main, image_url, product_id)

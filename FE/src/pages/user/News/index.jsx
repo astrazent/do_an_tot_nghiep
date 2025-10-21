@@ -1,9 +1,8 @@
-//src/App.jsx
 import React from 'react'
 import FeaturedSection from '~/components/user/news/FeaturedSection'
 import HotTopics from '~/components/user/news/HotTopic'
 import ArticleList from '~/components/user/news/ArticleList'
-//Nhóm Gà, Vịt
+
 import vitUxiDau from '~/assets/image/shared/product/dac-san-van-dinh-vit-u-xi-dau.jpg'
 import chaVitThuyManh from '~/assets/image/shared/product/dac-san-van-dinh-cha-vit-thuy-manh.jpg'
 import mocVitVanDinh from '~/assets/image/shared/product/dac-san-moc-vit-van-dinh.png'
@@ -13,7 +12,7 @@ import pateGanVit from '~/assets/image/shared/product/pate-gan-vit.jpg'
 import gaDongTaoUMuoi from '~/assets/image/shared/product/dong-tao-u-muoi.png'
 import gaUMuoi from '~/assets/image/shared/product/ga-u-muoi.png'
 import gaUXiDau from '~/assets/image/shared/product/ga-u-xi-dau.jpg'
-//Nhóm Chả & Nem
+
 import chaChanVit from '~/assets/image/shared/product/dac-san-cha-chan-vit.png'
 import chaCaThacLacTuoi from '~/assets/image/shared/product/cha-ca-thac-lac-tuoi.jpg'
 import chaCaThacLacHauGiang from '~/assets/image/shared/product/cha-ca-thac-lac-hau-giang.jpg'
@@ -26,7 +25,7 @@ import mocOc from '~/assets/image/shared/product/moc-oc.png'
 import nemHaNoi from '~/assets/image/shared/product/nem-ha-noi.jpg'
 import nemLuiNhaTrang from '~/assets/image/shared/product/nem-lui-nha-trang.jpg'
 import xucXichCom from '~/assets/image/shared/product/xuc-xich-com.png'
-//Nhóm Heo & Đặc sản khác
+
 import chanGioGiaCay from '~/assets/image/shared/product/chan-gio-gia-cay.jpg'
 import taiHeoUXiDau from '~/assets/image/shared/product/tai-heo-u-xi-dau.png'
 import taiHeoUTuong from '~/assets/image/shared/product/tai-heo-u-tuong.png'

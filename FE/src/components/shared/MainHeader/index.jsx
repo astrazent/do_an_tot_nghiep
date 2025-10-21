@@ -7,7 +7,6 @@ import {
 } from 'react-icons/fa'
 import logo from '~/assets/icon/logo/brand-logo.png'
 
-//Dữ liệu mẫu cho menu người dùng
 const userMenuItems = [
     { id: 1, name: 'Tài khoản của tôi', to: '/user/profile' },
     { id: 2, name: 'Đơn hàng của tôi', to: '/user/purchase' },

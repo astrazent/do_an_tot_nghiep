@@ -14,7 +14,9 @@ const FeedbackCard = ({ avatar, name, location, feedback }) => {
             <h3 className="text-xl font-bold text-gray-800">{name}</h3>
             <p className="text-sm text-gray-500 mb-4">{location}</p>
 
-            <p className="text-gray-600 italic leading-relaxed">&quot;{feedback}&quot;</p>
+            <p className="text-gray-600 italic leading-relaxed">
+                &quot;{feedback}&quot;
+            </p>
         </div>
     )
 }

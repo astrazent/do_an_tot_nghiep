@@ -5,7 +5,6 @@ const TestAlert = () => {
     const { showAlert } = useAlert()
 
     const handleSuccess = () => {
-        // Cú pháp: showAlert(message, { type: '...', duration: ... })
         showAlert('Sản phẩm đã được thêm vào Giỏ hàng', { type: 'success' })
     }
 

@@ -3,7 +3,6 @@ import Button from '~/components/shared/Button'
 import InputField from '~/components/shared/InputField'
 import './loginForm.scss'
 
-// Import icons
 import { FcGoogle } from 'react-icons/fc'
 import { FaApple } from 'react-icons/fa'
 import { HiOutlineMail } from 'react-icons/hi'

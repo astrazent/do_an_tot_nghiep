@@ -3,8 +3,6 @@ import { FaHome, FaFacebookF } from 'react-icons/fa'
 
 const SocialSidebar = () => {
     return (
-        // Position fixed để nó luôn nằm ở một vị trí trên màn hình
-        // Có thể cần điều chỉnh left/top để phù hợp với layout của bạn
         <div className="absolute left-0 -translate-x-full pr-4 hidden lg:flex flex-col space-y-2 top-45">
             <a
                 href="#home"

@@ -3,7 +3,6 @@ import Button from '~/components/shared/Button'
 import InputField from '~/components/shared/InputField'
 import './registerForm.scss'
 
-//Import icons
 import { HiOutlineUser, HiOutlineMail, HiOutlinePhone } from 'react-icons/hi'
 import { RiLockPasswordLine } from 'react-icons/ri'
 import { AiOutlineEyeInvisible } from 'react-icons/ai'
