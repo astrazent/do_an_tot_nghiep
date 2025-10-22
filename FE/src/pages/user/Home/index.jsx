@@ -10,7 +10,6 @@ import { useState } from 'react'
 import './home.scss'
 import LogoCarousel from '~/components/user/home/LogoCarousel'
 
-//Nhóm Gà, Vịt
 import vitUxiDau from '~/assets/image/shared/product/dac-san-van-dinh-vit-u-xi-dau.jpg'
 import chaVitThuyManh from '~/assets/image/shared/product/dac-san-van-dinh-cha-vit-thuy-manh.jpg'
 import mocVitVanDinh from '~/assets/image/shared/product/dac-san-moc-vit-van-dinh.png'
@@ -20,7 +19,7 @@ import pateGanVit from '~/assets/image/shared/product/pate-gan-vit.jpg'
 import gaDongTaoUMuoi from '~/assets/image/shared/product/dong-tao-u-muoi.png'
 import gaUMuoi from '~/assets/image/shared/product/ga-u-muoi.png'
 import gaUXiDau from '~/assets/image/shared/product/ga-u-xi-dau.jpg'
-//Nhóm Chả & Nem
+
 import chaChanVit from '~/assets/image/shared/product/dac-san-cha-chan-vit.png'
 import chaCaThacLacTuoi from '~/assets/image/shared/product/cha-ca-thac-lac-tuoi.jpg'
 import chaCaThacLacHauGiang from '~/assets/image/shared/product/cha-ca-thac-lac-hau-giang.jpg'
@@ -33,19 +32,19 @@ import mocOc from '~/assets/image/shared/product/moc-oc.png'
 import nemHaNoi from '~/assets/image/shared/product/nem-ha-noi.jpg'
 import nemLuiNhaTrang from '~/assets/image/shared/product/nem-lui-nha-trang.jpg'
 import xucXichCom from '~/assets/image/shared/product/xuc-xich-com.png'
-//Nhóm Heo & Đặc sản khác
+
 import chanGioGiaCay from '~/assets/image/shared/product/chan-gio-gia-cay.jpg'
 import khauNhucLangSon from '~/assets/image/shared/product/khau-nhuc-lang-son.jpg'
 import taiHeoUMuoi from '~/assets/image/shared/product/tai-heo-u-muoi.png'
 import taiHeoUXiDau from '~/assets/image/shared/product/tai-heo-u-xi-dau.png'
 import taiHeoUTuong from '~/assets/image/shared/product/tai-heo-u-tuong.png'
-//Nhận xét từ khách hàng
+
 import damVinhHungAvatar from '~/assets/image/shared/layout/avatar/dam-vinh-hung.png'
 import hoaiLinhAvatar from '~/assets/image/shared/layout/avatar/hoai-linh.png'
 import ngocTrinhAvatar from '~/assets/image/shared/layout/avatar/ngoc-trinh.png'
 import quangLinhAvatar from '~/assets/image/shared/layout/avatar/quang-linh.png'
 import thuyTienAvatar from '~/assets/image/shared/layout/avatar/thuy-tien.png'
-//Ảnh báo
+
 import news1 from '~/assets/image/shared/news/tai-sao-nen-mua-ga-u-muoi-tai-bep-sach-viet.jpg'
 import news2 from '~/assets/image/shared/news/5-ly-do-tai-sao-ban-nen-chon-mua-cha-vit-tu-bep-sach-viet.png'
 import news3 from '~/assets/image/shared/news/an-uong-lanh-manh-voi-hat-va-trai-cay-say-bi-quyet-dinh-duong-tu-bep-sach-viet.jpg'
@@ -387,7 +386,6 @@ export const porkSpecialties = [
     },
 ]
 
-//Dữ liệu mẫu cho feedback
 const customerFeedback = [
     {
         id: 'cfb01',

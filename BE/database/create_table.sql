@@ -9,6 +9,8 @@ DROP TABLE IF EXISTS Sliders;
 DROP TABLE IF EXISTS DiscountProducts;
 DROP TABLE IF EXISTS Discounts;
 DROP TABLE IF EXISTS CartItems;
+DROP TABLE IF EXISTS CouponScopes;
+DROP TABLE IF EXISTS Coupons;
 DROP TABLE IF EXISTS Products;
 DROP TABLE IF EXISTS Users;
 DROP TABLE IF EXISTS PostCategories;
@@ -133,6 +135,43 @@ CREATE TABLE
         INDEX idx_products_name (name)
     ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
+-- Coupons
+CREATE TABLE Coupons (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    code VARCHAR(50) NOT NULL UNIQUE,
+    description VARCHAR(255),
+    type TINYINT NOT NULL COMMENT '0: Giảm phí ship, 1: Giảm giá sản phẩm',
+    value DECIMAL(12, 2) NOT NULL DEFAULT 0.00 COMMENT '1–100: %, >100: VND',
+    max_value DECIMAL(12, 2) NULL COMMENT 'Giới hạn giảm tối đa (nếu measure = 1)',
+    min_order_value DECIMAL(12, 2) DEFAULT 0.00 COMMENT 'Giá trị đơn tối thiểu để áp dụng',
+    quantity INT UNSIGNED DEFAULT 0 COMMENT 'Số lượng mã phát hành',
+    used_count INT UNSIGNED DEFAULT 0 COMMENT 'Số lần đã sử dụng',
+    start_date DATETIME NULL,
+    end_date DATETIME NULL,
+    status TINYINT NOT NULL DEFAULT 1 COMMENT '0: Ẩn, 1: Hoạt động, 2: Hết hạn, 3: Hủy',
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_coupons_code (code),
+    INDEX idx_coupons_status (status)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- CouponScopes
+CREATE TABLE CouponScopes (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    coupon_id INT UNSIGNED NOT NULL,
+    scope_type TINYINT NOT NULL COMMENT '0: Toàn shop, 1: Theo thể loại, 2: Theo sản phẩm',
+    category_id INT UNSIGNED NULL,
+    product_id INT UNSIGNED NULL,
+    FOREIGN KEY (coupon_id) REFERENCES Coupons (id)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (category_id) REFERENCES Categories (id)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES Products (id)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    INDEX idx_coupon_scope_type (scope_type),
+    INDEX idx_coupon_scope_coupon (coupon_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- CartItems
 CREATE TABLE
     CartItems (
@@ -141,7 +180,7 @@ CREATE TABLE
         price_total DECIMAL(12, 2) NOT NULL DEFAULT 0.00,
         created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-        user_id INT UNSIGNED NOT NULL,
+        user_id INT UNSIGNED NULL,
         product_id INT UNSIGNED NOT NULL,
         CONSTRAINT fk_cartitems_user FOREIGN KEY (user_id) REFERENCES Users (id) ON DELETE CASCADE ON UPDATE CASCADE,
         CONSTRAINT fk_cartitems_product FOREIGN KEY (product_id) REFERENCES Products (id) ON DELETE CASCADE ON UPDATE CASCADE
@@ -154,7 +193,6 @@ CREATE TABLE
         name VARCHAR(100) NOT NULL,
         description VARCHAR(255),
         value DECIMAL(12, 2) NOT NULL DEFAULT 0.00,
-        min_price DECIMAL(12, 2) NOT NULL DEFAULT 0.00,
         start_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
         end_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
         status TINYINT (1) NOT NULL DEFAULT 0,
@@ -175,15 +213,22 @@ CREATE TABLE
     ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 -- Sliders
-CREATE TABLE
+CREATE TABLE 
     Sliders (
-        id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-        name VARCHAR(100) NOT NULL,
-        image_url VARCHAR(255) NOT NULL,
-        sort_order INT (11) NOT NULL DEFAULT 0,
-        created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-    ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL COMMENT 'Tên slider/banner',
+    description VARCHAR(255) NULL COMMENT 'Mô tả ngắn về banner',
+    image_url VARCHAR(255) NOT NULL COMMENT 'Đường dẫn ảnh banner',
+    link_url VARCHAR(255) NULL COMMENT 'Liên kết khi click vào banner',
+    sort_order INT(11) NOT NULL DEFAULT 0 COMMENT 'Thứ tự hiển thị, nhỏ hơn thì hiển thị trước',
+    status TINYINT NOT NULL DEFAULT 1 COMMENT '0: Ẩn, 1: Hiển thị',
+    start_date DATETIME NULL COMMENT 'Ngày bắt đầu hiển thị banner',
+    end_date DATETIME NULL COMMENT 'Ngày kết thúc hiển thị banner',
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_slider_status (status),
+    INDEX idx_slider_sort (sort_order)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ProductImages
 CREATE TABLE
@@ -256,7 +301,7 @@ CREATE TABLE
         delivered_at DATETIME NULL, -- ngày giao
         created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-        user_id INT UNSIGNED NOT NULL,
+        user_id INT UNSIGNED NULL,
         payment_id INT UNSIGNED NOT NULL,
         shipment_id INT UNSIGNED NOT NULL, -- liên kết phương thức vận chuyển
         CONSTRAINT fk_transactions_user FOREIGN KEY (user_id) REFERENCES Users (id) ON DELETE CASCADE ON UPDATE CASCADE,

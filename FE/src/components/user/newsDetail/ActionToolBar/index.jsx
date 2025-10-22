@@ -11,9 +11,7 @@ import { SiGooglenews } from 'react-icons/si'
 const ActionToolbar = () => {
     return (
         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 my-5">
-            {/* Nghe đọc bài & Google News */}
             <div className="flex items-center gap-4">
-                {/* Component Audio Player giả lập */}
                 <div className="flex items-center gap-2 text-sm text-gray-700 border rounded-full p-1 pr-3">
                     <button className="p-2 rounded-full hover:bg-gray-100">
                         <FaPlay className="text-gray-600" />

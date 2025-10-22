@@ -3,13 +3,10 @@ import ArticleCard from '~/components/shared/ArticleCard'
 import Pagination from '~/components/shared/Pagination'
 
 const RelatedArticle = ({ title = 'Bài viết liên quan', articles = [] }) => {
-    // 1. Thêm State để quản lý trang hiện tại, mặc định là trang 1
     const [currentPage, setCurrentPage] = useState(1)
 
-    // 2. Thiết lập các hằng số cho việc phân trang
-    const articlesPerPage = 6 // <-- Bạn có thể thay đổi số bài viết trên mỗi trang ở đây
+    const articlesPerPage = 6
 
-    // Logic tính toán phân trang
     const totalPages = Math.ceil(articles.length / articlesPerPage)
     const indexOfLastArticle = currentPage * articlesPerPage
     const indexOfFirstArticle = indexOfLastArticle - articlesPerPage
@@ -18,12 +15,10 @@ const RelatedArticle = ({ title = 'Bài viết liên quan', articles = [] }) => 
         indexOfLastArticle
     )
 
-    // 3. Hàm để xử lý khi người dùng chuyển trang
     const handlePageChange = pageNumber => {
         setCurrentPage(pageNumber)
     }
 
-    // Nếu không có bài viết nào thì không hiển thị component
     if (!articles || articles.length === 0) return null
 
     return (

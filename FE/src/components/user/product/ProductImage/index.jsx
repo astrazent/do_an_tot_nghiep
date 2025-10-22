@@ -1,17 +1,15 @@
 import React, { useState } from 'react'
 import { FaChevronLeft, FaChevronRight, FaPlay } from 'react-icons/fa'
 
-//Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react'
-//Import Swiper styles
+
 import 'swiper/css'
 import 'swiper/css/navigation'
-//import required modules
+
 import { Navigation } from 'swiper/modules'
-//Import component CssImageZoom
+
 import CssImageZoom from '~/components/shared/CssImageZoom'
 
-//Import trực tiếp các ảnh/video
 import videoFile from '~/assets/video/food-review.mp4'
 import videoThumb from '~/assets/video/video-thumb.png'
 import img1 from '~/assets/image/shared/product/dong-tao-u-muoi.png'
@@ -22,7 +20,6 @@ import img5 from '~/assets/image/shared/product/dac-san-van-dinh-vit-u-xi-dau.jp
 import img6 from '~/assets/image/shared/product/dong-tao-u-muoi.png'
 import img7 from '~/assets/image/shared/product/khau-nhuc-lang-son.jpg'
 
-//Dữ liệu media
 const mediaItems = [
     { type: 'video', src: videoFile, thumbnail: videoThumb },
     { type: 'image', src: img1 },

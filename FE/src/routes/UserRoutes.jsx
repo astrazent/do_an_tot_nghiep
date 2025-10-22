@@ -18,15 +18,9 @@ import Category from '~/pages/user/Category'
 import SearchPage from '~/pages/user/SearchPage'
 
 function ProtectedRoute({ children }) {
-    // Thêm logic kiểm tra xác thực người dùng ở đây
-    // Ví dụ: const isAuthenticated = checkUserAuthentication();
-    // if (!isAuthenticated) {
-    //     return <Navigate to="/login" />
-    // }
     return children
 }
 
-//Layout cho user protected routes
 function UserProtectedLayout() {
     return (
         <ProtectedRoute>
@@ -37,7 +31,6 @@ function UserProtectedLayout() {
     )
 }
 
-//User routes
 export const userRoutes = [
     { path: '/', element: <Home /> },
     {

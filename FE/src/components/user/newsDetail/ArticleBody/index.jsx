@@ -1,5 +1,5 @@
 import React from 'react'
-// Bạn cần lưu ảnh vào thư mục public hoặc src và import vào
+
 import xucXichCom from '~/assets/image/shared/product/xuc-xich-com.png'
 
 const ArticleBody = () => {

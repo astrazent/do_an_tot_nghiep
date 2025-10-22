@@ -5,7 +5,6 @@ import { RegisterUser } from '~/Service/userService'
 import { useAlert } from '~/contexts/AlertContext'
 import './registerForm.scss'
 
-//Import icons
 import { HiOutlineUser, HiOutlineMail, HiOutlinePhone } from 'react-icons/hi'
 import { RiLockPasswordLine } from 'react-icons/ri'
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai'

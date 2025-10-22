@@ -1,4 +1,3 @@
-//src/components/FeaturedSection.jsx
 import React from 'react'
 import { Link } from 'react-router-dom'
 const BASE_ARTICLE_ROUTE = '/news-detail'

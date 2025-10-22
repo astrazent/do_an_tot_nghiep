@@ -17,9 +17,9 @@ const data = [
 
 const SaleThisMonth = () => {
     return (
-        <div className="bg-blue-600 text-white p-6 rounded-lg shadow-md h-full">
-            <h2 className="text-3xl font-bold">34,042</h2>
-            <p className="text-blue-200">Sales this month</p>
+        <div className="bg-green-600 text-white p-6 rounded-lg shadow-md h-full">
+            <h2 className="text-3xl font-bold">34.023.220đ</h2>
+            <p className="text-blue-200">Doanh thu tháng này</p>
             <div className="h-40 mt-4 -ml-6">
                 <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={data}>

@@ -13,14 +13,8 @@
     font-family: 'Poppins', sans-serif;
     overflow: hidden;
 
-    
-    background-image:
-        
-        var(--icon-bg-url),
-        
-        var(--main-bg-url);
+    background-image: var(--icon-bg-url), var(--main-bg-url);
 
-    
     background-position:
         top 20px left 150px,
         center center;
@@ -32,9 +26,9 @@
     &::before {
         content: '';
         position: absolute;
-        inset: 0; 
-        background-color: rgba(0, 0, 0, 0.2); 
-        z-index: 5; 
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.2);
+        z-index: 5;
     }
 }
 

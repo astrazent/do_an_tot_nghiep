@@ -1,5 +1,3 @@
-//src/components/user/product/ArticleListSection.jsx
-
 import React from 'react'
 
 const ArticleListSection = ({ title, articles }) => {

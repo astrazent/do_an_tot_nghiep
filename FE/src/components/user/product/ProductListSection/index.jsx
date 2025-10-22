@@ -1,8 +1,7 @@
 import React from 'react'
-import { Link } from 'react-router-dom' // BƯỚC 1: Import Link
+import { Link } from 'react-router-dom'
 
 const ProductListSection = ({ title, products, isPromotion = false }) => {
-    // Logic kiểm tra props không thay đổi
     if (!title || !products || products.length === 0) return null
 
     return (
@@ -12,9 +11,8 @@ const ProductListSection = ({ title, products, isPromotion = false }) => {
             </h3>
             <div className="mt-4 space-y-4">
                 {products.map(product => (
-                    // BƯỚC 2: Thay thế <a> bằng <Link> và href bằng to
                     <Link
-                        to={product.slug ? `/product/${product.slug}` : '#'} // Sử dụng href từ dữ liệu sản phẩm
+                        to={product.slug ? `/product/${product.slug}` : '#'}
                         key={product.id}
                         className="flex items-center gap-4 p-2 rounded-lg hover:bg-gray-100 transition-colors group"
                     >

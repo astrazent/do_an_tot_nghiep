@@ -6,7 +6,6 @@ import 'swiper/css/pagination'
 import 'swiper/css/navigation'
 import './banner.scss'
 
-//Import banner
 import slide1 from '~/assets/image/shared/layout/banner/banner_1.jpg'
 import slide2 from '~/assets/image/shared/layout/banner/banner_2.png'
 import slide3 from '~/assets/image/shared/layout/banner/banner_3.png'

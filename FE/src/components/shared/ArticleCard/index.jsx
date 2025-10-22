@@ -1,7 +1,6 @@
 import React from 'react'
-import { Link } from 'react-router-dom' // 1. Import Link
+import { Link } from 'react-router-dom'
 
-// 2. Thêm 'slug' vào danh sách props
 const ArticleCard = ({
     image,
     title,
@@ -12,11 +11,7 @@ const ArticleCard = ({
 }) => {
     return (
         <article className="group">
-            {/* 3. Thay thế thẻ <a> bằng component <Link> */}
-            <Link
-                to={`/news-detail/${slug}`} // 4. Sử dụng prop 'to' với đường dẫn động
-                className="block"
-            >
+            <Link to={`/news-detail/${slug}`} className="block">
                 <div
                     className={`overflow-hidden rounded-lg shadow-md mb-4 ${imageHeight}`}
                 >

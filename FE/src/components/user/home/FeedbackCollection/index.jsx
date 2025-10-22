@@ -3,7 +3,6 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination, Autoplay } from 'swiper/modules'
 import FeedbackCard from '~/components/shared/FeedbackCard'
 
-//Import Swiper & SCSS styles
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'

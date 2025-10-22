@@ -37,11 +37,9 @@ const UserSidebar = () => {
                     {menuItems.map(item => {
                         const IconComponent = item.icon
                         return (
-                            // 3. Sử dụng NavLink thay cho button
                             <NavLink
                                 key={item.id}
                                 to={item.path}
-                                // 4. Thêm style cho trạng thái 'active'
                                 className={({ isActive }) =>
                                     `w-full flex items-center gap-3 p-3 text-left rounded-md transition-colors duration-200 border ${
                                         isActive

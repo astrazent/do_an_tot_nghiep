@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter } from 'react-router-dom' // Giữ nguyên BrowserRouter
+import { BrowserRouter } from 'react-router-dom'
 import { createRoot } from 'react-dom/client'
 import App from './App'
 import { Provider } from 'react-redux'
@@ -9,19 +9,21 @@ import '~/index.css'
 import { AuthProvider } from './contexts/authContext'
 import { AlertProvider } from './contexts/AlertContext'
 import ScrollPageToTop from './components/shared/ScrollPageToTop'
+import { ThemeProvider } from './contexts/ThemeContext'
 
 createRoot(document.getElementById('root')).render(
     <React.StrictMode>
         <Provider store={store}>
-            <PersistGate loading={null} persistor={persistor}>
-                <AuthProvider>
+            <AuthProvider>
+                <ThemeProvider>
                     <AlertProvider>
                         <BrowserRouter>
+                            <ScrollPageToTop />
                             <App />
                         </BrowserRouter>
                     </AlertProvider>
-                </AuthProvider>
-            </PersistGate>
+                </ThemeProvider>
+            </AuthProvider>
         </Provider>
     </React.StrictMode>
 )

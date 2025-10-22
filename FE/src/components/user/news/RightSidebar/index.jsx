@@ -1,5 +1,3 @@
-//src/components/user/product/RightSidebar.jsx
-
 import React from 'react'
 import ArticleListSection from '../ArticleListSection'
 import ProductListSection from '~/components/user/product/ProductListSection'

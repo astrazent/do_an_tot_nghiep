@@ -1,94 +1,232 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { NavLink, useLocation } from 'react-router-dom'
 import {
-    FiChevronRight,
-    FiHome,
-    FiGrid,
-    FiEdit,
-    FiFileText,
-    FiPieChart,
-    FiSliders,
-    FiShoppingBag,
-    FiUsers,
-    FiLock,
-    FiMessageSquare,
-} from 'react-icons/fi'
+    HiOutlineViewGrid,
+    HiOutlineUserGroup,
+    HiOutlineCube,
+    HiOutlineShoppingBag,
+    HiOutlineClipboardList,
+    HiOutlineChatAlt2,
+    HiChevronDown,
+    HiOutlineCurrencyDollar,
+    HiOutlineChartBar,
+    HiOutlineCash,
+    HiOutlineUsers,
+    HiOutlineNewspaper,
+    HiOutlineDocumentAdd,
+    HiX,
+} from 'react-icons/hi'
+import { MdLocalOffer, MdAdsClick, MdArticle } from 'react-icons/md'
 
-const Sidebar = () => {
-    const [activeItem, setActiveItem] = useState('Dashboard')
+const mainNavLinks = [
+    {
+        name: 'Bảng điều khiển',
+        icon: <HiOutlineViewGrid />,
+        path: '/admin',
+        end: true,
+    },
+    {
+        name: 'Doanh thu',
+        icon: <HiOutlineCurrencyDollar />,
+        hasSubmenu: true,
+        submenu: [
+            {
+                name: 'Phân tích',
+                path: '/admin/revenue/analysis',
+                icon: <HiOutlineChartBar />,
+            },
+            {
+                name: 'Nguồn tiền',
+                path: '/admin/revenue/sources',
+                icon: <HiOutlineCash />,
+            },
+        ],
+    },
+    {
+        name: 'Khách hàng',
+        icon: <HiOutlineUserGroup />,
+        hasSubmenu: true,
+        submenu: [
+            {
+                name: 'Phân tích',
+                path: '/admin/customers/analysis',
+                icon: <HiOutlineChartBar />,
+            },
+            {
+                name: 'Quản lý người dùng',
+                path: '/admin/customers/management',
+                icon: <HiOutlineUsers />,
+            },
+        ],
+    },
+    {
+        name: 'Kho',
+        icon: <HiOutlineCube />,
+        hasSubmenu: true,
+        submenu: [
+            {
+                name: 'Phân tích kho',
+                path: '/admin/inventory/analysis',
+                icon: <HiOutlineChartBar />,
+            },
+            {
+                name: 'Quản lý kho',
+                path: '/admin/inventory/management',
+                icon: <HiOutlineClipboardList />,
+            },
+        ],
+    },
+    { name: 'Đơn hàng', icon: <HiOutlineShoppingBag />, path: '/admin/orders' },
+    { name: 'Khuyến mãi', icon: <MdLocalOffer />, path: '/admin/promotions' },
+    { name: 'Banner', icon: <MdAdsClick />, path: '/admin/banner' },
+    {
+        name: 'Blog',
+        icon: <MdArticle />,
+        hasSubmenu: true,
+        submenu: [
+            {
+                name: 'Danh sách bài viết',
+                path: '/admin/blog/management',
+                icon: <HiOutlineNewspaper />,
+            },
+            {
+                name: 'Soạn bài viết',
+                path: '/admin/blog/create-new',
+                icon: <HiOutlineDocumentAdd />,
+            },
+        ],
+    },
+    { name: 'Tin nhắn', icon: <HiOutlineChatAlt2 />, path: '/admin/messages' },
+]
 
-    const menuItems = [
-        {
-            section: 'DASHBOARD & APPS',
-            items: [
-                { name: 'Dashboard', icon: <FiHome size={20} /> },
-                { name: 'Apps', icon: <FiGrid size={20} /> },
-            ],
-        },
-        {
-            section: 'COMPONENTS & UI',
-            items: [
-                { name: 'UI Elements', icon: <FiEdit size={20} /> },
-                { name: 'Forms & Tables', icon: <FiFileText size={20} /> },
-                { name: 'Charts', icon: <FiPieChart size={20} /> },
-            ],
-        },
-        {
-            section: 'COLLECTIONS',
-            items: [
-                { name: 'Widgets', icon: <FiSliders size={20} /> },
-                { name: 'Ecommerce', icon: <FiShoppingBag size={20} /> },
-                { name: 'Pages', icon: <FiUsers size={20} /> },
-            ],
-        },
-        {
-            section: 'LOGIN & ERROR',
-            items: [
-                { name: 'Authentication', icon: <FiLock size={20} /> },
-                { name: 'Miscellaneous', icon: <FiMessageSquare size={20} /> },
-            ],
-        },
-    ]
+const NavItem = ({ item, onClick }) => {
+    const { name, icon, path, hasSubmenu, submenu, end } = item
+    const location = useLocation()
+
+    const isChildActive =
+        hasSubmenu &&
+        submenu?.some(sub => location.pathname.startsWith(sub.path))
+    const [open, setOpen] = useState(isChildActive)
+
+    useEffect(() => {
+        if (isChildActive) {
+            setOpen(true)
+        }
+    }, [location.pathname, isChildActive])
+
+    const toggleSubmenu = () => setOpen(!open)
+
+    const activeClasses = 'bg-indigo-600 text-white'
+    const inactiveClasses =
+        'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
+    const activeParentClasses = 'bg-gray-100 dark:bg-gray-700'
+
+    if (hasSubmenu) {
+        return (
+            <div>
+                <button
+                    onClick={toggleSubmenu}
+                    className={`flex items-center justify-between w-full gap-3 px-4 py-3 rounded-lg transition-colors ${isChildActive ? activeParentClasses : inactiveClasses}`}
+                >
+                    <div className="flex items-center gap-4">
+                        {React.cloneElement(icon, { size: 22 })}
+                        <span className="flex-grow font-semibold text-base text-left">
+                            {name}
+                        </span>
+                    </div>
+                    <HiChevronDown
+                        size={20}
+                        className={`transition-transform duration-300 ${open ? 'rotate-180' : ''}`}
+                    />
+                </button>
+
+                <div
+                    className={`ml-8 mt-1 grid overflow-hidden transition-all duration-300 ease-in-out ${open ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}
+                >
+                    <div className="overflow-hidden space-y-1">
+                        {submenu?.map(sub => (
+                            <NavLink
+                                key={sub.name}
+                                to={sub.path}
+                                onClick={onClick}
+                                className={({ isActive }) =>
+                                    `flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm transition-colors ${isActive ? activeClasses : inactiveClasses}`
+                                }
+                            >
+                                {sub.icon &&
+                                    React.cloneElement(sub.icon, { size: 18 })}
+                                <span>{sub.name}</span>
+                            </NavLink>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        )
+    }
 
     return (
-        <div className="flex h-screen w-64 flex-col bg-white ">
-            <div className="flex-grow">
-                <nav className="flex-1 space-y-1 bg-white p-2">
-                    {menuItems.map(menu => (
-                        <div key={menu.section}>
-                            <h3 className="px-4 pt-4 text-xs font-semibold uppercase text-gray-400">
-                                {menu.section}
-                            </h3>
-                            <div className="mt-2 space-y-1">
-                                {menu.items.map(item => (
-                                    <a
-                                        key={item.name}
-                                        href="#"
-                                        onClick={() => setActiveItem(item.name)}
-                                        className={`group flex items-center rounded-md px-4 py-2 text-sm font-medium ${
-                                            activeItem === item.name
-                                                ? 'bg-blue-600 text-white'
-                                                : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-                                        }`}
-                                    >
-                                        <span
-                                            className={`mr-3 ${
-                                                activeItem === item.name
-                                                    ? 'text-white'
-                                                    : 'text-gray-400 group-hover:text-gray-500'
-                                            }`}
-                                        >
-                                            {item.icon}
-                                        </span>
-                                        <span>{item.name}</span>
-                                        <FiChevronRight className="ml-auto h-5 w-5 text-gray-400 transition-colors duration-150 ease-in-out group-hover:text-gray-500" />
-                                    </a>
-                                ))}
-                            </div>
-                        </div>
+        <NavLink
+            end={end}
+            to={path}
+            onClick={onClick}
+            className={({ isActive }) =>
+                `flex items-center justify-between gap-3 px-4 py-3 rounded-lg transition-colors ${isActive ? activeClasses : inactiveClasses}`
+            }
+        >
+            <div className="flex items-center gap-4">
+                {React.cloneElement(icon, { size: 22 })}
+                <span className="flex-grow font-semibold text-base">
+                    {name}
+                </span>
+            </div>
+        </NavLink>
+    )
+}
+
+const Sidebar = ({ isOpen, setIsOpen }) => {
+    const handleLinkClick = () => {
+        if (window.innerWidth < 1024) {
+            setIsOpen(false)
+        }
+    }
+
+    return (
+        <>
+            <div
+                onClick={() => setIsOpen(false)}
+                className={`fixed inset-0 bg-black/60 z-30 transition-opacity lg:hidden ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+            />
+
+            <aside
+                className={`fixed top-0 left-0 h-full w-72 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col z-40 transition-transform duration-300 ease-in-out
+                ${isOpen ? 'translate-x-0' : '-translate-x-full'} 
+                lg:translate-x-0 lg:fixed`}
+            >
+                <div className="p-4 h-16 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center shrink-0">
+                    <h1 className="text-xl font-bold text-indigo-600 dark:text-indigo-400 uppercase">
+                        Trang quản trị
+                    </h1>
+                    <button
+                        onClick={() => setIsOpen(false)}
+                        className="!p-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 lg:hidden"
+                    >
+                        <HiX
+                            size={24}
+                            className="text-gray-600 dark:text-gray-300"
+                        />
+                    </button>
+                </div>
+                <nav className="flex-grow px-4 py-4 space-y-2 overflow-y-auto">
+                    {mainNavLinks.map(item => (
+                        <NavItem
+                            key={item.name}
+                            item={item}
+                            onClick={handleLinkClick}
+                        />
                     ))}
                 </nav>
-            </div>
-        </div>
+            </aside>
+        </>
     )
 }
 
