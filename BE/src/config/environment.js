@@ -13,6 +13,7 @@ export const env = {
     APP_PORT: process.env.APP_PORT || 8023,
     APP_HOST: process.env.APP_HOST || 'localhost',
     BUILD_MODE: process.env.BUILD_MODE,
-
+    JWT_SECRET: process.env.JWT_SECRET || 'bepsachviet123',
     AUTHOR: process.env.AUTHOR || 'NP',
+    OPENROUTER_API_KEY: process.env.OPENROUTER_API_KEY
 }

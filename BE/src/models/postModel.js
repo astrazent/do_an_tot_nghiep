@@ -10,6 +10,9 @@ const POSTS_SCHEMA = Joi.object({
         'string.min': 'Title tối thiểu 3 ký tự',
         'string.max': 'Title tối đa 200 ký tự',
     }),
+    slug: Joi.string().max(200).allow('', null).messages({
+        'string.max': 'Slug tối đa 200 ký tự',
+    }),
     content: Joi.string().required().messages({
         'string.empty': 'Content không được để trống',
     }),
@@ -42,10 +45,11 @@ const PostsModel = {
 
         const conn = getConnection()
         const [result] = await conn.execute(
-            `INSERT INTO ${POSTS_TABLE_NAME} (title, content, author_name, description, status, published_at, admin_id) 
-            VALUES (?, ?, ?, ?, ?, ?, ?)`,
+            `INSERT INTO ${POSTS_TABLE_NAME} (title, slug, content, author_name, description, status, published_at, admin_id) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
             [
                 value.title,
+                value.slug,
                 value.content,
                 value.author_name,
                 value.description,

@@ -1,56 +1,114 @@
+import { commentService } from '~/services/commentService'
+import ErrorServer from '~/utils/ErrorServer'
 import { StatusCodes } from 'http-status-codes'
-import * as commentService from '../services/commentService.js'
 
-export const createComment = async (req, res, next) => {
+const createComment = async (req, res, next) => {
     try {
-        const { productId, rate, content } = req.body
-        const userId = req.user?.id || 1 // TODO: thay bằng user từ middleware auth
-
-        if (!productId) {
-            return res
-                .status(StatusCodes.BAD_REQUEST)
-                .json({ message: 'ProductId is required' })
-        }
-
-        if (!rate || rate < 1 || rate > 5) {
-            return res
-                .status(StatusCodes.BAD_REQUEST)
-                .json({ message: 'Rate must be 1-5' })
-        }
-
-        if (!content || content.trim() === '') {
-            return res
-                .status(StatusCodes.BAD_REQUEST)
-                .json({ message: 'Content cannot be empty' })
-        }
-
-        const comment = await commentService.addComment(
-            productId,
-            userId,
-            rate,
-            content
-        )
-
-        res.status(StatusCodes.CREATED).json(comment)
+        const data = await commentService.createCommentService(req.body)
+        return res.status(StatusCodes.OK).json({
+            message: 'Tạo mới comment thành công',
+            data,
+        })
     } catch (error) {
-        next(error)
+        return ErrorServer(error, req, res, next)
     }
 }
 
-export const getProductComments = async (req, res, next) => {
+const getByIdComment = async (req, res, next) => {
     try {
-        const { productId } = req.params
+        const data = await commentService.getByIdCommentService(req.query.commentId)
 
-        const comments = await commentService.getCommentsByProduct(productId)
-        const stats = await commentService.getCommentStats(productId)
-
-        res.status(StatusCodes.OK).json({
-            productId,
-            average: stats.avg_rate || 0,
-            total: stats.total_comments || 0,
-            comments,
+        return res.status(StatusCodes.OK).json({
+            message: 'Lấy comment thành công',
+            data,
         })
     } catch (error) {
-        next(error)
+        return ErrorServer(error, req, res, next)
     }
+}
+const getCommentByProductSlug = async (req, res, next) => {
+    try {
+        const data = await commentService.getCommentByProductSlugService(req.query.slug)
+
+        return res.status(StatusCodes.OK).json({
+            message: 'Lấy comment bằng slug thành công',
+            data,
+        })
+    } catch (error) {
+        return ErrorServer(error, req, res, next)
+    }
+}
+
+const getListComment = async (req, res, next) => {
+    try {
+        const data = await commentService.getListCommentService(req.body)
+
+        return res.status(StatusCodes.OK).json({
+            message: 'Lấy danh sách comment thành công',
+            data,
+        })
+    } catch (error) {
+        return ErrorServer(error, req, res, next)
+    }
+}
+
+const getListCommnentByProduct = async (req, res, next) => {
+    try {
+        const data = await commentService.getListCommentByProductService(req.query.productId)
+
+        return res.status(StatusCodes.OK).json({
+            message: 'Lấy danh sách comment theo sản phẩm thành công',
+            data,
+        })
+    } catch (error) {
+        return ErrorServer(error, req, res, next)
+    }
+}
+
+const getListCommentByUser = async (req, res, next) => {
+    try {
+        const data = await commentService.getListCommentByUserService(req.query.userId)
+
+        return res.status(StatusCodes.OK).json({
+            message: 'Lấy danh sách comment theo user thành công',
+            data,
+        })
+    } catch (error) {
+        return ErrorServer(error, req, res, next)
+    }
+}
+
+const updateComment = async (req, res, next) => {
+    try {
+        const data = await commentService.updateCommentService(req.query.commentId, req.body)
+        return res.status(StatusCodes.OK).json({
+            message: 'Cập nhật comment thành công',
+            data,
+        })
+    } catch (error) {
+        return ErrorServer(error, req, res, next)
+    }
+}
+
+const deleteComment = async (req, res, next) => {
+    try {
+        const data = await commentService.deleteCommentService(req.query.commentId)
+
+        return res.status(StatusCodes.OK).json({
+            data,
+        })
+    } catch (error) {
+        return ErrorServer(error, req, res, next)
+    }
+}
+
+export const commentController = {
+    createComment,
+    getByIdComment,
+    getCommentByProductSlug,
+    getListComment,
+    getListCommnentByProduct,
+    getListCommentByUser,
+    updateComment,
+    deleteComment,
 }

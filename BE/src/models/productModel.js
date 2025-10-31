@@ -10,6 +10,7 @@ const PRODUCTS_SCHEMA = Joi.object({
         'string.min': 'Name tối thiểu 3 ký tự',
         'string.max': 'Name tối đa 200 ký tự',
     }),
+    slug: Joi.string(),
     description: Joi.string().max(255).allow('', null).messages({
         'string.max': 'Description tối đa 255 ký tự',
     }),
@@ -28,6 +29,7 @@ const PRODUCTS_SCHEMA = Joi.object({
     low_stock_threshold: Joi.number().integer().min(0).default(0),
     last_restock_at: Joi.date().default(() => new Date()),
     status: Joi.number().integer().valid(0, 1).default(1),
+    ocop_rating: Joi.number().integer().default(0),
     category_id: Joi.number().integer().required().messages({
         'number.base': 'Category ID phải là số',
         'any.required': 'Category ID là bắt buộc',
@@ -35,7 +37,6 @@ const PRODUCTS_SCHEMA = Joi.object({
 })
 
 const ProductsModel = {
-    
     async createProduct(data) {
         const { error, value } = PRODUCTS_SCHEMA.validate(data, {
             abortEarly: false,
@@ -45,10 +46,11 @@ const ProductsModel = {
         const conn = getConnection()
         const [result] = await conn.execute(
             `INSERT INTO ${PRODUCTS_TABLE_NAME} 
-            (name, description, origin_price, price, buyed, rate_point_total, rate_count, stock_qty, low_stock_threshold, last_restock_at, status, category_id)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            (name, slug, description, origin_price, price, buyed, rate_point_total, rate_count, stock_qty, low_stock_threshold, last_restock_at, status, ocop_rating, category_id)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
                 value.name,
+                value.slug,
                 value.description,
                 value.origin_price,
                 value.price,
@@ -59,14 +61,57 @@ const ProductsModel = {
                 value.low_stock_threshold,
                 value.last_restock_at,
                 value.status,
+                value.ocop_rating,
                 value.category_id,
             ]
         )
-
         return { id: result.insertId, ...value }
     },
 
-    
+    async searchProductsByCategoryAndPrice(data, limit = 50, offset = 0) {
+        const conn = getConnection()
+        const { category, minPrice, maxPrice } = data
+
+        const params = []
+        let whereClause = 'WHERE 1=1'
+
+        // Nếu có category slug → join bảng Categories để lọc
+        if (category) {
+            whereClause += ' AND c.slug = ?'
+            params.push(category)
+        }
+
+        // Nếu có minPrice và maxPrice → lọc theo khoảng giá
+        if (minPrice !== undefined && maxPrice !== undefined) {
+            whereClause += ' AND p.price BETWEEN ? AND ?'
+            params.push(minPrice, maxPrice)
+        } else if (minPrice !== undefined) {
+            whereClause += ' AND p.price >= ?'
+            params.push(minPrice)
+        } else if (maxPrice !== undefined) {
+            whereClause += ' AND p.price <= ?'
+            params.push(maxPrice)
+        }
+
+        // Truy vấn
+        const [rows] = await conn.execute(
+            `
+        SELECT 
+            p.*,
+            c.name AS category_name,
+            c.slug AS category_slug
+        FROM ${PRODUCTS_TABLE_NAME} AS p
+        JOIN Categories AS c ON p.category_id = c.id
+        ${whereClause}
+        ORDER BY p.id DESC
+        LIMIT ? OFFSET ?
+        `,
+            [...params, limit, offset]
+        )
+
+        return rows
+    },
+
     async getProductById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -76,7 +121,6 @@ const ProductsModel = {
         return rows[0] || null
     },
 
-    
     async updateProduct(id, data) {
         const schema = PRODUCTS_SCHEMA.fork(
             Object.keys(PRODUCTS_SCHEMA.describe().keys),
@@ -99,7 +143,6 @@ const ProductsModel = {
         return this.getProductById(id)
     },
 
-    
     async deleteProduct(id) {
         const conn = getConnection()
         const [result] = await conn.execute(
@@ -109,7 +152,6 @@ const ProductsModel = {
         return result.affectedRows > 0
     },
 
-    
     async listProducts(limit = 50, offset = 0) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -119,7 +161,6 @@ const ProductsModel = {
         return rows
     },
 
-    
     async getProductsByCategory(category_id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -127,6 +168,68 @@ const ProductsModel = {
             [category_id]
         )
         return rows
+    },
+    async getProductBySlug(slug) {
+        if (!slug) return null
+
+        const conn = getConnection()
+        const [rows] = await conn.execute(
+            `SELECT * FROM ${PRODUCTS_TABLE_NAME}
+        WHERE slug = ?
+        LIMIT 1`,
+            [slug]
+        )
+
+        return rows.length ? rows[0] : null
+    },
+    async getRelatedBySlug(slug, limit = 10) {
+        if (!slug) return { sameCategory: [], coBought: [] }
+
+        const conn = getConnection()
+
+        try {
+            // 1️⃣ Lấy sản phẩm hiện tại
+            const [productRows] = await conn.execute(
+                `SELECT * FROM Products WHERE slug = ? LIMIT 1`,
+                [slug]
+            )
+
+            if (!productRows.length) return { sameCategory: [], coBought: [] }
+            const product = productRows[0]
+
+            // 2️⃣ Lấy các sản phẩm cùng category (ngoại trừ sản phẩm hiện tại)
+            const [categoryRows] = await conn.execute(
+                `SELECT * FROM Products 
+                WHERE category_id = ? AND slug != ?
+                ORDER BY created_at DESC
+                LIMIT ?`,
+                [product.category_id, slug, limit]
+            )
+
+            // 3️⃣ Lấy các sản phẩm được mua cùng với sản phẩm này
+            const [coBoughtRows] = await conn.execute(
+                `SELECT DISTINCT p.*
+                FROM OrderItems oi1
+                INNER JOIN OrderItems oi2 
+                    ON oi1.transaction_id = oi2.transaction_id 
+                    AND oi2.product_id != oi1.product_id
+                INNER JOIN Products p 
+                    ON p.id = oi2.product_id
+                INNER JOIN Products target 
+                    ON target.id = oi1.product_id
+                WHERE target.slug = ?
+                LIMIT ?`,
+                [slug, limit]
+            )
+
+            return {
+                sameCategory: categoryRows,
+                coBought: coBoughtRows,
+            }
+        } catch (error) {
+            console.error('Lỗi khi lấy sản phẩm liên quan:', error)
+            throw error
+        }
     },
 }
 

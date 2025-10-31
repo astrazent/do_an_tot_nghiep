@@ -1,17 +1,46 @@
 import React, { useState } from 'react'
 import Button from '~/components/shared/Button'
 import InputField from '~/components/shared/InputField'
+import { useLoginUser } from '~/hooks/user/useUser'
+import { useAlert } from '~/contexts/AlertContext'
+import { updateUser } from '~/Redux/reducers/userReducer'
 import './loginForm.scss'
 
 import { FcGoogle } from 'react-icons/fc'
 import { FaApple } from 'react-icons/fa'
-import { HiOutlineMail } from 'react-icons/hi'
+import { HiOutlineUser } from 'react-icons/hi'
 import { RiLockPasswordLine } from 'react-icons/ri'
-import { AiOutlineEyeInvisible } from 'react-icons/ai'
+import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
-const LoginForm = ({ isAdmin = false }) => {
-    const [email, setEmail] = useState('')
+const LoginForm = () => {
+    const { showAlert } = useAlert()
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [showPw, setShowPw] = useState(false)
+
+    // ✅ Dùng TanStack Query mutation
+    const { mutate: login, isPending } = useLoginUser({
+        onSuccess: data => {
+            dispatch(updateUser({ ...data.data }))
+            showAlert(data.message, { type: 'success', duration: 2000 })
+            navigate('/')
+        },
+        onError: error => {
+            const message =
+                error?.response?.data?.message || 'Đăng nhập thất bại'
+            showAlert(message, { type: 'error', duration: 2000 })
+        },
+    })
+
+    const handleLogin = e => {
+        e.preventDefault()
+        login({ username, password })
+    }
 
     return (
         <div className="login-card">
@@ -27,22 +56,30 @@ const LoginForm = ({ isAdmin = false }) => {
                 <span className="separator-line"></span>
             </div>
 
-            <form className="login-form">
+            <form className="login-form" onSubmit={handleLogin}>
                 <InputField
-                    type="email"
-                    placeholder="Địa chỉ email"
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
-                    icon={<HiOutlineMail />}
+                    type="text"
+                    placeholder="Tên đăng nhập"
+                    value={username}
+                    onChange={e => setUsername(e.target.value)}
+                    icon={<HiOutlineUser />}
                     required
                 />
                 <InputField
-                    type="password"
+                    type={showPw ? 'text' : 'password'}
                     placeholder="Mật khẩu"
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                     icon={<RiLockPasswordLine />}
-                    rightIcon={<AiOutlineEyeInvisible />}
+                    rightIcon={
+                        showPw ? (
+                            <AiOutlineEye onClick={() => setShowPw(false)} />
+                        ) : (
+                            <AiOutlineEyeInvisible
+                                onClick={() => setShowPw(true)}
+                            />
+                        )
+                    }
                     required
                 />
 
@@ -50,16 +87,18 @@ const LoginForm = ({ isAdmin = false }) => {
                     Quên mật khẩu?
                 </a>
 
-                <Button type="submit" className="login-button">
-                    Đăng nhập
+                <Button
+                    type="submit"
+                    className="login-button"
+                    disabled={isPending}
+                >
+                    {isPending ? 'Đang đăng nhập...' : 'Đăng nhập'}
                 </Button>
             </form>
 
-            {!isAdmin && (
-                <p className="signup-link">
-                    Chưa có tài khoản? <a href="#">Đăng kí ngay</a>
-                </p>
-            )}
+            <p className="signup-link">
+                Chưa có tài khoản? <a href="register">Đăng kí ngay</a>
+            </p>
         </div>
     )
 }

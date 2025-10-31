@@ -10,6 +10,7 @@ import boardRoutes from './boardRoute.js'
 import adminRoutes from "./adminRoute.js"
 import authRoutes from './authRoute.js'
 import cartItemRoutes from './cartItemRoute.js'
+import categoryRoutes from './categoryRoute.js'
 import paymentRoutes from './paymentRoute.js'
 import shipmentRoutes from "./shipmentRoute.js"
 import discountRoutes from "./discountRoute.js"
@@ -18,8 +19,13 @@ import transactionRoutes from "./transactionRoute.js"
 import orderItemRoutes from "./oderItemRoute.js"
 import { StatusCodes } from 'http-status-codes'
 import orderDetailRoutes from './orderDetailRoutes.js'
-import commentRoutes from './commentRoutes.js'
+import commentRoutes from './commentRoute.js'
+import commentReactionRoute from './commentReactionRoute.js'
+import aiRoutes from './aiRoute.js'
+import postRoutes from './postRoute.js'
 import productRoutes from './productRoute.js'
+import userRoutes from "./userRoute.js"
+import postCategoryRoutes from "./postCategoryRoute.js"
 // import columnRoutes from './columnRoute.js'
 // import cardRoutes from './cardRoute.js'
 
@@ -35,8 +41,10 @@ Router.get('/ping', (req, res) => {
  */
 Router.use('/boards', boardRoutes)
 Router.use('/auth', authRoutes)
+Router.use('/user', userRoutes)
 Router.use('/admin', adminRoutes)
 Router.use('/cart', cartItemRoutes)
+Router.use('/category', categoryRoutes)
 Router.use('/payment', paymentRoutes)
 Router.use('/shipment', shipmentRoutes)
 Router.use('/discount', discountRoutes)
@@ -45,7 +53,11 @@ Router.use('/transaction', transactionRoutes)
 Router.use('/order_item', orderItemRoutes)
 Router.use('/orders', orderDetailRoutes)
 Router.use('/comments', commentRoutes)
+Router.use('/reactions', commentReactionRoute)
+Router.use('/ai', aiRoutes)
 Router.use('/products', productRoutes)
+Router.use('/post', postRoutes)
+Router.use('/post_category', postCategoryRoutes)
 // Router.use('/columns', columnRoutes)
 // Router.use('/cards', cardRoutes)
 

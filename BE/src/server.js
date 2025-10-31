@@ -7,7 +7,7 @@ import { env } from '~/config/environment.js'
 import { APIs_V1 } from '~/routes/index.js'
 import { APIs_V2 } from '~/routes/index.js'
 import { errorHandlingMiddleware } from './middlewares/errorHandling'
-import orderRoutes from './routes/v1/orderDetailRoutes.js'
+import ErrorServer from './utils/ErrorServer'
 
 const START_SERVER = () => {
     const app = express()
@@ -15,8 +15,8 @@ const START_SERVER = () => {
     
     app.use(
         cors({
-            origin: 'http://localhost', 
-            methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+            origin: 'http://localhost:5173', 
+            methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'], 
             allowedHeaders: ['Content-Type', 'Authorization'], 
             credentials: true, 
         })
@@ -24,8 +24,7 @@ const START_SERVER = () => {
 
     
     app.use(cookieParser())
-
-    
+    app.use(ErrorServer)
     app.use(express.json()) 
     app.use(express.urlencoded({ extended: true })) 
 

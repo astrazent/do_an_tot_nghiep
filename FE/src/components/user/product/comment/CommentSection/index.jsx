@@ -1,60 +1,27 @@
-import React from 'react'
+import React, { useMemo, useState, useEffect } from 'react'
 import {
     FaStar,
+    FaStarHalf,
+    FaRobot,
     FaThumbsUp,
     FaThumbsDown,
-    FaRobot,
-    FaStarHalf,
 } from 'react-icons/fa'
 import plusIcon from '~/assets/icon/stuff/positive.png'
 import minusIcon from '~/assets/icon/stuff/negative.png'
 import PageComment from '../CommentList'
+import { useCommentsByProductSlug } from '~/hooks/user/useComment'
+import { usePostCommentAI } from '~/hooks/user/useAI'
 
-const reviewData = {
-    averageRating: 4.7,
-    totalReviews: 283,
-    ratingDistribution: [
-        { stars: 5, count: 236 },
-        { stars: 4, count: 32 },
-        { stars: 3, count: 6 },
-        { stars: 2, count: 4 },
-        { stars: 1, count: 5 },
-    ],
-    aiSummary: {
-        product: {
-            positive: [
-                'Chất lượng giấy tốt, sách đẹp, trình bày rõ ràng.',
-                'Nội dung sách hay, bổ ích, ý nghĩa.',
-                'Sản phẩm đúng mô tả, không lỗi phông chữ.',
-            ],
-            negative: [
-                'Một số nội dung không hấp dẫn, lan man, không như mong đợi.',
-            ],
-            positiveCount: 24,
-            negativeCount: 6,
-        },
-        service: {
-            positive: [
-                'Giao hàng nhanh, đúng hẹn.',
-                'Đóng gói cẩn thận, kỹ càng.',
-                'Nhân viên giao hàng thân thiện, nhiệt tình.',
-            ],
-            negative: [],
-            positiveCount: 20,
-            negativeCount: 0,
-        },
-    },
-    filters: [
-        'Mới nhất',
-        'Có hình ảnh',
-        'Đã mua hàng',
-        '5 sao',
-        '4 sao',
-        '3 sao',
-        '2 sao',
-        '1 sao',
-    ],
-}
+const filters = [
+    'Mới nhất',
+    'Có hình ảnh',
+    'Đã mua hàng',
+    '5 sao',
+    '4 sao',
+    '3 sao',
+    '2 sao',
+    '1 sao',
+]
 
 const StarRating = ({ rating }) => {
     const totalStars = 5
@@ -67,9 +34,7 @@ const StarRating = ({ rating }) => {
             {[...Array(fullStars)].map((_, i) => (
                 <FaStar key={`full-${i}`} className="text-yellow-500" />
             ))}
-
             {halfStar && <FaStarHalf className="text-yellow-500" />}
-
             {[...Array(emptyStars)].map((_, i) => (
                 <FaStar key={`empty-${i}`} className="text-gray-300" />
             ))}
@@ -77,16 +42,160 @@ const StarRating = ({ rating }) => {
     )
 }
 
-const CommentSection = () => {
-    const {
-        averageRating,
-        totalReviews,
-        ratingDistribution,
-        aiSummary,
-        filters,
-    } = reviewData
+const CommentSection = ({ slug }) => {
+    const { data: rawData, isLoading, isError } = useCommentsByProductSlug(slug)
+    const [activeFilter, setActiveFilter] = useState('Mới nhất')
+    const [aiSummaryData, setAiSummaryData] = useState(null)
 
+    const {
+        mutate: summarizeAI,
+        data: aiSummaryResult,
+        isPending: isAiSummarizing,
+        isError: aiError,
+    } = usePostCommentAI(slug)
+
+    const comments = useMemo(() => {
+        if (Array.isArray(rawData)) {
+            return rawData
+        }
+        return rawData?.data || []
+    }, [rawData])
+
+    useEffect(() => {
+        if (comments && comments.length > 0 && !aiSummaryData) {
+            summarizeAI(comments)
+        }
+    }, [comments, summarizeAI, aiSummaryData])
+
+    useEffect(() => {
+        if (aiSummaryResult?.data?.summary) {
+            setAiSummaryData(aiSummaryResult.data.summary)
+        }
+    }, [aiSummaryResult])
+
+    const formattedComments = useMemo(() => {
+        if (!comments || comments.length === 0) return []
+        return comments.map(comment => {
+            const apiBaseUrl =
+                import.meta.env.VITE_API_BACKEND || 'http://localhost:8023'
+            const absoluteAvatarUrl = comment.avatar_url
+                ? comment.avatar_url.startsWith('http')
+                    ? comment.avatar_url
+                    : `${apiBaseUrl}${comment.avatar_url}`
+                : 'https://i.pravatar.cc/150?u=default-user'
+
+            return {
+                id: comment.id,
+                user_id: comment.user_id,
+                product_id: comment.product_id,
+                rating: comment.rate,
+                comment: comment.content,
+                date: new Date(comment.created_at).toLocaleDateString('vi-VN'),
+                author: comment.full_name || 'Người dùng ẩn danh',
+                avatar: absoluteAvatarUrl,
+                likes: comment.likes || 0,
+                dislikes: comment.dislikes || 0,
+                isVerified: true,
+                images: comment.images || [],
+            }
+        })
+    }, [comments])
+
+    const filteredComments = useMemo(() => {
+        switch (activeFilter) {
+            case 'Mới nhất':
+                return formattedComments
+            case 'Có hình ảnh':
+                return formattedComments.filter(
+                    c => c.images && c.images.length > 0
+                )
+            case 'Đã mua hàng':
+                return formattedComments.filter(c => c.isVerified)
+            case '5 sao':
+                return formattedComments.filter(c => c.rating === 5)
+            case '4 sao':
+                return formattedComments.filter(c => c.rating === 4)
+            case '3 sao':
+                return formattedComments.filter(c => c.rating === 3)
+            case '2 sao':
+                return formattedComments.filter(c => c.rating === 2)
+            case '1 sao':
+                return formattedComments.filter(c => c.rating === 1)
+            default:
+                return formattedComments
+        }
+    }, [formattedComments, activeFilter])
+
+    const reviewStats = useMemo(() => {
+        if (!comments || comments.length === 0) {
+            return {
+                averageRating: 0,
+                totalReviews: 0,
+                ratingDistribution: [
+                    { stars: 5, count: 0 },
+                    { stars: 4, count: 0 },
+                    { stars: 3, count: 0 },
+                    { stars: 2, count: 0 },
+                    { stars: 1, count: 0 },
+                ],
+            }
+        }
+
+        const totalReviews = comments.length
+        const ratingSum = comments.reduce(
+            (sum, comment) => sum + comment.rate,
+            0
+        )
+        const averageRating =
+            totalReviews > 0
+                ? parseFloat((ratingSum / totalReviews).toFixed(1))
+                : 0
+
+        const distribution = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 }
+        comments.forEach(c => {
+            if (distribution[c.rate] !== undefined) {
+                distribution[c.rate]++
+            }
+        })
+
+        const ratingDistribution = Object.keys(distribution)
+            .map(key => ({
+                stars: parseInt(key),
+                count: distribution[key],
+            }))
+            .sort((a, b) => b.stars - a.stars)
+
+        return { averageRating, totalReviews, ratingDistribution }
+    }, [comments])
+
+    const { averageRating, totalReviews, ratingDistribution } = reviewStats
     const maxCount = Math.max(...ratingDistribution.map(item => item.count), 1)
+
+    if (isLoading) {
+        return <div className="pt-8 border-t">Đang tải đánh giá...</div>
+    }
+
+    if (isError) {
+        return (
+            <div className="pt-8 border-t text-red-500">
+                Lỗi khi tải đánh giá.
+            </div>
+        )
+    }
+
+    if (totalReviews === 0) {
+        return (
+            <div className="pt-8 border-t">
+                <h2 className="text-xl font-bold mb-4 flex items-center uppercase">
+                    <span className="w-1 h-6 bg-green-600 mr-2 inline-block"></span>
+                    Đánh giá sản phẩm
+                </h2>
+                <p className="text-gray-600">
+                    Chưa có đánh giá nào cho sản phẩm này.
+                </p>
+            </div>
+        )
+    }
 
     return (
         <div className="pt-8 border-t">
@@ -94,7 +203,8 @@ const CommentSection = () => {
                 <span className="w-1 h-6 bg-green-600 mr-2 inline-block"></span>
                 Tổng quan đánh giá
             </h2>
-            <div className="flex flex-col md:flex-row">
+            <div className="flex flex-col md:flex-row gap-8">
+                {}
                 <div className="w-full md:w-1/2">
                     <div className="flex items-center gap-4">
                         <div className="text-5xl font-bold">
@@ -107,7 +217,7 @@ const CommentSection = () => {
                             </p>
                         </div>
                     </div>
-                    <div className="mt-4 space-y-2 w-3/4">
+                    <div className="mt-4 space-y-2 w-full lg:w-3/4">
                         {ratingDistribution.map(item => (
                             <div
                                 key={item.stars}
@@ -121,7 +231,7 @@ const CommentSection = () => {
                                     <div
                                         className="bg-green-600 h-2.5 rounded-full"
                                         style={{
-                                            width: `${(item.count / maxCount) * 100}%`,
+                                            width: `${(item.count / totalReviews) * 100}%`,
                                         }}
                                     ></div>
                                 </div>
@@ -133,121 +243,183 @@ const CommentSection = () => {
                     </div>
                 </div>
 
+                {}
                 <div className="w-full md:w-1/2">
                     <h3 className="text-lg font-semibold mb-2 flex items-center gap-2">
                         <FaRobot className="text-green-600" />
-                        Trợ lý AI tổng hợp từ các đánh giá mới nhất
+                        Trợ lý AI tổng hợp
                     </h3>
-                    <div className="text-sm space-y-4">
-                        <div>
-                            <p className="font-semibold">
-                                Về sản phẩm:{' '}
-                                <span className="font-normal text-gray-600">
-                                    ({aiSummary.product.positiveCount} tích cực,{' '}
-                                    {aiSummary.product.negativeCount} tiêu cực)
-                                </span>
-                            </p>
-                            <ul className="mt-1 list-inside">
-                                {aiSummary.product.positive.map((item, i) => (
-                                    <li
-                                        key={i}
-                                        className="flex items-start text-green-700"
-                                    >
-                                        <img
-                                            src={plusIcon}
-                                            alt="Plus"
-                                            className="w-4 h-4 mr-2 mt-1"
-                                        />
-                                        <span className="text-gray-800">
-                                            {item}
-                                        </span>
-                                    </li>
-                                ))}
-                                {aiSummary.product.negative.map((item, i) => (
-                                    <li
-                                        key={i}
-                                        className="flex items-start text-red-600"
-                                    >
-                                        <img
-                                            src={minusIcon}
-                                            alt="Minus"
-                                            className="w-4 h-4 mr-2 mt-1"
-                                        />
-                                        <span className="text-gray-800">
-                                            {item}
-                                        </span>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
 
-                        <div>
-                            <p className="font-semibold">
-                                Về dịch vụ:{' '}
-                                <span className="font-normal text-gray-600">
-                                    ({aiSummary.service.positiveCount} tích cực,{' '}
-                                    {aiSummary.service.negativeCount} tiêu cực)
-                                </span>
+                    {isAiSummarizing && (
+                        <div className="p-4 border rounded-lg bg-gray-50 text-sm text-gray-600">
+                            <p>
+                                AI đang phân tích và tổng hợp từ các đánh giá
+                                mới nhất, vui lòng đợi trong giây lát...
                             </p>
-                            <ul className="mt-1 list-inside">
-                                {aiSummary.service.positive.map((item, i) => (
-                                    <li
-                                        key={i}
-                                        className="flex items-start text-green-700"
-                                    >
-                                        <img
-                                            src={plusIcon}
-                                            alt="Plus"
-                                            className="w-4 h-4 mr-2 mt-1"
-                                        />
-                                        <span className="text-gray-800">
-                                            {item}
-                                        </span>
-                                    </li>
-                                ))}
-                                {aiSummary.service.negative.map((item, i) => (
-                                    <li
-                                        key={i}
-                                        className="flex items-start text-red-600"
-                                    >
-                                        <img
-                                            src={minusIcon}
-                                            alt="Minus"
-                                            className="w-4 h-4 mr-2 mt-1"
-                                        />
-                                        <span className="text-gray-800">
-                                            {item}
-                                        </span>
-                                    </li>
-                                ))}
-                            </ul>
                         </div>
-                    </div>
-                    <div className="mt-4 flex gap-2">
-                        <button
-                            style={{ border: '1px solid #d1d5db' }}
-                            className="p-2 rounded-md hover:bg-blue-50 hover:text-blue-600 hover:border-blue-300 transition-colors duration-200"
-                        >
-                            <FaThumbsUp />
-                        </button>
-                        <button
-                            style={{ border: '1px solid #d1d5db' }}
-                            className="p-2 rounded-md hover:bg-red-50 hover:text-red-600 hover:border-red-300 transition-colors duration-200"
-                        >
-                            <FaThumbsDown />
-                        </button>
-                    </div>
+                    )}
+
+                    {aiError && (
+                        <div className="p-4 border rounded-lg bg-red-50 text-sm text-red-700">
+                            <p>
+                                Rất tiếc, đã xảy ra lỗi khi tổng hợp đánh giá
+                                bằng AI. Vui lòng thử lại sau.
+                            </p>
+                        </div>
+                    )}
+
+                    {aiSummaryData && !isAiSummarizing && !aiError && (
+                        <div className="transition-opacity duration-500 ease-in-out">
+                            <div className="text-sm space-y-4">
+                                <div>
+                                    <p className="font-semibold">
+                                        Về sản phẩm:
+                                        <span className="font-normal text-gray-600">
+                                            {' '}
+                                            (
+                                            {
+                                                aiSummaryData.product
+                                                    .positiveCount
+                                            }{' '}
+                                            tích cực,{' '}
+                                            {
+                                                aiSummaryData.product
+                                                    .negativeCount
+                                            }{' '}
+                                            tiêu cực)
+                                        </span>
+                                    </p>
+                                    <ul className="mt-1 list-inside">
+                                        {aiSummaryData.product.positive.map(
+                                            (item, i) => (
+                                                <li
+                                                    key={`prod-pos-${i}`}
+                                                    className="flex items-start text-green-700"
+                                                >
+                                                    <img
+                                                        src={plusIcon}
+                                                        alt="Plus"
+                                                        className="w-4 h-4 mr-2 mt-1 flex-shrink-0"
+                                                    />
+                                                    <span className="text-gray-800">
+                                                        {item}
+                                                    </span>
+                                                </li>
+                                            )
+                                        )}
+                                        {aiSummaryData.product.negative.map(
+                                            (item, i) => (
+                                                <li
+                                                    key={`prod-neg-${i}`}
+                                                    className="flex items-start text-red-600"
+                                                >
+                                                    <img
+                                                        src={minusIcon}
+                                                        alt="Minus"
+                                                        className="w-4 h-4 mr-2 mt-1 flex-shrink-0"
+                                                    />
+                                                    <span className="text-gray-800">
+                                                        {item}
+                                                    </span>
+                                                </li>
+                                            )
+                                        )}
+                                    </ul>
+                                </div>
+                                {(aiSummaryData.service.positive.length > 0 ||
+                                    aiSummaryData.service.negative.length >
+                                        0) && (
+                                    <div>
+                                        <p className="font-semibold">
+                                            Về dịch vụ:
+                                            <span className="font-normal text-gray-600">
+                                                {' '}
+                                                (
+                                                {
+                                                    aiSummaryData.service
+                                                        .positiveCount
+                                                }{' '}
+                                                tích cực,{' '}
+                                                {
+                                                    aiSummaryData.service
+                                                        .negativeCount
+                                                }{' '}
+                                                tiêu cực)
+                                            </span>
+                                        </p>
+                                        <ul className="mt-1 list-inside">
+                                            {aiSummaryData.service.positive.map(
+                                                (item, i) => (
+                                                    <li
+                                                        key={`serv-pos-${i}`}
+                                                        className="flex items-start text-green-700"
+                                                    >
+                                                        <img
+                                                            src={plusIcon}
+                                                            alt="Plus"
+                                                            className="w-4 h-4 mr-2 mt-1 flex-shrink-0"
+                                                        />
+                                                        <span className="text-gray-800">
+                                                            {item}
+                                                        </span>
+                                                    </li>
+                                                )
+                                            )}
+                                            {aiSummaryData.service.negative.map(
+                                                (item, i) => (
+                                                    <li
+                                                        key={`serv-neg-${i}`}
+                                                        className="flex items-start text-red-600"
+                                                    >
+                                                        <img
+                                                            src={minusIcon}
+                                                            alt="Minus"
+                                                            className="w-4 h-4 mr-2 mt-1 flex-shrink-0"
+                                                        />
+                                                        <span className="text-gray-800">
+                                                            {item}
+                                                        </span>
+                                                    </li>
+                                                )
+                                            )}
+                                        </ul>
+                                    </div>
+                                )}
+                            </div>
+                            <div className="mt-4 flex gap-2">
+                                <button
+                                    title="Hữu ích"
+                                    style={{ border: '1px solid #d1d5db' }}
+                                    className="p-2 rounded-md hover:bg-blue-50 hover:text-blue-600 hover:border-blue-300 transition-colors duration-200"
+                                >
+                                    <FaThumbsUp />
+                                </button>
+                                <button
+                                    title="Không hữu ích"
+                                    style={{ border: '1px solid #d1d5db' }}
+                                    className="p-2 rounded-md hover:bg-red-50 hover:text-red-600 hover:border-red-300 transition-colors duration-200"
+                                >
+                                    <FaThumbsDown />
+                                </button>
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
 
             <div className="mt-8">
                 <h3 className="text-lg font-semibold mb-2">Lọc theo</h3>
                 <div className="flex flex-wrap gap-2">
-                    {filters.map((filter, i) => (
+                    {filters.map(filter => (
                         <button
-                            key={i}
-                            style={{ border: '1px solid #d1d5db' }}
-                            className="px-4 py-2 rounded-full text-sm hover:bg-green-50 hover:text-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors duration-200"
+                            key={filter}
+                            onClick={() => setActiveFilter(filter)}
+                            className={`px-4 py-2 rounded-full text-sm !border transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-1
+                    ${
+                        activeFilter === filter
+                            ? 'bg-green-600 text-white border-green-600'
+                            : 'bg-white text-gray-700 !border-gray-300 hover:bg-green-50 hover:text-green-700 hover:border-green-400'
+                    }`}
                         >
                             {filter}
                         </button>
@@ -255,7 +427,7 @@ const CommentSection = () => {
                 </div>
             </div>
 
-            <PageComment />
+            <PageComment comments={filteredComments} slug={slug} />
         </div>
     )
 }

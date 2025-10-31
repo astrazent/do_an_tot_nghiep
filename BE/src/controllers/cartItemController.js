@@ -1,12 +1,12 @@
 import { cartItemService } from '~/services/cartItemService.js'
 import { StatusCodes } from 'http-status-codes'
+import ErrorServer from '~/utils/ErrorServer'
 import jwt from 'jsonwebtoken'
 
 const getCartItems = async (req, res, next) => {
     try {
         const token = req.headers.authorization.split(' ')[1];
         const userId = jwt.verify(token, process.env.JWT_SECRET || "bepsachviet123").userId;
-        console.log(userId)
         if(!userId){
             return res.status(StatusCodes.BAD_REQUEST).json({
                 message: "Lỗi token không tìm thấy user"
@@ -18,7 +18,7 @@ const getCartItems = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return next(error)
+        return ErrorServer(error, req, res, next)
     }
 }
 
@@ -36,7 +36,7 @@ const addCartItems = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return next(error)
+        return ErrorServer(error, req, res, next)
     }
 }
 
@@ -52,7 +52,7 @@ const updateQuantityCartItems = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return next(error)
+        return ErrorServer(error, req, res, next)
     }
 }
 
@@ -66,7 +66,7 @@ const deleteCartItems = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return next(error)
+        return ErrorServer(error, req, res, next)
     }
 }
 

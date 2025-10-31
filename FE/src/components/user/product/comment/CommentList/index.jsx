@@ -1,4 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
+import {
+    useUpdateCommentReaction,
+    useCommentReactions,
+} from '~/hooks/user/useCommentReaction'
+import { useQueryClient } from '@tanstack/react-query'
 import {
     FaStar,
     FaCheckCircle,
@@ -8,148 +13,10 @@ import {
     FaChevronRight,
 } from 'react-icons/fa'
 
-import vitUxiDau from '~/assets/image/shared/product/dac-san-van-dinh-vit-u-xi-dau.jpg'
-import chaVitThuyManh from '~/assets/image/shared/product/dac-san-van-dinh-cha-vit-thuy-manh.jpg'
-import mocVitVanDinh from '~/assets/image/shared/product/dac-san-moc-vit-van-dinh.png'
-import chanVitRutXuongUMuoi from '~/assets/image/shared/product/chan-vit-rut-xuong-u-muoi.png'
-import chanVitRutXuongUXiDau from '~/assets/image/shared/product/chan-vit-rut-xuong-u-xi-dau.png'
-import pateGanVit from '~/assets/image/shared/product/pate-gan-vit.jpg'
-import gaDongTaoUMuoi from '~/assets/image/shared/product/dong-tao-u-muoi.png'
-import gaUMuoi from '~/assets/image/shared/product/ga-u-muoi.png'
-import gaUXiDau from '~/assets/image/shared/product/ga-u-xi-dau.jpg'
-
-const sampleComments = [
-    {
-        id: 1,
-        author: 'Nguyễn Văn An',
-        avatar: 'https://i.pravatar.cc/150?u=a042581f4e29026704d',
-        rating: 5,
-        date: '20/09/2025',
-        isVerified: true,
-        comment:
-            'Vịt ủ xì dầu rất thơm ngon, thịt mềm và đậm đà. Gia đình tôi rất thích!',
-        images: [vitUxiDau, gaUMuoi],
-        likes: 15,
-        dislikes: 0,
-    },
-    {
-        id: 2,
-        author: 'Trần Thị Bích',
-        avatar: 'https://i.pravatar.cc/150?u=a042581f4e29026705d',
-        rating: 4,
-        date: '18/09/2025',
-        isVerified: true,
-        comment:
-            'Chả vịt Thủy Mẫn rất ngon, có một vài miếng hơi khô nhưng không đáng kể. Hương vị đặc trưng rất hấp dẫn.',
-        images: [chaVitThuyManh],
-        likes: 8,
-        dislikes: 1,
-    },
-    {
-        id: 3,
-        author: 'Lê Minh Cường',
-        avatar: 'https://i.pravatar.cc/150?u=a042581f4e29026706d',
-        rating: 5,
-        date: '15/09/2025',
-        isVerified: false,
-        comment:
-            'Quá tuyệt vời! Móc vịt Vân Đình làm rất công phu, hương vị đậm đà. Cảm ơn shop đã mang đến một sản phẩm chất lượng.',
-        images: [mocVitVanDinh, gaUMuoi],
-        likes: 22,
-        dislikes: 0,
-    },
-    {
-        id: 4,
-        author: 'Phạm Thuỳ Dung',
-        avatar: 'https://i.pravatar.cc/150?u=a042581f4e29026707d',
-        rating: 3,
-        date: '12/09/2025',
-        isVerified: true,
-        comment:
-            'Chân vịt rút xương ủ muối hơi mặn so với khẩu vị của mình. Bù lại thì chất lượng tốt, đóng gói cẩn thận.',
-        images: [chanVitRutXuongUMuoi],
-        likes: 2,
-        dislikes: 5,
-    },
-    {
-        id: 5,
-        author: 'Hoàng Văn Hải',
-        avatar: 'https://i.pravatar.cc/150?u=user5',
-        rating: 5,
-        date: '11/09/2025',
-        isVerified: true,
-        comment:
-            'Dịch vụ 5 sao, đóng gói cẩn thận, chân vịt rút xương ủ xì dầu thơm ngon khó cưỡng.',
-        images: [chanVitRutXuongUXiDau],
-        likes: 10,
-        dislikes: 0,
-    },
-    {
-        id: 6,
-        author: 'Đỗ Thị Lan',
-        avatar: 'https://i.pravatar.cc/150?u=user6',
-        rating: 5,
-        date: '10/09/2025',
-        isVerified: true,
-        comment: 'Pate gan vịt béo ngậy, thơm ngon, ăn với bánh mì rất tuyệt.',
-        images: [pateGanVit],
-        likes: 5,
-        dislikes: 0,
-    },
-    {
-        id: 7,
-        author: 'Vũ Minh Tuấn',
-        avatar: 'https://i.pravatar.cc/150?u=user7',
-        rating: 4,
-        date: '09/09/2025',
-        isVerified: true,
-        comment:
-            'Gà Đồng Tào ủ muối giao hàng hơi chậm một chút nhưng chất lượng sản phẩm tốt, thịt chắc ngọt.',
-        images: [gaDongTaoUMuoi],
-        likes: 3,
-        dislikes: 0,
-    },
-    {
-        id: 8,
-        author: 'Bùi Thị Hà',
-        avatar: 'https://i.pravatar.cc/150?u=user8',
-        rating: 5,
-        date: '08/09/2025',
-        isVerified: true,
-        comment: 'Gà ủ muối rất đẹp, thịt thơm ngon, sẽ mua lại ủng hộ shop.',
-        images: [gaUMuoi, gaUMuoi],
-        likes: 7,
-        dislikes: 0,
-    },
-    {
-        id: 9,
-        author: 'Ngô Gia Bảo',
-        avatar: 'https://i.pravatar.cc/150?u=user9',
-        rating: 5,
-        date: '07/09/2025',
-        isVerified: true,
-        comment:
-            'Gà ủ xì dầu đã thay đổi quan điểm của tôi về đồ ăn sẵn. Cảm ơn shop!',
-        images: [gaUXiDau],
-        likes: 30,
-        dislikes: 0,
-    },
-    {
-        id: 10,
-        author: 'Mai Anh Thư',
-        avatar: 'https://i.pravatar.cc/150?u=user10',
-        rating: 4,
-        date: '06/09/2025',
-        isVerified: true,
-        comment:
-            'Một lựa chọn không tồi cho những ai bận rộn muốn có bữa ăn ngon mà không mất thời gian nấu nướng.',
-        images: [vitUxiDau, chaVitThuyManh],
-        likes: 6,
-        dislikes: 1,
-    },
-]
-
 const CommentItem = ({
+    id,
+    user_id,
+    product_id,
     author,
     avatar,
     rating,
@@ -159,7 +26,76 @@ const CommentItem = ({
     images,
     likes,
     dislikes,
+    slug,
+    userReaction,
 }) => {
+    const queryClient = useQueryClient()
+
+    const currentUser = { id: 1 }
+
+    const { mutate: updateReaction } = useUpdateCommentReaction(slug, {
+        onMutate: async newReactionData => {
+            const { comment_id, reaction: newReaction } = newReactionData
+            const queryKey = ['comment-reactions', currentUser.id, product_id]
+
+            await queryClient.cancelQueries({ queryKey })
+            const previousReactions = queryClient.getQueryData(queryKey)
+
+            queryClient.setQueryData(queryKey, oldData => {
+                if (!oldData || !oldData.data) return oldData
+
+                const updatedReactions = [...oldData.data]
+                const existingIndex = updatedReactions.findIndex(
+                    r => r.comment_id === comment_id
+                )
+
+                if (newReaction === null) {
+                    if (existingIndex > -1) {
+                        updatedReactions.splice(existingIndex, 1)
+                    }
+                } else if (existingIndex > -1) {
+                    updatedReactions[existingIndex].reaction = newReaction
+                } else {
+                    updatedReactions.push({
+                        user_id: currentUser.id,
+                        comment_id: comment_id,
+                        reaction: newReaction,
+                    })
+                }
+
+                return { ...oldData, data: updatedReactions }
+            })
+
+            return { previousReactions }
+        },
+        onError: (err, newReaction, context) => {
+            const queryKey = ['comment-reactions', currentUser.id, product_id]
+            if (context?.previousReactions) {
+                queryClient.setQueryData(queryKey, context.previousReactions)
+            }
+        },
+        onSettled: () => {
+            const queryKey = ['comment-reactions', currentUser.id, product_id]
+            queryClient.invalidateQueries({ queryKey })
+        },
+    })
+
+    const handleReaction = reactionType => {
+        if (!currentUser) return
+
+        const newReaction = reactionType
+
+        updateReaction({
+            user_id: currentUser.id,
+            product_id: product_id,
+            comment_id: id,
+            reaction: newReaction,
+        })
+    }
+
+    const isLiked = userReaction === 'like'
+    const isDisliked = userReaction === 'dislike'
+
     return (
         <div className="flex gap-4 py-6 border-b border-gray-300 last:border-b-0">
             <img
@@ -193,23 +129,18 @@ const CommentItem = ({
                 </div>
                 <p className="text-sm text-gray-500 mt-1">{date}</p>
                 <p className="mt-2 text-gray-800">{comment}</p>
-                {images && images.length > 0 && (
-                    <div className="mt-2 flex gap-2">
-                        {images.map((img, index) => (
-                            <img
-                                key={index}
-                                src={img}
-                                alt={`Comment image ${index + 1}`}
-                                className="w-20 h-20 rounded-md object-cover cursor-pointer"
-                            />
-                        ))}
-                    </div>
-                )}
+                {}
                 <div className="mt-3 flex items-center gap-4 text-sm text-gray-600">
-                    <button className="flex items-center gap-1 hover:text-blue-600">
+                    <button
+                        className={`flex items-center gap-1 ${isLiked ? 'text-blue-600 font-bold' : 'hover:text-blue-600'}`}
+                        onClick={() => handleReaction('like')}
+                    >
                         <FaThumbsUp /> {likes}
                     </button>
-                    <button className="flex items-center gap-1 hover:text-red-600">
+                    <button
+                        className={`flex items-center gap-1 ${isDisliked ? 'text-red-600 font-bold' : 'hover:text-red-600'}`}
+                        onClick={() => handleReaction('dislike')}
+                    >
                         <FaThumbsDown /> {dislikes}
                     </button>
                 </div>
@@ -218,9 +149,36 @@ const CommentItem = ({
     )
 }
 
-const CommentList = ({ comments }) => {
+const CommentList = ({ comments = [], slug }) => {
     const [currentPage, setCurrentPage] = useState(1)
     const commentsPerPage = 5
+    const currentUser = { id: 1 }
+    const product_id = comments.length > 0 ? comments[0].product_id : null
+
+    const { data: reactionsData } = useCommentReactions(
+        { user_id: currentUser?.id, product_id: product_id },
+        {
+            enabled: !!currentUser?.id && !!product_id,
+        }
+    )
+
+    const reactionsMap = useMemo(() => {
+        if (!reactionsData?.data) {
+            return new Map()
+        }
+        return reactionsData.data.reduce((map, reaction) => {
+            map.set(reaction.comment_id, reaction.reaction)
+            return map
+        }, new Map())
+    }, [reactionsData])
+
+    if (comments.length === 0) {
+        return (
+            <div className="mt-8 pt-8 border-t border-gray-300 text-center text-gray-500">
+                <p>Không có bình luận nào phù hợp với bộ lọc này.</p>
+            </div>
+        )
+    }
 
     const totalComments = comments.length
     const totalPages = Math.ceil(totalComments / commentsPerPage)
@@ -233,13 +191,17 @@ const CommentList = ({ comments }) => {
 
     const handlePageChange = pageNumber => {
         setCurrentPage(pageNumber)
-        window.scrollTo(0, 0)
     }
 
     return (
         <div className="mt-8 border-t border-gray-300 pt-2">
             {currentComments.map(comment => (
-                <CommentItem key={comment.id} {...comment} />
+                <CommentItem
+                    key={comment.id}
+                    {...comment}
+                    slug={slug}
+                    userReaction={reactionsMap.get(comment.id)}
+                />
             ))}
 
             <div className="mt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
@@ -249,6 +211,7 @@ const CommentList = ({ comments }) => {
                     {totalComments} bình luận
                 </p>
 
+                {}
                 {totalPages > 1 && (
                     <div className="flex items-center gap-1">
                         <button
@@ -282,15 +245,16 @@ const CommentList = ({ comments }) => {
                         </button>
                     </div>
                 )}
+                {}
             </div>
         </div>
     )
 }
 
-const PageComment = () => {
+const PageComment = ({ comments, slug }) => {
     return (
         <div className="container mx-auto p-4">
-            <CommentList comments={sampleComments} />
+            <CommentList comments={comments} slug={slug} />
         </div>
     )
 }
