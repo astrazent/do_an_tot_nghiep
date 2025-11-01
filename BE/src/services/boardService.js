@@ -8,19 +8,71 @@
 import ApiError from '~/utils/ApiError'
 import { slugify } from '~/utils/formatters'
 import { BoardsModel } from '~/models/boardModel'
-const createBoard = async reqBody => {
-    
-    const boardData = {
-        ...reqBody,
-        slug: slugify(reqBody.title),
-    }
-    
-    const newBoard = await BoardsModel.createBoard(boardData)
-    console.log(newBoard)
-    
-    
-    return newBoard
+const totalProductsSold = async () => {
+    const result = await BoardsModel.getTotalProductsSold()
+    return result
 }
+
+const totalUsers = async () => {
+    const result = await BoardsModel.getTotalUsers()
+    return result
+}
+
+const totalInventory = async () => {
+    const result = await BoardsModel.getTotalStock()
+    return result
+}
+
+const monthlyRevenue = async (data) => {
+    const result = await BoardsModel.getMonthlyRevenue(data)
+    return result
+}
+
+const topBuyingCustomers = async () => {
+    const result = await BoardsModel.getTopCustomers()
+    return result
+}
+
+const topBuyedProduct = async () => {
+    const result = await BoardsModel.getBestSellingProduct()
+    return result
+}
+
+const OrderCountByStatus = async () => {
+    const result = await BoardsModel.getOrderCountByStatus()
+    return result
+}
+
+const NewUsersByMonths = async () => {
+    const result = await BoardsModel.getNewUsersByMonths()
+    return result
+}
+
+const RevenueByCategory = async () => {
+    const result = await BoardsModel.getRevenueByCategory()
+    return result
+}
+
+const RevenueByPaymentMethod = async () => {
+    const result = await BoardsModel.getRevenueByPaymentMethod()
+    return result
+}
+
+const RevenueByShipmentMethod = async () => {
+    const result = await BoardsModel.getRevenueByShipmentMethod()
+    return result
+}
+
 export const boardService = {
-    createBoard,
+    totalProductsSold,
+    totalUsers,
+    totalInventory,
+    monthlyRevenue,
+    topBuyingCustomers,
+    topBuyedProduct,
+    OrderCountByStatus,
+    NewUsersByMonths,
+    RevenueByCategory,
+    RevenueByPaymentMethod,
+    RevenueByShipmentMethod,
 }
