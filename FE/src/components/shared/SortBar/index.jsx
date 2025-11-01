@@ -41,11 +41,11 @@ const SortBar = ({ sortBy, onSortChange }) => {
 
                     <IoChevronDownSharp className="absolute right-2 top-1/2 -translate-y-1/2 text-green-700 text-xl pointer-events-none" />
                 </div>
-                <div className="relative inline-block">
+                <div className="relative inline-block w-40">
                     <select
                         value={sortBy.startsWith('rating') ? sortBy : ''}
                         onChange={e => onSortChange(e.target.value)}
-                        className="px-3 py-1 pr-8 text-sm font-medium text-green-800 bg-gray-100 py-3 rounded-md cursor-pointer appearance-none focus:outline-none focus:ring-0"
+                        className="px-3 py-1 pr-8 text-sm font-medium text-green-800 bg-gray-100 py-3 rounded-md cursor-pointer appearance-none focus:outline-none focus:ring-0 w-full"
                     >
                         <option value="" disabled>
                             Đánh giá

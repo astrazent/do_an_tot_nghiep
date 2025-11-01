@@ -21,6 +21,7 @@ const ProductList = ({ products }) => {
                                 ocop={product.ocop}
                                 rating={product.rating}
                                 reviewCount={product.reviewCount}
+                                size="small"
                             />
                         </Link>
                     ))}

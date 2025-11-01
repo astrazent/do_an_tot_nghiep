@@ -57,8 +57,8 @@ export const getNewestProducts = async limit => {
 export const getPoultryProducts = async limitPerCategory => {
     try {
         const [response1, response2] = await Promise.all([
-            api.get(`/products/category?categoryId=4`),
-            api.get(`/products/category?categoryId=6`),
+            api.get(`/products/by_category_slug?slug=san-pham-tu-ga`),
+            api.get(`/products/by_category_slug?slug=san-pham-tu-vit`),
         ])
 
         const poultry1Data = Array.isArray(response1.data.data)
@@ -82,8 +82,8 @@ export const getPoultryProducts = async limitPerCategory => {
 export const getSeafoodAndFishProducts = async limitPerCategory => {
     try {
         const [seafoodResponse, fishResponse] = await Promise.all([
-            api.get(`/products/category?categoryId=2`),
-            api.get(`/products/category?categoryId=7`),
+            api.get(`/products/by_category_slug?slug=hai-san`),
+            api.get(`/products/by_category_slug?slug=san-pham-tu-ca`),
         ])
 
         const seafoodData = Array.isArray(seafoodResponse.data.data)
@@ -106,7 +106,9 @@ export const getSeafoodAndFishProducts = async limitPerCategory => {
 
 export const getPorkSpecialties = async limit => {
     try {
-        const response = await api.get('/products/category?categoryId=8')
+        const response = await api.get(
+            '/products/by_category_slug?slug=san-pham-tu-heo'
+        )
 
         const porkData = Array.isArray(response.data.data)
             ? response.data.data
@@ -123,7 +125,7 @@ export const getPorkSpecialties = async limit => {
 export const getProductBySlug = async slug => {
     if (!slug) return null
     try {
-        const response = await api.get(`/products/by-slug?slug=${slug}`)
+        const response = await api.get(`/products/by_slug?slug=${slug}`)
         return response.data.data
     } catch (error) {
         console.error('Lỗi khi lấy sản phẩm theo slug:', error)
@@ -143,7 +145,23 @@ export const getCommentsByProductSlug = async slug => {
     }
 }
 
-export const getAllProductCollections = () => api.get('/products/collections')
+export const getAllProductCollections = async ({
+    limit = 10,
+    offset = 0,
+} = {}) => {
+    try {
+        const response = await api.get('/products/list', {
+            params: {
+                limit,
+                offset,
+            },
+        })
+        return response.data
+    } catch (error) {
+        console.error('Lỗi khi lấy danh sách sản phẩm:', error)
+        throw error
+    }
+}
 
 export const getRelatedProducts = async (slug, limit = 8) => {
     if (!slug) return { sameCategory: [], coBought: [] }
@@ -172,18 +190,13 @@ export const getRelatedProducts = async (slug, limit = 8) => {
     }
 }
 
-export const searchProductsByCategoryAndPrice = async ({
-    category,
-    minPrice,
-    maxPrice,
-}) => {
+export const searchProductsByCategory = async ({ slug }) => {
     try {
-        const response = await api.get('/products/search', {
-            params: { category, minPrice, maxPrice },
+        const response = await api.get('/products/by_category_slug', {
+            params: { slug },
         })
 
         const data = response.data.data
-
         if (!Array.isArray(data)) {
             console.error('Dữ liệu trả về không phải là mảng:', data)
             return []

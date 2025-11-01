@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom'
 
 export const useCommentsByProductSlug = slug => {
     return useQuery({
-        queryKey: ['comments', 'by-slug', slug],
+        queryKey: ['comments', 'by_slug', slug],
         queryFn: () => getCommentsByProductSlug(slug),
         enabled: !!slug,
         staleTime: 1000 * 60 * 3,
@@ -22,7 +22,7 @@ export const useUpdateComment = slugParam => {
         mutationFn: ({ commentId, data }) => updateCommentById(commentId, data),
 
         onMutate: async ({ commentId, data }) => {
-            const queryKey = ['comments', 'by-slug', slug]
+            const queryKey = ['comments', 'by_slug', slug]
 
             await queryClient.cancelQueries({ queryKey })
 
@@ -48,14 +48,14 @@ export const useUpdateComment = slugParam => {
 
         onError: (err, variables, context) => {
             if (context?.previousCommentsData) {
-                const queryKey = ['comments', 'by-slug', slug]
+                const queryKey = ['comments', 'by_slug', slug]
                 queryClient.setQueryData(queryKey, context.previousCommentsData)
             }
             console.error('Cập nhật comment thất bại:', err)
         },
 
         onSettled: () => {
-            const queryKey = ['comments', 'by-slug', slug]
+            const queryKey = ['comments', 'by_slug', slug]
             queryClient.invalidateQueries({ queryKey })
         },
     })

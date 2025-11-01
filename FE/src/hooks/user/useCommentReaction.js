@@ -14,7 +14,7 @@ export const useUpdateCommentReaction = (slugParam, options = {}) => {
         mutationFn: reactionData => updateCommentReaction(reactionData),
 
         onMutate: async reactionData => {
-            const queryKey = ['comments', 'by-slug', slug]
+            const queryKey = ['comments', 'by_slug', slug]
 
             await queryClient.cancelQueries({ queryKey })
             const previousCommentsData = queryClient.getQueryData(queryKey)
@@ -56,7 +56,7 @@ export const useUpdateCommentReaction = (slugParam, options = {}) => {
         },
 
         onError: (err, variables, context) => {
-            const queryKey = ['comments', 'by-slug', slug]
+            const queryKey = ['comments', 'by_slug', slug]
             if (context?.previousCommentsData) {
                 queryClient.setQueryData(queryKey, context.previousCommentsData)
             }
@@ -66,7 +66,7 @@ export const useUpdateCommentReaction = (slugParam, options = {}) => {
         },
 
         onSettled: (data, error, variables, context) => {
-            const queryKey = ['comments', 'by-slug', slug]
+            const queryKey = ['comments', 'by_slug', slug]
             queryClient.invalidateQueries({ queryKey })
 
             options.onSettled?.(data, error, variables, context)

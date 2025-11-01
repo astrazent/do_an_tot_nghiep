@@ -87,6 +87,7 @@ const Profile = () => {
 
     const handleSubmit = e => {
         e.preventDefault()
+        console.log('Dữ liệu được cập nhật:', profile)
         alert('Thông tin đã được lưu!')
     }
 
