@@ -27,6 +27,18 @@ const getByIdCategoryService = async categoryId => {
     return category
 }
 
+const getBySlugCategoryService = async slug => {
+    const category = await CategoriesModel.getCategoryBySlug(slug.slug)
+    if (!category) {
+        throw new ApiError(
+            StatusCodes.NOT_FOUND,
+            `Không tìm thấy danh mục với slug '${slug}'.`
+        )
+    }
+
+    return category
+}
+
 const getListCategoryService = async filters => {
     const categories = await CategoriesModel.listCategories(filters.limit, filters.offset)
     if (categories.length === 0) {
@@ -68,6 +80,7 @@ const deleteCategoryService = async categoryId => {
 export const categoryService = {
     createCategoryService,
     getByIdCategoryService,
+    getBySlugCategoryService,
     getListCategoryService,
     updateCategoryService,
     deleteCategoryService,

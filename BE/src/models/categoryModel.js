@@ -57,6 +57,14 @@ const CategoriesModel = {
         return rows[0] || null
     },
 
+    async getCategoryBySlug(slug) {
+        const conn = getConnection()
+        const [rows] = await conn.execute(
+            `SELECT * FROM ${CATEGORIES_TABLE_NAME} WHERE slug = ?`,
+            [slug]
+        )
+        return rows[0] || null
+    },
     
     async updateCategory(id, data) {
         const schema = CATEGORIES_SCHEMA.fork(

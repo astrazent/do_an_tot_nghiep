@@ -1,11 +1,11 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { FaChevronDown, FaSearch } from 'react-icons/fa'
 import ReactSlider from 'react-slider'
 import './sidebar.scss'
 import { Link, useNavigate } from 'react-router-dom'
 import { slugify } from '~/utils/slugify'
-
+import { useAllCategories } from '~/hooks/user/useCategory'
 import chanVitRutXuongUXiDau from '~/assets/image/shared/product/chan-vit-rut-xuong-u-xi-dau.png'
 import pateGanVit from '~/assets/image/shared/product/pate-gan-vit.jpg'
 import gaDongTaoUMuoi from '~/assets/image/shared/product/dong-tao-u-muoi.png'
@@ -14,17 +14,6 @@ import gaUXiDau from '~/assets/image/shared/product/ga-u-xi-dau.jpg'
 
 import ProductListSection from '../ProductListSection'
 
-const productCategories = [
-    'Sản phẩm từ vịt',
-    'Sản phẩm từ gà',
-    'Các loại hạt',
-    'Sản phẩm từ heo',
-    'Sản phẩm từ cá',
-    'Sản phẩm từ ngan',
-    'Hải sản',
-    'Các loại ruốc',
-    'Thực phẩm khác',
-]
 const hotProductsData = [
     {
         id: 1,
@@ -134,11 +123,19 @@ const Sidebar = ({
         isPromotion = true,
     } = {},
 } = {}) => {
+    const { data: productCategories, isLoading, isError } = useAllCategories()
     const [priceValues, setPriceValues] = useState([0, 500000])
-    const [selectedCategory, setSelectedCategory] = useState(
-        slugify(productCategories[0])
-    )
+    const [selectedCategory, setSelectedCategory] = useState('')
     const navigate = useNavigate()
+    useEffect(() => {
+        if (
+            productCategories &&
+            productCategories.length > 0 &&
+            !selectedCategory
+        ) {
+            setSelectedCategory(productCategories[0].slug)
+        }
+    }, [productCategories, selectedCategory])
     const handleSearch = () => {
         const searchUrl = `/search?category=${selectedCategory}&minPrice=${priceValues[0]}&maxPrice=${priceValues[1]}`
         navigate(searchUrl)
@@ -163,15 +160,23 @@ const Sidebar = ({
                                         setSelectedCategory(e.target.value)
                                     }
                                     className="w-full p-2 border border-gray-300 rounded-md bg-white appearance-none pr-8"
+                                    disabled={isLoading} // Vô hiệu hóa khi đang tải
                                 >
-                                    {productCategories.map(category => (
-                                        <option
-                                            key={slugify(category)}
-                                            value={slugify(category)}
-                                        >
-                                            {category}
-                                        </option>
-                                    ))}
+                                    {isLoading ? (
+                                        <option>Đang tải danh mục...</option>
+                                    ) : isError ? (
+                                        <option>Lỗi tải danh mục</option>
+                                    ) : (
+                                        productCategories?.map(category => (
+                                            <option
+                                                key={category.id} // Sử dụng id cho key
+                                                value={category.slug} // Sử dụng slug từ API
+                                            >
+                                                {category.name}{' '}
+                                                {/* Sử dụng name từ API */}
+                                            </option>
+                                        ))
+                                    )}
                                 </select>
                                 <FaChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
                             </div>
@@ -225,18 +230,29 @@ const Sidebar = ({
                         Danh mục sản phẩm
                     </h3>
                     <div className="mt-2">
-                        <ul>
-                            {productCategories.map((category, index) => (
-                                <li key={index}>
-                                    <Link
-                                        to={`/category/${slugify(category)}`}
-                                        className="block p-3 text-sm text-gray-600 border-b hover:bg-green-50 hover:text-green-700 transition-colors"
-                                    >
-                                        {category}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
+                        {}
+                        {isLoading ? (
+                            <p className="p-3 text-sm text-gray-500">
+                                Đang tải...
+                            </p>
+                        ) : isError ? (
+                            <p className="p-3 text-sm text-red-500">
+                                Không thể tải danh mục.
+                            </p>
+                        ) : (
+                            <ul>
+                                {productCategories?.map(category => (
+                                    <li key={category.id}>
+                                        <Link
+                                            to={`/category/${category.slug}`}
+                                            className="block p-3 text-sm text-gray-600 border-b hover:bg-green-50 hover:text-green-700 transition-colors"
+                                        >
+                                            {category.name}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
                     </div>
                 </div>
             )}

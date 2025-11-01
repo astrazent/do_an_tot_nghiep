@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useInfiniteQuery } from '@tanstack/react-query'
 import {
     getNewestProducts,
     getPoultryProducts,
@@ -8,7 +8,7 @@ import {
     getCommentsByProductSlug,
     getAllProductCollections,
     getRelatedProducts,
-    searchProductsByCategoryAndPrice,
+    searchProductsByCategory,
 } from '~/services/user/productService'
 
 export const useNewestProducts = (limit = 8) => {
@@ -43,17 +43,39 @@ export const usePorkSpecialties = (limit = 6) => {
     })
 }
 
-export const useAllProductCollections = () => {
-    return useQuery({
-        queryKey: ['products', 'collections'],
-        queryFn: getAllProductCollections,
+export const useInfiniteProductCollections = ({ limit = 10 } = {}) => {
+    return useInfiniteQuery({
+        queryKey: ['products', 'collections', limit],
+
+        queryFn: async ({ pageParam = 0 }) => {
+            const response = await getAllProductCollections({
+                limit,
+                offset: pageParam,
+            })
+
+            return response
+        },
+
         staleTime: 1000 * 60 * 10,
+
+        getNextPageParam: (lastPage, allPages) => {
+            const fetchedItemsCount = lastPage?.data?.length || 0
+
+            if (fetchedItemsCount < limit) {
+                return undefined
+            }
+
+            return allPages.reduce(
+                (acc, page) => acc + (page?.data?.length || 0),
+                0
+            )
+        },
     })
 }
 
 export const useProductBySlug = slug => {
     return useQuery({
-        queryKey: ['product', 'by-slug', slug],
+        queryKey: ['product', 'by_slug', slug],
         queryFn: () => getProductBySlug(slug),
         enabled: !!slug,
         staleTime: 1000 * 60 * 5,
@@ -62,7 +84,7 @@ export const useProductBySlug = slug => {
 
 export const useCommentsByProductSlug = slug => {
     return useQuery({
-        queryKey: ['comments', 'by-slug', slug],
+        queryKey: ['comments', 'by_slug', slug],
         queryFn: () => getCommentsByProductSlug(slug),
         enabled: !!slug,
         staleTime: 1000 * 60 * 3,
@@ -80,18 +102,15 @@ export const useRelatedProducts = (productId, limit = 8) => {
     })
 }
 
-export const useSearchProductsByCategoryAndPrice = params => {
-    console.log('HOOK CALLED WITH PARAMS:', params)
-
+export const useSearchProductsByCategory = (params, options = {}) => {
     return useQuery({
         queryKey: ['products', 'search', params],
         queryFn: async () => {
-            console.log('FETCHING DATA...')
-            const res = await searchProductsByCategoryAndPrice(params)
-            console.log('API RESPONSE:', res)
+            const res = await searchProductsByCategory(params)
             return res
         },
-        enabled: !!params?.category,
+        enabled: !!params?.slug,
         staleTime: 1000 * 60 * 5,
+        ...options,
     })
 }
