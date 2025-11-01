@@ -15,7 +15,7 @@ const Profile = () => {
     })
 
     const [avatarPreview, setAvatarPreview] = useState(
-        'https:
+        'https://i.pravatar.cc/150?u=a042581f4e29026704d'
     )
 
     const [provinces, setProvinces] = useState([])
@@ -87,6 +87,7 @@ const Profile = () => {
 
     const handleSubmit = e => {
         e.preventDefault()
+        console.log('Dữ liệu được cập nhật:', profile)
         alert('Thông tin đã được lưu!')
     }
 
