@@ -18,12 +18,12 @@ const getByIdCommentService = async commentId => {
 
     return comment
 }
-const getCommentByProductSlugService = async commentId => {
-    const comment = await CommentsModel.getCommentsByProductSlug(commentId)
+const getCommentByProductSlugService = async slug => {
+    const comment = await CommentsModel.getCommentsByProductSlug(slug)
     if (!comment) {
         throw new ApiError(
             StatusCodes.NOT_FOUND,
-            `Không tìm thấy comment với id: ${commentId}`
+            `Không tìm thấy comment với slug: ${slug}`
         )
     }
 

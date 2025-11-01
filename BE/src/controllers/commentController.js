@@ -35,6 +35,8 @@ const getCommentByProductSlug = async (req, res, next) => {
             data,
         })
     } catch (error) {
+
+        console.log(error);
         return ErrorServer(error, req, res, next)
     }
 }
