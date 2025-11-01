@@ -68,50 +68,6 @@ const ProductsModel = {
         return { id: result.insertId, ...value }
     },
 
-    async searchProductsByCategoryAndPrice(data, limit = 50, offset = 0) {
-        const conn = getConnection()
-        const { category, minPrice, maxPrice } = data
-
-        const params = []
-        let whereClause = 'WHERE 1=1'
-
-        // Nếu có category slug → join bảng Categories để lọc
-        if (category) {
-            whereClause += ' AND c.slug = ?'
-            params.push(category)
-        }
-
-        // Nếu có minPrice và maxPrice → lọc theo khoảng giá
-        if (minPrice !== undefined && maxPrice !== undefined) {
-            whereClause += ' AND p.price BETWEEN ? AND ?'
-            params.push(minPrice, maxPrice)
-        } else if (minPrice !== undefined) {
-            whereClause += ' AND p.price >= ?'
-            params.push(minPrice)
-        } else if (maxPrice !== undefined) {
-            whereClause += ' AND p.price <= ?'
-            params.push(maxPrice)
-        }
-
-        // Truy vấn
-        const [rows] = await conn.execute(
-            `
-        SELECT 
-            p.*,
-            c.name AS category_name,
-            c.slug AS category_slug
-        FROM ${PRODUCTS_TABLE_NAME} AS p
-        JOIN Categories AS c ON p.category_id = c.id
-        ${whereClause}
-        ORDER BY p.id DESC
-        LIMIT ? OFFSET ?
-        `,
-            [...params, limit, offset]
-        )
-
-        return rows
-    },
-
     async getProductById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -161,14 +117,6 @@ const ProductsModel = {
         return rows
     },
 
-    async getProductsByCategory(category_id) {
-        const conn = getConnection()
-        const [rows] = await conn.execute(
-            `SELECT * FROM ${PRODUCTS_TABLE_NAME} WHERE category_id = ? ORDER BY id DESC`,
-            [category_id]
-        )
-        return rows
-    },
     async getProductBySlug(slug) {
         if (!slug) return null
 
@@ -182,6 +130,22 @@ const ProductsModel = {
 
         return rows.length ? rows[0] : null
     },
+    async getProductsByCategorySlug(categorySlug) {
+        if (!categorySlug) return []
+
+        const conn = getConnection()
+
+        const [rows] = await conn.execute(
+            `SELECT p.*
+            FROM Products p
+            JOIN Categories c ON p.category_id = c.id
+            WHERE c.slug = ?
+            ORDER BY p.id DESC`,
+            [categorySlug]
+        )
+
+        return rows // trả về mảng sản phẩm, rỗng nếu không có
+    },
     async getRelatedBySlug(slug, limit = 10) {
         if (!slug) return { sameCategory: [], coBought: [] }
 
@@ -193,7 +157,6 @@ const ProductsModel = {
                 `SELECT * FROM Products WHERE slug = ? LIMIT 1`,
                 [slug]
             )
-
             if (!productRows.length) return { sameCategory: [], coBought: [] }
             const product = productRows[0]
 

@@ -6,15 +6,13 @@ Router.route('/').post(productController.createProduct)
 
 Router.route('/').get(productController.getByIdProduct)
 
-Router.route('/category').get(productController.getByCategory)
+Router.route('/by_slug').get(productController.getBySlug)
 
-Router.route('/by-slug').get(productController.getBySlug)
+Router.route('/by_category_slug').get(productController.getByCategorySlug)
 
 Router.route('/related_by_slug').get(productController.getRelatedBySlug)
 
 Router.route('/list').get(productController.getListProduct)
-
-Router.route('/search').get(productController.searchProduct)
 
 Router.route('/').patch(productController.updateProduct)
 
