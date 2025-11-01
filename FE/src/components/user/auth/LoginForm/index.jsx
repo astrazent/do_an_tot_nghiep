@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Button from '~/components/shared/Button'
 import InputField from '~/components/shared/InputField'
-import { loginUser } from '~/Service/userService'
+import { useLoginUser } from '~/hooks/user/useUser'
 import { useAlert } from '~/contexts/AlertContext'
 import { updateUser } from '~/Redux/reducers/userReducer'
 import './loginForm.scss'
@@ -12,30 +12,34 @@ import { HiOutlineUser } from 'react-icons/hi'
 import { RiLockPasswordLine } from 'react-icons/ri'
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 const LoginForm = () => {
     const { showAlert } = useAlert()
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const [loading, setLoading] = useState(false)
     const [showPw, setShowPw] = useState(false)
 
-    const handleLogin = async e => {
-        e.preventDefault();
-        
-        try {
-            setLoading(true)
-            const data = await loginUser({ username, password })
-            dispatch(updateUser({... data.data}))
+    // ✅ Dùng TanStack Query mutation
+    const { mutate: login, isPending } = useLoginUser({
+        onSuccess: data => {
+            dispatch(updateUser({ ...data.data }))
             showAlert(data.message, { type: 'success', duration: 2000 })
-            window.location.href = '/'
-        } catch (error) {
-            const message = error?.response?.data?.message
+            navigate('/')
+        },
+        onError: error => {
+            const message =
+                error?.response?.data?.message || 'Đăng nhập thất bại'
             showAlert(message, { type: 'error', duration: 2000 })
-        } finally {
-            setLoading(false)
-        }
+        },
+    })
+
+    const handleLogin = e => {
+        e.preventDefault()
+        login({ username, password })
     }
 
     return (
@@ -86,9 +90,9 @@ const LoginForm = () => {
                 <Button
                     type="submit"
                     className="login-button"
-                    disabled={loading}
+                    disabled={isPending}
                 >
-                    {loading ? 'Đang đăng nhập...' : 'Đăng nhập'}
+                    {isPending ? 'Đang đăng nhập...' : 'Đăng nhập'}
                 </Button>
             </form>
 

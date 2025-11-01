@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import Button from '~/components/shared/Button'
 import InputField from '~/components/shared/InputField'
-import { RegisterUser } from '~/Service/userService'
+import { useRegisterUser } from '~/hooks/user/useUser'
 import { useAlert } from '~/contexts/AlertContext'
 import './registerForm.scss'
+import { useNavigate } from 'react-router-dom'
 
 import { HiOutlineUser, HiOutlineMail, HiOutlinePhone } from 'react-icons/hi'
 import { RiLockPasswordLine } from 'react-icons/ri'
@@ -11,27 +12,30 @@ import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai'
 
 const RegisterForm = () => {
     const { showAlert } = useAlert()
+    const navigate = useNavigate()
+
     const [full_name, setFullName] = useState('')
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [phone, setPhone] = useState('')
     const [password, setPassword] = useState('')
-    const [loading, setLoading] = useState(false)
     const [showPw, setShowPw] = useState(false)
 
-    const handleRegister = async e => {
-        e.preventDefault()
-        try {
-            setLoading(true)
-            const data = await RegisterUser({ username, email, phone, password, full_name })
+    // ✅ Dùng TanStack Query mutation
+    const { mutate: register, isPending } = useRegisterUser({
+        onSuccess: data => {
             showAlert(data.message, { type: 'success', duration: 2000 })
-            // window.location.href = '/'
-        } catch (error) {
-            const message = error?.response?.data?.message
+            navigate('/login')
+        },
+        onError: error => {
+            const message = error?.response?.data?.message || 'Đăng ký thất bại'
             showAlert(message, { type: 'error', duration: 2000 })
-        } finally {
-            setLoading(false)
-        }
+        },
+    })
+
+    const handleRegister = e => {
+        e.preventDefault()
+        register({ username, email, phone, password, full_name })
     }
 
     return (
@@ -72,7 +76,7 @@ const RegisterForm = () => {
                     required
                 />
                 <InputField
-                    type="password"
+                    type={showPw ? 'text' : 'password'}
                     placeholder="Mật khẩu"
                     value={password}
                     onChange={e => setPassword(e.target.value)}
@@ -89,8 +93,12 @@ const RegisterForm = () => {
                     required
                 />
 
-                <Button type="submit" className="login-button" disabled={loading}> 
-                    {loading ? 'Đang đăng ký...' : 'Đăng ký'}
+                <Button
+                    type="submit"
+                    className="login-button"
+                    disabled={isPending}
+                >
+                    {isPending ? 'Đang đăng ký...' : 'Đăng ký'}
                 </Button>
             </form>
 

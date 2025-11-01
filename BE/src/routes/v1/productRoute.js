@@ -8,6 +8,10 @@ Router.route('/').get(productController.getByIdProduct)
 
 Router.route('/category').get(productController.getByCategory)
 
+Router.route('/by-slug').get(productController.getBySlug)
+
+Router.route('/related_by_slug').get(productController.getRelatedBySlug)
+
 Router.route('/list').get(productController.getListProduct)
 
 Router.route('/search').get(productController.searchProduct)

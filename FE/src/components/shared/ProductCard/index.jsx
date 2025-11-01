@@ -5,8 +5,6 @@ import { FaShoppingCart } from 'react-icons/fa'
 import { BsStarFill, BsStar } from 'react-icons/bs'
 import ocop3Star from '~/assets/icon/ocop/ocop-3-star.png'
 import ocop4Star from '~/assets/icon/ocop/ocop-4-star.svg'
-import { useDispatch } from 'react-redux'
-import * as cartUserReducer from '~/Redux/reducers/cartUserReducer'
 
 const ProductCard = ({
     image,
@@ -17,6 +15,7 @@ const ProductCard = ({
     rating = 0,
     reviewCount = 0,
     slug,
+    size = 'medium',
 }) => {
     const { showAlert } = useAlert()
 
@@ -26,12 +25,44 @@ const ProductCard = ({
     }
     const ocopImg = ocopMap[ocop] || null
 
+    const sizeStyles = {
+        small: {
+            card: 'w-45 h-80',
+            ocopImg: 'w-15 h-10',
+            title: 'text-base min-h-[40px]',
+            cartIcon: 'w-4 h-4',
+            price: 'text-base',
+            star: 'text-sm',
+        },
+        medium: {
+            card: 'w-56 h-96',
+            ocopImg: 'w-16 h-10',
+            title: 'text-sm min-h-[40px]',
+            cartIcon: 'w-5 h-5',
+            price: 'text-lg',
+            star: 'text-sm',
+        },
+        large: {
+            card: 'w-64 h-104',
+            ocopImg: 'w-20 h-12',
+            title: 'text-base min-h-[48px]',
+            cartIcon: 'w-6 h-6',
+            price: 'text-xl',
+            star: 'text-base',
+        },
+    }
+
+    const styles = sizeStyles[size] || sizeStyles.medium
+
     const stars = Array.from({ length: 5 }, (_, index) => {
         const starNumber = index + 1
         return starNumber <= rating ? (
-            <BsStarFill key={index} className="text-yellow-400" />
+            <BsStarFill
+                key={index}
+                className={`text-yellow-400 ${styles.star}`}
+            />
         ) : (
-            <BsStar key={index} className="text-gray-300" />
+            <BsStar key={index} className={`text-gray-300 ${styles.star}`} />
         )
     })
 
@@ -44,22 +75,20 @@ const ProductCard = ({
         }
     }
 
-    // 3. Tạo hàm xử lý sự kiện click
     const handleAddToCart = e => {
-        // Ngăn sự kiện click lan ra thẻ Link cha, tránh việc chuyển trang
         e.preventDefault()
         e.stopPropagation()
-
-        // Gọi hàm hiển thị thông báo
         showAlert('Sản phẩm đã được thêm vào Giỏ hàng', { type: 'success' })
     }
 
     return (
         <Link
             to={`/product/${slug}`}
-            className="block relative w-56 h-96 flex flex-col bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow p-3 font-sans border border-gray-100"
+            className={`block relative flex flex-col bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow p-3 font-sans border border-gray-100 ${styles.card}`}
         >
-            <div className="w-full h-48 mb-2">
+            <div className="w-full h-32 mb-2">
+                {' '}
+                {}
                 <img
                     src={image}
                     alt={name}
@@ -72,18 +101,20 @@ const ProductCard = ({
                     <img
                         src={ocopImg}
                         alt={`OCOP ${ocop}`}
-                        className="w-16 h-10 object-contain"
+                        className={`${styles.ocopImg} object-contain`}
                     />
                 </div>
             )}
 
-            <h2 className="text-sm font-normal text-gray-800 line-clamp-2 mb-1 min-h-[40px]">
+            <h2
+                className={`font-normal text-gray-800 line-clamp-2 mb-1 ${styles.title}`}
+            >
                 {name}
             </h2>
 
             <div className="flex items-center justify-between gap-1 mb-2">
                 <div className="flex items-center gap-1">
-                    <div className="flex">{stars}</div>
+                    <div className="flex items-center gap-0.5">{stars}</div> {}
                     {reviewCount > 0 && (
                         <span className="text-gray-400 text-xs">
                             ({reviewCount})
@@ -91,22 +122,24 @@ const ProductCard = ({
                     )}
                 </div>
 
-                <button
-                    onClick={handleAddToCart}
-                    className="group bg-gray-100 rounded-full flex items-center justify-center p-2
-                            hover:bg-green-600 transition-colors focus:outline-none focus:ring-2 focus:ring-green-400"
-                    aria-label="Thêm vào giỏ hàng"
-                >
-                    <FaShoppingCart
-                        size={18}
-                        className="text-gray-700 group-hover:text-white"
-                    />
-                </button>
+                {size !== 'small' && (
+                    <button
+                        onClick={handleAddToCart}
+                        className="group bg-gray-100 rounded-full flex items-center justify-center p-2
+                hover:bg-green-600 transition-colors focus:outline-none focus:ring-2 focus:ring-green-400"
+                        aria-label="Thêm vào giỏ hàng"
+                    >
+                        <FaShoppingCart
+                            className="text-gray-700 group-hover:text-white"
+                            size={size === 'large' ? 22 : 18}
+                        />
+                    </button>
+                )}
             </div>
 
             <div className="flex flex-col mt-auto">
                 <div className="flex items-baseline">
-                    <span className="text-red-500 text-lg font-bold">
+                    <span className={`text-red-500 font-bold ${styles.price}`}>
                         {price}
                     </span>
                 </div>

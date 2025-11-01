@@ -1,43 +1,59 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { FaChevronLeft, FaChevronRight, FaPlay } from 'react-icons/fa'
-
 import { Swiper, SwiperSlide } from 'swiper/react'
-
 import 'swiper/css'
 import 'swiper/css/navigation'
-
 import { Navigation } from 'swiper/modules'
-
 import CssImageZoom from '~/components/shared/CssImageZoom'
+import { useProductBySlug } from '~/hooks/user/useProduct'
 
 import videoFile from '~/assets/video/food-review.mp4'
 import videoThumb from '~/assets/video/video-thumb.png'
-import img1 from '~/assets/image/shared/product/dong-tao-u-muoi.png'
-import img2 from '~/assets/image/shared/product/cha-ca-thac-lac-hau-giang.jpg'
-import img3 from '~/assets/image/shared/product/cha-ca-thac-lac-tuoi-tam-gia-vi.png'
-import img4 from '~/assets/image/shared/product/dac-san-cha-sun.jpg'
-import img5 from '~/assets/image/shared/product/dac-san-van-dinh-vit-u-xi-dau.jpg'
-import img6 from '~/assets/image/shared/product/dong-tao-u-muoi.png'
-import img7 from '~/assets/image/shared/product/khau-nhuc-lang-son.jpg'
-
-const mediaItems = [
-    { type: 'video', src: videoFile, thumbnail: videoThumb },
-    { type: 'image', src: img1 },
-    { type: 'image', src: img2 },
-    { type: 'image', src: img3 },
-    { type: 'image', src: img4 },
-    { type: 'image', src: img5 },
-    { type: 'image', src: img6 },
-    { type: 'image', src: img7 },
-]
-
-const ProductImage = () => {
-    const [currentMedia, setCurrentMedia] = useState(mediaItems[0])
+const ProductImage = ({ slug }) => {
+    const [currentMedia, setCurrentMedia] = useState(null)
     const [showControls, setShowControls] = useState(false)
+    const { data: product, isLoading, isError, error } = useProductBySlug(slug)
+    const placeholderImg =
+        'https://img.freepik.com/free-vector/illustration-gallery-icon_53876-27002.jpg?semt=ais_hybrid&w=740&q=80'
+
+    const mediaItems = React.useMemo(() => {
+        if (!product?.images || product.images.length === 0) {
+            return [
+                { type: 'video', src: videoFile, thumbnail: videoThumb },
+                { type: 'image', src: placeholderImg },
+            ]
+        }
+
+        const productImages = product.images.map(src => ({
+            type: 'image',
+            src,
+        }))
+
+        return [
+            { type: 'video', src: videoFile, thumbnail: videoThumb },
+            ...productImages,
+        ]
+    }, [product])
+
+    useEffect(() => {
+        if (mediaItems.length > 0) {
+            setCurrentMedia(mediaItems[0])
+        }
+    }, [mediaItems])
+
+    if (isLoading) return <div>Đang tải hình ảnh...</div>
+    if (isError)
+        return (
+            <div className="text-red-500">
+                Lỗi tải hình: {error.message || 'Không xác định'}
+            </div>
+        )
+
     return (
         <div className="w-full">
-            <div className="mb-4 aspect-square flex items-center justify-center relative bg-gray-200 border border-gray-300 w-full">
-                {currentMedia.type === 'image' ? (
+            {}
+            <div className="mb-4 aspect-square flex items-center justify-center relative bg-gray-200 border border-gray-300 w-full rounded-xl overflow-hidden">
+                {currentMedia?.type === 'image' ? (
                     <CssImageZoom src={currentMedia.src} zoomLevel={2.5} />
                 ) : (
                     <video
@@ -45,13 +61,19 @@ const ProductImage = () => {
                         muted
                         autoPlay
                         loop
-                        className="w-full h-full object-contain rounded-2xl"
+                        className="w-full h-full object-contain"
                         controls={showControls}
                         onClick={() => setShowControls(true)}
                     />
                 )}
+
+                {}
+                <div className="absolute bottom-2 right-2 bg-black/60 text-white px-2 py-1 rounded-md text-xs">
+                    {slug}
+                </div>
             </div>
 
+            {}
             <div className="relative flex items-center px-8">
                 <div
                     id="prev-thumbnail"
@@ -81,7 +103,11 @@ const ProductImage = () => {
                         >
                             <div
                                 className={`relative rounded-md border-2 p-1 transition-colors flex items-center justify-center
-        ${currentMedia.src === item.src ? 'border-green-500' : 'border-transparent'}`}
+                    ${
+                        currentMedia?.src === item.src
+                            ? 'border-green-500'
+                            : 'border-transparent'
+                    }`}
                             >
                                 <img
                                     src={

@@ -1,4 +1,4 @@
-import { Navigate, Outlet } from 'react-router-dom'
+import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import Home from '~/pages/user/Home'
 import About from '~/pages/user/About'
 import Login from '~/pages/user/Login'
@@ -16,8 +16,16 @@ import TestAlert from '~/pages/user/TestAlert'
 import NewsDetail from '~/pages/user/NewsDetail'
 import Category from '~/pages/user/Category'
 import SearchPage from '~/pages/user/SearchPage'
+import { useSelector } from 'react-redux'
 
-function ProtectedRoute({ children }) {
+const ProtectedRoute = ({ children }) => {
+    const { token } = useSelector(state => state.user)
+    const location = useLocation()
+
+    if (!token) {
+        return <Navigate to="/login" state={{ from: location }} replace />
+    }
+
     return children
 }
 
@@ -43,11 +51,18 @@ export const userRoutes = [
     {
         element: <SidebarLayout />,
         children: [
-            { path: '/product/:slug', element: <Product /> },
             { path: '/category/:slug', element: <Category /> },
             { path: '/about', element: <About /> },
             { path: '/search', element: <SearchPage /> },
         ],
+    },
+    {
+        element: (
+            <SidebarLayout
+                leftHidePriority={['hot', 'featured', 'categories', 'search']}
+            />
+        ),
+        children: [{ path: '/product/:slug', element: <Product /> }],
     },
     {
         element: (

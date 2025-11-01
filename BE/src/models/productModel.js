@@ -65,20 +65,50 @@ const ProductsModel = {
                 value.category_id,
             ]
         )
-
         return { id: result.insertId, ...value }
     },
 
-    async searchProductsByName(keyword, limit = 50, offset = 0) {
+    async searchProductsByCategoryAndPrice(data, limit = 50, offset = 0) {
         const conn = getConnection()
-        const searchKeyword = `%${keyword}%`
+        const { category, minPrice, maxPrice } = data
+
+        const params = []
+        let whereClause = 'WHERE 1=1'
+
+        // Nếu có category slug → join bảng Categories để lọc
+        if (category) {
+            whereClause += ' AND c.slug = ?'
+            params.push(category)
+        }
+
+        // Nếu có minPrice và maxPrice → lọc theo khoảng giá
+        if (minPrice !== undefined && maxPrice !== undefined) {
+            whereClause += ' AND p.price BETWEEN ? AND ?'
+            params.push(minPrice, maxPrice)
+        } else if (minPrice !== undefined) {
+            whereClause += ' AND p.price >= ?'
+            params.push(minPrice)
+        } else if (maxPrice !== undefined) {
+            whereClause += ' AND p.price <= ?'
+            params.push(maxPrice)
+        }
+
+        // Truy vấn
         const [rows] = await conn.execute(
-            `SELECT * FROM ${PRODUCTS_TABLE_NAME} 
-         WHERE name LIKE ? COLLATE utf8mb4_unicode_ci
-         ORDER BY id DESC
-         LIMIT ? OFFSET ?`,
-            [searchKeyword, limit, offset]
+            `
+        SELECT 
+            p.*,
+            c.name AS category_name,
+            c.slug AS category_slug
+        FROM ${PRODUCTS_TABLE_NAME} AS p
+        JOIN Categories AS c ON p.category_id = c.id
+        ${whereClause}
+        ORDER BY p.id DESC
+        LIMIT ? OFFSET ?
+        `,
+            [...params, limit, offset]
         )
+
         return rows
     },
 
@@ -138,6 +168,68 @@ const ProductsModel = {
             [category_id]
         )
         return rows
+    },
+    async getProductBySlug(slug) {
+        if (!slug) return null
+
+        const conn = getConnection()
+        const [rows] = await conn.execute(
+            `SELECT * FROM ${PRODUCTS_TABLE_NAME}
+        WHERE slug = ?
+        LIMIT 1`,
+            [slug]
+        )
+
+        return rows.length ? rows[0] : null
+    },
+    async getRelatedBySlug(slug, limit = 10) {
+        if (!slug) return { sameCategory: [], coBought: [] }
+
+        const conn = getConnection()
+
+        try {
+            // 1️⃣ Lấy sản phẩm hiện tại
+            const [productRows] = await conn.execute(
+                `SELECT * FROM Products WHERE slug = ? LIMIT 1`,
+                [slug]
+            )
+
+            if (!productRows.length) return { sameCategory: [], coBought: [] }
+            const product = productRows[0]
+
+            // 2️⃣ Lấy các sản phẩm cùng category (ngoại trừ sản phẩm hiện tại)
+            const [categoryRows] = await conn.execute(
+                `SELECT * FROM Products 
+                WHERE category_id = ? AND slug != ?
+                ORDER BY created_at DESC
+                LIMIT ?`,
+                [product.category_id, slug, limit]
+            )
+
+            // 3️⃣ Lấy các sản phẩm được mua cùng với sản phẩm này
+            const [coBoughtRows] = await conn.execute(
+                `SELECT DISTINCT p.*
+                FROM OrderItems oi1
+                INNER JOIN OrderItems oi2 
+                    ON oi1.transaction_id = oi2.transaction_id 
+                    AND oi2.product_id != oi1.product_id
+                INNER JOIN Products p 
+                    ON p.id = oi2.product_id
+                INNER JOIN Products target 
+                    ON target.id = oi1.product_id
+                WHERE target.slug = ?
+                LIMIT ?`,
+                [slug, limit]
+            )
+
+            return {
+                sameCategory: categoryRows,
+                coBought: coBoughtRows,
+            }
+        } catch (error) {
+            console.error('Lỗi khi lấy sản phẩm liên quan:', error)
+            throw error
+        }
     },
 }
 

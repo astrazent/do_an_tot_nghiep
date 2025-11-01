@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS OrderItems;
 DROP TABLE IF EXISTS Transactions;
 DROP TABLE IF EXISTS Shipments;
 DROP TABLE IF EXISTS Payments;
+DROP TABLE IF EXISTS CommentReactions;
 DROP TABLE IF EXISTS Comments;
 DROP TABLE IF EXISTS ProductImages;
 DROP TABLE IF EXISTS Sliders;
@@ -119,6 +120,7 @@ CREATE TABLE
         description VARCHAR(255),
         origin_price DECIMAL(12, 2) NOT NULL DEFAULT 0.00,
         price DECIMAL(12, 2) NOT NULL DEFAULT 0.00,
+        import_price DECIMAL(12, 2) NOT NULL DEFAULT 0.00,
         buyed INT UNSIGNED NOT NULL DEFAULT 0,
         rate_point_total INT UNSIGNED NOT NULL DEFAULT 0,
         rate_count INT UNSIGNED NOT NULL DEFAULT 0,
@@ -244,18 +246,36 @@ CREATE TABLE
     ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 -- Comments
-CREATE TABLE
+CREATE TABLE 
     Comments (
-        id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-        rate TINYINT (1) NOT NULL,
-        content TEXT NOT NULL,
-        created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        product_id INT UNSIGNED NOT NULL,
-        user_id INT UNSIGNED NOT NULL,
-        CONSTRAINT fk_comments_user FOREIGN KEY (user_id) REFERENCES Users (id) ON DELETE CASCADE ON UPDATE CASCADE,
-        CONSTRAINT fk_comments_product FOREIGN KEY (product_id) REFERENCES Products (id) ON DELETE CASCADE ON UPDATE CASCADE
-    ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    rate TINYINT(1) NOT NULL,
+    content TEXT NOT NULL,
+    likes INT UNSIGNED NOT NULL DEFAULT 0,
+    dislikes INT UNSIGNED NOT NULL DEFAULT 0,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    product_id INT UNSIGNED NOT NULL,
+    user_id INT UNSIGNED NOT NULL,
+    CONSTRAINT fk_comments_user FOREIGN KEY (user_id) REFERENCES Users (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_comments_product FOREIGN KEY (product_id) REFERENCES Products (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    UNIQUE KEY unique_user_product (user_id, product_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- CommentReactions
+CREATE TABLE 
+    CommentReactions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT UNSIGNED NOT NULL,
+    product_id INT UNSIGNED NOT NULL,
+    comment_id INT UNSIGNED NOT NULL,
+    reaction ENUM('like', 'dislike') NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_user_comment (user_id, comment_id, product_id),
+    CONSTRAINT fk_comments_reaction_user FOREIGN KEY (user_id) REFERENCES Users (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_comment_reactions_product FOREIGN KEY (product_id) REFERENCES Products (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_comment_reactions_comment FOREIGN KEY (comment_id) REFERENCES Comments(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
 
 -- Payments
 CREATE TABLE

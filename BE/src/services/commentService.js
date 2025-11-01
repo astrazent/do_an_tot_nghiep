@@ -18,6 +18,17 @@ const getByIdCommentService = async commentId => {
 
     return comment
 }
+const getCommentByProductSlugService = async commentId => {
+    const comment = await CommentsModel.getCommentsByProductSlug(commentId)
+    if (!comment) {
+        throw new ApiError(
+            StatusCodes.NOT_FOUND,
+            `Không tìm thấy comment với id: ${commentId}`
+        )
+    }
+
+    return comment
+}
 
 const getListCommentService = async filters => {
     const comments = await CommentsModel.listComments(filters.limit, filters.offset)
@@ -31,7 +42,7 @@ const getListCommentService = async filters => {
     return comments
 }
 
-const getListCommnetByProductService = async productId => {
+const getListCommentByProductService = async productId => {
     const comments = await CommentsModel.getCommentsByProduct(productId)
     if(comments.length === 0){
         throw new ApiError(
@@ -84,8 +95,9 @@ const deleteCommentService = async commentId => {
 export const commentService = {
     createCommentService,
     getByIdCommentService,
+    getCommentByProductSlugService,
     getListCommentService,
-    getListCommnetByProductService,
+    getListCommentByProductService,
     getListCommentByUserService,
     updateCommentService,
     deleteCommentService,

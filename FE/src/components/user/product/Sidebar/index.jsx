@@ -145,15 +145,15 @@ const Sidebar = ({
     }
 
     return (
-        <aside className="w-full max-w-xs rounded-lg p-4 font-sans">
+        <aside className="w-full max-w-xs rounded-lg font-sans">
             {search && (
-                <div className="w-full max-w-xs rounded-lg p-4 font-sans">
-                    <h3 className="text-sm font-bold text-gray-500 uppercase pb-2 border-b">
+                <div className="w-full max-w-xs rounded-lg p-4 font-sans text-sm">
+                    <h3 className="font-bold text-gray-500 uppercase pb-2 border-b">
                         Tìm kiếm
                     </h3>
                     <div className="mt-4 space-y-4">
                         <div>
-                            <label className="text-sm font-semibold text-gray-700 block mb-2">
+                            <label className="font-semibold text-gray-700 block mb-2">
                                 Danh mục
                             </label>
                             <div className="relative">
@@ -178,7 +178,7 @@ const Sidebar = ({
                         </div>
 
                         <div>
-                            <label className="text-sm font-semibold text-gray-700 block mb-2">
+                            <label className="font-semibold text-gray-700 block mb-2">
                                 Khoảng giá
                             </label>
                             <ReactSlider
@@ -193,7 +193,7 @@ const Sidebar = ({
                                 minDistance={10000}
                                 onChange={values => setPriceValues(values)}
                             />
-                            <div className="mt-3 text-gray-800 text-lg font-semibold space-y-1">
+                            <div className="mt-3 text-gray-800 font-semibold space-y-1">
                                 <div>
                                     <span className="font-bold text-green-600">
                                         Từ:{' '}
@@ -210,9 +210,9 @@ const Sidebar = ({
                         </div>
                         <button
                             onClick={handleSearch}
-                            className="w-full bg-green-600 text-white font-bold py-2.5 rounded-md flex items-center justify-center gap-2 hover:bg-green-700 transition-colors"
+                            className="w-full bg-green-600 text-white font-bold text-sm py-1.5 rounded-md flex items-center justify-center gap-1.5 hover:bg-green-700 transition-colors"
                         >
-                            <FaSearch />
+                            <FaSearch className="text-xs" />
                             TÌM KIẾM
                         </button>
                     </div>

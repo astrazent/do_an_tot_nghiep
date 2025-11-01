@@ -22,7 +22,7 @@ const login = async (req, res, next) => {
             httpOnly: true, // không cho JS trên browser đọc cookie này
             secure: true, // chỉ gửi cookie qua HTTPS
             sameSite: 'strict', // chống CSRF (strict/lax tùy use case)
-            maxAge: 2 * 60 * 60 * 1000, // 2h
+            maxAge: 24 * 60 * 60 * 1000, // 24h
         })
 
         return res.status(StatusCodes.OK).json({
@@ -36,7 +36,9 @@ const login = async (req, res, next) => {
 
 const getByIdUser = async (req, res, next) => {
     try {
-        const data = await userService.getByIdUserService(req.query)
+        const hasQueryParams = Object.keys(req.query).length > 0;
+        const userData = hasQueryParams ? req.query : req.user;
+        const data = await userService.getByIdUserService(userData)
 
         return res.status(StatusCodes.OK).json({
             message: 'Lấy thông tin khách hàng thành công',

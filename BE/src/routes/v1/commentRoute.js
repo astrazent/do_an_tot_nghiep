@@ -8,7 +8,9 @@ Router.route('/').get(commentController.getByIdComment)
 
 Router.route('/list').get(commentController.getListComment)
 
-Router.route('/by_product').get(commentController.getListCommnetByProduct)
+Router.route('/by_product').get(commentController.getListCommnentByProduct)
+
+Router.route('/by_product_slug').get(commentController.getCommentByProductSlug)
 
 Router.route('/by_user').get(commentController.getListCommentByUser)
 

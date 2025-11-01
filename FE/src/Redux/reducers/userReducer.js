@@ -1,10 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
     fullName: '',
     phone: '',
     email: '',
-    token: ''
+    token: '',
 }
 
 export const userSlice = createSlice({
@@ -12,21 +12,21 @@ export const userSlice = createSlice({
     initialState,
     reducers: {
         updateUser: (state, action) => {
-            const {full_name, phone, email, token} = action.payload
+            const { full_name, phone, email, token } = action.payload
             state.fullName = full_name
             state.phone = phone
             state.email = email
             state.token = token
         },
-        remoteUser: (state) => {
-            state.fullName = ""
-            state.email = ""
-            state.token = ""
-            state.phone = ""
-        }
-    }
+        remoteUser: state => {
+            state.fullName = ''
+            state.email = ''
+            state.token = ''
+            state.phone = ''
+        },
+    },
 })
 
-export const {updateUser, remoteUser} = userSlice.actions
+export const { updateUser, remoteUser } = userSlice.actions
 
 export default userSlice.reducer

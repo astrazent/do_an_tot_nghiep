@@ -10,7 +10,7 @@ import { remoteUser } from '~/Redux/reducers/userReducer'
 const Header = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(true)
     const [cartCount, setCartCount] = useState(5)
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
 
     const handleLogout = () => {
         console.log('Đăng xuất...')

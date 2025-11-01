@@ -83,9 +83,43 @@ const getByCategoryService = async categoryId => {
 
     return products
 }
-const searchProductService = async name => {
-    const products = await ProductsModel.searchProductsByName(name)
+const getBySlugService = async slug => {
+    const product = await ProductsModel.getProductBySlug(slug)
 
+    if (!product) {
+        throw new ApiError(StatusCodes.NOT_FOUND, 'Không tìm thấy sản phẩm')
+    }
+
+    const allImages = await ProductImagesModel.getImagesByProductIds([product.id])
+
+    const images = allImages.map(i => {
+        const url = i.image_url || ''
+        return url.startsWith('http') ? url : '/' + url.replace(/^\/+/, '')
+    })
+
+    product.images = images
+
+    return product
+}
+const getRelatedBySlugService = async slug => {
+    const product = await ProductsModel.getRelatedBySlug(slug)
+    if (!product) {
+        throw new ApiError(StatusCodes.NOT_FOUND, 'Không tìm thấy sản phẩm')
+    }
+
+    // const allImages = await ProductImagesModel.getImagesByProductIds([product.id])
+
+    // const images = allImages.map(i => {
+    //     const url = i.image_url || ''
+    //     return url.startsWith('http') ? url : '/' + url.replace(/^\/+/, '')
+    // })
+
+    // product.images = images
+
+    return product
+}
+const searchProductService = async data => {
+    const products = await ProductsModel.searchProductsByCategoryAndPrice(data)
     if (products.length == 0) {
         throw new ApiError(
             StatusCodes.NOT_FOUND,
@@ -144,6 +178,8 @@ export const productService = {
     createProductService,
     getByIdProductService,
     getByCategoryService,
+    getBySlugService,
+    getRelatedBySlugService,
     getListProductService,
     searchProductService,
     updateProductService,

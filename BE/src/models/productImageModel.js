@@ -111,7 +111,6 @@ const ProductImagesModel = {
         )
         return rows
     },
-
     async getImagesBySlider(slider_id) {
         const conn = getConnection()
         const [rows] = await conn.execute(

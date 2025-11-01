@@ -26,6 +26,18 @@ const getByIdComment = async (req, res, next) => {
         return ErrorServer(error, req, res, next)
     }
 }
+const getCommentByProductSlug = async (req, res, next) => {
+    try {
+        const data = await commentService.getCommentByProductSlugService(req.query.slug)
+
+        return res.status(StatusCodes.OK).json({
+            message: 'Lấy comment bằng slug thành công',
+            data,
+        })
+    } catch (error) {
+        return ErrorServer(error, req, res, next)
+    }
+}
 
 const getListComment = async (req, res, next) => {
     try {
@@ -40,9 +52,9 @@ const getListComment = async (req, res, next) => {
     }
 }
 
-const getListCommnetByProduct = async (req, res, next) => {
+const getListCommnentByProduct = async (req, res, next) => {
     try {
-        const data = await commentService.getListCommnetByProductService(req.query.productId)
+        const data = await commentService.getListCommentByProductService(req.query.productId)
 
         return res.status(StatusCodes.OK).json({
             message: 'Lấy danh sách comment theo sản phẩm thành công',
@@ -69,7 +81,6 @@ const getListCommentByUser = async (req, res, next) => {
 const updateComment = async (req, res, next) => {
     try {
         const data = await commentService.updateCommentService(req.query.commentId, req.body)
-
         return res.status(StatusCodes.OK).json({
             message: 'Cập nhật comment thành công',
             data,
@@ -94,8 +105,9 @@ const deleteComment = async (req, res, next) => {
 export const commentController = {
     createComment,
     getByIdComment,
+    getCommentByProductSlug,
     getListComment,
-    getListCommnetByProduct,
+    getListCommnentByProduct,
     getListCommentByUser,
     updateComment,
     deleteComment,

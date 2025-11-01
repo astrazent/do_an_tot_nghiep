@@ -52,10 +52,36 @@ const getByCategory = async (req, res, next) => {
         return ErrorServer(error, req, res, next)
     }
 }
+const getBySlug = async (req, res, next) => {
+    try {
+        const data = await productService.getBySlugService(req.query.slug)
+
+        return res.status(StatusCodes.OK).json({
+            message: 'Lấy sản phẩm theo danh mục thành công',
+            data,
+        })
+    } catch (error) {
+        console.error('Lỗi trong getBySlug:', error)
+        return ErrorServer(error, req, res, next)
+    }
+}
+const getRelatedBySlug = async (req, res, next) => {
+    try {
+        const data = await productService.getRelatedBySlugService(req.query.slug)
+
+        return res.status(StatusCodes.OK).json({
+            message: 'Lấy danh sách sản phẩm liên quan thành công',
+            data,
+        })
+    } catch (error) {
+        console.error('Lỗi trong getBySlug:', error)
+        return ErrorServer(error, req, res, next)
+    }
+}
 
 const searchProduct = async (req, res, next) => {
     try {
-        const data = await productService.searchProductService(req.query.name)
+        const data = await productService.searchProductService(req.query)
 
         return res.status(StatusCodes.OK).json({
             message: 'Tìm kiếm thành công',
@@ -95,6 +121,8 @@ export const productController = {
     getByIdProduct,
     getListProduct,
     getByCategory,
+    getBySlug,
+    getRelatedBySlug,
     createProduct,
     searchProduct,
     updateProduct,

@@ -48,42 +48,47 @@ const SidebarLayout = ({
     const rightSidebarRef = useRef(null)
 
     useLayoutEffect(() => {
-        const mainNode = mainContentRef.current
-        const leftNode = leftSidebarRef.current
-        const rightNode = rightSidebarRef.current
+        const timer = setTimeout(() => {
+            const mainNode = mainContentRef.current
+            const leftNode = leftSidebarRef.current
+            const rightNode = rightSidebarRef.current
 
-        if (!mainNode) return
-        const mainHeight = mainNode.offsetHeight
+            if (!mainNode) return
+            const mainHeight = mainNode.offsetHeight
+            console.log('mainHeight (delayed):', mainHeight)
 
-        if (leftNode) {
-            const leftSidebarHeight = leftNode.offsetHeight
-            if (leftSidebarHeight > mainHeight) {
-                for (const sectionToHide of leftHidePriority) {
-                    if (leftVisibleSections[sectionToHide]) {
-                        setLeftVisibleSections(prev => ({
-                            ...prev,
-                            [sectionToHide]: false,
-                        }))
-                        break
+            if (leftNode) {
+                const leftSidebarHeight = leftNode.offsetHeight
+                if (leftSidebarHeight > mainHeight) {
+                    for (const sectionToHide of leftHidePriority) {
+                        if (leftVisibleSections[sectionToHide]) {
+                            setLeftVisibleSections(prev => ({
+                                ...prev,
+                                [sectionToHide]: false,
+                            }))
+                            break
+                        }
                     }
                 }
             }
-        }
 
-        if (rightNode) {
-            const rightSidebarHeight = rightNode.offsetHeight
-            if (rightSidebarHeight > mainHeight) {
-                for (const sectionToHide of rightHidePriority) {
-                    if (rightVisibleSections[sectionToHide]) {
-                        setRightVisibleSections(prev => ({
-                            ...prev,
-                            [sectionToHide]: false,
-                        }))
-                        break
+            if (rightNode) {
+                const rightSidebarHeight = rightNode.offsetHeight
+                if (rightSidebarHeight > mainHeight) {
+                    for (const sectionToHide of rightHidePriority) {
+                        if (rightVisibleSections[sectionToHide]) {
+                            setRightVisibleSections(prev => ({
+                                ...prev,
+                                [sectionToHide]: false,
+                            }))
+                            break
+                        }
                     }
                 }
             }
-        }
+        }, 200)
+
+        return () => clearTimeout(timer)
     }, [
         leftVisibleSections,
         rightVisibleSections,
@@ -112,7 +117,7 @@ const SidebarLayout = ({
                         <StickyBox offsetTop={STICKY_OFFSET} offsetBottom={20}>
                             <aside
                                 ref={leftSidebarRef}
-                                className="w-64 bg-white rounded-lg shadow-md p-4 flex-shrink-0"
+                                className="w-58 bg-white rounded-lg shadow-md p-4 flex-shrink-0"
                             >
                                 {controlledLeftSidebar}
                             </aside>

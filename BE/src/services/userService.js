@@ -41,7 +41,7 @@ export const registerService = async payload => {
             userId: userData.id,
             full_name: userData.full_name,
         },
-        env.JWT_SECRET || 'bepsachviet123'
+        env.JWT_SECRET
     )
 
     await UsersModel.updateUser(userData.id, { token: token })
@@ -70,7 +70,6 @@ const loginService = async payload => {
 
 const getByIdUserService = async data => {
     const user = await UsersModel.getUserById(data.userId)
-
     if(!user) {
         throw new ApiError(StatusCodes.NOT_FOUND, 'Không tìm thấy user')
     }
