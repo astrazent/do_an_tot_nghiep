@@ -2,9 +2,9 @@ import { v2 as cloudinary } from 'cloudinary'
 import multer from 'multer'
 
 cloudinary.config({
-    cloud_name: 'tienduy2003',
-    api_key: '225841868995845',
-    api_secret: 'vFg_IUlqLAfHXTsW3LHCDzfgqOA',
+    cloud_name: 'dratk1jhg',
+    api_key: '171242136667873',
+    api_secret: '7OocMokKZblDI2Xh7aLtIAg5f98',
 })
 
 const storage = multer.memoryStorage()
@@ -22,7 +22,7 @@ const uploadCloudinary = async (req, res, next) => {
         const uploadPromises = images.map(file => {
             const base64Image = `data:${file.mimetype};base64,${file.buffer.toString('base64')}`
             return cloudinary.uploader.upload(base64Image, {
-                folder: 'products',
+                folder: 'BSV',
             })
         })
 
