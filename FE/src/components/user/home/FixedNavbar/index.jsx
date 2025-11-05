@@ -1,40 +1,68 @@
 import React, { useState, useEffect } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom' // THÊM MỚI: useNavigate
+import { useDispatch } from 'react-redux' // THÊM MỚI
+import { removeUser } from '~/Redux/reducers/userReducer' // THÊM MỚI
+import { logoutUser } from '~/services/user/userService' // THÊM MỚI
+import { useAlert } from '~/contexts/AlertContext' // THÊM MỚI
 import logo from '~/assets/icon/logo/brand-logo.png'
 import { FaShoppingCart, FaUserCircle, FaChevronDown } from 'react-icons/fa'
-import { slugify } from '~/utils/slugify'
+import { useAllCategories } from '~/hooks/user/useCategory'
 
 const FixedNavbar = ({ login = true }) => {
     const [isVisible, setIsVisible] = useState(false)
     const [isProductMenuOpen, setIsProductMenuOpen] = useState(false)
     const [isUserMenuOpen, setUserMenuOpen] = useState(false)
 
-    useEffect(() => {
-        const handleScroll = () => {
-            setIsVisible(window.scrollY > 200)
+    // --- BẮT ĐẦU PHẦN TÍCH HỢP ---
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const { showAlert } = useAlert()
+
+    const handleSuccess = (message) => {
+        showAlert(message, {
+            type: 'success',
+        })
+    }
+
+    const handleError = (message) => {
+        showAlert(message, {
+            type: 'error',
+            duration: 3000,
+        })
+    }
+
+    // CẬP NHẬT: hàm handleLogout đầy đủ chức năng
+    const handleLogout = async () => {
+        try {
+            await logoutUser() // gọi API logout
+            dispatch(removeUser()) // xóa user trong Redux
+            handleSuccess('Đăng xuất thành công')
+            navigate('/') // Chuyển hướng về trang chủ sau khi đăng xuất
+        } catch (err) {
+            handleError('Đăng xuất thất bại')
+            console.error('Logout failed:', err)
         }
+    }
+    // --- KẾT THÚC PHẦN TÍCH HỢP ---
+
+    const { data: categories = [], isLoading: isCategoriesLoading } =
+        useAllCategories()
+    const location = useLocation()
+
+    useEffect(() => {
+        const handleScroll = () => setIsVisible(window.scrollY > 200)
         window.addEventListener('scroll', handleScroll)
         return () => window.removeEventListener('scroll', handleScroll)
     }, [])
 
-    const handleLogout = () => {
-        console.log('User logged out')
-    }
-
-    const productMenuItems = [
-        { id: 1, name: 'Sản phẩm từ Vịt' },
-        { id: 2, name: 'Sản phẩm từ Gà' },
-        { id: 3, name: 'Các loại hạt' },
-        { id: 4, name: 'Sản phẩm từ heo' },
-        { id: 5, name: 'Sản phẩm từ cá' },
-        { id: 6, name: 'Sản phẩm từ ngan' },
-        { id: 7, name: 'Hải sản' },
-        { id: 8, name: 'Các loại ruốc' },
-        { id: 9, name: 'Thực phẩm khác' },
-    ].map(item => ({
-        ...item,
-        href: `/search?category=${slugify(item.name)}`,
-    }))
+    // Product menu
+    const productMenuItems = isCategoriesLoading
+        ? [{ id: 'loading', name: 'Đang tải...', href: '#' }]
+        : categories.map(cat => ({
+            id: cat.id,
+            name: cat.name,
+            href: `/category/${cat.slug}`,
+        }))
 
     const userMenuItems = [
         { id: 'profile', name: 'Tài khoản của tôi', href: '/user/profile' },
@@ -45,46 +73,73 @@ const FixedNavbar = ({ login = true }) => {
     const getNavLinkClass = ({ isActive }) =>
         `py-2 transition-colors ${isActive ? 'text-green-600' : 'text-gray-700 hover:text-green-600'}`
 
+    const isProductActive =
+        location.pathname.startsWith('/search') ||
+        location.pathname.startsWith('/category')
+    const isSaleActive = location.pathname === '/sale'
+
     return (
         <nav
-            className={`fixed top-0 left-0 right-0 bg-white shadow-lg z-50 transition-all duration-500 ${isVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0 pointer-events-none'}`}
+            className={`fixed top-0 left-0 right-0 bg-white shadow-lg z-50 transition-all duration-500 ${
+                isVisible
+                    ? 'translate-y-0 opacity-100'
+                    : '-translate-y-full opacity-0 pointer-events-none'
+            }`}
         >
             <div className="container mx-auto px-20 py-3">
                 <div className="flex justify-between items-center">
+                    {/* Logo */}
                     <div className="flex-shrink-0">
                         <Link to="/">
                             <img src={logo} alt="tab farm" className="h-12" />
                         </Link>
                     </div>
 
+                    {/* Menu chính */}
                     <div className="flex-grow">
                         <ul className="flex items-center justify-center font-semibold space-x-8">
+                            {/* ... các NavLink khác không đổi ... */}
                             <li>
                                 <NavLink to="/" className={getNavLinkClass} end>
                                     TRANG CHỦ
                                 </NavLink>
                             </li>
                             <li>
-                                <NavLink to="/" className={getNavLinkClass}>
+                                <NavLink
+                                    to="/gioi-thieu"
+                                    className={getNavLinkClass}
+                                    end
+                                >
                                     GIỚI THIỆU
                                 </NavLink>
                             </li>
 
-                            <div
+                            {/* Product dropdown */}
+                            <li
                                 className="relative"
                                 onMouseEnter={() => setIsProductMenuOpen(true)}
                                 onMouseLeave={() => setIsProductMenuOpen(false)}
                             >
-                                <div className="flex items-center gap-1 text-gray-700 hover:text-green-600 py-2 transition-colors cursor-pointer">
+                                <div
+                                    className={`flex items-center gap-1 py-2 cursor-pointer transition-colors ${
+                                        isProductActive
+                                            ? 'text-green-600'
+                                            : 'text-gray-700 hover:text-green-600'
+                                    }`}
+                                >
                                     SẢN PHẨM
                                     <FaChevronDown
-                                        className={`h-3 w-3 transition-transform duration-300 ${isProductMenuOpen ? 'rotate-180' : ''}`}
+                                        className={`h-3 w-3 transition-transform duration-300 ${
+                                            isProductMenuOpen
+                                                ? 'rotate-180'
+                                                : ''
+                                        }`}
                                     />
                                 </div>
+
                                 <ul
-                                    className={`
-                                        absolute top-full left-1/2 -translate-x-1/5 w-60 
-                                        origin-top rounded-lg bg-white shadow-lg border border-gray-200/75 
+                                    className={`absolute top-full left-1/2 -translate-x-1/5 w-60
+                                        origin-top rounded-lg bg-white shadow-lg border border-gray-200/75
                                         divide-y divide-gray-100
                                         transition-all duration-300 ease-in-out
                                         ${isProductMenuOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}
@@ -92,40 +147,60 @@ const FixedNavbar = ({ login = true }) => {
                                 >
                                     {productMenuItems.map(item => (
                                         <li key={item.id}>
-                                            <Link
+                                            <NavLink
                                                 to={item.href}
-                                                className="block px-5 py-3 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200"
+                                                className={({ isActive }) =>
+                                                    `block px-5 py-3 text-sm transition-colors duration-200 ${
+                                                        isActive
+                                                            ? 'bg-green-100 text-green-700 font-semibold'
+                                                            : 'text-gray-700 hover:bg-green-50 hover:text-green-700'
+                                                    }`
+                                                }
                                             >
                                                 {item.name}
-                                            </Link>
+                                            </NavLink>
                                         </li>
                                     ))}
                                 </ul>
-                            </div>
-
+                            </li>
+                            {/* ... các NavLink khác không đổi ... */}
                             <li>
-                                <NavLink to="/news" className={getNavLinkClass}>
+                                <NavLink
+                                    to="/news"
+                                    className={getNavLinkClass}
+                                    end
+                                >
                                     TIN TỨC
                                 </NavLink>
                             </li>
                             <li>
-                                <NavLink to="/" className={getNavLinkClass}>
+                                <NavLink
+                                    to="/tuyen-dung"
+                                    className={getNavLinkClass}
+                                    end
+                                >
                                     TUYỂN DỤNG
                                 </NavLink>
                             </li>
                             <li>
-                                <NavLink to="/" className={getNavLinkClass}>
+                                <NavLink
+                                    to="/lien-he"
+                                    className={getNavLinkClass}
+                                    end
+                                >
                                     LIÊN HỆ
                                 </NavLink>
                             </li>
-
                             {login && (
                                 <li>
                                     <NavLink
-                                        to="/category/sale"
-                                        className={({ isActive }) =>
-                                            `font-bold py-2 transition-colors ${isActive ? 'text-red-600' : 'text-green-600 hover:text-red-600'}`
-                                        }
+                                        to="/sale"
+                                        className={`font-bold py-2 transition-colors ${
+                                            isSaleActive
+                                                ? 'text-red-600'
+                                                : 'text-green-600 hover:text-red-600'
+                                        }`}
+                                        end
                                     >
                                         KHUYẾN MÃI
                                     </NavLink>
@@ -134,6 +209,7 @@ const FixedNavbar = ({ login = true }) => {
                         </ul>
                     </div>
 
+                    {/* ... phần Cart & User không đổi ... */}
                     <div className="flex items-center space-x-12">
                         <Link to="/cart" className="relative">
                             <FaShoppingCart className="text-xl text-gray-600 hover:text-green-600 transition-colors" />
@@ -148,19 +224,23 @@ const FixedNavbar = ({ login = true }) => {
                                 onMouseEnter={() => setUserMenuOpen(true)}
                                 onMouseLeave={() => setUserMenuOpen(false)}
                             >
-                                <div className="cursor-pointer py-2">
+                                <div className="cursor-pointer p-4 flex items-center justify-center rounded-full">
                                     <FaUserCircle
-                                        className={`text-2xl transition-colors duration-300 ${isUserMenuOpen ? 'text-green-600' : 'text-gray-600'}`}
+                                        className={`text-2xl transition-colors duration-300 ${
+                                            isUserMenuOpen
+                                                ? 'text-green-600'
+                                                : 'text-gray-600'
+                                        }`}
                                     />
                                 </div>
+
                                 <div
-                                    className={`
-                                        absolute top-full -right-3 w-56 z-10
+                                    className={`absolute top-full -translate-y-2 -right-3 w-56 z-10
                                         origin-top-right rounded-md bg-white shadow-lg border border-gray-200/75
                                         transition-all duration-300 ease-in-out
                                         ${isUserMenuOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}
                                     `}
-                                >
+                                                            >
                                     <ul className="divide-y divide-gray-100">
                                         {userMenuItems.map(item => (
                                             <li key={item.id}>
@@ -186,7 +266,7 @@ const FixedNavbar = ({ login = true }) => {
                             </div>
                         ) : (
                             <Link
-                                to="/search"
+                                to="/category/all"
                                 className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg transition-colors font-semibold"
                             >
                                 ĐẶT HÀNG NGAY

@@ -1,4 +1,6 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react'
+import { formatCurrency } from '~/utils/formatCurrency';
+import { formatDateTime } from '~/utils/formatDateTime'
 
 const productsData = [
     {
@@ -87,19 +89,6 @@ const productsData = [
         rate_count: 350,
     },
 ]
-
-const formatCurrency = amount =>
-    new Intl.NumberFormat('vi-VN', {
-        style: 'currency',
-        currency: 'VND',
-    }).format(amount)
-const formatDateTime = date =>
-    new Date(date).toLocaleString('vi-VN', {
-        hour12: false,
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-    })
 
 const StatusBadge = ({ status }) => {
     const statusMap = {

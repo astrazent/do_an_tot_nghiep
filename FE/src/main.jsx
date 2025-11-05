@@ -16,7 +16,7 @@ createRoot(document.getElementById('root')).render(
     <React.StrictMode>
         <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
-                <AuthProvider>
+                {/* <AuthProvider> */}
                     <ThemeProvider>
                         <AlertProvider>
                             <QueryClientProvider client={queryClient}>
@@ -27,7 +27,7 @@ createRoot(document.getElementById('root')).render(
                             </QueryClientProvider>
                         </AlertProvider>
                     </ThemeProvider>
-                </AuthProvider>
+                {/* </AuthProvider> */}
             </PersistGate>
         </Provider>
     </React.StrictMode>

@@ -15,14 +15,14 @@ import RightSidebar from '~/components/user/news/RightSidebar'
 import TestAlert from '~/pages/user/TestAlert'
 import NewsDetail from '~/pages/user/NewsDetail'
 import Category from '~/pages/user/Category'
+import Promotion from '~/pages/user/Promotion'
 import SearchPage from '~/pages/user/SearchPage'
-import { useSelector } from 'react-redux'
-
+import { useCurrentUser } from '~/hooks/user/useUser'
 const ProtectedRoute = ({ children }) => {
-    const { token } = useSelector(state => state.user)
+    const { isAuthenticated } = useCurrentUser()
     const location = useLocation()
 
-    if (!token) {
+    if (!isAuthenticated) {
         return <Navigate to="/login" state={{ from: location }} replace />
     }
 
@@ -49,20 +49,18 @@ export const userRoutes = [
         ],
     },
     {
-        element: <SidebarLayout />,
-        children: [
-            { path: '/category/:slug', element: <Category /> },
-            { path: '/about', element: <About /> },
-            { path: '/search', element: <SearchPage /> },
-        ],
-    },
-    {
         element: (
             <SidebarLayout
                 leftHidePriority={['hot', 'featured', 'categories', 'search']}
             />
         ),
-        children: [{ path: '/product/:slug', element: <Product /> }],
+        children: [
+            { path: '/sale', element: <Promotion /> },
+            { path: '/category/:slug', element: <Category /> },
+            { path: '/about', element: <About /> },
+            { path: '/search', element: <SearchPage /> },
+            { path: '/product/:slug', element: <Product /> }
+        ],
     },
     {
         element: (
@@ -78,6 +76,7 @@ export const userRoutes = [
                     featuredPosts: true,
                     consumerTips: true,
                 }}
+                paddingX={50}
             />
         ),
         children: [

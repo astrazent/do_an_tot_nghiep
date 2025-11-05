@@ -37,6 +37,17 @@ const getListProduct = async (req, res, next) => {
         return ErrorServer(error, req, res, next)
     }
 }
+const getListPromotionProduct = async (req, res, next) => {
+    try {
+        const data = await productService.getPromotionProductService(req.query)
+        return res.status(StatusCodes.OK).json({
+            message: 'Danh sách sản phẩm đã được lấy thành công',
+            data,
+        })
+    } catch (error) {
+        return ErrorServer(error, req, res, next)
+    }
+}
 
 const getBySlug = async (req, res, next) => {
     try {
@@ -50,20 +61,6 @@ const getBySlug = async (req, res, next) => {
         return ErrorServer(error, req, res, next)
     }
 }
-
-const getByCategorySlug = async (req, res, next) => {
-    try {
-        const data = await productService.getByCategorySlugService(req.query.slug)
-        return res.status(StatusCodes.OK).json({
-            message: 'Danh sách sản phẩm thuộc danh mục đã được lấy thành công',
-            data,
-        })
-    } catch (error) {
-        console.error('Lỗi trong getByCategorySlug:', error)
-        return ErrorServer(error, req, res, next)
-    }
-}
-
 const getRelatedBySlug = async (req, res, next) => {
     try {
         const data = await productService.getRelatedBySlugService(req.query.slug)
@@ -73,6 +70,19 @@ const getRelatedBySlug = async (req, res, next) => {
         })
     } catch (error) {
         console.error('Lỗi trong getRelatedBySlug:', error)
+        return ErrorServer(error, req, res, next)
+    }
+}
+const getHotProduct = async (req, res, next) => {
+    try {
+        
+        const data = await productService.getHotProductService(req.query.limit)
+        return res.status(StatusCodes.OK).json({
+            message: 'Danh sách sản phẩm nổi bật đã được lấy thành công',
+            data,
+        })
+    } catch (error) {
+        console.error('Lỗi trong getHotProduct:', error)
         return ErrorServer(error, req, res, next)
     }
 }
@@ -104,8 +114,9 @@ const deleteProduct = async (req, res, next) => {
 export const productController = {
     getByIdProduct,
     getListProduct,
+    getListPromotionProduct,
     getBySlug,
-    getByCategorySlug,
+    getHotProduct,
     getRelatedBySlug,
     createProduct,
     updateProduct,

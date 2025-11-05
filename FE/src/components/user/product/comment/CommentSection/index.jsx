@@ -11,11 +11,13 @@ import minusIcon from '~/assets/icon/stuff/negative.png'
 import PageComment from '../CommentList'
 import { useCommentsByProductSlug } from '~/hooks/user/useComment'
 import { usePostCommentAI } from '~/hooks/user/useAI'
+// Giả sử hook của bạn nằm ở đây
+import { useCurrentUser } from '~/hooks/user/useUser' 
+import { usePostAIFeedbackByProductSlug } from '~/hooks/user/useAIFeedback'
 
 const filters = [
     'Mới nhất',
     'Có hình ảnh',
-    'Đã mua hàng',
     '5 sao',
     '4 sao',
     '3 sao',
@@ -24,6 +26,7 @@ const filters = [
 ]
 
 const StarRating = ({ rating }) => {
+    // ... (không thay đổi)
     const totalStars = 5
     const fullStars = Math.floor(rating)
     const halfStar = rating % 1 >= 0.5
@@ -46,6 +49,14 @@ const CommentSection = ({ slug }) => {
     const { data: rawData, isLoading, isError } = useCommentsByProductSlug(slug)
     const [activeFilter, setActiveFilter] = useState('Mới nhất')
     const [aiSummaryData, setAiSummaryData] = useState(null)
+    
+    // --- START: THÊM MỚI ---
+    const [voted, setVoted] = useState(null) // State để theo dõi: null, 'up', 'down'
+    const [feedbackId, setFeedbackId] = useState(null)
+    const { user, isAuthenticated } = useCurrentUser() // Lấy thông tin user
+    const { mutate: postAIFeedback, isPending: isPostingFeedback } =
+        usePostAIFeedbackByProductSlug()
+    // --- END: THÊM MỚI ---
 
     const {
         mutate: summarizeAI,
@@ -54,6 +65,7 @@ const CommentSection = ({ slug }) => {
         isError: aiError,
     } = usePostCommentAI(slug)
 
+    // ... (Các useMemo và useEffect khác không thay đổi)
     const comments = useMemo(() => {
         if (Array.isArray(rawData)) {
             return rawData
@@ -109,8 +121,6 @@ const CommentSection = ({ slug }) => {
                 return formattedComments.filter(
                     c => c.images && c.images.length > 0
                 )
-            case 'Đã mua hàng':
-                return formattedComments.filter(c => c.isVerified)
             case '5 sao':
                 return formattedComments.filter(c => c.rating === 5)
             case '4 sao':
@@ -168,9 +178,64 @@ const CommentSection = ({ slug }) => {
         return { averageRating, totalReviews, ratingDistribution }
     }, [comments])
 
-    const { averageRating, totalReviews, ratingDistribution } = reviewStats
-    const maxCount = Math.max(...ratingDistribution.map(item => item.count), 1)
+    // --- START: THÊM MỚI ---
+    const handleFeedback = voteType => {
+        // Ngăn không cho vote lại khi đang gửi hoặc đã vote rồi
+        if (isPostingFeedback) {
+            return
+        }
+        const isUndoAction = voted === voteType
+        const previousVote = voted
+        setVoted(isUndoAction ? null : voteType) // 1. Cập nhật UI ngay lập tức
 
+        // Giả sử bạn có cách để lấy ID của người dùng hiện tại
+        const payload = {
+            id: null,
+            slug,
+            vote: voteType === 'up' ? 1 : 0,
+            voter_id: null
+        }
+
+        if (isAuthenticated) {
+            payload.voter_id = user.id // Đảm bảo `user.id` là trường ID chính xác
+        }
+
+        if (feedbackId) {
+            payload.id = feedbackId
+        }
+
+        if (isUndoAction && !feedbackId) {
+            console.error("Không thể undo khi chưa có feedback ID. Hoàn tác UI.");
+            setVoted(previousVote); // Hoàn tác lại UI ngay lập tức
+            return;
+        }
+        // 2. Gọi mutation
+        postAIFeedback(payload, {
+            onSuccess: (response) => {
+                if (isUndoAction) {
+                    // Nếu undo thành công, reset ID để lần vote sau là CREATE
+                    setFeedbackId(null)
+                } else {
+                    // Nếu vote/update thành công, lưu lại ID mới
+                    const newId = response?.data?.id
+                    if (newId) {
+                        setFeedbackId(newId)
+                    }
+                }
+            },
+            onError: (error) => {
+                // Nếu có bất kỳ lỗi nào, hoàn tác lại trạng thái UI về ban đầu
+                console.error('Hành động thất bại, hoàn tác UI.', error)
+                setVoted(previousVote)
+                alert('Rất tiếc, đã có lỗi xảy ra. Vui lòng thử lại.')
+            },
+        })
+    }
+    // --- END: THÊM MỚI ---
+
+    const { averageRating, totalReviews, ratingDistribution } = reviewStats
+
+    // ... (Các phần return cho isLoading, isError, totalReviews === 0 không đổi)
     if (isLoading) {
         return <div className="pt-8 border-t">Đang tải đánh giá...</div>
     }
@@ -197,14 +262,15 @@ const CommentSection = ({ slug }) => {
         )
     }
 
+
     return (
         <div className="pt-8 border-t">
+            {/* ... (Phần tổng quan đánh giá không đổi) */}
             <h2 className="text-xl font-bold mb-10 flex items-center uppercase">
                 <span className="w-1 h-6 bg-green-600 mr-2 inline-block"></span>
                 Tổng quan đánh giá
             </h2>
             <div className="flex flex-col md:flex-row gap-8">
-                {}
                 <div className="w-full md:w-1/2">
                     <div className="flex items-center gap-4">
                         <div className="text-5xl font-bold">
@@ -270,6 +336,7 @@ const CommentSection = ({ slug }) => {
 
                     {aiSummaryData && !isAiSummarizing && !aiError && (
                         <div className="transition-opacity duration-500 ease-in-out">
+                            {/* ... (Phần hiển thị list positive/negative không đổi) */}
                             <div className="text-sm space-y-4">
                                 <div>
                                     <p className="font-semibold">
@@ -386,28 +453,43 @@ const CommentSection = ({ slug }) => {
                                     </div>
                                 )}
                             </div>
+                            {/* --- START: CẬP NHẬT BUTTONS --- */}
                             <div className="mt-4 flex gap-2">
                                 <button
                                     title="Hữu ích"
+                                    onClick={() => handleFeedback('up')}
+                                    disabled={isPostingFeedback} 
                                     style={{ border: '1px solid #d1d5db' }}
-                                    className="p-2 rounded-md hover:bg-blue-50 hover:text-blue-600 hover:border-blue-300 transition-colors duration-200"
+                                    className={`p-2 rounded-md transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-60 ${
+                                        voted === 'up'
+                                            ? 'bg-blue-600 text-white border-blue-600'
+                                            : 'hover:bg-blue-50 hover:text-blue-600 hover:border-blue-300'
+                                    }`}
                                 >
                                     <FaThumbsUp />
                                 </button>
                                 <button
                                     title="Không hữu ích"
+                                    onClick={() => handleFeedback('down')}
+                                    disabled={isPostingFeedback} 
                                     style={{ border: '1px solid #d1d5db' }}
-                                    className="p-2 rounded-md hover:bg-red-50 hover:text-red-600 hover:border-red-300 transition-colors duration-200"
+                                    className={`p-2 rounded-md transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-60 ${
+                                        voted === 'down'
+                                            ? 'bg-red-600 text-white border-red-600'
+                                            : 'hover:bg-red-50 hover:text-red-600 hover:border-red-300'
+                                    }`}
                                 >
                                     <FaThumbsDown />
                                 </button>
                             </div>
+                            {/* --- END: CẬP NHẬT BUTTONS --- */}
                         </div>
                     )}
                 </div>
             </div>
 
             <div className="mt-8">
+                {/* ... (Phần lọc và PageComment không đổi) */}
                 <h3 className="text-lg font-semibold mb-2">Lọc theo</h3>
                 <div className="flex flex-wrap gap-2">
                     {filters.map(filter => (

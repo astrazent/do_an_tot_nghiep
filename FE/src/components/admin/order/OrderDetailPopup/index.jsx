@@ -12,25 +12,8 @@ import {
     FiInfo,
     FiMessageSquare,
 } from 'react-icons/fi'
-
-const formatCurrency = amount => {
-    return new Intl.NumberFormat('vi-VN', {
-        style: 'currency',
-        currency: 'VND',
-    }).format(amount)
-}
-
-const formatDateTime = isoString => {
-    if (!isoString) return 'N/A'
-    const date = new Date(isoString)
-    return date.toLocaleString('vi-VN', {
-        hour: '2-digit',
-        minute: '2-digit',
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-    })
-}
+import { formatCurrency } from '~/utils/formatCurrency';
+import { formatDateTime } from '~/utils/formatDateTime';
 
 const getShipmentProviderName = providerId => {
     const providers = {

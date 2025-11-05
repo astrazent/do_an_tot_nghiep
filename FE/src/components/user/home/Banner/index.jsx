@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Autoplay, Pagination, Navigation } from 'swiper/modules'
 import 'swiper/css'
@@ -6,53 +7,52 @@ import 'swiper/css/pagination'
 import 'swiper/css/navigation'
 import './banner.scss'
 
-import slide1 from '~/assets/image/shared/layout/banner/banner_1.jpg'
-import slide2 from '~/assets/image/shared/layout/banner/banner_2.png'
-import slide3 from '~/assets/image/shared/layout/banner/banner_3.png'
+import { useListSlider } from '~/hooks/user/useSlider'
 
 const Banner = () => {
-    const slides = [
-        {
-            id: 1,
-            image: slide1,
-            title: 'ĐẶC SẢN VỊT VÂN ĐÌNH',
-        },
-        {
-            id: 2,
-            image: slide2,
-            title: 'COMBO RUỐC',
-        },
-        {
-            id: 3,
-            image: slide3,
-            title: 'NEM LỤI',
-        },
-    ]
+    // 1. Dữ liệu trả về từ hook (biến 'data') giờ đây chính là mảng 'slides'
+    const { data: slides, isLoading, isError } = useListSlider()
+
+    // 2. Trạng thái tải vẫn giữ nguyên
+    if (isLoading) {
+        return (
+            <div className="w-full h-[450px] bg-gray-200 animate-pulse" />
+        )
+    }
+
+    // 3. Điều chỉnh lại điều kiện kiểm tra lỗi hoặc không có dữ liệu
+    if (isError || !slides || slides.length === 0) {
+        return null // Không hiển thị gì nếu có lỗi hoặc mảng rỗng
+    }
+    
+    // console.log(slides); // Dòng này sẽ in ra trực tiếp mảng slider
+
     return (
-        <>
-            <div className="w-full">
-                <Swiper
-                    spaceBetween={0}
-                    slidesPerView={1}
-                    loop={true}
-                    autoplay={{ delay: 4000, disableOnInteraction: false }}
-                    pagination={{ clickable: true }}
-                    navigation={true}
-                    modules={[Autoplay, Pagination, Navigation]}
-                    className="!h-[120%] banner-swiper"
-                >
-                    {slides.map(slide => (
-                        <SwiperSlide key={slide.id}>
+        <div className="w-full">
+            <Swiper
+                spaceBetween={0}
+                slidesPerView={1}
+                loop={true}
+                autoplay={{ delay: 4000, disableOnInteraction: false }}
+                pagination={{ clickable: true }}
+                navigation={true}
+                modules={[Autoplay, Pagination, Navigation]}
+                className="!h-[120%] banner-swiper"
+            >
+                {/* 4. Logic map không cần thay đổi vì biến 'slides' đã đúng là mảng */}
+                {slides.map((slide) => (
+                    <SwiperSlide key={slide.id}>
+                        <Link to={slide.link_url || '#'}>
                             <img
-                                src={slide.image}
-                                alt={slide.title}
+                                src={slide.image_url}
+                                alt={slide.name}
                                 className="w-full h-full object-cover object-center"
                             />
-                        </SwiperSlide>
-                    ))}
-                </Swiper>
-            </div>
-        </>
+                        </Link>
+                    </SwiperSlide>
+                ))}
+            </Swiper>
+        </div>
     )
 }
 

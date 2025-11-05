@@ -1,7 +1,11 @@
 import { getConnection } from '../config/mysql.js'
 import Joi from 'joi'
 
-const POSTS_TABLE_NAME = 'Posts'
+// Khai báo tên bảng
+const POSTS_TABLE = 'Posts'
+const POST_CATEGORIES_TABLE = 'PostCategories'
+const CATEGORIES_TABLE = 'Categories'
+const POST_TYPES_TABLE = 'PostTypes'
 
 // Schema validate dữ liệu post
 const POSTS_SCHEMA = Joi.object({
@@ -36,16 +40,13 @@ const POSTS_SCHEMA = Joi.object({
 })
 
 const PostsModel = {
-    
     async createPost(data) {
-        const { error, value } = POSTS_SCHEMA.validate(data, {
-            abortEarly: false,
-        })
+        const { error, value } = POSTS_SCHEMA.validate(data, { abortEarly: false })
         if (error) throw error
 
         const conn = getConnection()
         const [result] = await conn.execute(
-            `INSERT INTO ${POSTS_TABLE_NAME} (title, slug, content, author_name, description, status, published_at, admin_id) 
+            `INSERT INTO ${POSTS_TABLE} (title, slug, content, author_name, description, status, published_at, admin_id) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
             [
                 value.title,
@@ -62,17 +63,131 @@ const PostsModel = {
         return { id: result.insertId, ...value }
     },
 
-    
     async getPostById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
-            `SELECT * FROM ${POSTS_TABLE_NAME} WHERE id = ?`,
+            `SELECT * FROM ${POSTS_TABLE} WHERE id = ?`,
             [id]
         )
         return rows[0] || null
     },
 
-    
+    async getPostBySlug(slug, limit = 1, offset = 0) {
+        if (!slug) return []
+
+        const conn = getConnection()
+        const sql = `
+        SELECT *
+        FROM ${POSTS_TABLE}
+        WHERE slug = ?
+        ORDER BY published_at DESC
+        LIMIT ? OFFSET ?
+    `
+        const params = [slug, limit, offset]
+        const [rows] = await conn.execute(sql, params)
+        return rows
+    },
+
+    async getPostByCategorySlug(slugString = '', limit = 5, offset = 0) {
+        if (!slugString) return []
+
+        const slugs = slugString
+            .split(',')
+            .map(s => s.trim())
+            .filter(s => s.length > 0)
+
+        if (slugs.length === 0) return []
+
+        const conn = getConnection()
+        const placeholders = slugs.map(() => '?').join(', ')
+        const sql = `
+        SELECT p.*
+        FROM ${POSTS_TABLE} p
+        JOIN ${POST_CATEGORIES_TABLE} pc ON p.id = pc.post_id
+        JOIN ${CATEGORIES_TABLE} c ON pc.category_id = c.id
+        WHERE c.slug IN (${placeholders})
+        ORDER BY p.published_at DESC
+        LIMIT ? OFFSET ?
+    `
+        const params = [...slugs, limit, offset]
+        const [rows] = await conn.execute(sql, params)
+        return rows
+    },
+
+    async getPostByPostTypeSlug(slug, limit = 5, offset = 0) {
+        if (!slug) return []
+
+        const conn = getConnection()
+        const sql = `
+        SELECT p.*
+        FROM ${POSTS_TABLE} p
+        JOIN ${POST_TYPES_TABLE} pt ON p.post_type_id = pt.id
+        WHERE pt.slug = ?
+        ORDER BY p.published_at DESC
+        LIMIT ? OFFSET ?
+    `
+        const [rows] = await conn.execute(sql, [slug, limit, offset])
+        return rows
+    },
+
+    async getRelatedByPostSlug(slug, limit = 5, offset = 0) {
+        if (!slug) return { relatedByCategory: [], relatedByPostType: [] }
+
+        const conn = getConnection()
+
+        const [originalRows] = await conn.execute(
+            `
+        SELECT p.id AS postId, p.post_type_id, pc.category_id
+        FROM ${POSTS_TABLE} p
+        LEFT JOIN ${POST_CATEGORIES_TABLE} pc ON p.id = pc.post_id
+        WHERE p.slug = ?
+        `,
+            [slug]
+        )
+        if (originalRows.length === 0)
+            return { relatedByCategory: [], relatedByPostType: [] }
+
+        const { postId, post_type_id } = originalRows[0]
+        const categoryIds = [
+            ...new Set(originalRows.map(r => r.category_id).filter(Boolean)),
+        ]
+
+        let relatedByCategory = []
+
+        if (categoryIds.length > 0) {
+            const placeholders = categoryIds.map(() => '?').join(',')
+            const [rows] = await conn.execute(
+                `
+            SELECT DISTINCT p.*
+            FROM ${POSTS_TABLE} p
+            JOIN ${POST_CATEGORIES_TABLE} pc ON p.id = pc.post_id
+            WHERE pc.category_id IN (${placeholders})
+            AND p.id != ?
+            ORDER BY p.published_at DESC
+            LIMIT ? OFFSET ?
+            `,
+                [...categoryIds, postId, limit, offset]
+            )
+            relatedByCategory = rows
+        }
+
+        const [relatedByPostType] = await conn.execute(
+            `
+        SELECT p.*
+        FROM ${POSTS_TABLE} p
+        WHERE p.post_type_id = ? AND p.id != ?
+        ORDER BY p.published_at DESC
+        LIMIT ? OFFSET ?
+        `,
+            [post_type_id, postId, limit, offset]
+        )
+
+        return {
+            relatedByCategory,
+            relatedByPostType,
+        }
+    },
+
     async updatePost(id, data) {
         const schema = POSTS_SCHEMA.fork(
             Object.keys(POSTS_SCHEMA.describe().keys),
@@ -88,32 +203,93 @@ const PostsModel = {
         const setClause = fields.map(f => `${f} = ?`).join(', ')
         const conn = getConnection()
         await conn.execute(
-            `UPDATE ${POSTS_TABLE_NAME} SET ${setClause} WHERE id = ?`,
+            `UPDATE ${POSTS_TABLE} SET ${setClause} WHERE id = ?`,
             [...values, id]
         )
 
         return this.getPostById(id)
     },
 
-    
     async deletePost(id) {
         const conn = getConnection()
         const [result] = await conn.execute(
-            `DELETE FROM ${POSTS_TABLE_NAME} WHERE id = ?`,
+            `DELETE FROM ${POSTS_TABLE} WHERE id = ?`,
             [id]
         )
         return result.affectedRows > 0
     },
 
-    
-    async listPosts(limit = 50, offset = 0) {
+    async listPosts(limit = 10, offset = 0, sort = 'newest') {
         const conn = getConnection()
-        const [rows] = await conn.execute(
-            `SELECT * FROM ${POSTS_TABLE_NAME} ORDER BY id DESC LIMIT ? OFFSET ?`,
-            [limit, offset]
-        )
+        let sql = ''
+        let params = [limit, offset]
+
+        switch (sort) {
+            case 'oldest':
+                sql = `
+                SELECT 
+                    p.*,
+                    pt.name AS post_type_name,
+                    pt.slug AS post_type_slug,
+                    pt.description AS post_type_description
+                FROM ${POSTS_TABLE} p
+                LEFT JOIN ${POST_TYPES_TABLE} pt ON p.post_type_id = pt.id
+                ORDER BY p.updated_at ASC
+                LIMIT ? OFFSET ?
+            `
+                break
+
+            case 'post_type':
+                sql = `
+                SELECT 
+                    p.*,
+                    pt.name AS post_type_name,
+                    pt.slug AS post_type_slug,
+                    pt.description AS post_type_description
+                FROM ${POSTS_TABLE} p
+                LEFT JOIN ${POST_TYPES_TABLE} pt ON p.post_type_id = pt.id
+                ORDER BY p.post_type_id ASC, p.updated_at DESC
+                LIMIT ? OFFSET ?
+            `
+                break
+
+            case 'post_type_limited':
+                sql = `
+                SELECT *
+                FROM (
+                    SELECT 
+                        p.*,
+                        pt.name AS post_type_name,
+                        pt.slug AS post_type_slug,
+                        pt.description AS post_type_description,
+                        ROW_NUMBER() OVER (PARTITION BY p.post_type_id ORDER BY p.updated_at DESC) AS rn
+                    FROM ${POSTS_TABLE} p
+                    LEFT JOIN ${POST_TYPES_TABLE} pt ON p.post_type_id = pt.id
+                ) ranked
+                WHERE ranked.rn <= 4
+                ORDER BY ranked.post_type_id ASC, ranked.updated_at DESC
+                LIMIT ? OFFSET ?
+            `
+                break
+
+            default:
+                sql = `
+                SELECT 
+                    p.*,
+                    pt.name AS post_type_name,
+                    pt.slug AS post_type_slug,
+                    pt.description AS post_type_description
+                FROM ${POSTS_TABLE} p
+                LEFT JOIN ${POST_TYPES_TABLE} pt ON p.post_type_id = pt.id
+                ORDER BY p.updated_at DESC
+                LIMIT ? OFFSET ?
+            `
+                break
+        }
+
+        const [rows] = await conn.execute(sql, params)
         return rows
     },
 }
 
-export { POSTS_TABLE_NAME, POSTS_SCHEMA, PostsModel }
+export { POSTS_TABLE, POSTS_SCHEMA, PostsModel }

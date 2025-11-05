@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 const ProductListSection = ({ title, products, isPromotion = false }) => {
@@ -17,7 +17,7 @@ const ProductListSection = ({ title, products, isPromotion = false }) => {
                         className="flex items-center gap-4 p-2 rounded-lg hover:bg-gray-100 transition-colors group"
                     >
                         <img
-                            src={product.imageUrl}
+                            src={product.images?.[0] || '/placeholder.png'}
                             alt={product.name}
                             className="w-16 h-16 rounded-md object-cover flex-shrink-0"
                         />
@@ -26,18 +26,18 @@ const ProductListSection = ({ title, products, isPromotion = false }) => {
                                 {product.name}
                             </h5>
 
-                            {isPromotion && product.discountPrice ? (
+                            {isPromotion ? (
                                 <div className="mt-1 flex flex-col">
                                     <span className="text-xs text-gray-400 line-through">
-                                        {product.price}
+                                        {Number(product.origin_price).toLocaleString('vi-VN')} ₫
                                     </span>
                                     <span className="text-sm text-green-600 font-bold">
-                                        {product.discountPrice}
+                                        {Number(product.price).toLocaleString('vi-VN')} ₫
                                     </span>
                                 </div>
                             ) : (
                                 <p className="text-sm text-green-600 font-bold mt-1">
-                                    {product.price}
+                                    {Number(product.price).toLocaleString('vi-VN')} ₫
                                 </p>
                             )}
                         </div>

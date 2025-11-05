@@ -4,37 +4,53 @@ import Joi from 'joi'
 const SLIDERS_TABLE_NAME = 'Sliders'
 
 // Schema validate dữ liệu slider
-const SLIDERS_SCHEMA = Joi.object({
+const SLIDER_SCHEMA = Joi.object({
     name: Joi.string().min(3).max(100).required().messages({
-        'string.empty': 'Name không được để trống',
-        'string.min': 'Name tối thiểu 3 ký tự',
-        'string.max': 'Name tối đa 100 ký tự',
+        'string.empty': 'Tên slider không được để trống',
+        'string.min': 'Tên slider tối thiểu 3 ký tự',
+        'string.max': 'Tên slider tối đa 100 ký tự',
+    }),
+    description: Joi.string().max(255).allow('', null).messages({
+        'string.max': 'Description tối đa 255 ký tự',
     }),
     image_url: Joi.string().max(255).required().messages({
         'string.empty': 'Image URL không được để trống',
         'string.max': 'Image URL tối đa 255 ký tự',
     }),
-    sort_order: Joi.number().integer().min(0).default(0),
+    link_url: Joi.string().max(255).allow('', null).messages({
+        'string.max': 'Link URL tối đa 255 ký tự',
+    }),
+    sort_order: Joi.number().integer().default(0),
+    status: Joi.number().integer().valid(0, 1).default(1),
+    start_date: Joi.date().allow(null),
+    end_date: Joi.date().allow(null),
 })
 
 const SlidersModel = {
-    
     async createSlider(data) {
-        const { error, value } = SLIDERS_SCHEMA.validate(data, {
-            abortEarly: false,
-        })
+        const { error, value } = SLIDER_SCHEMA.validate(data, { abortEarly: false })
         if (error) throw error
 
         const conn = getConnection()
         const [result] = await conn.execute(
-            `INSERT INTO ${SLIDERS_TABLE_NAME} (name, image_url, sort_order) VALUES (?, ?, ?)`,
-            [value.name, value.image_url, value.sort_order]
+            `INSERT INTO ${SLIDERS_TABLE_NAME} 
+            (name, description, image_url, link_url, sort_order, status, start_date, end_date)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+            [
+                value.name,
+                value.description,
+                value.image_url,
+                value.link_url,
+                value.sort_order,
+                value.status,
+                value.start_date,
+                value.end_date,
+            ]
         )
 
         return { id: result.insertId, ...value }
     },
 
-    
     async getSliderById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -44,12 +60,8 @@ const SlidersModel = {
         return rows[0] || null
     },
 
-    
     async updateSlider(id, data) {
-        const schema = SLIDERS_SCHEMA.fork(
-            Object.keys(SLIDERS_SCHEMA.describe().keys),
-            f => f.optional()
-        )
+        const schema = SLIDER_SCHEMA.fork(Object.keys(SLIDER_SCHEMA.describe().keys), f => f.optional())
         const { error, value } = schema.validate(data, { abortEarly: false })
         if (error) throw error
 
@@ -67,7 +79,6 @@ const SlidersModel = {
         return this.getSliderById(id)
     },
 
-    
     async deleteSlider(id) {
         const conn = getConnection()
         const [result] = await conn.execute(
@@ -77,15 +88,23 @@ const SlidersModel = {
         return result.affectedRows > 0
     },
 
-    
-    async listSliders(limit = 50, offset = 0) {
+    async listSliders(limit = 50, offset = 0, status = null, sort = 'desc') {
         const conn = getConnection()
-        const [rows] = await conn.execute(
-            `SELECT * FROM ${SLIDERS_TABLE_NAME} ORDER BY sort_order ASC, id DESC LIMIT ? OFFSET ?`,
-            [limit, offset]
-        )
+        let sql = `SELECT * FROM ${SLIDERS_TABLE_NAME}`
+        const params = []
+
+        if (status !== null) {
+            sql += ' WHERE status = ?'
+            params.push(status)
+        }
+
+        const order = sort === 'asc' ? 'ASC' : 'DESC'
+        sql += ` ORDER BY sort_order ${order}, id ${order} LIMIT ? OFFSET ?`
+        params.push(limit, offset)
+
+        const [rows] = await conn.execute(sql, params)
         return rows
-    },
+    }
 }
 
-export { SLIDERS_TABLE_NAME, SLIDERS_SCHEMA, SlidersModel }
+export { SLIDERS_TABLE_NAME, SLIDER_SCHEMA, SlidersModel }

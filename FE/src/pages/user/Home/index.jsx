@@ -6,15 +6,16 @@ import Footer from '~/components/user/home/Footer'
 import ProductCollection from '~/components/user/home/ProductCollection'
 import FeedbackCollection from '~/components/user/home/FeedbackCollection'
 import LatestNews from '~/components/user/home/LatestNews'
-import { useState } from 'react'
 import './home.scss'
 import LogoCarousel from '~/components/user/home/LogoCarousel'
+import { useCurrentUser } from '~/hooks/user/useUser'
 
 const Home = () => {
+    const { isAuthenticated } = useCurrentUser()
     return (
         <div>
-            <Header />
-            <FixedNavbar />
+            <Header login={isAuthenticated} />
+            <FixedNavbar login={isAuthenticated} />
             <Banner />
             <ProductCollection />
             <FeedbackCollection />

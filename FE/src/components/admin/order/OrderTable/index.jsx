@@ -9,6 +9,8 @@ import {
 } from 'react-icons/fi'
 
 import OrderDetailPopup from '../OrderDetailPopup'
+import { formatCurrency } from '~/utils/formatCurrency';
+
 
 const mockOrders = [
     {
@@ -89,13 +91,6 @@ const mockDetailedOrder = {
             price: 250000,
         },
     ],
-}
-
-const formatCurrency = amount => {
-    return new Intl.NumberFormat('vi-VN', {
-        style: 'currency',
-        currency: 'VND',
-    }).format(amount)
 }
 
 const OrderStatus = ({ status }) => {

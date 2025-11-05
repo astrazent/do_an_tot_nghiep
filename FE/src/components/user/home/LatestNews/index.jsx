@@ -1,64 +1,40 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import ArticleCard from '~/components/shared/ArticleCard'
 import Pagination from '~/components/shared/Pagination'
-
-const PLACEHOLDER_IMAGE =
-    'https://img.freepik.com/free-vector/illustration-gallery-icon_53876-27002.jpg?semt=ais_hybrid&w=740&q=80'
+import { usePosts } from '~/hooks/user/usePost'
 
 const LatestNews = ({
     title = 'Tin tức mới nhất',
     backgroundColor = 'bg-gray-100',
-    articlesPerPage = 4,
+    articlesPerPage = 8,
 }) => {
-    const [allArticles, setAllArticles] = useState([])
-
     const [currentPage, setCurrentPage] = useState(1)
 
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState(null)
+    const {
+        data: allArticles = [],
+        isLoading,
+        isError,
+    } = usePosts({
+        type: 'all',
+        limit: 24,
+        offset: 0,
+        sort: 'newest',
+    })
+    const formattedArticles = allArticles.map(article => {
+        const mainImage = article.images?.[0]?.url || null
 
-    useEffect(() => {
-        const fetchArticles = async () => {
-            try {
-                const response = await fetch(
-                    'http://localhost:8023/v1/post/list'
-                )
-                if (!response.ok) {
-                    throw new Error(`Lỗi HTTP! Trạng thái: ${response.status}`)
-                }
-                const result = await response.json()
-                const rawArticles = result.data || []
-
-                const sortedArticles = rawArticles.sort(
-                    (a, b) =>
-                        new Date(b.published_at) - new Date(a.published_at)
-                )
-
-                const formattedArticles = sortedArticles.map(article => ({
-                    id: article.id,
-                    title: article.title,
-                    slug: article.slug,
-                    image: PLACEHOLDER_IMAGE,
-                    date: new Date(article.published_at).toLocaleDateString(
-                        'vi-VN'
-                    ),
-                }))
-
-                setAllArticles(formattedArticles)
-            } catch (e) {
-                console.error('Không thể lấy danh sách bài viết:', e)
-                setError('Không thể tải tin tức. Vui lòng thử lại sau.')
-            } finally {
-                setLoading(false)
-            }
+        return {
+            id: article.id,
+            title: article.title,
+            slug: article.slug,
+            image: mainImage,
+            date: new Date(article.published_at).toLocaleDateString('vi-VN'),
         }
+    })
 
-        fetchArticles()
-    }, [])
+    const totalPages = Math.ceil(formattedArticles.length / articlesPerPage)
 
-    const totalPages = Math.ceil(allArticles.length / articlesPerPage)
-
-    const currentArticles = allArticles.slice(
+    const currentArticles = formattedArticles.slice(
         (currentPage - 1) * articlesPerPage,
         currentPage * articlesPerPage
     )
@@ -67,7 +43,7 @@ const LatestNews = ({
         setCurrentPage(pageNumber)
     }
 
-    if (loading) {
+    if (isLoading) {
         return (
             <section className={`${backgroundColor} py-16`}>
                 <div className="container mx-auto text-center">
@@ -77,17 +53,7 @@ const LatestNews = ({
         )
     }
 
-    if (error) {
-        return (
-            <section className={`${backgroundColor} py-16`}>
-                <div className="container mx-auto text-center text-red-500">
-                    <p>{error}</p>
-                </div>
-            </section>
-        )
-    }
-
-    if (allArticles.length === 0) {
+    if (isError || formattedArticles.length === 0) {
         return null
     }
 
@@ -106,7 +72,6 @@ const LatestNews = ({
 
                 <div className="px-[134px]">
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                        {}
                         {currentArticles.map(article => (
                             <ArticleCard
                                 key={article.id}
@@ -119,7 +84,6 @@ const LatestNews = ({
                     </div>
                 </div>
 
-                {}
                 {totalPages > 1 && (
                     <div className="px-[134px] mt-12">
                         <Pagination

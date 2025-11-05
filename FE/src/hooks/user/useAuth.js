@@ -1,49 +1,30 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import axios from 'axios'
-import { updateUser, remoteUser } from '~/Redux/reducers/userReducer'
-const API = import.meta.env.VITE_API_BACKEND
+import api from '~/services/user/api'
+import { updateUser, removeUser } from '~/Redux/reducers/userReducer'
+
 export const useAuth = () => {
     const dispatch = useDispatch()
     const userState = useSelector(state => state.user)
-
+    const [authLoading, setAuthLoading] = useState(true)
     useEffect(() => {
-        const authAxios = axios.create({
-            baseURL: `${API}`,
-            withCredentials: true,
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-
-        authAxios
-            .get('/user')
-            .then(res => {
-                console.log('User data:', res.data)
-                dispatch(
-                    updateUser({
-                        full_name: res.data.fullName || res.data.full_name,
-                        phone: res.data.phone,
-                        email: res.data.email,
-                        token: res.data.token || userState.token,
-                    })
-                )
-            })
-            .catch(error => {
-                console.error(
-                    'Auth check failed:',
-                    error.response?.data || error.message
-                )
-                dispatch(remoteUser())
-            })
-    }, [dispatch, userState.token])
+        const checkAuth = async () => {
+            try {
+                const res = await api.get('/auth/verify')
+                console.log("get: ",res.data);
+                dispatch(updateUser(res.data))
+            } catch {
+                dispatch(removeUser())
+            } finally {
+                setAuthLoading(false)
+            }
+        }
+        checkAuth()
+    }, [dispatch])
 
     return {
-        user: {
-            fullName: userState.fullName || '',
-            phone: userState.phone || '',
-            email: userState.email || '',
-        },
-        isAuthenticated: !!userState.token,
+        authLoading,
+        user: userState,
+        isAuthenticated: !!userState.email,
     }
 }

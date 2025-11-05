@@ -1,25 +1,18 @@
-import jwt from 'jsonwebtoken'
-import { env } from '~/config/environment.js'
 import { StatusCodes } from 'http-status-codes'
 import ApiError from '~/utils/ApiError.js'
+import { verifyAccessToken } from '~/utils/token.js'
 
 export function verifyToken(req, res, next) {
-    const token = req.cookies?.token
+    const token = req.cookies?.access_token
     if (!token) {
-        return next(
-            new ApiError(
-                StatusCodes.UNAUTHORIZED,
-                'Người dùng chưa xác thực. Vui lòng đăng nhập lại.'
-            )
-        )
+        return next(new ApiError(StatusCodes.UNAUTHORIZED, 'Không có access token.'))
     }
 
     try {
-        const decoded = jwt.verify(token, env.JWT_SECRET)
+        const decoded = verifyAccessToken(token)
         req.user = decoded
         next()
     } catch (err) {
-        // 🧩 Phân loại lỗi rõ ràng
         if (err.name === 'TokenExpiredError') {
             return next(
                 new ApiError(
@@ -38,7 +31,6 @@ export function verifyToken(req, res, next) {
             )
         }
 
-        // ⚙️ Các lỗi khác không xác định
         next(
             new ApiError(
                 StatusCodes.INTERNAL_SERVER_ERROR,

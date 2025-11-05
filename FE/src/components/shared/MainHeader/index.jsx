@@ -1,4 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux' // Thêm useSelector
+import { removeUser } from '~/Redux/reducers/userReducer'
+import { logoutUser } from '~/services/user/userService'
+import { useAlert } from '~/contexts/AlertContext'
 import {
     FaSearch,
     FaShoppingCart,
@@ -13,14 +17,48 @@ const userMenuItems = [
     { id: 3, name: 'Đăng xuất', isButton: true },
 ]
 
-function MainHeader({ login, handleLogout, cartItemCount = 0 }) {
+// Bỏ prop 'login' không cần thiết
+function MainHeader({ cartItemCount = 0 }) {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const { showAlert } = useAlert()
+
+    // Sử dụng useSelector để lấy trạng thái đăng nhập trực tiếp từ Redux store.
+    // Giả sử trong store của bạn, slice 'user' có một trường 'currentUser'.
+    // Nếu currentUser tồn tại (không phải null), coi như đã đăng nhập.
+    const isLoggedIn = useSelector((state) => !!state.user.email)
+
+    const handleSuccess = (message) => {
+        showAlert(message, {
+            type: 'success',
+        })
+    }
+
+    const handleError = (message) => {
+        showAlert(message, {
+            type: 'error',
+            duration: 3000,
+        })
+    }
 
     const handleUserIconClick = () => {
-        if (login) {
+        if (isLoggedIn) {
             navigate('/user/profile')
         } else {
             navigate('/login')
+        }
+    }
+
+    const handleLogout = async () => {
+        try {
+            console.log("đã bấm logout!")
+            await logoutUser() // gọi API logout
+            dispatch(removeUser()) // xóa user trong Redux
+            // Không cần setIsLoggedIn(false) nữa, component sẽ tự re-render khi Redux state thay đổi
+            handleSuccess('Đăng xuất thành công')
+        } catch (err) {
+            handleError('Đăng xuất thất bại')
+            console.error('Logout failed:', err)
         }
     }
 
@@ -67,20 +105,20 @@ function MainHeader({ login, handleLogout, cartItemCount = 0 }) {
                             className="text-gray-600 hover:text-green-600 transition-colors duration-300 text-3xl"
                             aria-label="Tài khoản"
                         >
-                            {login ? (
+                            {isLoggedIn ? (
                                 <FaUserCircle size={25} />
                             ) : (
                                 <FaSignInAlt size={25} />
                             )}
                         </button>
 
-                        {login && (
+                        {isLoggedIn && (
                             <div
                                 className="
-                                    absolute top-full right-0 w-48 z-10 
+                                    absolute top-full right-0 w-48 z-10
                                     origin-top-right rounded-md bg-white shadow-lg border border-gray-200/75
                                     transition-all duration-300 ease-in-out
-                                    opacity-0 scale-95 pointer-events-none 
+                                    opacity-0 scale-95 pointer-events-none
                                     group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto
                                 "
                             >

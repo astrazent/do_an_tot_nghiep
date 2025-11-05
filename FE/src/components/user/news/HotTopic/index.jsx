@@ -26,9 +26,9 @@ const HotTopicItem = ({ article }) => (
 
 const HotTopic = ({ articles }) => {
     return (
-        <section className="my-8">
-            <div className="border-b-2 border-green-600 mb-4 inline-block">
-                <h2 className="text-lg font-bold text-white bg-green-600 px-4 py-1 uppercase">
+        <section className="my-8 border-t border-gray-300/50">
+            <div className="border-b border-green-600 mb-3 inline-block">
+                <h2 className="text-sm font-bold text-white bg-green-600 px-2 py-0.5 uppercase tracking-wide">
                     Bài viết nổi bật
                 </h2>
             </div>

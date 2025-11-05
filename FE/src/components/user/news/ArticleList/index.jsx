@@ -46,7 +46,8 @@ const ArticleList = ({ articles }) => {
                 <div key={category}>
                     <div className="w-full h-[2px] bg-green-600 my-8"></div>
 
-                    <h2 className="text-2xl font-bold text-green-700 uppercase mb-6 border-b-2 border-green-500 inline-block pb-1">
+                    <h2 className="text-xl font-bold flex items-center uppercase mb-4">
+                        <span className="w-1 h-6 bg-green-600 mr-2 inline-block"></span>
                         {category}
                     </h2>
 

@@ -5,6 +5,8 @@ import { useAuth } from '~/hooks/user/useAuth'
 function App() {
     const { authLoading } = useAuth()
 
+    const route = useRoutes(routes) // hook luôn được gọi
+
     if (authLoading) {
         return (
             <div className="flex justify-center items-center min-h-screen">
@@ -13,7 +15,6 @@ function App() {
         )
     }
 
-    return useRoutes(routes)
+    return route
 }
-
 export default App
