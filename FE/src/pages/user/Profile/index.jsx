@@ -22,16 +22,8 @@ const Profile = () => {
         ward: '', // Sẽ lưu ID
     })
 
-<<<<<<< HEAD
-    const [avatarPreview, setAvatarPreview] = useState(
-        'https://i.pravatar.cc/150?u=a042581f4e29026704d'
-    )
-
-    const [provinces, setProvinces] = useState([])
-=======
     const [avatarPreview, setAvatarPreview] = useState('')
     const [allProvinces] = useState(provincesData)
->>>>>>> 4546453962015922ccfa4ccb13de87fd625e2fc1
     const [districts, setDistricts] = useState([])
     const [wards, setWards] = useState([])
 
