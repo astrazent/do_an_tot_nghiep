@@ -1,15 +1,12 @@
 import { cartItemService } from '~/services/cartItemService.js'
 import { StatusCodes } from 'http-status-codes'
-import ErrorServer from '~/utils/ErrorServer'
-import jwt from 'jsonwebtoken'
 
 const getCartItems = async (req, res, next) => {
     try {
-        const token = req.headers.authorization.split(' ')[1];
-        const userId = jwt.verify(token, process.env.JWT_SECRET || "bepsachviet123").userId;
-        if(!userId){
+        const userId = req.query.userId
+        if (!userId) {
             return res.status(StatusCodes.BAD_REQUEST).json({
-                message: "Lỗi token không tìm thấy user"
+                message: "Không tìm thấy userId"
             })
         }
         const data = await cartItemService.getCartItemsService(userId)
@@ -18,43 +15,55 @@ const getCartItems = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
 const addCartItems = async (req, res, next) => {
     try {
-        const token = req.headers.authorization.split(' ')[1];
-        const userId = jwt.verify(token, process.env.JWT_SECRET || "bepsachviet123").userId;
+        const userId = req.query.userId  // lấy trực tiếp từ req
+        if (!userId) {
+            return res.status(StatusCodes.BAD_REQUEST).json({
+                message: "Không tìm thấy userId"
+            })
+        }
+
         const data = await cartItemService.addCartItemsService(
             userId,
             req.body.productId,
             req.body.quantity
         )
+
         return res.status(StatusCodes.OK).json({
             message: 'Thêm sản phẩm vào giỏ hàng thành công',
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
 const updateQuantityCartItems = async (req, res, next) => {
     try {
+        const user_id = req.user?.id || req.query.userId;
+        const { product_id, quantity, price_total } = req.body;
+
+        // Gọi service (service đã validate input)
         const data = await cartItemService.updateQuantityCartItemsService(
-            req.body.cartItemId,
-            req.body.quantity
-        )
+            user_id,
+            product_id,
+            quantity,
+            price_total
+        );
 
         return res.status(StatusCodes.OK).json({
-            message: 'Cập nhật số lượng sản phẩm trong giỏ hàng thành công',
+            message: 'Cập nhật giỏ hàng thành công',
             data,
-        })
+        });
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error); // service sẽ ném ApiError nếu có lỗi
     }
-}
+};
 
 const deleteCartItems = async (req, res, next) => {
     try {
@@ -66,7 +75,7 @@ const deleteCartItems = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 

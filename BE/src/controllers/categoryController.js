@@ -1,5 +1,4 @@
 import { categoryService } from '~/services/categoryService'
-import ErrorServer from '~/utils/ErrorServer'
 import { StatusCodes } from 'http-status-codes'
 
 const createCategory = async (req, res, next) => {
@@ -10,7 +9,7 @@ const createCategory = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -23,7 +22,7 @@ const getByIdCategory = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -36,7 +35,7 @@ const getBySlugCategory = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -49,7 +48,7 @@ const getListCategory = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -62,7 +61,7 @@ const updateCategory = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -74,7 +73,7 @@ const deleteCategory = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 

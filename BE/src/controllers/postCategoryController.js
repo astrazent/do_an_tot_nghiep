@@ -1,5 +1,4 @@
 import { postCategoryService } from '~/services/postCategoryService'
-import ErrorServer from '~/utils/ErrorServer'
 import { StatusCodes } from 'http-status-codes'
 
 const create = async (req, res, next) => {
@@ -10,7 +9,7 @@ const create = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -23,7 +22,7 @@ const getById = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -36,7 +35,7 @@ const getList = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -49,7 +48,7 @@ const getListCategoryByPost = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -62,7 +61,7 @@ const getListPostByCategory = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -75,7 +74,7 @@ const update = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -87,7 +86,7 @@ const deleted = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 

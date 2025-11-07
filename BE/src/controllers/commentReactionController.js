@@ -1,6 +1,5 @@
 // src/controllers/commentReactionController.js
 import { commentReactionService } from '~/services/commentReactionService'
-import ErrorServer from '~/utils/ErrorServer'
 import { StatusCodes } from 'http-status-codes'
 
 const createOrUpdateReaction = async (req, res, next) => {
@@ -13,7 +12,7 @@ const createOrUpdateReaction = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -25,7 +24,7 @@ const getReactionById = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -37,7 +36,7 @@ const getReactionsByComment = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -49,7 +48,7 @@ const getReactionsByProduct = async (req, res, next) => {
             data,
         });
     } catch (error) {
-        return ErrorServer(error, req, res, next);
+        next(error);
     }
 }
 
@@ -61,7 +60,7 @@ const getReactionsByUser = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -79,7 +78,7 @@ const deleteReaction = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -91,7 +90,7 @@ const countReactions = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 

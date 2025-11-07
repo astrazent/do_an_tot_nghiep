@@ -18,6 +18,7 @@ import transactionRoutes from "./transactionRoute.js"
 import orderItemRoutes from "./oderItemRoute.js"
 import { StatusCodes } from 'http-status-codes'
 import orderDetailRoutes from './orderDetailRoutes.js'
+import couponRoute from "./couponRoute.js"
 import commentRoutes from './commentRoute.js'
 import aiFeedbackRoutes from './aiFeedbackRoute.js'
 import commentReactionRoute from './commentReactionRoute.js'
@@ -28,6 +29,7 @@ import userRoutes from "./userRoute.js"
 import postTypeRoute from "./postTypeRoute.js"
 import postCategoryRoutes from "./postCategoryRoute.js"
 import sliderRoute from "./sliderRoute.js"
+import couponScope from "./couponScope.js"
 
 const Router = express.Router()
 
@@ -51,6 +53,8 @@ Router.use('/discount_product', discountProductRoutes)
 Router.use('/transaction', transactionRoutes)   
 Router.use('/order_item', orderItemRoutes)
 Router.use('/orders', orderDetailRoutes)
+Router.use('/coupon', couponRoute)
+Router.use('/coupon_scope', couponScope)
 Router.use('/comments', commentRoutes)
 Router.use('/ai_feedback', aiFeedbackRoutes)
 Router.use('/reactions', commentReactionRoute)

@@ -18,5 +18,7 @@ export const env = {
     ACCESS_EXPIRES: process.env.ACCESS_EXPIRES || '15m',
     REFRESH_EXPIRES: process.env.REFRESH_EXPIRES || '7d',
     AUTHOR: process.env.AUTHOR || 'NP',
-    OPENROUTER_API_KEY: process.env.OPENROUTER_API_KEY
+    OPENROUTER_API_KEY: process.env.OPENROUTER_API_KEY,
+    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+    GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET
 }

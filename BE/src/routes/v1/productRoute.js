@@ -16,6 +16,10 @@ Router.route('/list_promotion').get(productController.getListPromotionProduct)
 
 Router.route('/list').get(productController.getListProduct)
 
+Router.route('/search_by_category').get(productController.getSearchByCategory)
+
+Router.route('/search').get(productController.getSearchProduct)
+
 Router.route('/').patch(productController.updateProduct)
 
 Router.route('/').delete(productController.deleteProduct)

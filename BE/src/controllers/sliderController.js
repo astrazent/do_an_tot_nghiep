@@ -1,5 +1,4 @@
 import { sliderService } from '~/services/sliderService'
-import ErrorServer from '~/utils/ErrorServer'
 import { StatusCodes } from 'http-status-codes'
 
 const createSlider = async (req, res, next) => {
@@ -10,7 +9,7 @@ const createSlider = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -22,7 +21,7 @@ const getByIdSlider = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -34,7 +33,7 @@ const getListSlider = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -46,7 +45,7 @@ const updateSlider = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -58,7 +57,7 @@ const deleteSlider = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 

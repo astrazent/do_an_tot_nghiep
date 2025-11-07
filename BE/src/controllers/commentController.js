@@ -1,5 +1,4 @@
 import { commentService } from '~/services/commentService'
-import ErrorServer from '~/utils/ErrorServer'
 import { StatusCodes } from 'http-status-codes'
 
 const createComment = async (req, res, next) => {
@@ -10,7 +9,7 @@ const createComment = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -23,7 +22,7 @@ const getByIdComment = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 const getCommentByProductSlug = async (req, res, next) => {
@@ -35,7 +34,7 @@ const getCommentByProductSlug = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -48,7 +47,7 @@ const getListComment = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -61,7 +60,7 @@ const getListCommnentByProduct = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -74,7 +73,7 @@ const getListCommentByUser = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -86,7 +85,7 @@ const updateComment = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -98,7 +97,7 @@ const deleteComment = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
