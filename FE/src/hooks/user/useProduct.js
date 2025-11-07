@@ -6,9 +6,10 @@ import {
     getPorkSpecialties,
     getProductBySlug,
     getCommentsByProductSlug,
-    getAllProductCollections,
-    getRelatedProducts,
-    searchProductsByCategory,
+    getListProductCollections,
+    getListPromotionProducts,
+    getHotProducts,
+    getRelatedProducts
 } from '~/services/user/productService'
 
 export const useNewestProducts = (limit = 8) => {
@@ -43,16 +44,25 @@ export const usePorkSpecialties = (limit = 6) => {
     })
 }
 
-export const useInfiniteProductCollections = ({ limit = 10 } = {}) => {
+export const useInfiniteProductCollections = ({ 
+    slug = 'all', 
+    limit = 10, 
+    sort = 'newest',
+    minPrice = null,
+    maxPrice = null,
+} = {}) => {
     return useInfiniteQuery({
-        queryKey: ['products', 'collections', limit],
+        queryKey: ['products', 'collections', slug, limit, sort, minPrice, maxPrice],
 
         queryFn: async ({ pageParam = 0 }) => {
-            const response = await getAllProductCollections({
+            const response = await getListProductCollections({
+                slug: slug !== 'all' ? slug : undefined,
                 limit,
                 offset: pageParam,
+                sort,
+                minPrice,
+                maxPrice,
             })
-
             return response
         },
 
@@ -60,10 +70,41 @@ export const useInfiniteProductCollections = ({ limit = 10 } = {}) => {
 
         getNextPageParam: (lastPage, allPages) => {
             const fetchedItemsCount = lastPage?.data?.length || 0
+            if (fetchedItemsCount < limit) return undefined
 
-            if (fetchedItemsCount < limit) {
-                return undefined
-            }
+            return allPages.reduce(
+                (acc, page) => acc + (page?.data?.length || 0),
+                0
+            )
+        },
+    })
+}
+
+export const useInfinitePromotionProducts = ({
+    limit = 10,
+    sort = 'newest',
+    minPrice = null,
+    maxPrice = null,
+} = {}) => {
+    return useInfiniteQuery({
+        queryKey: ['products', 'promotion', limit, sort, minPrice, maxPrice],
+
+        queryFn: async ({ pageParam = 0 }) => {
+            const response = await getListPromotionProducts({
+                limit,
+                offset: pageParam,
+                sort,
+                minPrice,
+                maxPrice,
+            })
+            return response
+        },
+
+        staleTime: 1000 * 60 * 10, // 10 phút
+
+        getNextPageParam: (lastPage, allPages) => {
+            const fetchedItemsCount = lastPage?.data?.length || 0
+            if (fetchedItemsCount < limit) return undefined
 
             return allPages.reduce(
                 (acc, page) => acc + (page?.data?.length || 0),
@@ -102,15 +143,24 @@ export const useRelatedProducts = (productId, limit = 8) => {
     })
 }
 
-export const useSearchProductsByCategory = (params, options = {}) => {
+export const useHotProducts = (limit = 6) => {
     return useQuery({
-        queryKey: ['products', 'search', params],
-        queryFn: async () => {
-            const res = await searchProductsByCategory(params)
-            return res
-        },
-        enabled: !!params?.slug,
-        staleTime: 1000 * 60 * 5,
-        ...options,
+        queryKey: ['products', 'hot', limit],
+        queryFn: () => getHotProducts(limit),
+        staleTime: Infinity,
+        cacheTime: Infinity
+    })
+}
+
+export const usePromotionProducts = (limit = 3) => {
+    return useQuery({
+        queryKey: ['products', 'promotion', limit],
+        queryFn: () => getListProductCollections({
+            limit,
+            slug: 'all',
+            sort: 'promotion',
+        }),
+        staleTime: Infinity,
+        cacheTime: Infinity
     })
 }

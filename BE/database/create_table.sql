@@ -1,9 +1,10 @@
-DROP TABLE IF EXISTS Boards;
 DROP TABLE IF EXISTS OrderItems;
 DROP TABLE IF EXISTS Transactions;
 DROP TABLE IF EXISTS Shipments;
 DROP TABLE IF EXISTS Payments;
+DROP TABLE IF EXISTS AIFeedback;
 DROP TABLE IF EXISTS CommentReactions;
+DROP TABLE IF EXISTS CommentImages;
 DROP TABLE IF EXISTS Comments;
 DROP TABLE IF EXISTS ProductImages;
 DROP TABLE IF EXISTS Sliders;
@@ -13,20 +14,25 @@ DROP TABLE IF EXISTS CartItems;
 DROP TABLE IF EXISTS CouponScopes;
 DROP TABLE IF EXISTS Coupons;
 DROP TABLE IF EXISTS Products;
+DROP TABLE IF EXISTS Tokens;
 DROP TABLE IF EXISTS Users;
 DROP TABLE IF EXISTS PostCategories;
 DROP TABLE IF EXISTS Categories;
+DROP TABLE IF EXISTS PostImages;
 DROP TABLE IF EXISTS Posts;
+DROP TABLE IF EXISTS PostTypes;
 DROP TABLE IF EXISTS Admins;
 DROP TABLE IF EXISTS Roles;
 
 -- Roles
-CREATE TABLE
+CREATE TABLE 
     Roles (
-        id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-        name VARCHAR(50) NOT NULL UNIQUE,
-        description VARCHAR(255)
-    ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL UNIQUE,
+    description VARCHAR(255),
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Admins
 CREATE TABLE
@@ -44,8 +50,20 @@ CREATE TABLE
         CONSTRAINT fk_admins_role FOREIGN KEY (role_id) REFERENCES Roles (id) ON DELETE RESTRICT ON UPDATE CASCADE
     ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
+-- PostTypes
+CREATE TABLE 
+    PostTypes (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL UNIQUE,        -- tên loại bài viết
+    slug VARCHAR(255) NOT NULL UNIQUE,        -- slug dùng query
+    description VARCHAR(255) DEFAULT NULL,    -- mô tả ngắn
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- Posts
-CREATE TABLE Posts (
+CREATE TABLE 
+    Posts (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(200) NOT NULL,
     slug VARCHAR(255) UNIQUE NOT NULL,
@@ -57,8 +75,25 @@ CREATE TABLE Posts (
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     admin_id INT UNSIGNED NOT NULL,
-    CONSTRAINT fk_posts_admin FOREIGN KEY (admin_id) REFERENCES Admins (id)
-        ON DELETE RESTRICT ON UPDATE CASCADE
+    post_type_id INT UNSIGNED NULL,
+    CONSTRAINT fk_posts_admin FOREIGN KEY (admin_id) REFERENCES Admins (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT fk_posts_post_type FOREIGN KEY (post_type_id) REFERENCES PostTypes(id) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- PostImages
+CREATE TABLE 
+    PostImages (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    post_id INT UNSIGNED NOT NULL,
+    image_url VARCHAR(255) NOT NULL,
+    is_main TINYINT(1) NOT NULL DEFAULT 0,
+    display_order INT UNSIGNED DEFAULT 0,
+    caption VARCHAR(255) DEFAULT NULL,
+    alt_text VARCHAR(255) DEFAULT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT fk_postimages_post FOREIGN KEY (post_id) REFERENCES Posts (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    INDEX idx_postimages_post (post_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Categories (self-relation)
@@ -81,7 +116,7 @@ CREATE TABLE
         id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-        category_id INT UNSIGNED NOT NULL,
+        category_id INT UNSIGNED NULL,
         post_id INT UNSIGNED NOT NULL,
         CONSTRAINT fk_postcategories_category FOREIGN KEY (category_id) REFERENCES Categories (id) ON DELETE CASCADE ON UPDATE CASCADE,
         CONSTRAINT fk_postcategories_post FOREIGN KEY (post_id) REFERENCES Posts (id) ON DELETE RESTRICT ON UPDATE CASCADE
@@ -91,54 +126,80 @@ CREATE TABLE
 CREATE TABLE 
     Users (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) UNIQUE NOT NULL,
-    password_hash VARCHAR(255),
-    token VARCHAR(512) UNIQUE DEFAULT NULL,
-    token_started_at DATETIME DEFAULT NULL,
-    token_expired_at DATETIME DEFAULT NULL,
+    username VARCHAR(50) UNIQUE NULL,
+    password_hash VARCHAR(255) NULL,
+    provider VARCHAR(50) NOT NULL DEFAULT 'local',
+    provider_id VARCHAR(255) NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
-    phone VARCHAR(20) UNIQUE NOT NULL,
-    full_name VARCHAR(100) NOT NULL,
-    address VARCHAR(255) NOT NULL,
-    city VARCHAR(100) NOT NULL,
-    district VARCHAR(100) NOT NULL,
-    ward VARCHAR(100) NOT NULL,
-    avatar_url VARCHAR(255),
+    email_verified TINYINT(1) NOT NULL DEFAULT 0,
+    phone VARCHAR(20) UNIQUE NULL,
+    full_name VARCHAR(100) NULL,
+    gender ENUM('male','female','other') NOT NULL DEFAULT 'other',
+    address VARCHAR(255) NULL,
+    city VARCHAR(100) NULL,
+    district VARCHAR(100) NULL,
+    ward VARCHAR(100) NULL,
+    avatar_url VARCHAR(255) NULL,
     status TINYINT NOT NULL DEFAULT 0,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     INDEX idx_users_email (email),
-    INDEX idx_users_username (username)
+    INDEX idx_users_username (username),
+    INDEX idx_users_provider (provider),
+    INDEX idx_users_provider_id (provider_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Tokens
+CREATE TABLE 
+    Tokens (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id INT UNSIGNED NOT NULL,
+    refresh_token VARCHAR(1024) UNIQUE NOT NULL,
+    device_info VARCHAR(255) DEFAULT NULL,
+    ip_address VARCHAR(45) DEFAULT NULL,
+    token_started_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    token_expired_at DATETIME NOT NULL,
+    is_revoked BOOLEAN DEFAULT FALSE,
+    revoked_at DATETIME DEFAULT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE,
+    INDEX idx_tokens_user (user_id)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 -- Products
-CREATE TABLE
+CREATE TABLE 
     Products (
-        id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-        name VARCHAR(200) NOT NULL,
-        slug VARCHAR(255) NOT NULL UNIQUE,
-        description VARCHAR(255),
-        origin_price DECIMAL(12, 2) NOT NULL DEFAULT 0.00,
-        price DECIMAL(12, 2) NOT NULL DEFAULT 0.00,
-        import_price DECIMAL(12, 2) NOT NULL DEFAULT 0.00,
-        buyed INT UNSIGNED NOT NULL DEFAULT 0,
-        rate_point_total INT UNSIGNED NOT NULL DEFAULT 0,
-        rate_count INT UNSIGNED NOT NULL DEFAULT 0,
-        stock_qty INT UNSIGNED NOT NULL DEFAULT 0,
-        low_stock_threshold INT UNSIGNED NOT NULL DEFAULT 0,
-        last_restock_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        status TINYINT NOT NULL DEFAULT 1,
-        ocop_rating TINYINT UNSIGNED NULL COMMENT 'Sản phẩm OCOP được xếp hạng (3 hoặc 4 sao)',
-        created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-        category_id INT UNSIGNED NOT NULL,
-        CONSTRAINT fk_products_category FOREIGN KEY (category_id) REFERENCES Categories (id) ON DELETE RESTRICT ON UPDATE CASCADE,
-        INDEX idx_products_category (category_id),
-        INDEX idx_products_name (name)
-    ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(200) NOT NULL,
+    slug VARCHAR(255) NOT NULL UNIQUE,
+    description VARCHAR(255),
+    origin_price DECIMAL(12, 2) NOT NULL DEFAULT 0.00,
+    price DECIMAL(12, 2) NOT NULL DEFAULT 0.00,
+    import_price DECIMAL(12, 2) NOT NULL DEFAULT 0.00,
+    buyed INT UNSIGNED NOT NULL DEFAULT 0,
+    rate_point_total INT UNSIGNED NOT NULL DEFAULT 0,
+    rate_count INT UNSIGNED NOT NULL DEFAULT 0,
+    stock_qty INT UNSIGNED NOT NULL DEFAULT 0,
+    low_stock_threshold INT UNSIGNED NOT NULL DEFAULT 0,
+    last_restock_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    status TINYINT NOT NULL DEFAULT 1,
+    ocop_rating TINYINT UNSIGNED NULL COMMENT 'Sản phẩm OCOP được xếp hạng (3 hoặc 4 sao)',
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    category_id INT UNSIGNED NOT NULL,
+    CONSTRAINT fk_products_category 
+        FOREIGN KEY (category_id) 
+        REFERENCES Categories (id)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE,
+    INDEX idx_products_category (category_id),
+    INDEX idx_products_name (name)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 -- Coupons
-CREATE TABLE Coupons (
+CREATE TABLE 
+    Coupons (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     code VARCHAR(50) NOT NULL UNIQUE,
     description VARCHAR(255),
@@ -158,15 +219,15 @@ CREATE TABLE Coupons (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- CouponScopes
-CREATE TABLE CouponScopes (
+CREATE TABLE 
+    CouponScopes (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     coupon_id INT UNSIGNED NOT NULL,
     scope_type TINYINT NOT NULL COMMENT '0: Toàn shop, 1: Theo thể loại, 2: Theo sản phẩm',
-    category_id INT UNSIGNED NULL,
     product_id INT UNSIGNED NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (coupon_id) REFERENCES Coupons (id)
-        ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (category_id) REFERENCES Categories (id)
         ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (product_id) REFERENCES Products (id)
         ON DELETE CASCADE ON UPDATE CASCADE,
@@ -238,6 +299,7 @@ CREATE TABLE
         id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         is_main TINYINT (1) NOT NULL,
         image_url VARCHAR(255) NOT NULL,
+        alt_text VARCHAR(255) NULL,
         created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         product_id INT UNSIGNED NOT NULL,
@@ -261,6 +323,32 @@ CREATE TABLE
     CONSTRAINT fk_comments_product FOREIGN KEY (product_id) REFERENCES Products (id) ON DELETE CASCADE ON UPDATE CASCADE,
     UNIQUE KEY unique_user_product (user_id, product_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- CommentImages
+CREATE TABLE 
+    CommentImages (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    comment_id INT UNSIGNED NOT NULL,
+    user_id INT UNSIGNED NOT NULL,
+    image_url VARCHAR(255) NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT fk_comment_images_comment FOREIGN KEY (comment_id) REFERENCES Comments (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_comment_images_user FOREIGN KEY (user_id) REFERENCES Users (id) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- AIFeedback
+CREATE TABLE 
+    AIFeedback (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    product_id INT UNSIGNED NOT NULL,
+    voter_id INT UNSIGNED DEFAULT NULL,         -- NULL nếu người vote không phải user
+    vote TINYINT NOT NULL,        -- 1 = like, 0 = dislike
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_product FOREIGN KEY (product_id) REFERENCES Products(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_voter FOREIGN KEY (voter_id) REFERENCES Users(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
 
 -- CommentReactions
 CREATE TABLE 
@@ -345,12 +433,4 @@ CREATE TABLE
         product_id INT UNSIGNED NOT NULL,
         CONSTRAINT fk_orderitems_transaction FOREIGN KEY (transaction_id) REFERENCES Transactions (id) ON DELETE CASCADE ON UPDATE CASCADE,
         CONSTRAINT fk_orderitems_product FOREIGN KEY (product_id) REFERENCES Products (id) ON DELETE CASCADE ON UPDATE CASCADE
-    ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
-
--- Boards (dùng để test)
-CREATE TABLE
-    Boards (
-        board_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-        title VARCHAR(255) NOT NULL,
-        slug VARCHAR(255) NOT NULL UNIQUE
     ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;

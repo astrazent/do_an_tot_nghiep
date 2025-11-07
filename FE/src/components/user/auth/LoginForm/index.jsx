@@ -60,6 +60,7 @@ const LoginForm = () => {
                 <InputField
                     type="text"
                     placeholder="Tên đăng nhập"
+                    autoComplete="off"
                     value={username}
                     onChange={e => setUsername(e.target.value)}
                     icon={<HiOutlineUser />}
@@ -68,6 +69,7 @@ const LoginForm = () => {
                 <InputField
                     type={showPw ? 'text' : 'password'}
                     placeholder="Mật khẩu"
+                    autoComplete="off"
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                     icon={<RiLockPasswordLine />}

@@ -1,17 +1,11 @@
 import api from './api'
+import { formatCurrency } from '~/utils/formatCurrency';
 
 const transformProductData = product => {
     const rating =
         product.rate_count > 0
             ? Math.round(product.rate_point_total / product.rate_count)
             : 0
-
-    const formatCurrency = priceString => {
-        if (!priceString) return null
-        const priceNumber = parseFloat(priceString)
-        if (isNaN(priceNumber)) return null
-        return new Intl.NumberFormat('vi-VN').format(priceNumber) + '₫'
-    }
 
     return {
         id: product.id,

@@ -1,6 +1,5 @@
 import React from 'react'
 import ProductCard from '~/components/shared/ProductCard'
-import { Link } from 'react-router-dom'
 
 const ProductList = ({ products }) => {
     return (
@@ -8,22 +7,19 @@ const ProductList = ({ products }) => {
             {products.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {products.map(product => (
-                        <Link
-                            key={product.id}
-                            to={`/product/${product.id}`}
-                            className="block w-full"
-                        >
-                            <ProductCard
-                                image={product.image}
-                                name={product.name}
-                                price={product.price}
-                                oldPrice={product.oldPrice}
-                                ocop={product.ocop}
-                                rating={product.rating}
-                                reviewCount={product.reviewCount}
-                                size="small"
-                            />
-                        </Link>
+                        <div key={product.id}>
+                                <ProductCard
+                                    slug={product.slug} // truyền slug vào đây
+                                    image={product.image}
+                                    name={product.name}
+                                    price={product.price}
+                                    oldPrice={product.oldPrice}
+                                    ocop={product.ocop}
+                                    rating={product.rating}
+                                    reviewCount={product.reviewCount}
+                                    size="small"
+                                />
+                        </div>
                     ))}
                 </div>
             ) : (

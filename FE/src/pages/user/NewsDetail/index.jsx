@@ -1,78 +1,94 @@
+import { useMemo } from 'react'
+import { useParams } from 'react-router-dom'
+// Import cả hai hook cần thiết
+import { usePostBySlug, useRelatedPostsBySlug } from '~/hooks/user/usePost'
+
 import ArticleHeader from '~/components/user/newsDetail/ArticleHeader'
 import ArticleBody from '~/components/user/newsDetail/ArticleBody'
 import SocialSidebar from '~/components/user/newsDetail/SocialSidebar'
 import RelatedArticle from '~/components/user/newsDetail/RelatedArticle'
-import chanVitRutXuongUXiDau from '~/assets/image/shared/product/chan-vit-rut-xuong-u-xi-dau.png'
-import pateGanVit from '~/assets/image/shared/product/pate-gan-vit.jpg'
-import gaDongTaoUMuoi from '~/assets/image/shared/product/dong-tao-u-muoi.png'
 
 function NewsDetail() {
+    const { slug } = useParams()
+
+    // --- 1. Lấy dữ liệu cho bài viết chính ---
+    const {
+        data: postData,
+        isLoading: isLoadingPost,
+        isError: isErrorPost
+    } = usePostBySlug(slug)
+
+    // --- 2. Lấy dữ liệu cho các bài viết liên quan ---
+    const {
+        data: relatedPostsData,
+        isLoading: isLoadingRelated,
+        isError: isErrorRelated
+    } = useRelatedPostsBySlug(slug)
+
+    const relatedArticles = useMemo(() => {
+        if (!relatedPostsData) return []
+        const { relatedByCategory, relatedByPostType } = relatedPostsData
+        const allRelatedPosts = [...(relatedByCategory || []), ...(relatedByPostType || [])]
+        const uniquePosts = Array.from(new Map(allRelatedPosts.map((post) => [post.id, post])).values())
+        return uniquePosts.map((post) => ({
+            id: post.id,
+            image: post.images && post.images.length > 0 ? post.images[0] : '/path/to/default-image.png',
+            title: post.title,
+            date: new Date(post.published_at).toLocaleDateString('vi-VN', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            })
+        }))
+    }, [relatedPostsData])
+
+    // --- 3. Xử lý trạng thái tải và lỗi cho bài viết chính ---
+    if (isLoadingPost) {
+        return <div className="min-h-screen text-center p-10">Đang tải bài viết...</div>
+    }
+
+    if (isErrorPost || !postData) {
+        return <div className="min-h-screen text-center p-10 text-red-500">Không tìm thấy bài viết hoặc có lỗi xảy ra.</div>
+    }
+
+    // --- 4. Định dạng lại dữ liệu cho các component con ---
+    const highlights = postData.description ? postData.description.split('. ') : []
+    const content = postData.content ? [postData.content] : []
+
+    // ******** FIXBUG TẠI ĐÂY ********
+    // Chuyển đổi mảng chuỗi URL thành mảng đối tượng { url, caption }
+    const images = postData.images
+        ?.sort((a, b) => a.display_order - b.display_order) // 1. Sắp xếp theo thứ tự hiển thị
+        .map(imageObj => ({
+            url: imageObj.url,         // 2. Lấy url từ đối tượng image
+            caption: imageObj.caption  // 3. Lấy caption từ đối tượng image
+    })) || [];
+    // **********************************
     return (
         <div className="min-h-screen">
             <main className="max-w-3xl mx-auto bg-white p-6 md:p-8 rounded-lg relative">
                 <SocialSidebar />
-                <ArticleHeader />
-                <ArticleBody />
-
-                <RelatedArticle
-                    title="Các bài viết liên quan"
-                    articles={[
-                        {
-                            id: 1,
-                            image: chanVitRutXuongUXiDau,
-                            title: 'Bí quyết làm xúc xích cốm thơm ngon tại nhà',
-                            date: '06/10/2025',
-                        },
-                        {
-                            id: 2,
-                            image: pateGanVit,
-                            title: 'Xúc xích cốm – món ăn sáng lý tưởng cho ngày mới',
-                            date: '03/10/2025',
-                        },
-                        {
-                            id: 3,
-                            image: gaDongTaoUMuoi,
-                            title: 'Khám phá hương vị xúc xích cốm Hà Nội truyền thống',
-                            date: '01/10/2025',
-                        },
-                        {
-                            id: 1,
-                            image: chanVitRutXuongUXiDau,
-                            title: 'Bí quyết làm xúc xích cốm thơm ngon tại nhà',
-                            date: '06/10/2025',
-                        },
-                        {
-                            id: 2,
-                            image: pateGanVit,
-                            title: 'Xúc xích cốm – món ăn sáng lý tưởng cho ngày mới',
-                            date: '03/10/2025',
-                        },
-                        {
-                            id: 3,
-                            image: gaDongTaoUMuoi,
-                            title: 'Khám phá hương vị xúc xích cốm Hà Nội truyền thống',
-                            date: '01/10/2025',
-                        },
-                        {
-                            id: 1,
-                            image: chanVitRutXuongUXiDau,
-                            title: 'Bí quyết làm xúc xích cốm thơm ngon tại nhà',
-                            date: '06/10/2025',
-                        },
-                        {
-                            id: 2,
-                            image: pateGanVit,
-                            title: 'Xúc xích cốm – món ăn sáng lý tưởng cho ngày mới',
-                            date: '03/10/2025',
-                        },
-                        {
-                            id: 3,
-                            image: gaDongTaoUMuoi,
-                            title: 'Khám phá hương vị xúc xích cốm Hà Nội truyền thống',
-                            date: '01/10/2025',
-                        },
-                    ]}
+                <ArticleHeader
+                    title={postData.title}
+                    author={postData.author_name}
+                    publishedAt={postData.published_at}
                 />
+                <ArticleBody
+                    highlights={highlights}
+                    content={content}
+                    images={images} // Truyền mảng đã được định dạng đúng
+                />
+
+                {/* Phần bài viết liên quan giữ nguyên logic cũ */}
+                {isLoadingRelated && (
+                    <p className="text-center mt-8">Đang tải bài viết liên quan...</p>
+                )}
+                {isErrorRelated && (
+                    <p className="text-center mt-8 text-red-500">Không thể tải được bài viết liên quan.</p>
+                )}
+                {!isLoadingRelated && !isErrorRelated && relatedArticles.length > 0 && (
+                    <RelatedArticle title="Các bài viết liên quan" articles={relatedArticles} />
+                )}
             </main>
         </div>
     )

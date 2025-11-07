@@ -1,17 +1,11 @@
 import api from './api'
+import { formatCurrency } from '~/utils/formatCurrency'
 
 const transformProductData = product => {
     const rating =
         product.rate_count > 0
             ? Math.round(product.rate_point_total / product.rate_count)
             : 0
-
-    const formatCurrency = priceString => {
-        if (!priceString) return null
-        const priceNumber = parseFloat(priceString)
-        if (isNaN(priceNumber)) return null
-        return new Intl.NumberFormat('vi-VN').format(priceNumber) + '₫'
-    }
 
     return {
         id: product.id,
@@ -30,47 +24,54 @@ const transformProductData = product => {
     }
 }
 
+/**
+ * Lấy danh sách sản phẩm mới nhất.
+ * Logic sắp xếp và giới hạn được thực hiện bởi API.
+ */
 export const getNewestProducts = async limit => {
     try {
-        const response = await api.get('/products/list')
-        const allProducts = response.data.data
+        const result = await getListProductCollections({
+            limit,
+            sort: 'newest',
+            slug: 'all', // Lấy từ tất cả các danh mục
+        })
 
-        if (!Array.isArray(allProducts)) {
-            console.error(
-                'Dữ liệu sản phẩm không phải là một mảng:',
-                allProducts
-            )
+        const products = result.data
+
+        if (!Array.isArray(products)) {
+            console.error('Dữ liệu sản phẩm không phải là một mảng:', products)
             return []
         }
-        const sortedProducts = allProducts.sort(
-            (a, b) => new Date(b.created_at) - new Date(a.created_at)
-        )
-        const limitedProducts = sortedProducts.slice(0, limit)
 
-        return limitedProducts.map(transformProductData)
+        return products.map(transformProductData)
     } catch (error) {
         console.error('Đã xảy ra lỗi khi lấy sản phẩm mới nhất:', error)
         throw error
     }
 }
 
+/**
+ * Lấy sản phẩm gia cầm (gà và vịt) bằng cách gọi getListProductCollections cho mỗi loại.
+ */
 export const getPoultryProducts = async limitPerCategory => {
     try {
-        const [response1, response2] = await Promise.all([
-            api.get(`/products/by_category_slug?slug=san-pham-tu-ga`),
-            api.get(`/products/by_category_slug?slug=san-pham-tu-vit`),
+        const [chickenResult, duckResult] = await Promise.all([
+            getListProductCollections({
+                slug: 'san-pham-tu-ga',
+                limit: limitPerCategory,
+            }),
+            getListProductCollections({
+                slug: 'san-pham-tu-vit',
+                limit: limitPerCategory,
+            }),
         ])
 
-        const poultry1Data = Array.isArray(response1.data.data)
-            ? response1.data.data
+        const chickenData = Array.isArray(chickenResult.data)
+            ? chickenResult.data
             : []
-        const poultry2Data = Array.isArray(response2.data.data)
-            ? response2.data.data
-            : []
+        const duckData = Array.isArray(duckResult.data) ? duckResult.data : []
 
-        const limitedPoultry1 = poultry1Data.slice(0, limitPerCategory)
-        const limitedPoultry2 = poultry2Data.slice(0, limitPerCategory)
-        const combinedProducts = [...limitedPoultry1, ...limitedPoultry2]
+        const combinedProducts = [...chickenData, ...duckData]
 
         return combinedProducts.map(transformProductData)
     } catch (error) {
@@ -79,23 +80,28 @@ export const getPoultryProducts = async limitPerCategory => {
     }
 }
 
+/**
+ * Lấy sản phẩm hải sản và cá bằng cách gọi getListProductCollections cho mỗi loại.
+ */
 export const getSeafoodAndFishProducts = async limitPerCategory => {
     try {
-        const [seafoodResponse, fishResponse] = await Promise.all([
-            api.get(`/products/by_category_slug?slug=hai-san`),
-            api.get(`/products/by_category_slug?slug=san-pham-tu-ca`),
+        const [seafoodResult, fishResult] = await Promise.all([
+            getListProductCollections({
+                slug: 'hai-san',
+                limit: limitPerCategory,
+            }),
+            getListProductCollections({
+                slug: 'san-pham-tu-ca',
+                limit: limitPerCategory,
+            }),
         ])
 
-        const seafoodData = Array.isArray(seafoodResponse.data.data)
-            ? seafoodResponse.data.data
+        const seafoodData = Array.isArray(seafoodResult.data)
+            ? seafoodResult.data
             : []
-        const fishData = Array.isArray(fishResponse.data.data)
-            ? fishResponse.data.data
-            : []
+        const fishData = Array.isArray(fishResult.data) ? fishResult.data : []
 
-        const limitedSeafood = seafoodData.slice(0, limitPerCategory)
-        const limitedFish = fishData.slice(0, limitPerCategory)
-        const combinedProducts = [...limitedSeafood, ...limitedFish]
+        const combinedProducts = [...seafoodData, ...fishData]
 
         return combinedProducts.map(transformProductData)
     } catch (error) {
@@ -106,16 +112,24 @@ export const getSeafoodAndFishProducts = async limitPerCategory => {
 
 export const getPorkSpecialties = async limit => {
     try {
-        const response = await api.get(
-            '/products/by_category_slug?slug=san-pham-tu-heo'
-        )
+        // Gọi hàm dùng chung với slug và limit tương ứng
+        const result = await getListProductCollections({
+            slug: 'san-pham-tu-heo',
+            limit: limit,
+        })
 
-        const porkData = Array.isArray(response.data.data)
-            ? response.data.data
-            : []
-        const limitedProducts = porkData.slice(0, limit)
+        const porkData = result.data
 
-        return limitedProducts.map(transformProductData)
+        // Kiểm tra để đảm bảo dữ liệu trả về là một mảng
+        if (!Array.isArray(porkData)) {
+            console.error(
+                'Dữ liệu đặc sản từ heo không phải là một mảng:',
+                porkData
+            )
+            return []
+        }
+
+        return porkData.map(transformProductData)
     } catch (error) {
         console.error('Đã xảy ra lỗi khi lấy đặc sản từ heo:', error)
         throw error
@@ -145,20 +159,56 @@ export const getCommentsByProductSlug = async slug => {
     }
 }
 
-export const getAllProductCollections = async ({
-    limit = 10,
+export const getListProductCollections = async ({
+    limit = 8,
     offset = 0,
+    slug = 'all',
+    sort = 'newest',
+    minPrice = null,
+    maxPrice = null,
 } = {}) => {
     try {
         const response = await api.get('/products/list', {
             params: {
                 limit,
                 offset,
+                ...(slug ? { slug } : {}), // chỉ gửi nếu slug có giá trị
+                sort, // luôn gửi sort
+                ...(minPrice !== null ? { minPrice } : {}), // gửi nếu khác null
+                ...(maxPrice !== null ? { maxPrice } : {}), // gửi nếu khác null
             },
+            authRequired: true, // <-- custom property
         })
+
+        console.log('check result: ', response.data)
         return response.data
     } catch (error) {
         console.error('Lỗi khi lấy danh sách sản phẩm:', error)
+        throw error
+    }
+}
+
+export const getListPromotionProducts = async ({
+    limit = 8,
+    offset = 0,
+    sort = 'newest',
+    minPrice = null,
+    maxPrice = null,
+} = {}) => {
+    try {
+        const response = await api.get('/products/list_promotion', {
+            params: {
+                limit,
+                offset,
+                sort, // luôn gửi sort
+                ...(minPrice !== null ? { minPrice } : {}), // gửi nếu khác null
+                ...(maxPrice !== null ? { maxPrice } : {}), // gửi nếu khác null
+            },
+        })
+        console.log('check result: ', response.data)
+        return response.data
+    } catch (error) {
+        console.error('Lỗi khi lấy danh sách sản phẩm khuyến mãi:', error)
         throw error
     }
 }
@@ -190,24 +240,15 @@ export const getRelatedProducts = async (slug, limit = 8) => {
     }
 }
 
-export const searchProductsByCategory = async ({ slug }) => {
+export const getHotProducts = async (limit = 3) => {
     try {
-        const response = await api.get('/products/by_category_slug', {
-            params: { slug },
+        const response = await api.get('/products/hot_product', {
+            params: { limit },
         })
 
-        const data = response.data.data
-        if (!Array.isArray(data)) {
-            console.error('Dữ liệu trả về không phải là mảng:', data)
-            return []
-        }
-
-        return data.map(transformProductData)
+        return response.data || []
     } catch (error) {
-        console.error(
-            'Đã xảy ra lỗi khi tìm kiếm sản phẩm theo danh mục và giá:',
-            error
-        )
+        console.error(`Đã xảy ra lỗi khi lấy sản phẩm hot:`, error)
         throw error
     }
 }

@@ -1,82 +1,141 @@
 import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux' // Giả sử bạn dùng react-redux
+import provincesData from '~/assets/data/provinces.json'
+import { useCurrentUser } from '~/hooks/user/useUser'
+import ChangeInfoPopup from '../ChangeInfoPopup'
+
 const Profile = () => {
+    const { user } = useCurrentUser() // Lấy dữ liệu người dùng từ hook
+    console.log('user: ', user)
     const [profile, setProfile] = useState({
-        username: 'mickey',
-        name: 'Nguyên',
-        email: 'no**********@gmail.com',
+        username: '',
+        name: '', // Sẽ được map từ fullName
+        email: '',
+        phone: '',
         gender: '',
         day: '',
         month: '',
         year: '',
         address: '',
-        province: '',
-        district: '',
-        ward: '',
+        province: '', // Sẽ lưu ID
+        district: '', // Sẽ lưu ID
+        ward: '', // Sẽ lưu ID
     })
 
+<<<<<<< HEAD
     const [avatarPreview, setAvatarPreview] = useState(
         'https://i.pravatar.cc/150?u=a042581f4e29026704d'
     )
 
     const [provinces, setProvinces] = useState([])
+=======
+    const [avatarPreview, setAvatarPreview] = useState('')
+    const [allProvinces] = useState(provincesData)
+>>>>>>> 4546453962015922ccfa4ccb13de87fd625e2fc1
     const [districts, setDistricts] = useState([])
     const [wards, setWards] = useState([])
 
+    const [isPopupOpen, setIsPopupOpen] = useState(false)
+    const [popupType, setPopupType] = useState('') // 'username', 'email', hoặc 'password'
+    const [currentPassword, setCurrentPassword] = useState('')
+    const [newValue, setNewValue] = useState('') // Dùng cho username và email mới
+    const [newPassword, setNewPassword] = useState('')
+    const [confirmNewPassword, setConfirmNewPassword] = useState('')
+
+    // Effect để điền dữ liệu người dùng vào form khi component được tạo
     useEffect(() => {
-        const fetchProvinces = async () => {
-            try {
-                const response = await fetch(
-                    'https://provinces.open-api.vn/api/'
-                )
-                const data = await response.json()
-                setProvinces(data)
-            } catch (error) {
-                console.error('Lỗi khi fetch tỉnh/thành phố:', error)
+        if (user && user.username) {
+            const selectedProvince = allProvinces.find(
+                p => p.Name === user.city
+            )
+            const provinceId = selectedProvince ? selectedProvince.Id : ''
+
+            let districtsOfSelectedProvince = []
+            if (selectedProvince) {
+                districtsOfSelectedProvince = selectedProvince.Districts
+                setDistricts(districtsOfSelectedProvince)
+            }
+
+            const selectedDistrict = districtsOfSelectedProvince.find(
+                d => d.Name === user.district
+            )
+            const districtId = selectedDistrict ? selectedDistrict.Id : ''
+
+            let wardsOfSelectedDistrict = []
+            if (selectedDistrict) {
+                wardsOfSelectedDistrict = selectedDistrict.Wards
+                setWards(wardsOfSelectedDistrict)
+            }
+
+            const selectedWard = wardsOfSelectedDistrict.find(
+                w => w.Name === user.ward
+            )
+            const wardId = selectedWard ? selectedWard.Id : ''
+
+            // ✅ Cập nhật ánh xạ đúng tên key snake_case
+            setProfile({
+                username: user.username ?? '',
+                name: user.full_name ?? '', // Sửa fullName → full_name
+                email: user.email ?? '',
+                phone: user.phone ?? '',
+                gender: user.gender ?? '',
+                address: user.address ?? '',
+                province: provinceId,
+                district: districtId,
+                ward: wardId,
+                day: '',
+                month: '',
+                year: '',
+            })
+
+            if (user.avatar_url) {
+                setAvatarPreview(user.avatar_url)
             }
         }
-        fetchProvinces()
-    }, [])
+    }, [user, allProvinces])
 
+    // Effect này không còn cần thiết vì đã gộp logic vào useEffect ở trên để xử lý lần đầu
+    // Tuy nhiên, chúng ta cần một phiên bản khác để xử lý khi người dùng TỰ THAY ĐỔI lựa chọn
     useEffect(() => {
         if (profile.province) {
-            const fetchDistricts = async () => {
-                try {
-                    const response = await fetch(
-                        `https://provinces.open-api.vn/api/p/${profile.province}?depth=2`
-                    )
-                    const data = await response.json()
-                    setDistricts(data.districts || [])
-                    setWards([])
-                    setProfile(prev => ({ ...prev, district: '', ward: '' }))
-                } catch (error) {
-                    console.error('Lỗi khi fetch quận/huyện:', error)
-                }
-            }
-            fetchDistricts()
+            const selectedProvince = allProvinces.find(
+                p => p.Id === profile.province
+            )
+            setDistricts(selectedProvince?.Districts || [])
+        } else {
+            setDistricts([])
         }
+        // KHÔNG reset district và ward ở đây, vì sẽ làm mất dữ liệu khi load lần đầu
     }, [profile.province])
 
     useEffect(() => {
         if (profile.district) {
-            const fetchWards = async () => {
-                try {
-                    const response = await fetch(
-                        `https://provinces.open-api.vn/api/d/${profile.district}?depth=2`
-                    )
-                    const data = await response.json()
-                    setWards(data.wards || [])
-                    setProfile(prev => ({ ...prev, ward: '' }))
-                } catch (error) {
-                    console.error('Lỗi khi fetch phường/xã:', error)
-                }
-            }
-            fetchWards()
+            const selectedDistrict = districts.find(
+                d => d.Id === profile.district
+            )
+            setWards(selectedDistrict?.Wards || [])
+        } else {
+            setWards([])
         }
-    }, [profile.district])
+    }, [profile.district, districts])
 
     const handleInputChange = e => {
         const { name, value } = e.target
-        setProfile(prev => ({ ...prev, [name]: value }))
+        const newProfile = { ...profile, [name]: value }
+
+        // Khi người dùng *chủ động* thay đổi tỉnh, reset huyện và xã
+        if (name === 'province') {
+            newProfile.district = ''
+            newProfile.ward = ''
+            setWards([]) // Reset danh sách xã
+        }
+
+        // Khi người dùng *chủ động* thay đổi huyện, reset xã
+        if (name === 'district') {
+            newProfile.ward = ''
+        }
+
+        setProfile(newProfile)
     }
 
     const handleImageChange = e => {
@@ -84,15 +143,77 @@ const Profile = () => {
             setAvatarPreview(URL.createObjectURL(e.target.files[0]))
         }
     }
+    const openPopup = type => {
+        setPopupType(type)
+        setIsPopupOpen(true)
+        // Reset các trường input trong popup
+        setCurrentPassword('')
+        setNewValue('')
+        setNewPassword('')
+        setConfirmNewPassword('')
+    }
 
+    const closePopup = () => {
+        setIsPopupOpen(false)
+    }
+    const handleSaveChanges = () => {
+        // --- GIẢ LẬP VIỆC GỌI API ĐỂ XÁC THỰC MẬT KHẨU ---
+        // Trong thực tế, bạn sẽ gửi `currentPassword` lên server để kiểm tra
+        if (currentPassword !== 'password123') {
+            // Giả sử mật khẩu đúng là 'password123'
+            alert('Mật khẩu hiện tại không chính xác!')
+            return
+        }
+
+        // Xử lý logic thay đổi dựa trên loại popup
+        switch (popupType) {
+            case 'username':
+                setProfile({ ...profile, username: newValue })
+                alert('Tên đăng nhập đã được thay đổi!')
+                break
+            case 'email':
+                setProfile({ ...profile, email: newValue })
+                alert('Email đã được thay đổi!')
+                break
+            case 'password':
+                if (newPassword !== confirmNewPassword) {
+                    alert('Mật khẩu mới và xác nhận mật khẩu không khớp!')
+                    return
+                }
+                if (newPassword.length < 6) {
+                    alert('Mật khẩu mới phải có ít nhất 6 ký tự.')
+                    return
+                }
+                // Logic gọi API đổi mật khẩu ở đây
+                alert('Mật khẩu đã được thay đổi thành công!')
+                break
+            default:
+                break
+        }
+
+        closePopup() // Đóng popup sau khi hoàn tất
+    }
     const handleSubmit = e => {
         e.preventDefault()
         console.log('Dữ liệu được cập nhật:', profile)
         alert('Thông tin đã được lưu!')
     }
-
     return (
         <div className="min-h-screen flex items-center justify-center">
+            <ChangeInfoPopup
+                isOpen={isPopupOpen}
+                onClose={closePopup}
+                popupType={popupType}
+                currentPassword={currentPassword}
+                setCurrentPassword={setCurrentPassword}
+                newValue={newValue}
+                setNewValue={setNewValue}
+                newPassword={newPassword}
+                setNewPassword={setNewPassword}
+                confirmNewPassword={confirmNewPassword}
+                setConfirmNewPassword={setConfirmNewPassword}
+                onSubmit={handleSaveChanges}
+            />
             <div className="bg-white w-full max-w-4xl rounded-lg p-8">
                 <div className="pb-6 border-b border-gray-200">
                     <h1 className="text-3xl font-bold text-gray-800">
@@ -120,11 +241,15 @@ const Profile = () => {
                                 id="username"
                                 value={profile.username}
                                 readOnly
-                                className="mt-1 block w-full px-4 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm cursor-not-allowed text-gray-500 focus:outline-none"
+                                className="flex-grow max-w-md px-4 py-2 bg-gray-100 border border-gray-300 rounded-l-md text-gray-500 cursor-not-allowed focus:outline-none"
                             />
-                            <p className="mt-1 text-xs text-gray-500">
-                                Tên đăng nhập chỉ có thể thay đổi một lần.
-                            </p>
+                            <button
+                                type="button"
+                                onClick={() => openPopup('username')}
+                                className="px-4 py-1 border border-l-0 ml-5 border-green-600 bg-green-600 text-white font-semibold rounded-r-md hover:bg-green-700 transition"
+                            >
+                                Thay Đổi
+                            </button>
                         </div>
 
                         <div>
@@ -161,6 +286,7 @@ const Profile = () => {
                                 />
                                 <button
                                     type="button"
+                                    onClick={() => openPopup('email')}
                                     className="px-4 py-1 border border-l-0 ml-5 border-green-600 bg-green-600 text-white font-semibold rounded-r-md hover:bg-green-700 transition"
                                 >
                                     Thay Đổi
@@ -170,14 +296,35 @@ const Profile = () => {
 
                         <div>
                             <label className="block text-sm font-medium text-gray-700">
+                                Mật khẩu
+                            </label>
+                            <div className="mt-1">
+                                <button
+                                    type="button"
+                                    onClick={() => openPopup('password')}
+                                    className="mt-1 px-4 py-2 text-green-600 hover:text-green-800 font-semibold bg-transparent hover:bg-green-50 rounded-md border border-transparent hover:border-green-200 transition-all duration-200"
+                                >
+                                    Đổi Mật khẩu
+                                </button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label
+                                htmlFor="phone"
+                                className="block text-sm font-medium text-gray-700"
+                            >
                                 Số điện thoại
                             </label>
-                            <button
-                                type="button"
-                                className="mt-1 px-4 py-2 text-green-600 hover:text-green-800 font-semibold bg-transparent hover:bg-green-50 rounded-md border border-transparent hover:border-green-200 transition-all duration-200"
-                            >
-                                Thêm số điện thoại
-                            </button>
+                            <input
+                                type="text"
+                                id="phone"
+                                name="phone"
+                                value={profile.phone || ''}
+                                onChange={handleInputChange}
+                                placeholder="Nhập số điện thoại"
+                                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-black focus:border-black"
+                            />
                         </div>
 
                         <div>
@@ -208,19 +355,19 @@ const Profile = () => {
                                     <select
                                         id="province"
                                         name="province"
-                                        value={profile.province}
+                                        value={profile.province} // <-- value là ID
                                         onChange={handleInputChange}
                                         className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black text-sm"
                                     >
                                         <option value="">
                                             Chọn tỉnh/thành
                                         </option>
-                                        {provinces.map(province => (
+                                        {allProvinces.map(province => (
                                             <option
-                                                key={province.code}
-                                                value={province.code}
+                                                key={province.Id}
+                                                value={province.Id}
                                             >
-                                                {province.name}
+                                                {province.Name}
                                             </option>
                                         ))}
                                     </select>
@@ -236,7 +383,7 @@ const Profile = () => {
                                     <select
                                         id="district"
                                         name="district"
-                                        value={profile.district}
+                                        value={profile.district} // <-- value là ID
                                         onChange={handleInputChange}
                                         disabled={!profile.province}
                                         className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black disabled:bg-gray-100 disabled:cursor-not-allowed text-sm"
@@ -246,10 +393,10 @@ const Profile = () => {
                                         </option>
                                         {districts.map(district => (
                                             <option
-                                                key={district.code}
-                                                value={district.code}
+                                                key={district.Id}
+                                                value={district.Id}
                                             >
-                                                {district.name}
+                                                {district.Name}
                                             </option>
                                         ))}
                                     </select>
@@ -265,7 +412,7 @@ const Profile = () => {
                                     <select
                                         id="ward"
                                         name="ward"
-                                        value={profile.ward}
+                                        value={profile.ward} // <-- value là ID
                                         onChange={handleInputChange}
                                         disabled={!profile.district}
                                         className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black disabled:bg-gray-100 disabled:cursor-not-allowed text-sm"
@@ -273,10 +420,10 @@ const Profile = () => {
                                         <option value="">Chọn phường/xã</option>
                                         {wards.map(ward => (
                                             <option
-                                                key={ward.code}
-                                                value={ward.code}
+                                                key={ward.Id}
+                                                value={ward.Id}
                                             >
-                                                {ward.name}
+                                                {ward.Name}
                                             </option>
                                         ))}
                                     </select>
@@ -284,105 +431,7 @@ const Profile = () => {
                             </div>
                         </div>
 
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700">
-                                Giới tính
-                            </label>
-                            <div className="mt-2 flex items-center space-x-6">
-                                <label className="flex items-center">
-                                    <input
-                                        type="radio"
-                                        name="gender"
-                                        value="male"
-                                        onChange={handleInputChange}
-                                        className="h-4 w-4 text-green-600 border-gray-300 focus:ring-black"
-                                    />
-                                    <span className="ml-2 text-gray-700">
-                                        Nam
-                                    </span>
-                                </label>
-                                <label className="flex items-center">
-                                    <input
-                                        type="radio"
-                                        name="gender"
-                                        value="female"
-                                        onChange={handleInputChange}
-                                        className="h-4 w-4 text-green-600 border-gray-300 focus:ring-black"
-                                    />
-                                    <span className="ml-2 text-gray-700">
-                                        Nữ
-                                    </span>
-                                </label>
-                                <label className="flex items-center">
-                                    <input
-                                        type="radio"
-                                        name="gender"
-                                        value="other"
-                                        onChange={handleInputChange}
-                                        className="h-4 w-4 text-green-600 border-gray-300 focus:ring-black"
-                                    />
-                                    <span className="ml-2 text-gray-700">
-                                        Khác
-                                    </span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700">
-                                Ngày sinh
-                            </label>
-                            <div className="mt-1 grid grid-cols-3 gap-3">
-                                <select
-                                    name="day"
-                                    value={profile.day}
-                                    onChange={handleInputChange}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm  focus:ring-black focus:border-black"
-                                >
-                                    <option value="">Ngày</option>
-                                    {Array.from(
-                                        { length: 31 },
-                                        (_, i) => i + 1
-                                    ).map(day => (
-                                        <option key={day} value={day}>
-                                            {day}
-                                        </option>
-                                    ))}
-                                </select>
-                                <select
-                                    name="month"
-                                    value={profile.month}
-                                    onChange={handleInputChange}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm  focus:ring-black focus:border-black"
-                                >
-                                    <option value="">Tháng</option>
-                                    {Array.from(
-                                        { length: 12 },
-                                        (_, i) => i + 1
-                                    ).map(month => (
-                                        <option key={month} value={month}>
-                                            {month}
-                                        </option>
-                                    ))}
-                                </select>
-                                <select
-                                    name="year"
-                                    value={profile.year}
-                                    onChange={handleInputChange}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm  focus:ring-black focus:border-black"
-                                >
-                                    <option value="">Năm</option>
-                                    {Array.from(
-                                        { length: 100 },
-                                        (_, i) => new Date().getFullYear() - i
-                                    ).map(year => (
-                                        <option key={year} value={year}>
-                                            {year}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-                        </div>
+                        {/* ... Các phần còn lại của form ... */}
                     </div>
 
                     <div className="flex flex-col items-center justify-start pt-6">

@@ -53,7 +53,11 @@ const ProductImage = ({ slug }) => {
         <div className="w-full">
             {}
             <div className="mb-4 aspect-square flex items-center justify-center relative bg-gray-200 border border-gray-300 w-full rounded-xl overflow-hidden">
-                {currentMedia?.type === 'image' ? (
+                {!currentMedia ? (
+                    <div className="text-gray-400 text-sm">
+                        Đang tải hình...
+                    </div>
+                ) : currentMedia.type === 'image' ? (
                     <CssImageZoom src={currentMedia.src} zoomLevel={2.5} />
                 ) : (
                     <video
@@ -66,11 +70,6 @@ const ProductImage = ({ slug }) => {
                         onClick={() => setShowControls(true)}
                     />
                 )}
-
-                {}
-                <div className="absolute bottom-2 right-2 bg-black/60 text-white px-2 py-1 rounded-md text-xs">
-                    {slug}
-                </div>
             </div>
 
             {}

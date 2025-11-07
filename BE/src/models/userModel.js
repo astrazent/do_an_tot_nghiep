@@ -80,6 +80,22 @@ const UsersModel = {
         return { id: result.insertId, ...value }
     },
 
+    async getRefreshToken(id) {
+        const conn = getConnection()
+        const [rows] = await conn.execute(
+            `
+        SELECT 
+            refresh_token, 
+            token_started_at, 
+            token_expired_at
+        FROM ${USERS_TABLE_NAME}
+        WHERE id = ?
+        `,
+            [id]
+        )
+        return rows[0] || null
+    },
+
     async getUserById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
