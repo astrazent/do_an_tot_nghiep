@@ -1,87 +1,119 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useMemo } from 'react'
+import { useQueryClient } from '@tanstack/react-query'
+import { formatCurrency } from '~/utils/formatCurrency'
+// --- Import các hooks và component cần thiết ---
 import CartItem from '~/components/user/cart/CartItem'
 import OrderSummary from '~/components/user/cart/OrderSummary'
 import FeatureStrip from '~/components/shared/FeatureStrip'
 import CheckoutPopup from '~/components/user/cart/CheckoutPopup'
+import { useCurrentUser } from '~/hooks/user/useUser'
+import { useCartItemsByUser } from '~/hooks/user/useCartItem'
+import { useUpdateCartItem } from '~/hooks/user/useCartItem'
+import { useDeleteCartItem } from '~/hooks/user/useCartItem'
 import './cart.scss'
-import pateGanVit from '~/assets/image/shared/product/pate-gan-vit.jpg'
-import gaDongTaoUMuoi from '~/assets/image/shared/product/dong-tao-u-muoi.png'
-import gaUMuoi from '~/assets/image/shared/product/ga-u-muoi.png'
-
-const initialItems = [
-    {
-        id: 1,
-        image: pateGanVit,
-        name: 'Chân Vịt Rút Xương Ủ Muối',
-        details: 'Đóng gói 500g, dùng kèm muối ớt chanh',
-        price: 460.0,
-        quantity: 1,
-    },
-    {
-        id: 2,
-        image: gaDongTaoUMuoi,
-        name: 'Gà Đông Tảo Ủ Muối Nguyên Con',
-        details: 'Khoảng 1.2 - 1.5kg, gà ta thả vườn, giao trong ngày',
-        price: 12.2,
-        quantity: 4,
-    },
-    {
-        id: 3,
-        image: gaUMuoi,
-        name: 'Khâu Nhục Lạng Sơn',
-        details: 'Đóng hộp 400g, hương vị truyền thống vùng Đông Bắc',
-        price: 460.0,
-        quantity: 3,
-    },
-]
 
 const Cart = () => {
-    const [items, setItems] = useState(initialItems)
-    const [couponCode, setCouponCode] = useState('')
+    // 1. Lấy thông tin người dùng hiện tại
+    const { user, isAuthenticated, loading: userLoading } = useCurrentUser()
+    const userId = user?.id || 1
 
+    // 2. Lấy các sản phẩm trong giỏ hàng
+    const {
+        data: cartData,
+        isLoading: cartLoading,
+        isError,
+    } = useCartItemsByUser(userId)
+    const queryClient = useQueryClient()
+
+    // 3. Khởi tạo các mutation hooks
+    const { mutate: updateItem } = useUpdateCartItem(userId)
+    const { mutate: deleteItem } = useDeleteCartItem(userId)
+
+    const [couponCode, setCouponCode] = useState('')
     const [isPopupOpen, setIsPopupOpen] = useState(false)
 
-    const handleOpenPopup = () => {
-        setIsPopupOpen(true)
-    }
+    // 4. Chuyển đổi dữ liệu từ API
+    const items = useMemo(() => {
+        if (!Array.isArray(cartData)) return []
+        return cartData.map(item => ({
+            id: item.cartItemId,
+            productId: item.id,
+            image: item.image,
+            name: item.name,
+            price: parseFloat(item.price) || 0,
+            quantity: item.qty,
+        }))
+    }, [cartData])
 
-    const handleClosePopup = () => {
-        setIsPopupOpen(false)
-    }
+    const handleOpenPopup = () => setIsPopupOpen(true)
+    const handleClosePopup = () => setIsPopupOpen(false)
 
     const handleConfirmOrder = formData => {
         console.log('Đơn hàng đã được xác nhận với thông tin:', formData)
         alert('Đặt hàng thành công! Cảm ơn bạn đã mua sắm.')
-
         setIsPopupOpen(false)
-        setItems([])
+        queryClient.invalidateQueries(['cart', userId])
     }
 
-    const discount = 60.0
-    const tax = 14.0
+    const discount = 60000
+    const tax = 14000
 
-    const handleQuantityChange = (itemId, newQuantity) => {
-        setItems(
-            items.map(item =>
-                item.id === itemId ? { ...item, quantity: newQuantity } : item
-            )
-        )
+    // 5. SỬA ĐỔI QUAN TRỌNG: Cập nhật hàm thay đổi số lượng để gọi API
+    const handleQuantityChange = (cartItemId, newQuantity) => {
+        const itemToUpdate = items.find(item => item.id === cartItemId)
+        if (itemToUpdate && newQuantity > 0) {
+            // Tính toán tổng tiền mới cho mặt hàng này
+            const newPriceTotal = newQuantity * itemToUpdate.price
+            console.log(newPriceTotal);
+            // Gọi mutation với đầy đủ các tham số mà API yêu cầu
+            updateItem({
+                productId: itemToUpdate.productId,
+                quantity: newQuantity,
+                priceTotal: newPriceTotal, // Thêm tham số còn thiếu
+            })
+        }
     }
 
-    const handleRemoveItem = itemId => {
-        setItems(items.filter(item => item.id !== itemId))
+    // 6. Cập nhật hàm xóa sản phẩm để gọi API
+    const handleRemoveItem = cartItemId => {
+        deleteItem(cartItemId)
     }
 
-    const subtotal = items.reduce(
-        (acc, item) => acc + item.price * item.quantity,
-        0
+    // 7. Tính toán tổng tiền
+    const subtotal = useMemo(
+        () => items.reduce((acc, item) => acc + item.price * item.quantity, 0),
+        [items]
     )
 
     const total = subtotal - discount + tax
 
+    // 8. Xử lý các trạng thái
+    if (userLoading || cartLoading) {
+        return <div className="cart-status">Đang tải giỏ hàng...</div>
+    }
+
+    if (!isAuthenticated) {
+        return (
+            <div className="cart-status">
+                Vui lòng đăng nhập để xem giỏ hàng của bạn.
+            </div>
+        )
+    }
+
+    if (isError) {
+        return (
+            <div className="cart-status">
+                Đã có lỗi xảy ra khi tải giỏ hàng.
+            </div>
+        )
+    }
+
+    if (items.length === 0) {
+        return <div className="cart-status">Giỏ hàng của bạn đang trống.</div>
+    }
+
     return (
         <>
-            {' '}
             <div className="shopping-cart-container">
                 <div className="cart-items">
                     <h2>Giỏ hàng của bạn</h2>
@@ -96,10 +128,10 @@ const Cart = () => {
                     <FeatureStrip />
                 </div>
                 <OrderSummary
-                    subtotal={subtotal}
-                    discount={discount}
-                    tax={tax}
-                    total={total}
+                    subtotal={formatCurrency(subtotal)}
+                    discount={formatCurrency(discount)}
+                    tax={formatCurrency(tax)}
+                    total={formatCurrency(total)}
                     couponCode={couponCode}
                     setCouponCode={setCouponCode}
                     onMakePurchase={handleOpenPopup}
@@ -107,7 +139,7 @@ const Cart = () => {
             </div>
             {isPopupOpen && (
                 <CheckoutPopup
-                    total={total}
+                    total={total} // Truyền giá trị số cho Popup để xử lý tiếp
                     onClose={handleClosePopup}
                     onSubmit={handleConfirmOrder}
                 />

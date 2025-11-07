@@ -8,6 +8,8 @@ import {
     getCommentsByProductSlug,
     getListProductCollections,
     getListPromotionProducts,
+    searchProducts,
+    searchProductsByCategory,
     getHotProducts,
     getRelatedProducts
 } from '~/services/user/productService'
@@ -114,6 +116,42 @@ export const useInfinitePromotionProducts = ({
     })
 }
 
+export const useInfiniteSearchProductsByCategory = ({
+    slug,
+    keyword = '',
+    limit = 10,
+} = {}) => {
+    return useInfiniteQuery({
+        queryKey: ['products', 'searchByCategory', slug, keyword, limit],
+
+        queryFn: async ({ pageParam = 0 }) => {
+            // pageParam sẽ là offset
+            const response = await searchProductsByCategory(
+                slug,
+                keyword,
+                limit,
+                pageParam
+            )
+            return response
+        },
+
+        staleTime: 1000 * 60 * 10, // 10 phút
+
+        getNextPageParam: (lastPage, allPages) => {
+            const fetchedItemsCount = lastPage?.length || 0
+            if (fetchedItemsCount < limit) return undefined
+
+            // Tính offset cho lần fetch tiếp theo
+            return allPages.reduce(
+                (acc, page) => acc + (page?.length || 0),
+                0
+            )
+        },
+
+        enabled: !!slug,
+    })
+}
+
 export const useProductBySlug = slug => {
     return useQuery({
         queryKey: ['product', 'by_slug', slug],
@@ -149,6 +187,16 @@ export const useHotProducts = (limit = 6) => {
         queryFn: () => getHotProducts(limit),
         staleTime: Infinity,
         cacheTime: Infinity
+    })
+}
+
+export const useSearchProducts = (slug, limit = 10) => {
+    return useQuery({
+        queryKey: ['products', 'search', slug, limit],
+        queryFn: () => searchProducts(slug, limit),
+        enabled: !!slug,
+        staleTime: Infinity,
+        cacheTime: Infinity,
     })
 }
 

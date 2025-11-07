@@ -1,14 +1,12 @@
 .feature-strip-container {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between; // dãn đều 3 item trên 1 hàng
     align-items: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap; // không xuống dòng
     padding: 10px 10px;
     background-color: #ffffff;
     font-family: Arial, sans-serif;
     gap: 15px;
-
-    border: none;
 
     &.bordered {
         border-top: 1px solid #e5e5e5;
@@ -19,12 +17,13 @@
 .feature-item {
     display: flex;
     align-items: center;
-    min-width: 220px;
+    flex: 1; // mỗi item chiếm 1 phần bằng nhau
+    min-width: 0; // tránh overflow chữ
 }
 
 .feature-icon {
-    font-size: 36px;
-    margin-right: 10px;
+    font-size: 28px; // nhỏ hơn 1 chút
+    margin-right: 8px;
 }
 
 .truck-icon {
@@ -38,15 +37,15 @@
 }
 
 .feature-text h4 {
-    margin: 0 0 4px 0;
-    font-size: 1rem;
+    margin: 0 0 2px 0;
+    font-size: 0.9rem; // nhỏ hơn
     font-weight: bold;
     color: #333;
 }
 
 .feature-text p {
     margin: 0;
-    font-size: 0.8rem;
+    font-size: 0.75rem; // nhỏ hơn
     color: #666;
 }
 
@@ -54,6 +53,6 @@
     .feature-strip-container {
         flex-direction: column;
         align-items: flex-start;
-        padding: 15px;
+        gap: 10px;
     }
 }

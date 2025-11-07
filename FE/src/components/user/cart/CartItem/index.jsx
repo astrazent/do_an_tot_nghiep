@@ -1,9 +1,12 @@
 import React from 'react'
-import './cartItem.scss'
 import { FaTrash } from 'react-icons/fa'
+// SỬA ĐỔI 1: Import hàm formatCurrency
+import { formatCurrency } from '~/utils/formatCurrency'
+import './cartItem.scss'
 
 const CartItem = ({ item, onQuantityChange, onRemove }) => {
     const handleIncrease = () => {
+        // item.id ở đây chính là cartItemId đã được map ở component cha
         onQuantityChange(item.id, item.quantity + 1)
     }
 
@@ -18,7 +21,6 @@ const CartItem = ({ item, onQuantityChange, onRemove }) => {
             <img src={item.image} alt={item.name} className="item-image" />
             <div className="item-info">
                 <p className="item-name">{item.name}</p>
-                <p className="item-details">{item.details}</p>
             </div>
 
             <div className="item-quantity">
@@ -38,14 +40,18 @@ const CartItem = ({ item, onQuantityChange, onRemove }) => {
                 </button>
             </div>
 
+            {/* SỬA ĐỔI 2: Sử dụng formatCurrency để hiển thị giá */}
             <div className="item-price">
                 <p className="total-item-price">
-                    ${(item.price * item.quantity).toFixed(2)}
+                    {/* Tính toán với number, sau đó mới format thành string */}
+                    {formatCurrency(item.price * item.quantity)}
                 </p>
                 <p className="price-per-item">
-                    ${item.price.toFixed(2)} / sản phẩm
+                    {/* Format giá của một sản phẩm */}
+                    {formatCurrency(item.price)} / sản phẩm
                 </p>
             </div>
+
             <div className="item-actions">
                 <button
                     className="remove-btn"

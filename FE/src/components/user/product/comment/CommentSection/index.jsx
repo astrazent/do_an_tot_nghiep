@@ -195,9 +195,8 @@ const CommentSection = ({ slug }) => {
             vote: voteType === 'up' ? 1 : 0,
             voter_id: null
         }
-
         if (isAuthenticated) {
-            payload.voter_id = user.id // Đảm bảo `user.id` là trường ID chính xác
+            payload.voter_id = user.user_id // Đảm bảo `user.user_id` là trường ID chính xác
         }
 
         if (feedbackId) {
