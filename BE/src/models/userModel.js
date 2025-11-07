@@ -10,6 +10,7 @@ const USERS_SCHEMA = Joi.object({
         'string.min': 'Username tối thiểu 3 ký tự',
         'string.max': 'Username tối đa 50 ký tự',
     }),
+    token: Joi.string(),
     password_hash: Joi.string().min(6).max(255).allow('', null).messages({
         'string.min': 'Password tối thiểu 6 ký tự',
         'string.max': 'Password tối đa 255 ký tự',
@@ -28,20 +29,16 @@ const USERS_SCHEMA = Joi.object({
         'string.min': 'Full name tối thiểu 3 ký tự',
         'string.max': 'Full name tối đa 100 ký tự',
     }),
-    address: Joi.string().max(255).required().messages({
-        'string.empty': 'Address không được để trống',
+    address: Joi.string().max(255).messages({
         'string.max': 'Address tối đa 255 ký tự',
     }),
-    city: Joi.string().max(100).required().messages({
-        'string.empty': 'City không được để trống',
+    city: Joi.string().max(100).messages({
         'string.max': 'City tối đa 100 ký tự',
     }),
-    district: Joi.string().max(100).required().messages({
-        'string.empty': 'District không được để trống',
+    district: Joi.string().max(100).messages({
         'string.max': 'District tối đa 100 ký tự',
     }),
-    ward: Joi.string().max(100).required().messages({
-        'string.empty': 'Ward không được để trống',
+    ward: Joi.string().max(100).messages({
         'string.max': 'Ward tối đa 100 ký tự',
     }),
     avatar_url: Joi.string().max(255).allow('', null).messages({
@@ -51,14 +48,9 @@ const USERS_SCHEMA = Joi.object({
         'number.base': 'Status phải là số',
         'any.only': 'Status phải là 0 hoặc 1',
     }),
-    role_id: Joi.number().integer().required().messages({
-        'number.base': 'Role ID phải là số',
-        'any.required': 'Role ID là bắt buộc',
-    }),
 })
 
 const UsersModel = {
-    // Tạo user mới
     async createUser(data) {
         const { error, value } = USERS_SCHEMA.validate(data, {
             abortEarly: false,
@@ -68,28 +60,42 @@ const UsersModel = {
         const conn = getConnection()
         const [result] = await conn.execute(
             `INSERT INTO ${USERS_TABLE_NAME} 
-            (username, password_hash, email, phone, full_name, address, city, district, ward, avatar_url, status, role_id) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            (username, password_hash, email, phone, full_name, address, city, district, ward, avatar_url, status) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
                 value.username,
                 value.password_hash,
                 value.email,
                 value.phone,
                 value.full_name,
-                value.address,
-                value.city,
-                value.district,
-                value.ward,
-                value.avatar_url,
-                value.status,
-                value.role_id,
+                value.address || '',
+                value.city || '',
+                value.district || '',
+                value.ward || '',
+                value.avatar_url || '',
+                value.status || 1,
             ]
         )
 
         return { id: result.insertId, ...value }
     },
 
-    // Lấy user theo ID
+    async getRefreshToken(id) {
+        const conn = getConnection()
+        const [rows] = await conn.execute(
+            `
+        SELECT 
+            refresh_token, 
+            token_started_at, 
+            token_expired_at
+        FROM ${USERS_TABLE_NAME}
+        WHERE id = ?
+        `,
+            [id]
+        )
+        return rows[0] || null
+    },
+
     async getUserById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -99,7 +105,6 @@ const UsersModel = {
         return rows[0] || null
     },
 
-    // Cập nhật user theo ID
     async updateUser(id, data) {
         const schema = USERS_SCHEMA.fork(
             Object.keys(USERS_SCHEMA.describe().keys),
@@ -122,7 +127,6 @@ const UsersModel = {
         return this.getUserById(id)
     },
 
-    // Xóa user theo ID
     async deleteUser(id) {
         const conn = getConnection()
         const [result] = await conn.execute(
@@ -132,7 +136,6 @@ const UsersModel = {
         return result.affectedRows > 0
     },
 
-    // Lấy danh sách user
     async listUsers(limit = 50, offset = 0) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -142,7 +145,16 @@ const UsersModel = {
         return rows
     },
 
-    // Tìm user theo email hoặc username
+    // Lấy user theo phone
+    async findUserByPhone(phone) {
+        const conn = getConnection()
+        const [rows] = await conn.execute(
+            `SELECT * FROM ${USERS_TABLE_NAME} WHERE phone = ? LIMIT 1`,
+            [phone]
+        )
+        return rows[0] || null
+    },
+
     async findUserByEmailOrUsername(identifier) {
         const conn = getConnection()
         const [rows] = await conn.execute(

@@ -15,7 +15,6 @@ export const createConnection = async () => {
             password: env.DB_PASSWORD,
             database: env.DB_NAME,
         })
-
         console.log('✅ Connected to MySQL database successfully!')
         return connection
     } catch (error) {

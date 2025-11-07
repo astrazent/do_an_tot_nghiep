@@ -1,0 +1,113 @@
+.order-summary {
+    width: 350px;
+    min-width: 300px;
+    border: 1px solid #e0e0e0;
+    padding: 1.5rem;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    height: fit-content;
+}
+
+.coupon-section {
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.coupon-section p {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.coupon-input {
+    display: flex;
+}
+
+.coupon-input input {
+    flex-grow: 1;
+    border: 1px solid #ccc;
+    padding: 0.7rem;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+}
+
+.coupon-input input:focus {
+    border-color: #007bff;
+}
+
+.coupon-input button {
+    border: 1px solid #ccc;
+    background-color: #fff;
+    padding: 0.7rem 1rem;
+    cursor: pointer;
+    border-left: none;
+    border-radius: 0 5px 5px 0;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.coupon-input button:hover {
+    background-color: #f0f0f0;
+}
+
+.price-details {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.8rem;
+    font-size: 1rem;
+    color: #555;
+}
+
+.price-row:last-child {
+    margin-bottom: 0;
+}
+
+.price-row.discount span:last-child {
+    color: #28a745;
+    font-weight: 500;
+}
+
+.total-section {
+    padding-top: 1.5rem;
+}
+
+.price-row.total span {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #000;
+}
+
+.purchase-btn,
+.back-btn {
+    width: 100%;
+    border: none;
+    padding: 1rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: opacity 0.2s;
+}
+
+.purchase-btn {
+    background-color: #00b33c;
+    color: white;
+    margin-top: 1rem;
+}
+
+.back-btn {
+    background-color: #fff;
+    color: #333;
+    border: 1px solid #ccc;
+    margin-top: 0.5rem;
+}
+
+.purchase-btn:hover,
+.back-btn:hover {
+    opacity: 0.9;
+}

@@ -2,16 +2,16 @@ import winston from 'winston'
 import 'winston-daily-rotate-file'
 import path from 'path'
 
-const logDirectory = path.join(process.cwd(), 'logs') // folder lưu log
+const logDirectory = path.join(process.cwd(), 'logs') 
 
 // Tạo transport để ghi log mỗi ngày 1 file, tự xoá sau 5 ngày
 const transport = new winston.transports.DailyRotateFile({
-    filename: '%DATE%.log', // ví dụ: 2025-09-25.log
+    filename: '%DATE%.log', 
     dirname: logDirectory,
     datePattern: 'YYYY-MM-DD',
-    zippedArchive: true, // nén log cũ
-    maxFiles: '5d', // giữ log 5 ngày
-    level: 'error', // chỉ log error trở lên
+    zippedArchive: true, 
+    maxFiles: '5d', 
+    level: 'error', 
 })
 
 export const logger = winston.createLogger({

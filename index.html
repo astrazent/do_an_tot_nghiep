@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soạn bài viết - Admin</title>
+<style>
+    body {
+        font-family: "Segoe UI", sans-serif;
+        margin: 0;
+        background: #f7f9fc;
+    }
+    .container {
+        display: flex;
+        gap: 20px;
+        padding: 20px;
+        max-width: 1200px;
+        margin: auto;
+    }
+    .left, .right {
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        padding: 20px;
+    }
+    .left {
+        flex: 2;
+    }
+    .right {
+        flex: 1;
+        height: fit-content;
+    }
+    h2 {
+        margin-top: 0;
+        color: #2d3748;
+    }
+    label {
+        display: block;
+        font-weight: 600;
+        margin-top: 15px;
+    }
+    input[type="text"], textarea, input[type="datetime-local"] {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 14px;
+    }
+    textarea {
+        min-height: 80px;
+        resize: vertical;
+    }
+    #content {
+        min-height: 200px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        padding: 10px;
+        margin-top: 5px;
+        background: #fafafa;
+    }
+    .switch {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 10px;
+    }
+    .switch input {
+        width: 40px;
+        height: 20px;
+        accent-color: #4caf50;
+    }
+    .buttons {
+        margin-top: 20px;
+        display: flex;
+        gap: 10px;
+    }
+    button {
+        padding: 10px 15px;
+        border: none;
+        border-radius: 6px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+    .save-draft { background: #f1c40f; color: #fff; }
+    .publish { background: #2ecc71; color: #fff; }
+    .cancel { background: #e74c3c; color: #fff; }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Cột trái -->
+    <div class="left">
+        <h2>📝 Soạn bài viết</h2>
+        <label for="title">Tiêu đề</label>
+        <input type="text" id="title" placeholder="Nhập tiêu đề bài viết">
+
+        <label for="description">Mô tả ngắn</label>
+        <textarea id="description" placeholder="Nhập mô tả ngắn gọn..."></textarea>
+
+        <label for="content">Nội dung bài viết</label>
+        <div id="content" contenteditable="true">
+            <p>Nhập nội dung HTML tại đây...</p>
+        </div>
+        <small style="color:#777;">💡 Bạn có thể chèn ảnh bằng cách dán URL hoặc kéo thả vào trình soạn thảo.</small>
+    </div>
+
+    <!-- Cột phải -->
+    <div class="right">
+        <h2>⚙️ Cài đặt bài viết</h2>
+
+        <label for="author">Tác giả</label>
+        <input type="text" id="author" value="Admin" placeholder="Tên tác giả">
+
+        <label for="published_at">Ngày phát hành</label>
+        <input type="datetime-local" id="published_at">
+
+        <label>Trạng thái</label>
+        <div class="switch">
+            <input type="checkbox" id="status" checked>
+            <span id="statusLabel">Đăng</span>
+        </div>
+
+        <div class="buttons">
+            <button class="save-draft" onclick="saveDraft()">Lưu nháp</button>
+            <button class="publish" onclick="publishPost()">Đăng bài</button>
+            <button class="cancel" onclick="cancelPost()">Hủy</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const statusInput = document.getElementById('status');
+    const statusLabel = document.getElementById('statusLabel');
+
+    statusInput.addEventListener('change', () => {
+        statusLabel.textContent = statusInput.checked ? 'Đăng' : 'Ẩn';
+    });
+
+    function saveDraft() {
+        alert('✅ Bài viết đã được lưu nháp!');
+    }
+
+    function publishPost() {
+        const title = document.getElementById('title').value.trim();
+        const content = document.getElementById('content').innerHTML.trim();
+        if (!title || !content) {
+            alert('⚠️ Vui lòng nhập đầy đủ tiêu đề và nội dung!');
+            return;
+        }
+        alert('🚀 Bài viết đã được đăng thành công!');
+    }
+
+    function cancelPost() {
+        if (confirm('Bạn có chắc muốn hủy bỏ thay đổi?')) {
+            document.getElementById('title').value = '';
+            document.getElementById('description').value = '';
+            document.getElementById('content').innerHTML = '<p>Nhập nội dung HTML tại đây...</p>';
+        }
+    }
+</script>
+
+</body>
+</html>

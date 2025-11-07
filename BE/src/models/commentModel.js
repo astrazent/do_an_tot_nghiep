@@ -1,7 +1,10 @@
 import { getConnection } from '../config/mysql.js'
 import Joi from 'joi'
 
-const COMMENTS_TABLE_NAME = 'Comments'
+// Khai báo tên bảng
+const COMMENTS_TABLE = 'Comments'
+const USERS_TABLE = 'Users'
+const PRODUCTS_TABLE = 'Products'
 
 // Schema validate dữ liệu comment
 const COMMENTS_SCHEMA = Joi.object({
@@ -23,36 +26,39 @@ const COMMENTS_SCHEMA = Joi.object({
         'number.base': 'User ID phải là số',
         'any.required': 'User ID là bắt buộc',
     }),
+    likes: Joi.number().integer().min(0).default(0).messages({
+        'number.base': 'Likes phải là số',
+        'number.min': 'Likes không thể âm',
+    }),
+    dislikes: Joi.number().integer().min(0).default(0).messages({
+        'number.base': 'Dislikes phải là số',
+        'number.min': 'Dislikes không thể âm',
+    }),
 })
 
 const CommentsModel = {
-    // Tạo comment mới
     async createComment(data) {
-        const { error, value } = COMMENTS_SCHEMA.validate(data, {
-            abortEarly: false,
-        })
+        const { error, value } = COMMENTS_SCHEMA.validate(data, { abortEarly: false })
         if (error) throw error
 
         const conn = getConnection()
         const [result] = await conn.execute(
-            `INSERT INTO ${COMMENTS_TABLE_NAME} (rate, content, product_id, user_id) VALUES (?, ?, ?, ?)`,
+            `INSERT INTO ${COMMENTS_TABLE} (rate, content, product_id, user_id) VALUES (?, ?, ?, ?)`,
             [value.rate, value.content, value.product_id, value.user_id]
         )
 
         return { id: result.insertId, ...value }
     },
 
-    // Lấy comment theo ID
     async getCommentById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
-            `SELECT * FROM ${COMMENTS_TABLE_NAME} WHERE id = ?`,
+            `SELECT * FROM ${COMMENTS_TABLE} WHERE id = ?`,
             [id]
         )
         return rows[0] || null
     },
 
-    // Cập nhật comment theo ID
     async updateComment(id, data) {
         const schema = COMMENTS_SCHEMA.fork(
             Object.keys(COMMENTS_SCHEMA.describe().keys),
@@ -68,52 +74,84 @@ const CommentsModel = {
         const setClause = fields.map(f => `${f} = ?`).join(', ')
         const conn = getConnection()
         await conn.execute(
-            `UPDATE ${COMMENTS_TABLE_NAME} SET ${setClause}, updated_at = CURRENT_TIMESTAMP WHERE id = ?`,
+            `UPDATE ${COMMENTS_TABLE} SET ${setClause}, updated_at = CURRENT_TIMESTAMP WHERE id = ?`,
             [...values, id]
         )
 
         return this.getCommentById(id)
     },
 
-    // Xóa comment theo ID
     async deleteComment(id) {
         const conn = getConnection()
         const [result] = await conn.execute(
-            `DELETE FROM ${COMMENTS_TABLE_NAME} WHERE id = ?`,
+            `DELETE FROM ${COMMENTS_TABLE} WHERE id = ?`,
             [id]
         )
         return result.affectedRows > 0
     },
 
-    // Lấy danh sách comment
     async listComments(limit = 50, offset = 0) {
         const conn = getConnection()
         const [rows] = await conn.execute(
-            `SELECT * FROM ${COMMENTS_TABLE_NAME} ORDER BY created_at DESC LIMIT ? OFFSET ?`,
+            `SELECT * FROM ${COMMENTS_TABLE} ORDER BY created_at DESC LIMIT ? OFFSET ?`,
             [limit, offset]
         )
         return rows
     },
 
-    // Lấy tất cả comment của một product
     async getCommentsByProduct(product_id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
-            `SELECT * FROM ${COMMENTS_TABLE_NAME} WHERE product_id = ? ORDER BY created_at DESC`,
+            `SELECT * FROM ${COMMENTS_TABLE} WHERE product_id = ? ORDER BY created_at DESC`,
             [product_id]
         )
         return rows
     },
 
-    // Lấy tất cả comment của một user
+    async getCommentsByProductSlug(slug) {
+        const conn = getConnection()
+        const [rows] = await conn.execute(
+            `
+        SELECT 
+            -- Dữ liệu từ bảng Comments
+            c.id, 
+            c.rate, 
+            c.content, 
+            c.likes,
+            c.dislikes,
+            c.created_at, 
+            c.updated_at, 
+            
+            -- Dữ liệu từ bảng Users
+            u.id AS user_id,
+            u.username,
+            u.full_name,
+            u.avatar_url,
+
+            -- Dữ liệu từ bảng Products
+            p.id AS product_id,
+            p.name AS product_name,
+            p.slug AS product_slug
+            
+        FROM ${COMMENTS_TABLE} AS c
+        INNER JOIN ${PRODUCTS_TABLE} AS p ON c.product_id = p.id
+        INNER JOIN ${USERS_TABLE} AS u ON c.user_id = u.id
+        WHERE p.slug = ?
+        ORDER BY c.created_at DESC
+        `,
+            [slug]
+        )
+        return rows
+    },
+
     async getCommentsByUser(user_id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
-            `SELECT * FROM ${COMMENTS_TABLE_NAME} WHERE user_id = ? ORDER BY created_at DESC`,
+            `SELECT * FROM ${COMMENTS_TABLE} WHERE user_id = ? ORDER BY created_at DESC`,
             [user_id]
         )
         return rows
     },
 }
 
-export { COMMENTS_TABLE_NAME, COMMENTS_SCHEMA, CommentsModel }
+export { COMMENTS_TABLE, COMMENTS_SCHEMA, CommentsModel }

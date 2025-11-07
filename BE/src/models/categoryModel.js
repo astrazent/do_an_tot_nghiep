@@ -10,6 +10,9 @@ const CATEGORIES_SCHEMA = Joi.object({
         'string.min': 'Name tối thiểu 3 ký tự',
         'string.max': 'Name tối đa 100 ký tự',
     }),
+    slug: Joi.string().max(255).allow('', null).messages({
+        'string.max': 'Slug tối đa 255 ký tự',
+    }),
     description: Joi.string().max(255).allow('', null).messages({
         'string.max': 'Description tối đa 255 ký tự',
     }),
@@ -19,7 +22,7 @@ const CATEGORIES_SCHEMA = Joi.object({
 })
 
 const CategoriesModel = {
-    // Tạo category mới
+    
     async createCategory(data) {
         const { error, value } = CATEGORIES_SCHEMA.validate(data, {
             abortEarly: false,
@@ -28,15 +31,23 @@ const CategoriesModel = {
 
         const conn = getConnection()
         const [result] = await conn.execute(
-            `INSERT INTO ${CATEGORIES_TABLE_NAME} (name, description, parent_id) 
-            VALUES (?, ?, ?)`,
-            [value.name, value.description, value.parent_id]
+            `INSERT INTO ${CATEGORIES_TABLE_NAME} (name, slug, description, parent_id) 
+            VALUES (?, ?, ?, ?)`,
+            [value.name, value.slug, value.description, value.parent_id]
         )
 
         return { id: result.insertId, ...value }
     },
 
-    // Lấy category theo ID
+    async getCategoryByName(name) {
+        const conn = getConnection()
+        const [rows] = await conn.execute(
+            `SELECT * FROM ${CATEGORIES_TABLE_NAME} WHERE name = ?`,
+            [name]
+        )
+        return rows[0] || null
+    },
+    
     async getCategoryById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -46,7 +57,15 @@ const CategoriesModel = {
         return rows[0] || null
     },
 
-    // Cập nhật category theo ID
+    async getCategoryBySlug(slug) {
+        const conn = getConnection()
+        const [rows] = await conn.execute(
+            `SELECT * FROM ${CATEGORIES_TABLE_NAME} WHERE slug = ?`,
+            [slug]
+        )
+        return rows[0] || null
+    },
+    
     async updateCategory(id, data) {
         const schema = CATEGORIES_SCHEMA.fork(
             Object.keys(CATEGORIES_SCHEMA.describe().keys),
@@ -69,7 +88,7 @@ const CategoriesModel = {
         return this.getCategoryById(id)
     },
 
-    // Xóa category theo ID
+    
     async deleteCategory(id) {
         const conn = getConnection()
         const [result] = await conn.execute(
@@ -79,7 +98,7 @@ const CategoriesModel = {
         return result.affectedRows > 0
     },
 
-    // Lấy danh sách category
+    
     async listCategories(limit = 50, offset = 0) {
         const conn = getConnection()
         const [rows] = await conn.execute(

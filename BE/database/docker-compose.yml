@@ -8,8 +8,9 @@ services:
         environment:
             - MYSQL_ROOT_PASSWORD=55555
             - MYSQL_DATABASE=bep_sach_viet
+            - TZ=Asia/Ho_Chi_Minh
         ports:
-            - '55555:3306'
+            - '3307:3306'
         volumes:
             - mariadb_data:/var/lib/mysql
         healthcheck:
@@ -18,7 +19,7 @@ services:
                     'CMD',
                     'mysqladmin',
                     '-uroot',
-                    '-p123456',
+                    '-p55555',
                     'ping',
                     '-h',
                     'localhost',

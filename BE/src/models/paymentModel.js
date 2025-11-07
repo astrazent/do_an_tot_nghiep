@@ -18,6 +18,24 @@ const PAYMENTS_SCHEMA = Joi.object({
 })
 
 const PaymentsModel = {
+    // Lấy tất cả payments không giới hạn
+    async getAllPayments() {
+        const conn = getConnection()
+        const [rows] = await conn.execute(
+            `SELECT * FROM ${PAYMENTS_TABLE_NAME} ORDER BY created_at DESC`
+        )
+        return rows
+    },
+
+    // Lấy tất cả payments có status = 1
+    async getActivePayments() {
+        const conn = getConnection()
+        const [rows] = await conn.execute(
+            `SELECT * FROM ${PAYMENTS_TABLE_NAME} WHERE status = 1 ORDER BY created_at DESC`
+        )
+        return rows
+    },
+
     // Tạo payment mới
     async createPayment(data) {
         const { error, value } = PAYMENTS_SCHEMA.validate(data, {
@@ -34,7 +52,7 @@ const PaymentsModel = {
         return { id: result.insertId, ...value }
     },
 
-    // Lấy payment theo ID
+    
     async getPaymentById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -44,7 +62,7 @@ const PaymentsModel = {
         return rows[0] || null
     },
 
-    // Cập nhật payment theo ID
+    
     async updatePayment(id, data) {
         const schema = PAYMENTS_SCHEMA.fork(
             Object.keys(PAYMENTS_SCHEMA.describe().keys),
@@ -67,7 +85,7 @@ const PaymentsModel = {
         return this.getPaymentById(id)
     },
 
-    // Xóa payment theo ID
+    
     async deletePayment(id) {
         const conn = getConnection()
         const [result] = await conn.execute(
@@ -77,7 +95,7 @@ const PaymentsModel = {
         return result.affectedRows > 0
     },
 
-    // Lấy danh sách payment
+    
     async listPayments(limit = 50, offset = 0) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -87,7 +105,7 @@ const PaymentsModel = {
         return rows
     },
 
-    // Lấy payment theo method
+    
     async getPaymentsByMethod(method) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -97,7 +115,7 @@ const PaymentsModel = {
         return rows
     },
 
-    // Lấy payment theo status
+    
     async getPaymentsByStatus(status) {
         const conn = getConnection()
         const [rows] = await conn.execute(

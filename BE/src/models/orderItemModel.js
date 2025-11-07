@@ -26,7 +26,7 @@ const ORDER_ITEMS_SCHEMA = Joi.object({
 })
 
 const OrderItemsModel = {
-    // Tạo order item mới
+    
     async createOrderItem(data) {
         const { error, value } = ORDER_ITEMS_SCHEMA.validate(data, {
             abortEarly: false,
@@ -47,7 +47,7 @@ const OrderItemsModel = {
         return { id: result.insertId, ...value }
     },
 
-    // Lấy order item theo ID
+    
     async getOrderItemById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -57,7 +57,7 @@ const OrderItemsModel = {
         return rows[0] || null
     },
 
-    // Cập nhật order item theo ID
+    
     async updateOrderItem(id, data) {
         const schema = ORDER_ITEMS_SCHEMA.fork(
             Object.keys(ORDER_ITEMS_SCHEMA.describe().keys),
@@ -80,7 +80,7 @@ const OrderItemsModel = {
         return this.getOrderItemById(id)
     },
 
-    // Xóa order item theo ID
+    
     async deleteOrderItem(id) {
         const conn = getConnection()
         const [result] = await conn.execute(
@@ -90,7 +90,7 @@ const OrderItemsModel = {
         return result.affectedRows > 0
     },
 
-    // Lấy danh sách order items
+    
     async listOrderItems(limit = 50, offset = 0) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -100,7 +100,7 @@ const OrderItemsModel = {
         return rows
     },
 
-    // Lấy order items theo transaction
+    
     async getItemsByTransaction(transaction_id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -110,7 +110,7 @@ const OrderItemsModel = {
         return rows
     },
 
-    // Lấy order items theo product
+    
     async getItemsByProduct(product_id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
