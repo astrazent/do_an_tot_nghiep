@@ -170,18 +170,19 @@ INSERT INTO PostCategories (post_id, category_id) VALUES
 (8, 8);
 
 -- Dữ liệu mẫu cho Users
-INSERT INTO Users (`username`, `password_hash`, `email`, `phone`, `full_name`, `gender`, `address`, `city`, `district`, `ward`, `avatar_url`, `status`) VALUES
-('nguyen55', '$2a$10$.RiX67BDw3k4Uw22rewLJ.KrZfOD0PdIGqc9DUUl4RZatU61f4gaa', 'nguyen55@example.com', '0912345678', 'Phạm Thành Nguyên', 'male', '12B Thanh Xuân Nam', 'Ha Noi', 'Quan Thanh Xuan', 'Phuong Thanh Xuan Nam', 'assets/image/user/avatar/user_1', 1),
-('minhtuan89', '$2a$10$oa596XbyvbHkScXJggYg5uFXWyRNYC.BdDKE6UHeXGWhbVeWM30Wy', 'minhtuan89@example.com', '0987654321', 'Trần Minh Tuấn', 'male', '45 Trần Duy Hưng', 'Ha Noi', 'Quan Cau Giay', 'Phuong Trung Hoa', 'assets/image/user/avatar/user_2', 1),
-('hoanglong_hn', '$2a$10$8G72fEPvu.cUDTN50lAk9ef3Hvwae8kC.D11QxMYQr7MBh38bmHhy', 'hoanglong.hn@example.com', '0903456789', 'Lê Hoàng Long', 'male', '789 Nguyễn Chí Thanh', 'Ha Noi', 'Quan Dong Da', 'Phuong Lang Thuong', 'assets/image/user/avatar/user_3', 0),
-('maiphuong_95', '$2a$10$WpCHIYYXjYEaTDWx1BYnd.xiS85olPsigfI9W0m3GRrbTN/YK7D6K', 'maiphuong95@example.com', '0904567890', 'Phạm Thị Mai Phương', 'female', '101 Láng Hạ', 'Ha Noi', 'Quan Ba Dinh', 'Phuong Thanh Cong', 'assets/image/user/avatar/user_4', 1),
-('quanghuy.dev', '$2a$10$L9.OA7ociHXQAOQE46UUeufy2QOi.sJ3pDgdqNNoJummTA6H5p1c2', 'quanghuy.dev@example.com', '0905678901', 'Hoàng Quang Huy', 'male', '202 Tôn Đức Thắng', 'Ha Noi', 'Quan Dong Da', 'Phuong Hang Bot', 'assets/image/user/avatar/user_5', 1),
-('thanhthao_88', '$2a$10$TmrNsumGD2Ttdoxf8LCFcOGwW5iCNJ2n.R6yo612vovsZ4bxIwnwC', 'thanhthao_88@example.com', '0915111222', 'Vũ Thanh Thảo', 'female', '55 Nguyễn Lương Bằng', 'Ha Noi', 'Quan Dong Da', 'Phuong Quang Trung', 'assets/image/user/avatar/user_6', 1),
-('duc.anh.le', '$2a$10$fulj8uZoGsYremHzos.eDuApDVHlOdvbc0cx8HAgNDj9rdHVxftE2', 'duc.anh.le@example.com', '0978888999', 'Lê Đức Anh', 'male', '88 Lò Đúc', 'Ha Noi', 'Quan Hai Ba Trung', 'Phuong Dong Mac', 'assets/image/user/avatar/user_7', 1),
-('ngocbich2000', '$2a$10$mS3vKfM8b86QdFtAB86KQecZ13j9xg70A3h41/eZDSCSKS7fXte0O', 'ngocbich2000@example.com', '0355123456', 'Đặng Ngọc Bích', 'female', '15 Hàng Bài', 'Ha Noi', 'Quan Hoan Kiem', 'Phuong Hang Bai', 'assets/image/user/avatar/user_8', 0),
-('trungdung_it', '$2a$10$QYKYYBCSJywmw/sKSSoy2uAKJDeFfakXNbVVWzPyfCgTXdFSgYwCa', 'trungdung_it@example.com', '0368246810', 'Phan Trung Dũng', 'male', '334 Nguyễn Trãi', 'Ha Noi', 'Quan Thanh Xuan', 'Phuong Thanh Xuan Trung', 'assets/image/user/avatar/user_9', 1),
-('linhchi_beauty', '$2a$10$o9mNPculqAv1YtdLhVuIKu3oOVv9nf0aTKK2ABmi6GXSd88YVyqxq', 'linhchi_beauty@example.com', '0918777888', 'Ngô Linh Chi', 'female', '18 Lý Thường Kiệt', 'Ha Noi', 'Quan Hoan Kiem', 'Phuong Phan Chu Trinh', 'assets/image/user/avatar/user_10', 1),
-('nnn', '$2a$10$RMTnNJ0gnaUirk7/PnepmusCA8.vZtad.Ty7iBz6/niY9je8Q9y1m', 'nnn@example.com', '0918777882', 'Ngô Ngọc Nguyên', 'male', '18 Lý Thường Kiệt', 'Thành phố Hà Nội', 'Quận Thanh Xuân', 'Phường Thanh Xuân Bắc', 'assets/image/user/avatar/user_11', 1);
+INSERT INTO Users 
+(`username`, `password_hash`, `provider`, `provider_id`, `email`, `phone`, `full_name`, `gender`, `address`, `city`, `district`, `ward`, `avatar_url`, `status`) VALUES
+('nguyen55', '$2a$10$.RiX67BDw3k4Uw22rewLJ.KrZfOD0PdIGqc9DUUl4RZatU61f4gaa', 'local', NULL, 'nguyen55@example.com', '0912345678', 'Phạm Thành Nguyên', 'male', '12B Thanh Xuân Nam', 'Ha Noi', 'Quan Thanh Xuan', 'Phuong Thanh Xuan Nam', 'assets/image/user/avatar/user_1', 1),
+('minhtuan89', '$2a$10$oa596XbyvbHkScXJggYg5uFXWyRNYC.BdDKE6UHeXGWhbVeWM30Wy', 'local', NULL, 'minhtuan89@example.com', '0987654321', 'Trần Minh Tuấn', 'male', '45 Trần Duy Hưng', 'Ha Noi', 'Quan Cau Giay', 'Phuong Trung Hoa', 'assets/image/user/avatar/user_2', 1),
+('hoanglong_hn', '$2a$10$8G72fEPvu.cUDTN50lAk9ef3Hvwae8kC.D11QxMYQr7MBh38bmHhy', 'local', NULL, 'hoanglong.hn@example.com', '0903456789', 'Lê Hoàng Long', 'male', '789 Nguyễn Chí Thanh', 'Ha Noi', 'Quan Dong Da', 'Phuong Lang Thuong', 'assets/image/user/avatar/user_3', 0),
+('maiphuong_95', '$2a$10$WpCHIYYXjYEaTDWx1BYnd.xiS85olPsigfI9W0m3GRrbTN/YK7D6K', 'local', NULL, 'maiphuong95@example.com', '0904567890', 'Phạm Thị Mai Phương', 'female', '101 Láng Hạ', 'Ha Noi', 'Quan Ba Dinh', 'Phuong Thanh Cong', 'assets/image/user/avatar/user_4', 1),
+('quanghuy.dev', '$2a$10$L9.OA7ociHXQAOQE46UUeufy2QOi.sJ3pDgdqNNoJummTA6H5p1c2', 'local', NULL, 'quanghuy.dev@example.com', '0905678901', 'Hoàng Quang Huy', 'male', '202 Tôn Đức Thắng', 'Ha Noi', 'Quan Dong Da', 'Phuong Hang Bot', 'assets/image/user/avatar/user_5', 1),
+('thanhthao_88', '$2a$10$TmrNsumGD2Ttdoxf8LCFcOGwW5iCNJ2n.R6yo612vovsZ4bxIwnwC', 'local', NULL, 'thanhthao_88@example.com', '0915111222', 'Vũ Thanh Thảo', 'female', '55 Nguyễn Lương Bằng', 'Ha Noi', 'Quan Dong Da', 'Phuong Quang Trung', 'assets/image/user/avatar/user_6', 1),
+('duc.anh.le', '$2a$10$fulj8uZoGsYremHzos.eDuApDVHlOdvbc0cx8HAgNDj9rdHVxftE2', 'local', NULL, 'duc.anh.le@example.com', '0978888999', 'Lê Đức Anh', 'male', '88 Lò Đúc', 'Ha Noi', 'Quan Hai Ba Trung', 'Phuong Dong Mac', 'assets/image/user/avatar/user_7', 1),
+('ngocbich2000', '$2a$10$mS3vKfM8b86QdFtAB86KQecZ13j9xg70A3h41/eZDSCSKS7fXte0O', 'local', NULL, 'ngocbich2000@example.com', '0355123456', 'Đặng Ngọc Bích', 'female', '15 Hàng Bài', 'Ha Noi', 'Quan Hoan Kiem', 'Phuong Hang Bai', 'assets/image/user/avatar/user_8', 0),
+('trungdung_it', '$2a$10$QYKYYBCSJywmw/sKSSoy2uAKJDeFfakXNbVVWzPyfCgTXdFSgYwCa', 'local', NULL, 'trungdung_it@example.com', '0368246810', 'Phan Trung Dũng', 'male', '334 Nguyễn Trãi', 'Ha Noi', 'Quan Thanh Xuan', 'Phuong Thanh Xuan Trung', 'assets/image/user/avatar/user_9', 1),
+('linhchi_beauty', '$2a$10$o9mNPculqAv1YtdLhVuIKu3oOVv9nf0aTKK2ABmi6GXSd88YVyqxq', 'local', NULL, 'linhchi_beauty@example.com', '0918777888', 'Ngô Linh Chi', 'female', '18 Lý Thường Kiệt', 'Ha Noi', 'Quan Hoan Kiem', 'Phuong Phan Chu Trinh', 'assets/image/user/avatar/user_10', 1),
+('nnn', '$2a$10$RMTnNJ0gnaUirk7/PnepmusCA8.vZtad.Ty7iBz6/niY9je8Q9y1m', 'local', NULL, 'nnn@example.com', '0918777882', 'Ngô Ngọc Nguyên', 'male', '18 Lý Thường Kiệt', 'Thành phố Hà Nội', 'Quận Thanh Xuân', 'Phường Thanh Xuân Bắc', 'https://avatar.iran.liara.run/public', 1);
 
 -- Dữ liệu mẫu cho Tokens
 INSERT INTO Tokens (`user_id`, `refresh_token`, `device_info`, `ip_address`, `token_started_at`, `token_expired_at`, `is_revoked`, `revoked_at`) VALUES
@@ -322,24 +323,24 @@ VALUES
 ('VITSHIP', 'Áp dụng miễn phí vận chuyển cho các món đặc sản từ vịt như chả vịt, pate gan vịt.', 0, 100, NULL, 80000, 120, 0, '2025-10-01', '2025-12-31', 1);
 
 -- Dữ liệu mẫu cho CouponScopes
-INSERT INTO CouponScopes (coupon_id, scope_type, category_id, product_id) VALUES
--- Giảm 10% cho đặc sản miền Tây
-(1, 1, 1, NULL),
+INSERT INTO CouponScopes (coupon_id, scope_type, product_id) VALUES
+-- Giảm 10% toàn shop
+(1, 0, NULL),
 
--- Giảm 20k cho đặc sản miền biển
-(2, 1, 2, NULL),
+-- Giảm 20k toàn shop
+(2, 0, NULL),
 
--- Miễn phí ship cho đặc sản miền Trung
-(3, 1, 3, NULL),
+-- Miễn phí ship toàn shop
+(3, 0, NULL),
 
--- Giảm 15% cho đặc sản miền Bắc
-(4, 1, 4, NULL),
+-- Giảm 15% toàn shop
+(4, 0, NULL),
 
--- Giảm 50k cho đặc sản dinh dưỡng
-(5, 1, 5, NULL),
+-- Giảm 50k toàn shop
+(5, 0, NULL),
 
--- Miễn phí ship cho đặc sản từ vịt
-(6, 1, 6, NULL);
+-- Miễn phí ship toàn shop
+(6, 0, NULL);
 
 -- Dữ liệu mẫu cho CartItems
 INSERT INTO CartItems (qty_total, price_total, user_id, product_id) VALUES
