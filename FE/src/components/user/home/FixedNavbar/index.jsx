@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom' // THÊM MỚI: useNavigate
-import { useDispatch } from 'react-redux' // THÊM MỚI
+import { useDispatch, useSelector } from 'react-redux' // THÊM MỚI
 import { removeUser } from '~/Redux/reducers/userReducer' // THÊM MỚI
 import { logoutUser } from '~/services/user/userService' // THÊM MỚI
 import { useAlert } from '~/contexts/AlertContext' // THÊM MỚI
@@ -12,19 +12,19 @@ const FixedNavbar = ({ login = true }) => {
     const [isVisible, setIsVisible] = useState(false)
     const [isProductMenuOpen, setIsProductMenuOpen] = useState(false)
     const [isUserMenuOpen, setUserMenuOpen] = useState(false)
-
+    const user = useSelector(state => state.user)
     // --- BẮT ĐẦU PHẦN TÍCH HỢP ---
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const { showAlert } = useAlert()
 
-    const handleSuccess = (message) => {
+    const handleSuccess = message => {
         showAlert(message, {
             type: 'success',
         })
     }
 
-    const handleError = (message) => {
+    const handleError = message => {
         showAlert(message, {
             type: 'error',
             duration: 3000,
@@ -59,10 +59,10 @@ const FixedNavbar = ({ login = true }) => {
     const productMenuItems = isCategoriesLoading
         ? [{ id: 'loading', name: 'Đang tải...', href: '#' }]
         : categories.map(cat => ({
-            id: cat.id,
-            name: cat.name,
-            href: `/category/${cat.slug}`,
-        }))
+              id: cat.id,
+              name: cat.name,
+              href: `/category/${cat.slug}`,
+          }))
 
     const userMenuItems = [
         { id: 'profile', name: 'Tài khoản của tôi', href: '/user/profile' },
@@ -225,13 +225,25 @@ const FixedNavbar = ({ login = true }) => {
                                 onMouseLeave={() => setUserMenuOpen(false)}
                             >
                                 <div className="cursor-pointer p-4 flex items-center justify-center rounded-full">
-                                    <FaUserCircle
-                                        className={`text-2xl transition-colors duration-300 ${
-                                            isUserMenuOpen
-                                                ? 'text-green-600'
-                                                : 'text-gray-600'
-                                        }`}
-                                    />
+                                    {user && user.avatar_url ? (
+                                        <img
+                                            src={user.avatar_url}
+                                            alt="User Avatar"
+                                            className={`w-10 h-10 rounded-full object-cover border-2 border-gray-200 transition-all duration-300 ${
+                                                isUserMenuOpen
+                                                    ? 'border-green-500'
+                                                    : ''
+                                            }`}
+                                        />
+                                    ) : (
+                                        <FaUserCircle
+                                            className={`text-2xl transition-colors duration-300 ${
+                                                isUserMenuOpen
+                                                    ? 'text-green-600'
+                                                    : 'text-gray-600'
+                                            }`}
+                                        />
+                                    )}
                                 </div>
 
                                 <div
@@ -240,7 +252,7 @@ const FixedNavbar = ({ login = true }) => {
                                         transition-all duration-300 ease-in-out
                                         ${isUserMenuOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}
                                     `}
-                                                            >
+                                >
                                     <ul className="divide-y divide-gray-100">
                                         {userMenuItems.map(item => (
                                             <li key={item.id}>

@@ -32,6 +32,39 @@ export const registerService = async payload => {
     delete userData.password_hash
     return userData
 }
+
+export const registerGoogleUserService = async payload => {
+    const { email, full_name, googleId, avatar_url, first_name, last_name, email_verified } = payload
+
+    // Kiểm tra email đã tồn tại
+    const existedEmail = await UsersModel.findUserByEmailOrUsername(email)
+    if (existedEmail) throw new ApiError(StatusCodes.CONFLICT, 'Email đã tồn tại')
+
+    // Tạo username từ phần trước dấu @
+    const username = email.split('@')[0]
+
+    // Kiểm tra username trùng
+    const existedUsername = await UsersModel.findUserByEmailOrUsername(username)
+    if (existedUsername) throw new ApiError(StatusCodes.CONFLICT, 'Username đã tồn tại')
+
+    // Tạo user mới
+    const userData = await UsersModel.createUser({
+        username,
+        email,
+        full_name: full_name || `${first_name || ''} ${last_name || ''}`.trim(),
+        provider: 'google',
+        provider_id: googleId,
+        phone: null,
+        gender: 'other',
+        avatar_url: avatar_url || null,
+        status: 1,
+        email_verified: email_verified ?? true, // thêm
+    })
+
+    delete userData.password_hash
+    return userData
+}
+
 const loginService = async payload => {
     const user = await UsersModel.findUserByEmailOrUsername(payload.username)
     if (!user) {
@@ -47,11 +80,49 @@ const loginService = async payload => {
     return user
 }
 const getByIdUserService = async data => {
-    const user = await UsersModel.getUserById(data.userId)
+    const user = await UsersModel.getUserById(data)
     if (!user) {
         throw new ApiError(StatusCodes.NOT_FOUND, 'Không tìm thấy user')
     }
 
+    return user
+}
+
+export const checkPasswordAndUpdateService = async ({ userId, old_password, data }) => {
+    // 1️⃣ Kiểm tra user có tồn tại không
+    const user = await UsersModel.getUserById(userId)
+    if (!user) {
+        throw new ApiError(StatusCodes.NOT_FOUND, 'Không tìm thấy user')
+    }
+
+    // 2️⃣ Kiểm tra tài khoản có mật khẩu hay không (tránh trường hợp đăng nhập Google)
+    if (!user.password_hash) {
+        throw new ApiError(StatusCodes.BAD_REQUEST, 'Tài khoản này không có mật khẩu')
+    }
+
+    // 3️⃣ So sánh mật khẩu cũ
+    const isMatch = await bcrypt.compare(old_password, user.password_hash)
+    if (!isMatch) {
+        throw new ApiError(StatusCodes.UNAUTHORIZED, 'Mật khẩu cũ không chính xác')
+    }
+
+    // 4️⃣ Nếu trong data có trường password → mã hoá
+    if (data.password) {
+        const hashedPassword = await bcrypt.hash(data.password, 10)
+        data.password_hash = hashedPassword
+        delete data.password
+    }
+
+    // 5️⃣ Cập nhật user
+    const updatedUser = await UsersModel.updateUser(userId, data)
+
+    // 6️⃣ Trả về thông tin mới, ẩn password
+    const { password_hash, ...safeUser } = updatedUser
+    return safeUser
+}
+
+const findUserByEmailService = async email => {
+    const user = await UsersModel.findUserByEmailOrUsername(email)
     return user
 }
 
@@ -67,11 +138,9 @@ const getListUserService = async data => {
 
 const updateUserService = async (userId, data) => {
     const user = await UsersModel.getUserById(userId)
-
     if (!user) {
         throw new ApiError(StatusCodes.NOT_FOUND, 'Không tìm thấy user')
     }
-
     const newUpdate = await UsersModel.updateUser(userId, data)
 
     return newUpdate
@@ -92,6 +161,9 @@ export const userService = {
     registerService,
     loginService,
     getByIdUserService,
+    checkPasswordAndUpdateService,
+    findUserByEmailService,
+    registerGoogleUserService,
     getListUserService,
     updateUserService,
     deleteUserService,

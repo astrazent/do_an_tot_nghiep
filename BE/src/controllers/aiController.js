@@ -1,5 +1,4 @@
 import { deepSeekService } from '~/services/deepSeekService'
-import ErrorServer from '~/utils/ErrorServer'
 import { StatusCodes } from 'http-status-codes'
 
 const postCommentAI = async (req, res, next) => {
@@ -10,7 +9,7 @@ const postCommentAI = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 export const aiController = {

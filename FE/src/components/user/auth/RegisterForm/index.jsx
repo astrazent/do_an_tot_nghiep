@@ -4,8 +4,7 @@ import InputField from '~/components/shared/InputField'
 import { useRegisterUser } from '~/hooks/user/useUser'
 import { useAlert } from '~/contexts/AlertContext'
 import './registerForm.scss'
-import { useNavigate } from 'react-router-dom'
-
+import { Link, useNavigate } from 'react-router-dom'
 import { HiOutlineUser, HiOutlineMail, HiOutlinePhone } from 'react-icons/hi'
 import { RiLockPasswordLine } from 'react-icons/ri'
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai'
@@ -103,7 +102,7 @@ const RegisterForm = () => {
             </form>
 
             <p className="signup-link">
-                Đã có tài khoản? <a href="/login">Đăng nhập ngay</a>
+                Đã có tài khoản? <Link to="/login">Đăng nhập ngay</Link>
             </p>
         </div>
     )

@@ -40,7 +40,9 @@ const PRODUCTS_SCHEMA = Joi.object({
 
 const ProductsModel = {
     async createProduct(data) {
-        const { error, value } = PRODUCTS_SCHEMA.validate(data, { abortEarly: false })
+        const { error, value } = PRODUCTS_SCHEMA.validate(data, {
+            abortEarly: false,
+        })
         if (error) throw error
 
         const conn = getConnection()
@@ -68,10 +70,10 @@ const ProductsModel = {
         return { id: result.insertId, ...value }
     },
 
-    async getProductById(id) {
+    async getProductBySlug(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
-            `SELECT * FROM ${PRODUCTS_TABLE} WHERE id = ?`,
+            `SELECT * FROM ${PRODUCTS_TABLE} WHERE slug = ?`,
             [id]
         )
         return rows[0] || null
@@ -108,7 +110,14 @@ const ProductsModel = {
         return result.affectedRows > 0
     },
 
-    async listProducts(limit = 50, offset = 0, slug = 'all', sort = 'newest', minPrice = null, maxPrice = null) {
+    async listProducts(
+        limit = 50,
+        offset = 0,
+        slug = 'all',
+        sort = 'newest',
+        minPrice = null,
+        maxPrice = null
+    ) {
         const conn = getConnection()
         let query = `
         SELECT p.*
@@ -184,7 +193,13 @@ const ProductsModel = {
         return rows
     },
 
-    async listPromotionProducts({ limit = 50, offset = 0, sort = 'newest', minPrice = null, maxPrice = null } = {}) {
+    async listPromotionProducts({
+        limit = 50,
+        offset = 0,
+        sort = 'newest',
+        minPrice = null,
+        maxPrice = null,
+    } = {}) {
         const conn = getConnection()
         let query = `
         SELECT p.*
@@ -264,6 +279,53 @@ const ProductsModel = {
             [slug]
         )
         return rows.length ? rows[0] : null
+    },
+
+    async getSearchProduct(slug, limit = 10) {
+        if (!slug) return []
+
+        const conn = getConnection()
+        const [rows] = await conn.execute(
+            `SELECT name, slug, id
+            FROM ${PRODUCTS_TABLE}
+            WHERE name LIKE CONCAT('%', ?, '%')
+            COLLATE utf8mb4_unicode_ci
+            ORDER BY rate_point_total DESC
+            LIMIT ?`,
+            [slug, Number(limit)]
+        )
+
+        return rows
+    },
+
+    async getSearchByCategory(categorySlug, keyword, limit = 10, offset = 0) {
+        if (!categorySlug) return []
+
+        const conn = getConnection()
+
+        // Lấy category id
+        const [catRows] = await conn.execute(
+            `SELECT id FROM Categories WHERE slug = ?`,
+            [categorySlug]
+        )
+
+        if (catRows.length === 0) return []
+
+        const categoryId = catRows[0].id
+
+        // Lấy sản phẩm trong category với limit + offset
+        const [rows] = await conn.execute(
+            `SELECT *
+        FROM Products
+        WHERE category_id = ?
+        AND name LIKE CONCAT('%', ?, '%')
+        COLLATE utf8mb4_unicode_ci
+        ORDER BY rate_point_total DESC
+        LIMIT ? OFFSET ?`,
+            [categoryId, keyword, Number(limit), Number(offset)]
+        )
+
+        return rows
     },
 
     async getHotProduct(limit = 6) {

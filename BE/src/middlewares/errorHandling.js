@@ -1,28 +1,22 @@
-
 import { StatusCodes } from 'http-status-codes'
-import { logger } from '../utils/logger.js'
 import { env } from '~/config/environment'
+import { logger } from '~/utils/logger'
 
-// Middleware xử lý lỗi tập trung trong ứng dụng Back-end NodeJS (ExpressJS)
 export const errorHandlingMiddleware = (err, req, res, next) => {
-    
     if (!err.statusCode) err.statusCode = StatusCodes.INTERNAL_SERVER_ERROR
 
-    
     const responseError = {
         statusCode: err.statusCode,
-        message: err.message || StatusCodes[err.statusCode], 
-        stack: err.stack,
+        message: err.message || StatusCodes[err.statusCode],
+        stack: err.stack
     }
-    
 
-    
-    if (env.BUILD_MODE !== 'env') delete responseError.stack
-
-    
-    
+    // 🔥 Log chi tiết lỗi (luôn log, dù ở môi trường nào)
     logger.error(`${err.message}\n${err.stack}`)
-
-    
-    res.status(responseError.statusCode).json(responseError)
+    if (env.BUILD_MODE === 'production') {
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            message: 'Lỗi server không xác định'
+        })
+    }
+    return res.status(responseError.statusCode).json(responseError)
 }

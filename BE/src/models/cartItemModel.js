@@ -25,7 +25,6 @@ const CART_ITEMS_SCHEMA = Joi.object({
 })
 
 const CartItemsModel = {
-    
     async createCartItem(data) {
         const { error, value } = CART_ITEMS_SCHEMA.validate(data, {
             abortEarly: false,
@@ -48,7 +47,6 @@ const CartItemsModel = {
         return { id: result.insertId, ...value }
     },
 
-    
     async getCartItemById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -58,30 +56,29 @@ const CartItemsModel = {
         return rows[0] || null
     },
 
-    
-    async updateCartItem(id, data) {
-        const schema = CART_ITEMS_SCHEMA.fork(
-            Object.keys(CART_ITEMS_SCHEMA.describe().keys),
-            f => f.optional()
-        )
-        const { error, value } = schema.validate(data, { abortEarly: false })
-        if (error) throw error
+    async updateCartItemByUser(user_id, product_id, newQty, newPriceTotal) {
+        if (!user_id || !product_id)
+            throw new Error('user_id và product_id là bắt buộc')
 
-        const fields = Object.keys(value)
-        const values = Object.values(value)
-        if (!fields.length) return null
-
-        const setClause = fields.map(f => `${f} = ?`).join(', ')
         const conn = getConnection()
-        await conn.execute(
-            `UPDATE ${CART_ITEMS_TABLE_NAME} SET ${setClause} WHERE id = ?`,
-            [...values, id]
+
+        const [result] = await conn.execute(
+            `
+        UPDATE ${CART_ITEMS_TABLE_NAME}
+        SET qty_total = ?, price_total = ?, updated_at = NOW()
+        WHERE user_id = ? AND product_id = ?
+        `,
+            [newQty, newPriceTotal, user_id, product_id]
         )
 
-        return this.getCartItemById(id)
+        if (result.affectedRows === 0) {
+            // Không tìm thấy cart item
+            return null
+        }
+
+        return { updated: true }
     },
 
-    
     async deleteCartItem(id) {
         const conn = getConnection()
         const [result] = await conn.execute(
@@ -91,7 +88,6 @@ const CartItemsModel = {
         return result.affectedRows > 0
     },
 
-    
     async listCartItems(limit = 50, offset = 0) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -101,17 +97,34 @@ const CartItemsModel = {
         return rows
     },
 
-    
     async getCartItemsByUser(user_id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
-            `SELECT * FROM ${CART_ITEMS_TABLE_NAME} WHERE user_id = ? ORDER BY id DESC`,
+            `
+        SELECT 
+            ci.id AS cart_item_id,
+            ci.qty_total,
+            ci.price_total,
+            p.id AS product_id,
+            p.name,
+            p.description,
+            p.slug,
+            p.price,
+            p.origin_price,
+            p.ocop_rating,
+            pi.image_url AS main_image
+        FROM ${CART_ITEMS_TABLE_NAME} ci
+        JOIN Products p ON ci.product_id = p.id
+        LEFT JOIN ProductImages pi 
+            ON pi.product_id = p.id AND pi.is_main = 1
+        WHERE ci.user_id = ?
+        ORDER BY ci.id DESC
+        `,
             [user_id]
         )
         return rows
     },
 
-    
     async getCartItemsByProduct(product_id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
