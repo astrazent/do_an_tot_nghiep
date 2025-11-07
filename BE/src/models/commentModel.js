@@ -116,11 +116,9 @@ const CommentsModel = {
             c.id, 
             c.rate, 
             c.content, 
-            c.likes,
-            c.dislikes,
             c.created_at, 
             c.updated_at, 
-            
+
             -- Dữ liệu từ bảng Users
             u.id AS user_id,
             u.username,

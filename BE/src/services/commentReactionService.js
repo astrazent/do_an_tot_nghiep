@@ -44,6 +44,7 @@ const getReactionsByProductService = async data => {
             product_id: Number(data.product_id),
         }
         const reactions = await CommentReactionsModel.getReactionsByProduct(queryData)
+        console.log(reactions);
         return reactions
     } catch (error) {
         throw new ApiError(
