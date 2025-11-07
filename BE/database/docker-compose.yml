@@ -10,7 +10,7 @@ services:
             - MYSQL_DATABASE=bep_sach_viet
             - TZ=Asia/Ho_Chi_Minh
         ports:
-            - '3307:3306'
+            - '55555:3306'
         volumes:
             - mariadb_data:/var/lib/mysql
         healthcheck:
