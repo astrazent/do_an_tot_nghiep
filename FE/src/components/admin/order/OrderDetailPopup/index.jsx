@@ -12,8 +12,8 @@ import {
     FiInfo,
     FiMessageSquare,
 } from 'react-icons/fi'
-import { formatCurrency } from '~/utils/formatCurrency';
-import { formatDateTime } from '~/utils/formatDateTime';
+import { formatCurrency } from '~/utils/formatCurrency'
+import { formatDateTime } from '~/utils/formatDateTime'
 
 const getShipmentProviderName = providerId => {
     const providers = {

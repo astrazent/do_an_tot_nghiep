@@ -1,22 +1,33 @@
 import React, { useState, useEffect } from 'react'
-import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom' // THÊM MỚI: useNavigate
-import { useDispatch, useSelector } from 'react-redux' // THÊM MỚI
-import { removeUser } from '~/Redux/reducers/userReducer' // THÊM MỚI
-import { logoutUser } from '~/services/user/userService' // THÊM MỚI
-import { useAlert } from '~/contexts/AlertContext' // THÊM MỚI
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { removeUser } from '~/Redux/reducers/userReducer'
+import { logoutUser } from '~/services/user/userService'
+import { useAlert } from '~/contexts/AlertContext'
 import logo from '~/assets/icon/logo/brand-logo.png'
 import { FaShoppingCart, FaUserCircle, FaChevronDown } from 'react-icons/fa'
 import { useAllCategories } from '~/hooks/user/useCategory'
+
+import { useCartItemsByUser } from '~/hooks/user/useCartItem'
 
 const FixedNavbar = ({ login = true }) => {
     const [isVisible, setIsVisible] = useState(false)
     const [isProductMenuOpen, setIsProductMenuOpen] = useState(false)
     const [isUserMenuOpen, setUserMenuOpen] = useState(false)
     const user = useSelector(state => state.user)
-    // --- BẮT ĐẦU PHẦN TÍCH HỢP ---
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const { showAlert } = useAlert()
+
+    const isLoggedIn = !!user.email
+
+    const { data: userCartData } = useCartItemsByUser(user.user_id)
+
+    const { cartItems: guestCartItems } = useSelector(state => state.cartItem)
+
+    const cartItemCount = isLoggedIn
+        ? userCartData?.length || 0
+        : guestCartItems?.length || 0
 
     const handleSuccess = message => {
         showAlert(message, {
@@ -31,19 +42,17 @@ const FixedNavbar = ({ login = true }) => {
         })
     }
 
-    // CẬP NHẬT: hàm handleLogout đầy đủ chức năng
     const handleLogout = async () => {
         try {
-            await logoutUser() // gọi API logout
-            dispatch(removeUser()) // xóa user trong Redux
+            await logoutUser()
+            dispatch(removeUser())
             handleSuccess('Đăng xuất thành công')
-            navigate('/') // Chuyển hướng về trang chủ sau khi đăng xuất
+            navigate('/')
         } catch (err) {
             handleError('Đăng xuất thất bại')
             console.error('Logout failed:', err)
         }
     }
-    // --- KẾT THÚC PHẦN TÍCH HỢP ---
 
     const { data: categories = [], isLoading: isCategoriesLoading } =
         useAllCategories()
@@ -55,7 +64,6 @@ const FixedNavbar = ({ login = true }) => {
         return () => window.removeEventListener('scroll', handleScroll)
     }, [])
 
-    // Product menu
     const productMenuItems = isCategoriesLoading
         ? [{ id: 'loading', name: 'Đang tải...', href: '#' }]
         : categories.map(cat => ({
@@ -88,17 +96,14 @@ const FixedNavbar = ({ login = true }) => {
         >
             <div className="container mx-auto px-20 py-3">
                 <div className="flex justify-between items-center">
-                    {/* Logo */}
                     <div className="flex-shrink-0">
                         <Link to="/">
                             <img src={logo} alt="tab farm" className="h-12" />
                         </Link>
                     </div>
 
-                    {/* Menu chính */}
                     <div className="flex-grow">
                         <ul className="flex items-center justify-center font-semibold space-x-8">
-                            {/* ... các NavLink khác không đổi ... */}
                             <li>
                                 <NavLink to="/" className={getNavLinkClass} end>
                                     TRANG CHỦ
@@ -114,7 +119,6 @@ const FixedNavbar = ({ login = true }) => {
                                 </NavLink>
                             </li>
 
-                            {/* Product dropdown */}
                             <li
                                 className="relative"
                                 onMouseEnter={() => setIsProductMenuOpen(true)}
@@ -163,7 +167,6 @@ const FixedNavbar = ({ login = true }) => {
                                     ))}
                                 </ul>
                             </li>
-                            {/* ... các NavLink khác không đổi ... */}
                             <li>
                                 <NavLink
                                     to="/news"
@@ -209,12 +212,12 @@ const FixedNavbar = ({ login = true }) => {
                         </ul>
                     </div>
 
-                    {/* ... phần Cart & User không đổi ... */}
                     <div className="flex items-center space-x-12">
                         <Link to="/cart" className="relative">
                             <FaShoppingCart className="text-xl text-gray-600 hover:text-green-600 transition-colors" />
                             <span className="absolute -top-2 -right-2 bg-green-600 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
-                                0
+                                {}
+                                {cartItemCount}
                             </span>
                         </Link>
 

@@ -7,23 +7,19 @@ import { formatCurrency } from '~/utils/formatCurrency'
 
 const ITEMS_PER_PAGE = 8
 
-// --- HÀM MỚI ĐỂ CHUẨN HÓA CHUỖI ---
-// Chuyển chuỗi thành chữ thường và loại bỏ dấu tiếng Việt
-const normalizeText = (text) => {
+const normalizeText = text => {
     if (!text) return ''
     return text
         .toLowerCase()
-        .normalize('NFD') // Chuẩn hóa Unicode (NFD)
-        .replace(/[\u0300-\u036f]/g, '') // Loại bỏ các ký tự dấu
-        .replace(/đ/g, 'd') // Chuyển 'đ' thành 'd'
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/đ/g, 'd')
 }
-
 
 const SearchPage = () => {
     const [searchParams, setSearchParams] = useSearchParams()
     const [searchTerm, setSearchTerm] = useState('')
 
-    // Lấy các tham số từ URL
     const category = searchParams.get('category') || 'all'
     const minPrice = searchParams.get('minPrice')
         ? parseInt(searchParams.get('minPrice'))
@@ -35,7 +31,6 @@ const SearchPage = () => {
 
     const [filteredProducts, setFilteredProducts] = useState([])
 
-    // Truyền trực tiếp minPrice và maxPrice vào hook để API xử lý lọc
     const { data, isLoading, hasNextPage, fetchNextPage, isFetchingNextPage } =
         useInfiniteProductCollections({
             slug: category,
@@ -45,7 +40,6 @@ const SearchPage = () => {
             maxPrice: maxPrice,
         })
 
-    // Dữ liệu trả về từ hook đã được lọc sẵn theo giá, chỉ cần biến đổi cấu trúc
     const allProducts = useMemo(() => {
         const rawProducts = data?.pages.flatMap(page => page.data) ?? []
         return rawProducts.map(product => ({
@@ -71,12 +65,9 @@ const SearchPage = () => {
         if (allProducts) {
             let results = allProducts
 
-            // --- SỬA ĐỔI LOGIC TÌM KIẾM TẠI ĐÂY ---
             if (searchTerm) {
-                // Chuẩn hóa từ khóa tìm kiếm
                 const normalizedSearchTerm = normalizeText(searchTerm)
                 results = allProducts.filter(product => {
-                    // Chuẩn hóa tên sản phẩm trước khi so sánh
                     const normalizedProductName = normalizeText(product.name)
                     return normalizedProductName.includes(normalizedSearchTerm)
                 })
@@ -85,7 +76,6 @@ const SearchPage = () => {
             setFilteredProducts(results)
         }
     }, [allProducts, searchTerm])
-
 
     const handleRemoveFilter = keys => {
         const updated = new URLSearchParams(searchParams)
@@ -116,7 +106,7 @@ const SearchPage = () => {
     return (
         <div className="min-h-screen font-sans">
             <main className="max-w-7xl mx-auto p-4">
-                {/* Phần JSX còn lại giữ nguyên */}
+                {}
                 <section className="mb-6">
                     <div className="flex items-center justify-between mb-4">
                         <h2 className="text-lg font-semibold text-gray-800 uppercase flex items-center">
@@ -206,9 +196,9 @@ const SearchPage = () => {
                                                 background: 'transparent',
                                             }}
                                             className="ml-0.5 text-green-500 hover:text-green-700 text-[10px] leading-[0]"
-                                            >
-                                                ×
-                                            </button>
+                                        >
+                                            ×
+                                        </button>
                                     </span>
                                 )}
                             </div>
@@ -234,8 +224,8 @@ const SearchPage = () => {
                                             oldPrice={
                                                 product.oldPrice
                                                     ? formatCurrency(
-                                                        product.oldPrice
-                                                    )
+                                                          product.oldPrice
+                                                      )
                                                     : null
                                             }
                                             ocop={product.ocop}

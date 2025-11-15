@@ -11,7 +11,7 @@ export const useAuth = () => {
         const checkAuth = async () => {
             try {
                 const res = await api.get('/auth/verify')
-                console.log("get: ",res.data);
+                console.log('get: ', res.data)
             } catch {
                 dispatch(removeUser())
             } finally {

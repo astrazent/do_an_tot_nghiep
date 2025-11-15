@@ -19,9 +19,11 @@ const ProductList = ({ products }) => {
                                     image={product.images[0]}
                                     name={product.name}
                                     price={formatCurrency(product.price)}
-                                    oldPrice={formatCurrency(product.origin_price)}
+                                    oldPrice={formatCurrency(
+                                        product.origin_price
+                                    )}
                                     ocop={product.ocop_rating}
-                                    rating={rating} // dùng rating mới tính
+                                    rating={rating}
                                     reviewCount={product.reviewCount}
                                     size="small"
                                 />

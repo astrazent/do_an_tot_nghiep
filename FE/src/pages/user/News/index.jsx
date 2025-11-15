@@ -24,14 +24,12 @@ const transformPostData = post => {
 }
 
 function News() {
-    // --- Featured Posts ---
     const {
         data: featuredPostsData,
         isLoading: isFeaturedLoading,
         isError: isFeaturedError,
     } = usePosts({ limit: 3, sort: 'newest' })
 
-    // --- Hot Topics ---
     const {
         data: hotTopicPostsData,
         isLoading: isHotTopicsLoading,
@@ -42,7 +40,6 @@ function News() {
         limit: 8,
     })
 
-    // --- Infinite scroll cho list ---
     const {
         data,
         fetchNextPage,
@@ -55,7 +52,6 @@ function News() {
         limit: 10,
     })
 
-    // --- Chuyển đổi dữ liệu ---
     const mainArticle = featuredPostsData
         ? transformPostData(featuredPostsData[0])
         : null
@@ -68,14 +64,12 @@ function News() {
         ? hotTopicPostsData.map(transformPostData)
         : []
 
-    // Lấy toàn bộ bài viết từ các page
     const listPostsData = data?.pages.flat() || []
 
     const listArticles = listPostsData
         .filter(post => post.post_type_slug !== 'bai-viet-noi-bat')
         .map(transformPostData)
 
-    // --- Infinite scroll event ---
     useEffect(() => {
         const handleScroll = () => {
             const { scrollTop, scrollHeight, clientHeight } =
@@ -96,7 +90,7 @@ function News() {
     return (
         <div className="bg-gray-50 min-h-screen font-sans">
             <div className="container mx-auto p-4 md:p-8">
-                {/* Featured Section */}
+                {}
                 {isFeaturedLoading && (
                     <p className="text-center py-4">
                         Đang tải bài viết nổi bật...
@@ -114,7 +108,7 @@ function News() {
                     />
                 )}
 
-                {/* Hot Topics */}
+                {}
                 {isHotTopicsLoading && (
                     <p className="text-center py-4 mt-8">
                         Đang tải chủ đề nóng...
@@ -129,7 +123,7 @@ function News() {
                     <HotTopics articles={hotTopicArticles} />
                 )}
 
-                {/* Article List + Infinite Scroll */}
+                {}
                 {isListLoading && (
                     <p className="text-center py-4 mt-8">
                         Đang tải danh sách bài viết...

@@ -74,7 +74,11 @@ const ProductCard = ({
             className={`block relative flex flex-col bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow p-3 font-sans border border-gray-100 ${styles.card}`}
         >
             <div className="w-full h-32 mb-2">
-                <img src={image} alt={name} className="w-full h-full object-contain" />
+                <img
+                    src={image}
+                    alt={name}
+                    className="w-full h-full object-contain"
+                />
             </div>
 
             {ocopImg && (
@@ -87,7 +91,9 @@ const ProductCard = ({
                 </div>
             )}
 
-            <h2 className={`font-normal text-gray-800 line-clamp-2 mb-1 ${styles.title}`}>
+            <h2
+                className={`font-normal text-gray-800 line-clamp-2 mb-1 ${styles.title}`}
+            >
                 {name}
             </h2>
 
@@ -95,14 +101,18 @@ const ProductCard = ({
                 <div className="flex items-center gap-1">
                     <div className="flex items-center gap-0.5">{stars}</div>
                     {reviewCount > 0 && (
-                        <span className="text-gray-400 text-xs">({reviewCount})</span>
+                        <span className="text-gray-400 text-xs">
+                            ({reviewCount})
+                        </span>
                     )}
                 </div>
             </div>
 
             <div className="flex flex-col mt-auto">
                 <div className="flex items-baseline">
-                    <span className={`text-red-500 font-bold ${styles.price}`}>{price}</span>
+                    <span className={`text-red-500 font-bold ${styles.price}`}>
+                        {price}
+                    </span>
                 </div>
                 <div className="flex items-center gap-2 text-xs text-gray-500 mt-1 min-h-[20px]">
                     {oldPrice && discountPercent > 0 && (

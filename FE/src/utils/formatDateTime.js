@@ -4,10 +4,7 @@ export const formatDateTime = (dateInput, options = {}) => {
     const date = new Date(dateInput)
     if (isNaN(date)) return 'N/A'
 
-    const {
-        showTime = true, // có hiển thị giờ phút không
-        hour12 = false,  // 24h hay 12h
-    } = options
+    const { showTime = true, hour12 = false } = options
 
     const baseOptions = {
         day: '2-digit',

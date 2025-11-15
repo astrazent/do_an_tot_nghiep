@@ -5,11 +5,84 @@ import {
     FaTimesCircle,
     FaShoppingCart,
 } from 'react-icons/fa'
+import { useDispatch } from 'react-redux'
+
 import { useProductBySlug } from '~/hooks/user/useProduct'
+import { useAddCartItem } from '~/hooks/user/useCartItem'
+import { useCurrentUser } from '~/hooks/user/useUser'
+import { addCart } from '~/Redux/reducers/cartItemReducer'
+import { useAlert } from '~/contexts/AlertContext'
 
 const ProductDetail = ({ slug }) => {
-    const { data: product, isLoading, isError, error } = useProductBySlug(slug)
-    if (isLoading) {
+    const {
+        data: product,
+        isLoading: isLoadingProduct,
+        isError,
+        error,
+    } = useProductBySlug(slug)
+
+    const { user, isAuthenticated } = useCurrentUser()
+    const dispatch = useDispatch()
+    const { showAlert } = useAlert()
+
+    const addCartItemMutation = useAddCartItem(user?.user_id)
+
+    const handleAddToCart = () => {
+        if (!product || !product.id) return
+
+        if (isAuthenticated) {
+            addCartItemMutation.mutate(
+                {
+                    productId: product.id,
+                    quantity: 1,
+                },
+                {
+                    onSuccess: data => {
+                        showAlert(
+                            data?.message || 'Thêm vào giỏ hàng thành công!',
+                            {
+                                type: 'success',
+                            }
+                        )
+                    },
+                    onError: error => {
+                        showAlert(
+                            error?.response?.data?.message ||
+                                'Đã có lỗi xảy ra. Vui lòng thử lại.',
+                            { type: 'error' }
+                        )
+                    },
+                }
+            )
+        } else {
+            const cartItem = {
+                product_id: product.id,
+                name: product.name,
+                description: product.description,
+                slug: product.slug,
+                price: product.price,
+                origin_price: product.origin_price,
+                ocop_rating: product.ocop_rating || 0,
+                main_image: product.images[0] || '',
+                qty_total: 1,
+            }
+
+            try {
+                dispatch(addCart({ cartItem }))
+
+                showAlert('Thêm vào giỏ hàng thành công!', {
+                    type: 'success',
+                })
+            } catch (e) {
+                showAlert('Lỗi khi thêm sản phẩm vào giỏ hàng.', {
+                    type: 'error',
+                })
+                console.error('Redux dispatch error:', e)
+            }
+        }
+    }
+
+    if (isLoadingProduct) {
         return (
             <div className="animate-pulse text-gray-400">
                 <div className="h-8 bg-gray-200 rounded w-1/3 mb-4"></div>
@@ -52,9 +125,7 @@ const ProductDetail = ({ slug }) => {
     const originalPrice = origin_price ? parseFloat(origin_price) : null
     const salePrice = price ? parseFloat(price) : null
 
-    const handleAddToCart = () => {
-        console.log('Thêm vào giỏ hàng:', slug)
-    }
+    const isLoading = addCartItemMutation.isLoading
 
     return (
         <div>
@@ -124,15 +195,15 @@ const ProductDetail = ({ slug }) => {
 
             <button
                 onClick={handleAddToCart}
-                disabled={!isAvailable}
-                className={`flex items-center justify-center gap-2 text-white px-4 py-2 rounded mt-4 text-sm ${
+                disabled={!isAvailable || isLoading}
+                className={`flex items-center justify-center gap-2 text-white px-4 py-2 rounded mt-4 text-sm transition-colors ${
                     isAvailable
                         ? 'bg-green-600 hover:bg-green-700'
                         : 'bg-gray-400 cursor-not-allowed'
-                }`}
+                } ${isLoading ? 'bg-gray-400 cursor-wait' : ''}`}
             >
                 <FaShoppingCart />
-                <span>Thêm vào giỏ hàng</span>
+                <span>{isLoading ? 'Đang thêm...' : 'Thêm vào giỏ hàng'}</span>
             </button>
 
             <p className="mt-4 text-xs text-gray-500 italic">

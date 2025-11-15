@@ -10,21 +10,18 @@ const RightSidebar = ({
         promotions = true,
     } = {},
 } = {}) => {
-    // Lấy bài viết nổi bật (postType slug = 'tin-tuc-am-thuc')
     const {
         data: featuredPostsResult,
         isLoading: isFeaturedLoading,
         isError: isFeaturedError,
     } = usePosts({ type: 'postType', slug: 'tin-tuc-am-thuc', limit: 3 })
 
-    // Lấy mẹo hay tiêu dùng (postType slug = 'meo-hay-tieu-dung')
     const {
         data: consumerTipsResult,
         isLoading: isTipsLoading,
         isError: isTipsError,
     } = usePosts({ type: 'postType', slug: 'meo-hay-tieu-dung', limit: 3 })
 
-    // Lấy sản phẩm khuyến mãi (hook cũ)
     const {
         data: promotionProductsResult,
         isLoading: isPromotionLoading,
@@ -35,8 +32,12 @@ const RightSidebar = ({
         <aside className="w-full max-w-xs rounded-lg font-sans">
             {featuredPosts && (
                 <>
-                    {isFeaturedLoading && <div>Đang tải bài viết nổi bật...</div>}
-                    {isFeaturedError && <div>Lỗi khi tải bài viết nổi bật.</div>}
+                    {isFeaturedLoading && (
+                        <div>Đang tải bài viết nổi bật...</div>
+                    )}
+                    {isFeaturedError && (
+                        <div>Lỗi khi tải bài viết nổi bật.</div>
+                    )}
                     {featuredPostsResult && (
                         <ArticleListSection
                             title="Tin tức ẩm thực"
@@ -62,7 +63,9 @@ const RightSidebar = ({
             {promotions && (
                 <>
                     {isPromotionLoading && <div>Đang tải sản phẩm...</div>}
-                    {isPromotionError && <div>Lỗi khi tải sản phẩm khuyến mãi.</div>}
+                    {isPromotionError && (
+                        <div>Lỗi khi tải sản phẩm khuyến mãi.</div>
+                    )}
                     {promotionProductsResult && (
                         <ProductListSection
                             title="Sản phẩm khuyến mãi"

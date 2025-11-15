@@ -9,7 +9,7 @@ const MainLayout = () => {
     const { isAuthenticated } = useCurrentUser()
     return (
         <div className="flex flex-col min-h-screen bg-gray-50">
-            <Header login={isAuthenticated}/>
+            <Header />
             <FixedNavbar login={isAuthenticated} />
 
             <div className="flex-1 py-6 px-[200px]">

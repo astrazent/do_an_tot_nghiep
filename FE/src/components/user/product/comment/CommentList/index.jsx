@@ -110,7 +110,7 @@ const CommentItem = ({
                         {isVerified && (
                             <p className="text-xs text-green-600 flex items-center gap-1">
                                 <FaCheckCircle />
-                                <span>Đã mua hàng</span>
+                                <span>Đã mua 1 lần</span>
                             </p>
                         )}
                     </div>

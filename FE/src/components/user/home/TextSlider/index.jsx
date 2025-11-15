@@ -7,11 +7,8 @@ import { NavLink } from 'react-router-dom'
 import { useHotProducts } from '~/hooks/user/useProduct'
 
 const TextSlider = () => {
-    // data ở đây sẽ là toàn bộ object response từ API
     const { data: apiResponse, isLoading } = useHotProducts(8)
 
-    // Trích xuất mảng hotProducts từ object response
-    // Sử dụng optional chaining (?.) để tránh lỗi nếu apiResponse hoặc data chưa tồn tại
     const hotProducts = apiResponse?.data?.hotProducts || []
 
     if (isLoading) {
@@ -33,8 +30,8 @@ const TextSlider = () => {
                 slidesPerView={1}
                 className="h-8"
             >
-                {/* Bây giờ hotProducts đã là mảng đúng và có thể map qua */}
-                {hotProducts.map((product) => (
+                {}
+                {hotProducts.map(product => (
                     <SwiperSlide key={product.id} className="h-12">
                         <div className="mt-1.5">
                             <NavLink

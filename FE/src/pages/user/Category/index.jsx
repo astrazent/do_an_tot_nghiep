@@ -3,10 +3,10 @@ import { useParams } from 'react-router-dom'
 import ProductList from '~/components/user/product/ProductList'
 import SortBar from '~/components/shared/SortBar'
 import { useAllCategories } from '~/hooks/user/useCategory'
-// --- THAY ĐỔI 1: Cập nhật danh sách import hook ---
+
 import {
     useInfiniteProductCollections,
-    useInfiniteSearchProductsByCategory, // Import hook mới
+    useInfiniteSearchProductsByCategory,
 } from '~/hooks/user/useProduct'
 import { useDebounce } from '~/hooks/shared/useDebounce'
 import { FaSearch } from 'react-icons/fa'
@@ -28,9 +28,6 @@ const Category = () => {
 
     const debouncedSearch = useDebounce(search, 500)
 
-    // ---- BẮT ĐẦU CẬP NHẬT LOGIC TRUY VẤN DỮ LIỆU ----
-
-    // Hook 1: Lấy sản phẩm để duyệt (infinite scroll) khi KHÔNG tìm kiếm
     const {
         data: productPages,
         isLoading: isLoadingProducts,
@@ -41,11 +38,9 @@ const Category = () => {
         slug: currentSlug,
         limit: PRODUCTS_PER_LOAD,
         sort: sortBy,
-        enabled: !debouncedSearch, // Chỉ chạy khi không có từ khóa tìm kiếm
+        enabled: !debouncedSearch,
     })
 
-    // --- THAY ĐỔI 2: Sử dụng hook tìm kiếm phân trang vô hạn ---
-    // Hook này sẽ được kích hoạt khi `debouncedSearch` có giá trị.
     const {
         data: searchedProductPages,
         isLoading: isSearching,
@@ -56,27 +51,22 @@ const Category = () => {
         slug: currentSlug,
         keyword: debouncedSearch,
         limit: PRODUCTS_PER_LOAD,
-        enabled: !!debouncedSearch, // Chỉ chạy khi CÓ từ khóa tìm kiếm
+        enabled: !!debouncedSearch,
     })
 
-    // Hook để lấy tất cả categories (giữ nguyên)
     const { data: allCategories, isLoading: isLoadingCategories } =
         useAllCategories()
 
-    // Lấy và làm phẳng dữ liệu từ API duyệt trang
     const productsFromApi = useMemo(
         () => productPages?.pages.flatMap(page => page.data) || [],
         [productPages]
     )
 
-    // --- THAY ĐỔI 3: Lấy và làm phẳng dữ liệu từ API tìm kiếm ---
     const searchedProductsFromApi = useMemo(
-        // Dựa trên cấu trúc hook mới, mỗi page là một mảng sản phẩm
         () => searchedProductPages?.pages.flatMap(page => page) || [],
         [searchedProductPages]
     )
 
-    // Quyết định danh sách sản phẩm cuối cùng để hiển thị
     const finalProducts = useMemo(() => {
         if (debouncedSearch) {
             return searchedProductsFromApi
@@ -84,13 +74,9 @@ const Category = () => {
         return productsFromApi
     }, [debouncedSearch, searchedProductsFromApi, productsFromApi])
 
-    // Cập nhật trạng thái loading tổng thể
     const isInitialLoading =
         (isLoadingProducts && !debouncedSearch) || isLoadingCategories
 
-    // ---- KẾT THÚC CẬP NHẬT LOGIC ----
-
-    // Logic xác định tiêu đề trang (không thay đổi)
     const title = useMemo(() => {
         if (CATEGORY_DATA[currentSlug]) {
             return CATEGORY_DATA[currentSlug].title
@@ -108,7 +94,6 @@ const Category = () => {
             .join(' ')
     }, [currentSlug, allCategories])
 
-    // Component loading ban đầu
     if (isInitialLoading) {
         return (
             <div className="text-center my-10 p-4">
@@ -119,7 +104,6 @@ const Category = () => {
         )
     }
 
-    // Component loading khi đang thực hiện tìm kiếm lần đầu
     if (isSearching && !isFetchingNextSearchedPage) {
         return (
             <div className="text-center my-10 p-4">
@@ -130,7 +114,6 @@ const Category = () => {
         )
     }
 
-    // --- THAY ĐỔI 4: Logic cho nút "Xem thêm" linh hoạt hơn ---
     const isSearchingActive = !!debouncedSearch
     const canLoadMore = isSearchingActive ? hasNextSearchedPage : hasNextPage
     const isFetchingMore = isSearchingActive
@@ -140,7 +123,7 @@ const Category = () => {
 
     return (
         <div className="App p-4">
-            {/* Tiêu đề và thanh tìm kiếm (không thay đổi) */}
+            {}
             <div className="text-center mb-6">
                 <h2 className="text-3xl font-bold text-green-800 uppercase">
                     {title}
@@ -179,7 +162,7 @@ const Category = () => {
                 )}
             </div>
 
-            {/* Hiển thị nút "Xem thêm" dựa trên logic đã được cập nhật */}
+            {}
             {canLoadMore && (
                 <div className="text-center mt-8">
                     <button

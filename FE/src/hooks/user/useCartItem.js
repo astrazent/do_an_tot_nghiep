@@ -4,6 +4,7 @@ import {
     updateCartItem,
     addCartItem,
     deleteCartItem,
+    deleteCartByUser,
 } from '~/services/user/cartItemService'
 
 export const useCartItemsByUser = userId => {
@@ -48,5 +49,18 @@ export const useDeleteCartItem = userId => {
         onSuccess: () => {
             queryClient.invalidateQueries(['cart', userId])
         },
+    })
+}
+
+export const useDeleteCartByUser = (options = {}) => {
+    const queryClient = useQueryClient()
+
+    return useMutation({
+        mutationFn: deleteCartByUser,
+        onSuccess: (data, userId) => {
+            queryClient.invalidateQueries(['cart', userId])
+            options.onSuccess?.(data)
+        },
+        onError: options.onError,
     })
 }

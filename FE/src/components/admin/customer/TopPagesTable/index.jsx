@@ -51,7 +51,6 @@ const pagesData = [
 const BounceRateBadge = ({ rate }) => {
     let colorClasses = ''
 
-    // Logic để xác định màu sắc
     if (rate < 25) {
         colorClasses = 'bg-green-100 text-green-800'
     } else if (rate >= 25 && rate < 50) {

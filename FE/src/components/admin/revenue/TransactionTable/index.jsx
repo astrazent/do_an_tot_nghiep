@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react'
-import { formatCurrency } from '~/utils/formatCurrency';
+import { formatCurrency } from '~/utils/formatCurrency'
 import { formatDateTime } from '~/utils/formatDateTime'
 
 const productsData = [

@@ -9,8 +9,7 @@ import {
 } from 'react-icons/fi'
 
 import OrderDetailPopup from '../OrderDetailPopup'
-import { formatCurrency } from '~/utils/formatCurrency';
-
+import { formatCurrency } from '~/utils/formatCurrency'
 
 const mockOrders = [
     {

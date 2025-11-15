@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react' // 1. Import thêm useRef và useEffect
+import { useState, useRef, useEffect } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { FaChevronDown } from 'react-icons/fa'
 import { useAllCategories } from '~/hooks/user/useCategory'
@@ -8,7 +8,6 @@ function NavigationBar() {
     const location = useLocation()
     const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
-    // 2. Tạo refs để lưu ID của setTimeout
     const openTimerRef = useRef(null)
     const closeTimerRef = useRef(null)
 
@@ -25,23 +24,20 @@ function NavigationBar() {
         setIsDropdownOpen(false)
     }
 
-    // 3. Hàm xử lý khi di chuột vào (có delay)
     const handleMouseEnter = () => {
-        clearTimeout(closeTimerRef.current) // Hủy hẹn giờ đóng nếu có
+        clearTimeout(closeTimerRef.current)
         openTimerRef.current = setTimeout(() => {
             setIsDropdownOpen(true)
-        }, 200) // Mở sau 200ms
+        }, 200)
     }
 
-    // 4. Hàm xử lý khi di chuột ra (có delay)
     const handleMouseLeave = () => {
-        clearTimeout(openTimerRef.current) // Hủy hẹn giờ mở nếu có
+        clearTimeout(openTimerRef.current)
         closeTimerRef.current = setTimeout(() => {
             setIsDropdownOpen(false)
-        }, 200) // Đóng sau 200ms
+        }, 200)
     }
 
-    // 5. Dọn dẹp timers khi component unmount
     useEffect(() => {
         return () => {
             clearTimeout(openTimerRef.current)
@@ -53,7 +49,7 @@ function NavigationBar() {
         <nav className="bg-green-700 text-white px-40">
             <div className="container mx-auto px-4 flex justify-between items-center">
                 <ul className="flex items-center font-semibold">
-                    {/* ... các NavLink khác ... */}
+                    {}
                     <li>
                         <NavLink to="/" className={getNavLinkClass} end>
                             TRANG CHỦ
@@ -64,10 +60,9 @@ function NavigationBar() {
                             GIỚI THIỆU
                         </NavLink>
                     </li>
-                    {/* === BẮT ĐẦU THAY ĐỔI CHO DROPDOWN === */}
+                    {}
                     <li
                         className="relative"
-                        // 6. Sử dụng các hàm xử lý mới
                         onMouseEnter={handleMouseEnter}
                         onMouseLeave={handleMouseLeave}
                     >
@@ -113,7 +108,9 @@ function NavigationBar() {
                                                             : 'text-gray-700 hover:bg-green-50 hover:text-green-700'
                                                     }`
                                                 }
-                                                onClick={handleDropdownItemClick}
+                                                onClick={
+                                                    handleDropdownItemClick
+                                                }
                                             >
                                                 {cat.name}
                                             </NavLink>
@@ -127,7 +124,7 @@ function NavigationBar() {
                             </ul>
                         </div>
                     </li>
-                    {/* === KẾT THÚC THAY ĐỔI CHO DROPDOWN === */}
+                    {}
                     <li>
                         <NavLink to="/news" className={getNavLinkClass}>
                             TIN TỨC
