@@ -1,14 +1,10 @@
-import { AdminsModel } from "~/models/adminModel"
+import { AdminsModel } from '~/models/adminModel'
 import bcrypt from 'bcryptjs/dist/bcrypt'
-import jwt from 'jsonwebtoken'
 import ApiError from '~/utils/ApiError'
 import { StatusCodes } from 'http-status-codes'
-import { env } from '~/config/environment.js'
 
-const addAdminService = async (payload) => {
-    const existedEmail = await AdminsModel.getAdminByEmail(
-        payload.email
-    )
+const addAdminService = async payload => {
+    const existedEmail = await AdminsModel.getAdminByEmail(payload.email)
     if (existedEmail) {
         throw new ApiError(StatusCodes.CONFLICT, 'Email đã tồn tại')
     }
@@ -29,19 +25,13 @@ const addAdminService = async (payload) => {
         full_name: payload.full_name,
         level: payload.level,
         description: payload.description,
-        role_id: payload.role_id
+        role_id: payload.role_id,
     })
-
-    const token = jwt.sign({ username: admin.username, adminId: admin.id, full_name: admin.full_name  }, env.JWT_SECRET || "bepsachviet123")
-
-    // await AdminsModel.updateAdmin(admin.id, { token: token })
-    // admin.token = token
-
     delete admin.password_hash
     return admin
 }
 
-const loginAdminService = async (payload) => {
+const loginAdminService = async payload => {
     const admin = await AdminsModel.getAdminByUsername(payload.username)
     if (!admin) {
         throw new ApiError(StatusCodes.UNAUTHORIZED, 'Sai username')
@@ -60,5 +50,5 @@ const loginAdminService = async (payload) => {
 
 export const adminService = {
     addAdminService,
-    loginAdminService
+    loginAdminService,
 }

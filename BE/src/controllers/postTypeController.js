@@ -15,7 +15,9 @@ const createPostType = async (req, res, next) => {
 
 const getByIdPostType = async (req, res, next) => {
     try {
-        const data = await postTypeService.getByIdPostTypeService(req.query.postTypeId)
+        const data = await postTypeService.getByIdPostTypeService(
+            req.query.postTypeId
+        )
         return res.status(StatusCodes.OK).json({
             message: 'Lấy loại bài viết thành công',
             data,
@@ -39,7 +41,10 @@ const getListPostType = async (req, res, next) => {
 
 const updatePostType = async (req, res, next) => {
     try {
-        const data = await postTypeService.updatePostTypeService(req.query.postTypeId, req.body)
+        const data = await postTypeService.updatePostTypeService(
+            req.query.postTypeId,
+            req.body
+        )
         return res.status(StatusCodes.OK).json({
             message: 'Cập nhật loại bài viết thành công',
             data,
@@ -51,7 +56,9 @@ const updatePostType = async (req, res, next) => {
 
 const deletePostType = async (req, res, next) => {
     try {
-        const data = await postTypeService.deletePostTypeService(req.query.postTypeId)
+        const data = await postTypeService.deletePostTypeService(
+            req.query.postTypeId
+        )
         return res.status(StatusCodes.OK).json({
             message: 'Xóa loại bài viết thành công',
             data,

@@ -21,15 +21,13 @@ const createOrUpdateFeedbackBySlugService = async data => {
         throw new Error('Dữ liệu feedback không hợp lệ!')
     }
 
-    // 1️⃣ Lấy product_id từ slug
     const product_id = await aiFeedbackModel.getIdByProductSlug(slug)
     if (!product_id) {
         throw new Error(`Không tìm thấy sản phẩm với slug: ${slug}`)
     }
 
-    // 2️⃣ Gọi hàm createOrUpdateFeedback của model
     const feedback = await aiFeedbackModel.createOrUpdateFeedback({
-        id, // Có thể null
+        id,
         product_id,
         voter_id,
         vote,

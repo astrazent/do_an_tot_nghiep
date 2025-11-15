@@ -4,9 +4,9 @@ import Joi from 'joi'
 
 const AIFEEDBACK_TABLE_NAME = 'AIFeedback'
 const PRODUCTS_TABLE_NAME = 'Products'
-// Schema validate dữ liệu feedback
+
 const AIFEEDBACK_SCHEMA = Joi.object({
-    id: Joi.number().integer().allow(null), // có thể null hoặc số
+    id: Joi.number().integer().allow(null),
     product_id: Joi.number().integer().required().messages({
         'number.base': 'Product ID phải là số',
         'any.required': 'Product ID là bắt buộc',
@@ -48,7 +48,7 @@ const aiFeedbackModel = {
 
         try {
             let existingFeedback = null
-            // Nếu có id → tìm feedback theo id
+
             if (value.id) {
                 const [rows] = await conn.execute(
                     `SELECT id, vote FROM ${AIFEEDBACK_TABLE_NAME} WHERE id = ?`,
@@ -56,10 +56,9 @@ const aiFeedbackModel = {
                 )
                 if (rows.length > 0) existingFeedback = rows[0]
             }
-            // Nếu tìm thấy feedback → toggle/update
+
             if (existingFeedback) {
                 if (existingFeedback.vote === value.vote) {
-                    // Xóa feedback (toggle off)
                     await conn.execute(
                         `DELETE FROM ${AIFEEDBACK_TABLE_NAME} WHERE id = ?`,
                         [existingFeedback.id]
@@ -68,7 +67,6 @@ const aiFeedbackModel = {
                     return { message: 'Feedback removed.' }
                 }
 
-                // Cập nhật vote khác
                 await conn.execute(
                     `UPDATE ${AIFEEDBACK_TABLE_NAME} SET vote = ? WHERE id = ?`,
                     [value.vote, existingFeedback.id]
@@ -77,7 +75,6 @@ const aiFeedbackModel = {
                 return { id: existingFeedback.id, ...value, updated: true }
             }
 
-            // Nếu chưa có feedback hoặc id null → tạo mới
             const [result] = await conn.execute(
                 `INSERT INTO ${AIFEEDBACK_TABLE_NAME} (product_id, voter_id, vote) VALUES (?, ?, ?)`,
                 [value.product_id, value.voter_id, value.vote]
@@ -94,9 +91,6 @@ const aiFeedbackModel = {
             console.error(`Transaction failed: ${err.message}`, err)
             throw err
         } finally {
-            if (conn) {
-                // conn.release() nếu thư viện yêu cầu
-            }
         }
     },
 

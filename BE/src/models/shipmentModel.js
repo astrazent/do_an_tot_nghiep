@@ -3,7 +3,6 @@ import Joi from 'joi'
 
 const SHIPMENTS_TABLE_NAME = 'Shipments'
 
-// Schema validate dữ liệu shipment
 const SHIPMENTS_SCHEMA = Joi.object({
     name: Joi.string().min(3).max(100).required().messages({
         'string.empty': 'Name không được để trống',
@@ -17,6 +16,10 @@ const SHIPMENTS_SCHEMA = Joi.object({
         'number.base': 'Base fee phải là số',
         'number.min': 'Base fee tối thiểu 0',
     }),
+    icon_url: Joi.string().uri().max(255).allow('', null).messages({
+        'string.uri': 'Icon URL không hợp lệ',
+        'string.max': 'Icon URL tối đa 255 ký tự',
+    }),
     status: Joi.number().integer().valid(0, 1).default(1).messages({
         'number.base': 'Status phải là số',
         'any.only': 'Status chỉ nhận 0 hoặc 1',
@@ -24,7 +27,6 @@ const SHIPMENTS_SCHEMA = Joi.object({
 })
 
 const ShipmentsModel = {
-    
     async createShipment(data) {
         const { error, value } = SHIPMENTS_SCHEMA.validate(data, {
             abortEarly: false,
@@ -33,23 +35,31 @@ const ShipmentsModel = {
 
         const conn = getConnection()
         const [result] = await conn.execute(
-            `INSERT INTO ${SHIPMENTS_TABLE_NAME} (name, description, base_fee, status) VALUES (?, ?, ?, ?)`,
-            [value.name, value.description, value.base_fee, value.status]
+            `INSERT INTO ${SHIPMENTS_TABLE_NAME} (name, description, base_fee, icon_url, status)
+            VALUES (?, ?, ?, ?, ?)`,
+            [
+                value.name,
+                value.description,
+                value.base_fee,
+                value.icon_url,
+                value.status,
+            ]
         )
 
         return { id: result.insertId, ...value }
     },
-    // Lấy shipment theo name
+
     async getShipmentByName(name) {
         const conn = getConnection()
         const [rows] = await conn.execute(
-            `SELECT * FROM ${SHIPMENTS_TABLE_NAME} WHERE name = ? LIMIT 1`,
+            `SELECT * FROM ${SHIPMENTS_TABLE_NAME} 
+            WHERE LOWER(REPLACE(name, ' ', '')) = LOWER(REPLACE(?, ' ', '')) 
+            LIMIT 1`,
             [name]
         )
         return rows[0] || null
     },
 
-    
     async getShipmentById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -59,7 +69,6 @@ const ShipmentsModel = {
         return rows[0] || null
     },
 
-    
     async updateShipment(id, data) {
         const schema = SHIPMENTS_SCHEMA.fork(
             Object.keys(SHIPMENTS_SCHEMA.describe().keys),
@@ -75,14 +84,15 @@ const ShipmentsModel = {
         const setClause = fields.map(f => `${f} = ?`).join(', ')
         const conn = getConnection()
         await conn.execute(
-            `UPDATE ${SHIPMENTS_TABLE_NAME} SET ${setClause}, updated_at = CURRENT_TIMESTAMP WHERE id = ?`,
+            `UPDATE ${SHIPMENTS_TABLE_NAME}
+            SET ${setClause}, updated_at = CURRENT_TIMESTAMP
+            WHERE id = ?`,
             [...values, id]
         )
 
         return this.getShipmentById(id)
     },
 
-    
     async deleteShipment(id) {
         const conn = getConnection()
         const [result] = await conn.execute(
@@ -92,7 +102,6 @@ const ShipmentsModel = {
         return result.affectedRows > 0
     },
 
-    // Lấy danh sách shipment
     async listShipments() {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -101,7 +110,6 @@ const ShipmentsModel = {
         return rows
     },
 
-    
     async getActiveShipments() {
         const conn = getConnection()
         const [rows] = await conn.execute(

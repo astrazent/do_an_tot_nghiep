@@ -1,12 +1,10 @@
 import { getConnection } from '../config/mysql.js'
 import Joi from 'joi'
 
-// Khai báo tên bảng
 const COMMENTS_TABLE = 'Comments'
 const USERS_TABLE = 'Users'
 const PRODUCTS_TABLE = 'Products'
 
-// Schema validate dữ liệu comment
 const COMMENTS_SCHEMA = Joi.object({
     rate: Joi.number().integer().min(1).max(5).required().messages({
         'number.base': 'Rate phải là số',
@@ -38,7 +36,9 @@ const COMMENTS_SCHEMA = Joi.object({
 
 const CommentsModel = {
     async createComment(data) {
-        const { error, value } = COMMENTS_SCHEMA.validate(data, { abortEarly: false })
+        const { error, value } = COMMENTS_SCHEMA.validate(data, {
+            abortEarly: false,
+        })
         if (error) throw error
 
         const conn = getConnection()

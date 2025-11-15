@@ -18,9 +18,13 @@ const attachImagesToPosts = async posts => {
     for (const post of postArray) {
         const images = imagesMap[post.id] || []
         post.images = images.map(i => ({
-            url: i.image_url ? (i.image_url.startsWith('http') ? i.image_url : '/' + i.image_url.replace(/^\/+/, '')) : '',
+            url: i.image_url
+                ? i.image_url.startsWith('http')
+                    ? i.image_url
+                    : '/' + i.image_url.replace(/^\/+/, '')
+                : '',
             caption: i.caption || '',
-            display_order: i.display_order ?? 0
+            display_order: i.display_order ?? 0,
         }))
     }
 
@@ -34,28 +38,26 @@ const attachImagesToRelatedPosts = async relatedData => {
 
     const { relatedByCategory = [], relatedByPostType = [] } = relatedData
 
-    // Gom tất cả ID từ cả hai list
     const allPosts = [...relatedByCategory, ...relatedByPostType]
-    if (allPosts.length === 0)
-        return { relatedByCategory, relatedByPostType }
+    if (allPosts.length === 0) return { relatedByCategory, relatedByPostType }
 
     const ids = allPosts.map(p => p.id)
     const allImages = await PostImagesModel.getImagesByPostIds(ids)
-    
-    // Map ảnh theo post_id
+
     const imagesMap = allImages.reduce((acc, img) => {
         if (!acc[img.post_id]) acc[img.post_id] = []
         acc[img.post_id].push(img)
         return acc
     }, {})
 
-    // Hàm gắn ảnh cho từng post
     const attachImages = posts =>
         posts.map(post => ({
             ...post,
             images: (imagesMap[post.id] || []).map(i => {
                 const url = i.image_url || ''
-                return url.startsWith('http') ? url : '/' + url.replace(/^\/+/, '')
+                return url.startsWith('http')
+                    ? url
+                    : '/' + url.replace(/^\/+/, '')
             }),
         }))
 
@@ -65,7 +67,7 @@ const attachImagesToRelatedPosts = async relatedData => {
     }
 }
 
-const createPostService = async data => {   
+const createPostService = async data => {
     const post = await PostsModel.createPost(data)
     return post
 }
@@ -81,7 +83,7 @@ const getByIdPostService = async postId => {
     return attachImagesToPosts(post)
 }
 
-const getBySlugService = async (data) => {
+const getBySlugService = async data => {
     const { slug, limit = 1, offset = 0 } = data
     if (!slug) {
         throw new ApiError(StatusCodes.BAD_REQUEST, 'Slug không được để trống')
@@ -96,12 +98,11 @@ const getBySlugService = async (data) => {
         )
     }
 
-    // Trả về 1 bài đầu tiên sau khi attach images
     const [postWithImages] = await attachImagesToPosts(posts)
     return postWithImages
 }
 
-const getByCategorySlugService = async (data) => {
+const getByCategorySlugService = async data => {
     const { slug, limit = 5, offset = 0 } = data
     const posts = await PostsModel.getPostByCategorySlug(slug, limit, offset)
     if (!posts || posts.length === 0) {
@@ -113,7 +114,7 @@ const getByCategorySlugService = async (data) => {
     return attachImagesToPosts(posts)
 }
 
-const getByPostTypeSlugService = async (data) => {
+const getByPostTypeSlugService = async data => {
     const { slug, limit = 5, offset = 0 } = data
     const posts = await PostsModel.getPostByPostTypeSlug(slug, limit, offset)
     if (!posts || posts.length === 0) {
@@ -124,7 +125,7 @@ const getByPostTypeSlugService = async (data) => {
     }
     return attachImagesToPosts(posts)
 }
-const getRelatedByPostSlugService = async (data) => {
+const getRelatedByPostSlugService = async data => {
     const { slug, limit = 5, offset = 0 } = data
     const { relatedByCategory, relatedByPostType } =
         await PostsModel.getRelatedByPostSlug(slug, limit, offset)
@@ -146,7 +147,7 @@ const getRelatedByPostSlugService = async (data) => {
 
     return result
 }
-const getListPostService = async (data) => {
+const getListPostService = async data => {
     const limit = parseInt(data.limit) || 10
     const offset = parseInt(data.offset) || 0
     const validSorts = ['newest', 'oldest', 'post_type', 'post_type_limited']

@@ -24,7 +24,12 @@ const getListSliderService = async data => {
     const status = data.status !== undefined ? parseInt(data.status) : null
     const sort = data.sort === 'asc' ? 'asc' : 'desc'
 
-    const listSlider = await SlidersModel.listSliders(limit, offset, status, sort)
+    const listSlider = await SlidersModel.listSliders(
+        limit,
+        offset,
+        status,
+        sort
+    )
 
     if (!listSlider || listSlider.length === 0) {
         throw new ApiError(StatusCodes.NOT_FOUND, 'Không tìm thấy slider nào')

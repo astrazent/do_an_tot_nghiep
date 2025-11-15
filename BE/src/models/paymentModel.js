@@ -3,7 +3,6 @@ import Joi from 'joi'
 
 const PAYMENTS_TABLE_NAME = 'Payments'
 
-// Schema validate dữ liệu payment
 const PAYMENTS_SCHEMA = Joi.object({
     method: Joi.string().min(3).max(50).required().messages({
         'string.empty': 'Method không được để trống',
@@ -15,10 +14,12 @@ const PAYMENTS_SCHEMA = Joi.object({
         'any.only': 'Status phải là 0, 1 hoặc 2',
         'any.required': 'Status là bắt buộc',
     }),
+    icon_url: Joi.string().max(255).allow('', null).messages({
+        'string.max': 'Icon URL tối đa 255 ký tự',
+    }),
 })
 
 const PaymentsModel = {
-    // Lấy tất cả payments không giới hạn
     async getAllPayments() {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -27,7 +28,6 @@ const PaymentsModel = {
         return rows
     },
 
-    // Lấy tất cả payments có status = 1
     async getActivePayments() {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -36,7 +36,6 @@ const PaymentsModel = {
         return rows
     },
 
-    // Tạo payment mới
     async createPayment(data) {
         const { error, value } = PAYMENTS_SCHEMA.validate(data, {
             abortEarly: false,
@@ -45,14 +44,13 @@ const PaymentsModel = {
 
         const conn = getConnection()
         const [result] = await conn.execute(
-            `INSERT INTO ${PAYMENTS_TABLE_NAME} (method, status) VALUES (?, ?)`,
-            [value.method, value.status]
+            `INSERT INTO ${PAYMENTS_TABLE_NAME} (method, status, icon_url) VALUES (?, ?, ?)`,
+            [value.method, value.status, value.icon_url]
         )
 
         return { id: result.insertId, ...value }
     },
 
-    
     async getPaymentById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -62,7 +60,6 @@ const PaymentsModel = {
         return rows[0] || null
     },
 
-    
     async updatePayment(id, data) {
         const schema = PAYMENTS_SCHEMA.fork(
             Object.keys(PAYMENTS_SCHEMA.describe().keys),
@@ -85,7 +82,6 @@ const PaymentsModel = {
         return this.getPaymentById(id)
     },
 
-    
     async deletePayment(id) {
         const conn = getConnection()
         const [result] = await conn.execute(
@@ -95,7 +91,6 @@ const PaymentsModel = {
         return result.affectedRows > 0
     },
 
-    
     async listPayments(limit = 50, offset = 0) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -105,17 +100,17 @@ const PaymentsModel = {
         return rows
     },
 
-    
     async getPaymentsByMethod(method) {
         const conn = getConnection()
         const [rows] = await conn.execute(
-            `SELECT * FROM ${PAYMENTS_TABLE_NAME} WHERE method = ? ORDER BY created_at DESC`,
+            `SELECT * FROM ${PAYMENTS_TABLE_NAME} 
+            WHERE LOWER(REPLACE(method, ' ', '')) = LOWER(REPLACE(?, ' ', '')) 
+            ORDER BY created_at DESC`,
             [method]
         )
         return rows
     },
 
-    
     async getPaymentsByStatus(status) {
         const conn = getConnection()
         const [rows] = await conn.execute(

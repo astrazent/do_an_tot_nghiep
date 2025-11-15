@@ -3,18 +3,25 @@ import { discountProductController } from '~/controllers/discountProductControll
 import { discountProductValidation } from '~/validations/discountProductValidation'
 const Router = express.Router()
 
-Router.route('/').post(discountProductValidation.validateDiscountProduct, discountProductController.addDiscountProduct) 
+Router.route('/').post(
+    discountProductValidation.validateDiscountProduct,
+    discountProductController.addDiscountProduct
+)
 
-Router.route('/').get(discountProductController.getDiscountProductById) 
+Router.route('/').get(discountProductController.getDiscountProductById)
 
-Router.route('/list').get(discountProductController.getListDiscountProduct) 
+Router.route('/list').get(discountProductController.getListDiscountProduct)
 
-Router.route('/').patch(discountProductController.updateDiscountProduct) 
+Router.route('/').patch(discountProductController.updateDiscountProduct)
 
-Router.route('/').delete(discountProductController.deleteDiscountProduct) 
+Router.route('/').delete(discountProductController.deleteDiscountProduct)
 
-Router.route('/product_by_discount').get(discountProductController.getProductsByDiscount) 
+Router.route('/product_by_discount').get(
+    discountProductController.getProductsByDiscount
+)
 
-Router.route('/discount_by_product').get(discountProductController.getDiscountsByProduct) 
+Router.route('/discount_by_product').get(
+    discountProductController.getDiscountsByProduct
+)
 
 export default Router

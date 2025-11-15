@@ -15,6 +15,14 @@ const getCouponByIdService = async couponId => {
     return coupon
 }
 
+const getCouponByCodeService = async couponCode => {
+    const coupon = await CouponsModel.getCouponByCode(couponCode)
+    if (!coupon) {
+        throw new ApiError(StatusCodes.NOT_FOUND, 'Không tìm thấy coupon này')
+    }
+    return coupon
+}
+
 const getListCouponsService = async data => {
     const listCoupons = await CouponsModel.listCoupons(data.limit, data.offset)
     return listCoupons
@@ -54,6 +62,7 @@ const deleteCouponService = async couponId => {
 export const couponService = {
     createCouponService,
     getCouponByIdService,
+    getCouponByCodeService,
     getListCouponsService,
     getCouponsByTypeService,
     updateCouponService,

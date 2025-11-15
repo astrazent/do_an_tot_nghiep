@@ -3,7 +3,6 @@ import Joi from 'joi'
 
 const USERS_TABLE_NAME = 'Users'
 
-// Schema validate dữ liệu user
 const USERS_SCHEMA = Joi.object({
     username: Joi.string().min(3).max(50).allow(null).messages({
         'string.min': 'Username tối thiểu 3 ký tự',
@@ -31,7 +30,7 @@ const USERS_SCHEMA = Joi.object({
         'string.max': 'Email tối đa 100 ký tự',
     }),
 
-    email_verified: Joi.boolean().default(false), // thêm trường email_verified
+    email_verified: Joi.boolean().default(false),
 
     phone: Joi.string().max(20).allow(null).messages({
         'string.max': 'Phone tối đa 20 ký tự',
@@ -77,22 +76,20 @@ const USERS_SCHEMA = Joi.object({
     created_at: Joi.date().optional(),
     updated_at: Joi.date().optional(),
 })
-.when(Joi.object({ provider: Joi.valid('local') }).unknown(), {
-    then: Joi.object({
-        // Nếu là tài khoản local: có thể có password_hash, nhưng không được có provider_id
-        provider_id: Joi.any().forbidden().messages({
-            'any.unknown': 'Tài khoản local không được có provider_id',
+    .when(Joi.object({ provider: Joi.valid('local') }).unknown(), {
+        then: Joi.object({
+            provider_id: Joi.any().forbidden().messages({
+                'any.unknown': 'Tài khoản local không được có provider_id',
+            }),
         }),
-    }),
-})
-.when(Joi.object({ provider: Joi.not('local') }).unknown(), {
-    then: Joi.object({
-        // Nếu là tài khoản mạng xã hội: có thể có provider_id, nhưng không được có password_hash
-        password_hash: Joi.any().forbidden().messages({
-            'any.unknown': 'Tài khoản mạng xã hội không có mật khẩu',
+    })
+    .when(Joi.object({ provider: Joi.not('local') }).unknown(), {
+        then: Joi.object({
+            password_hash: Joi.any().forbidden().messages({
+                'any.unknown': 'Tài khoản mạng xã hội không có mật khẩu',
+            }),
         }),
-    }),
-});
+    })
 
 const UsersModel = {
     async createUser(data) {
@@ -112,7 +109,7 @@ const UsersModel = {
                 value.provider || 'local',
                 value.provider_id || null,
                 value.email || null,
-                value.email_verified ?? false, // thêm trường email_verified
+                value.email_verified ?? false,
                 value.phone || null,
                 value.full_name || null,
                 value.gender || 'other',
@@ -138,8 +135,6 @@ const UsersModel = {
     },
 
     async updateUser(id, data) {
-        console.log(data);
-        // Cho phép update tự do, không cần đầy đủ dữ liệu
         const schema = USERS_SCHEMA.fork(
             Object.keys(USERS_SCHEMA.describe().keys),
             f => f.optional()

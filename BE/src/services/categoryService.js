@@ -1,8 +1,8 @@
-import { CategoriesModel } from "~/models/categoryModel"
+import { CategoriesModel } from '~/models/categoryModel'
 import { StatusCodes } from 'http-status-codes'
 import ApiError from '~/utils/ApiError'
 
-const createCategoryService = async data => {   
+const createCategoryService = async data => {
     const existingCategory = await CategoriesModel.getCategoryByName(data.name)
     if (existingCategory) {
         throw new ApiError(
@@ -40,7 +40,10 @@ const getBySlugCategoryService = async slug => {
 }
 
 const getListCategoryService = async filters => {
-    const categories = await CategoriesModel.listCategories(filters.limit, filters.offset)
+    const categories = await CategoriesModel.listCategories(
+        filters.limit,
+        filters.offset
+    )
     if (categories.length === 0) {
         throw new ApiError(
             StatusCodes.NOT_FOUND,
@@ -60,7 +63,10 @@ const updateCategoryService = async (categoryId, data) => {
         )
     }
 
-    const updatedCategory = await CategoriesModel.updateCategory(categoryId, data)
+    const updatedCategory = await CategoriesModel.updateCategory(
+        categoryId,
+        data
+    )
     return updatedCategory
 }
 
@@ -72,7 +78,7 @@ const deleteCategoryService = async categoryId => {
             `Không tìm thấy danh mục với ID '${categoryId}'.`
         )
     }
-    
+
     await CategoriesModel.deleteCategory(categoryId)
     return { message: `Xóa danh mục với ID '${categoryId}' thành công.` }
 }

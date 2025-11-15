@@ -75,20 +75,22 @@ const getRelatedByPostSlug = async (req, res, next) => {
 }
 const getListPost = async (req, res, next) => {
     try {
-        // Truyền req.query vào service
-        const data = await postService.getListPostService(req.query);
+        const data = await postService.getListPostService(req.query)
         return res.status(StatusCodes.OK).json({
             message: 'Lấy danh sách bài viết thành công',
             data,
-        });
+        })
     } catch (error) {
-        next(error);
+        next(error)
     }
-};
+}
 
 const updatePost = async (req, res, next) => {
     try {
-        const data = await postService.updatePostService(req.query.postId, req.body)
+        const data = await postService.updatePostService(
+            req.query.postId,
+            req.body
+        )
 
         return res.status(StatusCodes.OK).json({
             message: 'Cập nhật bài viết thành công',

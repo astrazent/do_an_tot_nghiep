@@ -15,7 +15,9 @@ const create = async (req, res, next) => {
 
 const getById = async (req, res, next) => {
     try {
-        const data = await postCategoryService.getByIdService(req.query.postCategoryId)
+        const data = await postCategoryService.getByIdService(
+            req.query.postCategoryId
+        )
 
         return res.status(StatusCodes.OK).json({
             message: 'Lấy liên kết giữa bài viết và danh mục thành công',
@@ -31,7 +33,8 @@ const getList = async (req, res, next) => {
         const data = await postCategoryService.getListService(req.body)
 
         return res.status(StatusCodes.OK).json({
-            message: 'Lấy danh sách liên kết giữa bài viết và danh mục thành công',
+            message:
+                'Lấy danh sách liên kết giữa bài viết và danh mục thành công',
             data,
         })
     } catch (error) {
@@ -41,7 +44,9 @@ const getList = async (req, res, next) => {
 
 const getListCategoryByPost = async (req, res, next) => {
     try {
-        const data = await postCategoryService.getListCategoryByPostService(req.query.postId)
+        const data = await postCategoryService.getListCategoryByPostService(
+            req.query.postId
+        )
 
         return res.status(StatusCodes.OK).json({
             message: 'Lấy danh sách danh mục theo bài viết thành công',
@@ -54,7 +59,9 @@ const getListCategoryByPost = async (req, res, next) => {
 
 const getListPostByCategory = async (req, res, next) => {
     try {
-        const data = await postCategoryService.getListPostByCategoryService(req.query.categoryId)
+        const data = await postCategoryService.getListPostByCategoryService(
+            req.query.categoryId
+        )
 
         return res.status(StatusCodes.OK).json({
             message: 'Lấy danh sách bài viết theo danh mục thành công',
@@ -67,7 +74,10 @@ const getListPostByCategory = async (req, res, next) => {
 
 const update = async (req, res, next) => {
     try {
-        const data = await postCategoryService.updateService(req.query.postCategoryId, req.body)
+        const data = await postCategoryService.updateService(
+            req.query.postCategoryId,
+            req.body
+        )
 
         return res.status(StatusCodes.OK).json({
             message: 'Cập nhật thành công',
@@ -80,7 +90,9 @@ const update = async (req, res, next) => {
 
 const deleted = async (req, res, next) => {
     try {
-        const data = await postCategoryService.deleteService(req.query.postCategoryId)
+        const data = await postCategoryService.deleteService(
+            req.query.postCategoryId
+        )
 
         return res.status(StatusCodes.OK).json({
             data,

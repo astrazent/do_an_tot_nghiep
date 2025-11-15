@@ -3,9 +3,14 @@ import { shipmentController } from '~/controllers/shipmentController'
 import { shipmentValidation } from '~/validations/shipmentValidation'
 const Router = express.Router()
 
-Router.route('/').post(shipmentValidation.validateShipment, shipmentController.addShipment) 
+Router.route('/').post(
+    shipmentValidation.validateShipment,
+    shipmentController.addShipment
+)
 
 Router.route('/').get(shipmentController.getShipmentById)
+
+Router.route('/by_name').get(shipmentController.getShipmentByName)
 
 Router.route('/getAll').get(shipmentController.getAllShipments)
 

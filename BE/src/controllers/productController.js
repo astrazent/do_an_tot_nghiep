@@ -15,7 +15,9 @@ const createProduct = async (req, res, next) => {
 
 const getByIdProduct = async (req, res, next) => {
     try {
-        const data = await productService.getByIdProductService(req.query.productId)
+        const data = await productService.getByIdProductService(
+            req.query.productId
+        )
         return res.status(StatusCodes.OK).json({
             message: 'Thông tin sản phẩm đã được lấy thành công',
             data,
@@ -43,7 +45,7 @@ const getSearchProduct = async (req, res, next) => {
 
         if (!slug) {
             return res.status(StatusCodes.BAD_REQUEST).json({
-                message: 'Vui lòng truyền từ khóa tìm kiếm'
+                message: 'Vui lòng truyền từ khóa tìm kiếm',
             })
         }
 
@@ -65,11 +67,10 @@ const getSearchByCategory = async (req, res, next) => {
 
         if (!slug) {
             return res.status(StatusCodes.BAD_REQUEST).json({
-                message: 'Vui lòng truyền slug của category'
+                message: 'Vui lòng truyền slug của category',
             })
         }
 
-        // Gọi service với slug, keyword, limit, offset
         const data = await productService.getSearchByCategoryService(
             slug,
             keyword,
@@ -79,7 +80,7 @@ const getSearchByCategory = async (req, res, next) => {
 
         return res.status(StatusCodes.OK).json({
             message: 'Danh sách sản phẩm đã được lấy thành công',
-            data: data || [], // luôn trả về array
+            data: data || [],
         })
     } catch (error) {
         console.error('Lỗi trong getSearchByCategory:', error)
@@ -113,7 +114,9 @@ const getBySlug = async (req, res, next) => {
 }
 const getRelatedBySlug = async (req, res, next) => {
     try {
-        const data = await productService.getRelatedBySlugService(req.query.slug)
+        const data = await productService.getRelatedBySlugService(
+            req.query.slug
+        )
         return res.status(StatusCodes.OK).json({
             message: 'Danh sách sản phẩm liên quan đã được lấy thành công',
             data,
@@ -125,7 +128,6 @@ const getRelatedBySlug = async (req, res, next) => {
 }
 const getHotProduct = async (req, res, next) => {
     try {
-        
         const data = await productService.getHotProductService(req.query.limit)
         return res.status(StatusCodes.OK).json({
             message: 'Danh sách sản phẩm nổi bật đã được lấy thành công',
@@ -139,7 +141,10 @@ const getHotProduct = async (req, res, next) => {
 
 const updateProduct = async (req, res, next) => {
     try {
-        const data = await productService.updateProductService(req.query.productId, req.body)
+        const data = await productService.updateProductService(
+            req.query.productId,
+            req.body
+        )
         return res.status(StatusCodes.OK).json({
             message: 'Thông tin sản phẩm đã được cập nhật thành công',
             data,
@@ -151,7 +156,9 @@ const updateProduct = async (req, res, next) => {
 
 const deleteProduct = async (req, res, next) => {
     try {
-        const data = await productService.deleteProductService(req.query.productId)
+        const data = await productService.deleteProductService(
+            req.query.productId
+        )
         return res.status(StatusCodes.OK).json({
             message: 'Sản phẩm đã được xóa thành công',
             data,
@@ -172,5 +179,5 @@ export const productController = {
     getRelatedBySlug,
     createProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
 }

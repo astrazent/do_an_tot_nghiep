@@ -5,7 +5,9 @@ const Router = express.Router()
 
 Router.route('/').post(aiFeedbackController.createFeedback)
 
-Router.route('/create_or_update').post(aiFeedbackController.createOrUpdateFeedbackBySlug)
+Router.route('/create_or_update').post(
+    aiFeedbackController.createOrUpdateFeedbackBySlug
+)
 
 Router.route('/').get(aiFeedbackController.getByIdFeedback)
 

@@ -8,14 +8,13 @@ export const errorHandlingMiddleware = (err, req, res, next) => {
     const responseError = {
         statusCode: err.statusCode,
         message: err.message || StatusCodes[err.statusCode],
-        stack: err.stack
+        stack: err.stack,
     }
 
-    // 🔥 Log chi tiết lỗi (luôn log, dù ở môi trường nào)
     logger.error(`${err.message}\n${err.stack}`)
     if (env.BUILD_MODE === 'production') {
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-            message: 'Lỗi server không xác định'
+            message: 'Lỗi server không xác định',
         })
     }
     return res.status(responseError.statusCode).json(responseError)

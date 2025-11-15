@@ -9,9 +9,12 @@ import { errorHandlingMiddleware } from './middlewares/errorHandling.js'
 import getPort from 'get-port'
 
 const APP_PORT = parseInt(env.APP_PORT) || 2000
-// Tạo mảng port fallback từ 2000 → 5000
-const fallbackPorts = Array.from({ length: 5000 - 2000 + 1 }, (_, i) => 2000 + i)
-// Ưu tiên APP_PORT trước
+
+const fallbackPorts = Array.from(
+    { length: 5000 - 2000 + 1 },
+    (_, i) => 2000 + i
+)
+
 const portsToTry = [APP_PORT, ...fallbackPorts.filter(p => p !== APP_PORT)]
 
 let serverInstance
@@ -23,10 +26,9 @@ const START_SERVER = async () => {
 
         const app = express()
 
-        // Middleware
         app.use(
             cors({
-                origin: 'http://localhost:5173',
+                origin: env.FE_BASE_URL,
                 methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
                 allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
                 credentials: true,
@@ -36,17 +38,14 @@ const START_SERVER = async () => {
         app.use(express.json())
         app.use(express.urlencoded({ extended: true }))
 
-        // Routes
         app.use('/v1', APIs_V1)
         app.use('/v2', APIs_V2)
         app.use(errorHandlingMiddleware)
 
-        // Start server
         serverInstance = app.listen(port, env.APP_HOST, () => {
             console.log(`Server running at Host: ${env.APP_HOST} Port: ${port}`)
         })
 
-        // Exit hook
         exitHook(() => {
             console.log('Server is shutting down...')
             if (serverInstance) {
@@ -63,7 +62,6 @@ const START_SERVER = async () => {
     }
 }
 
-// Kết nối DB trước khi start server
 createConnection()
     .then(() => console.log('Connected to MySQL Database!'))
     .then(() => START_SERVER())

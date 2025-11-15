@@ -26,7 +26,10 @@ const getListPostTypeService = async data => {
     const listPostType = await PostTypesModel.listPostTypes(limit, offset, sort)
 
     if (!listPostType || listPostType.length === 0) {
-        throw new ApiError(StatusCodes.NOT_FOUND, 'Không tìm thấy loại bài viết nào')
+        throw new ApiError(
+            StatusCodes.NOT_FOUND,
+            'Không tìm thấy loại bài viết nào'
+        )
     }
 
     return listPostType
@@ -41,7 +44,10 @@ const updatePostTypeService = async (postTypeId, data) => {
         )
     }
 
-    const updatedPostType = await PostTypesModel.updatePostType(postTypeId, data)
+    const updatedPostType = await PostTypesModel.updatePostType(
+        postTypeId,
+        data
+    )
     return updatedPostType
 }
 
