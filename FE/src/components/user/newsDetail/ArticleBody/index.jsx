@@ -1,8 +1,8 @@
 import React from 'react'
 
 const ArticleBody = ({ content = '', highlights = [], images = [] }) => {
-    console.log(images);
-    // Nếu content là array thì join lại thành 1 string
+    console.log(images)
+
     const contentString = Array.isArray(content) ? content.join('') : content
     const processedContent = images.reduce((html, img, idx) => {
         const imgTag = `<figure class="flex justify-center my-8">
@@ -25,7 +25,7 @@ const ArticleBody = ({ content = '', highlights = [], images = [] }) => {
                 </ul>
             )}
 
-            {/* Render content HTML đã chèn ảnh */}
+            {}
             <div
                 className="space-y-6"
                 dangerouslySetInnerHTML={{ __html: processedContent }}

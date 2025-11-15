@@ -85,14 +85,13 @@ const ContributionBadge = ({ rate }) => {
 const ProductRevenueList = () => {
     const [searchTerm, setSearchTerm] = useState('')
 
-    // 3. Lọc dữ liệu dựa trên searchTerm
     const filteredProducts = productData.filter(product =>
         product.productName.toLowerCase().includes(searchTerm.toLowerCase())
     )
 
     return (
         <div className="bg-white p-6 rounded-lg shadow-md w-full font-sans flex flex-col h-full">
-            {/* 4. Thêm thanh tìm kiếm và căn chỉnh */}
+            {}
             <div className="flex justify-between items-center mb-4">
                 <h2 className="text-xl font-semibold text-gray-800">
                     Doanh thu theo sản phẩm
@@ -109,9 +108,9 @@ const ProductRevenueList = () => {
                 </div>
             </div>
 
-            {/* Bảng dữ liệu */}
+            {}
             <div className="overflow-x-auto">
-                {/* Tiêu đề bảng */}
+                {}
                 <div className="grid grid-cols-6 min-w-[700px] bg-gray-50 p-4 rounded-t-lg sticky top-0">
                     <h3 className="text-left text-xs font-bold text-gray-500 uppercase tracking-wider col-span-2">
                         Sản phẩm
@@ -130,7 +129,7 @@ const ProductRevenueList = () => {
                     </h3>
                 </div>
 
-                {/* 5. Tạo vùng cuộn cho danh sách sản phẩm */}
+                {}
                 <div className="min-w-[700px] overflow-y-auto max-h-[400px] scrollbar-custom">
                     {filteredProducts.map((item, index) => (
                         <div

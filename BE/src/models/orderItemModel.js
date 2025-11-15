@@ -3,7 +3,6 @@ import Joi from 'joi'
 
 const ORDER_ITEMS_TABLE_NAME = 'OrderItems'
 
-// Schema validate dữ liệu order item
 const ORDER_ITEMS_SCHEMA = Joi.object({
     qty_total: Joi.number().integer().min(1).required().messages({
         'number.base': 'Số lượng phải là số',
@@ -26,7 +25,6 @@ const ORDER_ITEMS_SCHEMA = Joi.object({
 })
 
 const OrderItemsModel = {
-    
     async createOrderItem(data) {
         const { error, value } = ORDER_ITEMS_SCHEMA.validate(data, {
             abortEarly: false,
@@ -47,7 +45,6 @@ const OrderItemsModel = {
         return { id: result.insertId, ...value }
     },
 
-    
     async getOrderItemById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -57,7 +54,6 @@ const OrderItemsModel = {
         return rows[0] || null
     },
 
-    
     async updateOrderItem(id, data) {
         const schema = ORDER_ITEMS_SCHEMA.fork(
             Object.keys(ORDER_ITEMS_SCHEMA.describe().keys),
@@ -80,7 +76,6 @@ const OrderItemsModel = {
         return this.getOrderItemById(id)
     },
 
-    
     async deleteOrderItem(id) {
         const conn = getConnection()
         const [result] = await conn.execute(
@@ -90,7 +85,6 @@ const OrderItemsModel = {
         return result.affectedRows > 0
     },
 
-    
     async listOrderItems(limit = 50, offset = 0) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -100,7 +94,6 @@ const OrderItemsModel = {
         return rows
     },
 
-    
     async getItemsByTransaction(transaction_id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -110,7 +103,6 @@ const OrderItemsModel = {
         return rows
     },
 
-    
     async getItemsByProduct(product_id) {
         const conn = getConnection()
         const [rows] = await conn.execute(

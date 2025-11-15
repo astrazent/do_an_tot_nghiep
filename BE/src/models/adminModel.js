@@ -3,7 +3,6 @@ import Joi from 'joi'
 
 const ADMINS_TABLE_NAME = 'Admins'
 
-// Schema validate dữ liệu admin
 const ADMINS_SCHEMA = Joi.object({
     username: Joi.string().min(3).max(100).required().messages({
         'string.empty': 'Username không được để trống',
@@ -40,7 +39,6 @@ const ADMINS_SCHEMA = Joi.object({
 })
 
 const AdminsModel = {
-    
     async createAdmin(data) {
         const { error, value } = ADMINS_SCHEMA.validate(data, {
             abortEarly: false,
@@ -65,7 +63,6 @@ const AdminsModel = {
         return { id: result.insertId, ...value }
     },
 
-    
     async getAdminById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -75,7 +72,6 @@ const AdminsModel = {
         return rows[0] || null
     },
 
-    // Lấy admin theo Username
     async getAdminByUsername(username) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -85,7 +81,6 @@ const AdminsModel = {
         return rows[0] || null
     },
 
-    // Lấy admin theo Email
     async getAdminByEmail(email) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -95,7 +90,6 @@ const AdminsModel = {
         return rows[0] || null
     },
 
-    // Cập nhật admin theo ID
     async updateAdmin(id, data) {
         const schema = ADMINS_SCHEMA.fork(
             Object.keys(ADMINS_SCHEMA.describe().keys),
@@ -118,7 +112,6 @@ const AdminsModel = {
         return this.getAdminById(id)
     },
 
-    
     async deleteAdmin(id) {
         const conn = getConnection()
         const [result] = await conn.execute(
@@ -128,7 +121,6 @@ const AdminsModel = {
         return result.affectedRows > 0
     },
 
-    
     async listAdmins(limit = 50, offset = 0) {
         const conn = getConnection()
         const [rows] = await conn.execute(

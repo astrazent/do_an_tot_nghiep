@@ -76,10 +76,8 @@ const Alert = ({ message, type = 'success', duration = 2000, onClose }) => {
     }
 
     return ReactDOM.createPortal(
-        <div
-            className={`fixed inset-0 flex items-center justify-center z-[9999] transition-opacity duration-300 ${isFadingOut ? 'opacity-0' : 'opacity-100'}`}
-        >
-            <div className="flex flex-col items-center justify-center bg-black/80 text-white p-8 rounded-lg shadow-xl min-w-[350px] min-h-[200px]">
+        <div className="fixed inset-0 flex items-center justify-center z-[9999] pointer-events-none">
+            <div className="flex flex-col items-center justify-center bg-black/80 text-white p-8 rounded-lg shadow-xl min-w-[350px] min-h-[200px] pointer-events-auto transition-opacity duration-300">
                 {renderIcon()}
                 <p className="mt-6 text-center font-semibold text-lg">
                     {message}

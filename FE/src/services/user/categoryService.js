@@ -1,5 +1,5 @@
 import api from './api'
-import { formatCurrency } from '~/utils/formatCurrency';
+import { formatCurrency } from '~/utils/formatCurrency'
 
 const transformProductData = product => {
     const rating =

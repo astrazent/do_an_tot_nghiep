@@ -24,16 +24,12 @@ const transformProductData = product => {
     }
 }
 
-/**
- * Lấy danh sách sản phẩm mới nhất.
- * Logic sắp xếp và giới hạn được thực hiện bởi API.
- */
 export const getNewestProducts = async limit => {
     try {
         const result = await getListProductCollections({
             limit,
             sort: 'newest',
-            slug: 'all', // Lấy từ tất cả các danh mục
+            slug: 'all',
         })
 
         const products = result.data
@@ -50,9 +46,6 @@ export const getNewestProducts = async limit => {
     }
 }
 
-/**
- * Lấy sản phẩm gia cầm (gà và vịt) bằng cách gọi getListProductCollections cho mỗi loại.
- */
 export const getPoultryProducts = async limitPerCategory => {
     try {
         const [chickenResult, duckResult] = await Promise.all([
@@ -80,9 +73,6 @@ export const getPoultryProducts = async limitPerCategory => {
     }
 }
 
-/**
- * Lấy sản phẩm hải sản và cá bằng cách gọi getListProductCollections cho mỗi loại.
- */
 export const getSeafoodAndFishProducts = async limitPerCategory => {
     try {
         const [seafoodResult, fishResult] = await Promise.all([
@@ -112,7 +102,6 @@ export const getSeafoodAndFishProducts = async limitPerCategory => {
 
 export const getPorkSpecialties = async limit => {
     try {
-        // Gọi hàm dùng chung với slug và limit tương ứng
         const result = await getListProductCollections({
             slug: 'san-pham-tu-heo',
             limit: limit,
@@ -120,7 +109,6 @@ export const getPorkSpecialties = async limit => {
 
         const porkData = result.data
 
-        // Kiểm tra để đảm bảo dữ liệu trả về là một mảng
         if (!Array.isArray(porkData)) {
             console.error(
                 'Dữ liệu đặc sản từ heo không phải là một mảng:',
@@ -172,12 +160,12 @@ export const getListProductCollections = async ({
             params: {
                 limit,
                 offset,
-                ...(slug ? { slug } : {}), // chỉ gửi nếu slug có giá trị
-                sort, // luôn gửi sort
-                ...(minPrice !== null ? { minPrice } : {}), // gửi nếu khác null
-                ...(maxPrice !== null ? { maxPrice } : {}), // gửi nếu khác null
+                ...(slug ? { slug } : {}),
+                sort,
+                ...(minPrice !== null ? { minPrice } : {}),
+                ...(maxPrice !== null ? { maxPrice } : {}),
             },
-            authRequired: true, // <-- custom property
+            authRequired: true,
         })
         return response.data
     } catch (error) {
@@ -198,9 +186,9 @@ export const getListPromotionProducts = async ({
             params: {
                 limit,
                 offset,
-                sort, // luôn gửi sort
-                ...(minPrice !== null ? { minPrice } : {}), // gửi nếu khác null
-                ...(maxPrice !== null ? { maxPrice } : {}), // gửi nếu khác null
+                sort,
+                ...(minPrice !== null ? { minPrice } : {}),
+                ...(maxPrice !== null ? { maxPrice } : {}),
             },
         })
         return response.data
@@ -256,7 +244,7 @@ export const searchProducts = async (slug, limit = 10) => {
         const response = await api.get('/products/search', {
             params: { slug, limit },
         })
-        return response.data?.data || [] // data.data vì API trả về { message, data }
+        return response.data?.data || []
     } catch (error) {
         console.error(`Đã xảy ra lỗi khi tìm kiếm sản phẩm:`, error)
         throw error
@@ -274,7 +262,7 @@ export const searchProductsByCategory = async (
         const response = await api.get('/products/search_by_category', {
             params: { slug, keyword, limit, offset },
         })
-        return response.data?.data || [] // data.data vì API trả về { message, data }
+        return response.data?.data || []
     } catch (error) {
         console.error(
             `Đã xảy ra lỗi khi tìm kiếm sản phẩm theo category:`,

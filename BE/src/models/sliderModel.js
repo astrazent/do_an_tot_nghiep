@@ -3,7 +3,6 @@ import Joi from 'joi'
 
 const SLIDERS_TABLE_NAME = 'Sliders'
 
-// Schema validate dữ liệu slider
 const SLIDER_SCHEMA = Joi.object({
     name: Joi.string().min(3).max(100).required().messages({
         'string.empty': 'Tên slider không được để trống',
@@ -28,7 +27,9 @@ const SLIDER_SCHEMA = Joi.object({
 
 const SlidersModel = {
     async createSlider(data) {
-        const { error, value } = SLIDER_SCHEMA.validate(data, { abortEarly: false })
+        const { error, value } = SLIDER_SCHEMA.validate(data, {
+            abortEarly: false,
+        })
         if (error) throw error
 
         const conn = getConnection()
@@ -61,7 +62,10 @@ const SlidersModel = {
     },
 
     async updateSlider(id, data) {
-        const schema = SLIDER_SCHEMA.fork(Object.keys(SLIDER_SCHEMA.describe().keys), f => f.optional())
+        const schema = SLIDER_SCHEMA.fork(
+            Object.keys(SLIDER_SCHEMA.describe().keys),
+            f => f.optional()
+        )
         const { error, value } = schema.validate(data, { abortEarly: false })
         if (error) throw error
 
@@ -104,7 +108,7 @@ const SlidersModel = {
 
         const [rows] = await conn.execute(sql, params)
         return rows
-    }
+    },
 }
 
 export { SLIDERS_TABLE_NAME, SLIDER_SCHEMA, SlidersModel }

@@ -5,13 +5,11 @@ import NavigationBar from '~/components/shared/NavigationBar'
 import MainHeader from '~/components/shared/MainHeader'
 import TopBar from '~/components/shared/TopBar'
 
-const Header = ({ login = true }) => {
+const Header = () => {
     return (
         <header className="shadow">
             <TopBar />
-            <MainHeader
-                login={login}
-            />
+            <MainHeader />
             <NavigationBar />
             <FloatingContactBar />
         </header>

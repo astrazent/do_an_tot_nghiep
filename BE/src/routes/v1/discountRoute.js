@@ -3,7 +3,10 @@ import { discountController } from '~/controllers/discountController'
 import { discountValidation } from '~/validations/discountValidaton'
 const Router = express.Router()
 
-Router.route('/').post(discountValidation.validateDiscount, discountController.addDiscount) 
+Router.route('/').post(
+    discountValidation.validateDiscount,
+    discountController.addDiscount
+)
 
 Router.route('/').get(discountController.getDiscountById)
 

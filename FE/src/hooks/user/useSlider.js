@@ -5,7 +5,7 @@ export const useListSlider = (params = {}, options = {}) => {
     return useQuery({
         queryKey: ['slider', 'list', params],
         queryFn: () => getListSlider(params),
-        enabled: !!params, // luôn true vì params có default
+        enabled: !!params,
         staleTime: Infinity,
         cacheTime: Infinity,
         ...options,

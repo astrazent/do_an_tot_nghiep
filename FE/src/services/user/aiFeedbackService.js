@@ -1,17 +1,8 @@
 import api from './api'
 
-/**
- * Gửi hoặc cập nhật AI Feedback dựa trên product slug
- * @param {Object} feedback - Dữ liệu feedback
- * @param {number} feedback.vote - 0 hoặc 1
- * @param {number|null} feedback.voter_id - ID người vote hoặc null
- * @param {number|null} feedback.id - ID feedback nếu update, null nếu tạo mới
- * @param {string} feedback.slug - slug sản phẩm
- */
 export const postAIFeedbackByProductSlug = async feedback => {
     const { vote, voter_id, slug, id } = feedback
 
-    // 1️⃣ Validate dữ liệu
     if (typeof vote !== 'number') {
         throw new Error('Vote không hợp lệ! Phải là number.')
     }
@@ -29,7 +20,6 @@ export const postAIFeedbackByProductSlug = async feedback => {
     }
 
     try {
-        // 2️⃣ Gọi API create_or_update
         const response = await api.post(
             '/ai_feedback/create_or_update',
             feedback,
@@ -39,7 +29,6 @@ export const postAIFeedbackByProductSlug = async feedback => {
                 },
             }
         )
-        console.log(response);
         return response.data
     } catch (error) {
         console.error(

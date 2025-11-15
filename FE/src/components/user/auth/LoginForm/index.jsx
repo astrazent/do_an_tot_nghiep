@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Button from '~/components/shared/Button'
 import InputField from '~/components/shared/InputField'
-// ✅ Import hook mới và GoogleLogin
+
 import { useLoginUser, useLoginGoogle } from '~/hooks/user/useUser'
 import { GoogleLogin } from '@react-oauth/google'
 import { useAlert } from '~/contexts/AlertContext'
@@ -12,6 +12,7 @@ import { HiOutlineUser } from 'react-icons/hi'
 import { RiLockPasswordLine } from 'react-icons/ri'
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai'
 import { useDispatch } from 'react-redux'
+import { persistor } from '~/Redux/store'
 
 const LoginForm = () => {
     const { showAlert } = useAlert()
@@ -22,25 +23,24 @@ const LoginForm = () => {
     const [password, setPassword] = useState('')
     const [showPw, setShowPw] = useState(false)
 
-    // Mutation cho đăng nhập thường
     const { mutate: login, isPending } = useLoginUser({
-        onSuccess: data => {
+        onSuccess: async data => {
+            dispatch({ type: 'auth/logout' })
+            await persistor.purge()
             dispatch(updateUser({ ...data.data }))
             showAlert(data.message, { type: 'success', duration: 2000 })
             navigate('/')
         },
         onError: error => {
-            console.log(error);
+            console.log(error)
             const message =
                 error?.response?.data?.message || 'Đăng nhập thất bại'
             showAlert(message, { type: 'error', duration: 2000 })
         },
     })
 
-    // ✅ Mutation cho đăng nhập Google
     const { mutate: loginGoogle, isPending: isGooglePending } = useLoginGoogle({
         onSuccess: data => {
-            // Logic tương tự như đăng nhập thường
             dispatch(updateUser({ ...data.data }))
             showAlert(data.message, { type: 'success', duration: 2000 })
             navigate('/')
@@ -72,7 +72,7 @@ const LoginForm = () => {
                             duration: 2000,
                         })
                     }}
-                    width={240} // chiều rộng
+                    width={240}
                     shape="rectangular"
                 />
             </div>
@@ -84,7 +84,7 @@ const LoginForm = () => {
             </div>
 
             <form className="login-form" onSubmit={handleLogin}>
-                {/* ... Các InputField không đổi ... */}
+                {}
                 <InputField
                     type="text"
                     placeholder="Tên đăng nhập"
@@ -125,7 +125,6 @@ const LoginForm = () => {
                 <Button
                     type="submit"
                     className="login-button"
-                    // ✅ Vô hiệu hóa khi một trong hai đang chạy
                     disabled={isPending || isGooglePending}
                 >
                     {isPending ? 'Đang đăng nhập...' : 'Đăng nhập'}

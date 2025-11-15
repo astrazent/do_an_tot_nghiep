@@ -3,7 +3,6 @@ import Joi from 'joi'
 
 const DISCOUNTS_TABLE_NAME = 'Discounts'
 
-// Schema validate dữ liệu discount
 const DISCOUNTS_SCHEMA = Joi.object({
     name: Joi.string().min(3).max(100).required().messages({
         'string.empty': 'Name không được để trống',
@@ -30,7 +29,6 @@ const DISCOUNTS_SCHEMA = Joi.object({
 })
 
 const DiscountsModel = {
-    
     async createDiscount(data) {
         const { error, value } = DISCOUNTS_SCHEMA.validate(data, {
             abortEarly: false,
@@ -56,7 +54,6 @@ const DiscountsModel = {
         return { id: result.insertId, ...value }
     },
 
-    
     async getDiscountById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -66,7 +63,6 @@ const DiscountsModel = {
         return rows[0] || null
     },
 
-    
     async updateDiscount(id, data) {
         const schema = DISCOUNTS_SCHEMA.fork(
             Object.keys(DISCOUNTS_SCHEMA.describe().keys),
@@ -89,7 +85,6 @@ const DiscountsModel = {
         return this.getDiscountById(id)
     },
 
-    
     async deleteDiscount(id) {
         const conn = getConnection()
         const [result] = await conn.execute(
@@ -99,7 +94,6 @@ const DiscountsModel = {
         return result.affectedRows > 0
     },
 
-    
     async listDiscounts(limit = 50, offset = 0) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -109,7 +103,6 @@ const DiscountsModel = {
         return rows
     },
 
-    
     async getActiveDiscounts() {
         const now = new Date()
         const conn = getConnection()

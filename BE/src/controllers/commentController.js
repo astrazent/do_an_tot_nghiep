@@ -15,7 +15,9 @@ const createComment = async (req, res, next) => {
 
 const getByIdComment = async (req, res, next) => {
     try {
-        const data = await commentService.getByIdCommentService(req.query.commentId)
+        const data = await commentService.getByIdCommentService(
+            req.query.commentId
+        )
 
         return res.status(StatusCodes.OK).json({
             message: 'Lấy comment thành công',
@@ -27,7 +29,9 @@ const getByIdComment = async (req, res, next) => {
 }
 const getCommentByProductSlug = async (req, res, next) => {
     try {
-        const data = await commentService.getCommentByProductSlugService(req.query.slug)
+        const data = await commentService.getCommentByProductSlugService(
+            req.query.slug
+        )
 
         return res.status(StatusCodes.OK).json({
             message: 'Lấy comment bằng slug thành công',
@@ -53,7 +57,9 @@ const getListComment = async (req, res, next) => {
 
 const getListCommnentByProduct = async (req, res, next) => {
     try {
-        const data = await commentService.getListCommentByProductService(req.query.productId)
+        const data = await commentService.getListCommentByProductService(
+            req.query.productId
+        )
 
         return res.status(StatusCodes.OK).json({
             message: 'Lấy danh sách comment theo sản phẩm thành công',
@@ -66,7 +72,9 @@ const getListCommnentByProduct = async (req, res, next) => {
 
 const getListCommentByUser = async (req, res, next) => {
     try {
-        const data = await commentService.getListCommentByUserService(req.query.userId)
+        const data = await commentService.getListCommentByUserService(
+            req.query.userId
+        )
 
         return res.status(StatusCodes.OK).json({
             message: 'Lấy danh sách comment theo user thành công',
@@ -79,7 +87,10 @@ const getListCommentByUser = async (req, res, next) => {
 
 const updateComment = async (req, res, next) => {
     try {
-        const data = await commentService.updateCommentService(req.query.commentId, req.body)
+        const data = await commentService.updateCommentService(
+            req.query.commentId,
+            req.body
+        )
         return res.status(StatusCodes.OK).json({
             message: 'Cập nhật comment thành công',
             data,
@@ -91,7 +102,9 @@ const updateComment = async (req, res, next) => {
 
 const deleteComment = async (req, res, next) => {
     try {
-        const data = await commentService.deleteCommentService(req.query.commentId)
+        const data = await commentService.deleteCommentService(
+            req.query.commentId
+        )
 
         return res.status(StatusCodes.OK).json({
             data,

@@ -3,7 +3,6 @@ import Joi from 'joi'
 
 const DISCOUNT_PRODUCTS_TABLE_NAME = 'DiscountProducts'
 
-// Schema validate dữ liệu discount-product
 const DISCOUNT_PRODUCTS_SCHEMA = Joi.object({
     discount_id: Joi.number().integer().required().messages({
         'number.base': 'Discount ID phải là số',
@@ -16,7 +15,6 @@ const DISCOUNT_PRODUCTS_SCHEMA = Joi.object({
 })
 
 const DiscountProductsModel = {
-    
     async createLink(data) {
         const { error, value } = DISCOUNT_PRODUCTS_SCHEMA.validate(data, {
             abortEarly: false,
@@ -32,7 +30,6 @@ const DiscountProductsModel = {
         return { id: result.insertId, ...value }
     },
 
-    
     async getLinkById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -42,7 +39,6 @@ const DiscountProductsModel = {
         return rows[0] || null
     },
 
-    
     async updateLink(id, data) {
         const schema = DISCOUNT_PRODUCTS_SCHEMA.fork(
             Object.keys(DISCOUNT_PRODUCTS_SCHEMA.describe().keys),
@@ -65,7 +61,6 @@ const DiscountProductsModel = {
         return this.getLinkById(id)
     },
 
-    
     async deleteLink(id) {
         const conn = getConnection()
         const [result] = await conn.execute(
@@ -75,7 +70,6 @@ const DiscountProductsModel = {
         return result.affectedRows > 0
     },
 
-    
     async listLinks(limit = 50, offset = 0) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -85,7 +79,6 @@ const DiscountProductsModel = {
         return rows
     },
 
-    
     async getProductsByDiscount(discount_id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -95,7 +88,6 @@ const DiscountProductsModel = {
         return rows
     },
 
-    
     async getDiscountsByProduct(product_id) {
         const conn = getConnection()
         const [rows] = await conn.execute(

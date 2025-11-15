@@ -1,13 +1,11 @@
 import { getConnection } from '../config/mysql.js'
 import Joi from 'joi'
 
-// Khai báo tên bảng
 const POSTS_TABLE = 'Posts'
 const POST_CATEGORIES_TABLE = 'PostCategories'
 const CATEGORIES_TABLE = 'Categories'
 const POST_TYPES_TABLE = 'PostTypes'
 
-// Schema validate dữ liệu post
 const POSTS_SCHEMA = Joi.object({
     title: Joi.string().min(3).max(200).required().messages({
         'string.empty': 'Title không được để trống',
@@ -41,7 +39,9 @@ const POSTS_SCHEMA = Joi.object({
 
 const PostsModel = {
     async createPost(data) {
-        const { error, value } = POSTS_SCHEMA.validate(data, { abortEarly: false })
+        const { error, value } = POSTS_SCHEMA.validate(data, {
+            abortEarly: false,
+        })
         if (error) throw error
 
         const conn = getConnection()

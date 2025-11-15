@@ -29,15 +29,24 @@ const ProductListSection = ({ title, products, isPromotion = false }) => {
                             {isPromotion ? (
                                 <div className="mt-1 flex flex-col">
                                     <span className="text-xs text-gray-400 line-through">
-                                        {Number(product.origin_price).toLocaleString('vi-VN')} ₫
+                                        {Number(
+                                            product.origin_price
+                                        ).toLocaleString('vi-VN')}{' '}
+                                        ₫
                                     </span>
                                     <span className="text-sm text-green-600 font-bold">
-                                        {Number(product.price).toLocaleString('vi-VN')} ₫
+                                        {Number(product.price).toLocaleString(
+                                            'vi-VN'
+                                        )}{' '}
+                                        ₫
                                     </span>
                                 </div>
                             ) : (
                                 <p className="text-sm text-green-600 font-bold mt-1">
-                                    {Number(product.price).toLocaleString('vi-VN')} ₫
+                                    {Number(product.price).toLocaleString(
+                                        'vi-VN'
+                                    )}{' '}
+                                    ₫
                                 </p>
                             )}
                         </div>

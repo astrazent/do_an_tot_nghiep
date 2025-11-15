@@ -50,8 +50,8 @@ const PaymentPieChart = () => {
                         className="w-full h-full rounded-full"
                         style={{
                             background: `conic-gradient(
-                                ${revenueData[0].hexColor} 0% 54.25%,   /* 42.3 / (42.3+16.4+9.5) * 100 */
-                                ${revenueData[1].hexColor} 54.25% 75.8%, /* 16.4 / tổng * 100 */
+                                ${revenueData[0].hexColor} 0% 54.25%,   
+                                ${revenueData[1].hexColor} 54.25% 75.8%, 
                                 ${revenueData[2].hexColor} 75.8% 100%
                             )`,
                         }}

@@ -1,8 +1,6 @@
-// src/models/commentReactions.model.js
 import { getConnection } from '../config/mysql.js'
 import Joi from 'joi'
 
-// Khai báo tên bảng
 const COMMENT_REACTIONS_TABLE = 'CommentReactions'
 const COMMENTS_TABLE = 'Comments'
 
@@ -89,7 +87,12 @@ const CommentReactionsModel = {
             const [result] = await conn.execute(
                 `INSERT INTO ${COMMENT_REACTIONS_TABLE} (user_id, product_id, comment_id, reaction)
                 VALUES (?, ?, ?, ?)`,
-                [value.user_id, value.product_id, value.comment_id, value.reaction]
+                [
+                    value.user_id,
+                    value.product_id,
+                    value.comment_id,
+                    value.reaction,
+                ]
             )
 
             const columnToIncrement =
@@ -106,9 +109,6 @@ const CommentReactionsModel = {
             console.error(`Transaction failed: ${err.message}`, err)
             throw err
         } finally {
-            if (conn) {
-                // conn.release() nếu thư viện yêu cầu
-            }
         }
     },
 
@@ -163,4 +163,8 @@ const CommentReactionsModel = {
     },
 }
 
-export { COMMENT_REACTIONS_TABLE, COMMENT_REACTIONS_SCHEMA, CommentReactionsModel }
+export {
+    COMMENT_REACTIONS_TABLE,
+    COMMENT_REACTIONS_SCHEMA,
+    CommentReactionsModel,
+}

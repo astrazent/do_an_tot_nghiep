@@ -1,75 +1,139 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-    orderItems: [],
-    paymentMethod: '',
-    itemsPrice: 0,
+    user_id: null,
+    payment_method: '',
+    shipment_method: '',
+    status: 'pending',
+    deli_name: '',
+    deli_phone: '',
+    deli_email: '',
+    deli_address: '',
+    deli_city: '',
+    deli_district: '',
+    deli_ward: '',
+    message: '',
+    shipment_status: 'pending',
+    shipping_fee: 0,
+    shipped_at: null,
+    delivered_at: null,
     amount: 0,
-    shippingPrice: 0,
-    taxPrice: 0,
-    totalPrice: 0,
-    user: '',
-    isPaid: false,
-    paidAt: '',
-    isDelivered: false,
-    deliveredAt: '',
+    items: [],
 }
 
 export const orderSlice = createSlice({
     name: 'order',
     initialState,
     reducers: {
-        deleteAllOrder: (state, action) => {
-            state.orderItems = []
+        resetOrder: state => {
+            Object.assign(state, initialState)
         },
 
-        addOrder: (state, action) => {
+        setOrderFromPayload: (state, action) => {
+            Object.assign(state, action.payload)
+        },
+
+        setUserId: (state, action) => {
+            state.user_id = action.payload
+        },
+
+        setPaymentMethod: (state, action) => {
+            state.payment_method = action.payload
+        },
+
+        setShipmentMethod: (state, action) => {
+            state.shipment_method = action.payload
+        },
+
+        setShippingFee: (state, action) => {
+            state.shipping_fee = action.payload
+        },
+
+        setDeliveryInfo: (state, action) => {
+            const {
+                name,
+                phone,
+                email,
+                address,
+                city,
+                district,
+                ward,
+                message,
+            } = action.payload
+            state.deli_name = name
+            state.deli_phone = phone
+            state.deli_email = email
+            state.deli_address = address
+            state.deli_city = city
+            state.deli_district = district
+            state.deli_ward = ward
+            state.message = message || ''
+        },
+
+        setStatus: (state, action) => {
+            state.status = action.payload
+        },
+        setShipmentStatus: (state, action) => {
+            state.shipment_status = action.payload
+        },
+        setShippedAt: (state, action) => {
+            state.shipped_at = action.payload
+        },
+        setDeliveredAt: (state, action) => {
+            state.delivered_at = action.payload
+        },
+        setAmount: (state, action) => {
+            state.amount = action.payload
+        },
+
+        addOrderItem: (state, action) => {
             const { orderItem } = action.payload
-            const itemOrder = state?.orderItems?.find(
-                item => item?.product_id === orderItem.product_id
+            if (!state.orderItems) state.orderItems = []
+            const existingItem = state.orderItems.find(
+                i => i.product_id === orderItem.product_id
             )
-            if (itemOrder) {
-                itemOrder.amount += parseInt(orderItem?.amount)
-            } else {
-                state.orderItems.push(orderItem)
-            }
+            if (existingItem) existingItem.amount += parseInt(orderItem.amount)
+            else state.orderItems.push(orderItem)
         },
 
-        increaseAmount: (state, action) => {
-            const { orderItem } = action.payload
-            const itemOrder = state?.orderItems?.find(
-                item => item?.product_id === orderItem.product_id
-            )
-            if (itemOrder) {
-                itemOrder.amount += 1
-            }
+        increaseOrderItem: (state, action) => {
+            const { product_id } = action.payload
+            const item = state.orderItems.find(i => i.product_id === product_id)
+            if (item) item.amount += 1
         },
 
-        decreaseAmount: (state, action) => {
-            const { orderItem } = action.payload
-            const itemOrder = state?.orderItems?.find(
-                item => item?.product_id === orderItem.product_id
-            )
-            if (itemOrder && itemOrder.amount > 1) {
-                itemOrder.amount -= 1
-            }
+        decreaseOrderItem: (state, action) => {
+            const { product_id } = action.payload
+            const item = state.orderItems.find(i => i.product_id === product_id)
+            if (item && item.amount > 1) item.amount -= 1
         },
 
-        removeOrder: (state, action) => {
-            const { orderItem } = action.payload
+        removeOrderItem: (state, action) => {
+            const { product_id } = action.payload
             state.orderItems = state.orderItems.filter(
-                item => item.product_id !== orderItem.product_id
+                i => i.product_id !== product_id
             )
         },
     },
 })
 
 export const {
-    deleteAllOrder,
-    addOrder,
-    increaseAmount,
-    decreaseAmount,
-    removeOrder,
+    resetOrder,
+    setUserId,
+    setOrderFromPayload,
+    setPaymentMethod,
+    setShipmentMethod,
+    setShippingFee,
+    setDeliveryInfo,
+    setStatus,
+    setShipmentStatus,
+    setShippedAt,
+    setDeliveredAt,
+    setAmount,
+    addOrderItem,
+    increaseOrderItem,
+    decreaseOrderItem,
+    removeOrderItem,
 } = orderSlice.actions
 
 export default orderSlice.reducer

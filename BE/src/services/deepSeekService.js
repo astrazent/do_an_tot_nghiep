@@ -11,7 +11,6 @@ const getSummaryCommentService = async comments => {
             )
         }
 
-        // Gộp nội dung bình luận thành 1 đoạn văn bản
         const allText = comments
             .filter(
                 c => typeof c.content === 'string' && c.content.trim() !== ''
@@ -29,7 +28,6 @@ const getSummaryCommentService = async comments => {
             )
         }
 
-        // --- Gọi OpenRouter API ---
         const response = await fetch(
             'https://openrouter.ai/api/v1/chat/completions',
             {

@@ -3,8 +3,7 @@ import userReducer from './reducers/userReducer'
 import productReducer from './reducers/productReducer'
 import orderReducer from './reducers/orderReducer'
 import accountReducer from './reducers/accountReducer'
-import cartUserReducer from './reducers/cartUserReducer'
-import cartCustomerSlice from './reducers/cartCustomerReducer'
+import cartItemReducer from './reducers/cartItemReducer'
 import {
     persistStore,
     persistReducer,
@@ -24,14 +23,21 @@ const persistConfig = {
     blacklist: ['product'],
 }
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
     user: userReducer,
     product: productReducer,
     order: orderReducer,
     account: accountReducer,
-    cartUser: cartUserReducer,
-    cartCustomer: cartCustomerSlice,
+    cartItem: cartItemReducer,
 })
+
+const rootReducer = (state, action) => {
+    if (action.type === 'auth/logout') {
+        storage.removeItem('persist:root')
+        state = undefined
+    }
+    return appReducer(state, action)
+}
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 

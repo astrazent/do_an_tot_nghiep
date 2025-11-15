@@ -3,7 +3,6 @@ import Joi from 'joi'
 
 const TOKENS_TABLE_NAME = 'Tokens'
 
-// Schema validate dữ liệu token
 const TOKEN_SCHEMA = Joi.object({
     user_id: Joi.number().integer().positive().required().messages({
         'number.base': 'User ID phải là một số',
@@ -32,13 +31,10 @@ const TOKEN_SCHEMA = Joi.object({
 })
 
 const TokensModel = {
-    /**
-     * Tạo một refresh token mới và lưu vào DB
-     * @param {object} data - Dữ liệu token
-     * @returns {Promise<object>} - Token đã được tạo
-     */
     async createToken(data) {
-        const { error, value } = TOKEN_SCHEMA.validate(data, { abortEarly: false })
+        const { error, value } = TOKEN_SCHEMA.validate(data, {
+            abortEarly: false,
+        })
         if (error) throw error
         const conn = getConnection()
         const [result] = await conn.execute(
@@ -59,11 +55,6 @@ const TokensModel = {
         return { id: result.insertId, ...value }
     },
 
-    /**
-     * Tìm một token bằng chuỗi refresh token
-     * @param {string} token - Chuỗi refresh token
-     * @returns {Promise<object|null>}
-     */
     async findByToken(token) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -72,12 +63,7 @@ const TokensModel = {
         )
         return rows[0] || null
     },
-    
-    /**
-     * Tìm tất cả các token của một người dùng
-     * @param {number} userId - ID của người dùng
-     * @returns {Promise<Array>}
-     */
+
     async findByUserId(userId) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -87,11 +73,6 @@ const TokensModel = {
         return rows
     },
 
-    /**
-     * Thu hồi một token (cập nhật is_revoked = TRUE)
-     * @param {string} token - Chuỗi refresh token
-     * @returns {Promise<object|null>} - Token đã được cập nhật
-     */
     async revokeToken(token) {
         const conn = getConnection()
         await conn.execute(
@@ -101,11 +82,6 @@ const TokensModel = {
         return this.findByToken(token)
     },
 
-    /**
-     * Xóa một token khỏi DB
-     * @param {number} id - ID của token
-     * @returns {Promise<boolean>}
-     */
     async deleteToken(id) {
         const conn = getConnection()
         const [result] = await conn.execute(
@@ -115,11 +91,6 @@ const TokensModel = {
         return result.affectedRows > 0
     },
 
-    /**
-     * Xóa tất cả các token của một người dùng
-     * @param {number} userId - ID của người dùng
-     * @returns {Promise<boolean>}
-     */
     async deleteAllTokensByUserId(userId) {
         const conn = getConnection()
         const [result] = await conn.execute(

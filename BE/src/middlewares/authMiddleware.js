@@ -5,7 +5,9 @@ import { verifyAccessToken } from '~/utils/token.js'
 export function verifyToken(req, res, next) {
     const token = req.cookies?.access_token
     if (!token) {
-        return next(new ApiError(StatusCodes.UNAUTHORIZED, 'Không có access token.'))
+        return next(
+            new ApiError(StatusCodes.UNAUTHORIZED, 'Không có access token.')
+        )
     }
 
     try {

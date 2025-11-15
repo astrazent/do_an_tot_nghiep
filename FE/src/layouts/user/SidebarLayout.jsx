@@ -13,7 +13,7 @@ import FixedNavbar from '~/components/user/home/FixedNavbar'
 import StickyBox from 'react-sticky-box'
 import { useCurrentUser } from '~/hooks/user/useUser'
 
-const DEFAULT_HIDE_PRIORITY_LEFT = ['featured','hot', 'search', 'categories']
+const DEFAULT_HIDE_PRIORITY_LEFT = ['featured', 'hot', 'search', 'categories']
 const DEFAULT_HIDE_PRIORITY_RIGHT = ['featuredPosts', 'consumerTips']
 
 const DEFAULT_INITIAL_SECTIONS_STATE_LEFT = {
@@ -34,12 +34,16 @@ const SidebarLayout = ({
     rightHidePriority = DEFAULT_HIDE_PRIORITY_RIGHT,
     initialSectionsStateLeft = DEFAULT_INITIAL_SECTIONS_STATE_LEFT,
     initialSectionsStateRight = DEFAULT_INITIAL_SECTIONS_STATE_RIGHT,
-    paddingX = 200
+    paddingX = 200,
 }) => {
     const STICKY_OFFSET = 80
     const location = useLocation()
-    const [leftVisibleSections, setLeftVisibleSections] = useState(initialSectionsStateLeft)
-    const [rightVisibleSections, setRightVisibleSections] = useState(initialSectionsStateRight)
+    const [leftVisibleSections, setLeftVisibleSections] = useState(
+        initialSectionsStateLeft
+    )
+    const [rightVisibleSections, setRightVisibleSections] = useState(
+        initialSectionsStateRight
+    )
     const { isAuthenticated } = useCurrentUser()
     const leftSidebarRef = useRef(null)
     const mainContentRef = useRef(null)
@@ -92,7 +96,7 @@ const SidebarLayout = ({
         sidebarRight,
         leftHidePriority,
         rightHidePriority,
-        location.pathname
+        location.pathname,
     ])
 
     const controlledLeftSidebar = isValidElement(sidebar)
@@ -104,7 +108,7 @@ const SidebarLayout = ({
         : sidebarRight
     return (
         <div className="flex flex-col min-h-screen bg-gray-50">
-            <Header login={isAuthenticated}/>
+            <Header login={isAuthenticated} />
             <FixedNavbar login={isAuthenticated} />
 
             <div className={`flex-1 py-6 px-[${paddingX}px]`}>
@@ -127,7 +131,10 @@ const SidebarLayout = ({
                         </main>
 
                         {sidebarRight && (
-                            <StickyBox offsetTop={STICKY_OFFSET} offsetBottom={20}>
+                            <StickyBox
+                                offsetTop={STICKY_OFFSET}
+                                offsetBottom={20}
+                            >
                                 <aside
                                     ref={rightSidebarRef}
                                     className="w-64 bg-white rounded-lg shadow-md p-4 flex-shrink-0"

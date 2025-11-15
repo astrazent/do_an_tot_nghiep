@@ -3,7 +3,6 @@ import Joi from 'joi'
 
 const CATEGORIES_TABLE_NAME = 'Categories'
 
-// Schema validate dữ liệu category
 const CATEGORIES_SCHEMA = Joi.object({
     name: Joi.string().min(3).max(100).required().messages({
         'string.empty': 'Name không được để trống',
@@ -22,7 +21,6 @@ const CATEGORIES_SCHEMA = Joi.object({
 })
 
 const CategoriesModel = {
-    
     async createCategory(data) {
         const { error, value } = CATEGORIES_SCHEMA.validate(data, {
             abortEarly: false,
@@ -47,7 +45,7 @@ const CategoriesModel = {
         )
         return rows[0] || null
     },
-    
+
     async getCategoryById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -65,7 +63,7 @@ const CategoriesModel = {
         )
         return rows[0] || null
     },
-    
+
     async updateCategory(id, data) {
         const schema = CATEGORIES_SCHEMA.fork(
             Object.keys(CATEGORIES_SCHEMA.describe().keys),
@@ -88,7 +86,6 @@ const CategoriesModel = {
         return this.getCategoryById(id)
     },
 
-    
     async deleteCategory(id) {
         const conn = getConnection()
         const [result] = await conn.execute(
@@ -98,7 +95,6 @@ const CategoriesModel = {
         return result.affectedRows > 0
     },
 
-    
     async listCategories(limit = 50, offset = 0) {
         const conn = getConnection()
         const [rows] = await conn.execute(

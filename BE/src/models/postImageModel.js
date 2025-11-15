@@ -3,7 +3,6 @@ import Joi from 'joi'
 
 const POST_IMAGES_TABLE_NAME = 'PostImages'
 
-// Schema validate dữ liệu post image
 const POST_IMAGES_SCHEMA = Joi.object({
     is_main: Joi.number().integer().valid(0, 1).required().messages({
         'number.base': 'is_main phải là số',
@@ -22,7 +21,9 @@ const POST_IMAGES_SCHEMA = Joi.object({
 
 const PostImagesModel = {
     async createPostImage(data) {
-        const { error, value } = POST_IMAGES_SCHEMA.validate(data, { abortEarly: false })
+        const { error, value } = POST_IMAGES_SCHEMA.validate(data, {
+            abortEarly: false,
+        })
         if (error) throw error
 
         const conn = getConnection()

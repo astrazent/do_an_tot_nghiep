@@ -2,7 +2,7 @@ import { CommentsModel } from '~/models/commentModel'
 import { StatusCodes } from 'http-status-codes'
 import ApiError from '~/utils/ApiError'
 
-const createCommentService = async data => {   
+const createCommentService = async data => {
     const comment = await CommentsModel.createComment(data)
     return comment
 }
@@ -31,12 +31,12 @@ const getCommentByProductSlugService = async commentId => {
 }
 
 const getListCommentService = async filters => {
-    const comments = await CommentsModel.listComments(filters.limit, filters.offset)
-    if(comments.length === 0){
-        throw new ApiError(
-            StatusCodes.NOT_FOUND,
-            `Không có comment nào`
-        )
+    const comments = await CommentsModel.listComments(
+        filters.limit,
+        filters.offset
+    )
+    if (comments.length === 0) {
+        throw new ApiError(StatusCodes.NOT_FOUND, `Không có comment nào`)
     }
 
     return comments
@@ -44,7 +44,7 @@ const getListCommentService = async filters => {
 
 const getListCommentByProductService = async productId => {
     const comments = await CommentsModel.getCommentsByProduct(productId)
-    if(comments.length === 0){
+    if (comments.length === 0) {
         throw new ApiError(
             StatusCodes.NOT_FOUND,
             `Không có comment nào cho sản phẩm với id: ${productId}`
@@ -56,7 +56,7 @@ const getListCommentByProductService = async productId => {
 
 const getListCommentByUserService = async userId => {
     const comments = await CommentsModel.getCommentsByUser(userId)
-    if(comments.length === 0){
+    if (comments.length === 0) {
         throw new ApiError(
             StatusCodes.NOT_FOUND,
             `Không có comment nào của user với id: ${userId}`

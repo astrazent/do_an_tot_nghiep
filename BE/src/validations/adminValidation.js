@@ -2,7 +2,6 @@ import Joi from 'joi'
 import { StatusCodes } from 'http-status-codes'
 import ApiError from '~/utils/ApiError'
 
-// ✅ Schema tạo mới admin
 const CREATE_ADMIN_SCHEMA = Joi.object({
     username: Joi.string().min(3).max(100).required().messages({
         'string.empty': 'Username không được để trống',
@@ -38,7 +37,6 @@ const CREATE_ADMIN_SCHEMA = Joi.object({
     }),
 })
 
-// ✅ Schema đăng nhập admin
 const LOGIN_ADMIN_SCHEMA = Joi.object({
     username: Joi.string().min(3).max(100).required().messages({
         'string.empty': 'Username không được để trống',
@@ -52,7 +50,6 @@ const LOGIN_ADMIN_SCHEMA = Joi.object({
     }),
 })
 
-// 🧭 Middleware validate tạo mới admin
 function validateCreateAdmin(req, res, next) {
     const { error, value } = CREATE_ADMIN_SCHEMA.validate(req.body, {
         abortEarly: false,
@@ -60,7 +57,6 @@ function validateCreateAdmin(req, res, next) {
     })
 
     if (error) {
-        console.log(error)
         return next(
             new ApiError(
                 StatusCodes.UNPROCESSABLE_ENTITY,
@@ -73,7 +69,6 @@ function validateCreateAdmin(req, res, next) {
     return next()
 }
 
-// 🧭 Middleware validate đăng nhập admin
 function validateLoginAdmin(req, res, next) {
     const { error, value } = LOGIN_ADMIN_SCHEMA.validate(req.body, {
         abortEarly: false,
@@ -81,7 +76,6 @@ function validateLoginAdmin(req, res, next) {
     })
 
     if (error) {
-        console.log(error)
         return next(
             new ApiError(
                 StatusCodes.UNPROCESSABLE_ENTITY,

@@ -20,7 +20,6 @@ const RegisterForm = () => {
     const [password, setPassword] = useState('')
     const [showPw, setShowPw] = useState(false)
 
-    // ✅ Dùng TanStack Query mutation
     const { mutate: register, isPending } = useRegisterUser({
         onSuccess: data => {
             showAlert(data.message, { type: 'success', duration: 2000 })

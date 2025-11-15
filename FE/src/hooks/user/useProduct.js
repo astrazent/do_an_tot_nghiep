@@ -11,7 +11,7 @@ import {
     searchProducts,
     searchProductsByCategory,
     getHotProducts,
-    getRelatedProducts
+    getRelatedProducts,
 } from '~/services/user/productService'
 
 export const useNewestProducts = (limit = 8) => {
@@ -46,15 +46,23 @@ export const usePorkSpecialties = (limit = 6) => {
     })
 }
 
-export const useInfiniteProductCollections = ({ 
-    slug = 'all', 
-    limit = 10, 
+export const useInfiniteProductCollections = ({
+    slug = 'all',
+    limit = 10,
     sort = 'newest',
     minPrice = null,
     maxPrice = null,
 } = {}) => {
     return useInfiniteQuery({
-        queryKey: ['products', 'collections', slug, limit, sort, minPrice, maxPrice],
+        queryKey: [
+            'products',
+            'collections',
+            slug,
+            limit,
+            sort,
+            minPrice,
+            maxPrice,
+        ],
 
         queryFn: async ({ pageParam = 0 }) => {
             const response = await getListProductCollections({
@@ -102,7 +110,7 @@ export const useInfinitePromotionProducts = ({
             return response
         },
 
-        staleTime: 1000 * 60 * 10, // 10 phút
+        staleTime: 1000 * 60 * 10,
 
         getNextPageParam: (lastPage, allPages) => {
             const fetchedItemsCount = lastPage?.data?.length || 0
@@ -125,7 +133,6 @@ export const useInfiniteSearchProductsByCategory = ({
         queryKey: ['products', 'searchByCategory', slug, keyword, limit],
 
         queryFn: async ({ pageParam = 0 }) => {
-            // pageParam sẽ là offset
             const response = await searchProductsByCategory(
                 slug,
                 keyword,
@@ -135,17 +142,13 @@ export const useInfiniteSearchProductsByCategory = ({
             return response
         },
 
-        staleTime: 1000 * 60 * 10, // 10 phút
+        staleTime: 1000 * 60 * 10,
 
         getNextPageParam: (lastPage, allPages) => {
             const fetchedItemsCount = lastPage?.length || 0
             if (fetchedItemsCount < limit) return undefined
 
-            // Tính offset cho lần fetch tiếp theo
-            return allPages.reduce(
-                (acc, page) => acc + (page?.length || 0),
-                0
-            )
+            return allPages.reduce((acc, page) => acc + (page?.length || 0), 0)
         },
 
         enabled: !!slug,
@@ -186,7 +189,7 @@ export const useHotProducts = (limit = 6) => {
         queryKey: ['products', 'hot', limit],
         queryFn: () => getHotProducts(limit),
         staleTime: Infinity,
-        cacheTime: Infinity
+        cacheTime: Infinity,
     })
 }
 
@@ -203,12 +206,13 @@ export const useSearchProducts = (slug, limit = 10) => {
 export const usePromotionProducts = (limit = 3) => {
     return useQuery({
         queryKey: ['products', 'promotion', limit],
-        queryFn: () => getListProductCollections({
-            limit,
-            slug: 'all',
-            sort: 'promotion',
-        }),
+        queryFn: () =>
+            getListProductCollections({
+                limit,
+                slug: 'all',
+                sort: 'promotion',
+            }),
         staleTime: Infinity,
-        cacheTime: Infinity
+        cacheTime: Infinity,
     })
 }

@@ -5,7 +5,7 @@ import { useAuth } from '~/hooks/user/useAuth'
 function App() {
     const { authLoading } = useAuth()
 
-    const route = useRoutes(routes) // hook luôn được gọi
+    const route = useRoutes(routes)
 
     if (authLoading) {
         return (

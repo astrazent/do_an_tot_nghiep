@@ -7,6 +7,8 @@ router.post('/', couponController.createCoupon)
 
 router.get('/', couponController.getListCoupons)
 
+router.get('/get_by_code', couponController.getCouponByCode)
+
 router.get('/detail', couponController.getCouponById)
 
 router.get('/type', couponController.getCouponsByType)

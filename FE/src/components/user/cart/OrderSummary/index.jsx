@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import './orderSummary.scss'
 
 const OrderSummary = ({
@@ -8,8 +9,17 @@ const OrderSummary = ({
     total,
     couponCode,
     setCouponCode,
+    onApplyCoupon,
     onMakePurchase,
+    couponMessage,
+    isCouponLoading,
 }) => {
+    const navigate = useNavigate()
+
+    const handleContinueShopping = () => {
+        navigate('/')
+    }
+
     return (
         <div className="order-summary">
             <div className="coupon-section">
@@ -20,20 +30,25 @@ const OrderSummary = ({
                         placeholder="Mã giảm giá"
                         value={couponCode}
                         onChange={e => setCouponCode(e.target.value)}
+                        disabled={isCouponLoading}
                     />
-                    <button>Áp dụng</button>
+                    <button onClick={onApplyCoupon} disabled={isCouponLoading}>
+                        {isCouponLoading ? 'Đang...' : 'Áp dụng'}
+                    </button>
                 </div>
+                {couponMessage?.text && (
+                    <p className={`coupon-message ${couponMessage.type || ''}`}>
+                        {couponMessage.text}
+                    </p>
+                )}
             </div>
             <div className="price-details">
-                {/* SỬA ĐỔI: Hiển thị trực tiếp các props đã được định dạng */}
                 <div className="price-row">
                     <span>Tạm tính:</span>
-                    {/* `subtotal` đã là chuỗi "1.700.000 ₫" */}
                     <span>{subtotal}</span>
                 </div>
                 <div className="price-row discount">
                     <span>Giảm giá:</span>
-                    {/* Giữ lại dấu "-" và hiển thị `discount` */}
                     <span>- {discount}</span>
                 </div>
                 <div className="price-row">
@@ -44,13 +59,14 @@ const OrderSummary = ({
             <div className="total-section">
                 <div className="price-row total">
                     <span>Tổng cộng:</span>
-                    {/* Hiển thị tổng tiền đã được định dạng */}
                     <span>{total}</span>
                 </div>
                 <button className="purchase-btn" onClick={onMakePurchase}>
                     Thanh toán
                 </button>
-                <button className="back-btn">Tiếp tục mua sắm</button>
+                <button className="back-btn" onClick={handleContinueShopping}>
+                    Tiếp tục mua sắm
+                </button>
             </div>
         </div>
     )

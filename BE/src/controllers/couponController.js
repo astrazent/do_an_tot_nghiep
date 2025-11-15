@@ -27,6 +27,20 @@ const getCouponById = async (req, res, next) => {
     }
 }
 
+const getCouponByCode = async (req, res, next) => {
+    try {
+        const data = await couponService.getCouponByCodeService(
+            req.query.couponCode
+        )
+        return res.status(StatusCodes.OK).json({
+            message: 'Lấy coupon thành công',
+            data,
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
 const getListCoupons = async (req, res, next) => {
     try {
         const data = await couponService.getListCouponsService(req.body)
@@ -81,6 +95,7 @@ const deleteCoupon = async (req, res, next) => {
 export const couponController = {
     createCoupon,
     getCouponById,
+    getCouponByCode,
     getListCoupons,
     getCouponsByType,
     updateCoupon,
