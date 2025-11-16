@@ -1,6 +1,5 @@
 import { marketingAIService } from "~/services/marketingAIService"
 import { StatusCodes } from 'http-status-codes'
-import ErrorServer from '~/utils/ErrorServer'
 
 const marketing = async (req, res, next) => {
     try {
@@ -10,7 +9,7 @@ const marketing = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 

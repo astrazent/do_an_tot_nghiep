@@ -1,6 +1,5 @@
 import { transactionService } from "~/services/transactionService"
 import { StatusCodes } from 'http-status-codes'
-import ErrorServer from '~/utils/ErrorServer'
 
 const addTransaction = async (req, res, next) => {
     try {
@@ -10,7 +9,7 @@ const addTransaction = async (req, res, next) => {
             data
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -22,7 +21,7 @@ const getTransactionById = async (req, res, next) => {
             data
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -34,7 +33,7 @@ const getListTransactions = async (req, res, next) => {
             data
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -46,7 +45,7 @@ const getTransactionsByUser = async (req, res, next) => {
             data
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -58,7 +57,7 @@ const getTransactionsByStatus = async (req, res, next) => {
             data
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -70,7 +69,7 @@ const getTransactionsByShipmentStatus = async (req, res, next) => {
             data
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -82,7 +81,7 @@ const updateTransaction = async (req, res, next) => {
             data
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -93,7 +92,7 @@ const deleteTransaction = async (req, res, next) => {
             data
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 

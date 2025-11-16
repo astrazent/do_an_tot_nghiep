@@ -1,5 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux' // Thêm useSelector
+import { useSelector, useDispatch } from 'react-redux'
+import { useQueryClient } from '@tanstack/react-query'
+import { useState } from 'react' // Import useState
 import { removeUser } from '~/Redux/reducers/userReducer'
 import { logoutUser } from '~/services/user/userService'
 import { useAlert } from '~/contexts/AlertContext'
@@ -8,8 +10,13 @@ import {
     FaShoppingCart,
     FaUserCircle,
     FaSignInAlt,
+    FaSpinner, // Import icon loading
 } from 'react-icons/fa'
 import logo from '~/assets/icon/logo/brand-logo.png'
+
+// Giả sử các file này tồn tại ở đúng đường dẫn
+import { useDebounce } from '~/hooks/shared/useDebounce'
+import { useSearchProducts } from '~/hooks/user/useProduct'
 
 const userMenuItems = [
     { id: 1, name: 'Tài khoản của tôi', to: '/user/profile' },
@@ -17,24 +24,41 @@ const userMenuItems = [
     { id: 3, name: 'Đăng xuất', isButton: true },
 ]
 
-// Bỏ prop 'login' không cần thiết
 function MainHeader({ cartItemCount = 0 }) {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const { showAlert } = useAlert()
+    const user = useSelector(state => state.user)
+    const isLoggedIn = !!user.email
 
-    // Sử dụng useSelector để lấy trạng thái đăng nhập trực tiếp từ Redux store.
-    // Giả sử trong store của bạn, slice 'user' có một trường 'currentUser'.
-    // Nếu currentUser tồn tại (không phải null), coi như đã đăng nhập.
-    const isLoggedIn = useSelector((state) => !!state.user.email)
+    // --- TÍCH HỢP TÌM KIẾM ---
+    const [searchValue, setSearchValue] = useState('')
+    const [showResults, setShowResults] = useState(false)
+    const debouncedSearchValue = useDebounce(searchValue, 500) // delay 500ms
+    const queryClient = useQueryClient()
+    const { data: searchData, isLoading: isSearching } =
+        useSearchProducts(debouncedSearchValue)
 
-    const handleSuccess = (message) => {
+    const handleSearchChange = e => {
+        setSearchValue(e.target.value)
+    }
+    const handleBlurSearch = () => {
+        setTimeout(() => {
+            setShowResults(false)
+            if (debouncedSearchValue) {
+                queryClient.removeQueries(['product', 'search', debouncedSearchValue])
+            }
+        }, 200)
+    }
+    // --- KẾT THÚC TÍCH HỢP TÌM KIẾM ---
+
+    const handleSuccess = message => {
         showAlert(message, {
             type: 'success',
         })
     }
 
-    const handleError = (message) => {
+    const handleError = message => {
         showAlert(message, {
             type: 'error',
             duration: 3000,
@@ -51,10 +75,9 @@ function MainHeader({ cartItemCount = 0 }) {
 
     const handleLogout = async () => {
         try {
-            console.log("đã bấm logout!")
-            await logoutUser() // gọi API logout
-            dispatch(removeUser()) // xóa user trong Redux
-            // Không cần setIsLoggedIn(false) nữa, component sẽ tự re-render khi Redux state thay đổi
+            console.log('đã bấm logout!')
+            await logoutUser()
+            dispatch(removeUser())
             handleSuccess('Đăng xuất thành công')
         } catch (err) {
             handleError('Đăng xuất thất bại')
@@ -71,16 +94,71 @@ function MainHeader({ cartItemCount = 0 }) {
                     </Link>
                 </div>
 
+                {/* --- KHUNG TÌM KIẾM VÀ KẾT QUẢ --- */}
                 <div className="relative w-full max-w-md">
                     <input
                         type="text"
-                        placeholder="Tìm sản phẩm ..."
+                        placeholder="Tìm sản phẩm..."
                         className="border border-green-500 rounded-full py-2 pl-10 pr-4 w-full focus:outline-none focus:ring-1 focus:ring-green-400"
+                        value={searchValue}
+                        onChange={handleSearchChange}
+                        onFocus={() => setShowResults(true)}
+                        onBlur={handleBlurSearch}
                     />
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <FaSearch className="text-gray-400" />
                     </div>
+
+                    {/* --- HIỂN THỊ KẾT QUẢ TÌM KIẾM --- */}
+                    {showResults && searchValue && (
+                        <div className="absolute top-full mt-2 w-full z-20 bg-white rounded-md shadow-lg border border-gray-200/75 max-h-96 overflow-y-auto">
+                            {isSearching && (
+                                <div className="p-4 flex items-center justify-center text-gray-500">
+                                    <FaSpinner className="animate-spin mr-2" />
+                                    Đang tìm...
+                                </div>
+                            )}
+
+                            {!isSearching &&
+                                searchData?.length === 0 && (
+                                    <div className="p-4 text-center text-gray-500">
+                                        Không tìm thấy sản phẩm.
+                                    </div>
+                                )}
+
+                            {!isSearching &&
+                                searchData?.length > 0 && (
+                                    <ul>
+                                        {searchData.map(
+                                            product => (
+                                                <li key={product._id}>
+                                                    <Link
+                                                        to={`/product/${product.slug}`}
+                                                        className="flex items-center p-3 hover:bg-green-50 transition-colors duration-200"
+                                                    >
+                                                        <img
+                                                            src={
+                                                                product
+                                                                    .images?.[0]
+                                                                    ?.url ??
+                                                                '/placeholder.jpg' // ảnh mặc định
+                                                            }
+                                                            alt={product.name}
+                                                            className="w-12 h-12 object-cover rounded-md mr-4"
+                                                        />
+                                                        <span className="text-sm text-gray-800 font-medium">
+                                                            {product.name}
+                                                        </span>
+                                                    </Link>
+                                                </li>
+                                            )
+                                        )}
+                                    </ul>
+                                )}
+                        </div>
+                    )}
                 </div>
+                {/* --- KẾT THÚC KHUNG TÌM KIẾM --- */}
 
                 <div className="text-center flex-shrink-0">
                     <span className="text-gray-500 font-semibold">
@@ -102,11 +180,19 @@ function MainHeader({ cartItemCount = 0 }) {
                     <div className="relative group">
                         <button
                             onClick={handleUserIconClick}
-                            className="text-gray-600 hover:text-green-600 transition-colors duration-300 text-3xl"
+                            className="text-gray-600 hover:text-green-600 transition-colors duration-300 text-3xl flex items-center justify-center"
                             aria-label="Tài khoản"
                         >
                             {isLoggedIn ? (
-                                <FaUserCircle size={25} />
+                                user.avatar_url ? (
+                                    <img
+                                        src={user.avatar_url}
+                                        alt="User Avatar"
+                                        className="w-10 h-10 rounded-full object-cover border-2 border-gray-200 group-hover:border-green-500"
+                                    />
+                                ) : (
+                                    <FaUserCircle size={25} />
+                                )
                             ) : (
                                 <FaSignInAlt size={25} />
                             )}

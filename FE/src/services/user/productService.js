@@ -179,8 +179,6 @@ export const getListProductCollections = async ({
             },
             authRequired: true, // <-- custom property
         })
-
-        console.log('check result: ', response.data)
         return response.data
     } catch (error) {
         console.error('Lỗi khi lấy danh sách sản phẩm:', error)
@@ -205,7 +203,6 @@ export const getListPromotionProducts = async ({
                 ...(maxPrice !== null ? { maxPrice } : {}), // gửi nếu khác null
             },
         })
-        console.log('check result: ', response.data)
         return response.data
     } catch (error) {
         console.error('Lỗi khi lấy danh sách sản phẩm khuyến mãi:', error)
@@ -249,6 +246,40 @@ export const getHotProducts = async (limit = 3) => {
         return response.data || []
     } catch (error) {
         console.error(`Đã xảy ra lỗi khi lấy sản phẩm hot:`, error)
+        throw error
+    }
+}
+
+export const searchProducts = async (slug, limit = 10) => {
+    if (!slug) return []
+    try {
+        const response = await api.get('/products/search', {
+            params: { slug, limit },
+        })
+        return response.data?.data || [] // data.data vì API trả về { message, data }
+    } catch (error) {
+        console.error(`Đã xảy ra lỗi khi tìm kiếm sản phẩm:`, error)
+        throw error
+    }
+}
+
+export const searchProductsByCategory = async (
+    slug,
+    keyword = '',
+    limit = 10,
+    offset = 0
+) => {
+    if (!slug) return []
+    try {
+        const response = await api.get('/products/search_by_category', {
+            params: { slug, keyword, limit, offset },
+        })
+        return response.data?.data || [] // data.data vì API trả về { message, data }
+    } catch (error) {
+        console.error(
+            `Đã xảy ra lỗi khi tìm kiếm sản phẩm theo category:`,
+            error
+        )
         throw error
     }
 }

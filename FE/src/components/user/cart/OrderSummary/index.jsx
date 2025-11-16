@@ -25,23 +25,27 @@ const OrderSummary = ({
                 </div>
             </div>
             <div className="price-details">
+                {/* SỬA ĐỔI: Hiển thị trực tiếp các props đã được định dạng */}
                 <div className="price-row">
                     <span>Tạm tính:</span>
-                    <span>${subtotal.toFixed(2)}</span>
+                    {/* `subtotal` đã là chuỗi "1.700.000 ₫" */}
+                    <span>{subtotal}</span>
                 </div>
                 <div className="price-row discount">
                     <span>Giảm giá:</span>
-                    <span>- ${discount.toFixed(2)}</span>
+                    {/* Giữ lại dấu "-" và hiển thị `discount` */}
+                    <span>- {discount}</span>
                 </div>
                 <div className="price-row">
                     <span>Thuế:</span>
-                    <span>${tax.toFixed(2)}</span>
+                    <span>{tax}</span>
                 </div>
             </div>
             <div className="total-section">
                 <div className="price-row total">
                     <span>Tổng cộng:</span>
-                    <span>${total.toFixed(2)}</span>
+                    {/* Hiển thị tổng tiền đã được định dạng */}
+                    <span>{total}</span>
                 </div>
                 <button className="purchase-btn" onClick={onMakePurchase}>
                     Thanh toán

@@ -1,4 +1,3 @@
-import ErrorServer from '~/utils/ErrorServer'
 import { productService } from '~/services/productService'
 import { StatusCodes } from 'http-status-codes'
 
@@ -10,7 +9,7 @@ const createProduct = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -22,7 +21,7 @@ const getByIdProduct = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -34,9 +33,60 @@ const getListProduct = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
+
+const getSearchProduct = async (req, res, next) => {
+    try {
+        const { slug, limit } = req.query
+
+        if (!slug) {
+            return res.status(StatusCodes.BAD_REQUEST).json({
+                message: 'Vui lòng truyền từ khóa tìm kiếm'
+            })
+        }
+
+        const data = await productService.getSearchProductService(slug, limit)
+
+        return res.status(StatusCodes.OK).json({
+            message: 'Danh sách sản phẩm đã được lấy thành công',
+            data,
+        })
+    } catch (error) {
+        console.error('Lỗi trong getSearchProduct:', error)
+        next(error)
+    }
+}
+
+const getSearchByCategory = async (req, res, next) => {
+    try {
+        const { slug, keyword = '', limit, offset = 0 } = req.query
+
+        if (!slug) {
+            return res.status(StatusCodes.BAD_REQUEST).json({
+                message: 'Vui lòng truyền slug của category'
+            })
+        }
+
+        // Gọi service với slug, keyword, limit, offset
+        const data = await productService.getSearchByCategoryService(
+            slug,
+            keyword,
+            limit ? Number(limit) : 10,
+            offset ? Number(offset) : 0
+        )
+
+        return res.status(StatusCodes.OK).json({
+            message: 'Danh sách sản phẩm đã được lấy thành công',
+            data: data || [], // luôn trả về array
+        })
+    } catch (error) {
+        console.error('Lỗi trong getSearchByCategory:', error)
+        next(error)
+    }
+}
+
 const getListPromotionProduct = async (req, res, next) => {
     try {
         const data = await productService.getPromotionProductService(req.query)
@@ -45,7 +95,7 @@ const getListPromotionProduct = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -58,7 +108,7 @@ const getBySlug = async (req, res, next) => {
         })
     } catch (error) {
         console.error('Lỗi trong getBySlug:', error)
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 const getRelatedBySlug = async (req, res, next) => {
@@ -70,7 +120,7 @@ const getRelatedBySlug = async (req, res, next) => {
         })
     } catch (error) {
         console.error('Lỗi trong getRelatedBySlug:', error)
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 const getHotProduct = async (req, res, next) => {
@@ -83,7 +133,7 @@ const getHotProduct = async (req, res, next) => {
         })
     } catch (error) {
         console.error('Lỗi trong getHotProduct:', error)
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -95,7 +145,7 @@ const updateProduct = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -107,13 +157,15 @@ const deleteProduct = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
 export const productController = {
     getByIdProduct,
     getListProduct,
+    getSearchProduct,
+    getSearchByCategory,
     getListPromotionProduct,
     getBySlug,
     getHotProduct,

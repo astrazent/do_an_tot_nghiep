@@ -1,5 +1,4 @@
 import { postService } from '~/services/postService'
-import ErrorServer from '~/utils/ErrorServer'
 import { StatusCodes } from 'http-status-codes'
 
 const createPost = async (req, res, next) => {
@@ -10,7 +9,7 @@ const createPost = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -23,7 +22,7 @@ const getByIdPost = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 const getBySlug = async (req, res, next) => {
@@ -35,7 +34,7 @@ const getBySlug = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 const getByCategorySlug = async (req, res, next) => {
@@ -47,7 +46,7 @@ const getByCategorySlug = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 const getByPostTypeSlug = async (req, res, next) => {
@@ -59,7 +58,7 @@ const getByPostTypeSlug = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 const getRelatedByPostSlug = async (req, res, next) => {
@@ -71,7 +70,7 @@ const getRelatedByPostSlug = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 const getListPost = async (req, res, next) => {
@@ -83,7 +82,7 @@ const getListPost = async (req, res, next) => {
             data,
         });
     } catch (error) {
-        return ErrorServer(error, req, res, next);
+        next(error);
     }
 };
 
@@ -96,7 +95,7 @@ const updatePost = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -108,7 +107,7 @@ const deletePost = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 

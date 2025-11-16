@@ -7,11 +7,23 @@ import { formatCurrency } from '~/utils/formatCurrency'
 
 const ITEMS_PER_PAGE = 8
 
+// --- HÀM MỚI ĐỂ CHUẨN HÓA CHUỖI ---
+// Chuyển chuỗi thành chữ thường và loại bỏ dấu tiếng Việt
+const normalizeText = (text) => {
+    if (!text) return ''
+    return text
+        .toLowerCase()
+        .normalize('NFD') // Chuẩn hóa Unicode (NFD)
+        .replace(/[\u0300-\u036f]/g, '') // Loại bỏ các ký tự dấu
+        .replace(/đ/g, 'd') // Chuyển 'đ' thành 'd'
+}
+
+
 const SearchPage = () => {
     const [searchParams, setSearchParams] = useSearchParams()
     const [searchTerm, setSearchTerm] = useState('')
 
-    // Lấy các tham số từ URL, giữ nguyên logic
+    // Lấy các tham số từ URL
     const category = searchParams.get('category') || 'all'
     const minPrice = searchParams.get('minPrice')
         ? parseInt(searchParams.get('minPrice'))
@@ -23,15 +35,14 @@ const SearchPage = () => {
 
     const [filteredProducts, setFilteredProducts] = useState([])
 
-    // --- SỬA ĐỔI TẠI ĐÂY ---
     // Truyền trực tiếp minPrice và maxPrice vào hook để API xử lý lọc
     const { data, isLoading, hasNextPage, fetchNextPage, isFetchingNextPage } =
         useInfiniteProductCollections({
             slug: category,
             limit: ITEMS_PER_PAGE,
             sort: sortBy,
-            minPrice: minPrice, // Thêm minPrice
-            maxPrice: maxPrice, // Thêm maxPrice
+            minPrice: minPrice,
+            maxPrice: maxPrice,
         })
 
     // Dữ liệu trả về từ hook đã được lọc sẵn theo giá, chỉ cần biến đổi cấu trúc
@@ -57,28 +68,25 @@ const SearchPage = () => {
     }, [data])
 
     useEffect(() => {
-        // --- SỬA ĐỔI TẠI ĐÂY ---
-        // Bỏ logic lọc giá ở frontend, chỉ giữ lại lọc theo searchTerm
         if (allProducts) {
             let results = allProducts
 
-            // Chỉ lọc theo từ khóa tìm kiếm trên kết quả hiện tại
+            // --- SỬA ĐỔI LOGIC TÌM KIẾM TẠI ĐÂY ---
             if (searchTerm) {
-                results = allProducts.filter(product =>
-                    product.name
-                        .toLowerCase()
-                        .includes(searchTerm.toLowerCase())
-                )
+                // Chuẩn hóa từ khóa tìm kiếm
+                const normalizedSearchTerm = normalizeText(searchTerm)
+                results = allProducts.filter(product => {
+                    // Chuẩn hóa tên sản phẩm trước khi so sánh
+                    const normalizedProductName = normalizeText(product.name)
+                    return normalizedProductName.includes(normalizedSearchTerm)
+                })
             }
 
             setFilteredProducts(results)
         }
-        // Bỏ minPrice, maxPrice khỏi dependency array vì không còn dùng để lọc ở đây
     }, [allProducts, searchTerm])
 
-    // Logic xử lý tắt bộ lọc đã đúng với yêu cầu mới, không cần thay đổi
-    // - Khi xóa 'category', min/maxPrice vẫn còn trên URL, hook sẽ gọi API với category='all' và giữ bộ lọc giá.
-    // - Khi xóa ['minPrice', 'maxPrice'], 'category' vẫn còn, hook sẽ gọi API với category được chỉ định và không lọc giá.
+
     const handleRemoveFilter = keys => {
         const updated = new URLSearchParams(searchParams)
         if (Array.isArray(keys)) {
@@ -109,10 +117,10 @@ const SearchPage = () => {
         <div className="min-h-screen font-sans">
             <main className="max-w-7xl mx-auto p-4">
                 {/* Phần JSX còn lại giữ nguyên */}
-                <section className="mb-6 p-5 bg-white rounded-xl shadow border border-gray-100">
+                <section className="mb-6">
                     <div className="flex items-center justify-between mb-4">
                         <h2 className="text-lg font-semibold text-gray-800 uppercase flex items-center">
-                            <span className="w-1.5 h-6 bg-green-600 mr-2 rounded-sm"></span>
+                            <span className="w-1.5 h-6 bg-green-600 mr-2"></span>
                             Kết quả tìm kiếm
                         </h2>
                         <span className="text-sm text-gray-500 font-medium">
@@ -120,7 +128,7 @@ const SearchPage = () => {
                         </span>
                     </div>
 
-                    <div className="flex flex-col md:flex-row md:items-center md:justify-start md:gap-x-6 gap-y-3">
+                    <div className="w-full flex flex-col md:flex-row md:items-center md:justify-between md:gap-x-6 gap-y-3">
                         <div className="relative flex-1 max-w-[320px]">
                             <input
                                 type="text"
@@ -153,7 +161,7 @@ const SearchPage = () => {
                                 </span>
 
                                 {category && (
-                                    <span className="inline-flex items-center bg-green-50 text-green-700 border border-green-200 rounded px-1.5 py-[2px] font-medium transition hover:bg-green-100">
+                                    <span className="inline-flex items-center bg-green-50 text-green-700 border border-green-200 rounded px-1.5 py-[2px] font-medium transition hover:bg-green-100 mr-5">
                                         <span className="capitalize w-full">
                                             {category === 'all'
                                                 ? 'Tất cả sản phẩm'
@@ -181,7 +189,7 @@ const SearchPage = () => {
                                 )}
 
                                 {minPrice !== null && maxPrice !== null && (
-                                    <span className="inline-flex items-center bg-green-50 text-green-700 border border-green-200 rounded px-1.5 py-[2px] font-medium transition hover:bg-green-100">
+                                    <span className="inline-flex items-center bg-green-50 text-green-700 border border-green-200 rounded px-1.5 py-[2px] font-medium transition hover:bg-green-100 mr-5">
                                         Giá: {formatCurrency(minPrice)} -{' '}
                                         {formatCurrency(maxPrice)}
                                         <button
@@ -198,9 +206,9 @@ const SearchPage = () => {
                                                 background: 'transparent',
                                             }}
                                             className="ml-0.5 text-green-500 hover:text-green-700 text-[10px] leading-[0]"
-                                        >
-                                            ×
-                                        </button>
+                                            >
+                                                ×
+                                            </button>
                                     </span>
                                 )}
                             </div>

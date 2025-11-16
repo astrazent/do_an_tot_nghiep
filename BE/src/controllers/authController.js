@@ -1,7 +1,6 @@
 import { StatusCodes } from 'http-status-codes'
 import { env } from '~/config/environment'
 import ApiError from '~/utils/ApiError'
-import ErrorServer from '~/utils/ErrorServer'
 import { tokenService } from '~/services/tokenService'
 import { userService } from '../services/userService.js'
 import {
@@ -9,6 +8,7 @@ import {
     generateRefreshToken,
     verifyRefreshToken,
 } from '~/utils/token.js'
+import { verifyGoogleToken } from '~/utils/providerAuth.js'
 
 const register = async (req, res, next) => {
     try {
@@ -18,7 +18,7 @@ const register = async (req, res, next) => {
             data,
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 export const convertIP = rawIp => {
@@ -38,61 +38,119 @@ export const convertIP = rawIp => {
 
     return rawIp
 }
+
+/**
+ * Hàm tạo Access Token, Refresh Token, lưu vào DB và set cookie
+ * @param {object} res - Đối tượng response của Express
+ * @param {object} req - Đối tượng request của Express
+ * @param {object} user - Dữ liệu người dùng đã được xác thực (phải có id, username, email)
+ * @param {string} successMessage - Tin nhắn trả về khi thành công
+ */
+const generateAndSetTokens = async (res, req, user, successMessage) => {
+    // 1. Tạo payload cho token
+    const userPayload = {
+        user_id: user.id,
+        username: user.username,
+        email: user.email,
+    }
+
+    // 2. Tạo access và refresh token
+    const accessToken = generateAccessToken(userPayload)
+    const refreshToken = generateRefreshToken(userPayload)
+    const refreshTokenExpires = new Date(
+        Date.now() + 7 * 24 * 60 * 60 * 1000 // 7 ngày
+    )
+
+    // 3. Chuẩn bị dữ liệu để lưu vào DB
+    const tokenData = {
+        user_id: user.id,
+        refresh_token: refreshToken,
+        device_info: req.headers['user-agent'] || 'Unknown Device',
+        ip_address: convertIP(req.ip), // Giữ lại hàm convertIP của bạn
+        token_started_at: new Date(),
+        token_expired_at: refreshTokenExpires,
+        revoked_at: null,
+    }
+    await tokenService.createTokenService(tokenData)
+
+    // 4. Set cookie cho client
+    res.cookie('access_token', accessToken, {
+        httpOnly: true,
+        secure: env.BUILD_MODE === 'production',
+        sameSite: 'lax',
+        path: '/',
+        maxAge: 1 * 60 * 1000, // 2 phút
+    })
+    res.cookie('refresh_token', refreshToken, {
+        httpOnly: true,
+        secure: env.BUILD_MODE === 'production',
+        sameSite: 'lax',
+        path: '/',
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 ngày
+    })
+
+    // 5. Trả về response thành công
+    return res.status(StatusCodes.OK).json({
+        message: successMessage,
+        data: user,
+    })
+}
+
 const login = async (req, res, next) => {
     try {
-        const data = await userService.loginService(req.validated)
-        const userPayload = {
-            user_id: data.id,
-            username: data.username,
-            email: data.email,
-            phone: data.phone,
-            full_name: data.full_name,
-            gender: data.gender,
-            address: data.address,
-            city: data.city,
-            district: data.district,
-            ward: data.ward,
-            avatar_url: data.avatar_url,
-            status: data.status,
-            created_at: data.created_at,
-            updated_at: data.updated_at,
-        }
-        const accessToken = generateAccessToken(userPayload)
-        const refreshToken = generateRefreshToken(userPayload)
-        const refreshTokenExpires = new Date(
-            Date.now() + 7 * 24 * 60 * 60 * 1000
-        )
-        const tokenData = {
-            user_id: data.id,
-            refresh_token: refreshToken,
-            device_info: req.headers['user-agent'] || 'Unknown Device', // Lấy thông tin trình duyệt/thiết bị
-            ip_address: convertIP(req.ip), // Lấy địa chỉ IP từ request
-            token_started_at: new Date(),
-            token_expired_at: refreshTokenExpires,
-            revoked_at: null,
-        }
-        await tokenService.createTokenService(tokenData)
-        res.cookie('access_token', accessToken, {
-            httpOnly: true,
-            secure: env.BUILD_MODE === 'production',
-            sameSite: 'lax',
-            path: '/',
-            maxAge: 2 * 60 * 1000, // 2 phút
-        })
-        res.cookie('refresh_token', refreshToken, {
-            httpOnly: true,
-            secure: env.BUILD_MODE === 'production',
-            sameSite: 'lax',
-            path: '/',
-            maxAge: 7 * 24 * 60 * 60 * 1000, // 7 ngày
-        })
+        // Chỉ xác thực người dùng
+        const user = await userService.loginService(req.validated)
 
-        return res.status(StatusCodes.OK).json({
-            message: 'Đăng nhập thành công',
-            data,
-        })
+        // Gọi hàm dùng chung để xử lý token và trả về response
+        await generateAndSetTokens(res, req, user, 'Đăng nhập thành công')
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
+    }
+}
+
+export const loginGoogle = async (req, res, next) => {
+    try {
+        const { tokenId } = req.body
+        if (!tokenId) {
+            return next(
+                new ApiError(StatusCodes.BAD_REQUEST, 'Thiếu token Google')
+            )
+        }
+
+        // 1️⃣ Xác thực token Google bằng hàm chung
+        const payload = await verifyGoogleToken(tokenId)
+        if (!payload || !payload.email) {
+            return next(
+                new ApiError(
+                    StatusCodes.UNAUTHORIZED,
+                    'Google token không hợp lệ'
+                )
+            )
+        }
+
+
+        // 2️⃣ Kiểm tra user có tồn tại trong DB
+        let user = await userService.findUserByEmailService(payload.email)
+        // 3️⃣ Nếu chưa có user thì tạo mới
+        if (!user) {
+            user = await userService.registerGoogleUserService({
+                email: payload.email,
+                email_verified: payload.email_verified,
+                full_name: payload.full_name || `${payload.first_name || ''} ${payload.last_name || ''}`.trim(),
+                googleId: payload.googleId,
+                avatar_url: payload.avatar_url || null
+            })
+        }
+
+        // 4️⃣ Gọi hàm dùng chung để xử lý token và trả về response
+        await generateAndSetTokens(
+            res,
+            req,
+            user,
+            'Đăng nhập Google thành công'
+        )
+    } catch (error) {
+        next(error)
     }
 }
 
@@ -127,7 +185,7 @@ export const logout = async (req, res, next) => {
             .status(StatusCodes.OK)
             .json({ message: 'Người dùng đã đăng xuất.' })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -177,7 +235,7 @@ export const refreshToken = async (req, res, next) => {
             )
         }
         // 6️⃣ Kiểm tra user ID trong token
-        if (storedToken.user_id !== decoded.userId) {
+        if (storedToken.user_id !== decoded.user_id) {
             return next(
                 new ApiError(
                     StatusCodes.FORBIDDEN,
@@ -191,17 +249,6 @@ export const refreshToken = async (req, res, next) => {
             user_id: decoded.user_id,
             username: decoded.username,
             email: decoded.email,
-            phone: decoded.phone,
-            full_name: decoded.full_name,
-            gender: decoded.gender,
-            address: decoded.address,
-            city: decoded.city,
-            district: decoded.district,
-            ward: decoded.ward,
-            avatar_url: decoded.avatar_url,
-            status: decoded.status,
-            created_at: decoded.created_at,
-            updated_at: decoded.updated_at,
         }
 
         // 8️⃣ Cấp lại access token mới
@@ -219,7 +266,7 @@ export const refreshToken = async (req, res, next) => {
             message: 'Làm mới token thành công',
         })
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -229,25 +276,12 @@ export const refreshToken = async (req, res, next) => {
 export const validateToken = (req, res, next) => {
     try {
         const userPayload = {
-            user_id: req.user.user_id,
             username: req.user.username,
             email: req.user.email,
-            phone: req.user.phone,
-            full_name: req.user.full_name,
-            gender: req.user.gender,
-            address: req.user.address,
-            city: req.user.city,
-            district: req.user.district,
-            ward: req.user.ward,
-            avatar_url: req.user.avatar_url,
-            status: req.user.status,
-            created_at: req.user.created_at,
-            updated_at: req.user.updated_at,
         }
-        console.log(userPayload)
         res.status(StatusCodes.OK).json(userPayload)
     } catch (error) {
-        return ErrorServer(error, req, res, next)
+        next(error)
     }
 }
 
@@ -256,5 +290,6 @@ export const authController = {
     refreshToken,
     register,
     login,
+    loginGoogle,
     logout,
 }

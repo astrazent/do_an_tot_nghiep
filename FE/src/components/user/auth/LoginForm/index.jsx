@@ -1,18 +1,17 @@
 import React, { useState } from 'react'
 import Button from '~/components/shared/Button'
 import InputField from '~/components/shared/InputField'
-import { useLoginUser } from '~/hooks/user/useUser'
+// ✅ Import hook mới và GoogleLogin
+import { useLoginUser, useLoginGoogle } from '~/hooks/user/useUser'
+import { GoogleLogin } from '@react-oauth/google'
 import { useAlert } from '~/contexts/AlertContext'
 import { updateUser } from '~/Redux/reducers/userReducer'
 import './loginForm.scss'
-
-import { FcGoogle } from 'react-icons/fc'
-import { FaApple } from 'react-icons/fa'
+import { Link, useNavigate } from 'react-router-dom'
 import { HiOutlineUser } from 'react-icons/hi'
 import { RiLockPasswordLine } from 'react-icons/ri'
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai'
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 
 const LoginForm = () => {
     const { showAlert } = useAlert()
@@ -23,7 +22,7 @@ const LoginForm = () => {
     const [password, setPassword] = useState('')
     const [showPw, setShowPw] = useState(false)
 
-    // ✅ Dùng TanStack Query mutation
+    // Mutation cho đăng nhập thường
     const { mutate: login, isPending } = useLoginUser({
         onSuccess: data => {
             dispatch(updateUser({ ...data.data }))
@@ -31,8 +30,24 @@ const LoginForm = () => {
             navigate('/')
         },
         onError: error => {
+            console.log(error);
             const message =
                 error?.response?.data?.message || 'Đăng nhập thất bại'
+            showAlert(message, { type: 'error', duration: 2000 })
+        },
+    })
+
+    // ✅ Mutation cho đăng nhập Google
+    const { mutate: loginGoogle, isPending: isGooglePending } = useLoginGoogle({
+        onSuccess: data => {
+            // Logic tương tự như đăng nhập thường
+            dispatch(updateUser({ ...data.data }))
+            showAlert(data.message, { type: 'success', duration: 2000 })
+            navigate('/')
+        },
+        onError: error => {
+            const message =
+                error?.response?.data?.message || 'Đăng nhập Google thất bại'
             showAlert(message, { type: 'error', duration: 2000 })
         },
     })
@@ -45,9 +60,21 @@ const LoginForm = () => {
     return (
         <div className="login-card">
             <h1 className="login-title">Đăng nhập với</h1>
-            <div className="social-buttons">
-                <Button icon={<FcGoogle size={22} />}>Google</Button>
-                <Button icon={<FaApple size={22} />}>Apple</Button>
+            <div className="social-buttons flex justify-center items-center">
+                <GoogleLogin
+                    onSuccess={credentialResponse => {
+                        const tokenId = credentialResponse.credential
+                        loginGoogle({ tokenId })
+                    }}
+                    onError={() => {
+                        showAlert('Đăng nhập Google thất bại', {
+                            type: 'error',
+                            duration: 2000,
+                        })
+                    }}
+                    width={240} // chiều rộng
+                    shape="rectangular"
+                />
             </div>
 
             <div className="separator">
@@ -57,6 +84,7 @@ const LoginForm = () => {
             </div>
 
             <form className="login-form" onSubmit={handleLogin}>
+                {/* ... Các InputField không đổi ... */}
                 <InputField
                     type="text"
                     placeholder="Tên đăng nhập"
@@ -85,21 +113,27 @@ const LoginForm = () => {
                     required
                 />
 
-                <a href="#" className="forgot-password">
-                    Quên mật khẩu?
-                </a>
+                <p className="forgot-password">
+                    <Link
+                        to="/forgot-password"
+                        className="text-green-600 hover:underline"
+                    >
+                        Quên mật khẩu?
+                    </Link>
+                </p>
 
                 <Button
                     type="submit"
                     className="login-button"
-                    disabled={isPending}
+                    // ✅ Vô hiệu hóa khi một trong hai đang chạy
+                    disabled={isPending || isGooglePending}
                 >
                     {isPending ? 'Đang đăng nhập...' : 'Đăng nhập'}
                 </Button>
             </form>
 
             <p className="signup-link">
-                Chưa có tài khoản? <a href="register">Đăng kí ngay</a>
+                Chưa có tài khoản? <Link to="/register">Đăng kí ngay</Link>
             </p>
         </div>
     )
