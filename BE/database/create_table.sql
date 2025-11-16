@@ -136,6 +136,7 @@ CREATE TABLE
     email VARCHAR(100) UNIQUE NOT NULL,
     email_verified TINYINT(1) NOT NULL DEFAULT 0,
     phone VARCHAR(20) UNIQUE NULL,
+    phone_verified TINYINT(1) NOT NULL DEFAULT 0,
     full_name VARCHAR(100) NULL,
     gender ENUM('male','female','other') NOT NULL DEFAULT 'other',
     address VARCHAR(255) NULL,
@@ -158,14 +159,15 @@ CREATE TABLE
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     user_id INT UNSIGNED NOT NULL,
     code VARCHAR(10) NOT NULL,
-    type TINYINT NOT NULL DEFAULT 0 COMMENT '0: đăng nhập, 1: đổi mật khẩu, 2: xác thực email',
-    is_used BOOLEAN NOT NULL DEFAULT 0,
+    type ENUM('login', 'change_password', 'verify_email') NOT NULL DEFAULT 'login' COMMENT 'login: đăng nhập, change_password: đổi mật khẩu, verify_email: xác thực email',
+    is_used TINYINT(1) NOT NULL DEFAULT 0,
     attempts INT UNSIGNED NOT NULL DEFAULT 0,
     expires_at DATETIME NOT NULL,
     ip_address VARCHAR(45) DEFAULT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE
 );
+
 CREATE EVENT IF NOT EXISTS delete_expired_otps
 ON SCHEDULE EVERY 5 MINUTE
 DO
@@ -357,12 +359,10 @@ CREATE TABLE
     CommentImages (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     comment_id INT UNSIGNED NOT NULL,
-    user_id INT UNSIGNED NOT NULL,
     image_url VARCHAR(255) NOT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    CONSTRAINT fk_comment_images_comment FOREIGN KEY (comment_id) REFERENCES Comments (id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_comment_images_user FOREIGN KEY (user_id) REFERENCES Users (id) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT fk_comment_images_comment FOREIGN KEY (comment_id) REFERENCES Comments (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- AIFeedback
@@ -435,6 +435,7 @@ CREATE TABLE
     message VARCHAR(255) NOT NULL,
     tracking_number VARCHAR(100) NOT NULL,
     shipping_fee DECIMAL(12, 2) NOT NULL DEFAULT 0.00,
+    payment_status ENUM('pending', 'paid', 'failed', 'refunded') NOT NULL DEFAULT 'pending',
     shipment_status ENUM('pending', 'shipped', 'in_transit', 'delivered', 'returned') NOT NULL DEFAULT 'pending',
     amount DECIMAL(12, 2) NOT NULL DEFAULT 0.00,
     shipped_at DATETIME NULL,

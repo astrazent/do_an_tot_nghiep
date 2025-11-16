@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai'
 import { FiCamera } from 'react-icons/fi'
 import { useAlert } from '~/contexts/AlertContext'
-
+import { useCreateCommentByProductSlug } from '~/hooks/user/useComment'
+import { useUpdateCommentByProductSlug } from '~/hooks/user/useComment'
+import { useCurrentUser } from '~/hooks/user/useUser'
 const StarIcon = ({ filled, onClick, onMouseEnter, onMouseLeave }) => (
     <span
         onClick={onClick}
@@ -18,13 +20,29 @@ const StarIcon = ({ filled, onClick, onMouseEnter, onMouseLeave }) => (
     </span>
 )
 
-const CommentForm = ({ productSlug, onClose }) => {
+const CommentForm = ({ productSlug, onClose, onCommentSubmitted, existingComment }) => {
     const [rating, setRating] = useState(0)
     const [hover, setHover] = useState(0)
     const [comment, setComment] = useState('')
     const { showAlert } = useAlert()
+    const { user, isAuthenticated, loading: userLoading } = useCurrentUser()
+    const userId = user?.user_id || null
+    const { mutate: createComment, isLoading: creating } = useCreateCommentByProductSlug(productSlug)
+    const { mutate: updateComment, isLoading: updating } = useUpdateCommentByProductSlug(productSlug)
+    const isLoading = creating || updating
+    // Khi existingComment thay đổi, cập nhật state
+    useEffect(() => {
+        if (existingComment) {
+            setRating(existingComment.rate || 0)
+            setComment(existingComment.content || '')
+        }
+    }, [existingComment])
 
     const handleSubmit = () => {
+        if (!isAuthenticated || !userId) {
+            showAlert('Bạn cần đăng nhập để gửi đánh giá.', { type: 'error', duration: 3000 })
+            return
+        }
         if (rating === 0) {
             showAlert('Vui lòng chọn số sao để đánh giá chất lượng sản phẩm.', {
                 type: 'error',
@@ -33,19 +51,35 @@ const CommentForm = ({ productSlug, onClose }) => {
             return
         }
 
-        const reviewData = {
-            slug: productSlug,
-            rating: rating,
+        const payload = {
+            user_id: userId,
+            rate: rating,
             content: comment,
         }
 
-        console.log('Dữ liệu đánh giá sẽ được gửi đi:', reviewData)
-
-        showAlert('Cảm ơn bạn đã gửi đánh giá!', {
-            type: 'success',
-            duration: 3000,
-        })
-        onClose()
+        if (existingComment) {
+            updateComment(payload, {
+                onSuccess: () => {
+                    showAlert('Đã cập nhật đánh giá!', { type: 'success', duration: 3000 })
+                    if (onCommentSubmitted) onCommentSubmitted()
+                    onClose()
+                },
+                onError: err => {
+                    showAlert(`Có lỗi xảy ra: ${err.message}`, { type: 'error', duration: 3000 })
+                }
+            })
+        } else {
+            createComment({ ...payload, slug: productSlug }, {
+                onSuccess: () => {
+                    showAlert('Cảm ơn bạn đã gửi đánh giá!', { type: 'success', duration: 3000 })
+                    if (onCommentSubmitted) onCommentSubmitted()
+                    onClose()
+                },
+                onError: err => {
+                    showAlert(`Có lỗi xảy ra: ${err.message}`, { type: 'error', duration: 3000 })
+                }
+            })
+        }
     }
 
     return (
@@ -86,7 +120,7 @@ const CommentForm = ({ productSlug, onClose }) => {
                     value={comment}
                     onChange={e => setComment(e.target.value)}
                     className="w-full h-32 p-2 outline-none resize-none"
-                    placeholder="Hãy chia sẻ những trải nghiệm của bạn về sản phẩm..."
+                    placeholder={existingComment ? '' : "Hãy chia sẻ những trải nghiệm của bạn về sản phẩm..."}
                 ></textarea>
             </div>
 
@@ -119,9 +153,10 @@ const CommentForm = ({ productSlug, onClose }) => {
                 </button>
                 <button
                     onClick={handleSubmit}
-                    className="bg-green-600 text-white px-8 py-2 rounded hover:bg-green-600"
+                    disabled={isLoading}
+                    className={`bg-green-600 text-white px-8 py-2 rounded hover:bg-green-700 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
-                    Hoàn Thành
+                    {isLoading ? 'Đang gửi...' : 'Hoàn Thành'}
                 </button>
             </div>
         </div>

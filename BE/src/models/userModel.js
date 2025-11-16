@@ -8,71 +8,57 @@ const USERS_SCHEMA = Joi.object({
         'string.min': 'Username tối thiểu 3 ký tự',
         'string.max': 'Username tối đa 50 ký tự',
     }),
-
     password_hash: Joi.string().min(6).max(255).allow(null, '').messages({
         'string.min': 'Password tối thiểu 6 ký tự',
         'string.max': 'Password tối đa 255 ký tự',
     }),
-
     provider: Joi.string()
         .valid('local', 'google', 'facebook', 'github')
         .default('local')
         .messages({
             'any.only': 'Provider không hợp lệ',
         }),
-
     provider_id: Joi.string().max(255).allow(null).messages({
         'string.max': 'Provider ID tối đa 255 ký tự',
     }),
-
     email: Joi.string().email().max(100).allow(null).messages({
         'string.email': 'Email không hợp lệ',
         'string.max': 'Email tối đa 100 ký tự',
     }),
-
     email_verified: Joi.boolean().default(false),
-
     phone: Joi.string().max(20).allow(null).messages({
         'string.max': 'Phone tối đa 20 ký tự',
     }),
-
+    phone_verified: Joi.boolean().default(false),
     full_name: Joi.string().min(3).max(100).allow(null).messages({
         'string.min': 'Full name tối thiểu 3 ký tự',
         'string.max': 'Full name tối đa 100 ký tự',
     }),
-
     gender: Joi.string()
         .valid('male', 'female', 'other')
         .default('other')
         .messages({
             'any.only': 'Gender phải là male, female hoặc other',
         }),
-
     address: Joi.string().max(255).allow(null).messages({
         'string.max': 'Address tối đa 255 ký tự',
     }),
-
     city: Joi.string().max(100).allow(null).messages({
         'string.max': 'City tối đa 100 ký tự',
     }),
-
     district: Joi.string().max(100).allow(null).messages({
         'string.max': 'District tối đa 100 ký tự',
     }),
-
     ward: Joi.string().max(100).allow(null).messages({
         'string.max': 'Ward tối đa 100 ký tự',
     }),
-
     avatar_url: Joi.string().max(255).allow(null, '').messages({
         'string.max': 'Avatar URL tối đa 255 ký tự',
     }),
-
     status: Joi.number().integer().valid(0, 1).default(0).messages({
         'number.base': 'Status phải là số',
         'any.only': 'Status phải là 0 hoặc 1',
     }),
-
     created_at: Joi.date().optional(),
     updated_at: Joi.date().optional(),
 })
@@ -101,8 +87,8 @@ const UsersModel = {
         const conn = getConnection()
         const [result] = await conn.execute(
             `INSERT INTO ${USERS_TABLE_NAME} 
-        (username, password_hash, provider, provider_id, email, email_verified, phone, full_name, gender, address, city, district, ward, avatar_url, status) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            (username, password_hash, provider, provider_id, email, email_verified, phone, phone_verified, full_name, gender, address, city, district, ward, avatar_url, status) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
                 value.username || null,
                 value.password_hash || null,
@@ -111,6 +97,7 @@ const UsersModel = {
                 value.email || null,
                 value.email_verified ?? false,
                 value.phone || null,
+                value.phone_verified ?? false,
                 value.full_name || null,
                 value.gender || 'other',
                 value.address || null,

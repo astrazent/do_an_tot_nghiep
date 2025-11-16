@@ -7,7 +7,11 @@ import { useAlert } from '~/contexts/AlertContext'
 import logo from '~/assets/icon/logo/brand-logo.png'
 import { FaShoppingCart, FaUserCircle, FaChevronDown } from 'react-icons/fa'
 import { useAllCategories } from '~/hooks/user/useCategory'
-
+import {
+    FaSignOutAlt,
+    FaShoppingBag,
+    FaUser,
+} from 'react-icons/fa'
 import { useCartItemsByUser } from '~/hooks/user/useCartItem'
 
 const FixedNavbar = ({ login = true }) => {
@@ -67,15 +71,15 @@ const FixedNavbar = ({ login = true }) => {
     const productMenuItems = isCategoriesLoading
         ? [{ id: 'loading', name: 'Đang tải...', href: '#' }]
         : categories.map(cat => ({
-              id: cat.id,
-              name: cat.name,
-              href: `/category/${cat.slug}`,
-          }))
+            id: cat.id,
+            name: cat.name,
+            href: `/category/${cat.slug}`,
+        }))
 
     const userMenuItems = [
-        { id: 'profile', name: 'Tài khoản của tôi', href: '/user/profile' },
-        { id: 'orders', name: 'Lịch sử đơn hàng', href: '/user/orders' },
-        { id: 'logout', name: 'Đăng xuất', isButton: true },
+        { id: 'profile', name: 'Tài khoản của tôi', href: '/user/profile', icon: <FaUser /> },
+        { id: 'orders', name: 'Đơn mua', href: '/user/purchase', icon: <FaShoppingBag /> },
+        { id: 'logout', name: 'Đăng xuất', isButton: true, icon: <FaSignOutAlt /> },
     ]
 
     const getNavLinkClass = ({ isActive }) =>
@@ -262,15 +266,17 @@ const FixedNavbar = ({ login = true }) => {
                                                 {item.isButton ? (
                                                     <button
                                                         onClick={handleLogout}
-                                                        className="w-full text-left block px-4 py-3 text-sm text-red-600 hover:bg-red-50 font-medium transition-colors duration-200"
+                                                        className="w-full text-left !px-4 !py-3 text-sm text-red-600 hover:bg-red-50 font-medium transition-colors duration-200 flex items-center gap-2"
                                                     >
+                                                        {item.icon && <span>{item.icon}</span>}
                                                         {item.name}
                                                     </button>
                                                 ) : (
                                                     <Link
                                                         to={item.href}
-                                                        className="block px-4 py-3 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200"
+                                                        className="!px-4 !py-3 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 flex items-center gap-2"
                                                     >
+                                                        {item.icon && <span>{item.icon}</span>}
                                                         {item.name}
                                                     </Link>
                                                 )}

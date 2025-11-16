@@ -16,7 +16,6 @@ const ReturnPageVNPay = () => {
     const dispatch = useDispatch()
     const { showAlert } = useAlert()
     const orderState = useSelector(state => state.order)
-
     const paymentData = searchParams.has('vnp_TxnRef')
         ? {
               success: searchParams.get('success') === 'true',
@@ -114,7 +113,10 @@ const ReturnPageVNPay = () => {
 
     useEffect(() => {
         if (paymentData?.success && !creatingTransaction && hasValidOrder) {
-            createTransaction(orderState)
+            createTransaction({
+                ...orderState,
+                payment_status: 'paid',
+            })
         }
     }, [paymentData?.success, creatingTransaction, hasValidOrder])
 
