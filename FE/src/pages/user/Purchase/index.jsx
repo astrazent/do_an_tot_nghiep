@@ -121,7 +121,6 @@ const Purchase = () => {
         isLoading: transactionsIsLoading,
         isError,
     } = useTransactionsByUser(user?.user_id)
-
     const isLoading = userLoading || transactionsIsLoading
 
     const { mutate: cancelOrderMutation, isLoading: isCancelling } =

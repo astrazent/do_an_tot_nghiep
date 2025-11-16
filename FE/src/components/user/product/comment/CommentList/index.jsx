@@ -110,7 +110,7 @@ const CommentItem = ({
                         {isVerified && (
                             <p className="text-xs text-green-600 flex items-center gap-1">
                                 <FaCheckCircle />
-                                <span>Đã mua 1 lần</span>
+                                <span>Đã mua 1 sản phẩm</span>
                             </p>
                         )}
                     </div>
@@ -129,7 +129,23 @@ const CommentItem = ({
                 </div>
                 <p className="text-sm text-gray-500 mt-1">{date}</p>
                 <p className="mt-2 text-gray-800">{comment}</p>
-                {}
+                {images && images.length > 0 && (
+                    <div className="mt-2 flex gap-2">
+                        {images.slice(0, 2).map((imgUrl, idx) => (
+                            <img
+                                key={idx}
+                                src={imgUrl}
+                                alt={`Hình ảnh bình luận ${idx + 1}`}
+                                className="w-20 h-20 object-cover rounded"
+                            />
+                        ))}
+                        {images.length > 2 && (
+                            <div className="w-20 h-20 flex items-center justify-center bg-gray-200 text-gray-700 rounded text-sm font-semibold">
+                                +{images.length - 2}
+                            </div>
+                        )}
+                    </div>
+                )}
                 <div className="mt-3 flex items-center gap-4 text-sm text-gray-600">
                     <button
                         className={`flex items-center gap-1 ${isLiked ? 'text-blue-600 font-bold' : 'hover:text-blue-600'}`}
@@ -195,9 +211,9 @@ const CommentList = ({ comments = [], slug }) => {
 
     return (
         <div className="mt-8 border-t border-gray-300 pt-2">
-            {currentComments.map(comment => (
+            {currentComments.map((comment, index) => (
                 <CommentItem
-                    key={comment.id}
+                    key={`${comment.id}-${index}`}
                     {...comment}
                     slug={slug}
                     userReaction={reactionsMap.get(comment.id)}

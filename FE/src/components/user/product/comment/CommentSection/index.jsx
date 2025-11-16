@@ -9,15 +9,18 @@ import {
 import plusIcon from '~/assets/icon/stuff/positive.png'
 import minusIcon from '~/assets/icon/stuff/negative.png'
 import PageComment from '../CommentList'
-import { useCommentsByProductSlug } from '~/hooks/user/useComment'
+// Import hook mới
+import {
+    useCommentsByProductSlug,
+    useCommentByUserSlug,
+} from '~/hooks/user/useComment'
 import { usePostCommentAI } from '~/hooks/user/useAI'
 import { useCurrentUser } from '~/hooks/user/useUser'
 import { usePostAIFeedbackByProductSlug } from '~/hooks/user/useAIFeedback'
-
 import { useTransactionByEmailAndSlug } from '~/hooks/user/useTransaction'
-
 import CommentForm from '../CommentForm'
 import { useAlert } from '~/contexts/AlertContext'
+import { BsXCircleFill } from 'react-icons/bs'
 
 const filters = [
     'Mới nhất',
@@ -63,12 +66,20 @@ const CommentSection = ({ slug }) => {
 
     const { data: transactionData, isSuccess: transactionIsSuccess } =
         useTransactionByEmailAndSlug(isAuthenticated ? user.email : null, slug)
-
+    // SỬ DỤNG HOOK MỚI ĐỂ KIỂM TRA BÌNH LUẬN CỦA USER
+    const { data: existingComment, refetch } = useCommentByUserSlug(
+        isAuthenticated ? user.user_id : null,
+        slug
+    )
+    const hasCommented = !!existingComment // Chuyển đổi sang boolean
     const hasPurchased = useMemo(() => {
-        return (
-            transactionIsSuccess &&
-            Array.isArray(transactionData) &&
-            transactionData.length > 0
+        if (!transactionIsSuccess || !Array.isArray(transactionData))
+            return false
+        return transactionData.some(
+            t =>
+                t.transaction_status === 'completed' &&
+                t.payment_status === 'paid' &&
+                t.shipment_status === 'delivered'
         )
     }, [transactionIsSuccess, transactionData])
 
@@ -127,7 +138,7 @@ const CommentSection = ({ slug }) => {
                 product_id: comment.product_id,
                 rating: comment.rate,
                 comment: comment.content,
-                date: new Date(comment.created_at).toLocaleDateString('vi-VN'),
+                date: new Date(comment.updated_at).toLocaleDateString('vi-VN'),
                 author: comment.full_name || 'Người dùng ẩn danh',
                 avatar: absoluteAvatarUrl,
                 likes: comment.likes || 0,
@@ -267,6 +278,39 @@ const CommentSection = ({ slug }) => {
             </div>
         )
     }
+    // Gộp logic hiển thị nút viết/sửa đánh giá và form
+    const renderReviewButtonAndForm = () => (
+        <>
+            {isAuthenticated && hasPurchased && (
+                <div className="mt-6">
+                    <button
+                        onClick={() => setShowReviewForm(true)}
+                        className="bg-green-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                    >
+                        {/* THAY ĐỔI TEXT NÚT DỰA TRÊN hasCommented */}
+                        {hasCommented
+                            ? 'Sửa đánh giá'
+                            : 'Viết đánh giá của bạn'}
+                    </button>
+                </div>
+            )}
+            {showReviewForm && (
+                <div
+                    className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+                    onClick={() => setShowReviewForm(false)}
+                >
+                    <div onClick={e => e.stopPropagation()}>
+                        <CommentForm
+                            productSlug={slug}
+                            onClose={() => setShowReviewForm(false)}
+                            existingComment={existingComment}
+                            onCommentSubmitted={refetch}
+                        />
+                    </div>
+                </div>
+            )}
+        </>
+    )
 
     if (totalReviews === 0) {
         return (
@@ -278,33 +322,8 @@ const CommentSection = ({ slug }) => {
                 <p className="text-gray-600">
                     Chưa có đánh giá nào cho sản phẩm này.
                 </p>
-                {}
-                {}
-                {isAuthenticated && hasPurchased && (
-                    <div className="mt-6">
-                        <button
-                            onClick={() => setShowReviewForm(true)}
-                            className="bg-green-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-                        >
-                            Hãy là người đầu tiên đánh giá
-                        </button>
-                    </div>
-                )}
-                {showReviewForm && (
-                    <div
-                        className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
-                        onClick={() => setShowReviewForm(false)}
-                    >
-                        <div onClick={e => e.stopPropagation()}>
-                            {' '}
-                            {}
-                            <CommentForm
-                                productSlug={slug}
-                                onClose={() => setShowReviewForm(false)}
-                            />
-                        </div>
-                    </div>
-                )}
+                {/* HIỂN THỊ NÚT VÀ FORM (NẾU CÓ) */}
+                {renderReviewButtonAndForm()}
             </div>
         )
     }
@@ -352,34 +371,8 @@ const CommentSection = ({ slug }) => {
                             </div>
                         ))}
                     </div>
-
-                    {isAuthenticated && hasPurchased && (
-                        <div className="mt-6">
-                            {}
-                            <button
-                                onClick={() => setShowReviewForm(true)}
-                                className="bg-green-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-                            >
-                                Viết đánh giá của bạn
-                            </button>
-                            {}
-                        </div>
-                    )}
-                    {showReviewForm && (
-                        <div
-                            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
-                            onClick={() => setShowReviewForm(false)}
-                        >
-                            <div onClick={e => e.stopPropagation()}>
-                                {' '}
-                                {}
-                                <CommentForm
-                                    productSlug={slug}
-                                    onClose={() => setShowReviewForm(false)}
-                                />
-                            </div>
-                        </div>
-                    )}
+                    {/* HIỂN THỊ NÚT VÀ FORM (NẾU CÓ) */}
+                    {renderReviewButtonAndForm()}
                 </div>
 
                 <div className="w-full md:w-1/2">
@@ -576,7 +569,6 @@ const CommentSection = ({ slug }) => {
                     ))}
                 </div>
             </div>
-
             <PageComment comments={filteredComments} slug={slug} />
         </div>
     )
