@@ -1,11 +1,9 @@
-// src/services/commentReactionService.js
 import { CommentReactionsModel } from '~/models/commentReactionModel'
 import { StatusCodes } from 'http-status-codes'
 import ApiError from '~/utils/ApiError'
 import { CommentsModel } from '~/models/commentModel'
 
 const createOrUpdateReactionService = async data => {
-    // Kiểm tra xem comment có tồn tại không
     const existingComment = await CommentsModel.getCommentById(data.comment_id)
     if (!existingComment) {
         throw new ApiError(
@@ -32,8 +30,7 @@ const getReactionByIdService = async reactionId => {
 const getReactionsByCommentService = async commentId => {
     const reactions =
         await CommentReactionsModel.getReactionsByComment(commentId)
-    // Có thể một comment chưa có reaction nào, trả về mảng rỗng là hợp lệ
-    // nên không cần throw error ở đây.
+
     return reactions
 }
 
@@ -43,8 +40,13 @@ const getReactionsByProductService = async data => {
             user_id: Number(data.user_id),
             product_id: Number(data.product_id),
         }
+<<<<<<< HEAD
         const reactions = await CommentReactionsModel.getReactionsByProduct(queryData)
         console.log(reactions);
+=======
+        const reactions =
+            await CommentReactionsModel.getReactionsByProduct(queryData)
+>>>>>>> 90c0ef4009c16de0e32287b149daba0b9a7ba6f6
         return reactions
     } catch (error) {
         throw new ApiError(
@@ -82,7 +84,7 @@ const deleteReactionService = async (userId, commentId, productId) => {
 
 const countReactionsService = async commentId => {
     const counts = await CommentReactionsModel.countReactions(commentId)
-    // Hàm count luôn trả về một object, kể cả khi count là 0, nên không cần check not found.
+
     return counts
 }
 

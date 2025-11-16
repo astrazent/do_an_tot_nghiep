@@ -15,7 +15,9 @@ const createSlider = async (req, res, next) => {
 
 const getByIdSlider = async (req, res, next) => {
     try {
-        const data = await sliderService.getByIdSliderService(req.query.sliderId)
+        const data = await sliderService.getByIdSliderService(
+            req.query.sliderId
+        )
         return res.status(StatusCodes.OK).json({
             message: 'Lấy slider thành công',
             data,
@@ -39,7 +41,10 @@ const getListSlider = async (req, res, next) => {
 
 const updateSlider = async (req, res, next) => {
     try {
-        const data = await sliderService.updateSliderService(req.query.sliderId, req.body)
+        const data = await sliderService.updateSliderService(
+            req.query.sliderId,
+            req.body
+        )
         return res.status(StatusCodes.OK).json({
             message: 'Cập nhật slider thành công',
             data,

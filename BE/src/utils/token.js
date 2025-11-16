@@ -1,14 +1,22 @@
 import jwt from 'jsonwebtoken'
 import { env } from '~/config/environment'
+import { StatusCodes } from 'http-status-codes'
+import ApiError from './ApiError'
 
 export const generateAccessToken = user => {
     try {
         if (!env.JWT_SECRET) {
-            throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, 'Missing JWT_SECRET in environment')
+            throw new ApiError(
+                StatusCodes.INTERNAL_SERVER_ERROR,
+                'Missing JWT_SECRET in environment'
+            )
         }
         return jwt.sign(user, env.JWT_SECRET, { expiresIn: env.ACCESS_EXPIRES })
     } catch (err) {
-        throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, 'Failed to generate access token')
+        throw new ApiError(
+            StatusCodes.INTERNAL_SERVER_ERROR,
+            'Failed to generate access token'
+        )
     }
 }
 

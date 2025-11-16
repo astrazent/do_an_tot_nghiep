@@ -1,12 +1,10 @@
 import { getConnection } from '../config/mysql.js'
 import Joi from 'joi'
 
-// Khai báo tên bảng
 const COMMENTS_TABLE = 'Comments'
 const USERS_TABLE = 'Users'
 const PRODUCTS_TABLE = 'Products'
 
-// Schema validate dữ liệu comment
 const COMMENTS_SCHEMA = Joi.object({
     rate: Joi.number().integer().min(1).max(5).required().messages({
         'number.base': 'Rate phải là số',
@@ -38,7 +36,24 @@ const COMMENTS_SCHEMA = Joi.object({
 
 const CommentsModel = {
     async createComment(data) {
-        const { error, value } = COMMENTS_SCHEMA.validate(data, { abortEarly: false })
+        const { error, value } = COMMENTS_SCHEMA.validate(data, {
+            abortEarly: false,
+        })
+        if (error) throw error
+
+        const conn = getConnection()
+        const [result] = await conn.execute(
+            `INSERT INTO ${COMMENTS_TABLE} (rate, content, product_id, user_id) VALUES (?, ?, ?, ?)`,
+            [value.rate, value.content, value.product_id, value.user_id]
+        )
+
+        return { id: result.insertId, ...value }
+    },
+
+    async createCommentByUserAndProduct(data) {
+        const { error, value } = COMMENTS_SCHEMA.validate(data, {
+            abortEarly: false,
+        })
         if (error) throw error
 
         const conn = getConnection()
@@ -57,6 +72,20 @@ const CommentsModel = {
             [id]
         )
         return rows[0] || null
+    },
+
+    async updateCommentByUserAndProduct(user_id, product_id, data) {
+        const conn = getConnection()
+        const { content, rate } = data
+
+        const [result] = await conn.execute(
+            `UPDATE ${COMMENTS_TABLE} 
+            SET content = ?, rate = ?, updated_at = CURRENT_TIMESTAMP 
+            WHERE user_id = ? AND product_id = ?`,
+            [content, rate, user_id, product_id]
+        )
+
+        return result.affectedRows > 0
     },
 
     async updateComment(id, data) {
@@ -138,6 +167,42 @@ const CommentsModel = {
         ORDER BY c.created_at DESC
         `,
             [slug]
+        )
+        return rows
+    },
+
+    async getByUserIdAndProductId(user_id, product_id) {
+        const conn = getConnection()
+        const [rows] = await conn.execute(
+            `
+        SELECT 
+            -- Comment info
+            c.id, 
+            c.rate, 
+            c.content, 
+            c.likes,
+            c.dislikes,
+            c.created_at, 
+            c.updated_at, 
+            
+            -- User info
+            u.id AS user_id,
+            u.username,
+            u.full_name,
+            u.avatar_url,
+
+            -- Product info
+            p.id AS product_id,
+            p.name AS product_name,
+            p.slug AS product_slug
+            
+        FROM ${COMMENTS_TABLE} AS c
+        INNER JOIN ${PRODUCTS_TABLE} AS p ON c.product_id = p.id
+        INNER JOIN ${USERS_TABLE} AS u ON c.user_id = u.id
+        WHERE c.user_id = ? AND c.product_id = ?
+        ORDER BY c.created_at DESC
+        `,
+            [user_id, product_id]
         )
         return rows
     },

@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const api = axios.create({
     baseURL: import.meta.env.VITE_API_BACKEND || 'http://localhost:2003/v1',
-    withCredentials: true, // để HttpOnly cookie tự gửi
+    withCredentials: true,
 })
 
 api.interceptors.response.use(
@@ -18,7 +18,7 @@ api.interceptors.response.use(
                 await api.post('/auth/refresh')
                 return api(original)
             } catch {
-                console.log("lấy refresh token thất bại");
+                console.log('lấy refresh token thất bại')
             }
         }
 

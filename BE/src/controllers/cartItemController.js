@@ -6,7 +6,7 @@ const getCartItems = async (req, res, next) => {
         const userId = req.query.userId
         if (!userId) {
             return res.status(StatusCodes.BAD_REQUEST).json({
-                message: "Không tìm thấy userId"
+                message: 'Không tìm thấy userId',
             })
         }
         const data = await cartItemService.getCartItemsService(userId)
@@ -21,10 +21,10 @@ const getCartItems = async (req, res, next) => {
 
 const addCartItems = async (req, res, next) => {
     try {
-        const userId = req.query.userId  // lấy trực tiếp từ req
+        const userId = req.query.userId
         if (!userId) {
             return res.status(StatusCodes.BAD_REQUEST).json({
-                message: "Không tìm thấy userId"
+                message: 'Không tìm thấy userId',
             })
         }
 
@@ -45,25 +45,24 @@ const addCartItems = async (req, res, next) => {
 
 const updateQuantityCartItems = async (req, res, next) => {
     try {
-        const user_id = req.user?.id || req.query.userId;
-        const { product_id, quantity, price_total } = req.body;
+        const user_id = req.user?.id || req.query.userId
+        const { product_id, quantity, price_total } = req.body
 
-        // Gọi service (service đã validate input)
         const data = await cartItemService.updateQuantityCartItemsService(
             user_id,
             product_id,
             quantity,
             price_total
-        );
+        )
 
         return res.status(StatusCodes.OK).json({
             message: 'Cập nhật giỏ hàng thành công',
             data,
-        });
+        })
     } catch (error) {
-        next(error); // service sẽ ném ApiError nếu có lỗi
+        next(error)
     }
-};
+}
 
 const deleteCartItems = async (req, res, next) => {
     try {
@@ -79,9 +78,54 @@ const deleteCartItems = async (req, res, next) => {
     }
 }
 
+const deleteCartByUser = async (req, res, next) => {
+    try {
+        const userId = req.query.userId
+        if (!userId) {
+            return res.status(StatusCodes.BAD_REQUEST).json({
+                message: 'userId là bắt buộc',
+            })
+        }
+        const data = await cartItemService.deleteCartByUserService(userId)
+        return res.status(StatusCodes.OK).json({
+            message: 'Xóa giỏ hàng của user thành công',
+            data,
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
+const getCartItemByProduct = async (req, res, next) => {
+    try {
+        const productId = req.query.productId
+        const userId = req.query.userId || null
+
+        if (!productId) {
+            return res.status(StatusCodes.BAD_REQUEST).json({
+                message: 'productId là bắt buộc',
+            })
+        }
+
+        const data = await cartItemService.getCartItemByProductService(
+            productId,
+            userId
+        )
+
+        return res.status(StatusCodes.OK).json({
+            message: 'Lấy sản phẩm trong giỏ hàng thành công',
+            data,
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
 export const cartItemController = {
     getCartItems,
+    getCartItemByProduct,
     addCartItems,
     deleteCartItems,
+    deleteCartByUser,
     updateQuantityCartItems,
 }

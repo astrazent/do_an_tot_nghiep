@@ -30,7 +30,6 @@ function validateOrderItem(req, res, next) {
     })
 
     if (error) {
-        console.log(error)
         return next(
             new ApiError(
                 StatusCodes.UNPROCESSABLE_ENTITY,

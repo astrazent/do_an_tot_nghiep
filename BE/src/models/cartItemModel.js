@@ -3,7 +3,6 @@ import Joi from 'joi'
 
 const CART_ITEMS_TABLE_NAME = 'CartItems'
 
-// Schema validate dữ liệu cart item
 const CART_ITEMS_SCHEMA = Joi.object({
     qty_total: Joi.number().integer().min(1).required().messages({
         'number.base': 'Qty total phải là số',
@@ -56,6 +55,21 @@ const CartItemsModel = {
         return rows[0] || null
     },
 
+    async getCartItemByProductId(product_id, user_id = null) {
+        const conn = getConnection()
+        let query = `SELECT * FROM ${CART_ITEMS_TABLE_NAME} WHERE product_id = ?`
+        const params = [product_id]
+
+        if (user_id !== null) {
+            query += ' AND user_id = ?'
+            params.push(user_id)
+        }
+
+        query += ' ORDER BY id DESC LIMIT 1'
+
+        const [rows] = await conn.execute(query, params)
+        return rows[0] || null
+    },
     async updateCartItemByUser(user_id, product_id, newQty, newPriceTotal) {
         if (!user_id || !product_id)
             throw new Error('user_id và product_id là bắt buộc')
@@ -72,7 +86,6 @@ const CartItemsModel = {
         )
 
         if (result.affectedRows === 0) {
-            // Không tìm thấy cart item
             return null
         }
 
@@ -132,6 +145,17 @@ const CartItemsModel = {
             [product_id]
         )
         return rows
+    },
+
+    async deleteCartItemsByUser(user_id) {
+        if (!user_id) throw new Error('user_id là bắt buộc')
+
+        const conn = getConnection()
+        const [result] = await conn.execute(
+            `DELETE FROM ${CART_ITEMS_TABLE_NAME} WHERE user_id = ?`,
+            [user_id]
+        )
+        return result.affectedRows > 0
     },
 }
 

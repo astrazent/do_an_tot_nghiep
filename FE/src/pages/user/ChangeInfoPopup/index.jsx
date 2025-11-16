@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { useCheckPasswordAndUpdate } from '~/hooks/user/useUser';
-import { useAlert } from '~/contexts/AlertContext'; // Đảm bảo bạn đã import useAlert
+import React, { useState, useEffect } from 'react'
+import { useCheckPasswordAndUpdate } from '~/hooks/user/useUser'
+import { useAlert } from '~/contexts/AlertContext'
 
 const ChangeInfoPopup = ({
     isOpen,
@@ -17,36 +17,32 @@ const ChangeInfoPopup = ({
     userId,
     refetchUser,
 }) => {
-    // 1. Lấy hàm showAlert từ context
-    const { showAlert } = useAlert();
+    const { showAlert } = useAlert()
 
-    // Gọi hook mutation
     const {
         mutateAsync: updateUser,
         isLoading,
         error: mutationError,
-    } = useCheckPasswordAndUpdate();
+    } = useCheckPasswordAndUpdate()
 
-    const [displayError, setDisplayError] = useState(null);
+    const [displayError, setDisplayError] = useState(null)
 
-    // Reset lỗi khi popup được mở
     useEffect(() => {
         if (isOpen) {
-            setDisplayError(null);
+            setDisplayError(null)
         }
-    }, [isOpen]);
+    }, [isOpen])
 
-    // Hiển thị lỗi từ hook mutation bên trong form
     useEffect(() => {
         if (mutationError) {
             const errorMessage =
                 mutationError.response?.data?.message ||
-                'Đã có lỗi xảy ra. Vui lòng thử lại.';
-            setDisplayError(errorMessage);
+                'Đã có lỗi xảy ra. Vui lòng thử lại.'
+            setDisplayError(errorMessage)
         }
-    }, [mutationError]);
+    }, [mutationError])
 
-    if (!isOpen) return null;
+    if (!isOpen) return null
 
     const getTitleAndLabel = () => {
         switch (popupType) {
@@ -54,69 +50,62 @@ const ChangeInfoPopup = ({
                 return {
                     title: 'Thay đổi Tên đăng nhập',
                     label: 'Tên đăng nhập mới',
-                };
+                }
             case 'email':
-                return { title: 'Thay đổi Email', label: 'Email mới' };
+                return { title: 'Thay đổi Email', label: 'Email mới' }
             case 'password':
-                return { title: 'Thay đổi Mật khẩu', label: 'Mật khẩu mới' };
+                return { title: 'Thay đổi Mật khẩu', label: 'Mật khẩu mới' }
             default:
-                return { title: '', label: '' };
+                return { title: '', label: '' }
         }
-    };
+    }
 
-    const { title, label } = getTitleAndLabel();
+    const { title, label } = getTitleAndLabel()
 
     const handleSubmit = async () => {
-        setDisplayError(null);
+        setDisplayError(null)
 
-        // Kiểm tra xác nhận mật khẩu mới
         if (popupType === 'password') {
             if (!newPassword) {
-                setDisplayError('Mật khẩu mới không được để trống.');
-                return;
+                setDisplayError('Mật khẩu mới không được để trống.')
+                return
             }
             if (newPassword !== confirmNewPassword) {
-                setDisplayError('Mật khẩu mới không khớp.');
-                return;
+                setDisplayError('Mật khẩu mới không khớp.')
+                return
             }
         }
 
         try {
-            // Xây dựng đối tượng data để gửi đi
             const dataToUpdate = {
                 userId,
                 old_password: currentPassword,
                 provider: 'local',
-            };
+            }
 
             if (popupType === 'password') {
-                dataToUpdate.password = newPassword;
+                dataToUpdate.password = newPassword
             } else {
-                dataToUpdate[popupType] = newValue;
+                dataToUpdate[popupType] = newValue
             }
 
-            // Gọi API
-            await updateUser(dataToUpdate);
+            await updateUser(dataToUpdate)
 
-            // **TÍCH HỢP THÔNG BÁO THÀNH CÔNG**
-            showAlert('Cập nhật thông tin thành công!', 'success');
+            showAlert('Cập nhật thông tin thành công!', 'success')
 
-            // Cập nhật lại dữ liệu người dùng và đóng popup
             if (refetchUser) {
-                refetchUser();
+                refetchUser()
             }
-            onClose();
+            onClose()
         } catch (err) {
-            // **TÍCH HỢP THÔNG BÁO THẤT BẠI**
             const errorMessage =
                 err.response?.data?.message ||
-                'Cập nhật thất bại. Vui lòng thử lại.';
-            showAlert(errorMessage, 'error');
+                'Cập nhật thất bại. Vui lòng thử lại.'
+            showAlert(errorMessage, 'error')
 
-            // Lỗi đã được useEffect ở trên xử lý để hiển thị trong form
-            console.error('Update failed:', err);
+            console.error('Update failed:', err)
         }
-    };
+    }
 
     const renderNewValueInput = () => {
         if (popupType === 'password') {
@@ -133,7 +122,7 @@ const ChangeInfoPopup = ({
                             type="password"
                             id="newPassword"
                             value={newPassword}
-                            onChange={(e) => setNewPassword(e.target.value)}
+                            onChange={e => setNewPassword(e.target.value)}
                             className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-black focus:border-black"
                             required
                         />
@@ -149,7 +138,7 @@ const ChangeInfoPopup = ({
                             type="password"
                             id="confirmNewPassword"
                             value={confirmNewPassword}
-                            onChange={(e) =>
+                            onChange={e =>
                                 setConfirmNewPassword(e.target.value)
                             }
                             className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-black focus:border-black"
@@ -157,7 +146,7 @@ const ChangeInfoPopup = ({
                         />
                     </div>
                 </>
-            );
+            )
         }
 
         return (
@@ -172,13 +161,13 @@ const ChangeInfoPopup = ({
                     type={popupType === 'email' ? 'email' : 'text'}
                     id="newValue"
                     value={newValue}
-                    onChange={(e) => setNewValue(e.target.value)}
+                    onChange={e => setNewValue(e.target.value)}
                     className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-black focus:border-black"
                     required
                 />
             </div>
-        );
-    };
+        )
+    }
 
     return (
         <div className="fixed inset-0 flex items-center justify-center z-50">
@@ -188,9 +177,9 @@ const ChangeInfoPopup = ({
                     {title}
                 </h2>
                 <form
-                    onSubmit={(e) => {
-                        e.preventDefault();
-                        handleSubmit();
+                    onSubmit={e => {
+                        e.preventDefault()
+                        handleSubmit()
                     }}
                 >
                     <div className="space-y-4">
@@ -205,7 +194,7 @@ const ChangeInfoPopup = ({
                                 type="password"
                                 id="currentPassword"
                                 value={currentPassword}
-                                onChange={(e) =>
+                                onChange={e =>
                                     setCurrentPassword(e.target.value)
                                 }
                                 className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-black focus:border-black"
@@ -241,7 +230,7 @@ const ChangeInfoPopup = ({
                 </form>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default ChangeInfoPopup;
+export default ChangeInfoPopup

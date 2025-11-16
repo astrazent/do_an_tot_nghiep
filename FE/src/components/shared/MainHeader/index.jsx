@@ -1,8 +1,8 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { useQueryClient } from '@tanstack/react-query'
-import { useState } from 'react' // Import useState
-import { removeUser } from '~/Redux/reducers/userReducer'
+import { useState } from 'react'
+import { persistor } from '~/Redux/store'
 import { logoutUser } from '~/services/user/userService'
 import { useAlert } from '~/contexts/AlertContext'
 import {
@@ -10,31 +10,44 @@ import {
     FaShoppingCart,
     FaUserCircle,
     FaSignInAlt,
-    FaSpinner, // Import icon loading
+    FaSignOutAlt,
+    FaShoppingBag,
+    FaUser,
+    FaSpinner,
 } from 'react-icons/fa'
 import logo from '~/assets/icon/logo/brand-logo.png'
 
-// Giả sử các file này tồn tại ở đúng đường dẫn
 import { useDebounce } from '~/hooks/shared/useDebounce'
 import { useSearchProducts } from '~/hooks/user/useProduct'
 
+import { useCartItemsByUser } from '~/hooks/user/useCartItem'
+
 const userMenuItems = [
-    { id: 1, name: 'Tài khoản của tôi', to: '/user/profile' },
-    { id: 2, name: 'Đơn hàng của tôi', to: '/user/purchase' },
-    { id: 3, name: 'Đăng xuất', isButton: true },
+    { id: 1, name: 'Tài khoản của tôi', to: '/user/profile', icon: <FaUser /> },
+    { id: 2, name: 'Đơn mua', to: '/user/purchase', icon: <FaShoppingBag /> },
+    { id: 3, name: 'Đăng xuất', isButton: true, icon: <FaSignOutAlt /> },
 ]
 
-function MainHeader({ cartItemCount = 0 }) {
+function MainHeader() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const { showAlert } = useAlert()
+    const location = useLocation()
+    const isCartActive = location.pathname === '/cart'
     const user = useSelector(state => state.user)
     const isLoggedIn = !!user.email
 
-    // --- TÍCH HỢP TÌM KIẾM ---
+    const { data: userCartData } = useCartItemsByUser(user.user_id)
+
+    const { cartItems: guestCartItems } = useSelector(state => state.cartItem)
+
+    const cartItemCount = isLoggedIn
+        ? userCartData?.length || 0
+        : guestCartItems?.length || 0
+
     const [searchValue, setSearchValue] = useState('')
     const [showResults, setShowResults] = useState(false)
-    const debouncedSearchValue = useDebounce(searchValue, 500) // delay 500ms
+    const debouncedSearchValue = useDebounce(searchValue, 500)
     const queryClient = useQueryClient()
     const { data: searchData, isLoading: isSearching } =
         useSearchProducts(debouncedSearchValue)
@@ -46,11 +59,14 @@ function MainHeader({ cartItemCount = 0 }) {
         setTimeout(() => {
             setShowResults(false)
             if (debouncedSearchValue) {
-                queryClient.removeQueries(['product', 'search', debouncedSearchValue])
+                queryClient.removeQueries([
+                    'product',
+                    'search',
+                    debouncedSearchValue,
+                ])
             }
         }, 200)
     }
-    // --- KẾT THÚC TÍCH HỢP TÌM KIẾM ---
 
     const handleSuccess = message => {
         showAlert(message, {
@@ -77,7 +93,8 @@ function MainHeader({ cartItemCount = 0 }) {
         try {
             console.log('đã bấm logout!')
             await logoutUser()
-            dispatch(removeUser())
+            dispatch({ type: 'auth/logout' })
+            await persistor.purge()
             handleSuccess('Đăng xuất thành công')
         } catch (err) {
             handleError('Đăng xuất thất bại')
@@ -94,7 +111,7 @@ function MainHeader({ cartItemCount = 0 }) {
                     </Link>
                 </div>
 
-                {/* --- KHUNG TÌM KIẾM VÀ KẾT QUẢ --- */}
+                {}
                 <div className="relative w-full max-w-md">
                     <input
                         type="text"
@@ -109,7 +126,7 @@ function MainHeader({ cartItemCount = 0 }) {
                         <FaSearch className="text-gray-400" />
                     </div>
 
-                    {/* --- HIỂN THỊ KẾT QUẢ TÌM KIẾM --- */}
+                    {}
                     {showResults && searchValue && (
                         <div className="absolute top-full mt-2 w-full z-20 bg-white rounded-md shadow-lg border border-gray-200/75 max-h-96 overflow-y-auto">
                             {isSearching && (
@@ -119,46 +136,40 @@ function MainHeader({ cartItemCount = 0 }) {
                                 </div>
                             )}
 
-                            {!isSearching &&
-                                searchData?.length === 0 && (
-                                    <div className="p-4 text-center text-gray-500">
-                                        Không tìm thấy sản phẩm.
-                                    </div>
-                                )}
-
-                            {!isSearching &&
-                                searchData?.length > 0 && (
-                                    <ul>
-                                        {searchData.map(
-                                            product => (
-                                                <li key={product._id}>
-                                                    <Link
-                                                        to={`/product/${product.slug}`}
-                                                        className="flex items-center p-3 hover:bg-green-50 transition-colors duration-200"
-                                                    >
-                                                        <img
-                                                            src={
-                                                                product
-                                                                    .images?.[0]
-                                                                    ?.url ??
-                                                                '/placeholder.jpg' // ảnh mặc định
-                                                            }
-                                                            alt={product.name}
-                                                            className="w-12 h-12 object-cover rounded-md mr-4"
-                                                        />
-                                                        <span className="text-sm text-gray-800 font-medium">
-                                                            {product.name}
-                                                        </span>
-                                                    </Link>
-                                                </li>
-                                            )
-                                        )}
-                                    </ul>
-                                )}
+                            {!isSearching && searchData?.length === 0 && (
+                                <div className="p-4 text-center text-gray-500">
+                                    Không tìm thấy sản phẩm.
+                                </div>
+                            )}
+                            {!isSearching && searchData?.length > 0 && (
+                                <ul>
+                                    {searchData.map(product => (
+                                        <li key={product.id}>
+                                            <Link
+                                                to={`/product/${product.slug}`}
+                                                className="flex items-center p-3 hover:bg-green-50 transition-colors duration-200"
+                                            >
+                                                <img
+                                                    src={
+                                                        product.images?.[0]
+                                                            ?.url ??
+                                                        '/placeholder.jpg'
+                                                    }
+                                                    alt={product.name}
+                                                    className="w-12 h-12 object-cover rounded-md mr-4"
+                                                />
+                                                <span className="text-sm text-gray-800 font-medium">
+                                                    {product.name}
+                                                </span>
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
                         </div>
                     )}
                 </div>
-                {/* --- KẾT THÚC KHUNG TÌM KIẾM --- */}
+                {}
 
                 <div className="text-center flex-shrink-0">
                     <span className="text-gray-500 font-semibold">
@@ -170,8 +181,13 @@ function MainHeader({ cartItemCount = 0 }) {
                 </div>
 
                 <div className="flex items-center space-x-6 flex-shrink-0">
-                    <Link to="/cart" className="relative group">
-                        <FaShoppingCart className="text-2xl text-gray-600 group-hover:text-green-600 transition-colors duration-300" />
+                    <Link
+                        to="/cart"
+                        className={`relative group ${isCartActive ? 'text-green-600' : ''}`}
+                    >
+                        <FaShoppingCart
+                            className={`text-2xl transition-colors duration-300 ${isCartActive ? 'text-green-600' : 'text-gray-600 group-hover:text-green-600'}`}
+                        />
                         <span className="absolute -top-3 -right-3 bg-green-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center transition-transform group-hover:scale-110">
                             {cartItemCount}
                         </span>
@@ -214,16 +230,22 @@ function MainHeader({ cartItemCount = 0 }) {
                                             {item.isButton ? (
                                                 <button
                                                     onClick={handleLogout}
-                                                    className="w-full text-left block px-4 py-3 text-sm text-red-600 hover:bg-red-50 font-medium transition-colors duration-200"
+                                                    className="w-full text-left block !px-4 !py-3 text-sm text-red-600 hover:bg-red-50 font-medium transition-colors duration-200 flex items-center space-x-2"
                                                 >
-                                                    {item.name}
+                                                    {item.icon && (
+                                                        <span>{item.icon}</span>
+                                                    )}
+                                                    <span>{item.name}</span>
                                                 </button>
                                             ) : (
                                                 <Link
                                                     to={item.to}
-                                                    className="block px-4 py-3 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200"
+                                                    className="block px-4 py-3 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors duration-200 flex items-center space-x-2"
                                                 >
-                                                    {item.name}
+                                                    {item.icon && (
+                                                        <span>{item.icon}</span>
+                                                    )}
+                                                    <span>{item.name}</span>
                                                 </Link>
                                             )}
                                         </li>

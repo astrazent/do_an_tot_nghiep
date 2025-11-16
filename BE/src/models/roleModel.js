@@ -3,7 +3,6 @@ import Joi from 'joi'
 
 const ROLES_TABLE_NAME = 'Roles'
 
-// Schema validate dữ liệu role
 const ROLES_SCHEMA = Joi.object({
     name: Joi.string().min(3).max(50).required().messages({
         'string.empty': 'Name không được để trống',
@@ -16,7 +15,6 @@ const ROLES_SCHEMA = Joi.object({
 })
 
 const RolesModel = {
-    
     async createRole(data) {
         const { error, value } = ROLES_SCHEMA.validate(data, {
             abortEarly: false,
@@ -32,7 +30,6 @@ const RolesModel = {
         return { id: result.insertId, ...value }
     },
 
-    
     async getRoleById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -42,7 +39,6 @@ const RolesModel = {
         return rows[0] || null
     },
 
-    
     async updateRole(id, data) {
         const schema = ROLES_SCHEMA.fork(
             Object.keys(ROLES_SCHEMA.describe().keys),
@@ -65,7 +61,6 @@ const RolesModel = {
         return this.getRoleById(id)
     },
 
-    
     async deleteRole(id) {
         const conn = getConnection()
         const [result] = await conn.execute(
@@ -75,7 +70,6 @@ const RolesModel = {
         return result.affectedRows > 0
     },
 
-    
     async listRoles(limit = 50, offset = 0) {
         const conn = getConnection()
         const [rows] = await conn.execute(

@@ -5,7 +5,7 @@ import ReactSlider from 'react-slider'
 import './sidebar.scss'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAllCategories } from '~/hooks/user/useCategory'
-import { useHotProducts } from '~/hooks/user/useProduct' // Import hook mới
+import { useHotProducts } from '~/hooks/user/useProduct'
 
 import ProductListSection from '../ProductListSection'
 
@@ -15,12 +15,20 @@ const Sidebar = ({
         categories = true,
         featured = true,
         hot = true,
-        isPromotion = true
-    } = {}
+        isPromotion = true,
+    } = {},
 } = {}) => {
-    const { data: productCategories, isLoading: isLoadingCategories, isError: isErrorCategories } = useAllCategories()
-    // Sử dụng hook useHotProducts để lấy dữ liệu
-    const { data: sidebarProductsData, isLoading: isLoadingSidebarProducts, isError: isErrorSidebarProducts } = useHotProducts(6);
+    const {
+        data: productCategories,
+        isLoading: isLoadingCategories,
+        isError: isErrorCategories,
+    } = useAllCategories()
+
+    const {
+        data: sidebarProductsData,
+        isLoading: isLoadingSidebarProducts,
+        isError: isErrorSidebarProducts,
+    } = useHotProducts(6)
     const [priceValues, setPriceValues] = useState([0, 500000])
     const [selectedCategory, setSelectedCategory] = useState('')
     const navigate = useNavigate()
@@ -154,23 +162,31 @@ const Sidebar = ({
                 </div>
             )}
 
-            {featured && (
-                isLoadingSidebarProducts ? <p>Loading featured products...</p> : isErrorSidebarProducts ? <p>Error loading featured products.</p> :
-                <ProductListSection
-                    title="Sản phẩm OCCOP"
-                    products={sidebarProductsData?.data?.occopProducts} // Cập nhật nguồn dữ liệu
-                    isPromotion={isPromotion}
-                />
-            )}
+            {featured &&
+                (isLoadingSidebarProducts ? (
+                    <p>Loading featured products...</p>
+                ) : isErrorSidebarProducts ? (
+                    <p>Error loading featured products.</p>
+                ) : (
+                    <ProductListSection
+                        title="Sản phẩm OCCOP"
+                        products={sidebarProductsData?.data?.occopProducts}
+                        isPromotion={isPromotion}
+                    />
+                ))}
 
-            {hot && (
-                isLoadingSidebarProducts ? <p>Loading hot products...</p> : isErrorSidebarProducts ? <p>Error loading hot products.</p> :
-                <ProductListSection
-                    title="Sản phẩm nổi bật"
-                    products={sidebarProductsData?.data?.hotProducts} // Cập nhật nguồn dữ liệu
-                    isPromotion={isPromotion}
-                />
-            )}
+            {hot &&
+                (isLoadingSidebarProducts ? (
+                    <p>Loading hot products...</p>
+                ) : isErrorSidebarProducts ? (
+                    <p>Error loading hot products.</p>
+                ) : (
+                    <ProductListSection
+                        title="Sản phẩm nổi bật"
+                        products={sidebarProductsData?.data?.hotProducts}
+                        isPromotion={isPromotion}
+                    />
+                ))}
         </aside>
     )
 }

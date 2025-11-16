@@ -128,7 +128,7 @@ const AddSliderModal = ({ onClose, onAddSlider }) => {
         description: '',
         link: '',
         order: '',
-        image: '', // URL ảnh
+        image: '',
         status: 'Hiển thị',
         startDate: '',
         endDate: '',
@@ -142,14 +142,14 @@ const AddSliderModal = ({ onClose, onAddSlider }) => {
     const handleSubmit = e => {
         e.preventDefault()
         const newSlider = {
-            id: Date.now(), // Tạo id duy nhất
+            id: Date.now(),
             ...formData,
-            // Chuyển đổi định dạng ngày tháng trước khi thêm
+
             startDate: formData.startDate.split('-').reverse().join('/'),
             endDate: formData.endDate.split('-').reverse().join('/'),
         }
         onAddSlider(newSlider)
-        onClose() // Đóng modal sau khi thêm
+        onClose()
     }
 
     return (
@@ -158,7 +158,7 @@ const AddSliderModal = ({ onClose, onAddSlider }) => {
                 <h2 className="text-2xl font-bold mb-6">Thêm Slider Mới</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {/* Tên slider */}
+                        {}
                         <div>
                             <label className="block text-sm font-medium text-gray-700">
                                 Tên slider
@@ -172,7 +172,7 @@ const AddSliderModal = ({ onClose, onAddSlider }) => {
                                 required
                             />
                         </div>
-                        {/* Thứ tự */}
+                        {}
                         <div>
                             <label className="block text-sm font-medium text-gray-700">
                                 Thứ tự
@@ -187,7 +187,7 @@ const AddSliderModal = ({ onClose, onAddSlider }) => {
                             />
                         </div>
                     </div>
-                    {/* Mô tả */}
+                    {}
                     <div>
                         <label className="block text-sm font-medium text-gray-700">
                             Mô tả
@@ -201,7 +201,7 @@ const AddSliderModal = ({ onClose, onAddSlider }) => {
                         />
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {/* Liên kết */}
+                        {}
                         <div>
                             <label className="block text-sm font-medium text-gray-700">
                                 Liên kết
@@ -214,7 +214,7 @@ const AddSliderModal = ({ onClose, onAddSlider }) => {
                                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                             />
                         </div>
-                        {/* URL Ảnh */}
+                        {}
                         <div>
                             <label className="block text-sm font-medium text-gray-700">
                                 URL Ảnh
@@ -229,7 +229,7 @@ const AddSliderModal = ({ onClose, onAddSlider }) => {
                                 required
                             />
                         </div>
-                        {/* Ngày bắt đầu */}
+                        {}
                         <div>
                             <label className="block text-sm font-medium text-gray-700">
                                 Ngày bắt đầu hiển thị
@@ -243,7 +243,7 @@ const AddSliderModal = ({ onClose, onAddSlider }) => {
                                 required
                             />
                         </div>
-                        {/* Ngày kết thúc */}
+                        {}
                         <div>
                             <label className="block text-sm font-medium text-gray-700">
                                 Ngày kết thúc hiển thị
@@ -257,7 +257,7 @@ const AddSliderModal = ({ onClose, onAddSlider }) => {
                                 required
                             />
                         </div>
-                        {/* Trạng thái */}
+                        {}
                         <div>
                             <label className="block text-sm font-medium text-gray-700">
                                 Trạng thái
@@ -274,7 +274,7 @@ const AddSliderModal = ({ onClose, onAddSlider }) => {
                         </div>
                     </div>
 
-                    {/* Nút bấm */}
+                    {}
                     <div className="mt-8 flex justify-end space-x-4">
                         <button
                             type="button"
@@ -300,7 +300,6 @@ const SliderManager = () => {
     const [sliders, setSliders] = useState(initialSliders)
     const [isModalOpen, setIsModalOpen] = useState(false)
 
-    // Hàm xử lý logic
     const handleEdit = sliderId => alert(`Chỉnh sửa slider có ID: ${sliderId}`)
     const handleDelete = sliderId => {
         if (window.confirm('Bạn có chắc chắn muốn xóa slider này?')) {

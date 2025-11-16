@@ -7,11 +7,9 @@ import { FaSearch } from 'react-icons/fa'
 const PRODUCTS_PER_LOAD = 8
 
 const Promotion = () => {
-    // State tìm kiếm và sắp xếp
     const [search, setSearch] = useState('')
     const [sortBy, setSortBy] = useState('newest')
 
-    // Hook infinite fetch sản phẩm promotion
     const {
         data: productPages,
         isLoading,
@@ -23,13 +21,11 @@ const Promotion = () => {
         sort: sortBy,
     })
 
-    // Lấy toàn bộ sản phẩm từ các page
     const productsFromApi = useMemo(
         () => productPages?.pages.flatMap(page => page.data) || [],
         [productPages]
     )
 
-    // Lọc theo search ở client
     const finalProducts = useMemo(() => {
         if (!search) return productsFromApi
         return productsFromApi.filter(product =>

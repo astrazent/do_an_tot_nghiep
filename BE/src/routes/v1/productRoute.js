@@ -2,7 +2,7 @@ import express from 'express'
 import { productController } from '~/controllers/productController'
 const Router = express.Router()
 
-Router.route('/').post(productController.createProduct) 
+Router.route('/').post(productController.createProduct)
 
 Router.route('/').get(productController.getByIdProduct)
 
@@ -23,6 +23,5 @@ Router.route('/search').get(productController.getSearchProduct)
 Router.route('/').patch(productController.updateProduct)
 
 Router.route('/').delete(productController.deleteProduct)
-
 
 export default Router

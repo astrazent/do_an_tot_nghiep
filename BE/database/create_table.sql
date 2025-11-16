@@ -14,6 +14,7 @@ DROP TABLE IF EXISTS CartItems;
 DROP TABLE IF EXISTS CouponScopes;
 DROP TABLE IF EXISTS Coupons;
 DROP TABLE IF EXISTS Products;
+DROP TABLE IF EXISTS OtpCodes;
 DROP TABLE IF EXISTS Tokens;
 DROP TABLE IF EXISTS Users;
 DROP TABLE IF EXISTS PostCategories;
@@ -23,6 +24,8 @@ DROP TABLE IF EXISTS Posts;
 DROP TABLE IF EXISTS PostTypes;
 DROP TABLE IF EXISTS Admins;
 DROP TABLE IF EXISTS Roles;
+
+SET GLOBAL event_scheduler = ON;
 
 -- Roles
 CREATE TABLE 
@@ -133,6 +136,7 @@ CREATE TABLE
     email VARCHAR(100) UNIQUE NOT NULL,
     email_verified TINYINT(1) NOT NULL DEFAULT 0,
     phone VARCHAR(20) UNIQUE NULL,
+    phone_verified TINYINT(1) NOT NULL DEFAULT 0,
     full_name VARCHAR(100) NULL,
     gender ENUM('male','female','other') NOT NULL DEFAULT 'other',
     address VARCHAR(255) NULL,
@@ -148,6 +152,27 @@ CREATE TABLE
     INDEX idx_users_provider (provider),
     INDEX idx_users_provider_id (provider_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- OtpCodes
+CREATE TABLE 
+    OtpCodes (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id INT UNSIGNED NOT NULL,
+    code VARCHAR(10) NOT NULL,
+    type ENUM('login', 'change_password', 'verify_email') NOT NULL DEFAULT 'login' COMMENT 'login: đăng nhập, change_password: đổi mật khẩu, verify_email: xác thực email',
+    is_used TINYINT(1) NOT NULL DEFAULT 0,
+    attempts INT UNSIGNED NOT NULL DEFAULT 0,
+    expires_at DATETIME NOT NULL,
+    ip_address VARCHAR(45) DEFAULT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE
+);
+
+CREATE EVENT IF NOT EXISTS delete_expired_otps
+ON SCHEDULE EVERY 5 MINUTE
+DO
+    DELETE FROM OtpCodes
+    WHERE expires_at < NOW();
 
 -- Tokens
 CREATE TABLE 
@@ -165,6 +190,11 @@ CREATE TABLE
     FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE,
     INDEX idx_tokens_user (user_id)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+CREATE EVENT IF NOT EXISTS delete_expired_tokens
+ON SCHEDULE EVERY 1 DAY
+DO
+    DELETE FROM Tokens
+    WHERE token_expired_at < NOW() OR is_revoked = TRUE;
 
 -- Products
 CREATE TABLE 
@@ -223,7 +253,7 @@ CREATE TABLE
     CouponScopes (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     coupon_id INT UNSIGNED NOT NULL,
-    scope_type TINYINT NOT NULL COMMENT '0: Toàn shop, 1: Theo thể loại, 2: Theo sản phẩm',
+    scope_type TINYINT NOT NULL COMMENT '0: Toàn shop, 1: Theo sản phẩm',
     product_id INT UNSIGNED NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -329,12 +359,10 @@ CREATE TABLE
     CommentImages (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     comment_id INT UNSIGNED NOT NULL,
-    user_id INT UNSIGNED NOT NULL,
     image_url VARCHAR(255) NOT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    CONSTRAINT fk_comment_images_comment FOREIGN KEY (comment_id) REFERENCES Comments (id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_comment_images_user FOREIGN KEY (user_id) REFERENCES Users (id) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT fk_comment_images_comment FOREIGN KEY (comment_id) REFERENCES Comments (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- AIFeedback
@@ -368,58 +396,63 @@ CREATE TABLE
 -- Payments
 CREATE TABLE
     Payments (
-        id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-        method VARCHAR(50) NOT NULL, -- COD, CreditCard, Momo, VNPay, ...
-        status TINYINT (1) NOT NULL,
-        created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-        INDEX idx_payments_method (method),
-        INDEX idx_payments_status (status)
-    ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    method VARCHAR(50) NOT NULL, -- COD, CreditCard, Momo, VNPay, ...
+    status TINYINT (1) NOT NULL,
+    icon_url VARCHAR(255) DEFAULT NULL COMMENT 'đường dẫn ảnh icon',
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_payments_method (method),
+    INDEX idx_payments_status (status)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 -- Shipments
-CREATE TABLE
+CREATE TABLE 
     Shipments (
-        id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-        name VARCHAR(100) NOT NULL, -- Tên phương thức: GHN, GHTK, Viettel Post...
-        description VARCHAR(255), -- Mô tả thêm
-        base_fee DECIMAL(12, 2) NOT NULL DEFAULT 0.00, -- Phí cơ bản
-        status TINYINT (1) NOT NULL DEFAULT 1, -- 1: hoạt động, 0: ngừng
-        created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-    ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL, -- Tên phương thức: GHN, GHTK, Viettel Post...
+    description VARCHAR(255), -- Mô tả thêm
+    base_fee DECIMAL(12, 2) NOT NULL DEFAULT 0.00, -- Phí cơ bản
+    icon_url VARCHAR(255) DEFAULT NULL COMMENT 'Icon hoặc class CSS của phương thức vận chuyển', 
+    status TINYINT(1) NOT NULL DEFAULT 1, -- 1: hoạt động, 0: ngừng
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 -- Transactions
 CREATE TABLE
     Transactions (
-        id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-        status TINYINT (1) NOT NULL, -- trạng thái đơn hàng (0: pending, 1: confirmed, 2: completed, ...)
-        deli_name VARCHAR(100) NOT NULL, -- tên người nhận
-        deli_phone VARCHAR(20) NOT NULL, -- số điện thoại người nhận
-        deli_address VARCHAR(255) NOT NULL, -- địa chỉ giao hàng chi tiết
-        deli_city VARCHAR(100) NOT NULL,
-        deli_district VARCHAR(100) NOT NULL,
-        deli_ward VARCHAR(100) NOT NULL,
-        message VARCHAR(255) NOT NULL, -- ghi chú của khách hàng
-        tracking_number VARCHAR(100) NOT NULL, -- mã vận đơn
-        shipping_fee DECIMAL(12, 2) NOT NULL DEFAULT 0.00, -- phí vận chuyển
-        shipment_status VARCHAR(20) NOT NULL DEFAULT 'pending', -- pending, shipped, in_transit, delivered, returned
-        amount DECIMAL(12, 2) NOT NULL DEFAULT 0.00, -- tổng tiền đơn hàng
-        shipped_at DATETIME NULL, -- ngày gửi
-        delivered_at DATETIME NULL, -- ngày giao
-        created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-        user_id INT UNSIGNED NULL,
-        payment_id INT UNSIGNED NOT NULL,
-        shipment_id INT UNSIGNED NOT NULL, -- liên kết phương thức vận chuyển
-        CONSTRAINT fk_transactions_user FOREIGN KEY (user_id) REFERENCES Users (id) ON DELETE CASCADE ON UPDATE CASCADE,
-        CONSTRAINT fk_transactions_payment FOREIGN KEY (payment_id) REFERENCES Payments (id) ON DELETE RESTRICT ON UPDATE CASCADE,
-        CONSTRAINT fk_transactions_shipment FOREIGN KEY (shipment_id) REFERENCES Shipments (id) ON DELETE RESTRICT ON UPDATE CASCADE,
-        INDEX idx_transactions_status (status),
-        INDEX idx_transactions_tracking (tracking_number),
-        INDEX idx_transactions_shipment_status (shipment_status),
-        INDEX idx_transactions_shipment (shipment_id)
-    ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    status ENUM('pending', 'confirmed', 'canceled', 'refunded', 'completed') NOT NULL DEFAULT 'pending',
+    deli_name VARCHAR(100) NOT NULL,
+    deli_phone VARCHAR(20) NOT NULL,
+    deli_address VARCHAR(255) NOT NULL,
+    deli_email VARCHAR(255) NULL,
+    deli_city VARCHAR(100) NOT NULL,
+    deli_district VARCHAR(100) NOT NULL,
+    deli_ward VARCHAR(100) NOT NULL,
+    message VARCHAR(255) NOT NULL,
+    tracking_number VARCHAR(100) NOT NULL,
+    shipping_fee DECIMAL(12, 2) NOT NULL DEFAULT 0.00,
+    payment_status ENUM('pending', 'paid', 'failed', 'refunded') NOT NULL DEFAULT 'pending',
+    shipment_status ENUM('pending', 'shipped', 'in_transit', 'delivered', 'returned') NOT NULL DEFAULT 'pending',
+    amount DECIMAL(12, 2) NOT NULL DEFAULT 0.00,
+    shipped_at DATETIME NULL,
+    delivered_at DATETIME NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    user_id INT UNSIGNED NULL,
+    payment_id INT UNSIGNED NOT NULL,
+    shipment_id INT UNSIGNED NOT NULL,
+    CONSTRAINT fk_transactions_user FOREIGN KEY (user_id) REFERENCES Users (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_transactions_payment FOREIGN KEY (payment_id) REFERENCES Payments (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT fk_transactions_shipment FOREIGN KEY (shipment_id) REFERENCES Shipments (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    INDEX idx_transactions_status (status),
+    INDEX idx_transactions_tracking (tracking_number),
+    INDEX idx_transactions_shipment_status (shipment_status),
+    INDEX idx_transactions_shipment (shipment_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- OrderItems
 CREATE TABLE

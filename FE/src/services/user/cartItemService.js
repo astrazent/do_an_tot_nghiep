@@ -93,3 +93,17 @@ export const deleteCartItem = async cartItemId => {
         return false
     }
 }
+
+export const deleteCartByUser = async userId => {
+    if (!userId) throw new Error('userId là bắt buộc')
+
+    try {
+        const response = await api.delete('/cart/by_user', {
+            params: { userId },
+        })
+        return response.data
+    } catch (error) {
+        console.error('Xóa giỏ hàng thất bại:', error)
+        throw error
+    }
+}

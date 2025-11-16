@@ -3,7 +3,6 @@ import Joi from 'joi'
 
 const POST_CATEGORIES_TABLE_NAME = 'PostCategories'
 
-// Schema validate dữ liệu post-category
 const POST_CATEGORIES_SCHEMA = Joi.object({
     post_id: Joi.number().integer().required().messages({
         'number.base': 'Post ID phải là số',
@@ -16,7 +15,6 @@ const POST_CATEGORIES_SCHEMA = Joi.object({
 })
 
 const PostCategoriesModel = {
-    
     async createLink(data) {
         const { error, value } = POST_CATEGORIES_SCHEMA.validate(data, {
             abortEarly: false,
@@ -32,7 +30,6 @@ const PostCategoriesModel = {
         return { id: result.insertId, ...value }
     },
 
-    
     async getLinkById(id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -42,7 +39,6 @@ const PostCategoriesModel = {
         return rows[0] || null
     },
 
-    
     async updateLink(id, data) {
         const schema = POST_CATEGORIES_SCHEMA.fork(
             Object.keys(POST_CATEGORIES_SCHEMA.describe().keys),
@@ -65,7 +61,6 @@ const PostCategoriesModel = {
         return this.getLinkById(id)
     },
 
-    
     async deleteLink(id) {
         const conn = getConnection()
         const [result] = await conn.execute(
@@ -75,7 +70,6 @@ const PostCategoriesModel = {
         return result.affectedRows > 0
     },
 
-    
     async listLinks(limit = 50, offset = 0) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -85,7 +79,6 @@ const PostCategoriesModel = {
         return rows
     },
 
-    
     async getCategoriesByPost(post_id) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -95,7 +88,6 @@ const PostCategoriesModel = {
         return rows
     },
 
-    
     async getPostsByCategory(category_id) {
         const conn = getConnection()
         const [rows] = await conn.execute(

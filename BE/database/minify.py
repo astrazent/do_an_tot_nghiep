@@ -10,7 +10,6 @@ minified_sql = sqlparse.format(
     sql_text,
     strip_comments=True,
     reindent=False,
-    keyword_case='upper'
 ).replace("\n", " ").replace("\t", " ").strip()
 
 # Ghi đè lại chính file

@@ -13,9 +13,30 @@ const createComment = async (req, res, next) => {
     }
 }
 
+const createCommentByProductSlug = async (req, res, next) => {
+    try {
+        const user_id = req.user?.user_id
+        if (!user_id) throw new Error('Không xác định được user')
+
+        // Gộp user_id vào dữ liệu từ body
+        const data = { ...req.body, user_id }
+
+        const comment = await commentService.createCommentByProductSlugService(data)
+
+        return res.status(StatusCodes.OK).json({
+            message: 'Tạo mới comment thành công',
+            data: comment,
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
 const getByIdComment = async (req, res, next) => {
     try {
-        const data = await commentService.getByIdCommentService(req.query.commentId)
+        const data = await commentService.getByIdCommentService(
+            req.query.commentId
+        )
 
         return res.status(StatusCodes.OK).json({
             message: 'Lấy comment thành công',
@@ -27,7 +48,27 @@ const getByIdComment = async (req, res, next) => {
 }
 const getCommentByProductSlug = async (req, res, next) => {
     try {
-        const data = await commentService.getCommentByProductSlugService(req.query.slug)
+        const data = await commentService.getCommentByProductSlugService(
+            req.query.slug
+        )
+
+        return res.status(StatusCodes.OK).json({
+            message: 'Lấy comment bằng slug thành công',
+            data,
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
+const getByUserIdAndProductSlug = async (req, res, next) => {
+    try {
+        const { slug, user_id } = req.query
+
+        const data = await commentService.getByUserIdAndProductSlugService({
+            user_id,
+            slug,
+        })
 
         return res.status(StatusCodes.OK).json({
             message: 'Lấy comment bằng slug thành công',
@@ -53,7 +94,9 @@ const getListComment = async (req, res, next) => {
 
 const getListCommnentByProduct = async (req, res, next) => {
     try {
-        const data = await commentService.getListCommentByProductService(req.query.productId)
+        const data = await commentService.getListCommentByProductService(
+            req.query.productId
+        )
 
         return res.status(StatusCodes.OK).json({
             message: 'Lấy danh sách comment theo sản phẩm thành công',
@@ -66,7 +109,9 @@ const getListCommnentByProduct = async (req, res, next) => {
 
 const getListCommentByUser = async (req, res, next) => {
     try {
-        const data = await commentService.getListCommentByUserService(req.query.userId)
+        const data = await commentService.getListCommentByUserService(
+            req.query.userId
+        )
 
         return res.status(StatusCodes.OK).json({
             message: 'Lấy danh sách comment theo user thành công',
@@ -79,7 +124,10 @@ const getListCommentByUser = async (req, res, next) => {
 
 const updateComment = async (req, res, next) => {
     try {
-        const data = await commentService.updateCommentService(req.query.commentId, req.body)
+        const data = await commentService.updateCommentService(
+            req.query.commentId,
+            req.body
+        )
         return res.status(StatusCodes.OK).json({
             message: 'Cập nhật comment thành công',
             data,
@@ -89,9 +137,31 @@ const updateComment = async (req, res, next) => {
     }
 }
 
+const updateCommentByUserAndProduct = async (req, res, next) => {
+    try {
+        const user_id = req.user.user_id 
+        const slug = req.query.slug
+        const data = req.body
+        const updatedComment = await commentService.updateCommentByUserAndProductService({
+            user_id,
+            slug,
+            data,
+        })
+
+        return res.status(StatusCodes.OK).json({
+            message: 'Cập nhật comment thành công',
+            data: updatedComment,
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
 const deleteComment = async (req, res, next) => {
     try {
-        const data = await commentService.deleteCommentService(req.query.commentId)
+        const data = await commentService.deleteCommentService(
+            req.query.commentId
+        )
 
         return res.status(StatusCodes.OK).json({
             data,
@@ -103,11 +173,14 @@ const deleteComment = async (req, res, next) => {
 
 export const commentController = {
     createComment,
+    createCommentByProductSlug,
     getByIdComment,
     getCommentByProductSlug,
+    getByUserIdAndProductSlug,
     getListComment,
     getListCommnentByProduct,
     getListCommentByUser,
     updateComment,
+    updateCommentByUserAndProduct,
     deleteComment,
 }

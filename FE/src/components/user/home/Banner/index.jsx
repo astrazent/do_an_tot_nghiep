@@ -10,22 +10,15 @@ import './banner.scss'
 import { useListSlider } from '~/hooks/user/useSlider'
 
 const Banner = () => {
-    // 1. Dữ liệu trả về từ hook (biến 'data') giờ đây chính là mảng 'slides'
     const { data: slides, isLoading, isError } = useListSlider()
 
-    // 2. Trạng thái tải vẫn giữ nguyên
     if (isLoading) {
-        return (
-            <div className="w-full h-[450px] bg-gray-200 animate-pulse" />
-        )
+        return <div className="w-full h-[450px] bg-gray-200 animate-pulse" />
     }
 
-    // 3. Điều chỉnh lại điều kiện kiểm tra lỗi hoặc không có dữ liệu
     if (isError || !slides || slides.length === 0) {
-        return null // Không hiển thị gì nếu có lỗi hoặc mảng rỗng
+        return null
     }
-    
-    // console.log(slides); // Dòng này sẽ in ra trực tiếp mảng slider
 
     return (
         <div className="w-full">
@@ -39,8 +32,8 @@ const Banner = () => {
                 modules={[Autoplay, Pagination, Navigation]}
                 className="!h-[120%] banner-swiper"
             >
-                {/* 4. Logic map không cần thay đổi vì biến 'slides' đã đúng là mảng */}
-                {slides.map((slide) => (
+                {}
+                {slides.map(slide => (
                     <SwiperSlide key={slide.id}>
                         <Link to={slide.link_url || '#'}>
                             <img

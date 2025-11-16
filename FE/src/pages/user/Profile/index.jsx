@@ -3,10 +3,10 @@ import provincesData from '~/assets/data/provinces.json'
 import { useCurrentUser } from '~/hooks/user/useUser'
 import ChangeInfoPopup from '../ChangeInfoPopup'
 import { FaCheckCircle, FaExclamationCircle } from 'react-icons/fa'
-import { useUpdateUserById } from '~/hooks/user/useUser' // Import hook
+import { useUpdateUserById } from '~/hooks/user/useUser'
 import { useAlert } from '~/contexts/AlertContext'
 const Profile = () => {
-    const { user, refetchUser } = useCurrentUser() // Lấy thêm hàm refetch để làm mới dữ liệu user
+    const { user, refetchUser } = useCurrentUser()
     const [profile, setProfile] = useState({
         username: '',
         name: '',
@@ -17,11 +17,10 @@ const Profile = () => {
         province: '',
         district: '',
         ward: '',
-        // Các trường ngày sinh không được dùng nên có thể bỏ qua
     })
     const { showAlert } = useAlert()
     const [avatarPreview, setAvatarPreview] = useState('')
-    const [avatarFile, setAvatarFile] = useState(null) // State để lưu file ảnh mới
+    const [avatarFile, setAvatarFile] = useState(null)
     const [allProvinces] = useState(provincesData)
     const [districts, setDistricts] = useState([])
     const [wards, setWards] = useState([])
@@ -33,7 +32,6 @@ const Profile = () => {
     const [newPassword, setNewPassword] = useState('')
     const [confirmNewPassword, setConfirmNewPassword] = useState('')
 
-    // Sử dụng hook useUpdateUserById
     const { mutate: updateUser, isLoading: isUpdating } = useUpdateUserById({
         onSuccess: () => {
             showAlert('Cập nhật thông tin thành công!', { type: 'success' })
@@ -41,7 +39,7 @@ const Profile = () => {
         },
         onError: error => {
             console.log(error)
-            // Hiển thị lỗi chi tiết hơn từ server nếu có
+
             const errorMessage =
                 error?.response?.data?.message ||
                 'Đã có lỗi xảy ra khi cập nhật.'
@@ -49,7 +47,6 @@ const Profile = () => {
         },
     })
 
-    // Điền dữ liệu người dùng vào form khi component được tạo
     useEffect(() => {
         if (user && user.username) {
             const selectedProvince = allProvinces.find(
@@ -97,7 +94,6 @@ const Profile = () => {
         }
     }, [user, allProvinces])
 
-    // Xử lý khi người dùng thay đổi lựa chọn Tỉnh
     useEffect(() => {
         if (profile.province) {
             const selectedProvince = allProvinces.find(
@@ -109,7 +105,6 @@ const Profile = () => {
         }
     }, [profile.province, allProvinces])
 
-    // Xử lý khi người dùng thay đổi lựa chọn Huyện
     useEffect(() => {
         if (profile.district) {
             const selectedDistrict = districts.find(
@@ -142,7 +137,7 @@ const Profile = () => {
         const file = e.target.files[0]
         if (file) {
             setAvatarPreview(URL.createObjectURL(file))
-            setAvatarFile(file) // Lưu file để upload
+            setAvatarFile(file)
         }
     }
 
@@ -158,30 +153,37 @@ const Profile = () => {
     const closePopup = () => setIsPopupOpen(false)
 
     const handleSaveChanges = () => {
-        // Logic của popup không thay đổi
         if (currentPassword !== 'password123') {
-            alert('Mật khẩu hiện tại không chính xác!')
+            showAlert('Mật khẩu hiện tại không chính xác!', { type: 'error' })
             return
         }
         switch (popupType) {
             case 'username':
                 setProfile({ ...profile, username: newValue })
-                alert('Tên đăng nhập đã được thay đổi!')
+                showAlert('Tên đăng nhập đã được thay đổi!', {
+                    type: 'success',
+                })
                 break
             case 'email':
                 setProfile({ ...profile, email: newValue })
-                alert('Email đã được thay đổi!')
+                showAlert('Email đã được thay đổi!', { type: 'success' })
                 break
             case 'password':
                 if (newPassword !== confirmNewPassword) {
-                    alert('Mật khẩu mới và xác nhận mật khẩu không khớp!')
+                    showAlert('Mật khẩu mới và xác nhận mật khẩu không khớp!', {
+                        type: 'error',
+                    })
                     return
                 }
                 if (newPassword.length < 6) {
-                    alert('Mật khẩu mới phải có ít nhất 6 ký tự.')
+                    showAlert('Mật khẩu mới phải có ít nhất 6 ký tự.', {
+                        type: 'error',
+                    })
                     return
                 }
-                alert('Mật khẩu đã được thay đổi thành công!')
+                showAlert('Mật khẩu đã được thay đổi thành công!', {
+                    type: 'success',
+                })
                 break
             default:
                 break
@@ -189,7 +191,6 @@ const Profile = () => {
         closePopup()
     }
 
-    // Hàm xử lý khi submit form
     const handleSubmit = e => {
         e.preventDefault()
         if (!user?.user_id) {
@@ -199,7 +200,6 @@ const Profile = () => {
             return
         }
 
-        // Chuyển đổi ID tỉnh/huyện/xã thành tên trước khi gửi đi
         const selectedProvince = allProvinces.find(
             p => p.Id === profile.province
         )
@@ -215,24 +215,20 @@ const Profile = () => {
             district: selectedDistrict?.Name || '',
             ward: selectedWard?.Name || '',
             provider: 'local',
-            // Thêm các trường khác nếu API yêu cầu
         }
 
-        // API thường xử lý upload file riêng biệt dưới dạng FormData
-        // Nếu API của bạn cho phép gửi cả file và JSON, bạn cần điều chỉnh
         const formData = new FormData()
         Object.keys(dataToUpdate).forEach(key => {
             formData.append(key, dataToUpdate[key])
         })
 
         if (avatarFile) {
-            formData.append('avatar', avatarFile) // 'avatar' là key mà API mong đợi
+            formData.append('avatar', avatarFile)
         }
 
-        // Gọi mutation để cập nhật
         updateUser({ userId: user.user_id, data: formData })
     }
-    console.log(user);
+    console.log(user)
     return (
         <div className="min-h-screen flex items-center justify-center">
             <ChangeInfoPopup
@@ -265,9 +261,9 @@ const Profile = () => {
                     onSubmit={handleSubmit}
                     className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-10"
                 >
-                    {/* Các input fields giữ nguyên như cũ */}
+                    {}
                     <div className="md:col-span-2 space-y-6">
-                        {/* Tên đăng nhập */}
+                        {}
                         <div>
                             <label
                                 htmlFor="username"
@@ -290,7 +286,7 @@ const Profile = () => {
                                 Thay Đổi
                             </button>
                         </div>
-                        {/* Tên */}
+                        {}
                         <div>
                             <label
                                 htmlFor="name"
@@ -307,7 +303,7 @@ const Profile = () => {
                                 className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none  focus:ring-black focus:border-black"
                             />
                         </div>
-                        {/* Email */}
+                        {}
                         <div>
                             <label
                                 htmlFor="email"
@@ -352,7 +348,7 @@ const Profile = () => {
                                 </div>
                             )}
                         </div>
-                        {/* Số điện thoại */}
+                        {}
                         <div>
                             <label
                                 htmlFor="phone"
@@ -370,7 +366,7 @@ const Profile = () => {
                                 className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-black focus:border-black"
                             />
                         </div>
-                        {/* Giới tính */}
+                        {}
                         <div>
                             <label className="block text-sm font-medium text-gray-700">
                                 Giới tính
@@ -417,7 +413,7 @@ const Profile = () => {
                                 </label>
                             </div>
                         </div>
-                        {/* Địa chỉ */}
+                        {}
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-3">
                                 Địa chỉ
@@ -519,7 +515,7 @@ const Profile = () => {
                         </div>
                     </div>
 
-                    {/* Avatar */}
+                    {}
                     <div className="flex flex-col items-center justify-start pt-6">
                         <div
                             className="w-32 h-32 rounded-full bg-cover bg-center mb-4 shadow-md"
@@ -547,7 +543,7 @@ const Profile = () => {
                         </p>
                     </div>
 
-                    {/* Nút bấm */}
+                    {}
                     <div className="md:col-span-3 flex justify-end items-center gap-4 pt-6 border-t border-gray-200">
                         {user?.provider === 'local' && (
                             <button
@@ -561,7 +557,7 @@ const Profile = () => {
                         <button
                             type="submit"
                             className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-lg shadow-md transition duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed"
-                            disabled={isUpdating} // Vô hiệu hóa nút khi đang cập nhật
+                            disabled={isUpdating}
                         >
                             {isUpdating ? 'Đang lưu...' : 'Lưu Thay Đổi'}
                         </button>

@@ -4,7 +4,7 @@ import ApiError from '~/utils/ApiError'
 
 const addPaymentService = async (method, status) => {
     const existingPayment = await PaymentsModel.getPaymentsByMethod(method)
-    if (existingPayment.length!=0) {
+    if (existingPayment.length != 0) {
         throw new ApiError(
             StatusCodes.CONFLICT,
             'Phương thức thanh toán đã tồn tại'
@@ -17,8 +17,19 @@ const addPaymentService = async (method, status) => {
     return newPayment
 }
 
-const getPaymentByIdService = async (paymentId) => {
+const getPaymentByIdService = async paymentId => {
     const payment = await PaymentsModel.getPaymentById(paymentId)
+    if (!payment) {
+        throw new ApiError(
+            StatusCodes.NOT_FOUND,
+            'Không tìm thấy phương thức thanh toán'
+        )
+    }
+    return payment
+}
+
+const getPaymentByMethodService = async paymentMethod => {
+    const payment = await PaymentsModel.getPaymentsByMethod(paymentMethod)
     if (!payment) {
         throw new ApiError(
             StatusCodes.NOT_FOUND,
@@ -35,7 +46,7 @@ const getAllPaymentsService = async () => {
 
 const getActivePaymentService = async () => {
     const activePayment = await PaymentsModel.getActivePayments()
-    if(!activePayment){
+    if (!activePayment) {
         throw new ApiError(
             StatusCodes.NOT_FOUND,
             'Không tìm thấy phương thức thanh toán nào đang hoạt động'
@@ -57,14 +68,14 @@ const updatePaymentService = async (id, method, status) => {
     return updatedPayment
 }
 
-const deletePaymentService = async (paymentId) => {
+const deletePaymentService = async paymentId => {
     const existingPayment = await PaymentsModel.getPaymentById(paymentId)
     if (!existingPayment) {
-        throw new ApiError( 
+        throw new ApiError(
             StatusCodes.NOT_FOUND,
             'Không tìm thấy phương thức thanh toán'
         )
-    }   
+    }
     await PaymentsModel.deletePayment(paymentId)
     return { message: 'Xóa phương thức thanh toán thành công' }
 }
@@ -74,6 +85,7 @@ export const paymentService = {
     getAllPaymentsService,
     updatePaymentService,
     getPaymentByIdService,
+    getPaymentByMethodService,
     deletePaymentService,
-    getActivePaymentService
+    getActivePaymentService,
 }

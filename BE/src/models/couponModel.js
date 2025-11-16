@@ -55,6 +55,40 @@ const CouponsModel = {
         return rows[0] || null
     },
 
+    async getCouponByCode(code) {
+        const conn = getConnection()
+        const [rows] = await conn.execute(
+            `
+        SELECT 
+            c.id,
+            c.code,
+            c.type,
+            c.value,
+            c.max_value,
+            c.min_order_value,
+            c.start_date,
+            c.end_date,
+            c.status,
+            cs.scope_type,
+            p.id AS product_id,
+            p.name AS product_name,
+            p.price AS product_price,
+            p.slug AS product_slug
+        FROM ${COUPONS_TABLE_NAME} AS c
+        LEFT JOIN CouponScopes AS cs ON cs.coupon_id = c.id
+        LEFT JOIN Products AS p ON p.id = cs.product_id
+        WHERE c.code = ?
+        AND c.status = 1
+        AND (c.start_date IS NULL OR c.start_date <= NOW())
+        AND (c.end_date IS NULL OR c.end_date >= NOW())
+        LIMIT 1
+        `,
+            [code]
+        )
+
+        return rows[0] || null
+    },
+
     async updateCoupon(id, data) {
         const schema = COUPONS_SCHEMA.fork(
             Object.keys(COUPONS_SCHEMA.describe().keys),

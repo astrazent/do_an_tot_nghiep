@@ -6,7 +6,7 @@ const initialState = {
     full_name: '',
     gender: '',
     email: '',
-    email_verified: false, // thêm
+    email_verified: false,
     phone: '',
     address: '',
     city: '',
@@ -19,7 +19,7 @@ const initialState = {
     created_at: null,
     updated_at: null,
     token: '',
-    expire_date: null
+    expire_date: null,
 }
 
 export const userSlice = createSlice({
@@ -28,7 +28,6 @@ export const userSlice = createSlice({
     reducers: {
         updateUser: (state, action) => {
             const payload = action.payload || {}
-            console.log(payload);
             return {
                 user_id: payload.id ?? payload.user_id ?? null,
                 username: payload.username ?? '',
@@ -48,7 +47,7 @@ export const userSlice = createSlice({
                 created_at: payload.created_at ?? null,
                 updated_at: payload.updated_at ?? null,
                 token: payload.token ?? '',
-                expire_date: payload.expire_date ?? state.expire_date
+                expire_date: payload.expire_date ?? state.expire_date,
             }
         },
         removeUser: state => {
@@ -57,7 +56,7 @@ export const userSlice = createSlice({
             state.full_name = ''
             state.gender = ''
             state.email = ''
-            state.email_verified = false // thêm
+            state.email_verified = false
             state.phone = ''
             state.address = ''
             state.city = ''

@@ -3,7 +3,6 @@ import Joi from 'joi'
 
 const PRODUCT_IMAGES_TABLE_NAME = 'ProductImages'
 
-// Schema validate dữ liệu product image
 const PRODUCT_IMAGES_SCHEMA = Joi.object({
     is_main: Joi.number().integer().valid(0, 1).required().messages({
         'number.base': 'is_main phải là số',
@@ -102,7 +101,7 @@ const ProductImagesModel = {
         if (!Array.isArray(productIds) || productIds.length === 0) return []
 
         const conn = getConnection()
-        const placeholders = productIds.map(() => '?').join(',') // "?,?,?"
+        const placeholders = productIds.map(() => '?').join(',')
         const [rows] = await conn.execute(
             `SELECT * FROM ${PRODUCT_IMAGES_TABLE_NAME}
             WHERE product_id IN (${placeholders})

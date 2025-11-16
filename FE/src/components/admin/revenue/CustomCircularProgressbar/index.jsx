@@ -35,7 +35,7 @@ const CustomCircularProgressbar = ({
             />
 
             <div
-                className="absolute top-1/2 left-1/2 w-[92%] h-[92%]  /* tăng size để sát progress */
+                className="absolute top-1/2 left-1/2 w-[92%] h-[92%]  
                         bg-slate-800 rounded-full 
                         transform -translate-x-1/2 -translate-y-1/2 
                         flex flex-col justify-center items-center text-center shadow-lg"

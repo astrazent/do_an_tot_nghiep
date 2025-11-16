@@ -17,7 +17,7 @@ const shippingRevenueData = [
     { name: 'Nhận tại cửa hàng', revenue: 15100000, color: '#F472B6' },
     { name: 'Đối tác khác', revenue: 8900000, color: '#A78BFA' },
 ]
-import { formatCurrency } from '~/utils/formatCurrency';
+import { formatCurrency } from '~/utils/formatCurrency'
 
 const formatYAxis = value => `${value / 1000000}tr`
 

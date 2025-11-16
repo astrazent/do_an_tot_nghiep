@@ -25,8 +25,8 @@ const getListProductService = async data => {
         data.offset,
         data.slug,
         data.sort,
-        data.minPrice ?? null, // thêm minPrice
-        data.maxPrice ?? null  // thêm maxPrice
+        data.minPrice ?? null,
+        data.maxPrice ?? null
     )
 
     if (listProduct.length == 0) {
@@ -39,7 +39,6 @@ const getListProductService = async data => {
     const ids = listProduct.map(p => p.id)
     const allImages = await ProductImagesModel.getImagesByProductIds(ids)
 
-    // Nhóm theo product_id
     const imagesMap = allImages.reduce((acc, img) => {
         if (!acc[img.product_id]) acc[img.product_id] = []
         acc[img.product_id].push(img)
@@ -58,14 +57,13 @@ const getListProductService = async data => {
     return listProduct
 }
 
-export const getPromotionProductService = async (data) => {
-    // Chuyển data params sang kiểu phù hợp
+export const getPromotionProductService = async data => {
     const sort = data.sort || 'newest'
     const limit = data.limit ? parseInt(data.limit, 10) : 50
     const offset = data.offset ? parseInt(data.offset, 10) : 0
     const minPrice = data.minPrice ? parseInt(data.minPrice, 10) : null
     const maxPrice = data.maxPrice ? parseInt(data.maxPrice, 10) : null
-    // Lấy danh sách sản phẩm promotion
+
     const listProduct = await ProductsModel.listPromotionProducts({
         sort,
         limit,
@@ -81,18 +79,15 @@ export const getPromotionProductService = async (data) => {
         )
     }
 
-    // Lấy tất cả ảnh theo product_id
     const ids = listProduct.map(p => p.id)
     const allImages = await ProductImagesModel.getImagesByProductIds(ids)
 
-    // Nhóm ảnh theo product_id
     const imagesMap = allImages.reduce((acc, img) => {
         if (!acc[img.product_id]) acc[img.product_id] = []
         acc[img.product_id].push(img)
         return acc
     }, {})
 
-    // Gắn images vào từng sản phẩm
     for (const product of listProduct) {
         const images = imagesMap[product.id] || []
         product.images = images.map(i => {
@@ -124,13 +119,15 @@ const getBySlugService = async slug => {
 
     return product
 }
-const getHotProductService = async (limit) => {
+const getHotProductService = async limit => {
     const products = await ProductsModel.getHotProduct(limit)
-    if (!products || (!products.hotProducts?.length && !products.occopProducts?.length)) {
+    if (
+        !products ||
+        (!products.hotProducts?.length && !products.occopProducts?.length)
+    ) {
         throw new ApiError(StatusCodes.NOT_FOUND, 'Không tìm thấy sản phẩm')
     }
 
-    // Lấy tất cả productIds từ cả 2 nhãn
     const productIds = [
         ...products.hotProducts.map(p => p.id),
         ...products.occopProducts.map(p => p.id),
@@ -138,8 +135,7 @@ const getHotProductService = async (limit) => {
 
     const allImages = await ProductImagesModel.getImagesByProductIds(productIds)
 
-    // Hàm gán ảnh cho từng sản phẩm
-    const mapImages = (productArray) =>
+    const mapImages = productArray =>
         productArray.map(p => {
             const images = allImages
                 .filter(i => i.product_id === p.id)
@@ -163,15 +159,6 @@ const getRelatedBySlugService = async slug => {
         throw new ApiError(StatusCodes.NOT_FOUND, 'Không tìm thấy sản phẩm')
     }
 
-    // const allImages = await ProductImagesModel.getImagesByProductIds([product.id])
-
-    // const images = allImages.map(i => {
-    //     const url = i.image_url || ''
-    //     return url.startsWith('http') ? url : '/' + url.replace(/^\/+/, '')
-    // })
-
-    // product.images = images
-
     return product
 }
 
@@ -179,23 +166,25 @@ const getSearchProductService = async (slug, limit = 10) => {
     const products = await ProductsModel.getSearchProduct(slug, limit)
 
     if (!products || products.length === 0) {
-        return [] // trả về mảng rỗng
+        return []
     }
 
     const productIds = products.map(p => p.id).filter(id => id != null)
 
     if (productIds.length === 0) {
-        return products.map(p => ({ ...p, images: [] })) // nếu không có id, vẫn trả về array với images rỗng
+        return products.map(p => ({ ...p, images: [] }))
     }
 
     const allImages = await ProductImagesModel.getImagesByProductIds(productIds)
 
     const productsWithImages = products.map(p => {
         const images = allImages
-            .filter(i => i.product_id === p.id && i.is_main === 1) // chỉ lấy ảnh is_main = 1
+            .filter(i => i.product_id === p.id && i.is_main === 1)
             .map(i => {
                 const url = i.image_url || ''
-                return url.startsWith('http') ? url : '/' + url.replace(/^\/+/, '')
+                return url.startsWith('http')
+                    ? url
+                    : '/' + url.replace(/^\/+/, '')
             })
         return { ...p, images }
     })
@@ -204,14 +193,13 @@ const getSearchProductService = async (slug, limit = 10) => {
 }
 
 const getSearchByCategoryService = async (
-    categorySlug, 
-    keyword = '', 
-    limit = 10, 
+    categorySlug,
+    keyword = '',
+    limit = 10,
     offset = 0
 ) => {
     if (!categorySlug) return []
 
-    // Lấy sản phẩm từ model với limit + offset
     const products = await ProductsModel.getSearchByCategory(
         categorySlug,
         keyword,
@@ -220,26 +208,23 @@ const getSearchByCategoryService = async (
     )
 
     if (!products || products.length === 0) {
-        return [] // trả về mảng rỗng nếu không tìm thấy
+        return []
     }
 
     const productIds = products.map(p => p.id).filter(id => id != null)
 
     if (productIds.length === 0) {
-        return products.map(p => ({ ...p, images: [] })) // vẫn trả về array với images rỗng
+        return products.map(p => ({ ...p, images: [] }))
     }
 
-    // Lấy tất cả ảnh theo productIds, DB đã sắp xếp: is_main DESC, id ASC
     const allImages = await ProductImagesModel.getImagesByProductIds(productIds)
 
-    // Gom ảnh theo product_id
     const imagesMap = allImages.reduce((acc, img) => {
         if (!acc[img.product_id]) acc[img.product_id] = []
         acc[img.product_id].push(img)
         return acc
     }, {})
 
-    // Gán ảnh cho từng product
     const productsWithImages = products.map(p => {
         const images = (imagesMap[p.id] || []).map(i => {
             const url = i.image_url || ''

@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { useParams } from 'react-router-dom'
-// Import cả hai hook cần thiết
+
 import { usePostBySlug, useRelatedPostsBySlug } from '~/hooks/user/usePost'
 
 import ArticleHeader from '~/components/user/newsDetail/ArticleHeader'
@@ -11,59 +11,72 @@ import RelatedArticle from '~/components/user/newsDetail/RelatedArticle'
 function NewsDetail() {
     const { slug } = useParams()
 
-    // --- 1. Lấy dữ liệu cho bài viết chính ---
     const {
         data: postData,
         isLoading: isLoadingPost,
-        isError: isErrorPost
+        isError: isErrorPost,
     } = usePostBySlug(slug)
 
-    // --- 2. Lấy dữ liệu cho các bài viết liên quan ---
     const {
         data: relatedPostsData,
         isLoading: isLoadingRelated,
-        isError: isErrorRelated
+        isError: isErrorRelated,
     } = useRelatedPostsBySlug(slug)
 
     const relatedArticles = useMemo(() => {
         if (!relatedPostsData) return []
         const { relatedByCategory, relatedByPostType } = relatedPostsData
-        const allRelatedPosts = [...(relatedByCategory || []), ...(relatedByPostType || [])]
-        const uniquePosts = Array.from(new Map(allRelatedPosts.map((post) => [post.id, post])).values())
-        return uniquePosts.map((post) => ({
+        const allRelatedPosts = [
+            ...(relatedByCategory || []),
+            ...(relatedByPostType || []),
+        ]
+        const uniquePosts = Array.from(
+            new Map(allRelatedPosts.map(post => [post.id, post])).values()
+        )
+        return uniquePosts.map(post => ({
             id: post.id,
-            image: post.images && post.images.length > 0 ? post.images[0] : '/path/to/default-image.png',
+            image:
+                post.images && post.images.length > 0
+                    ? post.images[0]
+                    : '/path/to/default-image.png',
             title: post.title,
             date: new Date(post.published_at).toLocaleDateString('vi-VN', {
                 day: '2-digit',
                 month: '2-digit',
-                year: 'numeric'
-            })
+                year: 'numeric',
+            }),
         }))
     }, [relatedPostsData])
 
-    // --- 3. Xử lý trạng thái tải và lỗi cho bài viết chính ---
     if (isLoadingPost) {
-        return <div className="min-h-screen text-center p-10">Đang tải bài viết...</div>
+        return (
+            <div className="min-h-screen text-center p-10">
+                Đang tải bài viết...
+            </div>
+        )
     }
 
     if (isErrorPost || !postData) {
-        return <div className="min-h-screen text-center p-10 text-red-500">Không tìm thấy bài viết hoặc có lỗi xảy ra.</div>
+        return (
+            <div className="min-h-screen text-center p-10 text-red-500">
+                Không tìm thấy bài viết hoặc có lỗi xảy ra.
+            </div>
+        )
     }
 
-    // --- 4. Định dạng lại dữ liệu cho các component con ---
-    const highlights = postData.description ? postData.description.split('. ') : []
+    const highlights = postData.description
+        ? postData.description.split('. ')
+        : []
     const content = postData.content ? [postData.content] : []
 
-    // ******** FIXBUG TẠI ĐÂY ********
-    // Chuyển đổi mảng chuỗi URL thành mảng đối tượng { url, caption }
-    const images = postData.images
-        ?.sort((a, b) => a.display_order - b.display_order) // 1. Sắp xếp theo thứ tự hiển thị
-        .map(imageObj => ({
-            url: imageObj.url,         // 2. Lấy url từ đối tượng image
-            caption: imageObj.caption  // 3. Lấy caption từ đối tượng image
-    })) || [];
-    // **********************************
+    const images =
+        postData.images
+            ?.sort((a, b) => a.display_order - b.display_order)
+            .map(imageObj => ({
+                url: imageObj.url,
+                caption: imageObj.caption,
+            })) || []
+
     return (
         <div className="min-h-screen">
             <main className="max-w-3xl mx-auto bg-white p-6 md:p-8 rounded-lg relative">
@@ -76,19 +89,28 @@ function NewsDetail() {
                 <ArticleBody
                     highlights={highlights}
                     content={content}
-                    images={images} // Truyền mảng đã được định dạng đúng
+                    images={images}
                 />
 
-                {/* Phần bài viết liên quan giữ nguyên logic cũ */}
+                {}
                 {isLoadingRelated && (
-                    <p className="text-center mt-8">Đang tải bài viết liên quan...</p>
+                    <p className="text-center mt-8">
+                        Đang tải bài viết liên quan...
+                    </p>
                 )}
                 {isErrorRelated && (
-                    <p className="text-center mt-8 text-red-500">Không thể tải được bài viết liên quan.</p>
+                    <p className="text-center mt-8 text-red-500">
+                        Không thể tải được bài viết liên quan.
+                    </p>
                 )}
-                {!isLoadingRelated && !isErrorRelated && relatedArticles.length > 0 && (
-                    <RelatedArticle title="Các bài viết liên quan" articles={relatedArticles} />
-                )}
+                {!isLoadingRelated &&
+                    !isErrorRelated &&
+                    relatedArticles.length > 0 && (
+                        <RelatedArticle
+                            title="Các bài viết liên quan"
+                            articles={relatedArticles}
+                        />
+                    )}
             </main>
         </div>
     )

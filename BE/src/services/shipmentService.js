@@ -1,7 +1,6 @@
 import { ShipmentsModel } from '~/models/shipmentModel'
 import { StatusCodes } from 'http-status-codes'
 import ApiError from '~/utils/ApiError'
-import { shipmentController } from '~/controllers/shipmentController'
 
 const addShipmentService = async data => {
     const existed = await ShipmentsModel.getShipmentByName(data.name)
@@ -17,7 +16,18 @@ const addShipmentService = async data => {
 
 const getShipmentByIdService = async shipmentId => {
     const payment = await ShipmentsModel.getShipmentById(shipmentId)
-    if(!payment){
+    if (!payment) {
+        throw new ApiError(
+            StatusCodes.NOT_FOUND,
+            'Không tìm thấy phương thức giao hàng'
+        )
+    }
+    return payment
+}
+
+const getShipmentByNameService = async shipmentName => {
+    const payment = await ShipmentsModel.getShipmentByName(shipmentName)
+    if (!payment) {
         throw new ApiError(
             StatusCodes.NOT_FOUND,
             'Không tìm thấy phương thức giao hàng'
@@ -31,22 +41,22 @@ const getAllShipmentsService = async () => {
     return payments
 }
 
-const updateShipmentService = async (shipmentId,data) => {
+const updateShipmentService = async (shipmentId, data) => {
     const existed = await ShipmentsModel.getShipmentById(shipmentId)
-    if(!existed){
+    if (!existed) {
         throw new ApiError(
             StatusCodes.NOT_FOUND,
             'Không tìm thấy phương thức giao hàng'
         )
     }
 
-    const updateShipment = await ShipmentsModel.updateShipment(shipmentId,data)
+    const updateShipment = await ShipmentsModel.updateShipment(shipmentId, data)
     return updateShipment
 }
 
-const getActiveShipmentService = async(status) => {
+const getActiveShipmentService = async status => {
     const activeShipment = await ShipmentsModel.getActiveShipments()
-    if(!activeShipment){
+    if (!activeShipment) {
         throw new ApiError(
             StatusCodes.NOT_FOUND,
             'Không tìm thấy phương thức giao hàng nào đang hoạt động'
@@ -58,7 +68,8 @@ const getActiveShipmentService = async(status) => {
 export const shipmentService = {
     addShipmentService,
     getShipmentByIdService,
+    getShipmentByNameService,
     getAllShipmentsService,
     updateShipmentService,
-    getActiveShipmentService
+    getActiveShipmentService,
 }

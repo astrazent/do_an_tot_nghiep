@@ -111,3 +111,17 @@
 .back-btn:hover {
     opacity: 0.9;
 }
+
+.coupon-message {
+    font-size: 0.9em;
+    margin-top: 8px;
+    text-align: left;
+
+    &.success {
+        color: #28a745; // Màu xanh lá
+    }
+
+    &.error {
+        color: #dc3545; // Màu đỏ
+    }
+}

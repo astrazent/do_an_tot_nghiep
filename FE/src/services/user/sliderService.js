@@ -1,6 +1,10 @@
 import api from './api'
 
-export const getListSlider = async ({ limit = 10, offset = 0, sort = 'asc' } = {}) => {
+export const getListSlider = async ({
+    limit = 10,
+    offset = 0,
+    sort = 'asc',
+} = {}) => {
     try {
         const response = await api.get('/slider/list', {
             params: { limit, offset, sort },

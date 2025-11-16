@@ -3,7 +3,6 @@ import Joi from 'joi'
 
 const POST_TYPES_TABLE_NAME = 'PostTypes'
 
-// Schema validate dữ liệu post type
 const POST_TYPES_SCHEMA = Joi.object({
     name: Joi.string().min(3).max(100).required().messages({
         'string.empty': 'Name không được để trống',
@@ -84,7 +83,7 @@ const PostTypesModel = {
 
         const [rows] = await conn.execute(sql, [limit, offset])
         return rows
-    }
+    },
 }
 
 export { POST_TYPES_TABLE_NAME, POST_TYPES_SCHEMA, PostTypesModel }

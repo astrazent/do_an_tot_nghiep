@@ -20,8 +20,11 @@ const getDiscountByIdService = async discountId => {
     return discount
 }
 
-const getAllDiscountService = async (data) => {
-    const listDiscount = await DiscountsModel.listDiscounts(data.limit, data.offset)
+const getAllDiscountService = async data => {
+    const listDiscount = await DiscountsModel.listDiscounts(
+        data.limit,
+        data.offset
+    )
     return listDiscount
 }
 
@@ -30,10 +33,10 @@ const getActiveDiscountService = async () => {
     return activeDiscount
 }
 
-const updateDiscountService = async (discountId,data) => {
+const updateDiscountService = async (discountId, data) => {
     const discount = await DiscountsModel.getDiscountById(discountId)
 
-    if(!discount){
+    if (!discount) {
         throw new ApiError(
             StatusCodes.NOT_FOUND,
             'Không tìm thấy mã giảm giá này'
@@ -44,10 +47,10 @@ const updateDiscountService = async (discountId,data) => {
     return updateDiscount
 }
 
-const deleteDiscountService = async (discountId,data) => {
+const deleteDiscountService = async (discountId, data) => {
     const discount = await DiscountsModel.getDiscountById(discountId)
 
-    if(!discount){
+    if (!discount) {
         throw new ApiError(
             StatusCodes.NOT_FOUND,
             'Không tìm thấy mã giảm giá này'
@@ -55,7 +58,7 @@ const deleteDiscountService = async (discountId,data) => {
     }
 
     await DiscountsModel.deleteDiscount(discountId)
-    return {message: "Xóa mã giảm giá thành công"}
+    return { message: 'Xóa mã giảm giá thành công' }
 }
 
 export const discountService = {
@@ -64,5 +67,5 @@ export const discountService = {
     getAllDiscountService,
     getDiscountByIdService,
     updateDiscountService,
-    deleteDiscountService
+    deleteDiscountService,
 }

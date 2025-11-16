@@ -4,7 +4,9 @@ import ApiError from '~/utils/ApiError'
 import { StatusCodes } from 'http-status-codes'
 
 export const registerService = async payload => {
-    const existedEmail = await UsersModel.findUserByEmailOrUsername(payload.email)
+    const existedEmail = await UsersModel.findUserByEmailOrUsername(
+        payload.email
+    )
     if (existedEmail) {
         throw new ApiError(StatusCodes.CONFLICT, 'Email đã tồn tại')
     }
@@ -14,7 +16,9 @@ export const registerService = async payload => {
         throw new ApiError(StatusCodes.CONFLICT, 'Số điện thoại đã tồn tại')
     }
 
-    const existedUsername = await UsersModel.findUserByEmailOrUsername(payload.username)
+    const existedUsername = await UsersModel.findUserByEmailOrUsername(
+        payload.username
+    )
     if (existedUsername) {
         throw new ApiError(StatusCodes.CONFLICT, 'Username đã tồn tại')
     }
@@ -23,6 +27,7 @@ export const registerService = async payload => {
 
     const userData = await UsersModel.createUser({
         username: payload.username,
+        provider: 'local',
         password_hash: hashedPassword,
         email: payload.email,
         phone: payload.phone,
@@ -34,20 +39,32 @@ export const registerService = async payload => {
 }
 
 export const registerGoogleUserService = async payload => {
-    const { email, full_name, googleId, avatar_url, first_name, last_name, email_verified } = payload
+    const {
+        email,
+        full_name,
+        googleId,
+        avatar_url,
+        first_name,
+        last_name,
+        email_verified,
+    } = payload
 
-    // Kiểm tra email đã tồn tại
     const existedEmail = await UsersModel.findUserByEmailOrUsername(email)
-    if (existedEmail) throw new ApiError(StatusCodes.CONFLICT, 'Email đã tồn tại')
+    if (existedEmail)
+        throw new ApiError(StatusCodes.CONFLICT, 'Email đã tồn tại')
 
-    // Tạo username từ phần trước dấu @
     const username = email.split('@')[0]
 
-    // Kiểm tra username trùng
     const existedUsername = await UsersModel.findUserByEmailOrUsername(username)
+<<<<<<< HEAD
     if (existedUsername) throw new ApiError(StatusCodes.CONFLICT, 'Username đã tồn tại')
     console.log('Đăng ký user Google với email:', email_verified)
     // Tạo user mới
+=======
+    if (existedUsername)
+        throw new ApiError(StatusCodes.CONFLICT, 'Username đã tồn tại')
+
+>>>>>>> 90c0ef4009c16de0e32287b149daba0b9a7ba6f6
     const userData = await UsersModel.createUser({
         username,
         email,
@@ -58,7 +75,7 @@ export const registerGoogleUserService = async payload => {
         gender: 'other',
         avatar_url: avatar_url || null,
         status: 1,
-        email_verified: email_verified ?? true, // thêm
+        email_verified: email_verified ?? true,
     })
 
     delete userData.password_hash
@@ -88,35 +105,39 @@ const getByIdUserService = async data => {
     return user
 }
 
-export const checkPasswordAndUpdateService = async ({ userId, old_password, data }) => {
-    // 1️⃣ Kiểm tra user có tồn tại không
+export const checkPasswordAndUpdateService = async ({
+    userId,
+    old_password,
+    data,
+}) => {
     const user = await UsersModel.getUserById(userId)
     if (!user) {
         throw new ApiError(StatusCodes.NOT_FOUND, 'Không tìm thấy user')
     }
 
-    // 2️⃣ Kiểm tra tài khoản có mật khẩu hay không (tránh trường hợp đăng nhập Google)
     if (!user.password_hash) {
-        throw new ApiError(StatusCodes.BAD_REQUEST, 'Tài khoản này không có mật khẩu')
+        throw new ApiError(
+            StatusCodes.BAD_REQUEST,
+            'Tài khoản này không có mật khẩu'
+        )
     }
 
-    // 3️⃣ So sánh mật khẩu cũ
     const isMatch = await bcrypt.compare(old_password, user.password_hash)
     if (!isMatch) {
-        throw new ApiError(StatusCodes.UNAUTHORIZED, 'Mật khẩu cũ không chính xác')
+        throw new ApiError(
+            StatusCodes.UNAUTHORIZED,
+            'Mật khẩu cũ không chính xác'
+        )
     }
 
-    // 4️⃣ Nếu trong data có trường password → mã hoá
     if (data.password) {
         const hashedPassword = await bcrypt.hash(data.password, 10)
         data.password_hash = hashedPassword
         delete data.password
     }
 
-    // 5️⃣ Cập nhật user
     const updatedUser = await UsersModel.updateUser(userId, data)
 
-    // 6️⃣ Trả về thông tin mới, ẩn password
     const { password_hash, ...safeUser } = updatedUser
     return safeUser
 }

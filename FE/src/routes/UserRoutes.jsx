@@ -18,6 +18,7 @@ import Category from '~/pages/user/Category'
 import Promotion from '~/pages/user/Promotion'
 import SearchPage from '~/pages/user/SearchPage'
 import { useCurrentUser } from '~/hooks/user/useUser'
+import ReturnPageVNPay from '~/components/user/payment/ReturnPageVNPay'
 const ProtectedRoute = ({ children }) => {
     const { isAuthenticated } = useCurrentUser()
     const location = useLocation()
@@ -46,6 +47,7 @@ export const userRoutes = [
         children: [
             { path: '/cart', element: <Cart /> },
             { path: '/test-alert', element: <TestAlert /> },
+            { path: '/vnpay/return', element: <ReturnPageVNPay /> },
         ],
     },
     {
@@ -59,7 +61,7 @@ export const userRoutes = [
             { path: '/category/:slug', element: <Category /> },
             { path: '/about', element: <About /> },
             { path: '/search', element: <SearchPage /> },
-            { path: '/product/:slug', element: <Product /> }
+            { path: '/product/:slug', element: <Product /> },
         ],
     },
     {

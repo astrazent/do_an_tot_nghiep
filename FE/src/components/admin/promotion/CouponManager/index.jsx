@@ -181,7 +181,7 @@ const AddCouponModal = ({ onClose, onAddCoupon }) => {
         value: '',
         startDate: '',
         endDate: '',
-        totalUsage: 100, // Thêm trường số lượng tối đa
+        totalUsage: 100,
     })
 
     const handleChange = e => {

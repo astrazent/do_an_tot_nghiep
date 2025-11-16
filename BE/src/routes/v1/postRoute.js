@@ -20,5 +20,4 @@ Router.route('/').patch(postController.updatePost)
 
 Router.route('/').delete(postController.deletePost)
 
-
 export default Router

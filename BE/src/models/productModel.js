@@ -1,7 +1,6 @@
 import { getConnection } from '../config/mysql.js'
 import Joi from 'joi'
 
-// Khai báo tên bảng
 const PRODUCTS_TABLE = 'Products'
 const CATEGORIES_TABLE = 'Categories'
 const ORDER_ITEMS_TABLE = 'OrderItems'
@@ -70,13 +69,14 @@ const ProductsModel = {
         return { id: result.insertId, ...value }
     },
 
-    async getProductBySlug(id) {
+    async getProductById(id) {
+        if (!id) return null
         const conn = getConnection()
         const [rows] = await conn.execute(
-            `SELECT * FROM ${PRODUCTS_TABLE} WHERE slug = ?`,
+            `SELECT * FROM ${PRODUCTS_TABLE} WHERE id = ? LIMIT 1`,
             [id]
         )
-        return rows[0] || null
+        return rows.length ? rows[0] : null
     },
 
     async updateProduct(id, data) {
@@ -303,7 +303,6 @@ const ProductsModel = {
 
         const conn = getConnection()
 
-        // Lấy category id
         const [catRows] = await conn.execute(
             `SELECT id FROM Categories WHERE slug = ?`,
             [categorySlug]
@@ -313,7 +312,6 @@ const ProductsModel = {
 
         const categoryId = catRows[0].id
 
-        // Lấy sản phẩm trong category với limit + offset
         const [rows] = await conn.execute(
             `SELECT *
         FROM Products

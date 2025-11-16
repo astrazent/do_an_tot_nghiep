@@ -15,7 +15,9 @@ const createCategory = async (req, res, next) => {
 
 const getByIdCategory = async (req, res, next) => {
     try {
-        const data = await categoryService.getByIdCategoryService(req.query.categoryId)
+        const data = await categoryService.getByIdCategoryService(
+            req.query.categoryId
+        )
 
         return res.status(StatusCodes.OK).json({
             message: 'Lấy danh mục thành công',
@@ -54,7 +56,10 @@ const getListCategory = async (req, res, next) => {
 
 const updateCategory = async (req, res, next) => {
     try {
-        const data = await categoryService.updateCategoryService(req.query.categoryId, req.body)
+        const data = await categoryService.updateCategoryService(
+            req.query.categoryId,
+            req.body
+        )
 
         return res.status(StatusCodes.OK).json({
             message: 'Cập nhật thông tin danh mục thành công',
@@ -67,7 +72,9 @@ const updateCategory = async (req, res, next) => {
 
 const deleteCategory = async (req, res, next) => {
     try {
-        const data = await categoryService.deleteCategoryService(req.query.categoryId)
+        const data = await categoryService.deleteCategoryService(
+            req.query.categoryId
+        )
 
         return res.status(StatusCodes.OK).json({
             data,
@@ -83,5 +90,5 @@ export const categoryController = {
     getBySlugCategory,
     getListCategory,
     updateCategory,
-    deleteCategory
+    deleteCategory,
 }

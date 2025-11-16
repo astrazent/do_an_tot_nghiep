@@ -25,4 +25,4 @@ dist-ssr
 
 # ENV variable
 .env
-rmc.cjs
+rmc.js
