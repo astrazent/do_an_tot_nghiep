@@ -49,7 +49,13 @@ const TRANSACTIONS_SCHEMA = Joi.object({
         'number.base': 'Shipping fee phải là số',
         'number.min': 'Shipping fee tối thiểu là 0',
     }),
-
+    payment_status: Joi.string()
+        .valid('pending', 'paid', 'failed', 'refunded')
+        .default('pending')
+        .messages({
+            'any.only':
+                'Payment status chỉ được là: pending, paid, failed, refunded',
+        }),
     shipment_status: Joi.string()
         .valid('pending', 'shipped', 'in_transit', 'delivered', 'returned')
         .default('pending')
@@ -138,10 +144,10 @@ const TransactionsModel = {
         try {
             const [result] = await conn.execute(
                 `INSERT INTO ${TRANSACTIONS_TABLE_NAME}
-            (status, deli_name, deli_phone, deli_address, deli_email, deli_city, deli_district, deli_ward,
-            message, tracking_number, shipping_fee, shipment_status, amount, shipped_at, delivered_at,
-            user_id, payment_id, shipment_id)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                (status, deli_name, deli_phone, deli_address, deli_email, deli_city, deli_district, deli_ward,
+                message, tracking_number, shipping_fee, shipment_status, amount, shipped_at, delivered_at,
+                user_id, payment_id, shipment_id, payment_status)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                 [
                     value.status,
                     value.deli_name,
@@ -161,6 +167,7 @@ const TransactionsModel = {
                     value.user_id,
                     value.payment_id,
                     value.shipment_id,
+                    value.payment_status,
                 ]
             )
 
@@ -194,7 +201,11 @@ const TransactionsModel = {
         const conn = getConnection()
 
         const [rows] = await conn.execute(
-            `SELECT oi.*
+            `SELECT 
+            oi.*,
+            t.status AS transaction_status,
+            t.payment_status,
+            t.shipment_status
             FROM OrderItems oi
             JOIN Transactions t ON t.id = oi.transaction_id
             WHERE t.user_id = ? AND oi.product_id = ?`,

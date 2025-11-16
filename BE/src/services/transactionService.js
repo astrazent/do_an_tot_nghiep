@@ -60,6 +60,7 @@ export const addTransactionService = async data => {
         deli_ward: data.deli_ward,
         message: data.message || '',
         shipping_fee: data.shipping_fee || 0,
+        payment_status: data.payment_status || 'pending',
         shipment_status: data.shipment_status || 'pending',
         amount: data.amount || 0,
         shipped_at: data.shipped_at || null,
@@ -120,10 +121,7 @@ const getTransactionsByUserService = async user_id => {
     const transactionByUser =
         await TransactionsModel.getTransactionsByUser(user_id)
     if (transactionByUser.length == 0) {
-        throw new ApiError(
-            StatusCodes.NOT_FOUND,
-            'Người dùng nào chưa có giao dịch nào'
-        )
+        return []
     }
     return transactionByUser
 }

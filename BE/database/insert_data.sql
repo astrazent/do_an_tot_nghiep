@@ -186,17 +186,17 @@ INSERT INTO Users
 
 -- Dữ liệu mẫu cho bảng OtpCodes
 INSERT INTO OtpCodes (user_id, code, type, is_used, attempts, expires_at, ip_address) VALUES
-(1, '482915', 0, 0, 0, DATE_ADD(NOW(), INTERVAL 5 MINUTE), '192.168.1.10'),
-(2, '937421', 1, 0, 1, DATE_ADD(NOW(), INTERVAL 10 MINUTE), '192.168.1.11'),
-(3, '120583', 2, 1, 2, DATE_SUB(NOW(), INTERVAL 2 MINUTE), '192.168.1.5'),  -- hết hạn
-(4, '553201', 0, 0, 0, DATE_ADD(NOW(), INTERVAL 3 MINUTE), '192.168.1.9'),
-(5, '778402', 1, 1, 3, DATE_SUB(NOW(), INTERVAL 1 MINUTE), '192.168.1.20'), -- hết hạn
-(6, '991244', 2, 0, 0, DATE_ADD(NOW(), INTERVAL 7 MINUTE), '192.168.1.30'),
-(7, '341298', 0, 0, 0, DATE_ADD(NOW(), INTERVAL 8 MINUTE), '192.168.1.40'),
-(8, '662910', 1, 0, 1, DATE_ADD(NOW(), INTERVAL 6 MINUTE), '192.168.1.14'),
-(9, '274501', 2, 1, 2, DATE_SUB(NOW(), INTERVAL 3 MINUTE), '192.168.1.99'), -- hết hạn
-(10, '834729', 0, 0, 0, DATE_ADD(NOW(), INTERVAL 9 MINUTE), '192.168.1.200'),
-(11, '559802', 1, 0, 0, DATE_ADD(NOW(), INTERVAL 4 MINUTE), '192.168.1.55');
+(1, '482915', 'login', 0, 0, DATE_ADD(NOW(), INTERVAL 5 MINUTE), '192.168.1.10'),
+(2, '937421', 'change_password', 0, 1, DATE_ADD(NOW(), INTERVAL 10 MINUTE), '192.168.1.11'),
+(3, '120583', 'verify_email', 1, 2, DATE_SUB(NOW(), INTERVAL 2 MINUTE), '192.168.1.5'),  -- hết hạn
+(4, '553201', 'login', 0, 0, DATE_ADD(NOW(), INTERVAL 3 MINUTE), '192.168.1.9'),
+(5, '778402', 'change_password', 1, 3, DATE_SUB(NOW(), INTERVAL 1 MINUTE), '192.168.1.20'), -- hết hạn
+(6, '991244', 'verify_email', 0, 0, DATE_ADD(NOW(), INTERVAL 7 MINUTE), '192.168.1.30'),
+(7, '341298', 'login', 0, 0, DATE_ADD(NOW(), INTERVAL 8 MINUTE), '192.168.1.40'),
+(8, '662910', 'change_password', 0, 1, DATE_ADD(NOW(), INTERVAL 6 MINUTE), '192.168.1.14'),
+(9, '274501', 'verify_email', 1, 2, DATE_SUB(NOW(), INTERVAL 3 MINUTE), '192.168.1.99'), -- hết hạn
+(10, '834729', 'login', 0, 0, DATE_ADD(NOW(), INTERVAL 9 MINUTE), '192.168.1.200'),
+(11, '559802', 'change_password', 0, 0, DATE_ADD(NOW(), INTERVAL 4 MINUTE), '192.168.1.55');
 
 -- Dữ liệu mẫu cho Tokens
 INSERT INTO Tokens (`user_id`, `refresh_token`, `device_info`, `ip_address`, `token_started_at`, `token_expired_at`, `is_revoked`, `revoked_at`) VALUES
@@ -1008,6 +1008,18 @@ INSERT INTO Comments (rate, content, product_id, user_id, created_at, updated_at
 -- Sửa lỗi: user_id=10 đã comment cho product_id=3. Đổi user_id thành 7.
 (4, 'Cà phê có hậu vị ngọt, khá đặc biệt.', 3, 7, '2025-10-10 19:40:00', '2025-10-10 19:40:00', 69, 6);
 
+-- CommentImages
+INSERT INTO CommentImages (comment_id, image_url, created_at, updated_at) VALUES
+-- Comment của user_id = 11 cho product_id = 1, 2, 3, 4 (giả sử comment_id là 1, 2, 3, 4)
+(1, 'https://fakeimg.pl/250x250/?text=Image1', '2025-10-11 09:00:00', '2025-10-11 09:00:00'),
+(1, 'https://fakeimg.pl/250x250/?text=Image2', '2025-10-11 09:05:00', '2025-10-11 09:05:00'),
+(2, 'https://fakeimg.pl/250x250/?text=Image3', '2025-10-11 10:00:00', '2025-10-11 10:00:00'),
+(2, 'https://fakeimg.pl/250x250/?text=Image4', '2025-10-11 10:05:00', '2025-10-11 10:05:00'),
+(2, 'https://fakeimg.pl/250x250/?text=Image5', '2025-10-11 10:10:00', '2025-10-11 10:10:00'),
+(3, 'https://fakeimg.pl/250x250/?text=Image6', '2025-10-11 11:00:00', '2025-10-11 11:00:00'),
+(4, 'https://fakeimg.pl/250x250/?text=Image7', '2025-10-11 12:00:00', '2025-10-11 12:00:00'),
+(4, 'https://fakeimg.pl/250x250/?text=Image8', '2025-10-11 12:05:00', '2025-10-11 12:05:00');
+
 -- Dữ liệu mẫu bảng AIFeedback
 INSERT INTO AIFeedback (product_id, voter_id, vote, created_at, updated_at) VALUES
 (5, 1, 1, '2025-11-04 20:00:00', '2025-11-04 20:00:00'),
@@ -1083,8 +1095,8 @@ VALUES
 INSERT INTO Payments (method, status, icon_url) VALUES
 ('COD', 1, 'https://cdn-icons-png.flaticon.com/512/3796/3796142.png'),
 ('CreditCard', 1, 'https://cdn-icons-png.flaticon.com/512/6963/6963703.png'),
-('Momo', 1, 'https://img.mservice.com.vn/app/img/portal_documents/mini-app_design-guideline_branding-guide-2-2.png'),
-('VNPay', 0, 'https://i.pinimg.com/736x/f9/5e/a2/f95ea23c297af3170d9d75173bed9d7e.jpg'),
+('Momo', 0, 'https://img.mservice.com.vn/app/img/portal_documents/mini-app_design-guideline_branding-guide-2-2.png'),
+('VNPay', 1, 'https://i.pinimg.com/736x/f9/5e/a2/f95ea23c297af3170d9d75173bed9d7e.jpg'),
 ('ZaloPay', 1, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwPynD27LbXlPsbofv1AX-5ZXDn_XMGo-1TA&s'),
 ('Paypal', 0, 'https://png.pngtree.com/element_our/png/20180723/paypal-logo-icon-png_44635.jpg');
 
