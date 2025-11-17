@@ -215,15 +215,225 @@ const TransactionsModel = {
         return rows || null
     },
 
-    async getTransactionById(id) {
+    async getOrderStats() {
         const conn = getConnection()
         const [rows] = await conn.execute(
-            `SELECT * FROM ${TRANSACTIONS_TABLE_NAME} WHERE id = ?`,
-            [id]
+            `
+        SELECT
+            current_cnt AS count,
+            CASE 
+                WHEN last_cnt = 0 THEN 100
+                ELSE ROUND( ((current_cnt - last_cnt) / last_cnt) * 100 , 2)
+            END AS percent_change
+        FROM (
+            SELECT
+                -- số đơn tháng này
+                (SELECT COUNT(*) 
+                 FROM Transactions 
+                 WHERE MONTH(created_at) = MONTH(NOW())
+                 AND YEAR(created_at) = YEAR(NOW())
+                ) AS current_cnt,
+
+                -- số đơn tháng trước
+                (SELECT COUNT(*) 
+                 FROM Transactions 
+                 WHERE MONTH(created_at) = MONTH(DATE_SUB(NOW(), INTERVAL 1 MONTH))
+                 AND YEAR(created_at) = YEAR(DATE_SUB(NOW(), INTERVAL 1 MONTH))
+                ) AS last_cnt
+        ) AS t;
+        `
         )
-        return rows[0] || null
+        return rows[0]
     },
 
+    async getAverageProcessingTime() {
+        const conn = getConnection()
+        const [rows] = await conn.execute(
+            `
+        SELECT 
+            current_val,
+            CASE 
+                WHEN last_val = 0 THEN 100
+                ELSE ROUND(((current_val - last_val) / last_val) * 100, 2)
+            END AS percent_change
+        FROM (
+            SELECT
+                -- tháng này (đơn vị: phút)
+                (SELECT AVG(TIMESTAMPDIFF(MINUTE, created_at, delivered_at))
+                 FROM Transactions
+                 WHERE delivered_at IS NOT NULL
+                 AND MONTH(created_at) = MONTH(NOW())
+                 AND YEAR(created_at) = YEAR(NOW())
+                ) AS current_val,
+
+                -- tháng trước
+                (SELECT AVG(TIMESTAMPDIFF(MINUTE, created_at, delivered_at))
+                 FROM Transactions
+                 WHERE delivered_at IS NOT NULL
+                 AND MONTH(created_at) = MONTH(DATE_SUB(NOW(), INTERVAL 1 MONTH))
+                 AND YEAR(created_at) = YEAR(DATE_SUB(NOW(), INTERVAL 1 MONTH))
+                ) AS last_val
+        ) AS t;
+        `
+        )
+        return rows[0]
+    },
+    async getCancelRefundRate() {
+        const conn = getConnection()
+        const [rows] = await conn.execute(
+            `
+        SELECT 
+            current_rate AS value,
+            CASE 
+                WHEN last_rate = 0 THEN 100
+                ELSE ROUND(((current_rate - last_rate) / last_rate) * 100, 2)
+            END AS percent_change
+        FROM (
+            SELECT
+                -- tỉ lệ tháng này
+                (
+                    (SELECT COUNT(*) 
+                     FROM Transactions
+                     WHERE status IN ('canceled','refunded')
+                     AND MONTH(created_at) = MONTH(NOW())
+                     AND YEAR(created_at) = YEAR(NOW()))
+                    /
+                    (SELECT COUNT(*) 
+                     FROM Transactions
+                     WHERE MONTH(created_at) = MONTH(NOW())
+                     AND YEAR(created_at) = YEAR(NOW()))
+                ) * 100 AS current_rate,
+
+                -- tỉ lệ tháng trước
+                (
+                    (SELECT COUNT(*) 
+                     FROM Transactions
+                     WHERE status IN ('canceled','refunded')
+                     AND MONTH(created_at) = MONTH(DATE_SUB(NOW(), INTERVAL 1 MONTH))
+                     AND YEAR(created_at) = YEAR(DATE_SUB(NOW(), INTERVAL 1 MONTH)))
+                    /
+                    (SELECT COUNT(*) 
+                     FROM Transactions
+                     WHERE MONTH(created_at) = MONTH(DATE_SUB(NOW(), INTERVAL 1 MONTH))
+                     AND YEAR(created_at) = YEAR(DATE_SUB(NOW(), INTERVAL 1 MONTH)))
+                ) * 100 AS last_rate
+        ) AS t;
+        `
+        )
+        return rows[0]
+    },
+    async getAverageRating() {
+        const conn = getConnection()
+        const [rows] = await conn.execute(
+            `
+        SELECT 
+            current_rate AS value,
+            CASE 
+                WHEN last_rate = 0 THEN 100
+                ELSE ROUND(((current_rate - last_rate) / last_rate) * 100, 2)
+            END AS percent_change
+        FROM (
+            SELECT
+                -- tháng này
+                (SELECT ROUND(AVG(rate), 2)
+                 FROM Comments
+                 WHERE MONTH(created_at) = MONTH(NOW())
+                 AND YEAR(created_at) = YEAR(NOW())
+                ) AS current_rate,
+
+                -- tháng trước
+                (SELECT ROUND(AVG(rate), 2)
+                 FROM Comments
+                 WHERE MONTH(created_at) = MONTH(DATE_SUB(NOW(), INTERVAL 1 MONTH))
+                 AND YEAR(created_at) = YEAR(DATE_SUB(NOW(), INTERVAL 1 MONTH))
+                ) AS last_rate
+        ) AS t;
+        `
+        )
+        return rows[0]
+    },
+    async getTransactionById(id) {
+        const conn = getConnection()
+
+        // Lấy thông tin đơn hàng + shipment + payment
+        const [orders] = await conn.execute(
+            `
+        SELECT 
+            t.*,
+            s.name AS shipment_name,
+            p.method AS payment_method
+        FROM Transactions t
+        LEFT JOIN Shipments s ON s.id = t.shipment_id
+        LEFT JOIN Payments p ON p.id = t.payment_id
+        WHERE t.id = ?
+        `,
+            [id]
+        )
+
+        const order = orders[0]
+        if (!order) return null
+
+        // Lấy danh sách sản phẩm trong đơn
+        const [items] = await conn.execute(
+            `
+        SELECT 
+            oi.id,
+            oi.qty_total AS quantity,
+            p.name AS product_name,
+            p.price AS price
+        FROM OrderItems oi
+        INNER JOIN Products p ON p.id = oi.product_id
+        WHERE oi.transaction_id = ?
+        `,
+            [id]
+        )
+
+        return {
+            ...order,
+            items,
+        }
+    },
+
+    async getTransactionStatusStats() {
+        const conn = getConnection()
+
+        const [[{ total }]] = await conn.execute(`
+        SELECT COUNT(*) AS total 
+        FROM Transactions
+    `)
+
+        const [rows] = await conn.execute(`
+        SELECT status, COUNT(*) AS count
+        FROM Transactions
+        GROUP BY status
+    `)
+
+        const result = {}
+
+        const allStatuses = [
+            'pending',
+            'confirmed',
+            'canceled',
+            'refunded',
+            'completed',
+        ]
+
+        allStatuses.forEach(s => {
+            result[s] = { count: 0, percent: 0 }
+        })
+
+        rows.forEach(row => {
+            const percent =
+                total > 0 ? Number(((row.count / total) * 100).toFixed(2)) : 0
+
+            result[row.status] = {
+                count: row.count,
+                percent,
+            }
+        })
+
+        return result
+    },
     async updateTransaction(id, data) {
         const schema = TRANSACTIONS_SCHEMA.fork(
             Object.keys(TRANSACTIONS_SCHEMA.describe().keys),
@@ -270,7 +480,7 @@ const TransactionsModel = {
         return result.affectedRows > 0
     },
 
-    async listTransactions(limit = 50, offset = 0) {
+    async listTransactions(limit, offset) {
         const conn = getConnection()
         const [rows] = await conn.execute(
             `SELECT * FROM ${TRANSACTIONS_TABLE_NAME}

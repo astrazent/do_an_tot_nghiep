@@ -117,6 +117,26 @@ const getListTransactionsService = async data => {
     return listTransaction
 }
 
+const getOrderStats = async () => {
+    const result = await TransactionsModel.getOrderStats()
+    return result
+}
+
+const getAverageProcessingTime = async () => {
+    const result = await TransactionsModel.getAverageProcessingTime()
+    return result
+}
+
+const getCancelRefundRate = async () => {
+    const result = await TransactionsModel.getCancelRefundRate()
+    return result
+}
+
+const getAverageProductRating = async () => {
+    const result = await TransactionsModel.getAverageRating()
+    return result
+}
+
 const getTransactionsByUserService = async user_id => {
     const transactionByUser =
         await TransactionsModel.getTransactionsByUser(user_id)
@@ -124,6 +144,17 @@ const getTransactionsByUserService = async user_id => {
         return []
     }
     return transactionByUser
+}
+
+const getOrderStatusOfTransaction = async () => {
+    const data = await TransactionsModel.getTransactionStatusStats()
+    if (!data) {
+        throw new ApiError(
+            StatusCodes.NOT_FOUND,
+            'Không tìm thấy dữ liệu'
+        )
+    }
+    return data
 }
 
 const getTransactionsByStatusService = async status => {
@@ -211,4 +242,9 @@ export const transactionService = {
     updateTransactionService,
     deleteByUserAndTrackingNumberService,
     deleteTransactionService,
+    getOrderStatusOfTransaction,
+    getOrderStats,
+    getAverageProcessingTime,
+    getCancelRefundRate,
+    getAverageProductRating
 }

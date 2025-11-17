@@ -108,11 +108,6 @@ export const loginGoogle = async (req, res, next) => {
             )
         }
 
-<<<<<<< HEAD
-
-        // 2️⃣ Kiểm tra user có tồn tại trong DB
-=======
->>>>>>> 90c0ef4009c16de0e32287b149daba0b9a7ba6f6
         let user = await userService.findUserByEmailService(payload.email)
 
         if (!user) {

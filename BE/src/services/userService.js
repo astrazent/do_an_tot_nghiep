@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs/dist/bcrypt'
 import { UsersModel } from '~/models/userModel'
 import ApiError from '~/utils/ApiError'
 import { StatusCodes } from 'http-status-codes'
+import { AdminsModel } from '~/models/adminModel'
 
 export const registerService = async payload => {
     const existedEmail = await UsersModel.findUserByEmailOrUsername(
@@ -56,15 +57,9 @@ export const registerGoogleUserService = async payload => {
     const username = email.split('@')[0]
 
     const existedUsername = await UsersModel.findUserByEmailOrUsername(username)
-<<<<<<< HEAD
-    if (existedUsername) throw new ApiError(StatusCodes.CONFLICT, 'Username đã tồn tại')
-    console.log('Đăng ký user Google với email:', email_verified)
-    // Tạo user mới
-=======
     if (existedUsername)
         throw new ApiError(StatusCodes.CONFLICT, 'Username đã tồn tại')
 
->>>>>>> 90c0ef4009c16de0e32287b149daba0b9a7ba6f6
     const userData = await UsersModel.createUser({
         username,
         email,
@@ -84,17 +79,24 @@ export const registerGoogleUserService = async payload => {
 
 const loginService = async payload => {
     const user = await UsersModel.findUserByEmailOrUsername(payload.username)
+    const admin = await AdminsModel.getAdminByUsername(payload.username)
+    let account
     if (!user) {
+        account = admin
+    } else {
+        account = user
+    }
+    if (!account) {
         throw new ApiError(StatusCodes.UNAUTHORIZED, 'Sai username')
     }
-    const isPasswordValid = await bcrypt.compare(
+    const isPasswordValidUser = await bcrypt.compare(
         payload.password,
-        user.password_hash
+        account.password_hash
     )
-    if (!isPasswordValid) {
+    if (!isPasswordValidUser) {
         throw new ApiError(StatusCodes.UNAUTHORIZED, 'Sai password')
     }
-    return user
+    return account
 }
 const getByIdUserService = async data => {
     const user = await UsersModel.getUserById(data)

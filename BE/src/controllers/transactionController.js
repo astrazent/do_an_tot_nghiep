@@ -52,10 +52,58 @@ const getTransactionById = async (req, res, next) => {
 const getListTransactions = async (req, res, next) => {
     try {
         const data = await transactionService.getListTransactionsService(
-            req.body
+            req.query
         )
         return res.status(StatusCodes.OK).json({
             message: 'Lấy danh sách giao dịch thành công',
+            data,
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
+const getOrderStats = async (req, res, next) => {
+    try {
+        const data = await transactionService.getOrderStats()
+        return res.status(StatusCodes.OK).json({
+            message: 'Lấy data thành công',
+            data,
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
+const getAverageProcessingTime = async (req, res, next) => {
+    try {
+        const data = await transactionService.getAverageProcessingTime()
+        return res.status(StatusCodes.OK).json({
+            message: 'Lấy data thành công',
+            data,
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
+const getCancelRefundRate = async (req, res, next) => {
+    try {
+        const data = await transactionService.getCancelRefundRate()
+        return res.status(StatusCodes.OK).json({
+            message: 'Lấy data thành công',
+            data,
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
+const getAverageProductRating = async (req, res, next) => {
+    try {
+        const data = await transactionService.getAverageProductRating()
+        return res.status(StatusCodes.OK).json({
+            message: 'Lấy data thành công',
             data,
         })
     } catch (error) {
@@ -70,6 +118,18 @@ const getTransactionsByUser = async (req, res, next) => {
         )
         return res.status(StatusCodes.OK).json({
             message: 'Lấy danh sách giao dịch theo người dùng thành công',
+            data,
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
+const getOrderStatusOfTransaction = async (req, res, next) => {
+    try {
+        const data = await transactionService.getOrderStatusOfTransaction()
+        return res.status(StatusCodes.OK).json({
+            message: 'Lấy dữ liệu tổng hợp status của transaction thành công',
             data,
         })
     } catch (error) {
@@ -168,4 +228,9 @@ export const transactionController = {
     updateTransaction,
     deleteByUserAndTrackingNumber,
     deleteTransaction,
+    getOrderStatusOfTransaction,
+    getOrderStats,
+    getAverageProcessingTime,
+    getCancelRefundRate,
+    getAverageProductRating
 }

@@ -51,7 +51,6 @@ const getCommentByProductSlug = async (req, res, next) => {
         const data = await commentService.getCommentByProductSlugService(
             req.query.slug
         )
-
         return res.status(StatusCodes.OK).json({
             message: 'Lấy comment bằng slug thành công',
             data,

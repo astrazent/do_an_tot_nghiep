@@ -18,7 +18,17 @@ Router.route('/list').get(transactionController.getListTransactions)
 
 Router.route('/by_user').get(transactionController.getTransactionsByUser)
 
+Router.route('/order_status_admin').get(transactionController.getOrderStatusOfTransaction)
+
 Router.route('/by_status').get(transactionController.getTransactionsByStatus)
+
+Router.route('/order_stats').get(transactionController.getOrderStats)
+
+Router.route('/average_processing_time').get(transactionController.getAverageProcessingTime)
+
+Router.route('/cancel_refund_rate').get(transactionController.getCancelRefundRate)
+
+Router.route('/average_product_rating').get(transactionController.getAverageProductRating)
 
 Router.route('/by_shipment_status').get(
     transactionController.getTransactionsByShipmentStatus

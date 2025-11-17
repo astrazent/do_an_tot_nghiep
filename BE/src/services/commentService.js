@@ -65,13 +65,6 @@ const getByIdCommentService = async commentId => {
     return comment
 }
 const getCommentByProductSlugService = async slug => {
-<<<<<<< HEAD
-    const comment = await CommentsModel.getCommentsByProductSlug(slug)
-    if (!comment) {
-        throw new ApiError(
-            StatusCodes.NOT_FOUND,
-            `Không tìm thấy comment với slug: ${slug}`
-=======
     const comments = await CommentsModel.getCommentsByProductSlug(slug)
     if (!comments || comments.length === 0) {
         return []
@@ -89,7 +82,6 @@ const getByUserIdAndProductSlugService = async ({ user_id, slug }) => {
         throw new ApiError(
             StatusCodes.NOT_FOUND,
             `Không tìm thấy sản phẩm với slug: ${slug}`
->>>>>>> 90c0ef4009c16de0e32287b149daba0b9a7ba6f6
         )
     }
 
