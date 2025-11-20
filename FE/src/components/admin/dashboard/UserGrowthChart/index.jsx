@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     BarChart,
     Bar,
@@ -8,27 +8,41 @@ import {
     ResponsiveContainer,
     CartesianGrid,
 } from 'recharts'
-
-const userGrowthData = [
-    { name: 'Day 24', users: 62 },
-    { name: 'Day 25', users: 98 },
-    { name: 'Day 26', users: 28 },
-    { name: 'Day 27', users: 68 },
-    { name: 'Day 28', users: 86 },
-    { name: 'Day 29', users: 76 },
-    { name: 'Day 30', users: 60 },
-]
+import { getNewUsersByMonths } from '~/services/admin/dashboardAdminService'
 
 const UserGrowthChart = () => {
+    const [chartData, setChartData] = useState([])
+
+    const fetchData = async () => {
+        try {
+            const res = await getNewUsersByMonths()
+
+            const formatted = res.data.map(item => {
+                return {
+                    name: item.month,
+                    users: item.total_new_users,
+                }
+            })
+
+            setChartData(formatted)
+        } catch (error) {
+            console.error('Lỗi lấy dữ liệu new users:', error)
+        }
+    }
+
+    useEffect(() => {
+        fetchData()
+    }, [])
+
     return (
         <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm dark:border dark:border-gray-700 h-full">
             <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">
-                Số lượng người dùng mới (7 ngày gần nhất)
+                Số lượng người dùng mới (7 tháng gần nhất)
             </h3>
             <div className="h-72">
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart
-                        data={userGrowthData}
+                        data={chartData}
                         margin={{ top: 5, right: 20, left: -10, bottom: 5 }}
                     >
                         <CartesianGrid

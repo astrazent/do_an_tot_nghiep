@@ -1,8 +1,19 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { HiOutlineDotsHorizontal } from 'react-icons/hi'
 import { FaMoneyBillWave } from 'react-icons/fa'
+import { getFinancialData } from '~/services/admin/dashboardAdminService'
 
-const IncomeCard = () => {
+const IncomeCard = ({ dateRange }) => {
+    const [FinancialData, setFinancialData] = useState({})
+    const fetchData = async () => {
+        const res = await getFinancialData(dateRange)
+        setFinancialData(res.data[0])
+    }
+
+    useEffect(() => {
+        fetchData()
+    }, [dateRange])
+
     return (
         <div className="grid grid-cols-2 gap-6 h-full w-full">
             <div className="bg-white p-6 rounded-lg shadow-md">
@@ -16,9 +27,13 @@ const IncomeCard = () => {
                 </div>
                 <div className="mt-4">
                     <p className="text-2xl font-bold text-gray-800">
-                        28.087.333đ
+                        {new Intl.NumberFormat('vi-VN', {
+                            style: 'currency',
+                            currency: 'VND',
+                            minimumFractionDigits: 0,
+                        }).format(FinancialData.gross_profit)}
                     </p>
-                    <p className="text-sm text-gray-500">Lợi nhuận ròng</p>
+                    <p className="text-sm text-gray-500">Lợi nhuận gộp</p>
                 </div>
             </div>
 
@@ -33,7 +48,11 @@ const IncomeCard = () => {
                 </div>
                 <div className="mt-4">
                     <p className="text-2xl font-bold text-gray-800">
-                        12.324.390đ
+                        {new Intl.NumberFormat('vi-VN', {
+                            style: 'currency',
+                            currency: 'VND',
+                            minimumFractionDigits: 0,
+                        }).format(FinancialData.total_cost)}
                     </p>
                     <p className="text-sm text-gray-500">Tổng chi phí</p>
                 </div>
@@ -52,8 +71,8 @@ const IncomeCard = () => {
                     </button>
                 </div>
                 <div className="mt-4">
-                    <p className="text-2xl font-bold text-gray-800">150.000đ</p>
-                    <p className="text-sm text-gray-500">/đơn hàng</p>
+                    <p className="text-2xl font-bold text-gray-800">{FinancialData.avg_order_value}</p>
+                    <p className="text-sm text-gray-500">Đơn hàng trung bình</p>
                 </div>
             </div>
 
@@ -70,7 +89,7 @@ const IncomeCard = () => {
                     </button>
                 </div>
                 <div className="mt-4">
-                    <p className="text-2xl font-bold text-gray-800">9.875</p>
+                    <p className="text-2xl font-bold text-gray-800">{FinancialData.total_orders}</p>
                     <p className="text-sm text-gray-500">Đơn hàng</p>
                 </div>
             </div>

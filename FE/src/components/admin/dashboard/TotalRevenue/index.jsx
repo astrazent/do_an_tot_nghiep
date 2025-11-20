@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { AreaChart, Area, ResponsiveContainer, Tooltip } from 'recharts'
+import { getTopProduct } from '~/services/admin/dashboardAdminService'
 
 const data = [
     { value: 400 },
@@ -27,18 +28,28 @@ const CustomTooltip = ({ active, payload, label }) => {
     return null
 }
 
-const TotalRevenue = () => {
+const TotalRevenue = ({ dateRange }) => {
+    const [topProduct, setTopProduct] = useState({})
+    const fetchData = async () => {
+        const res = await getTopProduct(dateRange)
+        setTopProduct(res.data)
+    }
+
+    useEffect(() => {
+        fetchData()
+    }, [dateRange])
+
     return (
         <div className="bg-white p-6 rounded-lg shadow-md h-full">
             <div>
                 <p className="text-sm text-gray-500">
-                    Sản phẩm có doanh thu cao nhất
+                    Sản phẩm có số lượng bán cao nhất
                 </p>
                 <h3 className="text-2xl font-bold text-gray-800">
-                    11.568.320đ
+                    {topProduct.total_sold} sản phẩm - {topProduct.product_name}
                 </h3>
                 <p className="text-sm text-gray-400">
-                    Được đặt bởi 112 khách hàng
+                    Được đặt bởi {topProduct.total_buyers} khách hàng
                 </p>
             </div>
             <div className="h-40 mt-4">

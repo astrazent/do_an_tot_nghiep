@@ -5,16 +5,14 @@
  *   - Khi có chức năng chung cần tái sử dụng nhiều nơi (AuthService.js, ReportService.js)
  */
 
-import ApiError from '~/utils/ApiError'
-import { slugify } from '~/utils/formatters'
 import { BoardsModel } from '~/models/boardModel'
-const totalProductsSold = async () => {
-    const result = await BoardsModel.getTotalProductsSold()
+const totalProductsSold = async (date) => {
+    const result = await BoardsModel.getTotalProductsSold(date)
     return result
 }
 
-const totalUsers = async () => {
-    const result = await BoardsModel.getTotalUsers()
+const totalUsers = async (date) => {
+    const result = await BoardsModel.getTotalUsers(date)
     return result
 }
 
@@ -23,23 +21,33 @@ const totalInventory = async () => {
     return result
 }
 
-const monthlyRevenue = async (data) => {
-    const result = await BoardsModel.getMonthlyRevenue(data)
+const monthlyRevenue = async (date) => {
+    const result = await BoardsModel.getMonthlyRevenue(date)
     return result
 }
 
-const topBuyingCustomers = async () => {
-    const result = await BoardsModel.getTopCustomers()
+const yearRevenue = async () => {
+    const result = await BoardsModel.getYearRevenue()
     return result
 }
 
-const topBuyedProduct = async () => {
-    const result = await BoardsModel.getBestSellingProduct()
+const FinancialData = async (date) => {
+    const result = await BoardsModel.getFinancialData(date)
     return result
 }
 
-const OrderCountByStatus = async () => {
-    const result = await BoardsModel.getOrderCountByStatus()
+const topBuyingCustomers = async (date) => {
+    const result = await BoardsModel.getTopCustomers(date)
+    return result
+}
+
+const topBuyedProduct = async (date) => {
+    const result = await BoardsModel.getBestSellingProduct(date)
+    return result
+}
+
+const OrderCountByStatus = async (date) => {
+    const result = await BoardsModel.getOrderCountByStatus(date)
     return result
 }
 
@@ -63,6 +71,32 @@ const RevenueByShipmentMethod = async () => {
     return result
 }
 
+const getReturningCustomerRate = async (date) => {
+    const result = await BoardsModel.getReturningCustomerRate(date)
+    return result
+}
+
+const getCustomerConversionRate = async (date) => {
+    const result = await BoardsModel.getCustomerConversionRate(date)
+    return result
+}
+
+const getOrderConversionRate = async (date) => {
+    const result = await BoardsModel.getOrderConversionRate(date)
+    return result
+}
+
+const getCancelRefundRate = async (date) => {
+    const result = await BoardsModel.getCancelRefundRate(date)
+    return result
+}
+
+const getRevenueByLocation = async (date) => {
+    const result = await BoardsModel.getRevenueByLocation(date)
+    return result
+}
+
+
 export const boardService = {
     totalProductsSold,
     totalUsers,
@@ -75,4 +109,11 @@ export const boardService = {
     RevenueByCategory,
     RevenueByPaymentMethod,
     RevenueByShipmentMethod,
+    yearRevenue,
+    FinancialData,
+    getReturningCustomerRate,
+    getCustomerConversionRate,
+    getOrderConversionRate,
+    getCancelRefundRate,
+    getRevenueByLocation
 }

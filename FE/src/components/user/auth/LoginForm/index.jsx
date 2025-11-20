@@ -29,7 +29,11 @@ const LoginForm = () => {
             await persistor.purge()
             dispatch(updateUser({ ...data.data }))
             showAlert(data.message, { type: 'success', duration: 2000 })
-            navigate('/')
+            if (data.data.role_id === 1) {
+                navigate('/admin')
+            } else {
+                navigate('/')
+            }
         },
         onError: error => {
             console.log(error)

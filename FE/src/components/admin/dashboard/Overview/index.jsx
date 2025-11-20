@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     AreaChart,
     Area,
@@ -8,21 +8,49 @@ import {
     ResponsiveContainer,
 } from 'recharts'
 import { HiOutlineDotsHorizontal } from 'react-icons/hi'
-
-const data = [
-    { name: 'Jan', value: 0 },
-    { name: 'Feb', value: 30000 },
-    { name: 'Mar', value: 50000 },
-    { name: 'Apr', value: 42000 },
-    { name: 'May', value: 48000 },
-    { name: 'Jun', value: 25000 },
-    { name: 'Jul', value: 60000 },
-    { name: 'Aug', value: 40000 },
-    { name: 'Sep', value: 38000 },
-    { name: 'Oct', value: 40000 },
-]
+import { getYearRevenue } from '../../../../services/admin/dashboardAdminService'
 
 const Overview = () => {
+    const [revenueData, setRevenueData] = useState(Array(12).fill(0))
+
+    // GỌN GÀNG – Fetch API
+    const fetchDashboard = async () => {
+        try {
+            const res = await getYearRevenue()
+
+            const formatted =
+                res?.data?.map(item => Number(item.total_revenue)) || []
+            const padded = [...formatted]
+
+            // Đảm bảo luôn có đủ 12 tháng
+            while (padded.length < 12) padded.push(0)
+
+            setRevenueData(padded)
+        } catch (error) {
+            console.error('Lỗi tải doanh thu năm:', error)
+        }
+    }
+
+    useEffect(() => {
+        fetchDashboard()
+    }, [])
+
+    // Chuẩn hóa dữ liệu theo 12 tháng
+    const data = [
+        { name: 'Jan', value: revenueData[0] },
+        { name: 'Feb', value: revenueData[1] },
+        { name: 'Mar', value: revenueData[2] },
+        { name: 'Apr', value: revenueData[3] },
+        { name: 'May', value: revenueData[4] },
+        { name: 'Jun', value: revenueData[5] },
+        { name: 'Jul', value: revenueData[6] },
+        { name: 'Aug', value: revenueData[7] },
+        { name: 'Sep', value: revenueData[8] },
+        { name: 'Oct', value: revenueData[9] },
+        { name: 'Nov', value: revenueData[10] },
+        { name: 'Dec', value: revenueData[11] },
+    ]
+
     return (
         <div className="bg-white p-6 rounded-lg shadow-md h-full">
             <div className="flex justify-between items-center mb-4">
@@ -33,11 +61,12 @@ const Overview = () => {
                     <HiOutlineDotsHorizontal size={24} />
                 </button>
             </div>
+
             <div className="h-56">
                 <ResponsiveContainer width="100%" height="100%">
                     <AreaChart
                         data={data}
-                        margin={{ top: 5, right: 20, left: -10, bottom: 5 }}
+                        margin={{ top: 5, right: 20, left: 11, bottom: 5 }}
                     >
                         <defs>
                             <linearGradient
@@ -51,7 +80,7 @@ const Overview = () => {
                                     offset="5%"
                                     stopColor="#4ADE80"
                                     stopOpacity={0.4}
-                                />{' '}
+                                />
                                 <stop
                                     offset="95%"
                                     stopColor="#4ADE80"
@@ -59,17 +88,31 @@ const Overview = () => {
                                 />
                             </linearGradient>
                         </defs>
+
+                        {/* Tooltip hiển thị VND */}
+                        <Tooltip
+                            formatter={value =>
+                                value.toLocaleString('vi-VN', {
+                                    style: 'currency',
+                                    currency: 'VND',
+                                })
+                            }
+                        />
+
                         <XAxis dataKey="name" tick={{ fontSize: 12 }} />
+
+                        {/* Y-axis format tiền */}
                         <YAxis
-                            tickFormatter={value => `${value / 1000}K`}
+                            tickFormatter={value =>
+                                value.toLocaleString('vi-VN')
+                            }
                             tick={{ fontSize: 12 }}
                         />
-                        <Tooltip />
+
                         <Area
                             type="monotone"
                             dataKey="value"
                             stroke="#22C55E"
-                            fillOpacity={1}
                             fill="url(#colorValue)"
                             strokeWidth={2}
                         />

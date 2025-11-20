@@ -64,7 +64,7 @@ const TRANSACTIONS_SCHEMA = Joi.object({
                 'Shipment status chỉ được là: pending, shipped, in_transit, delivered, returned',
         }),
 
-    amount: Joi.number().precision(2).min(0).default(0).messages({
+    amount: Joi.number().precision(2).min(0).messages({
         'number.base': 'Amount phải là số',
         'number.min': 'Amount tối thiểu là 0',
     }),

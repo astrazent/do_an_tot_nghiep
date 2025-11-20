@@ -24,6 +24,7 @@ import postCategoryRoutes from './postCategoryRoute.js'
 import sliderRoute from './sliderRoute.js'
 import couponScope from './couponScope.js'
 import marketingRoutes from './marketingAIRouter.js'
+import boardRoutes from './boardRoute.js'
 
 const Router = express.Router()
 
@@ -54,6 +55,7 @@ Router.use('/post', postRoutes)
 Router.use('/post_type', postTypeRoute)
 Router.use('/post_category', postCategoryRoutes)
 Router.use('/marketing', marketingRoutes)
+Router.use('/boards', boardRoutes)
 // Router.use('/columns', columnRoutes)
 // Router.use('/cards', cardRoutes)
 
