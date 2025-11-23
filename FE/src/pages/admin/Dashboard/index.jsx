@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import dayjs from 'dayjs'
 import { DatePicker } from 'antd'
-import { CalendarOutlined } from '@ant-design/icons'
 
 // API IMPORT
 import {

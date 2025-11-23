@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     BarChart,
     Bar,
@@ -7,47 +7,57 @@ import {
     Tooltip,
     ResponsiveContainer,
     CartesianGrid,
-    Legend,
 } from 'recharts'
-
-const shippingRevenueData = [
-    { name: 'Giao hàng Nhanh', revenue: 45500000, color: '#2DD4BF' },
-    { name: 'Giao hàng Tiết kiệm', revenue: 32800000, color: '#60A5FA' },
-    { name: 'Hỏa tốc', revenue: 28200000, color: '#FBBF24' },
-    { name: 'Nhận tại cửa hàng', revenue: 15100000, color: '#F472B6' },
-    { name: 'Đối tác khác', revenue: 8900000, color: '#A78BFA' },
-]
+import { getRevenueByShipmentMethod } from '~/services/admin/RevenueService'
 import { formatCurrency } from '~/utils/formatCurrency'
+
+const COLOR_MAP = {
+    GHTK: '#2DD4BF',
+    'Viettel Post': '#60A5FA',
+    GHN: '#FBBF24',
+    'Nhận tại cửa hàng': '#F472B6',
+    'Đối tác khác': '#A78BFA',
+}
 
 const formatYAxis = value => `${value / 1000000}tr`
 
-const CustomLegend = () => {
-    return (
-        <div className="flex flex-col space-y-2 ml-4">
-            {shippingRevenueData.map(item => (
-                <div key={item.name} className="flex items-center space-x-2">
-                    <span
-                        className="w-3 h-3 rounded-full"
-                        style={{ backgroundColor: item.color }}
-                    ></span>
-                    <span className="text-gray-700 text-sm">{item.name}</span>
-                </div>
-            ))}
-        </div>
-    )
-}
+const ShippingRevenueChart = ({ dateRange }) => {
+    const [data, setData] = useState([])
 
-const ShippingRevenueChart = () => {
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res = await getRevenueByShipmentMethod({
+                    startDate: dateRange.startDate,
+                    endDate: dateRange.endDate,
+                })
+
+                const apiData = res.data.map(item => ({
+                    name: item.shipment_name,
+                    revenue: Number(item.total_revenue),
+                    color: COLOR_MAP[item.shipment_name] || '#60A5FA',
+                }))
+
+                setData(apiData)
+            } catch (error) {
+                console.error('Lỗi load shipment chart:', error)
+            }
+        }
+
+        fetchData()
+    }, [dateRange])
+
     return (
         <div className="bg-white p-6 rounded-lg shadow-sm h-full flex flex-col">
             <h3 className="text-lg font-semibold text-gray-800 mb-4">
                 Doanh thu theo Phương thức Giao hàng
             </h3>
+
             <div className="flex">
                 <div className="flex-1 h-72">
                     <ResponsiveContainer width="100%" height="100%">
                         <BarChart
-                            data={shippingRevenueData}
+                            data={data}
                             margin={{ top: 5, right: 20, left: -10, bottom: 5 }}
                         >
                             <CartesianGrid
@@ -78,15 +88,13 @@ const ShippingRevenueChart = () => {
                                     `${formatCurrency(value)} ₫`
                                 }
                             />
+
                             <Bar
                                 dataKey="revenue"
                                 radius={[8, 8, 0, 0]}
-                                isAnimationActive={false}
-                                fill="#000"
                                 shape={props => {
                                     const { x, y, width, height, index } = props
-                                    const fillColor =
-                                        shippingRevenueData[index].color
+                                    const fillColor = data[index]?.color
                                     return (
                                         <rect
                                             x={x}
@@ -103,7 +111,22 @@ const ShippingRevenueChart = () => {
                     </ResponsiveContainer>
                 </div>
 
-                <CustomLegend />
+                <div className="flex flex-col space-y-2 ml-6">
+                    {data.map(item => (
+                        <div
+                            key={item.name}
+                            className="flex items-center space-x-2"
+                        >
+                            <span
+                                className="w-3 h-3 rounded-full"
+                                style={{ backgroundColor: item.color }}
+                            ></span>
+                            <span className="text-gray-700 text-sm">
+                                {item.name}
+                            </span>
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>
     )

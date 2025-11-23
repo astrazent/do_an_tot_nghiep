@@ -1,65 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { HiOutlineSearch } from 'react-icons/hi'
 import './productRevenueList.scss'
-
-const productData = [
-    {
-        productName: 'Bánh mì đặc biệt',
-        category: 'Thực phẩm khác',
-        unitsSold: 12847,
-        revenue: 384900000,
-        contributionRate: '28.4%',
-    },
-    {
-        productName: 'Tôm sú tươi',
-        category: 'Hải sản',
-        unitsSold: 9234,
-        revenue: 630136000,
-        contributionRate: '32.3%',
-    },
-    {
-        productName: 'Ruốc sợi vàng',
-        category: 'Ruốc',
-        unitsSold: 7892,
-        revenue: 475908000,
-        contributionRate: '16.7%',
-    },
-    {
-        productName: 'Gà ta thảo mộc',
-        category: 'Sản phẩm từ gà',
-        unitsSold: 4567,
-        revenue: 36964330,
-        contributionRate: '4.78%',
-    },
-    {
-        productName: 'Hạt điều rang muối',
-        category: 'Các loại hạt',
-        unitsSold: 3421,
-        revenue: 256575000,
-        contributionRate: '8.4%',
-    },
-    {
-        productName: 'Vịt quay Bắc Kinh',
-        category: 'Sản phẩm từ vịt',
-        unitsSold: 2105,
-        revenue: 215750000,
-        contributionRate: '11.2%',
-    },
-    {
-        productName: 'Cá hồi phi lê',
-        category: 'Sản phẩm từ cá',
-        unitsSold: 6543,
-        revenue: 490725000,
-        contributionRate: '25.5%',
-    },
-    {
-        productName: 'Heo sữa quay',
-        category: 'Sản phẩm từ heo',
-        unitsSold: 1588,
-        revenue: 238200000,
-        contributionRate: '41.9%',
-    },
-]
+import { getProductRevenueList } from '~/services/admin/RevenueService'
 
 const ContributionBadge = ({ rate }) => {
     const rateValue = parseFloat(rate)
@@ -75,27 +17,57 @@ const ContributionBadge = ({ rate }) => {
 
     return (
         <span
-            className={`px-3 py-1 text-xs font-semibold rounded-full ${badgeClasses}`}
+            className={`inline-block w-fit px-3 py-1 text-xs font-semibold rounded-full ${badgeClasses}`}
         >
-            {rate}
+            {rate}%
         </span>
     )
 }
 
-const ProductRevenueList = () => {
+const ProductRevenueList = ({ dateRange }) => {
     const [searchTerm, setSearchTerm] = useState('')
+    const [productData, setProductData] = useState([])
 
+    // ===== FETCH API =====
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res = await getProductRevenueList({
+                    startDate: dateRange.startDate,
+                    endDate: dateRange.endDate,
+                })
+
+                const formatted = res.data.map(item => ({
+                    productName: item.product_name,
+                    category: item.category_name,
+                    unitsSold: Number(item.total_sold),
+                    revenue: Number(item.total_revenue),
+                    contributionRate: Number(item.contribution_percent).toFixed(
+                        2
+                    ),
+                }))
+
+                setProductData(formatted)
+            } catch (error) {
+                console.error('Lỗi khi load ProductRevenueList', error)
+            }
+        }
+
+        fetchData()
+    }, [dateRange])
+
+    // ===== FILTER =====
     const filteredProducts = productData.filter(product =>
         product.productName.toLowerCase().includes(searchTerm.toLowerCase())
     )
 
     return (
         <div className="bg-white p-6 rounded-lg shadow-md w-full font-sans flex flex-col h-full">
-            {}
             <div className="flex justify-between items-center mb-4">
                 <h2 className="text-xl font-semibold text-gray-800">
                     Doanh thu theo sản phẩm
                 </h2>
+
                 <div className="relative w-64">
                     <input
                         type="text"
@@ -108,28 +80,28 @@ const ProductRevenueList = () => {
                 </div>
             </div>
 
-            {}
+            {/* TABLE */}
             <div className="overflow-x-auto">
-                {}
-                <div className="grid grid-cols-6 min-w-[700px] bg-gray-50 p-4 rounded-t-lg sticky top-0">
-                    <h3 className="text-left text-xs font-bold text-gray-500 uppercase tracking-wider col-span-2">
+                {/* HEADER */}
+                <div className="grid grid-cols-6 min-w-[700px] bg-gray-50 p-4 rounded-t-lg sticky top-0 z-10">
+                    <h3 className="text-left text-xs font-bold text-gray-500 uppercase col-span-2">
                         Sản phẩm
                     </h3>
-                    <h3 className="text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
+                    <h3 className="text-left text-xs font-bold text-gray-500 uppercase">
                         Danh mục
                     </h3>
-                    <h3 className="text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
+                    <h3 className="text-left text-xs font-bold text-gray-500 uppercase flex justify-center">
                         Đã bán
                     </h3>
-                    <h3 className="text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
+                    <h3 className="text-left text-xs font-bold text-gray-500 uppercase flex justify-center">
                         Tỷ lệ đóng góp
                     </h3>
-                    <h3 className="text-left text-xs font-bold text-gray-500 uppercase tracking-wider">
+                    <h3 className="text-left text-xs font-bold text-gray-500 uppercase flex justify-center">
                         Doanh thu
                     </h3>
                 </div>
 
-                {}
+                {/* ROWS */}
                 <div className="min-w-[700px] overflow-y-auto max-h-[400px] scrollbar-custom">
                     {filteredProducts.map((item, index) => (
                         <div
@@ -137,22 +109,26 @@ const ProductRevenueList = () => {
                             className="grid grid-cols-6 items-center p-4 border-b border-gray-200 hover:bg-gray-50"
                         >
                             <div className="col-span-2">
-                                <p className="font-medium text-blue-600">
+                                <p className="font-medium text-blue-600 cursor-pointer hover:underline">
                                     {item.productName}
                                 </p>
                             </div>
+
                             <p className="text-sm text-gray-600">
                                 {item.category}
                             </p>
-                            <p className="font-semibold text-gray-800">
-                                {item.unitsSold.toLocaleString()}
+
+                            <p className="font-semibold text-gray-800 flex justify-center">
+                                {item.unitsSold.toLocaleString('vi-VN')}
                             </p>
-                            <div>
+
+                            <div className="flex justify-center">
                                 <ContributionBadge
                                     rate={item.contributionRate}
                                 />
                             </div>
-                            <p className="font-semibold text-gray-800">
+
+                            <p className="font-semibold text-gray-800 flex justify-center">
                                 {item.revenue.toLocaleString('vi-VN')} đ
                             </p>
                         </div>
