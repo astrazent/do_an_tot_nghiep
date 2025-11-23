@@ -83,7 +83,7 @@ const UsersModel = {
             abortEarly: false,
         })
         if (error) throw error
-        console.log('Creating user with data:', data);
+        console.log('Creating user with data:', data)
         const conn = getConnection()
         const [result] = await conn.execute(
             `INSERT INTO ${USERS_TABLE_NAME} 
@@ -151,10 +151,10 @@ const UsersModel = {
         return result.affectedRows > 0
     },
 
-    async listUsers(limit = 50, offset = 0) {
+    async listUsers(limit,offset) {
         const conn = getConnection()
         const [rows] = await conn.execute(
-            `SELECT * FROM ${USERS_TABLE_NAME} ORDER BY id DESC LIMIT ? OFFSET ?`,
+            `SELECT * FROM ${USERS_TABLE_NAME} ORDER BY created_at DESC LIMIT ? OFFSET ?`,
             [limit, offset]
         )
         return rows
@@ -185,6 +185,101 @@ const UsersModel = {
             [provider, providerId]
         )
         return rows[0] || null
+    },
+
+    async getDashboardSummary({ startDate, endDate }) {
+        const conn = getConnection()
+
+        const [rows] = await conn.execute(
+            `
+        WITH
+
+        /* 1. Người dùng mới */
+        new_users AS (
+            SELECT id
+            FROM Users
+            WHERE created_at BETWEEN ? AND ?
+        ),
+
+        /* 2. Đơn hàng trong thời gian lọc */
+        filtered_orders AS (
+            SELECT t.*
+            FROM Transactions t
+            WHERE t.status = 'completed'
+              AND t.updated_at BETWEEN ? AND ?
+        ),
+
+        /* 3. Người dùng tạo ra đơn hàng */
+        users_with_orders AS (
+            SELECT DISTINCT user_id
+            FROM filtered_orders
+        ),
+
+        /* 4. Tính doanh thu tổng */
+        revenue_sum AS (
+            SELECT COALESCE(SUM(amount - shipping_fee), 0) AS total_revenue
+            FROM filtered_orders
+        ),
+
+        /* 5. Khách mới mua lần đầu trong thời gian lọc */
+        first_time_buyers AS (
+            SELECT o.user_id
+            FROM filtered_orders o
+            LEFT JOIN Transactions t2
+                ON t2.user_id = o.user_id
+                AND t2.status='completed'
+                AND t2.updated_at < ?
+            WHERE t2.id IS NULL
+            GROUP BY o.user_id
+        ),
+
+        /* 6. Khách quay lại */
+        returning_customers AS (
+            SELECT o.user_id
+            FROM filtered_orders o
+            LEFT JOIN Transactions t2
+                ON t2.user_id = o.user_id
+                AND t2.status='completed'
+                AND t2.updated_at < ?
+            WHERE t2.id IS NOT NULL
+            GROUP BY o.user_id
+        )
+
+        SELECT
+            (SELECT COUNT(*) FROM new_users) AS new_users,
+
+            (
+                SELECT 
+                    CASE 
+                        WHEN (SELECT COUNT(*) FROM new_users) = 0 THEN 0
+                        ELSE ROUND(
+                            (SELECT COUNT(*) FROM users_with_orders) /
+                            (SELECT COUNT(*) FROM new_users) 
+                            * 100, 2
+                        )
+                    END
+            ) AS conversion_rate,
+
+            (SELECT COUNT(*) FROM first_time_buyers) AS first_buyers,
+            (SELECT COUNT(*) FROM returning_customers) AS returning_customers,
+
+            (
+                SELECT 
+                    CASE 
+                        WHEN (SELECT COUNT(*) FROM users_with_orders) = 0 THEN 0
+                        ELSE ROUND(
+                            (SELECT total_revenue FROM revenue_sum) /
+                            (SELECT COUNT(*) FROM users_with_orders),
+                            2
+                        )
+                    END
+            ) AS avg_revenue_per_customer;
+
+        `,
+            [startDate, endDate, startDate, endDate, startDate, startDate]
+        )
+
+        return rows[0]
     },
 }
 

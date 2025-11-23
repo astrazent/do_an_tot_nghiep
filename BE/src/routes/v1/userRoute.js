@@ -5,9 +5,9 @@ import multer from 'multer'
 const Router = express.Router()
 const upload = multer()
 
-Router.route('/').get(verifyToken, userController.getByIdUser)
+Router.route('/').get(userController.getByIdUser)
 
-Router.route('/list').get(verifyToken, userController.getListUser)
+Router.route('/list').get(userController.getListUser)
 
 Router.route('/check_and_update').post(
     verifyToken,
@@ -20,6 +20,8 @@ Router.route('/').patch(
     userController.updateUser
 )
 
-Router.route('/').delete(verifyToken, userController.deleteUser)
+Router.route('/').delete(userController.deleteUser)
+
+Router.route('/dashboard_summary').get(userController.getDashboardSummary)
 
 export default Router

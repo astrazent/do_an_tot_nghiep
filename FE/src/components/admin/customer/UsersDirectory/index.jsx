@@ -1,396 +1,571 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
+import {
+    FiMoreVertical,
+    FiChevronDown,
+    FiSearch,
+    FiFilter,
+    FiMail,
+    FiSmartphone,
+    FiMapPin,
+    FiTrash2,
+    FiEye,
+} from 'react-icons/fi'
 
-const usersData = [
-    {
-        id: 6,
-        username: 'ngoc_anh',
-        full_name: 'Ngọc Anh',
-        email: 'ngocanh@example.com',
-        phone: '090-111-2222',
-        address: '789 Đường Sồi',
-        city: 'TP. Hồ Chí Minh',
-        avatar_link: 'https://i.pravatar.cc/150?u=ngocanh',
-        role: 'admin',
-        status: 'active',
-        lastActive: '30 phút trước',
-        created_at: '2023-01-15T10:30:00Z',
-        updated_at: '2023-10-28T11:00:00Z',
-    },
-    {
-        id: 5,
-        username: 'minh_khoa',
-        full_name: 'Minh Khoa',
-        email: 'minhkhoa@example.com',
-        phone: '091-222-3333',
-        address: '456 Đường Thông',
-        city: 'Hà Nội',
-        avatar_link: 'https://i.pravatar.cc/150?u=minhkhoa',
-        role: 'user',
-        status: 'inactive',
-        lastActive: '1 tuần trước',
-        created_at: '2022-11-20T14:00:00Z',
-        updated_at: '2023-09-10T08:20:00Z',
-    },
-]
+import { getListUser, deleteUser } from '~/services/admin/userAdminService'
+import UserProfileModal from '../UserProfileModal'
 
-const SearchIcon = () => (
-    <svg
-        className="w-5 h-5 text-gray-400"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-    >
-        <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-        />
-    </svg>
-)
-const SortIcon = () => (
-    <svg
-        className="w-4 h-4 ml-1"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-    >
-        <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M5 15l7-7 7 7"
-        />
-    </svg>
-)
-const EllipsisIcon = () => (
-    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-        <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-    </svg>
-)
-const EditIcon = () => (
-    <svg
-        className="w-4 h-4 mr-3 text-gray-600"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-    >
-        <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.5L15.232 5.232z"
-        />
-    </svg>
-)
-const ViewProfileIcon = () => (
-    <svg
-        className="w-4 h-4 mr-3 text-gray-600"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-    >
-        <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-        />
-        <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-        />
-    </svg>
-)
-const DeleteIcon = () => (
-    <svg
-        className="w-4 h-4 mr-3 text-red-500"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-    >
-        <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-        />
-    </svg>
-)
-const RoleBadge = ({ role }) => {
-    const roles = {
-        admin: 'bg-red-100 text-red-800',
-        user: 'bg-indigo-100 text-indigo-800',
-        moderator: 'bg-orange-100 text-orange-800',
-    }
-    const roleText = {
-        admin: 'Quản trị viên',
-        user: 'Người dùng',
-        moderator: 'Điều hành viên',
-    }
-    return (
-        <span
-            className={`px-3 py-1 text-xs font-semibold rounded-full capitalize ${roles[role] || 'bg-gray-100 text-gray-800'}`}
-        >
-            {roleText[role] || 'Không xác định'}
-        </span>
-    )
-}
-const StatusBadge = ({ status }) => {
-    const statuses = {
-        active: 'bg-green-100 text-green-800',
-        inactive: 'bg-gray-200 text-gray-800',
-        pending: 'bg-yellow-100 text-yellow-800',
-    }
-    const statusText = {
-        active: 'Hoạt động',
-        inactive: 'Ngừng hoạt động',
-        pending: 'Đang chờ',
-    }
-    return (
-        <span
-            className={`px-3 py-1 text-xs font-semibold rounded-full capitalize ${statuses[status] || 'bg-gray-100 text-gray-800'}`}
-        >
-            {statusText[status] || 'Không xác định'}
-        </span>
-    )
-}
-const ActionMenu = ({ onEdit, onView, onDelete }) => (
-    <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 border border-gray-200">
-        <ul className="py-1">
-            <li>
-                <a
-                    href="#"
-                    onClick={onEdit}
-                    className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                >
-                    <EditIcon /> Chỉnh sửa
-                </a>
-            </li>
-            <li>
-                <a
-                    href="#"
-                    onClick={onView}
-                    className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                >
-                    <ViewProfileIcon /> Xem hồ sơ
-                </a>
-            </li>
-            <li>
-                <a
-                    href="#"
-                    onClick={onDelete}
-                    className="flex items-center px-4 py-2 text-sm text-red-600 hover:bg-red-50"
-                >
-                    <DeleteIcon /> Xóa
-                </a>
-            </li>
-        </ul>
+/* ================================================================
+   UI COMPONENTS (Giữ nguyên)
+================================================================ */
+
+// 1. Skeleton Loading Row
+const SkeletonRow = () => (
+    <div className="grid grid-cols-12 gap-4 px-6 py-4 border-b border-gray-100 animate-pulse">
+        <div className="col-span-3 flex items-center gap-3">
+            <div className="w-10 h-10 bg-gray-200 rounded-full"></div>
+            <div className="space-y-2 flex-1">
+                <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                <div className="h-3 bg-gray-200 rounded w-1/2"></div>
+            </div>
+        </div>
+        <div className="col-span-3 space-y-2">
+            <div className="h-3 bg-gray-200 rounded w-full"></div>
+            <div className="h-3 bg-gray-200 rounded w-2/3"></div>
+        </div>
+        <div className="col-span-2">
+            <div className="h-3 bg-gray-200 rounded w-full"></div>
+        </div>
+        <div className="col-span-2 flex justify-center">
+            <div className="h-6 bg-gray-200 rounded-full w-20"></div>
+        </div>
+        <div className="col-span-2 flex justify-center">
+            <div className="h-3 bg-gray-200 rounded w-1/2"></div>
+        </div>
     </div>
 )
 
-const UsersDirectory = () => {
-    const [openMenuId, setOpenMenuId] = useState(null)
-    const menuRef = useRef(null)
+// 2. Status Badge
+const UserStatus = ({ status }) => {
+    const config =
+        status === 1
+            ? {
+                  label: 'Hoạt động',
+                  bg: 'bg-emerald-50',
+                  text: 'text-emerald-700',
+                  border: 'border-emerald-100',
+                  dot: 'bg-emerald-500',
+              }
+            : {
+                  label: 'Ngừng hoạt động',
+                  bg: 'bg-slate-100',
+                  text: 'text-slate-600',
+                  border: 'border-slate-200',
+                  dot: 'bg-slate-400',
+              }
+
+    return (
+        <span
+            className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${config.bg} ${config.text} ${config.border}`}
+        >
+            <span
+                className={`w-1.5 h-1.5 rounded-full mr-1.5 ${config.dot}`}
+            ></span>
+            {config.label}
+        </span>
+    )
+}
+
+// 3. Dropdown Status
+const DropdownStatus = ({ value, onChange }) => {
+    const [open, setOpen] = useState(false)
+    const ref = useRef(null)
 
     useEffect(() => {
-        const handleClickOutside = event => {
-            if (menuRef.current && !menuRef.current.contains(event.target)) {
-                setOpenMenuId(null)
-            }
+        const handleClickOutside = e => {
+            if (ref.current && !ref.current.contains(e.target)) setOpen(false)
         }
         document.addEventListener('mousedown', handleClickOutside)
         return () =>
             document.removeEventListener('mousedown', handleClickOutside)
     }, [])
 
-    const toggleMenu = userId =>
-        setOpenMenuId(openMenuId === userId ? null : userId)
-
-    const formatDate = dateString => {
-        const options = {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-        }
-        return new Date(dateString).toLocaleDateString('vi-VN', options)
-    }
+    const statuses = [
+        { key: '', label: 'Tất cả trạng thái' },
+        { key: 1, label: 'Hoạt động' },
+        { key: 0, label: 'Ngừng hoạt động' },
+    ]
+    const currentLabel = statuses.find(s => s.key === value)?.label
 
     return (
-        <div className="bg-white rounded-xl shadow-md overflow-hidden font-sans">
-            <div className="pt-4 sm:p-6 border-b border-gray-200">
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
-                    <h2 className="text-xl font-semibold text-gray-800 mb-4 sm:mb-0">
-                        Danh sách người dùng
-                    </h2>
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 w-full sm:w-auto">
-                        <div className="relative w-full sm:w-auto">
-                            <input
-                                type="text"
-                                placeholder="Tìm kiếm người dùng..."
-                                className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                            />
-                            <div className="absolute top-1/2 left-3 -translate-y-1/2">
-                                <SearchIcon />
-                            </div>
+        <div className="relative w-full" ref={ref}>
+            <div
+                onClick={() => setOpen(!open)}
+                className="w-full flex items-center justify-between px-3 py-2.5 bg-white border border-gray-200 rounded-lg shadow-sm cursor-pointer hover:border-indigo-400 transition-colors text-sm text-gray-700"
+            >
+                <span className="truncate">{currentLabel}</span>
+                <FiChevronDown
+                    className={`text-gray-400 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+                />
+            </div>
+            {open && (
+                <div className="absolute z-50 w-full mt-1 bg-white border border-gray-100 rounded-lg shadow-xl animate-fade-in-up overflow-hidden">
+                    {statuses.map(item => (
+                        <div
+                            key={item.key}
+                            onClick={() => {
+                                onChange(item.key)
+                                setOpen(false)
+                            }}
+                            className={`px-4 py-2.5 text-sm cursor-pointer transition-colors ${value === item.key ? 'bg-indigo-50 text-indigo-600 font-medium' : 'text-gray-600 hover:bg-gray-50'}`}
+                        >
+                            {item.label}
                         </div>
-                        <select className="w-full sm:w-auto px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                            <option>Tất cả trạng thái</option>
-                            <option>Hoạt động</option>
-                            <option>Ngừng hoạt động</option>
-                            <option>Đang chờ</option>
-                        </select>
-                        <select className="w-full sm:w-auto px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                            <option>Tất cả vai trò</option>
-                            <option>Quản trị viên</option>
-                            <option>Người dùng</option>
-                            <option>Điều hành viên</option>
-                        </select>
-                    </div>
+                    ))}
                 </div>
-            </div>
-
-            <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-gray-200">
-                    <thead className="bg-gray-50">
-                        <tr>
-                            <th className="py-3 px-4 w-12">
-                                <input type="checkbox" className="rounded" />
-                            </th>
-                            <th className="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                <div className="flex items-center">
-                                    Họ tên <SortIcon />
-                                </div>
-                            </th>
-                            <th className="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Email
-                            </th>
-                            <th className="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Điện thoại
-                            </th>
-                            <th className="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Địa chỉ
-                            </th>
-                            <th className="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Vai trò
-                            </th>
-                            <th className="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Trạng thái
-                            </th>
-                            <th className="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Ngày tạo
-                            </th>
-                            <th className="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Hành động
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
-                        {usersData.map(user => (
-                            <tr key={user.id} className="hover:bg-gray-50">
-                                <td className="py-4 px-4">
-                                    <input
-                                        type="checkbox"
-                                        className="rounded"
-                                    />
-                                </td>
-                                <td className="py-4 px-4 whitespace-nowrap">
-                                    <div className="flex items-center gap-3">
-                                        <img
-                                            className="w-10 h-10 rounded-full"
-                                            src={user.avatar_link}
-                                            alt={`Ảnh đại diện của ${user.full_name}`}
-                                        />
-                                        <div>
-                                            <div className="text-sm font-medium text-gray-900">
-                                                {user.full_name}
-                                            </div>
-                                            <div className="text-xs text-gray-500">
-                                                @{user.username}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td className="py-4 px-4 whitespace-nowrap text-sm text-gray-700">
-                                    {user.email}
-                                </td>
-                                <td className="py-4 px-4 whitespace-nowrap text-sm text-gray-700">
-                                    {user.phone}
-                                </td>
-                                <td className="py-4 px-4 whitespace-nowrap text-sm text-gray-700">
-                                    {user.address}, {user.city}
-                                </td>
-                                <td className="py-4 px-4 whitespace-nowrap">
-                                    <RoleBadge role={user.role} />
-                                </td>
-                                <td className="py-4 px-4 whitespace-nowrap">
-                                    <StatusBadge status={user.status} />
-                                </td>
-                                <td className="py-4 px-4 whitespace-nowrap text-sm text-gray-700">
-                                    {formatDate(user.created_at)}
-                                </td>
-                                <td
-                                    className="py-4 px-4 whitespace-nowrap relative"
-                                    ref={
-                                        openMenuId === user.id ? menuRef : null
-                                    }
-                                >
-                                    <button
-                                        onClick={() => toggleMenu(user.id)}
-                                        className="p-1 border rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                                    >
-                                        <EllipsisIcon />
-                                    </button>
-                                    {openMenuId === user.id && (
-                                        <ActionMenu
-                                            onEdit={() => {
-                                                alert(
-                                                    `Chỉnh sửa ${user.full_name}`
-                                                )
-                                                setOpenMenuId(null)
-                                            }}
-                                            onView={() => {
-                                                alert(
-                                                    `Xem hồ sơ của ${user.full_name}`
-                                                )
-                                                setOpenMenuId(null)
-                                            }}
-                                            onDelete={() => {
-                                                alert(`Xóa ${user.full_name}`)
-                                                setOpenMenuId(null)
-                                            }}
-                                        />
-                                    )}
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-
-            <div className="p-4 flex flex-col sm:flex-row justify-between items-center text-sm text-gray-600">
-                <p className="mb-4 sm:mb-0">
-                    Hiển thị 1 đến {usersData.length} trong tổng số{' '}
-                    {usersData.length} kết quả
-                </p>
-                <div className="inline-flex -space-x-px">
-                    <button className="px-3 py-1 border border-gray-300 rounded-l-md hover:bg-gray-100 focus:outline-none">
-                        Trước
-                    </button>
-                    <button className="px-3 py-1 text-white bg-indigo-600 border border-indigo-600 focus:outline-none">
-                        1
-                    </button>
-                    <button className="px-3 py-1 border border-gray-300 rounded-r-md hover:bg-gray-100 focus:outline-none">
-                        Sau
-                    </button>
-                </div>
-            </div>
+            )}
         </div>
     )
 }
 
-export default UsersDirectory
+// 4. Actions Dropdown
+const ActionsDropdown = ({ onViewDetail, onDelete }) => {
+    const [open, setOpen] = useState(false)
+    const ref = useRef(null)
+
+    useEffect(() => {
+        const handleClickOutside = event => {
+            if (ref.current && !ref.current.contains(event.target))
+                setOpen(false)
+        }
+        document.addEventListener('mousedown', handleClickOutside)
+        return () =>
+            document.removeEventListener('mousedown', handleClickOutside)
+    }, [])
+
+    return (
+        <div className="relative" ref={ref}>
+            <button
+                onClick={() => setOpen(!open)}
+                className="p-2 rounded-full hover:bg-gray-100 text-gray-400 hover:text-indigo-600 transition-colors"
+            >
+                <FiMoreVertical className="w-5 h-5" />
+            </button>
+            {open && (
+                <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-gray-100 z-40 overflow-hidden">
+                    <button
+                        onClick={() => {
+                            onViewDetail()
+                            setOpen(false)
+                        }}
+                        className="w-full px-4 py-3 text-left hover:bg-indigo-50 text-sm text-gray-700 flex items-center gap-3 transition-colors"
+                    >
+                        <FiEye className="text-indigo-500" /> Xem chi tiết
+                    </button>
+                    <div className="h-px bg-gray-100 mx-3"></div>
+                    <button
+                        onClick={() => {
+                            onDelete()
+                            setOpen(false)
+                        }}
+                        className="w-full px-4 py-3 text-left hover:bg-red-50 text-sm text-red-600 flex items-center gap-3 transition-colors"
+                    >
+                        <FiTrash2 /> Xóa người dùng
+                    </button>
+                </div>
+            )}
+        </div>
+    )
+}
+
+/* ================================================================
+   MAIN COMPONENT
+================================================================ */
+const UsersTable = () => {
+    const [users, setUsers] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
+    const [refreshKey, setRefreshKey] = useState(0)
+
+    // Filters
+    const [search, setSearch] = useState('')
+    const [statusFilter, setStatusFilter] = useState('')
+    const [dateFrom, setDateFrom] = useState('')
+    const [dateTo, setDateTo] = useState('')
+
+    // Pagination
+    // 💡 API FETCH LIMIT: Mặc định 100 user/lần fetch, có thể thay đổi bằng input "Số bản ghi"
+    const [limit, setLimit] = useState(100)
+    const [offset, setOffset] = useState(0)
+    const [currentPage, setCurrentPage] = useState(1)
+
+    // 💡 FRONTEND DISPLAY LIMIT: Cố định 10 user hiển thị trên 1 trang
+    const displayPerPage = 10
+
+    // Modal
+    const [selectedUserId, setSelectedUserId] = useState(null)
+    const [isModalOpen, setIsModalOpen] = useState(false)
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false)
+        setTimeout(() => setSelectedUserId(null), 200)
+    }
+
+    // Fetch Data
+    useEffect(() => {
+        const fetchUsers = async () => {
+            setIsLoading(true)
+            try {
+                // Sử dụng "limit" để gọi API
+                const res = await getListUser({ limit, offset })
+                setUsers(res.data)
+            } catch (error) {
+                console.error('Lỗi tải danh sách:', error)
+            } finally {
+                setTimeout(() => setIsLoading(false), 300)
+            }
+        }
+        fetchUsers()
+    }, [limit, offset, refreshKey])
+
+    const handleDeleteUser = async id => {
+        if (window.confirm('Bạn có chắc chắn muốn xóa người dùng này không?')) {
+            try {
+                await deleteUser({ userId: id })
+                alert('Xóa thành công!')
+                setRefreshKey(old => old + 1)
+            } catch (error) {
+                alert('Xóa thất bại!')
+            }
+        }
+    }
+
+    // Filter Logic
+    const filtered = users.filter(u => {
+        const normalize = str =>
+            str
+                ?.normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .toLowerCase()
+        const searchLower = normalize(search)
+        const matchSearch =
+            normalize(u.full_name)?.includes(searchLower) ||
+            normalize(u.email)?.includes(searchLower)
+        const matchStatus =
+            statusFilter !== '' ? u.status === statusFilter : true
+        const createdDate = u.created_at?.split('T')[0]
+        const matchFrom = dateFrom ? createdDate >= dateFrom : true
+        const matchTo = dateTo ? createdDate <= dateTo : true
+        return matchSearch && matchStatus && matchFrom && matchTo
+    })
+
+    // Pagination Logic
+    // Sử dụng "displayPerPage" (10) để tính toán số trang
+    const totalPages = Math.ceil(filtered.length / displayPerPage)
+    const currentUsers = filtered.slice(
+        (currentPage - 1) * displayPerPage,
+        currentPage * displayPerPage
+    )
+
+    const pages = () => {
+        if (totalPages <= 5)
+            return [...Array(totalPages).keys()].map(i => i + 1)
+        if (currentPage <= 3) return [1, 2, 3, 4, '...', totalPages]
+        if (currentPage >= totalPages - 2)
+            return [
+                1,
+                '...',
+                totalPages - 3,
+                totalPages - 2,
+                totalPages - 1,
+                totalPages,
+            ]
+
+        return [
+            1,
+            '...',
+            currentPage - 1,
+            currentPage,
+            currentPage + 1,
+            '...',
+            totalPages,
+        ]
+    }
+
+    return (
+        <div className="space-y-6 fade-in">
+            {/* --- HEADER --- */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h1 className="text-2xl font-bold text-gray-900">
+                        Quản lý Người dùng
+                    </h1>
+                    <p className="text-sm text-gray-500 mt-1">
+                        Xem và quản lý danh sách khách hàng
+                    </p>
+                </div>
+            </div>
+
+            {/* --- FILTER CARD --- */}
+            <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
+                <div className="flex items-center gap-2 mb-4 text-gray-700 font-semibold text-sm uppercase tracking-wide">
+                    <FiFilter className="text-indigo-500" /> Bộ lọc tìm kiếm
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+                    {/* Search */}
+                    <div className="md:col-span-4 relative">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <FiSearch className="text-gray-400" />
+                        </div>
+                        <input
+                            type="text"
+                            placeholder="Tìm theo tên hoặc email..."
+                            value={search}
+                            onChange={e => setSearch(e.target.value)}
+                            className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                        />
+                    </div>
+
+                    {/* Status */}
+                    <div className="md:col-span-3">
+                        <DropdownStatus
+                            value={statusFilter}
+                            onChange={setStatusFilter}
+                        />
+                    </div>
+
+                    {/* Limit (Số bản ghi) - Thay đổi giá trị này sẽ thay đổi số lượng user được fetch từ API */}
+                    <div className="md:col-span-2">
+                        <input
+                            type="number"
+                            min={1}
+                            value={limit}
+                            onChange={e => {
+                                setLimit(Number(e.target.value))
+                                setCurrentPage(1)
+                            }}
+                            className="w-full px-3 py-2.5 bg-white border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                            placeholder="Số bản ghi"
+                        />
+                    </div>
+
+                    {/* Date Range */}
+                    <div className="md:col-span-3 flex items-center gap-2">
+                        <input
+                            type="date"
+                            value={dateFrom}
+                            onChange={e => {
+                                setDateFrom(e.target.value)
+                                setCurrentPage(1)
+                            }}
+                            className="w-full px-3 py-2.5 bg-white border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none text-gray-600"
+                        />
+                        <span className="text-gray-400">-</span>
+                        <input
+                            type="date"
+                            value={dateTo}
+                            onChange={e => {
+                                setDateTo(e.target.value)
+                                setCurrentPage(1)
+                            }}
+                            className="w-full px-3 py-2.5 bg-white border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none text-gray-600"
+                        />
+                    </div>
+                </div>
+            </div>
+
+            {/* --- DATA TABLE CARD --- */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden pb-4">
+                {/* Table Header */}
+                <div className="grid grid-cols-12 gap-4 px-6 py-4 bg-gray-50 border-b border-gray-100 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                    <div className="col-span-2">Họ và tên</div>
+                    <div className="col-span-3">Liên hệ</div>
+                    <div className="col-span-2">Địa chỉ</div>
+                    <div className="col-span-2 text-center">Trạng thái</div>
+                    <div className="col-span-2 text-center">Ngày tham gia</div>
+                </div>
+
+                {/* Table Body */}
+                <div className="divide-y divide-gray-50">
+                    {isLoading ? (
+                        [...Array(displayPerPage)].map((_, i) => (
+                            <SkeletonRow key={i} />
+                        ))
+                    ) : currentUsers.length > 0 ? (
+                        currentUsers.map(u => (
+                            <div
+                                key={u.id}
+                                className="grid grid-cols-12 gap-4 px-6 py-4 items-center hover:bg-gray-50/80 transition-colors group"
+                            >
+                                <div className="col-span-2 flex items-center gap-3 overflow-hidden">
+                                    <img
+                                        src={
+                                            u.avatar_url ||
+                                            `https://ui-avatars.com/api/?name=${u.full_name}&background=random`
+                                        }
+                                        alt=""
+                                        className="w-10 h-10 rounded-full object-cover border border-gray-200 shadow-sm flex-shrink-0"
+                                    />
+                                    <div className="truncate">
+                                        <div
+                                            className="font-medium text-gray-900 text-sm truncate"
+                                            title={u.full_name}
+                                        >
+                                            {u.full_name}
+                                        </div>
+                                        <div className="text-xs text-gray-500 font-mono mt-0.5">
+                                            ID: #{u.id}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-span-3 flex flex-col justify-center gap-1 overflow-hidden">
+                                    <div
+                                        className="flex items-center gap-2 text-sm text-gray-600 truncate"
+                                        title={u.email}
+                                    >
+                                        <FiMail className="text-gray-400 flex-shrink-0" />{' '}
+                                        {u.email}
+                                    </div>
+                                    <div className="flex items-center gap-2 text-xs text-gray-500">
+                                        <FiSmartphone className="text-gray-400 flex-shrink-0" />{' '}
+                                        {u.phone || '---'}
+                                    </div>
+                                </div>
+                                <div className="col-span-2">
+                                    <div className="flex items-start gap-2">
+                                        <FiMapPin
+                                            className="text-gray-400 mt-0.5 flex-shrink-0"
+                                            size={12}
+                                        />
+                                        <span
+                                            className="text-sm text-gray-600 line-clamp-2"
+                                            title={`${u.address}, ${u.city}`}
+                                        >
+                                            {u.address ? (
+                                                `${u.address}, ${u.city}`
+                                            ) : (
+                                                <span className="italic text-gray-400">
+                                                    Chưa cập nhật
+                                                </span>
+                                            )}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className="col-span-2 text-center">
+                                    <UserStatus status={u.status} />
+                                </div>
+                                <div className="col-span-2 text-center justify-between pl-4">
+                                    <div className="text-xs text-gray-500 flex flex-col text-center">
+                                        <span className="font-medium text-gray-700">
+                                            {u.created_at
+                                                ? new Date(
+                                                      u.created_at
+                                                  ).toLocaleDateString('vi-VN')
+                                                : ''}
+                                        </span>
+                                        <span className="text-[10px]">
+                                            {u.created_at
+                                                ? new Date(
+                                                      u.created_at
+                                                  ).toLocaleTimeString(
+                                                      'vi-VN',
+                                                      {
+                                                          hour: '2-digit',
+                                                          minute: '2-digit',
+                                                      }
+                                                  )
+                                                : ''}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className="col-span-1 flex items-center justify-between pl-4">
+                                    <ActionsDropdown
+                                        onViewDetail={() => {
+                                            setSelectedUserId(u.id)
+                                            setIsModalOpen(true)
+                                        }}
+                                        onDelete={() => handleDeleteUser(u.id)}
+                                    />
+                                </div>
+                            </div>
+                        ))
+                    ) : (
+                        <div className="flex flex-col items-center justify-center py-12 text-center">
+                            <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                                <FiSearch className="text-gray-400 text-2xl" />
+                            </div>
+                            <h3 className="text-gray-900 font-medium">
+                                Không tìm thấy kết quả
+                            </h3>
+                            <p className="text-gray-500 text-sm mt-1">
+                                Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm
+                            </p>
+                        </div>
+                    )}
+                </div>
+
+                {/* ===================== PAGINATION ===================== */}
+                <div className="flex justify-center gap-2 mt-6 mb-2">
+                    <button
+                        disabled={currentPage === 1}
+                        onClick={() => setCurrentPage(1)}
+                        className="px-3 py-2 border rounded-lg disabled:text-gray-400 hover:bg-gray-50"
+                    >
+                        «
+                    </button>
+
+                    <button
+                        disabled={currentPage === 1}
+                        onClick={() => setCurrentPage(p => p - 1)}
+                        className="px-3 py-2 border rounded-lg disabled:text-gray-400 hover:bg-gray-50"
+                    >
+                        ‹
+                    </button>
+
+                    {pages().map((p, i) =>
+                        p === '...' ? (
+                            <span key={i} className="px-3 py-2">
+                                …
+                            </span>
+                        ) : (
+                            <button
+                                key={i}
+                                onClick={() => setCurrentPage(p)}
+                                className={`px-3 py-2 border rounded-lg transition-colors ${
+                                    currentPage === p
+                                        ? 'bg-indigo-500 text-white'
+                                        : 'hover:bg-gray-50'
+                                }`}
+                            >
+                                {p}
+                            </button>
+                        )
+                    )}
+
+                    <button
+                        disabled={currentPage === totalPages}
+                        onClick={() => setCurrentPage(p => p + 1)}
+                        className="px-3 py-2 border rounded-lg disabled:text-gray-400 hover:bg-gray-50"
+                    >
+                        ›
+                    </button>
+
+                    <button
+                        disabled={currentPage === totalPages}
+                        onClick={() => setCurrentPage(totalPages)}
+                        className="px-3 py-2 border rounded-lg disabled:text-gray-400 hover:bg-gray-50"
+                    >
+                        »
+                    </button>
+                </div>
+            </div>
+
+            <UserProfileModal
+                userId={selectedUserId}
+                isOpen={isModalOpen}
+                onClose={handleCloseModal}
+            />
+        </div>
+    )
+}
+
+export default UsersTable

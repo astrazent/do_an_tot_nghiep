@@ -19,8 +19,7 @@ const getByIdUser = async (req, res, next) => {
 
 const getListUser = async (req, res, next) => {
     try {
-        const data = await userService.getListUserService(req.body)
-
+        const data = await userService.getListUserService(req.query)
         return res.status(StatusCodes.OK).json({
             message: 'Lấy danh sách khách hàng thành công',
             data,
@@ -77,10 +76,24 @@ const deleteUser = async (req, res, next) => {
     }
 }
 
+const getDashboardSummary = async (req, res, next) => {
+    try {
+        const result = await userService.getDashboardSummary(req.query)
+        return res.status(StatusCodes.OK).json({
+            message: 'Lấy data thành công',
+            data: result,
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
+
 export const userController = {
     getByIdUser,
     getListUser,
     checkPasswordAndUpdate,
     updateUser,
     deleteUser,
+    getDashboardSummary
 }

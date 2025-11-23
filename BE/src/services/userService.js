@@ -180,6 +180,12 @@ const deleteUserService = async userId => {
 
     return { message: 'Xóa user thành công' }
 }
+
+const getDashboardSummary = async date => {
+    const result = await UsersModel.getDashboardSummary(date)
+    return result
+}
+
 export const userService = {
     registerService,
     loginService,
@@ -190,4 +196,5 @@ export const userService = {
     getListUserService,
     updateUserService,
     deleteUserService,
+    getDashboardSummary,
 }

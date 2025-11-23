@@ -1,7 +1,7 @@
 import React from 'react'
-import UsersDirectory from '~/components/admin/customer/UsersDirectory'
+import UsersTable from '~/components/admin/customer/UsersDirectory'
 const AdminCustomersManagement = () => {
-    return <UsersDirectory />
+    return <UsersTable />
 }
 
 export default AdminCustomersManagement
