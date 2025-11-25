@@ -10,7 +10,10 @@ import {
 import { formatCurrency } from '~/utils/formatCurrency'
 import { formatDateTime } from '~/utils/formatDateTime'
 
+// Component để hiển thị trạng thái
 const StatusBadge = ({ status }) => {
+    const lowerCaseStatus = status ? status.toLowerCase() : 'default'
+
     const styles = {
         completed: 'bg-green-100 text-green-800',
         confirmed: 'bg-blue-100 text-blue-800',
@@ -19,13 +22,15 @@ const StatusBadge = ({ status }) => {
         refunded: 'bg-purple-100 text-purple-800',
         delivered: 'bg-green-100 text-green-800',
         shipping: 'bg-blue-100 text-blue-800',
+        shipped: 'bg-indigo-100 text-indigo-800', // Dùng màu khác cho shipped để dễ phân biệt
         returned: 'bg-gray-200 text-gray-700',
+        default: 'bg-gray-100 text-gray-800',
     }
 
     return (
         <span
             className={`px-2 py-1 text-xs font-medium rounded-full ${
-                styles[status] || 'bg-gray-100 text-gray-800'
+                styles[lowerCaseStatus] || styles.default
             }`}
         >
             {status}
@@ -33,6 +38,7 @@ const StatusBadge = ({ status }) => {
     )
 }
 
+// Component Pop-up Chi tiết Đơn hàng
 const OrderDetailPopup = ({ order, onClose }) => {
     if (!order) return null
 
@@ -45,16 +51,18 @@ const OrderDetailPopup = ({ order, onClose }) => {
         : 0
 
     return (
+        // Sửa: Thẻ bao ngoài: Đảm bảo định vị cố định, bao phủ toàn màn hình, lớp phủ mờ đen (bg-black), và z-index cao.
         <div
-            className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50"
+            className="bg-opacity-70 flex justify-center items-center z-[1000]" // Tăng z-index lên rất cao (z-[1000] hoặc z-50)
             onClick={onClose}
         >
+            {/* Sửa: Thẻ chứa nội dung: Đảm bảo nền là màu trắng và kích thước tối đa */}
             <div
-                className="bg-gray-50 rounded-lg shadow-xl w-full max-w-3xl"
+                className="bg-white rounded-lg shadow-2xl w-full max-w-3xl max-h-[90vh] flex flex-col transform scale-100" 
                 onClick={e => e.stopPropagation()}
             >
                 {/* HEADER */}
-                <div className="flex justify-between items-center p-4 border-b border-gray-200 bg-white rounded-t-lg">
+                <div className="flex justify-between items-center p-4 border-b border-gray-200 flex-shrink-0">
                     <h2 className="text-xl font-bold text-gray-800">
                         Chi tiết đơn hàng:{' '}
                         <span className="text-indigo-600">{order.id}</span>
@@ -67,16 +75,17 @@ const OrderDetailPopup = ({ order, onClose }) => {
                     </button>
                 </div>
 
-                {/* BODY */}
-                <div className="p-6 space-y-6 max-h-[80vh] overflow-y-auto">
+                {/* BODY: Phần nội dung có thể cuộn */}
+                <div className="p-6 space-y-6 flex-grow overflow-y-auto">
                     {/* --- ORDER INFO --- */}
-                    <div className="bg-white p-4 rounded-lg shadow-sm">
+                    <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
                         <h3 className="text-lg font-semibold text-gray-700 mb-4 flex items-center">
                             <FiInfo className="mr-2 text-indigo-600" />
                             Thông tin đơn hàng
                         </h3>
 
                         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+                            {/* ... (Các thông tin Ngày tạo, Cập nhật, Trạng thái đơn hàng) ... */}
                             <div>
                                 <p className="text-gray-500">Ngày tạo:</p>
                                 <p className="mt-1 font-medium">
@@ -101,7 +110,7 @@ const OrderDetailPopup = ({ order, onClose }) => {
                                     <StatusBadge status={order.status} />
                                 </div>
                             </div>
-
+                            {/* ... (Các thông tin Trạng thái vận chuyển, Đơn vị vận chuyển, Mã vận đơn) ... */}
                             <div>
                                 <p className="text-gray-500">
                                     Trạng thái vận chuyển:
@@ -134,7 +143,7 @@ const OrderDetailPopup = ({ order, onClose }) => {
                     {/* --- CUSTOMER + PAYMENT --- */}
                     <div className="grid md:grid-cols-2 gap-6">
                         {/* CUSTOMER */}
-                        <div className="bg-white p-4 rounded-lg shadow-sm">
+                        <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
                             <h3 className="text-lg font-semibold text-gray-700 mb-4 flex items-center">
                                 <FiUser className="mr-2 text-indigo-600" />
                                 Thông tin người nhận
@@ -148,8 +157,9 @@ const OrderDetailPopup = ({ order, onClose }) => {
                                     {order.deli_phone}
                                 </p>
 
+                                {/* Sửa: Hiển thị địa chỉ chính xác hơn */}
                                 <p className="text-gray-600">
-                                    {`${order.deli_address}, ${order.deli_ward}, ${order.deli_district}, ${order.deli_city}`}
+                                    {`${order.deli_address || ''}, ${order.deli_ward || ''}, ${order.deli_district || ''}, ${order.deli_city || ''}`.replace(/,\s*$/, '')}
                                 </p>
 
                                 {order.message && (
@@ -167,7 +177,7 @@ const OrderDetailPopup = ({ order, onClose }) => {
                         </div>
 
                         {/* PAYMENT */}
-                        <div className="bg-white p-4 rounded-lg shadow-sm">
+                        <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
                             <h3 className="text-lg font-semibold text-gray-700 mb-4 flex items-center">
                                 <FiCreditCard className="mr-2 text-indigo-600" />
                                 Thông tin thanh toán
@@ -185,9 +195,11 @@ const OrderDetailPopup = ({ order, onClose }) => {
 
                                 <div>
                                     <p className="text-gray-500">Tình trạng:</p>
-                                    <p className="mt-1 font-medium text-blue-600">
-                                        {order.payment_status}
-                                    </p>
+                                    <div className="mt-1">
+                                        <StatusBadge
+                                            status={order.payment_status}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -220,8 +232,9 @@ const OrderDetailPopup = ({ order, onClose }) => {
                                 </thead>
 
                                 <tbody className="divide-y divide-gray-100">
-                                    {order.items.map(item => (
-                                        <tr key={item.id}>
+                                    {/* Sửa: Đảm bảo order.items tồn tại và là một mảng trước khi map */}
+                                    {order.items && Array.isArray(order.items) && order.items.map((item, index) => (
+                                        <tr key={item.id || index}>
                                             <td className="p-3">
                                                 {item.product_name}
                                             </td>
@@ -255,14 +268,17 @@ const OrderDetailPopup = ({ order, onClose }) => {
                             <div className="flex justify-between text-gray-600">
                                 <span>Phí vận chuyển</span>
                                 <span className="font-medium">
-                                    {formatCurrency(order.shipping_fee)}
+                                    {formatCurrency(Number(order.shipping_fee || 0))} 
                                 </span>
                             </div>
 
                             <div className="flex justify-between text-lg font-bold text-gray-900">
                                 <span>Tổng cộng</span>
                                 <span>
-                                    {formatCurrency(order.amount || subtotal)}
+                                    {formatCurrency(
+                                        // Sử dụng order.amount nếu có, hoặc tính lại.
+                                        order.amount || subtotal + Number(order.shipping_fee || 0)
+                                    )}
                                 </span>
                             </div>
                         </div>
@@ -270,10 +286,11 @@ const OrderDetailPopup = ({ order, onClose }) => {
                 </div>
 
                 {/* FOOTER */}
-                <div className="bg-white p-4 flex justify-end rounded-b-lg border-t border-gray-200">
+                {/* Sửa: Nút 'Đóng' đặt ở góc phải dưới pop-up */}
+                <div className="bg-gray-50 p-4 flex justify-end rounded-b-lg border-t border-gray-200 flex-shrink-0">
                     <button
                         onClick={onClose}
-                        className="px-5 py-2 bg-indigo-600 text-white font-semibold rounded-md hover:bg-indigo-700"
+                        className="px-5 py-2 bg-indigo-600 text-white font-semibold rounded-md hover:bg-indigo-700 transition duration-150 ease-in-out"
                     >
                         Đóng
                     </button>

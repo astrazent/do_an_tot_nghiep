@@ -39,11 +39,8 @@ const getBySlugCategoryService = async slug => {
     return category
 }
 
-const getListCategoryService = async filters => {
-    const categories = await CategoriesModel.listCategories(
-        filters.limit,
-        filters.offset
-    )
+const getListCategoryService = async () => {
+    const categories = await CategoriesModel.listCategories()
     if (categories.length === 0) {
         throw new ApiError(
             StatusCodes.NOT_FOUND,

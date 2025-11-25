@@ -17,9 +17,8 @@ const PRODUCT_IMAGES_SCHEMA = Joi.object({
         'number.base': 'Product ID phải là số',
         'any.required': 'Product ID là bắt buộc',
     }),
-    slider_id: Joi.number().integer().required().messages({
-        'number.base': 'Slider ID phải là số',
-        'any.required': 'Slider ID là bắt buộc',
+    alt_text: Joi.string().max(100).allow(null, '').messages({
+        'string.max': 'Alt text tối đa 100 ký tự',
     }),
 })
 
@@ -32,8 +31,8 @@ const ProductImagesModel = {
 
         const conn = getConnection()
         const [result] = await conn.execute(
-            `INSERT INTO ${PRODUCT_IMAGES_TABLE_NAME} (is_main, image_url, product_id, slider_id) VALUES (?, ?, ?, ?)`,
-            [value.is_main, value.image_url, value.product_id, value.slider_id]
+            `INSERT INTO ${PRODUCT_IMAGES_TABLE_NAME} (is_main, image_url, product_id, alt_text) VALUES (?, ?, ?, ?)`,
+            [value.is_main, value.image_url, value.product_id, value.alt_text]
         )
 
         return { id: result.insertId, ...value }
@@ -68,6 +67,42 @@ const ProductImagesModel = {
         )
 
         return this.getProductImageById(id)
+    },
+
+    async setMainImage(imageId) {
+        const conn = getConnection()
+
+        try {
+            await conn.beginTransaction()
+
+            // 1. Lấy product_id từ ảnh được chọn
+            const [image] = await conn.execute(
+                `SELECT product_id FROM ${PRODUCT_IMAGES_TABLE_NAME} WHERE id = ?`,
+                [imageId]
+            )
+
+            if (!image[0]) throw new Error('Không tìm thấy ảnh')
+
+            const productId = image[0].product_id
+
+            // 2. Đặt tất cả ảnh của sản phẩm về is_main = 0
+            await conn.execute(
+                `UPDATE ${PRODUCT_IMAGES_TABLE_NAME} SET is_main = 0 WHERE product_id = ?`,
+                [productId]
+            )
+
+            // 3. Đặt ảnh được chọn thành is_main = 1
+            await conn.execute(
+                `UPDATE ${PRODUCT_IMAGES_TABLE_NAME} SET is_main = 1 WHERE id = ?`,
+                [imageId]
+            )
+
+            await conn.commit()
+            return { success: true }
+        } catch (err) {
+            await conn.rollback()
+            throw err
+        }
     },
 
     async deleteProductImage(id) {
@@ -107,14 +142,6 @@ const ProductImagesModel = {
             WHERE product_id IN (${placeholders})
             ORDER BY product_id ASC, is_main DESC, id ASC`,
             productIds
-        )
-        return rows
-    },
-    async getImagesBySlider(slider_id) {
-        const conn = getConnection()
-        const [rows] = await conn.execute(
-            `SELECT * FROM ${PRODUCT_IMAGES_TABLE_NAME} WHERE slider_id = ? ORDER BY is_main DESC, id ASC`,
-            [slider_id]
         )
         return rows
     },

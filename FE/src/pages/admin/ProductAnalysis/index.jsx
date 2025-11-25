@@ -1,203 +1,108 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import InventoryStats from '~/components/admin/inventory/InventoryStats'
 import CategoryDistributionChart from '~/components/admin/inventory/CategoryDistributionChart'
 import SalesPerformanceChart from '~/components/admin/inventory/SalesPerformanceChart'
 import UnsoldProductsTable from '~/components/admin/inventory/UnsoldProductsTable'
 import SwitchableTopList from '~/components/admin/inventory/SwitchableTopList'
-import { FiBox, FiMapPin } from 'react-icons/fi'
-const categoryData = [
-    { name: 'Thực phẩm khác', value: 400 },
-    { name: 'Hải sản', value: 300 },
-    { name: 'Ruốc', value: 300 },
-    { name: 'Sản phẩm từ gà', value: 200 },
-    { name: 'Các loại hạt', value: 278 },
-    { name: 'Sản phẩm từ vịt', value: 189 },
-    { name: 'Sản phẩm từ cá', value: 239 },
-    { name: 'Sản phẩm từ heo', value: 349 },
-    { name: 'Sản phẩm từ ngan', value: 150 },
-]
+import { getUnsoldProductsThisMonth, getTop5Customers } from '~/services/admin/productAdminService'
 
-const sampleProducts = [
-    {
-        id: 1,
-        name: 'Áo thun Cotton Basic',
-        category: 'Thời trang nam',
-        stock: 120,
-        lastSoldDate: '2025-10-06',
-        price: 250000,
-    },
-    {
-        id: 2,
-        name: 'Quần Jeans Slim-fit',
-        category: 'Thời trang nam',
-        stock: 80,
-        lastSoldDate: '2025-10-10',
-        price: 550000,
-    },
-    {
-        id: 3,
-        name: 'Sách "Nhà Giả Kim"',
-        category: 'Sách văn học',
-        stock: 250,
-        lastSoldDate: '2025-09-20',
-        price: 89000,
-    },
-    {
-        id: 4,
-        name: 'Tai nghe Bluetooth Pro',
-        category: 'Phụ kiện điện tử',
-        stock: 50,
-        lastSoldDate: '2025-10-09',
-        price: 1200000,
-    },
-    {
-        id: 5,
-        name: 'Bàn phím cơ Gaming X',
-        category: 'Phụ kiện máy tính',
-        stock: 30,
-        lastSoldDate: '2025-08-15',
-        price: 1800000,
-    },
-    {
-        id: 6,
-        name: 'Giày thể thao Runner',
-        category: 'Giày dép',
-        stock: 95,
-        lastSoldDate: '2025-10-01',
-        price: 850000,
-    },
-    {
-        id: 7,
-        name: 'Đồng hồ thông minh Watch 5',
-        category: 'Thiết bị đeo',
-        stock: 45,
-        lastSoldDate: '2025-10-11',
-        price: 3500000,
-    },
-]
-
-const topListsData = [
-    {
-        title: 'Người dùng mua nhiều nhất',
-        columnHeaders: { left: 'Tên', right: 'Số lượng' },
-        items: [
-            { id: 2, name: 'Lan', value: 158 },
-            { id: 1, name: 'Mai', value: 74 },
-            { id: 4, name: 'Hương', value: 35 },
-            { id: 3, name: 'Trang', value: 32 },
-            { id: 5, name: 'Nam', value: 15 },
-        ],
-    },
-    {
-        title: 'Sản phẩm bán chạy nhất',
-        columnHeaders: { left: 'Sản phẩm', right: 'Số lượng bán' },
-        items: [
-            {
-                id: 1,
-                name: 'Đồng hồ thông minh',
-                value: 2450,
-                icon: <FiBox size={20} />,
-            },
-            {
-                id: 2,
-                name: 'Tai nghe không dây',
-                value: 1892,
-                icon: <FiBox size={20} />,
-            },
-            {
-                id: 3,
-                name: 'Thảm tập yoga',
-                value: 986,
-                icon: <FiBox size={20} />,
-            },
-            {
-                id: 4,
-                name: 'Bình nước thể thao',
-                value: 753,
-                icon: <FiBox size={20} />,
-            },
-        ],
-    },
-    {
-        title: 'Khu vực có doanh thu cao nhất',
-        columnHeaders: { left: 'Thành phố', right: 'Doanh thu' },
-        items: [
-            {
-                id: 1,
-                name: 'Hà Nội',
-                value: '1.2 tỷ',
-                icon: <FiMapPin size={20} />,
-            },
-            {
-                id: 2,
-                name: 'TP. Hồ Chí Minh',
-                value: '950 triệu',
-                icon: <FiMapPin size={20} />,
-            },
-            {
-                id: 3,
-                name: 'Đà Nẵng',
-                value: '810 triệu',
-                icon: <FiMapPin size={20} />,
-            },
-            {
-                id: 4,
-                name: 'Cần Thơ',
-                value: '620 triệu',
-                icon: <FiMapPin size={20} />,
-            },
-        ],
-    },
-]
 function ProductAnalysis() {
-    const [daysFilter, setDaysFilter] = useState(5)
+  const [unsoldProducts, setUnsoldProducts] = useState([])
+  const [topCustomers, setTopCustomers] = useState([])
+  const [loadingUnsold, setLoadingUnsold] = useState(true)
+  const [loadingTopCustomers, setLoadingTopCustomers] = useState(true)
 
-    const handleIncreaseDays = () => {
-        setDaysFilter(prevDays => prevDays + 1)
+  // Lấy sản phẩm không bán được trong tháng
+  useEffect(() => {
+    const fetchUnsold = async () => {
+      try {
+        const data = await getUnsoldProductsThisMonth()
+        const sorted = (data.data || data).sort((a, b) => b.daysUnsold - a.daysUnsold)
+        setUnsoldProducts(sorted)
+      } catch (err) {
+        console.error('Lỗi lấy sản phẩm ế:', err)
+        setUnsoldProducts([])
+      } finally {
+        setLoadingUnsold(false)
+      }
     }
+    fetchUnsold()
+  }, [])
 
-    const handleDecreaseDays = () => {
-        setDaysFilter(prevDays => (prevDays > 1 ? prevDays - 1 : 1))
+  // Lấy 5 khách hàng mua nhiều nhất
+  useEffect(() => {
+    const fetchTopCustomers = async () => {
+      try {
+        const data = await getTop5Customers()
+        setTopCustomers(data.data) 
+      } catch (err) {
+        console.error('Lỗi lấy top khách hàng:', err)
+        setTopCustomers([])
+      } finally {
+        setLoadingTopCustomers(false)
+      }
     }
-    return (
-        <div className="w-full">
-            <div className="bg-gray-100 min-h-screen flex flex-col gap-6">
-                <InventoryStats />
-                <div className="min-h-screen font-sans w-full">
-                    <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 sm:gap-6 w-full">
-                        <div className="flex flex-col gap-4 sm:gap-6 xl:col-span-2">
-                            <div className="xl:row-span-1">
-                                <SalesPerformanceChart />
-                            </div>
+    fetchTopCustomers()
+  }, [])
 
-                            <div className="xl:row-span-2">
-                                <div className="overflow-auto">
-                                    <UnsoldProductsTable
-                                        products={sampleProducts}
-                                        inactiveDays={daysFilter}
-                                        onIncreaseDays={handleIncreaseDays}
-                                        onDecreaseDays={handleDecreaseDays}
-                                    />
-                                </div>
-                            </div>
-                        </div>
+  // Dữ liệu cho SwitchableTopList – chỉ phần "Người dùng mua nhiều nhất" là thật
+  const topListsData = [
+    {
+      title: 'Người dùng mua nhiều nhất',
+      columnHeaders: { left: 'Tên', right: 'Số lượng' },
+      items: loadingTopCustomers
+        ? [] // đang tải
+        : topCustomers.length > 0
+        ? topCustomers.map(c => ({
+            id: c.id,
+            name: c.name || 'Khách lẻ',
+            value: c.value || 0
+          }))
+        : [{ id: 1, name: 'Chưa có dữ liệu', value: 0 }]
+    },
+  ]
 
-                        <div className="flex flex-col gap-4 sm:gap-6 xl:col-span-1">
-                            <div className="xl:row-span-2">
-                                <CategoryDistributionChart
-                                    data={categoryData}
-                                />
-                            </div>
+  return (
+    <div className="w-full">
+      <div className="bg-gray-100 min-h-screen flex flex-col gap-6">
+        <InventoryStats />
 
-                            <div className="xl:row-span-1">
-                                <SwitchableTopList listsData={topListsData} />
-                            </div>
-                        </div>
+        <div className="min-h-screen font-sans w-full">
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 sm:gap-6 w-full">
+            {/* Cột trái */}
+            <div className="flex flex-col gap-4 sm:gap-6 xl:col-span-2">
+              <div className="xl:row-span-1">
+                <SalesPerformanceChart />
+              </div>
+
+              <div className="xl:row-span-2">
+                <div className="overflow-auto">
+                  {loadingUnsold ? (
+                    <div className="bg-white rounded-xl shadow-sm p-10 text-center text-gray-500">
+                      Đang tải danh sách sản phẩm chưa bán...
                     </div>
+                  ) : (
+                    <UnsoldProductsTable products={unsoldProducts} />
+                  )}
                 </div>
+              </div>
             </div>
+
+            {/* Cột phải */}
+            <div className="flex flex-col gap-4 sm:gap-6 xl:col-span-1">
+              <div className="xl:row-span-2 h-[890px]">
+                <CategoryDistributionChart />
+              </div>
+
+              <div className="xl:row-span-1">
+                <SwitchableTopList listsData={topListsData} />
+              </div>
+            </div>
+          </div>
         </div>
-    )
+      </div>
+    </div>
+  )
 }
 
 export default ProductAnalysis

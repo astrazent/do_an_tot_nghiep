@@ -219,71 +219,67 @@ const PostsModel = {
         return result.affectedRows > 0
     },
 
-    async listPosts(limit = 10, offset = 0, sort = 'newest') {
+    async listPosts(sort = 'newest') {
         const conn = getConnection()
         let sql = ''
-        let params = [limit, offset]
+        let params = []
 
         switch (sort) {
             case 'oldest':
                 sql = `
-                SELECT 
-                    p.*,
-                    pt.name AS post_type_name,
-                    pt.slug AS post_type_slug,
-                    pt.description AS post_type_description
-                FROM ${POSTS_TABLE} p
-                LEFT JOIN ${POST_TYPES_TABLE} pt ON p.post_type_id = pt.id
-                ORDER BY p.updated_at ASC
-                LIMIT ? OFFSET ?
-            `
+            SELECT 
+                p.*,
+                pt.name AS post_type_name,
+                pt.slug AS post_type_slug,
+                pt.description AS post_type_description
+            FROM ${POSTS_TABLE} p
+            LEFT JOIN ${POST_TYPES_TABLE} pt ON p.post_type_id = pt.id
+            ORDER BY p.updated_at ASC
+        `
                 break
 
             case 'post_type':
                 sql = `
-                SELECT 
-                    p.*,
-                    pt.name AS post_type_name,
-                    pt.slug AS post_type_slug,
-                    pt.description AS post_type_description
-                FROM ${POSTS_TABLE} p
-                LEFT JOIN ${POST_TYPES_TABLE} pt ON p.post_type_id = pt.id
-                ORDER BY p.post_type_id ASC, p.updated_at DESC
-                LIMIT ? OFFSET ?
-            `
+            SELECT 
+                p.*,
+                pt.name AS post_type_name,
+                pt.slug AS post_type_slug,
+                pt.description AS post_type_description
+            FROM ${POSTS_TABLE} p
+            LEFT JOIN ${POST_TYPES_TABLE} pt ON p.post_type_id = pt.id
+            ORDER BY p.post_type_id ASC, p.updated_at DESC
+        `
                 break
 
             case 'post_type_limited':
                 sql = `
-                SELECT *
-                FROM (
-                    SELECT 
-                        p.*,
-                        pt.name AS post_type_name,
-                        pt.slug AS post_type_slug,
-                        pt.description AS post_type_description,
-                        ROW_NUMBER() OVER (PARTITION BY p.post_type_id ORDER BY p.updated_at DESC) AS rn
-                    FROM ${POSTS_TABLE} p
-                    LEFT JOIN ${POST_TYPES_TABLE} pt ON p.post_type_id = pt.id
-                ) ranked
-                WHERE ranked.rn <= 4
-                ORDER BY ranked.post_type_id ASC, ranked.updated_at DESC
-                LIMIT ? OFFSET ?
-            `
-                break
-
-            default:
-                sql = `
+            SELECT *
+            FROM (
                 SELECT 
                     p.*,
                     pt.name AS post_type_name,
                     pt.slug AS post_type_slug,
-                    pt.description AS post_type_description
+                    pt.description AS post_type_description,
+                    ROW_NUMBER() OVER (PARTITION BY p.post_type_id ORDER BY p.updated_at DESC) AS rn
                 FROM ${POSTS_TABLE} p
                 LEFT JOIN ${POST_TYPES_TABLE} pt ON p.post_type_id = pt.id
-                ORDER BY p.updated_at DESC
-                LIMIT ? OFFSET ?
-            `
+            ) ranked
+            WHERE ranked.rn <= 4
+            ORDER BY ranked.post_type_id ASC, ranked.updated_at DESC
+        `
+                break
+
+            default: 
+                sql = `
+            SELECT 
+                p.*,
+                pt.name AS post_type_name,
+                pt.slug AS post_type_slug,
+                pt.description AS post_type_description
+            FROM ${POSTS_TABLE} p
+            LEFT JOIN ${POST_TYPES_TABLE} pt ON p.post_type_id = pt.id
+            ORDER BY p.updated_at DESC
+        `
                 break
         }
 

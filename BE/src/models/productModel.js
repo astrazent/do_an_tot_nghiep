@@ -395,6 +395,189 @@ const ProductsModel = {
             throw error
         }
     },
+
+    async getInventoryDashboard() {
+        const conn = getConnection()
+
+        // Tổng số sản phẩm
+        const [[totalProducts]] = await conn.execute(
+            `SELECT COUNT(*) AS total FROM Products`
+        )
+
+        // Tổng tồn kho (số sản phẩm có tồn kho > 0)
+        const [[totalInStock]] = await conn.execute(
+            `SELECT COALESCE(SUM(stock_qty), 0) AS total FROM Products`
+        )
+
+        // Số sản phẩm dưới ngưỡng cảnh báo
+        const [[lowStock]] = await conn.execute(
+            `SELECT COUNT(*) AS total 
+         FROM Products 
+         WHERE stock_qty < low_stock_threshold`
+        )
+
+        // Tổng giá trị kho
+        const [[inventoryValue]] = await conn.execute(
+            `SELECT SUM(stock_qty * import_price) AS total_value 
+         FROM Products`
+        )
+
+        return {
+            totalProducts: totalProducts.total || 0,
+            totalInStock: totalInStock.total || 0,
+            lowStock: lowStock.total || 0,
+            inventoryValue: inventoryValue.total_value || 0,
+        }
+    },
+
+    async getSoldProductChartByYear(year) {
+        const conn = getConnection()
+
+        const [rows] = await conn.execute(
+            `
+        SELECT 
+            DATE_FORMAT(t.created_at, '%m') AS month,
+            SUM(oi.qty_total) AS total_sold
+        FROM OrderItems oi
+        JOIN Transactions t ON t.id = oi.transaction_id
+        WHERE t.status = 'completed'
+          AND YEAR(t.created_at) = ?
+        GROUP BY month
+        ORDER BY month;
+        `,
+            [year]
+        )
+
+        return rows
+    },
+
+    async getProductStockByCategory() {
+        const conn = getConnection()
+
+        const [rows] = await conn.execute(
+            `
+        SELECT 
+            c.name AS category_name,
+            COALESCE(SUM(p.stock_qty), 0) AS total_stock
+        FROM Categories c
+        LEFT JOIN Products p ON p.category_id = c.id
+        GROUP BY c.id, c.name
+        HAVING total_stock > 0
+        ORDER BY total_stock DESC;
+        `
+        )
+
+        // Tính tổng số lượng sản phẩm trong kho để ra phần trăm
+        const grandTotal = rows.reduce(
+            (sum, row) => sum + Number(row.total_stock),
+            0
+        )
+
+        const result = rows.map(row => ({
+            category_name: row.category_name,
+            total_stock: Number(row.total_stock),
+            percentage:
+                grandTotal > 0
+                    ? Math.round((Number(row.total_stock) / grandTotal) * 100)
+                    : 0,
+        }))
+
+        return result
+    },
+
+    async getUnsoldProductsThisMonth() {
+        const conn = getConnection()
+
+        const [rows] = await conn.execute(`
+        SELECT 
+            p.id,
+            p.name,
+            p.stock_qty AS stock,
+            p.price,
+            c.name AS category_name,
+            -- Ngày bán cuối cùng từ TOÀN BỘ LỊCH SỬ (không filter tháng)
+            COALESCE(MAX(t_all.created_at), NULL) AS last_sold_date
+        FROM Products p
+        LEFT JOIN Categories c ON c.id = p.category_id
+        -- Subquery: Kiểm tra sản phẩm CÓ BÁN trong tháng này không
+        LEFT JOIN (
+            SELECT DISTINCT oi.product_id
+            FROM OrderItems oi
+            JOIN Transactions t ON t.id = oi.transaction_id 
+                AND t.status = 'completed'
+                AND YEAR(t.created_at) = YEAR(CURDATE())
+                AND MONTH(t.created_at) = MONTH(CURDATE())
+        ) recent_sales ON recent_sales.product_id = p.id
+        -- LEFT JOIN lấy ngày bán cuối từ toàn bộ (cho "Chưa từng bán" = NULL)
+        LEFT JOIN OrderItems oi_all ON oi_all.product_id = p.id
+        LEFT JOIN Transactions t_all ON t_all.id = oi_all.transaction_id 
+            AND t_all.status = 'completed'
+        WHERE p.stock_qty > 0  -- Còn hàng trong kho
+          AND recent_sales.product_id IS NULL  -- KHÔNG có đơn trong tháng này
+        GROUP BY p.id, p.name, p.stock_qty, p.price, c.name
+        ORDER BY p.stock_qty DESC, p.name ASC  -- Tồn nhiều nhất lên đầu
+    `)
+
+        // Tính số ngày chưa bán (từ last_sold_date toàn bộ lịch sử)
+        const result = rows.map(row => {
+            let daysUnsold = 0
+            let lastSoldDateStr = null
+
+            if (row.last_sold_date) {
+                const lastSold = new Date(row.last_sold_date)
+                daysUnsold = Math.ceil(
+                    (new Date() - lastSold) / (1000 * 60 * 60 * 24)
+                )
+                lastSoldDateStr = lastSold.toLocaleDateString('vi-VN')
+            } else {
+                // Chưa từng bán → tính từ ngày tạo sản phẩm
+                const createdAt = new Date(row.created_at || Date.now())
+                daysUnsold = Math.ceil(
+                    (new Date() - createdAt) / (1000 * 60 * 60 * 24)
+                )
+                lastSoldDateStr = 'Chưa từng bán'
+            }
+
+            return {
+                id: row.id,
+                name: row.name,
+                category: row.category_name || 'Chưa phân loại',
+                stock: Number(row.stock),
+                price: Number(row.price),
+                lastSoldDate: lastSoldDateStr,
+                daysUnsold: daysUnsold,
+            }
+        })
+
+        return result
+    },
+    async getTop5Customers() {
+        const conn = getConnection()
+
+        const [rows] = await conn.execute(`
+        SELECT 
+            u.id,
+            u.full_name AS name,
+            COALESCE(SUM(oi.qty_total), 0) AS total_quantity
+        FROM Users u
+        LEFT JOIN Transactions t ON t.user_id = u.id 
+            AND t.status = 'completed'
+        LEFT JOIN OrderItems oi ON oi.transaction_id = t.id
+        WHERE u.full_name IS NOT NULL 
+          AND u.full_name != ''
+          AND u.email NOT LIKE '%@admin.com'  -- loại bỏ tài khoản admin/test nếu cần
+        GROUP BY u.id, u.full_name
+        HAVING total_quantity > 0
+        ORDER BY total_quantity DESC
+        LIMIT 5
+    `)
+
+        return rows.map(row => ({
+            id: row.id,
+            name: row.name || 'Khách lẻ',
+            value: Number(row.total_quantity),
+        }))
+    },
 }
 
 export { PRODUCTS_TABLE, PRODUCTS_SCHEMA, ProductsModel }

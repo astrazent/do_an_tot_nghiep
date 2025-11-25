@@ -95,11 +95,10 @@ const CategoriesModel = {
         return result.affectedRows > 0
     },
 
-    async listCategories(limit = 50, offset = 0) {
+    async listCategories() {
         const conn = getConnection()
         const [rows] = await conn.execute(
-            `SELECT * FROM ${CATEGORIES_TABLE_NAME} ORDER BY id DESC LIMIT ? OFFSET ?`,
-            [limit, offset]
+            `SELECT * FROM ${CATEGORIES_TABLE_NAME} ORDER BY id DESC`,
         )
         return rows
     },

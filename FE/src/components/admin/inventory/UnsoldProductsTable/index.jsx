@@ -1,128 +1,116 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { format } from 'date-fns'
 
-const UnsoldProductsTable = ({
-    products,
-    inactiveDays,
-    onIncreaseDays,
-    onDecreaseDays,
-}) => {
-    const unsoldProducts = useMemo(() => {
-        const today = new Date()
-        return products.filter(product => {
-            const lastSoldDate = new Date(product.lastSoldDate)
-            const diffTime = Math.abs(today - lastSoldDate)
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-            product.daysUnsold = diffDays
-            return diffDays >= inactiveDays
-        })
-    }, [products, inactiveDays])
+const UnsoldProductsTable = ({ products = [] }) => {
+  const getBadgeClass = (days) => {
+    if (days >= 90) return 'bg-red-100 text-red-700 border border-red-200'
+    if (days >= 60) return 'bg-orange-100 text-orange-700 border border-orange-200'
+    if (days >= 30) return 'bg-yellow-100 text-yellow-700 border border-yellow-200'
+    return 'bg-gray-100 text-gray-700 border border-gray-300'
+  }
 
-    const getBadgeColor = days => {
-        if (days >= inactiveDays * 2) return 'bg-red-100 text-red-800'
-        if (days >= inactiveDays) return 'bg-yellow-100 text-yellow-800'
-        return 'bg-green-100 text-green-800'
+  const formatDate = (dateStr) => {
+    if (!dateStr || dateStr === 'Chưa từng bán') {
+      return <span className="text-red-600 font-medium">Chưa từng bán</span>
     }
+    try {
+      const date = new Date(dateStr)
+      if (isNaN(date.getTime())) throw new Error()
+      return format(date, 'dd/MM/yyyy')
+    } catch {
+      const match = dateStr.toString().match(/\d{4}-\d{2}-\d{2}/)
+      return match ? match[0].split('-').reverse().join('/') : dateStr
+    }
+  }
 
-    return (
-        <div className="bg-white rounded-lg shadow-lg p-6 w-full h-[810px] mx-auto">
-            <div className="mb-4">
-                <h2 className="text-xl font-bold text-gray-800 flex items-center">
-                    <span>Sản phẩm không bán được trong&nbsp;</span>
-                    <div className="flex items-center space-x-2 mx-1">
-                        <button
-                            onClick={onDecreaseDays}
-                            disabled={inactiveDays <= 1}
-                            className="bg-gray-200 text-gray-800 font-bold rounded-full w-6 h-6 flex items-center justify-center hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                            aria-label="Giảm số ngày"
-                        >
-                            -
-                        </button>
-                        <span className="text-xl font-bold text-indigo-600 w-8 text-center select-none">
-                            {inactiveDays}
-                        </span>
-                        <button
-                            onClick={onIncreaseDays}
-                            className="bg-gray-200 text-gray-800 font-bold rounded-full w-6 h-6 flex items-center justify-center hover:bg-gray-300 transition-colors"
-                            aria-label="Tăng số ngày"
-                        >
-                            +
-                        </button>
-                    </div>
-                    <span>&nbsp;ngày</span>
-                </h2>
-            </div>
+  return (
+    <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+      {/* Tiêu đề */}
+      <div className="px-6 py-4 border-b border-gray-200 bg-gray-50">
+        <h2 className="text-lg font-semibold text-gray-800">
+          Sản phẩm không bán được trong tháng này
+          <span className="ml-3 text-sm font-normal text-gray-500">
+            ({products.length} sản phẩm)
+          </span>
+        </h2>
+      </div>
 
-            <div className="overflow-x-auto mt-10">
-                <table className="w-full text-left">
-                    <thead>
-                        <tr className="border-b border-gray-200">
-                            <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase">
-                                Sản phẩm
-                            </th>
-                            <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase">
-                                Tồn kho
-                            </th>
-                            <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase">
-                                Ngày bán cuối
-                            </th>
-                            <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase">
-                                Số ngày chưa bán
-                            </th>
-                            <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase">
-                                Giá
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {unsoldProducts.map(product => (
-                            <tr
-                                key={product.id}
-                                className="border-b border-gray-200 last:border-0 hover:bg-gray-50"
-                            >
-                                <td className="py-4 px-4">
-                                    <div className="font-semibold text-blue-600">
-                                        {product.name}
-                                    </div>
-                                    <div className="text-sm text-gray-500">
-                                        {product.category}
-                                    </div>
-                                </td>
-                                <td className="py-4 px-4 font-semibold text-gray-700">
-                                    {product.stock.toLocaleString()}
-                                </td>
-                                <td className="py-4 px-4 text-gray-700">
-                                    {format(
-                                        new Date(product.lastSoldDate),
-                                        'dd/MM/yyyy'
-                                    )}
-                                </td>
-                                <td className="py-4 px-4">
-                                    <span
-                                        className={`px-3 py-1 text-sm font-semibold rounded-full ${getBadgeColor(product.daysUnsold)}`}
-                                    >
-                                        {product.daysUnsold} ngày
-                                    </span>
-                                </td>
-                                <td className="py-4 px-4 font-semibold text-gray-700">
-                                    {product.price.toLocaleString('vi-VN', {
-                                        style: 'currency',
-                                        currency: 'VND',
-                                    })}
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-                {unsoldProducts.length === 0 && (
-                    <div className="text-center py-10 text-gray-500">
-                        Không có sản phẩm nào không bán được trong{' '}
-                        {inactiveDays} ngày qua.
-                    </div>
-                )}
-            </div>
-        </div>
-    )
+      {/* Bảng + cuộn dọc khi > 9 sản phẩm */}
+      <div className="max-h-187 overflow-y-auto">
+        <table className="w-full text-sm">
+          <thead className="sticky top-0 bg-gray-50 border-b border-gray-200">
+            <tr className="text-gray-600 text-xs uppercase tracking-wider">
+              <th className="px-6 py-3.5 text-left font-medium">Sản phẩm</th>
+              <th className="px-6 py-3.5 text-center font-medium">Tồn kho</th>
+              <th className="px-6 py-3.5 text-center font-medium">Ngày bán cuối</th>
+              <th className="px-6 py-3.5 text-center font-medium">Chưa bán</th>
+              <th className="px-6 py-3.5 text-right font-medium pr-8">Giá bán</th>
+            </tr>
+          </thead>
+
+          <tbody className="divide-y divide-gray-200">
+            {products.length === 0 ? (
+              <tr>
+                <td colSpan="5" className="text-center py-16 text-gray-500">
+                  <div className="text-2xl font-medium mb-2">Tuyệt vời!</div>
+                  <div className="text-base">Tất cả sản phẩm đều đã có đơn trong tháng này</div>
+                </td>
+              </tr>
+            ) : (
+              products.map((product) => (
+                <tr key={product.id} className="hover:bg-gray-50 transition-colors">
+                  <td className="px-6 py-4">
+                    <div className="font-medium text-gray-900">{product.name}</div>
+                    <div className="text-xs text-gray-500 mt-0.5">{product.category}</div>
+                  </td>
+                  <td className="px-6 py-4 text-center font-semibold text-gray-800">
+                    {product.stock?.toLocaleString() || 0}
+                  </td>
+                  <td className="px-6 py-4 text-center text-gray-700">
+                    {formatDate(product.lastSoldDate)}
+                  </td>
+                  <td className="px-6 py-4 text-center">
+                    <span
+                      className={`inline-block px-3 py-1.5 rounded-full text-xs font-bold ${getBadgeClass(
+                        product.daysUnsold || 0
+                      )}`}
+                    >
+                      {product.daysUnsold || 0} ngày
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 text-right pr-8 font-medium text-gray-900">
+                    {product.price?.toLocaleString('vi-VN', {
+                      style: 'currency',
+                      currency: 'VND',
+                      minimumFractionDigits: 0,
+                    }) || '0 ₫'}
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Thanh cuộn dọc đẹp */}
+      <style jsx>{`
+        /* Thanh cuộn mỏng, đẹp */
+        .overflow-y-auto::-webkit-scrollbar {
+          width: 6px;
+        }
+        .overflow-y-auto::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        .overflow-y-auto::-webkit-scrollbar-thumb {
+          background: #cbd5e0;
+          border-radius: 3px;
+        }
+        .overflow-y-auto::-webkit-scrollbar-thumb:hover {
+          background: #a0aec0;
+        }
+      `}</style>
+    </div>
+  )
 }
 
 export default UnsoldProductsTable

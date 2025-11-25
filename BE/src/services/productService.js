@@ -3,14 +3,32 @@ import { ProductImagesModel } from '~/models/productImageModel'
 import { StatusCodes } from 'http-status-codes'
 import ApiError from '~/utils/ApiError'
 
-const createProductService = async data => {
-    const product = await ProductsModel.createProduct(data)
+const createProductService = async (body, images) => {
+    const product = await ProductsModel.createProduct(body)
 
+    try {
+        if (images && images.length > 0) {
+            const imagePromises = images.map((imageUrl, index) => {
+                return ProductImagesModel.createProductImage({
+                    product_id: product.id,
+                    image_url: imageUrl,
+                    is_main: index === 0 ? 1 : 0,
+                    alt_text: body.alt_text || null,
+                })
+            })
+            await Promise.all(imagePromises)
+        }
+    
+    } catch (error) {
+        await ProductsModel.deleteProduct(product.id)
+        throw error
+    }
     return product
 }
 
 const getByIdProductService = async productId => {
-    const product = await ProductsModel.getProductById(productId)
+    const product_id = productId
+    const product = await ProductsModel.getProductById(product_id)
 
     if (!product) {
         throw new ApiError(StatusCodes.NOT_FOUND, 'Không tìm thấy sản phẩm này')
@@ -238,7 +256,6 @@ const getSearchByCategoryService = async (
 
 const updateProductService = async (productId, data) => {
     const product = await ProductsModel.getProductById(productId)
-
     if (!product) {
         throw new ApiError(StatusCodes.NOT_FOUND, 'Không tìm thấy sản phẩm này')
     }
@@ -260,6 +277,31 @@ const deleteProductService = async productId => {
     return { message: 'Xóa sản phẩm thành công' }
 }
 
+const getInventoryDashboard = async () => {
+    const data = await ProductsModel.getInventoryDashboard()
+    return data
+}
+
+const getSoldProductChartByYear = async (year) => {
+    const data = await ProductsModel.getSoldProductChartByYear(year)
+    return data
+}
+
+const getProductStockByCategory = async () => {
+    const data = await ProductsModel.getProductStockByCategory()
+    return data
+}
+
+const getUnsoldProductsThisMonth = async () => {
+    const data = await ProductsModel.getUnsoldProductsThisMonth()
+    return data
+}
+
+const getTop5Customers = async () => {
+    const data = await ProductsModel.getTop5Customers()
+    return data
+}
+
 export const productService = {
     createProductService,
     getByIdProductService,
@@ -272,4 +314,9 @@ export const productService = {
     getListProductService,
     updateProductService,
     deleteProductService,
+    getInventoryDashboard,
+    getSoldProductChartByYear,
+    getProductStockByCategory,
+    getUnsoldProductsThisMonth,
+    getTop5Customers
 }

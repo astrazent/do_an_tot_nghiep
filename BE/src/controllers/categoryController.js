@@ -43,7 +43,7 @@ const getBySlugCategory = async (req, res, next) => {
 
 const getListCategory = async (req, res, next) => {
     try {
-        const data = await categoryService.getListCategoryService(req.body)
+        const data = await categoryService.getListCategoryService()
 
         return res.status(StatusCodes.OK).json({
             message: 'Lấy danh sách danh mục thành công',

@@ -1,7 +1,7 @@
 import React from 'react'
-import TransactionTable from '~/components/admin/revenue/TransactionTable'
+import ProductTable from '~/components/admin/revenue/ProductTable'
 const ProductManagement = () => {
-    return <TransactionTable />
+    return <ProductTable />
 }
 
 export default ProductManagement

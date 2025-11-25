@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes'
 
 const createProduct = async (req, res, next) => {
     try {
-        const data = await productService.createProductService(req.body)
+        const data = await productService.createProductService(req.body, req.uploadedImageUrls)
         return res.status(StatusCodes.OK).json({
             message: 'Sản phẩm đã được tạo thành công',
             data,
@@ -112,6 +112,7 @@ const getBySlug = async (req, res, next) => {
         next(error)
     }
 }
+
 const getRelatedBySlug = async (req, res, next) => {
     try {
         const data = await productService.getRelatedBySlugService(
@@ -142,7 +143,7 @@ const getHotProduct = async (req, res, next) => {
 const updateProduct = async (req, res, next) => {
     try {
         const data = await productService.updateProductService(
-            req.query.productId,
+            req.params.productId,
             req.body
         )
         return res.status(StatusCodes.OK).json({
@@ -168,6 +169,66 @@ const deleteProduct = async (req, res, next) => {
     }
 }
 
+const getInventoryDashboard = async (req, res, next) => {
+    try {
+        const data = await productService.getInventoryDashboard()
+        return res.status(StatusCodes.OK).json({
+            message: 'Lấy data thành công',
+            data,
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
+const getSoldProductChartByYear = async (req, res, next) => {
+    try {
+        const data = await productService.getSoldProductChartByYear(req.query.year)
+        return res.status(StatusCodes.OK).json({
+            message: 'Lấy data thành công',
+            data,
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
+const getProductStockByCategory = async (req, res, next) => {
+    try {
+        const data = await productService.getProductStockByCategory(req.query.year)
+        return res.status(StatusCodes.OK).json({
+            message: 'Lấy data thành công',
+            data,
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
+const getUnsoldProductsThisMonth = async (req, res, next) => {
+    try {
+        const data = await productService.getUnsoldProductsThisMonth()
+        return res.status(StatusCodes.OK).json({
+            message: 'Lấy data thành công',
+            data,
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
+const getTop5Customers = async (req, res, next) => {
+    try {
+        const data = await productService.getTop5Customers()
+        return res.status(StatusCodes.OK).json({
+            message: 'Lấy data thành công',
+            data,
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
 export const productController = {
     getByIdProduct,
     getListProduct,
@@ -180,4 +241,9 @@ export const productController = {
     createProduct,
     updateProduct,
     deleteProduct,
+    getInventoryDashboard,
+    getSoldProductChartByYear,
+    getProductStockByCategory,
+    getUnsoldProductsThisMonth,
+    getTop5Customers,
 }

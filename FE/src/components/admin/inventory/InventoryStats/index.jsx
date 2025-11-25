@@ -1,12 +1,13 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { getInventoryDashboard } from '~/services/admin/productAdminService'
 
+// ==== ICON COMPONENT (giữ nguyên như bạn đã đưa) ====
 const BoxIcon = () => (
     <svg
         className="w-6 h-6"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
     >
         <path
             strokeLinecap="round"
@@ -23,7 +24,6 @@ const CheckCircleIcon = () => (
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
     >
         <path
             strokeLinecap="round"
@@ -40,7 +40,6 @@ const WarningIcon = () => (
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
     >
         <path
             strokeLinecap="round"
@@ -57,7 +56,6 @@ const DollarIcon = () => (
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
     >
         <path
             strokeLinecap="round"
@@ -74,7 +72,6 @@ const ArrowUpIcon = () => (
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
     >
         <path
             strokeLinecap="round"
@@ -91,7 +88,6 @@ const InfoIcon = () => (
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
     >
         <path
             strokeLinecap="round"
@@ -102,6 +98,7 @@ const InfoIcon = () => (
     </svg>
 )
 
+// ==== STAT CARD ====
 const StatCard = ({
     icon,
     title,
@@ -119,6 +116,7 @@ const StatCard = ({
                     <p className="text-3xl font-bold text-gray-800 mt-1">
                         {value}
                     </p>
+
                     <div
                         className={`flex items-center text-sm mt-3 ${footerStyle}`}
                     >
@@ -126,47 +124,64 @@ const StatCard = ({
                         <span>{footerText}</span>
                     </div>
                 </div>
+
                 <div className={`p-3 rounded-xl ${iconStyle}`}>{icon}</div>
             </div>
         </div>
     )
 }
 
+// ==== MAIN COMPONENT ====
 const InventoryStats = () => {
+    const [stats, setStats] = useState({
+        totalProducts: 0,
+        totalInStock: 0,
+        lowStock: 0,
+        inventoryValue: 0,
+    })
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await getInventoryDashboard()
+                setStats(data.data)
+            } catch (error) {
+                console.error('Error loading dashboard:', error)
+            }
+        }
+
+        fetchData()
+    }, [])
+
     const statsData = [
         {
             title: 'Tổng số sản phẩm',
-            value: '25',
-            footerText: '+5% from last month',
+            value: stats.totalProducts,
             icon: <BoxIcon />,
-            footerIcon: <ArrowUpIcon />,
             iconStyle: 'bg-indigo-100 text-indigo-600',
             footerStyle: 'text-green-600',
         },
         {
             title: 'Tổng tồn kho',
-            value: '16',
-            footerText: 'Well stocked',
+            value: stats.totalInStock,
             icon: <CheckCircleIcon />,
-            footerIcon: <ArrowUpIcon />,
             iconStyle: 'bg-green-100 text-green-600',
             footerStyle: 'text-green-600',
         },
         {
             title: 'Dưới ngưỡng báo động',
-            value: '7',
-            footerText: 'Needs attention',
+            value: stats.lowStock,
             icon: <WarningIcon />,
-            footerIcon: <InfoIcon />,
             iconStyle: 'bg-orange-100 text-orange-500',
             footerStyle: 'text-orange-500',
         },
         {
             title: 'Tổng giá trị kho',
-            value: '$216,989.44',
-            footerText: 'Inventory value',
+            value: Number(stats.inventoryValue || 0).toLocaleString('vi', {
+                style: 'currency',
+                currency: 'VND',
+            }),
             icon: <DollarIcon />,
-            footerIcon: <InfoIcon />,
             iconStyle: 'bg-cyan-100 text-cyan-600',
             footerStyle: 'text-cyan-600',
         },
@@ -176,16 +191,7 @@ const InventoryStats = () => {
         <div className="font-sans">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {statsData.map((stat, index) => (
-                    <StatCard
-                        key={index}
-                        title={stat.title}
-                        value={stat.value}
-                        footerText={stat.footerText}
-                        icon={stat.icon}
-                        footerIcon={stat.footerIcon}
-                        iconStyle={stat.iconStyle}
-                        footerStyle={stat.footerStyle}
-                    />
+                    <StatCard key={index} {...stat} />
                 ))}
             </div>
         </div>

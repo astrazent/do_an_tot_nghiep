@@ -28,6 +28,7 @@ const uploadCloudinary = async (req, res, next) => {
 
         const results = await Promise.all(uploadPromises)
         req.uploadedImageUrls = results.map(r => r.secure_url)
+        
         next()
     } catch (error) {
         console.error('Lỗi upload Cloudinary:', error)

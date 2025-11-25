@@ -148,12 +148,10 @@ const getRelatedByPostSlugService = async data => {
     return result
 }
 const getListPostService = async data => {
-    const limit = parseInt(data.limit) || 10
-    const offset = parseInt(data.offset) || 0
     const validSorts = ['newest', 'oldest', 'post_type', 'post_type_limited']
     const sort = validSorts.includes(data.sort) ? data.sort : 'newest'
 
-    const listPost = await PostsModel.listPosts(limit, offset, sort)
+    const listPost = await PostsModel.listPosts(sort)
     if (!listPost || listPost.length === 0) {
         throw new ApiError(StatusCodes.NOT_FOUND, 'Không tìm thấy bài viết nào')
     }
