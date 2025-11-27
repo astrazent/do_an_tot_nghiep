@@ -57,7 +57,7 @@ const getListCategory = async (req, res, next) => {
 const updateCategory = async (req, res, next) => {
     try {
         const data = await categoryService.updateCategoryService(
-            req.query.categoryId,
+            req.params.categoryId,
             req.body
         )
 

@@ -10,7 +10,7 @@ Router.route('/by_slug').get(categoryController.getBySlugCategory)
 
 Router.route('/list').get(categoryController.getListCategory)
 
-Router.route('/').patch(categoryController.updateCategory)
+Router.route('/:categoryId').patch(categoryController.updateCategory)
 
 Router.route('/').delete(categoryController.deleteCategory)
 

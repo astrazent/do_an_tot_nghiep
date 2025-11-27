@@ -14,9 +14,7 @@ const uploadCloudinary = async (req, res, next) => {
     try {
         const images = req.files
         if (!images || images.length === 0) {
-            return res
-                .status(400)
-                .json({ message: 'Không có tệp tin nào được tải lên' })
+            return next()
         }
 
         const uploadPromises = images.map(file => {

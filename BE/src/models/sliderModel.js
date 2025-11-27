@@ -92,7 +92,7 @@ const SlidersModel = {
         return result.affectedRows > 0
     },
 
-    async listSliders(limit = 50, offset = 0, status = null, sort = 'desc') {
+    async listSliders(status = null, sort = 'desc') {
         const conn = getConnection()
         let sql = `SELECT * FROM ${SLIDERS_TABLE_NAME}`
         const params = []
@@ -103,8 +103,9 @@ const SlidersModel = {
         }
 
         const order = sort === 'asc' ? 'ASC' : 'DESC'
-        sql += ` ORDER BY sort_order ${order}, id ${order} LIMIT ? OFFSET ?`
-        params.push(limit, offset)
+
+        // Chỉ sắp xếp theo ngày tạo
+        sql += ` ORDER BY created_at ${order}`
 
         const [rows] = await conn.execute(sql, params)
         return rows

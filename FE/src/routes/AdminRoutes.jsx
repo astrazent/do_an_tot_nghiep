@@ -14,6 +14,8 @@ import AdminBanner from '~/pages/admin/AdminBanner'
 import AdminBlogManagement from '~/pages/admin/AdminBlogManagement'
 import AdminBlogCreateNew from '~/pages/admin/AdminBlogCreateNew'
 import AdminMessage from '~/pages/admin/AdminMessage'
+import AdminBlogTypeManagement from '~/pages/admin/AdminBlogTypeManagement'
+import AdminCategoryManagement from '~/pages/admin/AdminCategoryManagement'
 
 function ProtectedAdmin({ children }) {
     return children
@@ -46,11 +48,13 @@ export const adminRoutes = [
                 path: 'inventory/management',
                 element: <AdminProductManagement />,
             },
+            { path: 'category', element: <AdminCategoryManagement /> },
             { path: 'orders', element: <AdminOrder /> },
             { path: 'promotions', element: <AdminPromotion /> },
             { path: 'banner', element: <AdminBanner /> },
             { path: 'blog/management', element: <AdminBlogManagement /> },
             { path: 'blog/create-new', element: <AdminBlogCreateNew /> },
+            { path: 'blog/type', element: <AdminBlogTypeManagement /> },
             { path: 'messages', element: <AdminMessage /> },
         ],
     },

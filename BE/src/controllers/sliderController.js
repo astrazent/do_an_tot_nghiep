@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes'
 
 const createSlider = async (req, res, next) => {
     try {
-        const data = await sliderService.createSliderService(req.body)
+        const data = await sliderService.createSliderService(req.body, req.uploadedImageUrls)
         return res.status(StatusCodes.OK).json({
             message: 'Tạo mới slider thành công',
             data,
@@ -42,8 +42,9 @@ const getListSlider = async (req, res, next) => {
 const updateSlider = async (req, res, next) => {
     try {
         const data = await sliderService.updateSliderService(
-            req.query.sliderId,
-            req.body
+            req.params.sliderId,
+            req.body,
+            req.uploadedImageUrls
         )
         return res.status(StatusCodes.OK).json({
             message: 'Cập nhật slider thành công',

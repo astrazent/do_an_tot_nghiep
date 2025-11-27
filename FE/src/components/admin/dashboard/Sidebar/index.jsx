@@ -15,8 +15,11 @@ import {
     HiOutlineNewspaper,
     HiOutlineDocumentAdd,
     HiX,
+    HiOutlineTag,
+    HiOutlineTemplate,
 } from 'react-icons/hi'
 import { MdLocalOffer, MdAdsClick, MdArticle } from 'react-icons/md'
+import { BiCategoryAlt } from 'react-icons/bi'
 
 const mainNavLinks = [
     {
@@ -76,6 +79,7 @@ const mainNavLinks = [
             },
         ],
     },
+    { name: 'Danh mục sản phẩm', icon: <HiOutlineTag />, path: '/admin/category' },
     { name: 'Đơn hàng', icon: <HiOutlineShoppingBag />, path: '/admin/orders' },
     { name: 'Khuyến mãi', icon: <MdLocalOffer />, path: '/admin/promotions' },
     { name: 'Banner', icon: <MdAdsClick />, path: '/admin/banner' },
@@ -93,6 +97,11 @@ const mainNavLinks = [
                 name: 'Soạn bài viết',
                 path: '/admin/blog/create-new',
                 icon: <HiOutlineDocumentAdd />,
+            },
+            {
+                name: 'Kiểu bài viết',
+                path: '/admin/blog/type',
+                icon: <BiCategoryAlt />,
             },
         ],
     },
