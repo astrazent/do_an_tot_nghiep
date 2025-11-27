@@ -21,3 +21,46 @@ export const getByIdPost = async postId => {
         throw error
     }
 }
+
+export const getListPostType = async () => {
+    try {
+        const response = await axios.get('http://localhost:8023/v1/post_type/list')
+        return response.data
+    } catch (error) {
+        console.error('Đã xảy ra lỗi khi lấy dữ liệu', error)
+        throw error
+    }
+}
+
+export const createPostType = async (data) => {
+    try {
+        const response = await axios.post('http://localhost:8023/v1/post_type', data)
+        return response.data
+    } catch (error) {
+        console.error('Đã xảy ra lỗi khi lấy dữ liệu', error)
+        throw error
+    }
+}
+
+export const updatePostType = async (data, postTypeId) => {
+    try {
+        const response = await axios.patch(`http://localhost:8023/v1/post_type/${postTypeId}`, data)
+        return response.data
+    } catch (error) {
+        console.error('Đã xảy ra lỗi khi lấy dữ liệu', error)
+        throw error
+    }
+}
+
+export const deletePostType = async (postTypeId) => {
+    try {
+        const response = await axios.delete(
+            `http://localhost:8023/v1/post_type`, 
+            { params: { postTypeId: postTypeId } }
+        )
+        return response.data
+    } catch (error) {
+        console.error('Đã xảy ra lỗi khi xóa category', error)
+        throw error
+    }
+}

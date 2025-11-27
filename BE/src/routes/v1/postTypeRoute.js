@@ -9,7 +9,7 @@ Router.route('/').get(postTypeController.getByIdPostType)
 
 Router.route('/list').get(postTypeController.getListPostType)
 
-Router.route('/').patch(postTypeController.updatePostType)
+Router.route('/:postTypeId').patch(postTypeController.updatePostType)
 
 Router.route('/').delete(postTypeController.deletePostType)
 

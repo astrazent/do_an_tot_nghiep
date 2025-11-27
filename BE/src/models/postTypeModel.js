@@ -74,14 +74,14 @@ const PostTypesModel = {
         return result.affectedRows > 0
     },
 
-    async listPostTypes(limit = 50, offset = 0, sort = 'newest') {
+    async listPostTypes(sort = 'newest') {
         const conn = getConnection()
         let sql = `SELECT * FROM ${POST_TYPES_TABLE_NAME}`
 
         const order = sort === 'oldest' ? 'ASC' : 'DESC'
-        sql += ` ORDER BY id ${order} LIMIT ? OFFSET ?`
+        sql += ` ORDER BY id ${order} `
 
-        const [rows] = await conn.execute(sql, [limit, offset])
+        const [rows] = await conn.execute(sql)
         return rows
     },
 }

@@ -42,7 +42,7 @@ const getListPostType = async (req, res, next) => {
 const updatePostType = async (req, res, next) => {
     try {
         const data = await postTypeService.updatePostTypeService(
-            req.query.postTypeId,
+            req.params.postTypeId,
             req.body
         )
         return res.status(StatusCodes.OK).json({

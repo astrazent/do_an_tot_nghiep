@@ -19,11 +19,9 @@ const getByIdPostTypeService = async postTypeId => {
 }
 
 const getListPostTypeService = async data => {
-    const limit = parseInt(data.limit) || 50
-    const offset = parseInt(data.offset) || 0
     const sort = data.sort === 'oldest' ? 'oldest' : 'newest'
 
-    const listPostType = await PostTypesModel.listPostTypes(limit, offset, sort)
+    const listPostType = await PostTypesModel.listPostTypes(sort)
 
     if (!listPostType || listPostType.length === 0) {
         throw new ApiError(
