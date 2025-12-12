@@ -51,7 +51,6 @@ const ProductImage = ({ slug }) => {
 
     return (
         <div className="w-full">
-            {}
             <div className="mb-4 aspect-square flex items-center justify-center relative bg-gray-200 border border-gray-300 w-full rounded-xl overflow-hidden">
                 {!currentMedia ? (
                     <div className="text-gray-400 text-sm">
@@ -72,7 +71,6 @@ const ProductImage = ({ slug }) => {
                 )}
             </div>
 
-            {}
             <div className="relative flex items-center px-8">
                 <div
                     id="prev-thumbnail"

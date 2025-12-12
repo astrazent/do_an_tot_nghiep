@@ -71,7 +71,6 @@ const FeedbackCollection = () => {
     return (
         <section className={`${backgroundColor} py-16`}>
             <div className="container mx-auto px-4">
-                {}
                 <div className="text-center mb-12">
                     <div className="flex items-center justify-center gap-4">
                         <div className="flex-1 h-px bg-green-500 max-w-32"></div>
@@ -82,7 +81,6 @@ const FeedbackCollection = () => {
                     </div>
                 </div>
 
-                {}
                 <div className="relative swiper-container-wrapper">
                     {customerFeedback.length > 3 ? (
                         <Swiper

@@ -52,7 +52,8 @@ export const createCommentByProductSlug = async data => {
 }
 
 export const getCommentByUserIdAndSlug = async (user_id, slug) => {
-    if (!user_id || !slug) throw new Error('user_id và slug không được để trống')
+    if (!user_id || !slug)
+        throw new Error('user_id và slug không được để trống')
 
     try {
         const response = await api.get(
@@ -76,7 +77,10 @@ export const updateCommentByProductSlug = async (slug, data) => {
         )
         return response.data
     } catch (error) {
-        console.error(`Lỗi khi cập nhật comment cho product slug "${slug}":`, error)
+        console.error(
+            `Lỗi khi cập nhật comment cho product slug "${slug}":`,
+            error
+        )
         throw error
     }
 }

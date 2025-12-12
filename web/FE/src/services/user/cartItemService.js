@@ -64,7 +64,6 @@ export const updateCartItem = async (
     priceTotal
 ) => {
     try {
-        console.log(userId, productId, quantity, priceTotal)
         const res = await api.patch(`/cart?userId=${userId}`, {
             product_id: productId,
             quantity,

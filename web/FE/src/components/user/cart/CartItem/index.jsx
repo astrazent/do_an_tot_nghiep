@@ -39,14 +39,11 @@ const CartItem = ({ item, onQuantityChange, onRemove }) => {
                 </button>
             </div>
 
-            {}
             <div className="item-price">
                 <p className="total-item-price">
-                    {}
                     {formatCurrency(item.price * item.quantity)}
                 </p>
                 <p className="price-per-item">
-                    {}
                     {formatCurrency(item.price)} / sản phẩm
                 </p>
             </div>

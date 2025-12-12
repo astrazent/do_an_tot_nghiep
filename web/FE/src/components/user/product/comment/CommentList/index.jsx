@@ -15,7 +15,6 @@ import {
 
 const CommentItem = ({
     id,
-    user_id,
     product_id,
     author,
     avatar,
@@ -227,7 +226,6 @@ const CommentList = ({ comments = [], slug }) => {
                     {totalComments} bình luận
                 </p>
 
-                {}
                 {totalPages > 1 && (
                     <div className="flex items-center gap-1">
                         <button
@@ -261,7 +259,6 @@ const CommentList = ({ comments = [], slug }) => {
                         </button>
                     </div>
                 )}
-                {}
             </div>
         </div>
     )

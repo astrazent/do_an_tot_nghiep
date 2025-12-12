@@ -51,6 +51,7 @@ export const addTransactionService = async data => {
         payment_id: paymentRecord.id,
         shipment_id: shipmentRecord.id,
         status: data.status || 'pending',
+        source: 'system',
         deli_name: data.deli_name,
         deli_phone: data.deli_phone,
         deli_email: data.deli_email || null,
@@ -66,6 +67,42 @@ export const addTransactionService = async data => {
         shipped_at: data.shipped_at || null,
         delivered_at: data.delivered_at || null,
         items,
+    }
+
+    return await TransactionsModel.createTransaction(transactionData)
+}
+
+export const addChatBotTransactionService = async data => {
+    const shipmentRecord = await ShipmentsModel.getShipmentById(
+        data.shipment_id
+    )
+    if (!shipmentRecord)
+        throw new Error(`shipment_id không hợp lệ: ${data.shipment_id}`)
+    const paymentRecord = await PaymentsModel.getPaymentById(data.payment_id)
+    if (!paymentRecord)
+        throw new Error(`payment_id không hợp lệ: ${data.payment_id}`)
+
+    const transactionData = {
+        user_id: data.user_id || null,
+        payment_id: data.payment_id,
+        shipment_id: data.shipment_id,
+        status: 'pending',
+        source: 'chatbot',
+        deli_name: data.deli_name,
+        deli_phone: data.deli_phone,
+        deli_email: null,
+        deli_address: data.deli_address,
+        deli_city: null,
+        deli_district: null,
+        deli_ward: null,
+        message: data.message || '',
+        shipping_fee: data.shipping_fee,
+        payment_status: data.payment_status || 'pending',
+        shipment_status: 'pending',
+        amount: data.amount,
+        shipped_at: null,
+        delivered_at: null,
+        items: data.items,
     }
 
     return await TransactionsModel.createTransaction(transactionData)
@@ -233,6 +270,7 @@ const deleteTransactionService = async transactionId => {
 
 export const transactionService = {
     addTransactionService,
+    addChatBotTransactionService,
     getTransactionByEmailAndSlugService,
     getListTransactionsService,
     getTransactionByIdService,

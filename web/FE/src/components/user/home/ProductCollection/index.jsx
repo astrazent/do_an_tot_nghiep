@@ -57,7 +57,6 @@ const SingleSection = ({
             className={`${backgroundColor} ${showTitle && title ? 'pt-16 pb-5' : 'pb-5'}`}
         >
             <div className="container mx-auto px-4">
-                {}
                 {showTitle && title && (
                     <div className="text-center mb-12">
                         <h2 className="text-3xl font-bold text-green-800 uppercase">
@@ -67,11 +66,9 @@ const SingleSection = ({
                     </div>
                 )}
 
-                {}
                 <div
                     className={`relative swiper-container-wrapper ${size === 'small' ? 'wrapper-size-small' : ''}`}
                 >
-                    {}
                     {displayProducts.length > 4 ? (
                         <Swiper
                             spaceBetween={20}

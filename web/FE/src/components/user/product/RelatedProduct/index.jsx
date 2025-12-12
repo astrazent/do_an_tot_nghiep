@@ -148,8 +148,6 @@ const RelatedProduct = ({ title = 'Có thể bạn sẽ thích', slug = null }) 
                 </h2>
             )}
 
-            {}
-            {}
             <ProductCollection type="related" relatedTo={slug} size="small" />
         </div>
     )

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 
 const ProductListSection = ({ title, products, isPromotion = false }) => {

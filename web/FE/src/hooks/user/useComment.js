@@ -4,7 +4,7 @@ import {
     updateCommentById,
     createCommentByProductSlug,
     getCommentByUserIdAndSlug,
-    updateCommentByProductSlug
+    updateCommentByProductSlug,
 } from '~/services/user/commentService'
 import { useParams } from 'react-router-dom'
 

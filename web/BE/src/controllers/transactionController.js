@@ -1,11 +1,33 @@
 import { transactionService } from '~/services/transactionService'
 import { StatusCodes } from 'http-status-codes'
-
+import { broadcast } from '~/sockets/sseClient'
 const addTransaction = async (req, res, next) => {
     try {
         const data = await transactionService.addTransactionService(req.body)
         return res.status(StatusCodes.OK).json({
             message: 'Tạo giao dịch thành công',
+            data,
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
+const addChatBotTransaction = async (req, res, next) => {
+    try {
+        const data = await transactionService.addChatBotTransactionService(
+            req.body
+        )
+
+        broadcast({
+            event: 'transaction_added',
+            status: 'success',
+            transaction: data,
+            message: 'Giao dịch đã được thêm thành công!',
+        })
+
+        return res.status(StatusCodes.OK).json({
+            message: 'Tạo giao dịch chatbot thành công',
             data,
         })
     } catch (error) {
@@ -219,6 +241,7 @@ const deleteTransaction = async (req, res, next) => {
 
 export const transactionController = {
     addTransaction,
+    addChatBotTransaction,
     getTransactionByEmailAndSlug,
     getListTransactions,
     getTransactionById,

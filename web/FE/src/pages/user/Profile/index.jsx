@@ -228,7 +228,6 @@ const Profile = () => {
 
         updateUser({ userId: user.user_id, data: formData })
     }
-    console.log(user)
     return (
         <div className="min-h-screen flex items-center justify-center">
             <ChangeInfoPopup
@@ -261,9 +260,7 @@ const Profile = () => {
                     onSubmit={handleSubmit}
                     className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-10"
                 >
-                    {}
                     <div className="md:col-span-2 space-y-6">
-                        {}
                         <div>
                             <label
                                 htmlFor="username"
@@ -286,7 +283,7 @@ const Profile = () => {
                                 Thay Đổi
                             </button>
                         </div>
-                        {}
+
                         <div>
                             <label
                                 htmlFor="name"
@@ -303,7 +300,7 @@ const Profile = () => {
                                 className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none  focus:ring-black focus:border-black"
                             />
                         </div>
-                        {}
+
                         <div>
                             <label
                                 htmlFor="email"
@@ -348,7 +345,7 @@ const Profile = () => {
                                 </div>
                             )}
                         </div>
-                        {}
+
                         <div>
                             <label
                                 htmlFor="phone"
@@ -366,7 +363,7 @@ const Profile = () => {
                                 className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-black focus:border-black"
                             />
                         </div>
-                        {}
+
                         <div>
                             <label className="block text-sm font-medium text-gray-700">
                                 Giới tính
@@ -413,7 +410,7 @@ const Profile = () => {
                                 </label>
                             </div>
                         </div>
-                        {}
+
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-3">
                                 Địa chỉ
@@ -515,7 +512,6 @@ const Profile = () => {
                         </div>
                     </div>
 
-                    {}
                     <div className="flex flex-col items-center justify-start pt-6">
                         <div
                             className="w-32 h-32 rounded-full bg-cover bg-center mb-4 shadow-md"
@@ -543,7 +539,6 @@ const Profile = () => {
                         </p>
                     </div>
 
-                    {}
                     <div className="md:col-span-3 flex justify-end items-center gap-4 pt-6 border-t border-gray-200">
                         {user?.provider === 'local' && (
                             <button

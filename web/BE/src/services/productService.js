@@ -75,6 +75,18 @@ const getListProductService = async data => {
     return listProduct
 }
 
+const getListProductChatBotService = async data => {
+    const listProduct = await ProductsModel.getListProductChatBot(
+        data.limit,
+        data.offset
+    )
+
+    if (listProduct.length === 0) {
+        throw new ApiError(StatusCodes.NOT_FOUND, 'Không tìm thấy sản phẩm nào')
+    }
+    return listProduct
+}
+
 export const getPromotionProductService = async data => {
     const sort = data.sort || 'newest'
     const limit = data.limit ? parseInt(data.limit, 10) : 50
@@ -312,6 +324,7 @@ export const productService = {
     getHotProductService,
     getPromotionProductService,
     getListProductService,
+    getListProductChatBotService,
     updateProductService,
     deleteProductService,
     getInventoryDashboard,

@@ -17,11 +17,10 @@ const createCommentByProductSlug = async (req, res, next) => {
     try {
         const user_id = req.user?.user_id
         if (!user_id) throw new Error('Không xác định được user')
-
-        // Gộp user_id vào dữ liệu từ body
         const data = { ...req.body, user_id }
 
-        const comment = await commentService.createCommentByProductSlugService(data)
+        const comment =
+            await commentService.createCommentByProductSlugService(data)
 
         return res.status(StatusCodes.OK).json({
             message: 'Tạo mới comment thành công',
@@ -138,14 +137,15 @@ const updateComment = async (req, res, next) => {
 
 const updateCommentByUserAndProduct = async (req, res, next) => {
     try {
-        const user_id = req.user.user_id 
+        const user_id = req.user.user_id
         const slug = req.query.slug
         const data = req.body
-        const updatedComment = await commentService.updateCommentByUserAndProductService({
-            user_id,
-            slug,
-            data,
-        })
+        const updatedComment =
+            await commentService.updateCommentByUserAndProductService({
+                user_id,
+                slug,
+                data,
+            })
 
         return res.status(StatusCodes.OK).json({
             message: 'Cập nhật comment thành công',

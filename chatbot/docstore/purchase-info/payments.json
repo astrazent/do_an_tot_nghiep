@@ -1,0 +1,38 @@
+[
+  {
+    "text": "Phương thức thanh toán: COD\n            Trạng thái: Hoạt động",
+    "metadata": {
+      "id": 1,
+      "tên_phương_thức": "COD",
+      "trạng_thái": "hoạt động",
+      "url": "https://cdn-icons-png.flaticon.com/512/3796/3796142.png"
+    }
+  },
+  {
+    "text": "Phương thức thanh toán: CreditCard\n            Trạng thái: Hoạt động",
+    "metadata": {
+      "id": 2,
+      "tên_phương_thức": "CreditCard",
+      "trạng_thái": "hoạt động",
+      "url": "https://cdn-icons-png.flaticon.com/512/6963/6963703.png"
+    }
+  },
+  {
+    "text": "Phương thức thanh toán: VNPay\n            Trạng thái: Hoạt động",
+    "metadata": {
+      "id": 4,
+      "tên_phương_thức": "VNPay",
+      "trạng_thái": "hoạt động",
+      "url": "https://i.pinimg.com/736x/f9/5e/a2/f95ea23c297af3170d9d75173bed9d7e.jpg"
+    }
+  },
+  {
+    "text": "Phương thức thanh toán: ZaloPay\n            Trạng thái: Hoạt động",
+    "metadata": {
+      "id": 5,
+      "tên_phương_thức": "ZaloPay",
+      "trạng_thái": "hoạt động",
+      "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwPynD27LbXlPsbofv1AX-5ZXDn_XMGo-1TA&s"
+    }
+  }
+]

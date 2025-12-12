@@ -122,7 +122,6 @@ const Purchase = () => {
         isError,
     } = useTransactionsByUser(user?.user_id)
     const isLoading = userLoading || transactionsIsLoading
-
     const { mutate: cancelOrderMutation, isLoading: isCancelling } =
         useMutation({
             mutationFn: ({ userId, trackingNumber }) =>
@@ -206,7 +205,6 @@ const Purchase = () => {
                 Quản lý Đơn hàng
             </h1>
 
-            {}
             <div className="flex items-center space-x-1 mt-2 mb-4">
                 {tabs.map(tab => (
                     <button
@@ -235,7 +233,6 @@ const Purchase = () => {
                 ))}
             </div>
 
-            {}
             <div className="bg-white shadow-sm rounded-md">
                 <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-gray-50">
@@ -340,7 +337,6 @@ const Purchase = () => {
                 </table>
             </div>
 
-            {}
             <OrderDetailModal
                 order={selectedOrder}
                 onClose={() => setSelectedOrder(null)}

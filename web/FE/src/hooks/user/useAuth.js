@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import api from '~/services/user/api'
-import { updateUser, removeUser } from '~/Redux/reducers/userReducer'
+import { removeUser } from '~/Redux/reducers/userReducer'
 
 export const useAuth = () => {
     const dispatch = useDispatch()
@@ -11,7 +11,6 @@ export const useAuth = () => {
         const checkAuth = async () => {
             try {
                 const res = await api.get('/auth/verify')
-                console.log('get: ', res.data)
             } catch {
                 dispatch(removeUser())
             } finally {

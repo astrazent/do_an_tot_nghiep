@@ -1,4 +1,3 @@
-import { log } from 'winston'
 import { getConnection } from '../config/mysql.js'
 import Joi from 'joi'
 

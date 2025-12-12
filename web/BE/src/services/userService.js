@@ -98,6 +98,7 @@ const loginService = async payload => {
     }
     return account
 }
+
 const getByIdUserService = async data => {
     const user = await UsersModel.getUserById(data)
     if (!user) {

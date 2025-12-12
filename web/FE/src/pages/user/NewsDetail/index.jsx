@@ -92,7 +92,6 @@ function NewsDetail() {
                     images={images}
                 />
 
-                {}
                 {isLoadingRelated && (
                     <p className="text-center mt-8">
                         Đang tải bài viết liên quan...

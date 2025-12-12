@@ -1,0 +1,2409 @@
+[
+  {
+    "text": "Tên sản phẩm: Bánh pía Sóc Trăng\n        Mô tả sản phẩm: Bánh pía Sóc Trăng thơm ngon, đặc sản miền Tây với lớp vỏ mỏng và nhân đậu xanh sầu riêng béo ngậy.\n        Giá gốc: 70000.00 VND\n        Giá bán: 65000.00 VND\n        Danh mục: Thực phẩm khác\n        Mô tả danh mục: Tổng hợp các món ăn, sản vật đặc trưng của các địa phương trên cả nước.",
+    "metadata": {
+      "id": 1,
+      "tồn_kho": "200 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.8,
+      "số_lượt_đánh_giá": 10,
+      "từ_khóa": [
+        "pia",
+        "sóc",
+        "bánh",
+        "trang",
+        "trăng",
+        "pía",
+        "banh",
+        "soc",
+        "thực phẩm khác"
+      ],
+      "url": "assets/image/shared/product/cac-thuc-pham-khac/banh-pia-soc-trang/banh-pia-soc-trang-ctpk.jpeg",
+      "khuyến_mãi": [
+        {
+          "tên": "Giảm 10% mùa hè",
+          "giá_trị": "10%",
+          "mô_tả": "Áp dụng cho tất cả đặc sản mùa hè",
+          "ngày_bắt_đầu": "31/05/2025 17:00",
+          "ngày_kết_thúc": "31/08/2025 16:59"
+        }
+      ]
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Bò một nắng Krông Pa\n        Mô tả sản phẩm: Đặc sản bò một nắng Krông Pa, thịt bò tươi được tẩm ướp gia vị đậm đà và phơi qua một nắng giòn.\n        Giá gốc: 550000.00 VND\n        Giá bán: 525000.00 VND\n        Danh mục: Thực phẩm khác\n        Mô tả danh mục: Tổng hợp các món ăn, sản vật đặc trưng của các địa phương trên cả nước.",
+    "metadata": {
+      "id": 2,
+      "tồn_kho": "100 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.75,
+      "số_lượt_đánh_giá": 20,
+      "từ_khóa": [
+        "nắng",
+        "một",
+        "mot",
+        "bò",
+        "krông",
+        "krong",
+        "pa",
+        "nang",
+        "thực phẩm khác",
+        "bo"
+      ],
+      "url": "assets/image/shared/product/cac-thuc-pham-khac/bo-mot-nang-rong-pa/bo-mot-nang-rong-pa-ctpk.jpg",
+      "khuyến_mãi": [
+        {
+          "tên": "Giảm 10% mùa hè",
+          "giá_trị": "10%",
+          "mô_tả": "Áp dụng cho tất cả đặc sản mùa hè",
+          "ngày_bắt_đầu": "31/05/2025 17:00",
+          "ngày_kết_thúc": "31/08/2025 16:59"
+        }
+      ]
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Cà phê Buôn Ma Thuột\n        Mô tả sản phẩm: Cà phê rang xay nguyên chất từ thủ phủ cà phê Buôn Ma Thuột, hương thơm nồng nàn, vị đậm đà.\n        Giá gốc: 150000.00 VND\n        Giá bán: 135000.00 VND\n        Danh mục: Thực phẩm khác\n        Mô tả danh mục: Tổng hợp các món ăn, sản vật đặc trưng của các địa phương trên cả nước.",
+    "metadata": {
+      "id": 3,
+      "tồn_kho": "300 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.75,
+      "số_lượt_đánh_giá": 40,
+      "từ_khóa": [
+        "ma",
+        "thuột",
+        "buon",
+        "thực phẩm khác",
+        "cà",
+        "phê",
+        "buôn",
+        "thuot",
+        "phe",
+        "ca"
+      ],
+      "url": "assets/image/shared/product/cac-thuc-pham-khac/ca-phe-buon-ma-thuot/ca-phe-buon-ma-thuot-ctpk.jpg",
+      "khuyến_mãi": [
+        {
+          "tên": "Flash Sale 50k",
+          "giá_trị": "50,000 VND",
+          "mô_tả": "Giảm trực tiếp 50.000 VND cho đơn hàng đặc sản",
+          "ngày_bắt_đầu": "19/09/2025 17:00",
+          "ngày_kết_thúc": "25/09/2025 16:59"
+        }
+      ]
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Chả ốc\n        Mô tả sản phẩm: Chả ốc dai giòn sần sật, kết hợp giữa thịt ốc tươi và các loại gia vị truyền thống, món ngon khó cưỡng.\n        Giá gốc: 120000.00 VND\n        Giá bán: 110000.00 VND\n        Danh mục: Thực phẩm khác\n        Mô tả danh mục: Tổng hợp các món ăn, sản vật đặc trưng của các địa phương trên cả nước.",
+    "metadata": {
+      "id": 4,
+      "tồn_kho": "150 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.533333333333333,
+      "số_lượt_đánh_giá": 15,
+      "từ_khóa": [
+        "chả",
+        "ốc",
+        "oc",
+        "cha",
+        "thực phẩm khác"
+      ],
+      "url": "assets/image/shared/product/cac-thuc-pham-khac/cha-oc-nua/cha-oc-nua-ctpk.jpg",
+      "khuyến_mãi": [
+        {
+          "tên": "Flash Sale 50k",
+          "giá_trị": "50,000 VND",
+          "mô_tả": "Giảm trực tiếp 50.000 VND cho đơn hàng đặc sản",
+          "ngày_bắt_đầu": "19/09/2025 17:00",
+          "ngày_kết_thúc": "25/09/2025 16:59"
+        }
+      ]
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Dê chiên giòn Tây Ninh\n        Mô tả sản phẩm: Thịt dê tươi được chế biến theo công thức đặc biệt của Tây Ninh, chiên giòn rụm, thơm nức mũi.\n        Giá gốc: 250000.00 VND\n        Giá bán: 230000.00 VND\n        Danh mục: Thực phẩm khác\n        Mô tả danh mục: Tổng hợp các món ăn, sản vật đặc trưng của các địa phương trên cả nước.",
+    "metadata": {
+      "id": 5,
+      "tồn_kho": "80 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.5,
+      "số_lượt_đánh_giá": 10,
+      "từ_khóa": [
+        "gion",
+        "dê",
+        "tay",
+        "tây",
+        "chiên",
+        "de",
+        "ninh",
+        "giòn",
+        "thực phẩm khác",
+        "chien"
+      ],
+      "url": "assets/image/shared/product/cac-thuc-pham-khac/de-chien-gion-tay-ninh/de-chien-gion-tay-ninh-ctpk.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Gân bò rau tiến vua\n        Mô tả sản phẩm: Món gỏi gân bò giòn sần sật kết hợp với rau tiến vua thanh mát, nước sốt chua ngọt đậm vị.\n        Giá gốc: 180000.00 VND\n        Giá bán: 175000.00 VND\n        Danh mục: Thực phẩm khác\n        Mô tả danh mục: Tổng hợp các món ăn, sản vật đặc trưng của các địa phương trên cả nước.",
+    "metadata": {
+      "id": 6,
+      "tồn_kho": "120 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.4,
+      "số_lượt_đánh_giá": 20,
+      "từ_khóa": [
+        "tien",
+        "tiến",
+        "vua",
+        "gân",
+        "bò",
+        "rau",
+        "thực phẩm khác",
+        "gan",
+        "bo"
+      ],
+      "url": "assets/image/shared/product/cac-thuc-pham-khac/gan-bo-rau-tien-vua/gan-bo-rau-tien-vua-ctpk.jpeg",
+      "khuyến_mãi": [
+        {
+          "tên": "Giảm 20% dịp lễ",
+          "giá_trị": "20%",
+          "mô_tả": "Khuyến mại 20% tất cả đặc sản dịp lễ",
+          "ngày_bắt_đầu": "19/12/2025 17:00",
+          "ngày_kết_thúc": "31/12/2025 16:59"
+        }
+      ]
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Hạt điều rang muối Bình Phước\n        Mô tả sản phẩm: Hạt điều Bình Phước loại 1, được rang muối thủ công, giữ trọn vị bùi béo và hương thơm tự nhiên.\n        Giá gốc: 300000.00 VND\n        Giá bán: 280000.00 VND\n        Danh mục: Thực phẩm khác\n        Mô tả danh mục: Tổng hợp các món ăn, sản vật đặc trưng của các địa phương trên cả nước.",
+    "metadata": {
+      "id": 7,
+      "tồn_kho": "400 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.8,
+      "số_lượt_đánh_giá": 50,
+      "từ_khóa": [
+        "muối",
+        "muoi",
+        "phước",
+        "dieu",
+        "binh",
+        "rang",
+        "điều",
+        "phuoc",
+        "hạt",
+        "hat",
+        "thực phẩm khác",
+        "bình"
+      ],
+      "url": "assets/image/shared/product/cac-thuc-pham-khac/hat-dieu-rang-muoi-binh-phuoc/hat-dieu-rang-muoi-binh-phuoc-ctpk.jpg",
+      "khuyến_mãi": [
+        {
+          "tên": "Giảm 20% dịp lễ",
+          "giá_trị": "20%",
+          "mô_tả": "Khuyến mại 20% tất cả đặc sản dịp lễ",
+          "ngày_bắt_đầu": "19/12/2025 17:00",
+          "ngày_kết_thúc": "31/12/2025 16:59"
+        }
+      ]
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Mắm tép chưng thịt\n        Mô tả sản phẩm: Mắm tép chưng thịt đậm đà hương vị truyền thống, sản phẩm sạch, không chất bảo quản, ăn cùng cơm nóng tuyệt ngon.\n        Giá gốc: 160000.00 VND\n        Giá bán: 150000.00 VND\n        Danh mục: Thực phẩm khác\n        Mô tả danh mục: Tổng hợp các món ăn, sản vật đặc trưng của các địa phương trên cả nước.",
+    "metadata": {
+      "id": 8,
+      "tồn_kho": "250 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.833333333333333,
+      "số_lượt_đánh_giá": 30,
+      "từ_khóa": [
+        "tep",
+        "chưng",
+        "mam",
+        "chung",
+        "thit",
+        "thịt",
+        "thực phẩm khác",
+        "mắm",
+        "tép"
+      ],
+      "url": "assets/image/shared/product/cac-thuc-pham-khac/mam-tep-chung-thit/mam-tep-chung-thit-ctpk.jpg",
+      "khuyến_mãi": [
+        {
+          "tên": "Free Ship 0đ",
+          "giá_trị": "0",
+          "mô_tả": "Miễn phí vận chuyển cho đơn hàng đặc sản",
+          "ngày_bắt_đầu": "31/08/2025 17:00",
+          "ngày_kết_thúc": "30/09/2025 16:59"
+        }
+      ]
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Mật ong rừng U Minh\n        Mô tả sản phẩm: Mật ong nguyên chất khai thác từ rừng tràm U Minh, có màu vàng óng, hương thơm đặc trưng và vị ngọt thanh.\n        Giá gốc: 800000.00 VND\n        Giá bán: 750000.00 VND\n        Danh mục: Thực phẩm khác\n        Mô tả danh mục: Tổng hợp các món ăn, sản vật đặc trưng của các địa phương trên cả nước.",
+    "metadata": {
+      "id": 9,
+      "tồn_kho": "100 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.6,
+      "số_lượt_đánh_giá": 25,
+      "từ_khóa": [
+        "mật",
+        "rung",
+        "u",
+        "mat",
+        "ong",
+        "thực phẩm khác",
+        "minh",
+        "rừng"
+      ],
+      "url": "assets/image/shared/product/cac-thuc-pham-khac/mat-ong-rung-u-minh/mat-ong-rung-u-minh-ctpk.jpg",
+      "khuyến_mãi": [
+        {
+          "tên": "Free Ship 0đ",
+          "giá_trị": "0",
+          "mô_tả": "Miễn phí vận chuyển cho đơn hàng đặc sản",
+          "ngày_bắt_đầu": "31/08/2025 17:00",
+          "ngày_kết_thúc": "30/09/2025 16:59"
+        }
+      ]
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Mè xửng Huế\n        Mô tả sản phẩm: Đặc sản Mè xửng Huế dẻo thơm, ngọt bùi, là sự hòa quyện của mạch nha, đậu phộng và mè rang.\n        Giá gốc: 50000.00 VND\n        Giá bán: 45000.00 VND\n        Danh mục: Thực phẩm khác\n        Mô tả danh mục: Tổng hợp các món ăn, sản vật đặc trưng của các địa phương trên cả nước.",
+    "metadata": {
+      "id": 10,
+      "tồn_kho": "500 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.75,
+      "số_lượt_đánh_giá": 60,
+      "từ_khóa": [
+        "xửng",
+        "xung",
+        "mè",
+        "me",
+        "huế",
+        "hue",
+        "thực phẩm khác"
+      ],
+      "url": "assets/image/shared/product/cac-thuc-pham-khac/me-sung-hue/me-sung-hue-ctpk.jpg",
+      "khuyến_mãi": [
+        {
+          "tên": "Free Ship 0đ",
+          "giá_trị": "0",
+          "mô_tả": "Miễn phí vận chuyển cho đơn hàng đặc sản",
+          "ngày_bắt_đầu": "31/08/2025 17:00",
+          "ngày_kết_thúc": "30/09/2025 16:59"
+        }
+      ]
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Mọc ốc\n        Mô tả sản phẩm: Mọc ốc được làm từ thịt ốc tươi xay nhuyễn, nấm mèo và giò sống, viên mọc dai ngon, đậm đà.\n        Giá gốc: 130000.00 VND\n        Giá bán: 120000.00 VND\n        Danh mục: Thực phẩm khác\n        Mô tả danh mục: Tổng hợp các món ăn, sản vật đặc trưng của các địa phương trên cả nước.",
+    "metadata": {
+      "id": 11,
+      "tồn_kho": "130 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.222222222222222,
+      "số_lượt_đánh_giá": 18,
+      "từ_khóa": [
+        "moc",
+        "ốc",
+        "mọc",
+        "oc",
+        "thực phẩm khác"
+      ],
+      "url": "assets/image/shared/product/cac-thuc-pham-khac/moc-oc/moc-oc-ctpk.png",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Rượu cần Tây Nguyên\n        Mô tả sản phẩm: Rượu cần là tinh hoa văn hóa của núi rừng Tây Nguyên, được ủ từ men lá cây và gạo nếp, hương vị độc đáo.\n        Giá gốc: 200000.00 VND\n        Giá bán: 180000.00 VND\n        Danh mục: Thực phẩm khác\n        Mô tả danh mục: Tổng hợp các món ăn, sản vật đặc trưng của các địa phương trên cả nước.",
+    "metadata": {
+      "id": 12,
+      "tồn_kho": "90 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.6,
+      "số_lượt_đánh_giá": 20,
+      "từ_khóa": [
+        "tay",
+        "rượu",
+        "nguyên",
+        "tây",
+        "cần",
+        "can",
+        "nguyen",
+        "thực phẩm khác",
+        "ruou"
+      ],
+      "url": "assets/image/shared/product/cac-thuc-pham-khac/ruou-can-tay-nguyen/ruou-can-tay-nguyen-ctpk.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Trà sen Tây Hồ\n        Mô tả sản phẩm: Trà sen Tây Hồ được ướp hương từ những bông sen Bách Diệp, mang đến hương thơm thanh khiết và tinh tế.\n        Giá gốc: 450000.00 VND\n        Giá bán: 420000.00 VND\n        Danh mục: Thực phẩm khác\n        Mô tả danh mục: Tổng hợp các món ăn, sản vật đặc trưng của các địa phương trên cả nước.",
+    "metadata": {
+      "id": 13,
+      "tồn_kho": "150 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.666666666666667,
+      "số_lượt_đánh_giá": 30,
+      "từ_khóa": [
+        "tra",
+        "ho",
+        "tay",
+        "tây",
+        "hồ",
+        "thực phẩm khác",
+        "trà",
+        "sen"
+      ],
+      "url": "assets/image/shared/product/cac-thuc-pham-khac/tra-sen-tay-ho/tra-sen-tay-ho-ctpk.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Trứng kiến Tây Bắc\n        Mô tả sản phẩm: Đặc sản độc đáo của núi rừng Tây Bắc, trứng kiến non béo ngậy, thường dùng để nấu xôi hoặc làm gỏi.\n        Giá gốc: 350000.00 VND\n        Giá bán: 330000.00 VND\n        Danh mục: Thực phẩm khác\n        Mô tả danh mục: Tổng hợp các món ăn, sản vật đặc trưng của các địa phương trên cả nước.",
+    "metadata": {
+      "id": 14,
+      "tồn_kho": "60 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.75,
+      "số_lượt_đánh_giá": 8,
+      "từ_khóa": [
+        "bac",
+        "kiến",
+        "trứng",
+        "kien",
+        "tay",
+        "trung",
+        "tây",
+        "bắc",
+        "thực phẩm khác"
+      ],
+      "url": "assets/image/shared/product/cac-thuc-pham-khac/trung-kien-tay-bac/trung-kien-tay-bac-ctpk.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Bề bề rang muối\n        Mô tả sản phẩm: Bề bề tươi ngon được rang cùng muối và sả ớt, vỏ giòn, thịt ngọt đậm đà, là món nhậu hấp dẫn.\n        Giá gốc: 280000.00 VND\n        Giá bán: 260000.00 VND\n        Danh mục: Hải sản\n        Mô tả danh mục: Các món ăn được chế biến sẵn từ hải sản tươi sống.",
+    "metadata": {
+      "id": 15,
+      "tồn_kho": "180 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.642857142857143,
+      "số_lượt_đánh_giá": 28,
+      "từ_khóa": [
+        "muối",
+        "muoi",
+        "be",
+        "rang",
+        "hải sản",
+        "bề"
+      ],
+      "url": "assets/image/shared/product/hai-san/be-be-rang-muoi/be-be-rang-muoi-hs.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Cá bóp nấu me\n        Mô tả sản phẩm: Lẩu cá bóp nấu me chua thanh, thịt cá bóp ngọt và chắc, là món ăn giải nhiệt và bổ dưỡng.\n        Giá gốc: 320000.00 VND\n        Giá bán: 290000.00 VND\n        Danh mục: Hải sản\n        Mô tả danh mục: Các món ăn được chế biến sẵn từ hải sản tươi sống.",
+    "metadata": {
+      "id": 16,
+      "tồn_kho": "120 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.454545454545454,
+      "số_lượt_đánh_giá": 22,
+      "từ_khóa": [
+        "bóp",
+        "nấu",
+        "cá",
+        "me",
+        "bop",
+        "hải sản",
+        "nau",
+        "ca"
+      ],
+      "url": "assets/image/shared/product/hai-san/ca-bop-nau-me/ca-bop-nau-me-hs.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Cá linh bông\n        Mô tả sản phẩm: Cá linh mùa nước nổi, thân nhỏ, xương mềm, thịt ngọt, thường dùng để nấu lẩu hoặc kho lạt.\n        Giá gốc: 180000.00 VND\n        Giá bán: 165000.00 VND\n        Danh mục: Hải sản\n        Mô tả danh mục: Các món ăn được chế biến sẵn từ hải sản tươi sống.",
+    "metadata": {
+      "id": 17,
+      "tồn_kho": "250 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.605263157894737,
+      "số_lượt_đánh_giá": 38,
+      "từ_khóa": [
+        "bong",
+        "linh",
+        "cá",
+        "hải sản",
+        "bông",
+        "ca"
+      ],
+      "url": "assets/image/shared/product/hai-san/ca-linh-bong/ca-linh-bong-hs.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Chả cá Móng\n        Mô tả sản phẩm: Chả cá Móng Cái nổi tiếng với độ dai, giòn và hương vị đậm đà từ thịt cá tươi nguyên chất.\n        Giá gốc: 240000.00 VND\n        Giá bán: 220000.00 VND\n        Danh mục: Hải sản\n        Mô tả danh mục: Các món ăn được chế biến sẵn từ hải sản tươi sống.",
+    "metadata": {
+      "id": 18,
+      "tồn_kho": "200 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.6875,
+      "số_lượt_đánh_giá": 32,
+      "từ_khóa": [
+        "chả",
+        "cá",
+        "cha",
+        "mong",
+        "hải sản",
+        "móng",
+        "ca"
+      ],
+      "url": "assets/image/shared/product/hai-san/cha-ca-mong/cha-ca-mong-hs.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Chả cá mực tôm\n        Mô tả sản phẩm: Sự kết hợp hoàn hảo giữa cá, mực và tôm tươi, tạo nên món chả dai ngon, đậm vị biển.\n        Giá gốc: 260000.00 VND\n        Giá bán: 245000.00 VND\n        Danh mục: Hải sản\n        Mô tả danh mục: Các món ăn được chế biến sẵn từ hải sản tươi sống.",
+    "metadata": {
+      "id": 19,
+      "tồn_kho": "150 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.48,
+      "số_lượt_đánh_giá": 25,
+      "từ_khóa": [
+        "tôm",
+        "mực",
+        "chả",
+        "tom",
+        "cá",
+        "muc",
+        "cha",
+        "hải sản",
+        "ca"
+      ],
+      "url": "assets/image/shared/product/hai-san/cha-ca-muc-tom/cha-ca-muc-tom-hs.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Chả mỡ ghẹ\n        Mô tả sản phẩm: Chả mỡ ghẹ béo ngậy, thơm lừng mùi ghẹ tươi, là món ăn độc đáo và đầy dinh dưỡng từ hải sản.\n        Giá gốc: 300000.00 VND\n        Giá bán: 280000.00 VND\n        Danh mục: Hải sản\n        Mô tả danh mục: Các món ăn được chế biến sẵn từ hải sản tươi sống.",
+    "metadata": {
+      "id": 20,
+      "tồn_kho": "110 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.45,
+      "số_lượt_đánh_giá": 20,
+      "từ_khóa": [
+        "mỡ",
+        "chả",
+        "mo",
+        "cha",
+        "hải sản",
+        "ghe",
+        "ghẹ"
+      ],
+      "url": "assets/image/shared/product/hai-san/cha-mo-ghe/cha-mo-ghe-hs.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Chả mực Hạ Long\n        Mô tả sản phẩm: Đặc sản trứ danh Hạ Long, chả mực được giã tay dai giòn, thơm nức hương mực mai tươi.\n        Giá gốc: 480000.00 VND\n        Giá bán: 450000.00 VND\n        Danh mục: Hải sản\n        Mô tả danh mục: Các món ăn được chế biến sẵn từ hải sản tươi sống.",
+    "metadata": {
+      "id": 21,
+      "tồn_kho": "250 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.6,
+      "số_lượt_đánh_giá": 50,
+      "từ_khóa": [
+        "mực",
+        "hạ",
+        "chả",
+        "ha",
+        "long",
+        "muc",
+        "cha",
+        "hải sản"
+      ],
+      "url": "assets/image/shared/product/hai-san/cha-muc-ha-long/cha-muc-ha-long-hs.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Chả tôm\n        Mô tả sản phẩm: Chả tôm được làm từ tôm tươi xay nhuyễn, có độ dai và vị ngọt tự nhiên, thích hợp chiên hoặc nấu canh.\n        Giá gốc: 230000.00 VND\n        Giá bán: 210000.00 VND\n        Danh mục: Hải sản\n        Mô tả danh mục: Các món ăn được chế biến sẵn từ hải sản tươi sống.",
+    "metadata": {
+      "id": 22,
+      "tồn_kho": "220 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.428571428571429,
+      "số_lượt_đánh_giá": 35,
+      "từ_khóa": [
+        "tôm",
+        "chả",
+        "tom",
+        "cha",
+        "hải sản"
+      ],
+      "url": "assets/image/shared/product/hai-san/cha-tom/cha-tom-hs.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Cua Cà Mau\n        Mô tả sản phẩm: Cua Cà Mau nổi tiếng chắc thịt, ngọt và nhiều gạch. Sản phẩm được giao sống tận nơi.\n        Giá gốc: 600000.00 VND\n        Giá bán: 580000.00 VND\n        Danh mục: Hải sản\n        Mô tả danh mục: Các món ăn được chế biến sẵn từ hải sản tươi sống.",
+    "metadata": {
+      "id": 23,
+      "tồn_kho": "100 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.733333333333333,
+      "số_lượt_đánh_giá": 30,
+      "từ_khóa": [
+        "mau",
+        "cà",
+        "hải sản",
+        "cua",
+        "ca"
+      ],
+      "url": "assets/image/shared/product/hai-san/cua-ca-mau/cua-ca-mau-hs.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Gỏi cá trích\n        Mô tả sản phẩm: Gỏi cá trích Phú Quốc với cá tươi, dừa nạo và rau thơm, cuốn bánh tráng chấm nước mắm chua ngọt.\n        Giá gốc: 190000.00 VND\n        Giá bán: 175000.00 VND\n        Danh mục: Hải sản\n        Mô tả danh mục: Các món ăn được chế biến sẵn từ hải sản tươi sống.",
+    "metadata": {
+      "id": 24,
+      "tồn_kho": "160 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.482758620689655,
+      "số_lượt_đánh_giá": 29,
+      "từ_khóa": [
+        "cá",
+        "hải sản",
+        "goi",
+        "gỏi",
+        "trích",
+        "trich",
+        "ca"
+      ],
+      "url": "assets/image/shared/product/hai-san/goi-ca-trich/goi-ca-trich-hs.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Hàu nướng mỡ hành\n        Mô tả sản phẩm: Hàu sữa tươi sống được nướng trên bếp than cùng mỡ hành thơm lừng, đậu phộng béo bùi.\n        Giá gốc: 150000.00 VND\n        Giá bán: 140000.00 VND\n        Danh mục: Hải sản\n        Mô tả danh mục: Các món ăn được chế biến sẵn từ hải sản tươi sống.",
+    "metadata": {
+      "id": 25,
+      "tồn_kho": "300 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.666666666666667,
+      "số_lượt_đánh_giá": 45,
+      "từ_khóa": [
+        "mỡ",
+        "nuong",
+        "hanh",
+        "hành",
+        "hau",
+        "mo",
+        "hàu",
+        "hải sản",
+        "nướng"
+      ],
+      "url": "assets/image/shared/product/hai-san/hau-nuong-mo-hanh/hau-nuong-mo-hanh-hs.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Mực một nắng\n        Mô tả sản phẩm: Mực lá được phơi qua đúng một nắng, giữ được độ dẻo, ngọt và hương thơm đặc trưng của biển.\n        Giá gốc: 700000.00 VND\n        Giá bán: 650000.00 VND\n        Danh mục: Hải sản\n        Mô tả danh mục: Các món ăn được chế biến sẵn từ hải sản tươi sống.",
+    "metadata": {
+      "id": 26,
+      "tồn_kho": "200 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.642857142857143,
+      "số_lượt_đánh_giá": 42,
+      "từ_khóa": [
+        "mực",
+        "một",
+        "nắng",
+        "mot",
+        "muc",
+        "hải sản",
+        "nang"
+      ],
+      "url": "assets/image/shared/product/hai-san/muc-mot-nang/muc-mot-nang-hs.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Nem hải sản\n        Mô tả sản phẩm: Nem hải sản với vỏ ngoài giòn tan, bên trong là nhân tôm, cua, ghẹ hòa quyện cùng sốt mayonnaise béo ngậy.\n        Giá gốc: 140000.00 VND\n        Giá bán: 125000.00 VND\n        Danh mục: Hải sản\n        Mô tả danh mục: Các món ăn được chế biến sẵn từ hải sản tươi sống.",
+    "metadata": {
+      "id": 27,
+      "tồn_kho": "350 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.545454545454546,
+      "số_lượt_đánh_giá": 55,
+      "từ_khóa": [
+        "sản",
+        "hai",
+        "hải",
+        "nem",
+        "hải sản",
+        "san"
+      ],
+      "url": "assets/image/shared/product/hai-san/nem-hai-san/nem-hai-san-hs.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Sá sùng nướng\n        Mô tả sản phẩm: Sá sùng khô, đặc sản quý hiếm của vùng biển Quan Lạn, nướng lên có vị ngọt đậm, dai và thơm.\n        Giá gốc: 900000.00 VND\n        Giá bán: 880000.00 VND\n        Danh mục: Hải sản\n        Mô tả danh mục: Các món ăn được chế biến sẵn từ hải sản tươi sống.",
+    "metadata": {
+      "id": 28,
+      "tồn_kho": "80 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.722222222222222,
+      "số_lượt_đánh_giá": 18,
+      "từ_khóa": [
+        "sung",
+        "nuong",
+        "sùng",
+        "hải sản",
+        "sa",
+        "nướng",
+        "sá"
+      ],
+      "url": "assets/image/shared/product/hai-san/sa-sung-nuong/sa-sung-nuong-hs.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Tôm sú Bạc Liêu\n        Mô tả sản phẩm: Tôm sú Bạc Liêu được nuôi trồng theo mô hình sinh thái, thịt chắc, ngọt và an toàn cho sức khỏe.\n        Giá gốc: 450000.00 VND\n        Giá bán: 430000.00 VND\n        Danh mục: Hải sản\n        Mô tả danh mục: Các món ăn được chế biến sẵn từ hải sản tươi sống.",
+    "metadata": {
+      "id": 29,
+      "tồn_kho": "200 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.5,
+      "số_lượt_đánh_giá": 40,
+      "từ_khóa": [
+        "tôm",
+        "bac",
+        "tom",
+        "liêu",
+        "su",
+        "hải sản",
+        "bạc",
+        "lieu",
+        "sú"
+      ],
+      "url": "assets/image/shared/product/hai-san/tom-su-bac-lieu/tom-su-bac-lieu-hs.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Ruốc bề bề\n        Mô tả sản phẩm: Ruốc làm từ 100% thịt bề bề tươi, sợi ruốc bông, tơi, vị ngọt đậm đà, giàu canxi.\n        Giá gốc: 180000.00 VND\n        Giá bán: 170000.00 VND\n        Danh mục: Ruốc\n        Mô tả danh mục: Ruốc (chà bông) làm từ các loại thịt, cá, tôm.",
+    "metadata": {
+      "id": 30,
+      "tồn_kho": "150 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.363636363636363,
+      "số_lượt_đánh_giá": 22,
+      "từ_khóa": [
+        "ruoc",
+        "ruốc",
+        "be",
+        "bề"
+      ],
+      "url": "assets/image/shared/product/ruoc/ruoc-be-be/ruoc-be-be-r.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Ruốc cá basa\n        Mô tả sản phẩm: Ruốc cá basa thơm ngon, không tanh, giàu Omega-3, thích hợp cho cả trẻ em và người lớn.\n        Giá gốc: 120000.00 VND\n        Giá bán: 110000.00 VND\n        Danh mục: Ruốc\n        Mô tả danh mục: Ruốc (chà bông) làm từ các loại thịt, cá, tôm.",
+    "metadata": {
+      "id": 31,
+      "tồn_kho": "250 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.514285714285714,
+      "số_lượt_đánh_giá": 35,
+      "từ_khóa": [
+        "ruoc",
+        "cá",
+        "ruốc",
+        "basa",
+        "ca"
+      ],
+      "url": "assets/image/shared/product/ruoc/ruoc-ca-basa/ruoc-ca-basa-r.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Ruốc cá lóc\n        Mô tả sản phẩm: Ruốc cá lóc đồng nguyên chất, sợi vàng ươm, thơm ngon, bổ dưỡng, tốt cho người ốm và trẻ nhỏ.\n        Giá gốc: 160000.00 VND\n        Giá bán: 150000.00 VND\n        Danh mục: Ruốc\n        Mô tả danh mục: Ruốc (chà bông) làm từ các loại thịt, cá, tôm.",
+    "metadata": {
+      "id": 32,
+      "tồn_kho": "200 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.666666666666667,
+      "số_lượt_đánh_giá": 30,
+      "từ_khóa": [
+        "ruoc",
+        "loc",
+        "cá",
+        "ruốc",
+        "lóc",
+        "ca"
+      ],
+      "url": "assets/image/shared/product/ruoc/ruoc-ca-loc/ruoc-ca-loc-r.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Ruốc cá rô đồng\n        Mô tả sản phẩm: Ruốc làm từ cá rô đồng tự nhiên, thịt dai, thơm, được sao khô thủ công, giữ trọn vị ngọt của cá.\n        Giá gốc: 170000.00 VND\n        Giá bán: 155000.00 VND\n        Danh mục: Ruốc\n        Mô tả danh mục: Ruốc (chà bông) làm từ các loại thịt, cá, tôm.",
+    "metadata": {
+      "id": 33,
+      "tồn_kho": "180 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.4,
+      "số_lượt_đánh_giá": 25,
+      "từ_khóa": [
+        "ruoc",
+        "dong",
+        "cá",
+        "đồng",
+        "ruốc",
+        "rô",
+        "ro",
+        "ca"
+      ],
+      "url": "assets/image/shared/product/ruoc/ruoc-ca-ro-dong/ruoc-ca-ro-dong-r.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Ruốc cá thu\n        Mô tả sản phẩm: Ruốc cá thu giàu dinh dưỡng, thịt cá thơm, sợi ruốc bông, là lựa chọn tuyệt vời cho bữa ăn gia đình.\n        Giá gốc: 250000.00 VND\n        Giá bán: 235000.00 VND\n        Danh mục: Ruốc\n        Mô tả danh mục: Ruốc (chà bông) làm từ các loại thịt, cá, tôm.",
+    "metadata": {
+      "id": 34,
+      "tồn_kho": "250 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.75,
+      "số_lượt_đánh_giá": 40,
+      "từ_khóa": [
+        "ruoc",
+        "cá",
+        "ruốc",
+        "thu",
+        "ca"
+      ],
+      "url": "assets/image/shared/product/ruoc/ruoc-ca-thu/ruoc-ca-thu-r.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Ruốc mắm Huế\n        Mô tả sản phẩm: Đặc sản mắm ruốc Huế thơm nồng đặc trưng, dùng để nêm nếm các món bún bò, lẩu hoặc xào nấu.\n        Giá gốc: 80000.00 VND\n        Giá bán: 70000.00 VND\n        Danh mục: Ruốc\n        Mô tả danh mục: Ruốc (chà bông) làm từ các loại thịt, cá, tôm.",
+    "metadata": {
+      "id": 35,
+      "tồn_kho": "400 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.9,
+      "số_lượt_đánh_giá": 50,
+      "từ_khóa": [
+        "ruoc",
+        "mam",
+        "huế",
+        "ruốc",
+        "hue",
+        "mắm"
+      ],
+      "url": "assets/image/shared/product/ruoc/ruoc-mam-hue/ruoc-mam-hue-r.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Ruốc tép Đồng Tháp\n        Mô tả sản phẩm: Ruốc làm từ tép đồng tươi, có màu đỏ tự nhiên, vị ngọt đậm, thơm mùi tép, ăn kèm cơm trắng hoặc cháo.\n        Giá gốc: 140000.00 VND\n        Giá bán: 130000.00 VND\n        Danh mục: Ruốc\n        Mô tả danh mục: Ruốc (chà bông) làm từ các loại thịt, cá, tôm.",
+    "metadata": {
+      "id": 36,
+      "tồn_kho": "300 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.5,
+      "số_lượt_đánh_giá": 40,
+      "từ_khóa": [
+        "ruoc",
+        "dong",
+        "tep",
+        "tháp",
+        "thap",
+        "đồng",
+        "ruốc",
+        "tép"
+      ],
+      "url": "assets/image/shared/product/ruoc/ruoc-tep-dong-thap/ruoc-tep-dong-thap-r.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Ruốc thịt lợn Nam Định\n        Mô tả sản phẩm: Ruốc thịt lợn làm theo công thức gia truyền Nam Định, sợi ruốc bông, tơi, vàng óng và thơm ngon.\n        Giá gốc: 320000.00 VND\n        Giá bán: 290000.00 VND\n        Danh mục: Ruốc\n        Mô tả danh mục: Ruốc (chà bông) làm từ các loại thịt, cá, tôm.",
+    "metadata": {
+      "id": 37,
+      "tồn_kho": "400 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.923076923076923,
+      "số_lượt_đánh_giá": 65,
+      "từ_khóa": [
+        "ruoc",
+        "lon",
+        "định",
+        "nam",
+        "thit",
+        "dinh",
+        "ruốc",
+        "thịt",
+        "lợn"
+      ],
+      "url": "assets/image/shared/product/ruoc/ruoc-thit-lon-nam-dinh/ruoc-thit-lon-nam-dinh-r.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Ruốc tôm Bình Định\n        Mô tả sản phẩm: Ruốc tôm Bình Định được làm từ tôm đất tươi, giã tay, có vị ngọt thanh, thơm mùi tôm và màu sắc hấp dẫn.\n        Giá gốc: 280000.00 VND\n        Giá bán: 260000.00 VND\n        Danh mục: Ruốc\n        Mô tả danh mục: Ruốc (chà bông) làm từ các loại thịt, cá, tôm.",
+    "metadata": {
+      "id": 38,
+      "tồn_kho": "300 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.583333333333333,
+      "số_lượt_đánh_giá": 48,
+      "từ_khóa": [
+        "tôm",
+        "ruoc",
+        "định",
+        "tom",
+        "binh",
+        "dinh",
+        "ruốc",
+        "bình"
+      ],
+      "url": "assets/image/shared/product/ruoc/ruoc-tom-binh-dinh/ruoc-tom-binh-dinh-r.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Ruốc tôm đất Cà Mau\n        Mô tả sản phẩm: Ruốc làm từ tôm đất Cà Mau 100%, không pha trộn, sợi ruốc dai, ngọt và đậm đà hương vị miền sông nước.\n        Giá gốc: 300000.00 VND\n        Giá bán: 285000.00 VND\n        Danh mục: Ruốc\n        Mô tả danh mục: Ruốc (chà bông) làm từ các loại thịt, cá, tôm.",
+    "metadata": {
+      "id": 39,
+      "tồn_kho": "220 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.722222222222222,
+      "số_lượt_đánh_giá": 36,
+      "từ_khóa": [
+        "tôm",
+        "ruoc",
+        "mau",
+        "tom",
+        "dat",
+        "ruốc",
+        "cà",
+        "đất",
+        "ca"
+      ],
+      "url": "assets/image/shared/product/ruoc/ruoc-tom-dat-ca-mau/ruoc-tom-dat-ca-mau-r.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Ruốc tôm Hạ Long\n        Mô tả sản phẩm: Ruốc tôm Hạ Long nổi tiếng với sợi ruốc bông, tơi, vị ngọt đậm của tôm he, món quà ý nghĩa từ biển.\n        Giá gốc: 290000.00 VND\n        Giá bán: 270000.00 VND\n        Danh mục: Ruốc\n        Mô tả danh mục: Ruốc (chà bông) làm từ các loại thịt, cá, tôm.",
+    "metadata": {
+      "id": 40,
+      "tồn_kho": "280 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.555555555555555,
+      "số_lượt_đánh_giá": 45,
+      "từ_khóa": [
+        "tôm",
+        "ruoc",
+        "hạ",
+        "tom",
+        "ha",
+        "long",
+        "ruốc"
+      ],
+      "url": "assets/image/shared/product/ruoc/ruoc-tom-ha-long/ruoc-tom-ha-long-r.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Ruốc tôm rong biển\n        Mô tả sản phẩm: Sự kết hợp độc đáo giữa ruốc tôm và rong biển, mang lại hương vị mới lạ và bổ sung nhiều khoáng chất.\n        Giá gốc: 200000.00 VND\n        Giá bán: 185000.00 VND\n        Danh mục: Ruốc\n        Mô tả danh mục: Ruốc (chà bông) làm từ các loại thịt, cá, tôm.",
+    "metadata": {
+      "id": 41,
+      "tồn_kho": "200 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.5,
+      "số_lượt_đánh_giá": 30,
+      "từ_khóa": [
+        "tôm",
+        "ruoc",
+        "rong",
+        "tom",
+        "bien",
+        "ruốc",
+        "biển"
+      ],
+      "url": "assets/image/shared/product/ruoc/ruoc-tom-rong-bien/ruoc-tom-rong-bien-r.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Da Gà Chiên Giòn\n        Mô tả sản phẩm: Da gà được làm sạch, tẩm ướp gia vị đậm đà rồi chiên giòn rụm, là món ăn vặt hấp dẫn khó cưỡng.\n        Giá gốc: 75000.00 VND\n        Giá bán: 69000.00 VND\n        Danh mục: Sản phẩm từ gà\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt gà.",
+    "metadata": {
+      "id": 42,
+      "tồn_kho": "200 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.733333333333333,
+      "số_lượt_đánh_giá": 30,
+      "từ_khóa": [
+        "gion",
+        "gà",
+        "ga",
+        "sản phẩm từ gà",
+        "chiên",
+        "da",
+        "giòn",
+        "chien"
+      ],
+      "url": "assets/image/shared/product/ga/da-ga-chien-gion/da-ga-chien-gion-g.png",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Gà Cháy Tỏi\n        Mô tả sản phẩm: Thịt gà mềm ngọt hòa quyện với hương thơm nồng nàn của tỏi phi vàng, tạo nên món ăn đưa cơm hấp dẫn.\n        Giá gốc: 180000.00 VND\n        Giá bán: 169000.00 VND\n        Danh mục: Sản phẩm từ gà\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt gà.",
+    "metadata": {
+      "id": 43,
+      "tồn_kho": "150 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.6,
+      "số_lượt_đánh_giá": 25,
+      "từ_khóa": [
+        "chay",
+        "gà",
+        "ga",
+        "cháy",
+        "sản phẩm từ gà",
+        "tỏi",
+        "toi"
+      ],
+      "url": "assets/image/shared/product/ga/ga-chay-toi/ga-chay-toi-g.png",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Gà Đông Tảo Ủ Muối\n        Mô tả sản phẩm: Đặc sản gà Đông Tảo trứ danh với lớp da giòn, thịt ngọt và chắc, được ủ muối hoa tiêu thơm lừng.\n        Giá gốc: 450000.00 VND\n        Giá bán: 429000.00 VND\n        Danh mục: Sản phẩm từ gà\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt gà.",
+    "metadata": {
+      "id": 44,
+      "tồn_kho": "100 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.722222222222222,
+      "số_lượt_đánh_giá": 18,
+      "từ_khóa": [
+        "muối",
+        "dong",
+        "muoi",
+        "gà",
+        "tảo",
+        "ủ",
+        "ga",
+        "đông",
+        "u",
+        "sản phẩm từ gà",
+        "tao"
+      ],
+      "url": "assets/image/shared/product/ga/ga-dong-tao-u-muoi/ga-dong-tao-u-muoi-g.png",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Gà Nướng Muối Ớt\n        Mô tả sản phẩm: Gà ta được tẩm ướp muối ớt cay nồng, nướng trên than hồng cho lớp da vàng giòn, thịt mềm và mọng nước.\n        Giá gốc: 250000.00 VND\n        Giá bán: 235000.00 VND\n        Danh mục: Sản phẩm từ gà\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt gà.",
+    "metadata": {
+      "id": 45,
+      "tồn_kho": "200 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.75,
+      "số_lượt_đánh_giá": 40,
+      "từ_khóa": [
+        "muối",
+        "nuong",
+        "muoi",
+        "ot",
+        "gà",
+        "ga",
+        "sản phẩm từ gà",
+        "nướng",
+        "ớt"
+      ],
+      "url": "assets/image/shared/product/ga/ga-nuong-muoi-ot/ga-nuong-muoi-ot-g.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Gà Nướng Thảo Mộc\n        Mô tả sản phẩm: Hương vị độc đáo từ các loại thảo mộc núi rừng thấm đượm trong từng thớ thịt gà nướng mềm thơm.\n        Giá gốc: 260000.00 VND\n        Giá bán: 245000.00 VND\n        Danh mục: Sản phẩm từ gà\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt gà.",
+    "metadata": {
+      "id": 46,
+      "tồn_kho": "150 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.583333333333333,
+      "số_lượt_đánh_giá": 24,
+      "từ_khóa": [
+        "thảo",
+        "nuong",
+        "gà",
+        "ga",
+        "moc",
+        "thao",
+        "sản phẩm từ gà",
+        "nướng",
+        "mộc"
+      ],
+      "url": "assets/image/shared/product/ga/ga-nuong-thao-moc/ga-nuong-thao-moc-g.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Gà Ủ Muối\n        Mô tả sản phẩm: Gà ta nguyên con được ủ muối thảo dược, da vàng óng, thịt dai ngọt và giữ trọn hương vị tự nhiên.\n        Giá gốc: 220000.00 VND\n        Giá bán: 209000.00 VND\n        Danh mục: Sản phẩm từ gà\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt gà.",
+    "metadata": {
+      "id": 47,
+      "tồn_kho": "250 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.666666666666667,
+      "số_lượt_đánh_giá": 60,
+      "từ_khóa": [
+        "muối",
+        "muoi",
+        "gà",
+        "u",
+        "ủ",
+        "ga",
+        "sản phẩm từ gà"
+      ],
+      "url": "assets/image/shared/product/ga/ga-u-muoi/ga-u-muoi-g.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Gà Ủ Xì Dầu\n        Mô tả sản phẩm: Món gà ủ xì dầu với công thức đặc biệt, thịt gà mềm thấm vị, đậm đà, hương thơm quyến rũ.\n        Giá gốc: 230000.00 VND\n        Giá bán: 219000.00 VND\n        Danh mục: Sản phẩm từ gà\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt gà.",
+    "metadata": {
+      "id": 48,
+      "tồn_kho": "180 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.714285714285714,
+      "số_lượt_đánh_giá": 35,
+      "từ_khóa": [
+        "dau",
+        "xi",
+        "gà",
+        "ga",
+        "ủ",
+        "u",
+        "dầu",
+        "sản phẩm từ gà",
+        "xì"
+      ],
+      "url": "assets/image/shared/product/ga/ga-u-xi-dau/ga-u-xi-dau-g.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Gà Viên Chiên\n        Mô tả sản phẩm: Gà viên chiên vàng giòn bên ngoài, mềm ngọt bên trong, là món ăn vặt yêu thích của mọi lứa tuổi.\n        Giá gốc: 90000.00 VND\n        Giá bán: 85000.00 VND\n        Danh mục: Sản phẩm từ gà\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt gà.",
+    "metadata": {
+      "id": 49,
+      "tồn_kho": "300 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.666666666666667,
+      "số_lượt_đánh_giá": 45,
+      "từ_khóa": [
+        "gà",
+        "ga",
+        "sản phẩm từ gà",
+        "chiên",
+        "chien",
+        "viên",
+        "vien"
+      ],
+      "url": "assets/image/shared/product/ga/ga-vien-chien/ga-vien-chien-g.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Há Cảo Gà\n        Mô tả sản phẩm: Lớp vỏ bánh mềm dai bọc lấy nhân thịt gà và rau củ tươi ngon, hấp lên thơm phức, chấm cùng nước tương đậm đà.\n        Giá gốc: 110000.00 VND\n        Giá bán: 99000.00 VND\n        Danh mục: Sản phẩm từ gà\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt gà.",
+    "metadata": {
+      "id": 50,
+      "tồn_kho": "200 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.642857142857143,
+      "số_lượt_đánh_giá": 28,
+      "từ_khóa": [
+        "cảo",
+        "gà",
+        "ga",
+        "ha",
+        "há",
+        "sản phẩm từ gà",
+        "cao"
+      ],
+      "url": "assets/image/shared/product/ga/ha-cao-ga/ha-cao-ga-g.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Gà Kho Mắm\n        Mô tả sản phẩm: Hương vị dân dã mà đậm đà khó quên của món gà kho mắm, thịt gà săn chắc thấm đượm vị mắm thơm nồng.\n        Giá gốc: 150000.00 VND\n        Giá bán: 139000.00 VND\n        Danh mục: Sản phẩm từ gà\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt gà.",
+    "metadata": {
+      "id": 51,
+      "tồn_kho": "220 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.605263157894737,
+      "số_lượt_đánh_giá": 38,
+      "từ_khóa": [
+        "gà",
+        "ga",
+        "sản phẩm từ gà",
+        "mam",
+        "kho",
+        "mắm"
+      ],
+      "url": "assets/image/shared/product/ga/ga-kho-mam/ga-kho-mam-g.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Bánh Hạt Điều\n        Mô tả sản phẩm: Bánh quy bơ giòn tan kết hợp với những hạt điều bùi béo, tạo nên món ăn vặt thơm ngon, dinh dưỡng.\n        Giá gốc: 130000.00 VND\n        Giá bán: 120000.00 VND\n        Danh mục: Các loại hạt\n        Mô tả danh mục: Tổng hợp các loại hạt sấy khô, rang muối tốt cho sức khỏe.",
+    "metadata": {
+      "id": 52,
+      "tồn_kho": "180 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.48,
+      "số_lượt_đánh_giá": 25,
+      "từ_khóa": [
+        "các loại hạt",
+        "dieu",
+        "bánh",
+        "điều",
+        "banh",
+        "hạt",
+        "hat"
+      ],
+      "url": "assets/image/shared/product/hat/banh-hat-dieu/banh-hat-dieu-h.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Bánh Thanh Hạnh Nhân\n        Mô tả sản phẩm: Những thanh bánh giòn rụm phủ đầy lát hạnh nhân rang vàng, vị ngọt nhẹ, béo bùi tự nhiên.\n        Giá gốc: 150000.00 VND\n        Giá bán: 139000.00 VND\n        Danh mục: Các loại hạt\n        Mô tả danh mục: Tổng hợp các loại hạt sấy khô, rang muối tốt cho sức khỏe.",
+    "metadata": {
+      "id": 53,
+      "tồn_kho": "250 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.625,
+      "số_lượt_đánh_giá": 40,
+      "từ_khóa": [
+        "nhan",
+        "nhân",
+        "các loại hạt",
+        "hanh",
+        "bánh",
+        "hạnh",
+        "banh",
+        "thanh"
+      ],
+      "url": "assets/image/shared/product/hat/banh-thanh-hanh-nhan/banh-thanh-hanh-nhan-h.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Bánh Thuyền Macca\n        Mô tả sản phẩm: Đế bánh giòn tan hình chiếc thuyền, bên trên là sự kết hợp của macca, hạt điều, hạnh nhân và bí xanh.\n        Giá gốc: 160000.00 VND\n        Giá bán: 149000.00 VND\n        Danh mục: Các loại hạt\n        Mô tả danh mục: Tổng hợp các loại hạt sấy khô, rang muối tốt cho sức khỏe.",
+    "metadata": {
+      "id": 54,
+      "tồn_kho": "200 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.6875,
+      "số_lượt_đánh_giá": 32,
+      "từ_khóa": [
+        "các loại hạt",
+        "macca",
+        "bánh",
+        "thuyen",
+        "banh",
+        "thuyền"
+      ],
+      "url": "assets/image/shared/product/hat/banh-thuyen-macca/banh-thuyen-macca-h.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Hạnh Nhân Rang Bơ\n        Mô tả sản phẩm: Hạnh nhân nhập khẩu được rang cùng bơ và muối, giòn rụm, thơm lừng, là món ăn vặt tốt cho sức khỏe.\n        Giá gốc: 280000.00 VND\n        Giá bán: 265000.00 VND\n        Danh mục: Các loại hạt\n        Mô tả danh mục: Tổng hợp các loại hạt sấy khô, rang muối tốt cho sức khỏe.",
+    "metadata": {
+      "id": 55,
+      "tồn_kho": "250 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.761904761904762,
+      "số_lượt_đánh_giá": 42,
+      "từ_khóa": [
+        "nhan",
+        "nhân",
+        "các loại hạt",
+        "hanh",
+        "rang",
+        "bơ",
+        "hạnh",
+        "bo"
+      ],
+      "url": "assets/image/shared/product/hat/hanh-nhan/hanh-nhan-h.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Hạt Điều Rang Muối\n        Mô tả sản phẩm: Hạt điều Bình Phước loại A, hạt to đều, được rang muối thủ công, giữ vị ngọt bùi tự nhiên.\n        Giá gốc: 320000.00 VND\n        Giá bán: 299000.00 VND\n        Danh mục: Các loại hạt\n        Mô tả danh mục: Tổng hợp các loại hạt sấy khô, rang muối tốt cho sức khỏe.",
+    "metadata": {
+      "id": 56,
+      "tồn_kho": "350 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.75,
+      "số_lượt_đánh_giá": 80,
+      "từ_khóa": [
+        "muối",
+        "muoi",
+        "các loại hạt",
+        "dieu",
+        "rang",
+        "điều",
+        "hạt",
+        "hat"
+      ],
+      "url": "assets/image/shared/product/hat/hat-dieu/hat-dieu-h.png",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Hạt Macca Sấy Nứt Vỏ\n        Mô tả sản phẩm: Nữ hoàng của các loại hạt, hạt macca sấy khô tự nhiên, nứt vỏ dễ dàng, vị béo ngậy, thơm ngon.\n        Giá gốc: 350000.00 VND\n        Giá bán: 330000.00 VND\n        Danh mục: Các loại hạt\n        Mô tả danh mục: Tổng hợp các loại hạt sấy khô, rang muối tốt cho sức khỏe.",
+    "metadata": {
+      "id": 57,
+      "tồn_kho": "300 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.6,
+      "số_lượt_đánh_giá": 50,
+      "từ_khóa": [
+        "các loại hạt",
+        "macca",
+        "sấy",
+        "vỏ",
+        "say",
+        "nứt",
+        "hạt",
+        "hat",
+        "nut",
+        "vo"
+      ],
+      "url": "assets/image/shared/product/hat/hat-macca/hat-macca-h.png",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Hạt Óc Chó\n        Mô tả sản phẩm: Hạt óc chó chứa nhiều Omega-3, tốt cho trí não và tim mạch, vị bùi, béo nhẹ, dễ ăn.\n        Giá gốc: 300000.00 VND\n        Giá bán: 285000.00 VND\n        Danh mục: Các loại hạt\n        Mô tả danh mục: Tổng hợp các loại hạt sấy khô, rang muối tốt cho sức khỏe.",
+    "metadata": {
+      "id": 58,
+      "tồn_kho": "220 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.7560975609756095,
+      "số_lượt_đánh_giá": 41,
+      "từ_khóa": [
+        "các loại hạt",
+        "oc",
+        "chó",
+        "óc",
+        "hạt",
+        "hat",
+        "cho"
+      ],
+      "url": "assets/image/shared/product/hat/hat-oc-cho/hat-oc-cho-h.png",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Hạt Sen Sấy Giòn\n        Mô tả sản phẩm: Hạt sen được sấy giòn bằng công nghệ hiện đại, giữ nguyên giá trị dinh dưỡng, vị bùi, ngọt thanh.\n        Giá gốc: 180000.00 VND\n        Giá bán: 169000.00 VND\n        Danh mục: Các loại hạt\n        Mô tả danh mục: Tổng hợp các loại hạt sấy khô, rang muối tốt cho sức khỏe.",
+    "metadata": {
+      "id": 59,
+      "tồn_kho": "250 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.722222222222222,
+      "số_lượt_đánh_giá": 36,
+      "từ_khóa": [
+        "gion",
+        "hat",
+        "các loại hạt",
+        "sấy",
+        "say",
+        "hạt",
+        "giòn",
+        "sen"
+      ],
+      "url": "assets/image/shared/product/hat/hat-sen-say/hat-sen-say-h.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Mix 5 Loại Hạt Dinh Dưỡng\n        Mô tả sản phẩm: Hỗn hợp 5 loại hạt cao cấp: óc chó, macca, hạnh nhân, hạt điều, bí xanh. Cung cấp năng lượng và dưỡng chất.\n        Giá gốc: 340000.00 VND\n        Giá bán: 325000.00 VND\n        Danh mục: Các loại hạt\n        Mô tả danh mục: Tổng hợp các loại hạt sấy khô, rang muối tốt cho sức khỏe.",
+    "metadata": {
+      "id": 60,
+      "tồn_kho": "300 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.7272727272727275,
+      "số_lượt_đánh_giá": 55,
+      "từ_khóa": [
+        "5",
+        "mix",
+        "các loại hạt",
+        "loai",
+        "loại",
+        "dinh",
+        "hạt",
+        "hat",
+        "dưỡng",
+        "duong"
+      ],
+      "url": "assets/image/shared/product/hat/mix-5-loai-hat-dinh-duong/mix-5-loai-hat-dinh-duong-h.png",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Thanh Rong Biển Kẹp Hạt\n        Mô tả sản phẩm: Rong biển sấy giòn kẹp các loại hạt dinh dưỡng, là món ăn vặt lạ miệng, thơm ngon và tốt cho sức khỏe.\n        Giá gốc: 120000.00 VND\n        Giá bán: 110000.00 VND\n        Danh mục: Các loại hạt\n        Mô tả danh mục: Tổng hợp các loại hạt sấy khô, rang muối tốt cho sức khỏe.",
+    "metadata": {
+      "id": 61,
+      "tồn_kho": "300 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.479166666666667,
+      "số_lượt_đánh_giá": 48,
+      "từ_khóa": [
+        "rong",
+        "hat",
+        "các loại hạt",
+        "bien",
+        "kep",
+        "biển",
+        "hạt",
+        "thanh",
+        "kẹp"
+      ],
+      "url": "assets/image/shared/product/hat/thanh-rong-bien-kep-hat/thanh-rong-bien-kep-hat-h.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Chả Chân Vịt\n        Mô tả sản phẩm: Món chả độc đáo làm từ chân vịt rút xương, giòn sần sật, đậm đà gia vị, thích hợp làm món nhậu hoặc ăn chơi.\n        Giá gốc: 140000.00 VND\n        Giá bán: 129000.00 VND\n        Danh mục: Sản phẩm từ vịt\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt vịt.",
+    "metadata": {
+      "id": 62,
+      "tồn_kho": "150 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.565217391304348,
+      "số_lượt_đánh_giá": 23,
+      "từ_khóa": [
+        "chả",
+        "vit",
+        "chan",
+        "vịt",
+        "cha",
+        "chân",
+        "sản phẩm từ vịt"
+      ],
+      "url": "assets/image/shared/product/vit/cha-chan-vit/cha-chan-vit-v.png",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Chả Vịt Thúy Hạnh\n        Mô tả sản phẩm: Đặc sản chả vịt Thúy Hạnh nổi tiếng với hương vị thơm ngon đặc trưng, thịt vịt mềm ngọt quyện mỡ hành béo ngậy.\n        Giá gốc: 190000.00 VND\n        Giá bán: 179000.00 VND\n        Danh mục: Sản phẩm từ vịt\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt vịt.",
+    "metadata": {
+      "id": 63,
+      "tồn_kho": "130 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.454545454545454,
+      "số_lượt_đánh_giá": 22,
+      "từ_khóa": [
+        "chả",
+        "vit",
+        "thúy",
+        "hanh",
+        "vịt",
+        "cha",
+        "hạnh",
+        "thuy",
+        "sản phẩm từ vịt"
+      ],
+      "url": "assets/image/shared/product/vit/cha-vit-thuy-manh/cha-vit-thuy-manh-v.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Chân Vịt Rút Xương Ủ Muối\n        Mô tả sản phẩm: Chân vịt rút xương tiện lợi, được ủ muối thảo mộc, giòn sần sật, chấm cùng sốt chấm cay cay là hết ý.\n        Giá gốc: 150000.00 VND\n        Giá bán: 135000.00 VND\n        Danh mục: Sản phẩm từ vịt\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt vịt.",
+    "metadata": {
+      "id": 64,
+      "tồn_kho": "250 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.5,
+      "số_lượt_đánh_giá": 40,
+      "từ_khóa": [
+        "rut",
+        "rút",
+        "xuong",
+        "muối",
+        "vit",
+        "muoi",
+        "u",
+        "ủ",
+        "chan",
+        "vịt",
+        "xương",
+        "chân",
+        "sản phẩm từ vịt"
+      ],
+      "url": "assets/image/shared/product/vit/chan-vit-rut-xuong-u-muoi/chan-vit-rut-xuong-u-muoi-v.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Chân Vịt Rút Xương Ủ Xì Dầu\n        Mô tả sản phẩm: Chân vịt rút xương ngâm trong nước sốt xì dầu thảo mộc đậm đà, vị mặn ngọt hài hòa, thơm nức.\n        Giá gốc: 155000.00 VND\n        Giá bán: 140000.00 VND\n        Danh mục: Sản phẩm từ vịt\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt vịt.",
+    "metadata": {
+      "id": 65,
+      "tồn_kho": "220 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.571428571428571,
+      "số_lượt_đánh_giá": 35,
+      "từ_khóa": [
+        "rut",
+        "rút",
+        "xuong",
+        "dau",
+        "vit",
+        "xi",
+        "u",
+        "ủ",
+        "dầu",
+        "chan",
+        "vịt",
+        "xương",
+        "xì",
+        "chân",
+        "sản phẩm từ vịt"
+      ],
+      "url": "assets/image/shared/product/vit/chan-vit-rut-xuong-u-xi-dau/chan-vit-rut-xuong-u-xi-dau-v.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Mọc Vịt\n        Mô tả sản phẩm: Viên mọc làm từ thịt vịt xay nhuyễn, nấm hương và gia vị, dai ngon, ngọt thanh, dùng để nấu canh hoặc thả lẩu.\n        Giá gốc: 130000.00 VND\n        Giá bán: 119000.00 VND\n        Danh mục: Sản phẩm từ vịt\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt vịt.",
+    "metadata": {
+      "id": 66,
+      "tồn_kho": "180 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.464285714285714,
+      "số_lượt_đánh_giá": 28,
+      "từ_khóa": [
+        "vit",
+        "moc",
+        "mọc",
+        "vịt",
+        "sản phẩm từ vịt"
+      ],
+      "url": "assets/image/shared/product/vit/moc-vit/moc-vit-v.png",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Pate Gan Vịt\n        Mô tả sản phẩm: Pate gan vịt kiểu Pháp béo ngậy, mềm mịn, thơm lừng hương vị của rượu cognac và các loại gia vị hảo hạng.\n        Giá gốc: 250000.00 VND\n        Giá bán: 230000.00 VND\n        Danh mục: Sản phẩm từ vịt\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt vịt.",
+    "metadata": {
+      "id": 67,
+      "tồn_kho": "120 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.5,
+      "số_lượt_đánh_giá": 20,
+      "từ_khóa": [
+        "vit",
+        "gan",
+        "pate",
+        "vịt",
+        "sản phẩm từ vịt"
+      ],
+      "url": "assets/image/shared/product/vit/pate-gan-vit/pate-gan-vit-v.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Vịt Quay\n        Mô tả sản phẩm: Vịt quay da giòn rụm màu cánh gián, thịt mềm ngọt, được tẩm ướp công phu theo công thức gia truyền.\n        Giá gốc: 350000.00 VND\n        Giá bán: 329000.00 VND\n        Danh mục: Sản phẩm từ vịt\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt vịt.",
+    "metadata": {
+      "id": 68,
+      "tồn_kho": "150 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.833333333333333,
+      "số_lượt_đánh_giá": 30,
+      "từ_khóa": [
+        "vịt",
+        "vit",
+        "sản phẩm từ vịt",
+        "quay"
+      ],
+      "url": "assets/image/shared/product/vit/vit-quay/vit-quay-v.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Vịt Tiềm Hạt Sen\n        Mô tả sản phẩm: Món ăn bổ dưỡng với thịt vịt mềm rục, hạt sen bùi thơm và nước dùng ngọt thanh từ các vị thuốc bắc.\n        Giá gốc: 280000.00 VND\n        Giá bán: 265000.00 VND\n        Danh mục: Sản phẩm từ vịt\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt vịt.",
+    "metadata": {
+      "id": 69,
+      "tồn_kho": "130 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.5,
+      "số_lượt_đánh_giá": 24,
+      "từ_khóa": [
+        "tiem",
+        "vit",
+        "vịt",
+        "hạt",
+        "hat",
+        "sen",
+        "sản phẩm từ vịt",
+        "tiềm"
+      ],
+      "url": "assets/image/shared/product/vit/vit-tiem-hat-sen/vit-tiem-hat-sen-v.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Vịt Ủ Xì Dầu\n        Mô tả sản phẩm: Thịt vịt mềm ngọt thấm đẫm trong nước sốt xì dầu và hoa hồi, quế, thảo quả, hương vị khó quên.\n        Giá gốc: 270000.00 VND\n        Giá bán: 255000.00 VND\n        Danh mục: Sản phẩm từ vịt\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt vịt.",
+    "metadata": {
+      "id": 70,
+      "tồn_kho": "160 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.615384615384615,
+      "số_lượt_đánh_giá": 26,
+      "từ_khóa": [
+        "dau",
+        "vit",
+        "xi",
+        "u",
+        "ủ",
+        "dầu",
+        "vịt",
+        "xì",
+        "sản phẩm từ vịt"
+      ],
+      "url": "assets/image/shared/product/vit/vit-u-xi-dau/vit-u-xi-dau-v.png",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Chả Cá Thác Lác Tươi\n        Mô tả sản phẩm: Chả cá thác lác nguyên chất, được quết tay dai ngon, không hàn the, ngọt vị cá tự nhiên.\n        Giá gốc: 200000.00 VND\n        Giá bán: 185000.00 VND\n        Danh mục: Sản phẩm từ cá\n        Mô tả danh mục: Các món ăn được chế biến sẵn từ cá nước ngọt và cá biển.",
+    "metadata": {
+      "id": 71,
+      "tồn_kho": "300 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.6,
+      "số_lượt_đánh_giá": 50,
+      "từ_khóa": [
+        "thác",
+        "chả",
+        "lác",
+        "cá",
+        "tươi",
+        "cha",
+        "thac",
+        "tuoi",
+        "sản phẩm từ cá",
+        "lac",
+        "ca"
+      ],
+      "url": "assets/image/shared/product/ca/cha-ca-thac-lac-tuoi/cha-ca-thac-lac-tuoi-c.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Cá Chiên Tẩm Gia Vị Sấy Khô\n        Mô tả sản phẩm: Cá nục được chiên giòn rồi rim với gia vị mặn ngọt, sau đó sấy khô, món ăn vặt hoặc ăn với cơm đều ngon.\n        Giá gốc: 150000.00 VND\n        Giá bán: 139000.00 VND\n        Danh mục: Sản phẩm từ cá\n        Mô tả danh mục: Các món ăn được chế biến sẵn từ cá nước ngọt và cá biển.",
+    "metadata": {
+      "id": 72,
+      "tồn_kho": "200 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.571428571428571,
+      "số_lượt_đánh_giá": 35,
+      "từ_khóa": [
+        "vị",
+        "sấy",
+        "cá",
+        "tẩm",
+        "chiên",
+        "chien",
+        "tam",
+        "khô",
+        "say",
+        "vi",
+        "kho",
+        "sản phẩm từ cá",
+        "gia",
+        "ca"
+      ],
+      "url": "assets/image/shared/product/ca/ca-chien-tam-gia-vi-say-kho/ca-chien-tam-gia-vi-say-kho-c.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Cá Chua Ngọt Đông Hũ\n        Mô tả sản phẩm: Cá được kho rim chua ngọt đậm đà, đóng trong hũ tiện lợi, chỉ cần hâm nóng là có thể dùng ngay.\n        Giá gốc: 130000.00 VND\n        Giá bán: 119000.00 VND\n        Danh mục: Sản phẩm từ cá\n        Mô tả danh mục: Các món ăn được chế biến sẵn từ cá nước ngọt và cá biển.",
+    "metadata": {
+      "id": 73,
+      "tồn_kho": "180 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.642857142857143,
+      "số_lượt_đánh_giá": 28,
+      "từ_khóa": [
+        "hu",
+        "dong",
+        "ngot",
+        "ngọt",
+        "đông",
+        "cá",
+        "chua",
+        "sản phẩm từ cá",
+        "hũ",
+        "ca"
+      ],
+      "url": "assets/image/shared/product/ca/ca-chua-ngot-dong-hu/ca-chua-ngot-dong-hu-c.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Cá Hộp\n        Mô tả sản phẩm: Cá nục hoặc cá trích sốt cà chua, sản phẩm tiện lợi, giàu dinh dưỡng cho bữa ăn nhanh.\n        Giá gốc: 40000.00 VND\n        Giá bán: 35000.00 VND\n        Danh mục: Sản phẩm từ cá\n        Mô tả danh mục: Các món ăn được chế biến sẵn từ cá nước ngọt và cá biển.",
+    "metadata": {
+      "id": 74,
+      "tồn_kho": "600 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.7368421052631575,
+      "số_lượt_đánh_giá": 95,
+      "từ_khóa": [
+        "cá",
+        "sản phẩm từ cá",
+        "hộp",
+        "hop",
+        "ca"
+      ],
+      "url": "assets/image/shared/product/ca/ca-hop/ca-hop-c.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Cá Khô\n        Mô tả sản phẩm: Cá lóc hoặc cá sặc khô, được phơi nắng tự nhiên, thịt dai ngọt, dùng để nướng, chiên hoặc làm gỏi.\n        Giá gốc: 250000.00 VND\n        Giá bán: 230000.00 VND\n        Danh mục: Sản phẩm từ cá\n        Mô tả danh mục: Các món ăn được chế biến sẵn từ cá nước ngọt và cá biển.",
+    "metadata": {
+      "id": 75,
+      "tồn_kho": "250 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.625,
+      "số_lượt_đánh_giá": 40,
+      "từ_khóa": [
+        "cá",
+        "khô",
+        "sản phẩm từ cá",
+        "kho",
+        "ca"
+      ],
+      "url": "assets/image/shared/product/ca/ca-kho/ca-kho-c.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Cá Lóc Rim Me\n        Mô tả sản phẩm: Thịt cá lóc đồng chiên vàng, rim cùng nước sốt me chua ngọt đậm đà, món ăn hao cơm trứ danh.\n        Giá gốc: 160000.00 VND\n        Giá bán: 149000.00 VND\n        Danh mục: Sản phẩm từ cá\n        Mô tả danh mục: Các món ăn được chế biến sẵn từ cá nước ngọt và cá biển.",
+    "metadata": {
+      "id": 76,
+      "tồn_kho": "200 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.696969696969697,
+      "số_lượt_đánh_giá": 33,
+      "từ_khóa": [
+        "rim",
+        "loc",
+        "cá",
+        "me",
+        "sản phẩm từ cá",
+        "lóc",
+        "ca"
+      ],
+      "url": "assets/image/shared/product/ca/ca-loc-rim-me/ca-loc-rim-me-c.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Cá Một Nắng\n        Mô tả sản phẩm: Cá dứa hoặc cá đù một nắng, thịt dẻo, vị ngọt tự nhiên, không quá khô, chiên lên thơm lừng.\n        Giá gốc: 300000.00 VND\n        Giá bán: 280000.00 VND\n        Danh mục: Sản phẩm từ cá\n        Mô tả danh mục: Các món ăn được chế biến sẵn từ cá nước ngọt và cá biển.",
+    "metadata": {
+      "id": 77,
+      "tồn_kho": "250 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.659090909090909,
+      "số_lượt_đánh_giá": 44,
+      "từ_khóa": [
+        "nắng",
+        "một",
+        "mot",
+        "cá",
+        "nang",
+        "sản phẩm từ cá",
+        "ca"
+      ],
+      "url": "assets/image/shared/product/ca/ca-mot-nang/ca-mot-nang-c.png",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Cá Mực Một Nắng Tẩm Gia Vị\n        Mô tả sản phẩm: Mực một nắng dẻo ngọt, được tẩm ướp gia vị cay cay mặn mặn, nướng lên thơm nức mũi.\n        Giá gốc: 380000.00 VND\n        Giá bán: 359000.00 VND\n        Danh mục: Sản phẩm từ cá\n        Mô tả danh mục: Các món ăn được chế biến sẵn từ cá nước ngọt và cá biển.",
+    "metadata": {
+      "id": 78,
+      "tồn_kho": "200 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.684210526315789,
+      "số_lượt_đánh_giá": 38,
+      "từ_khóa": [
+        "mực",
+        "một",
+        "nắng",
+        "vị",
+        "mot",
+        "tam",
+        "cá",
+        "tẩm",
+        "muc",
+        "nang",
+        "vi",
+        "sản phẩm từ cá",
+        "gia",
+        "ca"
+      ],
+      "url": "assets/image/shared/product/ca/ca-muc-mot-nang-tam-gia-vi/ca-muc-mot-nang-tam-gia-vi-c.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Cá Mực Một Nắng Tẩm Gia Vị\n        Mô tả sản phẩm: Mực một nắng dẻo ngọt, được tẩm ướp gia vị cay cay mặn mặn, nướng lên thơm nức mũi.\n        Giá gốc: 380000.00 VND\n        Giá bán: 359000.00 VND\n        Danh mục: Sản phẩm từ cá\n        Mô tả danh mục: Các món ăn được chế biến sẵn từ cá nước ngọt và cá biển.",
+    "metadata": {
+      "id": 78,
+      "tồn_kho": "200 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.684210526315789,
+      "số_lượt_đánh_giá": 38,
+      "từ_khóa": [
+        "mực",
+        "một",
+        "nắng",
+        "vị",
+        "mot",
+        "tam",
+        "cá",
+        "tẩm",
+        "muc",
+        "nang",
+        "vi",
+        "sản phẩm từ cá",
+        "gia",
+        "ca"
+      ],
+      "url": "assets/image/shared/product/ca/ca-muc-mot-nang-tam-gia-vi/ca-muc-mot-nang-tam-gia-vi-1.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Cá Rim\n        Mô tả sản phẩm: Cá cơm hoặc cá bống rim mặn ngọt, món ăn dân dã nhưng đậm đà hương vị quê hương.\n        Giá gốc: 120000.00 VND\n        Giá bán: 110000.00 VND\n        Danh mục: Sản phẩm từ cá\n        Mô tả danh mục: Các món ăn được chế biến sẵn từ cá nước ngọt và cá biển.",
+    "metadata": {
+      "id": 79,
+      "tồn_kho": "300 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.7272727272727275,
+      "số_lượt_đánh_giá": 55,
+      "từ_khóa": [
+        "rim",
+        "sản phẩm từ cá",
+        "cá",
+        "ca"
+      ],
+      "url": "assets/image/shared/product/ca/ca-rim/ca-rim-c.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Cá Rô Phi Sấy Giòn\n        Mô tả sản phẩm: Thịt cá rô phi được phi lê, tẩm ướp và sấy giòn tan, có thể ăn liền như snack.\n        Giá gốc: 140000.00 VND\n        Giá bán: 129000.00 VND\n        Danh mục: Sản phẩm từ cá\n        Mô tả danh mục: Các món ăn được chế biến sẵn từ cá nước ngọt và cá biển.",
+    "metadata": {
+      "id": 80,
+      "tồn_kho": "200 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.666666666666667,
+      "số_lượt_đánh_giá": 30,
+      "từ_khóa": [
+        "gion",
+        "phi",
+        "sấy",
+        "cá",
+        "say",
+        "rô",
+        "sản phẩm từ cá",
+        "ro",
+        "giòn",
+        "ca"
+      ],
+      "url": "assets/image/shared/product/ca/ca-ro-phi-say-gion/ca-ro-phi-say-gion-c.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Cá Thu Rim Tỏi Ớt\n        Mô tả sản phẩm: Khúc cá thu tươi được chiên vàng, rim trong nước sốt tỏi ớt mặn ngọt, đậm đà, thơm lừng.\n        Giá gốc: 280000.00 VND\n        Giá bán: 265000.00 VND\n        Danh mục: Sản phẩm từ cá\n        Mô tả danh mục: Các món ăn được chế biến sẵn từ cá nước ngọt và cá biển.",
+    "metadata": {
+      "id": 81,
+      "tồn_kho": "220 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.72972972972973,
+      "số_lượt_đánh_giá": 37,
+      "từ_khóa": [
+        "rim",
+        "ot",
+        "toi",
+        "cá",
+        "thu",
+        "sản phẩm từ cá",
+        "tỏi",
+        "ớt",
+        "ca"
+      ],
+      "url": "assets/image/shared/product/ca/ca-thu-rim-toi-ot/ca-thu-rim-toi-ot-c.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Chả Cá Thác Lác Hậu Giang\n        Mô tả sản phẩm: Đặc sản Hậu Giang, chả cá thác lác dai ngon, thơm mùi thì là, chiên vàng hoặc nấu lẩu đều tuyệt.\n        Giá gốc: 210000.00 VND\n        Giá bán: 195000.00 VND\n        Danh mục: Sản phẩm từ cá\n        Mô tả danh mục: Các món ăn được chế biến sẵn từ cá nước ngọt và cá biển.",
+    "metadata": {
+      "id": 82,
+      "tồn_kho": "250 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.714285714285714,
+      "số_lượt_đánh_giá": 42,
+      "từ_khóa": [
+        "thác",
+        "chả",
+        "lác",
+        "hậu",
+        "hau",
+        "cá",
+        "giang",
+        "cha",
+        "thac",
+        "sản phẩm từ cá",
+        "lac",
+        "ca"
+      ],
+      "url": "assets/image/shared/product/ca/cha-ca-thac-lac-hau-giang/cha-ca-thac-lac-hau-giang-c.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Chả Cá Thác Lác Tẩm Gia Vị\n        Mô tả sản phẩm: Chả cá thác lác đã được quết dai và tẩm ướp gia vị vừa ăn, tiện lợi cho việc chế biến.\n        Giá gốc: 220000.00 VND\n        Giá bán: 205000.00 VND\n        Danh mục: Sản phẩm từ cá\n        Mô tả danh mục: Các món ăn được chế biến sẵn từ cá nước ngọt và cá biển.",
+    "metadata": {
+      "id": 83,
+      "tồn_kho": "200 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.583333333333333,
+      "số_lượt_đánh_giá": 36,
+      "từ_khóa": [
+        "thác",
+        "vị",
+        "chả",
+        "lác",
+        "tam",
+        "cá",
+        "tẩm",
+        "cha",
+        "thac",
+        "vi",
+        "sản phẩm từ cá",
+        "lac",
+        "gia",
+        "ca"
+      ],
+      "url": "assets/image/shared/product/ca/cha-ca-thac-lac-tuoi-tam-gia-vi/cha-ca-thac-lac-tuoi-tam-gia-vi-c.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Pate Cá Hồi Hạ Long\n        Mô tả sản phẩm: Pate làm từ cá hồi tươi vùng biển Hạ Long, béo ngậy, thơm ngon, giàu Omega-3, dùng kèm bánh mì.\n        Giá gốc: 190000.00 VND\n        Giá bán: 175000.00 VND\n        Danh mục: Sản phẩm từ cá\n        Mô tả danh mục: Các món ăn được chế biến sẵn từ cá nước ngọt và cá biển.",
+    "metadata": {
+      "id": 84,
+      "tồn_kho": "160 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.571428571428571,
+      "số_lượt_đánh_giá": 28,
+      "từ_khóa": [
+        "hạ",
+        "ha",
+        "cá",
+        "long",
+        "pate",
+        "hồi",
+        "sản phẩm từ cá",
+        "hoi",
+        "ca"
+      ],
+      "url": "assets/image/shared/product/ca/pa-te-ca-hoi-ha-long/pa-te-ca-hoi-ha-long-c.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Chả Giò Chả Lụa\n        Mô tả sản phẩm: Combo chả giò và chả lụa truyền thống, được làm từ thịt heo tươi ngon theo công thức gia truyền, thơm ngon, đậm đà.\n        Giá gốc: 180000.00 VND\n        Giá bán: 169000.00 VND\n        Danh mục: Sản phẩm từ heo\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt heo.",
+    "metadata": {
+      "id": 85,
+      "tồn_kho": "300 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.7,
+      "số_lượt_đánh_giá": 50,
+      "từ_khóa": [
+        "sản phẩm từ heo",
+        "gio",
+        "chả",
+        "giò",
+        "lua",
+        "cha",
+        "lụa"
+      ],
+      "url": "assets/image/shared/product/heo/cha-gio-cha-lua/cha-gio-cha-lua-h.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Chân Giò Giả Cầy\n        Mô tả sản phẩm: Chân giò heo được thui vàng, nấu cùng riềng, mẻ, mắm tôm, tạo nên hương vị giả cầy đặc trưng, thơm nức mũi.\n        Giá gốc: 220000.00 VND\n        Giá bán: 205000.00 VND\n        Danh mục: Sản phẩm từ heo\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt heo.",
+    "metadata": {
+      "id": 86,
+      "tồn_kho": "200 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.666666666666667,
+      "số_lượt_đánh_giá": 36,
+      "từ_khóa": [
+        "gio",
+        "giò",
+        "chan",
+        "giả",
+        "cay",
+        "sản phẩm từ heo",
+        "gia",
+        "chân",
+        "cầy"
+      ],
+      "url": "assets/image/shared/product/heo/chan-gio-gia-cay/chan-gio-gia-cay-h.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Đặc Sản Chả Chìa Hải Phòng\n        Mô tả sản phẩm: Chả chìa (chả sả) Hải Phòng, thịt heo băm nhuyễn bọc quanh cây sả, nướng thơm lừng, hương vị khó quên.\n        Giá gốc: 190000.00 VND\n        Giá bán: 179000.00 VND\n        Danh mục: Sản phẩm từ heo\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt heo.",
+    "metadata": {
+      "id": 87,
+      "tồn_kho": "180 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.67741935483871,
+      "số_lượt_đánh_giá": 31,
+      "từ_khóa": [
+        "phòng",
+        "chìa",
+        "chả",
+        "sản",
+        "phong",
+        "hai",
+        "hải",
+        "chia",
+        "cha",
+        "đặc",
+        "san",
+        "sản phẩm từ heo",
+        "dac"
+      ],
+      "url": "assets/image/shared/product/heo/dac-san-cha-chia-hai-phong/dac-san-cha-chia-hai-phong-h.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Đặc Sản Chả Cốm Hà Nội\n        Mô tả sản phẩm: Thức quà của mùa thu Hà Nội, chả cốm dẻo thơm, sự hòa quyện giữa thịt heo xay và những hạt cốm non xanh mướt.\n        Giá gốc: 210000.00 VND\n        Giá bán: 199000.00 VND\n        Danh mục: Sản phẩm từ heo\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt heo.",
+    "metadata": {
+      "id": 88,
+      "tồn_kho": "250 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.666666666666667,
+      "số_lượt_đánh_giá": 60,
+      "từ_khóa": [
+        "nội",
+        "chả",
+        "hà",
+        "sản",
+        "cốm",
+        "com",
+        "ha",
+        "noi",
+        "cha",
+        "đặc",
+        "san",
+        "sản phẩm từ heo",
+        "dac"
+      ],
+      "url": "assets/image/shared/product/heo/dac-san-cha-com-ha-noi/dac-san-cha-com-ha-noi-h.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Đặc Sản Chả Sụn\n        Mô tả sản phẩm: Chả sụn giòn sần sật, được làm từ thịt heo và sụn non, chiên vàng hay nướng đều thơm ngon khó cưỡng.\n        Giá gốc: 200000.00 VND\n        Giá bán: 185000.00 VND\n        Danh mục: Sản phẩm từ heo\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt heo.",
+    "metadata": {
+      "id": 89,
+      "tồn_kho": "250 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.659090909090909,
+      "số_lượt_đánh_giá": 44,
+      "từ_khóa": [
+        "chả",
+        "sản",
+        "sun",
+        "cha",
+        "đặc",
+        "san",
+        "sản phẩm từ heo",
+        "dac",
+        "sụn"
+      ],
+      "url": "assets/image/shared/product/heo/dac-san-cha-sun/dac-san-cha-sun-h.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Khâu Nhục Lạng Sơn\n        Mô tả sản phẩm: Món ăn đặc sản Lạng Sơn, thịt ba chỉ được tẩm ướp công phu, hầm mềm tan, béo ngậy mà không ngán.\n        Giá gốc: 250000.00 VND\n        Giá bán: 235000.00 VND\n        Danh mục: Sản phẩm từ heo\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt heo.",
+    "metadata": {
+      "id": 90,
+      "tồn_kho": "150 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.666666666666667,
+      "số_lượt_đánh_giá": 30,
+      "từ_khóa": [
+        "nhục",
+        "nhuc",
+        "khâu",
+        "sản phẩm từ heo",
+        "sơn",
+        "son",
+        "lang",
+        "khau",
+        "lạng"
+      ],
+      "url": "assets/image/shared/product/heo/khau-nhuc-lang-son/khau-nhuc-lang-son-h.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Mắm Nêm Tai Heo\n        Mô tả sản phẩm: Tai heo giòn sần sật ngâm trong mắm nêm đậm đà, thêm chút dứa và gia vị, món nhậu hay ăn kèm bún đều tuyệt.\n        Giá gốc: 140000.00 VND\n        Giá bán: 129000.00 VND\n        Danh mục: Sản phẩm từ heo\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt heo.",
+    "metadata": {
+      "id": 91,
+      "tồn_kho": "160 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.6,
+      "số_lượt_đánh_giá": 25,
+      "từ_khóa": [
+        "tai",
+        "mam",
+        "nem",
+        "nêm",
+        "sản phẩm từ heo",
+        "heo",
+        "mắm"
+      ],
+      "url": "assets/image/shared/product/heo/mam-heo/mam-heo-h.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Nem Chua Thanh Hóa\n        Mô tả sản phẩm: Đặc sản nem chua Thanh Hóa, vị chua thanh, cay nồng của tỏi ớt, thơm mùi lá chuối, món quà quê ý nghĩa.\n        Giá gốc: 90000.00 VND\n        Giá bán: 80000.00 VND\n        Danh mục: Sản phẩm từ heo\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt heo.",
+    "metadata": {
+      "id": 92,
+      "tồn_kho": "500 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.470588235294118,
+      "số_lượt_đánh_giá": 85,
+      "từ_khóa": [
+        "hoa",
+        "nem",
+        "chua",
+        "sản phẩm từ heo",
+        "thanh",
+        "hóa"
+      ],
+      "url": "assets/image/shared/product/heo/nem-chua/nem-chua-h.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Nem Rán Hà Nội\n        Mô tả sản phẩm: Nem rán (chả giò) theo phong vị Hà Nội, vỏ giòn rụm, nhân đầy đặn thịt, mộc nhĩ, miến, chấm nước mắm chua ngọt.\n        Giá gốc: 120000.00 VND\n        Giá bán: 110000.00 VND\n        Danh mục: Sản phẩm từ heo\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt heo.",
+    "metadata": {
+      "id": 93,
+      "tồn_kho": "400 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.571428571428571,
+      "số_lượt_đánh_giá": 70,
+      "từ_khóa": [
+        "nội",
+        "hà",
+        "ha",
+        "nem",
+        "rán",
+        "noi",
+        "ran",
+        "sản phẩm từ heo"
+      ],
+      "url": "assets/image/shared/product/heo/nem-ha-noi/nem-ha-noi-h.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Nem Lụi Nha Trang\n        Mô tả sản phẩm: Nem nướng làm từ thịt heo xay, được lụi trên que sả hoặc que tre, nướng than hồng thơm lừng, ăn kèm rau sống và bánh tráng.\n        Giá gốc: 160000.00 VND\n        Giá bán: 149000.00 VND\n        Danh mục: Sản phẩm từ heo\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt heo.",
+    "metadata": {
+      "id": 94,
+      "tồn_kho": "300 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.568965517241379,
+      "số_lượt_đánh_giá": 58,
+      "từ_khóa": [
+        "lụi",
+        "nem",
+        "trang",
+        "nha",
+        "sản phẩm từ heo",
+        "lui"
+      ],
+      "url": "assets/image/shared/product/heo/nem-lui-nha-trang/nem-lui-nha-trang-h.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Pate Gan Heo\n        Mô tả sản phẩm: Pate gan heo nhà làm, mềm mịn, béo ngậy, thơm mùi tiêu, không chất bảo quản, hoàn hảo cho bữa sáng.\n        Giá gốc: 150000.00 VND\n        Giá bán: 135000.00 VND\n        Danh mục: Sản phẩm từ heo\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt heo.",
+    "metadata": {
+      "id": 95,
+      "tồn_kho": "250 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.714285714285714,
+      "số_lượt_đánh_giá": 42,
+      "từ_khóa": [
+        "heo",
+        "sản phẩm từ heo",
+        "gan",
+        "pate"
+      ],
+      "url": "assets/image/shared/product/heo/pa-te-gan-heo/pa-te-gan-heo-h.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Tai Heo Cuộn Lưỡi\n        Mô tả sản phẩm: Món nhậu hấp dẫn với tai heo giòn và lưỡi heo mềm được cuộn chặt, luộc chín, thái mỏng chấm mắm gừng.\n        Giá gốc: 180000.00 VND\n        Giá bán: 165000.00 VND\n        Danh mục: Sản phẩm từ heo\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt heo.",
+    "metadata": {
+      "id": 96,
+      "tồn_kho": "200 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.647058823529412,
+      "số_lượt_đánh_giá": 34,
+      "từ_khóa": [
+        "luoi",
+        "tai",
+        "cuộn",
+        "cuon",
+        "sản phẩm từ heo",
+        "heo",
+        "lưỡi"
+      ],
+      "url": "assets/image/shared/product/heo/tai-heo-cuon-luoi/tai-heo-cuon-luoi-h.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Tai Heo Ủ Muối\n        Mô tả sản phẩm: Tai heo được làm sạch, ủ muối hoa tiêu, giòn sần sật, thơm mùi gia vị, là món khai vị tuyệt vời.\n        Giá gốc: 170000.00 VND\n        Giá bán: 159000.00 VND\n        Danh mục: Sản phẩm từ heo\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt heo.",
+    "metadata": {
+      "id": 97,
+      "tồn_kho": "220 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.605263157894737,
+      "số_lượt_đánh_giá": 38,
+      "từ_khóa": [
+        "muối",
+        "tai",
+        "muoi",
+        "u",
+        "ủ",
+        "sản phẩm từ heo",
+        "heo"
+      ],
+      "url": "assets/image/shared/product/heo/tai-heo-u-muoi/tai-heo-u-muoi-h.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Tai Heo Ủ Xì Dầu\n        Mô tả sản phẩm: Tai heo ngâm trong nước sốt xì dầu thảo mộc đậm đà, vị mặn ngọt hài hòa, thơm nức mùi hoa hồi, quế.\n        Giá gốc: 175000.00 VND\n        Giá bán: 162000.00 VND\n        Danh mục: Sản phẩm từ heo\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt heo.",
+    "metadata": {
+      "id": 98,
+      "tồn_kho": "180 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.67741935483871,
+      "số_lượt_đánh_giá": 31,
+      "từ_khóa": [
+        "tai",
+        "xi",
+        "dau",
+        "u",
+        "ủ",
+        "dầu",
+        "sản phẩm từ heo",
+        "xì",
+        "heo"
+      ],
+      "url": "assets/image/shared/product/heo/tai-heo-u-xi-dau/tai-heo-u-xi-dau-h.jpeg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Thịt Chưng Mắm Tép\n        Mô tả sản phẩm: Món ăn hao cơm trứ danh, thịt vai heo xay chưng cùng mắm tép, riềng, hành khô cho đến khi keo lại, thơm lừng.\n        Giá gốc: 190000.00 VND\n        Giá bán: 175000.00 VND\n        Danh mục: Sản phẩm từ heo\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt heo.",
+    "metadata": {
+      "id": 99,
+      "tồn_kho": "260 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.6875,
+      "số_lượt_đánh_giá": 48,
+      "từ_khóa": [
+        "tep",
+        "chưng",
+        "chung",
+        "thit",
+        "mam",
+        "thịt",
+        "sản phẩm từ heo",
+        "mắm",
+        "tép"
+      ],
+      "url": "assets/image/shared/product/heo/thit-chung-mam-tep/thit-chung-mam-tep-h.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Thịt Heo Sấy Khô\n        Mô tả sản phẩm: Thịt heo sấy khô kiểu gác bếp, được tẩm ướp gia vị đậm đà, dai ngọt, cay cay, là món nhậu lai rai hấp dẫn.\n        Giá gốc: 350000.00 VND\n        Giá bán: 329000.00 VND\n        Danh mục: Sản phẩm từ heo\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt heo.",
+    "metadata": {
+      "id": 100,
+      "tồn_kho": "220 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.75,
+      "số_lượt_đánh_giá": 40,
+      "từ_khóa": [
+        "sấy",
+        "thit",
+        "khô",
+        "say",
+        "thịt",
+        "sản phẩm từ heo",
+        "heo",
+        "kho"
+      ],
+      "url": "assets/image/shared/product/heo/thit-heo-say-kho/thit-heo-say-kho-h.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Thịt Heo Xông Khói\n        Mô tả sản phẩm: Thịt ba chỉ heo được ướp gia vị và xông khói bằng gỗ sồi, mang lại hương vị thơm ngon đặc trưng.\n        Giá gốc: 400000.00 VND\n        Giá bán: 379000.00 VND\n        Danh mục: Sản phẩm từ heo\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt heo.",
+    "metadata": {
+      "id": 101,
+      "tồn_kho": "200 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.857142857142857,
+      "số_lượt_đánh_giá": 35,
+      "từ_khóa": [
+        "xong",
+        "sản phẩm từ heo",
+        "khói",
+        "thit",
+        "khoi",
+        "xông",
+        "thịt",
+        "heo"
+      ],
+      "url": "assets/image/shared/product/heo/thit-heo-xong-khoi/thit-heo-xong-khoi-h.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Xúc Xích Cốm\n        Mô tả sản phẩm: Sự kết hợp độc đáo giữa xúc xích heo và cốm xanh, khi chiên lên vỏ ngoài giòn, bên trong dẻo thơm.\n        Giá gốc: 130000.00 VND\n        Giá bán: 119000.00 VND\n        Danh mục: Sản phẩm từ heo\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt heo.",
+    "metadata": {
+      "id": 102,
+      "tồn_kho": "300 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.615384615384615,
+      "số_lượt_đánh_giá": 52,
+      "từ_khóa": [
+        "xúc",
+        "xuc",
+        "cốm",
+        "xich",
+        "com",
+        "xích",
+        "sản phẩm từ heo"
+      ],
+      "url": "assets/image/shared/product/heo/xuc-xich-com/xuc-xich-com-h.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Chả Ngan\n        Mô tả sản phẩm: Chả ngan được làm từ thịt ngan tươi, xay nhuyễn và tẩm ướp gia vị, chiên vàng thơm nức, vị ngọt đậm đà.\n        Giá gốc: 240000.00 VND\n        Giá bán: 225000.00 VND\n        Danh mục: Sản phẩm từ ngan\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt ngan.",
+    "metadata": {
+      "id": 103,
+      "tồn_kho": "170 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.758620689655173,
+      "số_lượt_đánh_giá": 29,
+      "từ_khóa": [
+        "cha",
+        "ngan",
+        "chả",
+        "sản phẩm từ ngan"
+      ],
+      "url": "assets/image/shared/product/ngan/cha-ngan/cha-ngan-n.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Ngan Một Nắng\n        Mô tả sản phẩm: Thịt ngan được tẩm ướp gia vị rồi phơi qua một nắng, thịt dẻo, đậm vị, chiên hoặc nướng đều rất ngon.\n        Giá gốc: 280000.00 VND\n        Giá bán: 260000.00 VND\n        Danh mục: Sản phẩm từ ngan\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt ngan.",
+    "metadata": {
+      "id": 104,
+      "tồn_kho": "140 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.583333333333333,
+      "số_lượt_đánh_giá": 24,
+      "từ_khóa": [
+        "nắng",
+        "một",
+        "mot",
+        "nang",
+        "sản phẩm từ ngan",
+        "ngan"
+      ],
+      "url": "assets/image/shared/product/ngan/ngan-mot-nang/bo-kho-mot-nang-n.jpg",
+      "khuyến_mãi": []
+    }
+  },
+  {
+    "text": "Tên sản phẩm: Ngan Xông Khói\n        Mô tả sản phẩm: Thịt ức ngan được tẩm ướp và xông khói theo quy trình nghiêm ngặt, thái lát mỏng ăn liền, hương vị hảo hạng.\n        Giá gốc: 320000.00 VND\n        Giá bán: 299000.00 VND\n        Danh mục: Sản phẩm từ ngan\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt ngan.",
+    "metadata": {
+      "id": 105,
+      "tồn_kho": "150 sản phẩm",
+      "trạng_thái": "đang_kinh_doanh",
+      "điểm_trung_bình": 4.642857142857143,
+      "số_lượt_đánh_giá": 28,
+      "từ_khóa": [
+        "xong",
+        "khói",
+        "khoi",
+        "sản phẩm từ ngan",
+        "xông",
+        "ngan"
+      ],
+      "url": "assets/image/shared/product/ngan/ngan-xong-khoi/ngan-xong-khoi-n.jpg",
+      "khuyến_mãi": []
+    }
+  }
+]

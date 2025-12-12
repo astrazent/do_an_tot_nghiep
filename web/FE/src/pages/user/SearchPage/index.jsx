@@ -106,7 +106,6 @@ const SearchPage = () => {
     return (
         <div className="min-h-screen font-sans">
             <main className="max-w-7xl mx-auto p-4">
-                {}
                 <section className="mb-6">
                     <div className="flex items-center justify-between mb-4">
                         <h2 className="text-lg font-semibold text-gray-800 uppercase flex items-center">

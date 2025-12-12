@@ -62,7 +62,6 @@ const LoggedInCart = () => {
             onSuccess: async data => {
                 showAlert('Đặt hàng thành công! Cảm ơn bạn đã mua sắm.')
                 try {
-                    console.log(userId)
                     await deleteCartByUser(userId)
                     queryClient.invalidateQueries(['cart', userId])
                 } catch (err) {

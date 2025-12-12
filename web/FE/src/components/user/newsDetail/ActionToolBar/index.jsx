@@ -1,11 +1,5 @@
 import React from 'react'
-import {
-    FaThumbsUp,
-    FaShare,
-    FaEnvelope,
-    FaMicrophoneAlt,
-    FaPlay,
-} from 'react-icons/fa'
+import { FaMicrophoneAlt, FaPlay } from 'react-icons/fa'
 import { SiGooglenews } from 'react-icons/si'
 
 const ActionToolbar = () => {

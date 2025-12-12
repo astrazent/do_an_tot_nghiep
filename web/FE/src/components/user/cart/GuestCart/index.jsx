@@ -223,7 +223,6 @@ const GuestCart = () => {
                         <FeatureStrip />
                     </div>
                 </div>
-                {}
                 <OrderSummary
                     subtotal={formatCurrency(subtotal)}
                     discount={formatCurrency(couponDiscount)}

@@ -90,7 +90,6 @@ function News() {
     return (
         <div className="bg-gray-50 min-h-screen font-sans">
             <div className="container mx-auto p-4 md:p-8">
-                {}
                 {isFeaturedLoading && (
                     <p className="text-center py-4">
                         Đang tải bài viết nổi bật...
@@ -108,7 +107,6 @@ function News() {
                     />
                 )}
 
-                {}
                 {isHotTopicsLoading && (
                     <p className="text-center py-4 mt-8">
                         Đang tải chủ đề nóng...
@@ -123,7 +121,6 @@ function News() {
                     <HotTopics articles={hotTopicArticles} />
                 )}
 
-                {}
                 {isListLoading && (
                     <p className="text-center py-4 mt-8">
                         Đang tải danh sách bài viết...

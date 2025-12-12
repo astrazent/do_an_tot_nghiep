@@ -4,14 +4,12 @@ import { IoChevronDownSharp } from 'react-icons/io5'
 const SortBar = ({ sortBy, onSortChange, hidePromotionButton = false }) => {
     return (
         <section className="mb-8 p-4 bg-white rounded-lg">
-            {}
             <div className="mb-3">
                 <span className="font-semibold text-gray-800">
                     Sắp xếp theo
                 </span>
             </div>
 
-            {}
             <div className="flex flex-wrap items-center gap-3">
                 <button
                     onClick={() => onSortChange('newest')}

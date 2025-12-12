@@ -1,0 +1,46 @@
+[
+  {
+    "text": "Tên phương thức vận chuyển: GHN\n            Mô tả: Giao Hàng Nhanh, giao trong 1-2 ngày nội thành\n            Phí cơ bản: 20,000 VND\n            Trạng thái: Hoạt động",
+    "metadata": {
+      "id": 1,
+      "tên_phương_thức": "GHN",
+      "mô_tả": "Giao Hàng Nhanh, giao trong 1-2 ngày nội thành",
+      "phí_cơ_bản": "20,000 VND",
+      "trạng_thái": "hoạt động",
+      "url": "https://cdn.haitrieu.com/wp-content/uploads/2022/05/Logo-GHN-Slogan-En.png"
+    }
+  },
+  {
+    "text": "Tên phương thức vận chuyển: GHTK\n            Mô tả: Giao Hàng Tiết Kiệm, chi phí thấp, giao trong 2-3 ngày\n            Phí cơ bản: 15,000 VND\n            Trạng thái: Hoạt động",
+    "metadata": {
+      "id": 2,
+      "tên_phương_thức": "GHTK",
+      "mô_tả": "Giao Hàng Tiết Kiệm, chi phí thấp, giao trong 2-3 ngày",
+      "phí_cơ_bản": "15,000 VND",
+      "trạng_thái": "hoạt động",
+      "url": "https://cdn.haitrieu.com/wp-content/uploads/2022/05/Logo-GHTK-V.png"
+    }
+  },
+  {
+    "text": "Tên phương thức vận chuyển: Viettel Post\n            Mô tả: Viettel Post, giao hàng toàn quốc\n            Phí cơ bản: 25,000 VND\n            Trạng thái: Hoạt động",
+    "metadata": {
+      "id": 3,
+      "tên_phương_thức": "Viettel Post",
+      "mô_tả": "Viettel Post, giao hàng toàn quốc",
+      "phí_cơ_bản": "25,000 VND",
+      "trạng_thái": "hoạt động",
+      "url": "https://cdn.haitrieu.com/wp-content/uploads/2022/05/Logo-Viettel-Post-Transparent.png"
+    }
+  },
+  {
+    "text": "Tên phương thức vận chuyển: J&T Express\n            Mô tả: Giao hàng nhanh, phù hợp nội thành và ngoại thành\n            Phí cơ bản: 22,000 VND\n            Trạng thái: Hoạt động",
+    "metadata": {
+      "id": 4,
+      "tên_phương_thức": "J&T Express",
+      "mô_tả": "Giao hàng nhanh, phù hợp nội thành và ngoại thành",
+      "phí_cơ_bản": "22,000 VND",
+      "trạng_thái": "hoạt động",
+      "url": "https://i.pinimg.com/474x/29/4d/14/294d1488cebbfd40db530843c96dc68e.jpg"
+    }
+  }
+]

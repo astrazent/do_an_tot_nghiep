@@ -1,0 +1,137 @@
+services:
+    maridb_web:
+        image: mariadb:latest
+        container_name: web_database
+        restart: always
+        environment:
+            - MYSQL_ROOT_PASSWORD=55555
+            - MYSQL_DATABASE=web_db
+            - TZ=Asia/Ho_Chi_Minh
+        ports:
+            - '55555:3306'
+        volumes:
+            - web_database_data:/var/lib/mysql
+        healthcheck:
+            test: ["CMD-SHELL", "mysqladmin ping -uroot -p55555"]
+            interval: 10s
+            retries: 5
+            timeout: 5s
+            start_period: 10s
+
+    mariadb_chatbot:
+        image: mariadb:latest
+        container_name: chatbot_database
+        restart: always
+        environment:
+            - MYSQL_ROOT_PASSWORD=66666
+            - MYSQL_DATABASE=chatbot_db
+            - TZ=Asia/Ho_Chi_Minh
+        ports:
+            - '55556:3306'
+        volumes:
+            - mariadb_chatbot_data:/var/lib/mysql
+        healthcheck:
+            test: ["CMD-SHELL", "mysqladmin ping -uroot -p66666"]
+            interval: 10s
+            retries: 5
+            timeout: 5s
+            start_period: 10s
+
+    redis:
+        image: redis/redis-stack:latest
+        container_name: redis
+        restart: always
+        environment:
+            - TZ=Asia/Ho_Chi_Minh
+        ports:
+            - "6379:6379"
+            - "8001:8001"
+        volumes:
+            - redis_data:/data
+            - ./redis.conf:/redis-stack.conf
+        command: ["redis-stack-server", "/redis-stack.conf"]
+        healthcheck:
+            test: ["CMD", "redis-cli", "ping"]
+            interval: 5s
+            timeout: 3s
+            retries: 5
+
+    backend:
+        build:
+            context: ./web/be
+            dockerfile: Dockerfile
+        container_name: backend
+        restart: always
+        environment:
+            - TZ=Asia/Ho_Chi_Minh
+        ports:
+            - "2082:2082"
+        volumes:
+            - ./web/be:/app
+            - /app/node_modules
+        depends_on:
+            - maridb_web
+
+    frontend:
+        build:
+            context: ./web/fe
+            dockerfile: Dockerfile
+        container_name: frontend
+        restart: always
+        environment:
+            - TZ=Asia/Ho_Chi_Minh
+        ports:
+            - "5173:5173"
+        volumes:
+            - ./web/fe:/app
+            - /app/node_modules
+
+    chatbot_worker_1:
+        build:
+            context: ./worker
+            dockerfile: Dockerfile
+        container_name: chatbot_worker_1
+        restart: always
+        environment:
+            - TZ=Asia/Ho_Chi_Minh
+        volumes:
+            - ./worker:/app
+        depends_on:
+            - redis
+            - mariadb_chatbot
+
+    chatbot_worker_2:
+        build:
+            context: ./worker
+            dockerfile: Dockerfile
+        container_name: chatbot_worker_2
+        restart: always
+        environment:
+            - TZ=Asia/Ho_Chi_Minh
+        volumes:
+            - ./worker:/app
+        depends_on:
+            - redis
+            - mariadb_chatbot
+
+    chatbot:
+        build:
+            context: ./chatbot
+            dockerfile: Dockerfile
+        container_name: chatbot
+        restart: always
+        environment:
+            - TZ=Asia/Ho_Chi_Minh
+        ports:
+            - "8000:8000"
+        volumes:
+            - ./chatbot:/app
+            - pip_cache:/root/.cache/pip
+        depends_on:
+            - mariadb_chatbot
+
+volumes:
+    web_database_data:
+    mariadb_chatbot_data:
+    pip_cache:
+    redis_data:

@@ -8,6 +8,11 @@ Router.route('/').post(
     transactionController.addTransaction
 )
 
+Router.route('/chatbot').post(
+    transactionValidation.validateTransaction,
+    transactionController.addChatBotTransaction
+)
+
 Router.route('/by_email_slug').get(
     transactionController.getTransactionByEmailAndSlug
 )

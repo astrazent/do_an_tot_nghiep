@@ -9,7 +9,7 @@ import {
 import plusIcon from '~/assets/icon/stuff/positive.png'
 import minusIcon from '~/assets/icon/stuff/negative.png'
 import PageComment from '../CommentList'
-// Import hook mới
+
 import {
     useCommentsByProductSlug,
     useCommentByUserSlug,
@@ -20,7 +20,6 @@ import { usePostAIFeedbackByProductSlug } from '~/hooks/user/useAIFeedback'
 import { useTransactionByEmailAndSlug } from '~/hooks/user/useTransaction'
 import CommentForm from '../CommentForm'
 import { useAlert } from '~/contexts/AlertContext'
-import { BsXCircleFill } from 'react-icons/bs'
 
 const filters = [
     'Mới nhất',
@@ -66,12 +65,12 @@ const CommentSection = ({ slug }) => {
 
     const { data: transactionData, isSuccess: transactionIsSuccess } =
         useTransactionByEmailAndSlug(isAuthenticated ? user.email : null, slug)
-    // SỬ DỤNG HOOK MỚI ĐỂ KIỂM TRA BÌNH LUẬN CỦA USER
+
     const { data: existingComment, refetch } = useCommentByUserSlug(
         isAuthenticated ? user.user_id : null,
         slug
     )
-    const hasCommented = !!existingComment // Chuyển đổi sang boolean
+    const hasCommented = !!existingComment
     const hasPurchased = useMemo(() => {
         if (!transactionIsSuccess || !Array.isArray(transactionData))
             return false
@@ -278,7 +277,7 @@ const CommentSection = ({ slug }) => {
             </div>
         )
     }
-    // Gộp logic hiển thị nút viết/sửa đánh giá và form
+
     const renderReviewButtonAndForm = () => (
         <>
             {isAuthenticated && hasPurchased && (
@@ -287,7 +286,6 @@ const CommentSection = ({ slug }) => {
                         onClick={() => setShowReviewForm(true)}
                         className="bg-green-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
                     >
-                        {/* THAY ĐỔI TEXT NÚT DỰA TRÊN hasCommented */}
                         {hasCommented
                             ? 'Sửa đánh giá'
                             : 'Viết đánh giá của bạn'}
@@ -322,7 +320,7 @@ const CommentSection = ({ slug }) => {
                 <p className="text-gray-600">
                     Chưa có đánh giá nào cho sản phẩm này.
                 </p>
-                {/* HIỂN THỊ NÚT VÀ FORM (NẾU CÓ) */}
+
                 {renderReviewButtonAndForm()}
             </div>
         )
@@ -371,7 +369,7 @@ const CommentSection = ({ slug }) => {
                             </div>
                         ))}
                     </div>
-                    {/* HIỂN THỊ NÚT VÀ FORM (NẾU CÓ) */}
+
                     {renderReviewButtonAndForm()}
                 </div>
 

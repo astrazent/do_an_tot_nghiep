@@ -257,7 +257,6 @@ const CheckoutPopup = ({
                 className="space-y-6 divide-y divide-gray-200"
             >
                 <div className="space-y-4">
-                    {}
                     <div>
                         <label className="block text-sm font-medium text-gray-700">
                             Họ và tên
@@ -310,7 +309,7 @@ const CheckoutPopup = ({
                             className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                         />
                     </div>
-                    {}
+
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
                             <label className="block text-sm font-medium text-gray-700">
@@ -391,7 +390,6 @@ const CheckoutPopup = ({
                     </div>
                 </div>
 
-                {}
                 <div className="space-y-6 pt-6">
                     <div>
                         <h3 className="text-lg font-medium text-gray-900">
@@ -403,9 +401,6 @@ const CheckoutPopup = ({
                                     Math.floor(
                                         Math.random() * (50 - 10 + 1) + 10
                                     ) * 1000
-                                const displayFee =
-                                    parseFloat(shipment.base_fee) +
-                                    randomAddition
 
                                 return (
                                     <label
@@ -460,7 +455,6 @@ const CheckoutPopup = ({
                     </div>
                 </div>
 
-                {}
                 <div className="space-y-6">
                     <div>
                         <h3 className="text-lg font-medium text-gray-900">

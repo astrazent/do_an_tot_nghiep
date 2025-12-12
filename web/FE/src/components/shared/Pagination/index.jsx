@@ -42,7 +42,6 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
 
     return (
         <nav className="flex justify-center items-center space-x-2 mt-5">
-            {}
             <button
                 onClick={() => onPageChange(currentPage - 1)}
                 disabled={currentPage === 1}
@@ -51,7 +50,6 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
                 &lt;
             </button>
 
-            {}
             {pagesToRender.map((page, index) =>
                 typeof page === 'number' ? (
                     <button
@@ -72,7 +70,6 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
                 )
             )}
 
-            {}
             <button
                 onClick={() => onPageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}

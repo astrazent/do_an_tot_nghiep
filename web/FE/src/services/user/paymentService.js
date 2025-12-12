@@ -24,10 +24,7 @@ const handlePosPayment = (orderData, { onSubmit, showAlert }) => {
     console.log('Đơn hàng POS đã được tạo!')
 }
 
-const handleVnPayPayment = async (
-    orderData,
-    { dispatch, onSubmit, showAlert }
-) => {
+const handleVnPayPayment = async (orderData, { dispatch }) => {
     console.log('Dữ liệu nhận được:', orderData)
     console.log('Bắt đầu xử lý thanh toán VNPay...')
 

@@ -83,8 +83,7 @@ const OrderDetailModal = ({ order, onClose }) => {
                 className="bg-white rounded-lg shadow-xl w-full max-w-2xl relative animate-fade-in-up"
                 onClick={e => e.stopPropagation()}
             >
-                {}
-                <div className="flex justify-between items-start p-5 border-b rounded-t">
+                <div className="flex justify-between items-start p-5 rounded-t">
                     <div>
                         <h2 className="text-xl font-bold text-gray-800">
                             Chi tiết Đơn hàng #{order.tracking_number}
@@ -101,9 +100,7 @@ const OrderDetailModal = ({ order, onClose }) => {
                     </button>
                 </div>
 
-                {}
                 <div className="p-5 space-y-5 max-h-[70vh] overflow-y-auto mb-2">
-                    {}
                     <div className="flex justify-between items-center bg-gray-50 p-3 rounded-lg">
                         <span className="font-semibold text-gray-600">
                             Trạng thái:
@@ -111,8 +108,7 @@ const OrderDetailModal = ({ order, onClose }) => {
                         <StatusBadge status={order.status} />
                     </div>
 
-                    {}
-                    <div className="border-t pt-4">
+                    <div className="pt-4">
                         <SectionTitle
                             icon={<FiShoppingBag className="text-gray-500" />}
                             title="Sản phẩm trong đơn"
@@ -125,7 +121,6 @@ const OrderDetailModal = ({ order, onClose }) => {
                                         className="flex justify-between items-center p-2 hover:bg-gray-50 rounded"
                                     >
                                         <div>
-                                            {}
                                             <p className="font-medium text-gray-800">
                                                 {item.name}
                                             </p>
@@ -146,8 +141,7 @@ const OrderDetailModal = ({ order, onClose }) => {
                         </div>
                     </div>
 
-                    {}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5 border-t pt-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-4">
                         <div>
                             <SectionTitle
                                 icon={<FiUser className="text-gray-500" />}
@@ -192,8 +186,7 @@ const OrderDetailModal = ({ order, onClose }) => {
                         </div>
                     </div>
 
-                    {}
-                    <div className="border-t pt-4">
+                    <div className="pt-4">
                         <SectionTitle
                             icon={<FiCreditCard className="text-gray-500" />}
                             title="Thông tin thanh toán"
@@ -209,7 +202,7 @@ const OrderDetailModal = ({ order, onClose }) => {
                                     {formatCurrency(order.shipping_fee)}
                                 </span>
                             </div>
-                            <div className="flex justify-between font-bold text-base mt-2 pt-2 border-t border-gray-200 text-emerald-600">
+                            <div className="flex justify-between font-bold text-base mt-2 pt-2 border-gray-200 text-emerald-600">
                                 <span>Tổng cộng:</span>
                                 <span>{formatCurrency(order.amount)}</span>
                             </div>

@@ -49,7 +49,6 @@ function NavigationBar() {
         <nav className="bg-green-700 text-white px-40">
             <div className="container mx-auto px-4 flex justify-between items-center">
                 <ul className="flex items-center font-semibold">
-                    {}
                     <li>
                         <NavLink to="/" className={getNavLinkClass} end>
                             TRANG CHỦ
@@ -60,7 +59,7 @@ function NavigationBar() {
                             GIỚI THIỆU
                         </NavLink>
                     </li>
-                    {}
+
                     <li
                         className="relative"
                         onMouseEnter={handleMouseEnter}
@@ -124,7 +123,7 @@ function NavigationBar() {
                             </ul>
                         </div>
                     </li>
-                    {}
+
                     <li>
                         <NavLink to="/news" className={getNavLinkClass}>
                             TIN TỨC

@@ -40,6 +40,20 @@ const getListProduct = async (req, res, next) => {
     }
 }
 
+const getListProductChatBot = async (req, res, next) => {
+    try {
+        const data = await productService.getListProductChatBotService(
+            req.query
+        )
+        return res.status(StatusCodes.OK).json({
+            message: 'Danh sách sản phẩm đã được lấy thành công',
+            data,
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
 const getSearchProduct = async (req, res, next) => {
     try {
         const { slug, limit } = req.query
@@ -233,6 +247,7 @@ const getTop5Customers = async (req, res, next) => {
 export const productController = {
     getByIdProduct,
     getListProduct,
+    getListProductChatBot,
     getSearchProduct,
     getSearchByCategory,
     getListPromotionProduct,

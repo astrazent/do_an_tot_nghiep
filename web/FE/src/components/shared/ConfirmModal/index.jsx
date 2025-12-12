@@ -5,9 +5,8 @@ const ConfirmModal = ({ isOpen, message, onConfirm, onCancel }) => {
     if (!isOpen) return null
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 animate-fade-in">
+        <div className="fixed inset-0 z-500 flex items-center justify-center bg-black/60 animate-fade-in">
             <div className="bg-white rounded-xl shadow-xl p-6 w-80 max-w-full relative animate-slide-up">
-                {}
                 <button
                     onClick={onCancel}
                     className="absolute top-3 right-3 text-gray-400 hover:text-gray-600 transition-colors"
@@ -19,7 +18,6 @@ const ConfirmModal = ({ isOpen, message, onConfirm, onCancel }) => {
                     Xác nhận hành động
                 </h2>
 
-                {}
                 <div className="flex justify-center mb-4 text-red-500">
                     <FiAlertCircle size={60} />
                 </div>
@@ -43,8 +41,6 @@ const ConfirmModal = ({ isOpen, message, onConfirm, onCancel }) => {
                     </button>
                 </div>
             </div>
-
-            {}
             <style jsx>{`
                 @keyframes fade-in {
                     from {

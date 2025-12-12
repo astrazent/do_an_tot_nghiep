@@ -32,7 +32,6 @@ const Banner = () => {
                 modules={[Autoplay, Pagination, Navigation]}
                 className="!h-[120%] banner-swiper"
             >
-                {}
                 {slides.map(slide => (
                     <SwiperSlide key={slide.id}>
                         <Link to={slide.link_url || '#'}>

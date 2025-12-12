@@ -4,6 +4,9 @@ import Joi from 'joi'
 const PRODUCTS_TABLE = 'Products'
 const CATEGORIES_TABLE = 'Categories'
 const ORDER_ITEMS_TABLE = 'OrderItems'
+const PRODUCT_IMAGES_TABLE = 'ProductImages'
+const DISCOUNT_PRODUCTS_TABLE = 'DiscountProducts'
+const DISCOUNTS_TABLE = 'Discounts'
 
 const PRODUCTS_SCHEMA = Joi.object({
     name: Joi.string().min(3).max(200).required().messages({
@@ -189,6 +192,54 @@ const ProductsModel = {
         query += ` LIMIT ? OFFSET ?`
         params.push(limit, offset)
 
+        const [rows] = await conn.execute(query, params)
+        return rows
+    },
+
+    async getListProductChatBot({ limit = 150, offset = 0 } = {}) {
+        const conn = getConnection()
+        const query = `
+        SELECT
+            p.id AS id,
+            p.name AS product_name,
+            p.slug AS product_slug,
+            p.description AS product_description,
+            p.origin_price,
+            p.price,
+            p.import_price,
+            p.buyed,
+            p.rate_point_total,
+            p.rate_count,
+            p.stock_qty,
+            p.low_stock_threshold,
+            p.last_restock_at,
+            p.status AS product_status,
+            p.ocop_rating,
+
+            c.name AS category_name,
+            c.description AS category_description,
+
+            pi.image_url AS main_image_url,
+
+            d.name AS discount_name,
+            d.description AS discount_description,
+            d.value AS discount_value,
+            d.start_date AS discount_start_date,
+            d.end_date AS discount_end_date,
+            d.status AS discount_status
+
+        FROM ${PRODUCTS_TABLE} p
+        LEFT JOIN ${CATEGORIES_TABLE} c ON p.category_id = c.id
+        LEFT JOIN ${PRODUCT_IMAGES_TABLE} pi 
+            ON pi.product_id = p.id AND pi.is_main = 1
+        LEFT JOIN ${DISCOUNT_PRODUCTS_TABLE} dp 
+            ON dp.product_id = p.id
+        LEFT JOIN ${DISCOUNTS_TABLE} d 
+            ON dp.discount_id = d.id
+
+        LIMIT ? OFFSET ?
+    `
+        const params = [limit, offset]
         const [rows] = await conn.execute(query, params)
         return rows
     },

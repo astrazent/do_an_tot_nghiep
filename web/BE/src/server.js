@@ -7,6 +7,7 @@ import { createConnection, closeConnection } from '~/config/mysql.js'
 import { env } from '~/config/environment.js'
 import { APIs_V1, APIs_V2 } from '~/routes/index.js'
 import { errorHandlingMiddleware } from './middlewares/errorHandling.js'
+import sseRoute from './routes/sseRoute.js'
 import getPort from 'get-port'
 
 const APP_PORT = parseInt(env.APP_PORT) || 2000
@@ -39,6 +40,7 @@ const START_SERVER = async () => {
         app.use(express.json())
         app.use(express.urlencoded({ extended: true }))
 
+        app.use('/sse', sseRoute)
         app.use('/v1', APIs_V1)
         app.use('/v2', APIs_V2)
         app.use(errorHandlingMiddleware)

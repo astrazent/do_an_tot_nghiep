@@ -30,7 +30,6 @@ const TextSlider = () => {
                 slidesPerView={1}
                 className="h-8"
             >
-                {}
                 {hotProducts.map(product => (
                     <SwiperSlide key={product.id} className="h-12">
                         <div className="mt-1.5">

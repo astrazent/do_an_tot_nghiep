@@ -123,7 +123,6 @@ const Category = () => {
 
     return (
         <div className="App p-4">
-            {}
             <div className="text-center mb-6">
                 <h2 className="text-3xl font-bold text-green-800 uppercase">
                     {title}
@@ -162,7 +161,6 @@ const Category = () => {
                 )}
             </div>
 
-            {}
             {canLoadMore && (
                 <div className="text-center mt-8">
                     <button

@@ -111,7 +111,6 @@ function MainHeader() {
                     </Link>
                 </div>
 
-                {}
                 <div className="relative w-full max-w-md">
                     <input
                         type="text"
@@ -126,7 +125,6 @@ function MainHeader() {
                         <FaSearch className="text-gray-400" />
                     </div>
 
-                    {}
                     {showResults && searchValue && (
                         <div className="absolute top-full mt-2 w-full z-20 bg-white rounded-md shadow-lg border border-gray-200/75 max-h-96 overflow-y-auto">
                             {isSearching && (
@@ -169,7 +167,6 @@ function MainHeader() {
                         </div>
                     )}
                 </div>
-                {}
 
                 <div className="text-center flex-shrink-0">
                     <span className="text-gray-500 font-semibold">

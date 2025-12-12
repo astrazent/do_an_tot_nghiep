@@ -88,7 +88,6 @@ const LoginForm = () => {
             </div>
 
             <form className="login-form" onSubmit={handleLogin}>
-                {}
                 <InputField
                     type="text"
                     placeholder="Tên đăng nhập"

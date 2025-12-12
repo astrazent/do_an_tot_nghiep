@@ -33,28 +33,24 @@ const TRANSACTIONS_SCHEMA = Joi.object({
 
     deli_email: Joi.string().trim().email().allow(null, ''),
 
-    deli_city: Joi.string().min(2).max(100).required(),
-    deli_district: Joi.string().min(2).max(100).required(),
-    deli_ward: Joi.string().min(2).max(100).required(),
+    deli_city: Joi.string().min(2).max(100).allow(null, ''),
+    deli_district: Joi.string().min(2).max(100).allow(null, ''),
+    deli_ward: Joi.string().min(2).max(100).allow(null, ''),
 
     message: Joi.string().max(255).allow('', null),
-
     tracking_number: Joi.string().max(100).allow('', null),
-
     shipping_fee: Joi.number().precision(2).min(0).required(),
-
     shipment_status: Joi.string()
         .valid('pending', 'shipped', 'in_transit', 'delivered', 'returned')
         .required(),
-
     amount: Joi.number().precision(2).min(0).required(),
-
     shipped_at: Joi.date().allow(null),
     delivered_at: Joi.date().allow(null),
 
     user_id: Joi.number().integer().allow(null),
     payment_id: Joi.number().integer().allow(null),
     shipment_id: Joi.number().integer().allow(null),
+
     items: Joi.array()
         .items(
             Joi.object({
@@ -67,6 +63,10 @@ const TRANSACTIONS_SCHEMA = Joi.object({
         .messages({
             'array.base': 'Items phải là một mảng nếu có',
         }),
+
+    source: Joi.string().valid('chatbot', 'system').optional().messages({
+        'any.only': 'Source chỉ được là chatbot hoặc system',
+    }),
 })
 
 function validateTransaction(req, res, next) {

@@ -5,7 +5,7 @@ const initialState = {
     payment_method: '',
     shipment_method: '',
     status: 'pending',
-    payment_status: 'pending', // thêm payment_status
+    payment_status: 'pending',
     deli_name: '',
     deli_phone: '',
     deli_email: '',
@@ -46,7 +46,7 @@ export const orderSlice = createSlice({
             state.shipment_method = action.payload
         },
 
-        setPaymentStatus: (state, action) => { // thêm reducer
+        setPaymentStatus: (state, action) => {
             state.payment_status = action.payload
         },
 
@@ -55,7 +55,16 @@ export const orderSlice = createSlice({
         },
 
         setDeliveryInfo: (state, action) => {
-            const { name, phone, email, address, city, district, ward, message } = action.payload
+            const {
+                name,
+                phone,
+                email,
+                address,
+                city,
+                district,
+                ward,
+                message,
+            } = action.payload
             state.deli_name = name
             state.deli_phone = phone
             state.deli_email = email
@@ -89,7 +98,9 @@ export const orderSlice = createSlice({
         addOrderItem: (state, action) => {
             const { orderItem } = action.payload
             if (!state.items) state.items = []
-            const existingItem = state.items.find(i => i.product_id === orderItem.product_id)
+            const existingItem = state.items.find(
+                i => i.product_id === orderItem.product_id
+            )
             if (existingItem) existingItem.amount += parseInt(orderItem.amount)
             else state.items.push(orderItem)
         },
@@ -119,7 +130,7 @@ export const {
     setOrderFromPayload,
     setPaymentMethod,
     setShipmentMethod,
-    setPaymentStatus, // export action mới
+    setPaymentStatus,
     setShippingFee,
     setDeliveryInfo,
     setStatus,

@@ -35,7 +35,6 @@ const OrderStatusChart = ({ dateRange }) => {
             <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">
                 Tỷ lệ đơn hàng theo trạng thái
             </h3>
-
             <div className="h-64">
                 <ResponsiveContainer width="100%" height="100%">
                     <PieChart>

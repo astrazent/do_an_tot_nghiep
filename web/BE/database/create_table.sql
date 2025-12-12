@@ -14,8 +14,8 @@ DROP TABLE IF EXISTS CartItems;
 DROP TABLE IF EXISTS CouponScopes;
 DROP TABLE IF EXISTS Coupons;
 DROP TABLE IF EXISTS Products;
-DROP TABLE IF EXISTS OtpCodes;
 DROP TABLE IF EXISTS Tokens;
+DROP TABLE IF EXISTS OtpCodes;
 DROP TABLE IF EXISTS Users;
 DROP TABLE IF EXISTS PostCategories;
 DROP TABLE IF EXISTS Categories;
@@ -425,13 +425,14 @@ CREATE TABLE
     Transactions (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     status ENUM('pending', 'confirmed', 'canceled', 'refunded', 'completed') NOT NULL DEFAULT 'pending',
+    source ENUM('chatbot', 'system') NOT NULL DEFAULT 'system',
     deli_name VARCHAR(100) NOT NULL,
     deli_phone VARCHAR(20) NOT NULL,
     deli_address VARCHAR(255) NOT NULL,
     deli_email VARCHAR(255) NULL,
-    deli_city VARCHAR(100) NOT NULL,
-    deli_district VARCHAR(100) NOT NULL,
-    deli_ward VARCHAR(100) NOT NULL,
+    deli_city VARCHAR(100) NULL,
+    deli_district VARCHAR(100) NULL,
+    deli_ward VARCHAR(100) NULL,
     message VARCHAR(255) NOT NULL,
     tracking_number VARCHAR(100) NOT NULL,
     shipping_fee DECIMAL(12, 2) NOT NULL DEFAULT 0.00,

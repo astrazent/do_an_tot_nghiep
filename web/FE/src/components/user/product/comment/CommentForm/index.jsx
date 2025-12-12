@@ -20,17 +20,24 @@ const StarIcon = ({ filled, onClick, onMouseEnter, onMouseLeave }) => (
     </span>
 )
 
-const CommentForm = ({ productSlug, onClose, onCommentSubmitted, existingComment }) => {
+const CommentForm = ({
+    productSlug,
+    onClose,
+    onCommentSubmitted,
+    existingComment,
+}) => {
     const [rating, setRating] = useState(0)
     const [hover, setHover] = useState(0)
     const [comment, setComment] = useState('')
     const { showAlert } = useAlert()
     const { user, isAuthenticated, loading: userLoading } = useCurrentUser()
     const userId = user?.user_id || null
-    const { mutate: createComment, isLoading: creating } = useCreateCommentByProductSlug(productSlug)
-    const { mutate: updateComment, isLoading: updating } = useUpdateCommentByProductSlug(productSlug)
+    const { mutate: createComment, isLoading: creating } =
+        useCreateCommentByProductSlug(productSlug)
+    const { mutate: updateComment, isLoading: updating } =
+        useUpdateCommentByProductSlug(productSlug)
     const isLoading = creating || updating
-    // Khi existingComment thay đổi, cập nhật state
+
     useEffect(() => {
         if (existingComment) {
             setRating(existingComment.rate || 0)
@@ -40,7 +47,10 @@ const CommentForm = ({ productSlug, onClose, onCommentSubmitted, existingComment
 
     const handleSubmit = () => {
         if (!isAuthenticated || !userId) {
-            showAlert('Bạn cần đăng nhập để gửi đánh giá.', { type: 'error', duration: 3000 })
+            showAlert('Bạn cần đăng nhập để gửi đánh giá.', {
+                type: 'error',
+                duration: 3000,
+            })
             return
         }
         if (rating === 0) {
@@ -60,25 +70,40 @@ const CommentForm = ({ productSlug, onClose, onCommentSubmitted, existingComment
         if (existingComment) {
             updateComment(payload, {
                 onSuccess: () => {
-                    showAlert('Đã cập nhật đánh giá!', { type: 'success', duration: 3000 })
+                    showAlert('Đã cập nhật đánh giá!', {
+                        type: 'success',
+                        duration: 3000,
+                    })
                     if (onCommentSubmitted) onCommentSubmitted()
                     onClose()
                 },
                 onError: err => {
-                    showAlert(`Có lỗi xảy ra: ${err.message}`, { type: 'error', duration: 3000 })
-                }
+                    showAlert(`Có lỗi xảy ra: ${err.message}`, {
+                        type: 'error',
+                        duration: 3000,
+                    })
+                },
             })
         } else {
-            createComment({ ...payload, slug: productSlug }, {
-                onSuccess: () => {
-                    showAlert('Cảm ơn bạn đã gửi đánh giá!', { type: 'success', duration: 3000 })
-                    if (onCommentSubmitted) onCommentSubmitted()
-                    onClose()
-                },
-                onError: err => {
-                    showAlert(`Có lỗi xảy ra: ${err.message}`, { type: 'error', duration: 3000 })
+            createComment(
+                { ...payload, slug: productSlug },
+                {
+                    onSuccess: () => {
+                        showAlert('Cảm ơn bạn đã gửi đánh giá!', {
+                            type: 'success',
+                            duration: 3000,
+                        })
+                        if (onCommentSubmitted) onCommentSubmitted()
+                        onClose()
+                    },
+                    onError: err => {
+                        showAlert(`Có lỗi xảy ra: ${err.message}`, {
+                            type: 'error',
+                            duration: 3000,
+                        })
+                    },
                 }
-            })
+            )
         }
     }
 
@@ -120,7 +145,11 @@ const CommentForm = ({ productSlug, onClose, onCommentSubmitted, existingComment
                     value={comment}
                     onChange={e => setComment(e.target.value)}
                     className="w-full h-32 p-2 outline-none resize-none"
-                    placeholder={existingComment ? '' : "Hãy chia sẻ những trải nghiệm của bạn về sản phẩm..."}
+                    placeholder={
+                        existingComment
+                            ? ''
+                            : 'Hãy chia sẻ những trải nghiệm của bạn về sản phẩm...'
+                    }
                 ></textarea>
             </div>
 

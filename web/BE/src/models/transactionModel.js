@@ -14,20 +14,17 @@ const TRANSACTIONS_SCHEMA = Joi.object({
             'any.required': 'Status là bắt buộc',
         }),
 
-    deli_name: Joi.string().min(3).max(100).required().messages({
-        'string.empty': 'Tên người nhận không được để trống',
+    deli_name: Joi.string().min(3).max(100).optional().messages({
         'string.min': 'Tên người nhận tối thiểu 3 ký tự',
         'string.max': 'Tên người nhận tối đa 100 ký tự',
     }),
 
-    deli_phone: Joi.string().min(5).max(20).required().messages({
-        'string.empty': 'Số điện thoại không được để trống',
+    deli_phone: Joi.string().min(5).max(20).optional().messages({
         'string.min': 'Số điện thoại tối thiểu 5 ký tự',
         'string.max': 'Số điện thoại tối đa 20 ký tự',
     }),
 
-    deli_address: Joi.string().min(5).max(255).required().messages({
-        'string.empty': 'Địa chỉ giao hàng không được để trống',
+    deli_address: Joi.string().min(5).max(255).optional().messages({
         'string.min': 'Địa chỉ tối thiểu 5 ký tự',
         'string.max': 'Địa chỉ tối đa 255 ký tự',
     }),
@@ -37,9 +34,9 @@ const TRANSACTIONS_SCHEMA = Joi.object({
         'string.max': 'Email tối đa 255 ký tự',
     }),
 
-    deli_city: Joi.string().min(2).max(100).required(),
-    deli_district: Joi.string().min(2).max(100).required(),
-    deli_ward: Joi.string().min(2).max(100).required(),
+    deli_city: Joi.string().min(2).max(100).allow(null, '').optional(),
+    deli_district: Joi.string().min(2).max(100).allow(null, '').optional(),
+    deli_ward: Joi.string().min(2).max(100).allow(null, '').optional(),
 
     message: Joi.string().max(255).allow('', null).default('').messages({
         'string.max': 'Message tối đa 255 ký tự',
@@ -49,6 +46,7 @@ const TRANSACTIONS_SCHEMA = Joi.object({
         'number.base': 'Shipping fee phải là số',
         'number.min': 'Shipping fee tối thiểu là 0',
     }),
+
     payment_status: Joi.string()
         .valid('pending', 'paid', 'failed', 'refunded')
         .default('pending')
@@ -56,6 +54,7 @@ const TRANSACTIONS_SCHEMA = Joi.object({
             'any.only':
                 'Payment status chỉ được là: pending, paid, failed, refunded',
         }),
+
     shipment_status: Joi.string()
         .valid('pending', 'shipped', 'in_transit', 'delivered', 'returned')
         .default('pending')
@@ -69,12 +68,22 @@ const TRANSACTIONS_SCHEMA = Joi.object({
         'number.min': 'Amount tối thiểu là 0',
     }),
 
+    source: Joi.string()
+        .valid('chatbot', 'system')
+        .allow(null, '')
+        .optional()
+        .messages({
+            'any.only': 'Source chỉ được là chatbot hoặc system',
+            'string.base': 'Source phải là chuỗi nếu có',
+        }),
+
     shipped_at: Joi.date().allow(null),
     delivered_at: Joi.date().allow(null),
 
     user_id: Joi.number().integer().allow(null),
     payment_id: Joi.number().integer().required(),
     shipment_id: Joi.number().integer().required(),
+
     items: Joi.array()
         .items(
             Joi.object({
@@ -144,12 +153,13 @@ const TransactionsModel = {
         try {
             const [result] = await conn.execute(
                 `INSERT INTO ${TRANSACTIONS_TABLE_NAME}
-                (status, deli_name, deli_phone, deli_address, deli_email, deli_city, deli_district, deli_ward,
+                (status, source, deli_name, deli_phone, deli_address, deli_email, deli_city, deli_district, deli_ward,
                 message, tracking_number, shipping_fee, shipment_status, amount, shipped_at, delivered_at,
                 user_id, payment_id, shipment_id, payment_status)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                 [
                     value.status,
+                    value.source,
                     value.deli_name,
                     value.deli_phone,
                     value.deli_address,
@@ -189,7 +199,6 @@ const TransactionsModel = {
             }
 
             await conn.commit()
-
             return { id: transactionId, ...value, items }
         } catch (err) {
             await conn.rollback()

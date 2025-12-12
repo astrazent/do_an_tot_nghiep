@@ -20,10 +20,14 @@ const PAYMENTS_SCHEMA = Joi.object({
 })
 
 const PaymentsModel = {
-    async getAllPayments() {
+    async getAllPayments(limit = 50, offset = 0) {
         const conn = getConnection()
         const [rows] = await conn.execute(
-            `SELECT * FROM ${PAYMENTS_TABLE_NAME} ORDER BY created_at DESC`
+            `SELECT * FROM ${PAYMENTS_TABLE_NAME} 
+            WHERE status = 1 
+            ORDER BY created_at DESC 
+            LIMIT ? OFFSET ?`,
+            [limit, offset]
         )
         return rows
     },

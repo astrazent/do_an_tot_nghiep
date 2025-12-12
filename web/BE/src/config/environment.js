@@ -11,6 +11,7 @@ export const env = {
     APP_HOST: process.env.APP_HOST || 'localhost',
     BUILD_MODE: process.env.BUILD_MODE || 'development',
     JWT_SECRET: process.env.JWT_SECRET || 'bepsachviet123',
+    ALGORITHM: process.env.ALGORITHM || 'HS256',
     JWT_REFRESH_SECRET: process.env.JWT_REFRESH_SECRET || 'bepsachviet6969',
     ACCESS_EXPIRES: process.env.ACCESS_EXPIRES || '15m',
     REFRESH_EXPIRES: process.env.REFRESH_EXPIRES || '7d',

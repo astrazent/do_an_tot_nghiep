@@ -4,7 +4,7 @@ import LoggedInCart from '~/components/user/cart/LoggedInCart'
 import GuestCart from '~/components/user/cart/GuestCart'
 
 const Cart = () => {
-    const { user, isAuthenticated, loading: userLoading } = useCurrentUser()
+    const { isAuthenticated, loading: userLoading } = useCurrentUser()
 
     if (userLoading) {
         return <div className="cart-status">Đang tải giỏ hàng...</div>

@@ -4,7 +4,6 @@ import {
     FaPhoneAlt,
     FaEnvelope,
     FaFacebookF,
-    FaChevronDown,
 } from 'react-icons/fa'
 import bannerFooter from '~/assets/image/shared/layout/footer/banner-fb-footer.png'
 import logo from '~/assets/icon/logo/brand-logo.png'

@@ -1,6 +1,7 @@
 import { useRoutes } from 'react-router-dom'
 import { routes } from './routes'
 import { useAuth } from '~/hooks/user/useAuth'
+import GlobalSSEHandler from '~/components/shared/GlobalSSEHandler'
 
 function App() {
     const { authLoading } = useAuth()
@@ -15,6 +16,12 @@ function App() {
         )
     }
 
-    return route
+    return (
+        <>
+            <GlobalSSEHandler />
+            {route}
+        </>
+    )
 }
+
 export default App
