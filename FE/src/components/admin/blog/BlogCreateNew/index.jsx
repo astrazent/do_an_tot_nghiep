@@ -1,265 +1,347 @@
-// src/components/BlogCreateNew.jsx
+// src/admin/blog/BlogCreateNew.jsx
 import React, { useState, useRef, useEffect } from 'react'
-import ReactQuill, { Quill } from 'react-quill-new'
-import ImageResize from 'quill-image-resize-module-react'
+import ReactQuill from 'react-quill-new'
 import 'react-quill-new/dist/quill.snow.css'
+import ImageResize from 'quill-image-resize-module-react'
 
-// Đăng ký module resize ảnh
+import { createPost, getListPostType } from '~/services/admin/postAdminService'
+import { getAllCategories } from '~/services/user/categoryService'
+
+// Fix bullet/list + đăng ký resize module
+const Quill = ReactQuill.Quill
+let Block = Quill.import('blots/block')
+Block.tagName = 'div'
+Quill.register(Block, true)
 Quill.register('modules/imageResize', ImageResize)
 
 const BlogCreateNew = () => {
     const [title, setTitle] = useState('')
+    const [slug, setSlug] = useState('')
     const [description, setDescription] = useState('')
     const [content, setContent] = useState('')
     const [author, setAuthor] = useState('Admin Nguyễn')
     const [publishedAt, setPublishedAt] = useState('')
     const [status, setStatus] = useState(true)
+    const [postTypeId, setPostTypeId] = useState('')
+    const [selectedCategoryIds, setSelectedCategoryIds] = useState([])
+
+    const [featuredImageFile, setFeaturedImageFile] = useState(null)
+    const [featuredImagePreview, setFeaturedImagePreview] = useState(null)
+    const featuredInputRef = useRef(null)
+
+    // Lưu mapping: { imageDataUrl: { file, display_order } }
+    const [imageMapping, setImageMapping] = useState({})
+    const imageCounterRef = useRef(0)
     const quillRef = useRef(null)
 
-    // Hàm upload ảnh lên Cloudinary (miễn phí) hoặc server của bạn
-    const uploadImageToCloudinary = async file => {
-        const formData = new FormData()
-        formData.append('file', file)
-        formData.append('upload_preset', 'your_upload_preset') // Thay bằng preset của bạn
+    const [postTypes, setPostTypes] = useState([])
+    const [categories, setCategories] = useState([])
+    const [loading, setLoading] = useState(true)
+    const [submitting, setSubmitting] = useState(false)
 
-        const res = await fetch(
-            'https://api.cloudinary.com/v1_1/your_cloud_name/image/upload', // Thay your_cloud_name
-            {
-                method: 'POST',
-                body: formData,
+    // Load data
+    useEffect(() => {
+        Promise.all([getListPostType(), getAllCategories()])
+            .then(([ptRes, catRes]) => {
+                setPostTypes(ptRes?.data || ptRes || [])
+                setCategories(catRes || [])
+            })
+            .catch(() => alert('Không tải được dữ liệu loại bài viết hoặc danh mục'))
+            .finally(() => setLoading(false))
+    }, [])
+
+    // Tạo slug tự động
+    useEffect(() => {
+        if (!title.trim()) return
+        const newSlug = title.toLowerCase()
+            .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+            .replace(/đ/g, 'd').replace(/[^a-z0-9\s-]/g, '')
+            .trim().replace(/\s+/g, '-').replace(/-+/g, '-')
+        setSlug(newSlug)
+    }, [title])
+
+    // XỬ LÝ ẢNH: Chuyển thành base64 để hiển thị ổn định
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            if (!quillRef.current) return
+            
+            const quill = quillRef.current.getEditor()
+
+            const handleImageUpload = (file) => {
+                const range = quill.getSelection() || { index: quill.getLength() }
+                imageCounterRef.current += 1
+                const id = imageCounterRef.current
+
+                const reader = new FileReader()
+                reader.onload = (e) => {
+                    const imageDataUrl = e.target.result
+
+                    quill.insertEmbed(range.index, 'image', imageDataUrl, 'user')
+                    quill.setSelection(range.index + 1)
+
+                    setImageMapping(prev => ({
+                        ...prev,
+                        [imageDataUrl]: { file, display_order: id }
+                    }))
+
+                    console.log('Đã chèn ảnh:', id, file.name)
+                }
+                reader.readAsDataURL(file)
             }
-        )
-        const data = await res.json()
-        return data.secure_url
-    }
 
-    // Nếu bạn dùng server riêng (localhost), dùng hàm này thay thế:
-    // const uploadImageToServer = async (file) => {
-    //     const formData = new FormData();
-    //     formData.append('image', file);
-    //     const res = await fetch('/api/upload', { method: 'POST', body: formData });
-    //     const json = await res.json();
-    //     return json.url;
-    // };
-
-    const imageHandler = () => {
-        const input = document.createElement('input')
-        input.setAttribute('type', 'file')
-        input.setAttribute('accept', 'image/*')
-        input.click()
-
-        input.onchange = async () => {
-            const file = input.files?.[0]
-            if (!file) return
-
-            const quill = quillRef.current?.getEditor()
-            if (!quill) return
-
-            const range = quill.getSelection(true) || { index: 0 }
-
-            // Chèn ảnh loading tạm thời
-            quill.insertEmbed(
-                range.index,
-                'image',
-                'https://i.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.webp'
-            ) // spinner nhỏ
-            quill.setSelection(range.index + 1)
-
-            try {
-                // Upload ảnh thật
-                const imageUrl = await uploadImageToCloudinary(file)
-
-                // Xóa ảnh loading và chèn ảnh thật
-                quill.deleteText(range.index, 1)
-                quill.insertEmbed(range.index, 'image', imageUrl)
-                quill.setSelection(range.index + 1)
-            } catch (error) {
-                console.error('Upload ảnh thất bại:', error)
-                quill.deleteText(range.index, 1)
-                alert('Không thể tải ảnh lên. Vui lòng thử lại!')
+            // Override toolbar image button
+            const toolbar = quill.getModule('toolbar')
+            if (toolbar) {
+                toolbar.addHandler('image', () => {
+                    const input = document.createElement('input')
+                    input.type = 'file'
+                    input.accept = 'image/*'
+                    input.multiple = false
+                    input.onchange = () => {
+                        const file = input.files?.[0]
+                        if (file) {
+                            console.log('Chọn ảnh từ toolbar:', file.name)
+                            handleImageUpload(file)
+                        }
+                    }
+                    input.click()
+                })
             }
-        }
-    }
 
+            // Xử lý paste và drop
+            const handlePasteAndDrop = (e) => {
+                const items = e.clipboardData?.items || e.dataTransfer?.items
+                if (!items) return
+
+                const images = Array.from(items).filter(item => item.type.indexOf('image') !== -1)
+                
+                if (images.length > 0) {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    
+                    images.forEach(item => {
+                        const file = item.getAsFile()
+                        if (file) {
+                            console.log('Paste/drop ảnh:', file.name)
+                            handleImageUpload(file)
+                        }
+                    })
+                }
+            }
+
+            const editor = quill.root
+            editor.addEventListener('paste', handlePasteAndDrop, true)
+            editor.addEventListener('drop', handlePasteAndDrop, true)
+
+            return () => {
+                editor.removeEventListener('paste', handlePasteAndDrop, true)
+                editor.removeEventListener('drop', handlePasteAndDrop, true)
+            }
+        }, 100)
+
+        return () => clearTimeout(timer)
+    }, [])
+
+    // TỰ ĐỘNG ĐIỀU CHỈNH CHIỀU CAO EDITOR THEO NỘI DUNG
     useEffect(() => {
         if (!quillRef.current) return
-
         const quill = quillRef.current.getEditor()
+        const container = quill.container
 
-        // 1. Click vào ảnh → tự động chọn ảnh đó
-        const handleClick = event => {
-            if (event.target && event.target.tagName === 'IMG') {
-                const blot = Quill.find(event.target)
-                if (blot) {
-                    const index = quill.getIndex(blot)
-                    quill.setSelection(index, 1, 'user')
-                }
-            }
-        }
-        quill.root.addEventListener('click', handleClick)
-
-        // 2. Xóa ảnh bằng Delete hoặc Backspace (mượt như WordPress)
-        const deleteImageIfSelected = (range, context) => {
-            if (!range || range.length === 0) {
-                // Nếu không có vùng chọn, kiểm tra xem con trỏ có đang ở trên ảnh không
-                const [blot] = quill.getLeaf(range.index)
-                if (blot && blot.domNode && blot.domNode.tagName === 'IMG') {
-                    quill.deleteText(range.index, 1, 'user')
-                    return false // ngăn hành vi mặc định
-                }
-            } else {
-                // Nếu có vùng chọn, kiểm tra trong vùng chọn có ảnh không
-                const contents = quill.getContents(range.index, range.length)
-                const hasImage = contents.ops.some(
-                    op => op.insert && op.insert.image
-                )
-                if (hasImage) {
-                    quill.deleteText(range.index, range.length, 'user')
-                    return false
-                }
-            }
-            return true // để Quill xử lý bình thường
+        const adjustHeight = () => {
+            container.style.height = 'auto'
+            container.style.height = `${container.scrollHeight + 20}px`
         }
 
-        // Gắn phím Delete và Backspace
-        quill.keyboard.addBinding(
-            { key: 'Delete' },
-            { collapsed: true },
-            deleteImageIfSelected
-        )
-        quill.keyboard.addBinding(
-            { key: 'Backspace' },
-            { collapsed: true },
-            range => {
-                if (range.index === 0) return true
-                const [blot] = quill.getLeaf(range.index - 1)
-                if (blot && blot.domNode && blot.domNode.tagName === 'IMG') {
-                    quill.deleteText(range.index - 1, 1, 'user')
-                    return false
-                }
-                return deleteImageIfSelected(range)
-            }
-        )
+        quill.on('text-change', adjustHeight)
+        quill.on('selection-change', adjustHeight)
 
-        // Cleanup khi component unmount
+        // Gọi lần đầu sau khi mount
+        setTimeout(adjustHeight, 100)
+
         return () => {
-            quill.root.removeEventListener('click', handleClick)
+            quill.off('text-change', adjustHeight)
+            quill.off('selection-change', adjustHeight)
         }
     }, [])
 
     const modules = {
         toolbar: [
-            [{ header: [1, 2, 3, 4, 5, 6, false] }], // Tiêu đề
-            ['bold', 'italic', 'underline', 'strike'], // In đậm, nghiêng...
-            [{ list: 'ordered' }, { list: 'bullet' }], // Danh sách
-            [{ indent: '-1' }, { indent: '+1' }], // Thụt đầu dòng
-            [{ align: [] }], // Căn lề
-            ['link', 'image', 'video'], // ← Dòng QUAN TRỌNG NHẤT: có nút ảnh
-            ['clean'], // Xóa format
+            [{ header: [1, 2, 3, 4, 5, 6, false] }],
+            ['bold', 'italic', 'underline', 'strike'],
+            [{ list: 'ordered' }, { list: 'bullet' }],
+            [{ indent: '-1' }, { indent: '+1' }],
+            [{ align: [] }],
+            ['link', 'image', 'video'],
+            ['clean']
         ],
-        imageResize: {
-            parchment: Quill.import('parchment'),
-            modules: ['Resize', 'DisplaySize'],
-        },
+        imageResize: { parchment: Quill.import('parchment'), modules: ['Resize', 'DisplaySize'] }
     }
 
-    const formats = [
-        'header',
-        'bold',
-        'italic',
-        'underline',
-        'strike',
-        'list',
-        'bullet',
-        'indent',
-        'align',
-        'link',
-        'image',
-        'video',
-        'color',
-        'background',
-    ]
+    const formats = ['header', 'bold', 'italic', 'underline', 'strike', 'list', 'bullet', 'indent', 'align', 'link', 'image', 'video']
 
-    const handleSubmit = e => {
+    // SUBMIT: Thay ảnh base64 thành [IMAGE_X] trước khi gửi
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        const blogData = {
-            title,
-            description,
-            content,
-            author,
-            publishedAt: publishedAt || new Date().toISOString(),
-            status,
+        if (!title.trim()) return alert('Vui lòng nhập tiêu đề!')
+        if (!featuredImageFile) return alert('Vui lòng chọn ảnh đại diện!')
+        
+        const uploadedImages = Object.values(imageMapping)
+        if (uploadedImages.length === 0) return alert('Vui lòng chèn ít nhất 1 ảnh vào nội dung bài viết!')
+
+        setSubmitting(true)
+
+        let processedContent = content
+        
+        Object.entries(imageMapping).forEach(([imageDataUrl, data]) => {
+            const placeholder = `[IMAGE_${data.display_order}]`
+            const escapedUrl = imageDataUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+            const imgRegex = new RegExp(`<img[^>]*src="${escapedUrl}"[^>]*>`, 'g')
+            processedContent = processedContent.replace(imgRegex, placeholder)
+        })
+
+        console.log('Content sau khi xử lý:', processedContent)
+
+        const fd = new FormData()
+        fd.append('title', title)
+        fd.append('slug', slug)
+        fd.append('description', description)
+        fd.append('content', processedContent)
+        fd.append('author_name', author)
+        fd.append('status', status ? 1 : 0)
+        fd.append('admin_id', 1)
+        if (publishedAt) fd.append('published_at', publishedAt)
+        if (postTypeId) fd.append('post_type_id', postTypeId)
+        selectedCategoryIds.forEach(id => fd.append('category_ids[]', id))
+
+        // Ảnh đại diện
+        fd.append('images', featuredImageFile)
+        fd.append('images_meta[is_main][]', 1)
+        fd.append('images_meta[display_order][]', 0)
+        fd.append('images_meta[placeholder][]', '')
+
+        // Ảnh trong nội dung
+        uploadedImages
+            .sort((a, b) => a.display_order - b.display_order)
+            .forEach(img => {
+                fd.append('images', img.file)
+                fd.append('images_meta[is_main][]', 0)
+                fd.append('images_meta[display_order][]', img.display_order)
+                fd.append('images_meta[placeholder][]', `[IMAGE_${img.display_order}]`)
+            })
+
+        try {
+            await createPost(fd)
+            alert('Tạo bài viết thành công!')
+        } catch (err) {
+            console.error(err)
+            alert(err.response?.data?.message || 'Lỗi server!')
+        } finally {
+            setSubmitting(false)
         }
-        console.log('Bài viết đã lưu:', blogData)
-        alert('Đã lưu bài viết thành công!')
     }
+
+    if (loading) return <div className="p-10 text-center text-xl">Đang tải dữ liệu...</div>
 
     return (
         <>
+            {/* CSS TỰ ĐỘNG MỞ RỘNG CHIỀU CAO EDITOR - BẮT BUỘC */}
             <style jsx>{`
-                .ql-container.ql-snow {
-                    border: none !important;
+                .quill-auto-height .ql-container {
+                    min-height: 300px;
+                    height: auto !important;
+                    overflow: visible !important;
+                    border-bottom: none !important;
                 }
-                .ql-editor {
-                    min-height: 350px;
-                    padding: 16px;
-                    border-radius: 0 0 8px 8px;
+                .quill-auto-height .ql-editor {
+                    min-height: 300px;
+                    padding-bottom: 120px;
+                    line-height: 1.7;
                 }
-                .ql-container {
-                    border: 1px solid #d1d5db !important;
-                    border-top: none !important;
-                    border-radius: 0 0 8px 8px;
+                .quill-auto-height .ql-toolbar {
+                    border-top: 1px solid #ccc;
+                    border-left: 1px solid #ccc;
+                    border-right: 1px solid #ccc;
                 }
-                /* Tùy chọn: làm đẹp placeholder */
-                .ql-editor.ql-blank::before {
-                    color: #9ca3af;
-                    font-style: italic;
+                .quill-auto-height:focus-within .ql-container {
+                    border-color: #3b82f6 !important;
+                    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
                 }
             `}</style>
 
-            <div className="flex flex-col md:flex-row gap-6 p-6 bg-gray-50 min-h-screen">
-                {/* Phần chính - Soạn bài viết */}
-                <div className="flex-1 bg-white p-6 rounded-2xl shadow-sm">
-                    <h2 className="text-xl font-semibold mb-6">
-                        Soạn bài viết
-                    </h2>
+            <div className="flex flex-col md:flex-row gap-8 p-6 bg-gray-50 min-h-screen">
+                {/* PHẦN CHÍNH */}
+                <div className="flex-1 bg-white rounded-2xl shadow-lg p-8">
+                    <h1 className="text-3xl font-bold mb-8">Tạo bài viết mới</h1>
 
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                        {/* Tiêu đề */}
-                        <div>
-                            <label className="block font-medium mb-2 text-gray-700">
-                                Tiêu đề
-                            </label>
+                    <form onSubmit={handleSubmit} className="space-y-8">
+
+                        <input
+                            type="text"
+                            placeholder="Tiêu đề bài viết *"
+                            value={title}
+                            onChange={e => setTitle(e.target.value)}
+                            className="w-full text-4xl font-bold border-b-2 focus:border-blue-500 outline-none pb-4"
+                            required
+                        />
+
+                        <div className="flex items-center gap-3 text-gray-600">
+                            <span>Slug:</span>
                             <input
                                 type="text"
-                                value={title}
-                                onChange={e => setTitle(e.target.value)}
-                                placeholder="Nhập tiêu đề bài viết..."
-                                className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                                required
+                                value={slug}
+                                onChange={e => setSlug(e.target.value)}
+                                className="flex-1 bg-gray-100 rounded px-4 py-2 outline-none"
                             />
                         </div>
 
-                        {/* Mô tả ngắn */}
+                        {/* ẢNH ĐẠI DIỆN */}
                         <div>
-                            <label className="block font-medium mb-2 text-gray-700">
-                                Mô tả ngắn
-                            </label>
-                            <textarea
-                                value={description}
-                                onChange={e => setDescription(e.target.value)}
-                                placeholder="Mô tả ngắn gọn nội dung bài viết..."
-                                rows={3}
-                                className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none transition"
+                            <label className="block text-lg font-semibold mb-4">Ảnh đại diện *</label>
+                            {!featuredImagePreview ? (
+                                <div
+                                    onClick={() => featuredInputRef.current?.click()}
+                                    className="border-2 border-dashed border-gray-400 rounded-xl h-80 flex items-center justify-center cursor-pointer hover:border-blue-500 bg-gray-50"
+                                >
+                                    <p className="text-lg text-gray-500">Click để chọn ảnh đại diện</p>
+                                </div>
+                            ) : (
+                                <div className="relative">
+                                    <img src={featuredImagePreview} alt="Featured" className="w-full h-96 object-cover rounded-xl" />
+                                    <button
+                                        type="button"
+                                        onClick={() => { setFeaturedImageFile(null); setFeaturedImagePreview(null) }}
+                                        className="absolute top-4 right-4 bg-red-600 text-white w-10 h-10 rounded-full hover:bg-red-700"
+                                    >X</button>
+                                </div>
+                            )}
+                            <input
+                                ref={featuredInputRef}
+                                type="file"
+                                accept="image/*"
+                                onChange={e => {
+                                    const file = e.target.files?.[0]
+                                    if (file) {
+                                        setFeaturedImageFile(file)
+                                        setFeaturedImagePreview(URL.createObjectURL(file))
+                                    }
+                                }}
+                                className="hidden"
                             />
                         </div>
 
-                        {/* Nội dung bài viết - ReactQuill */}
+                        <textarea
+                            placeholder="Mô tả ngắn (SEO)..."
+                            rows={4}
+                            value={description}
+                            onChange={e => setDescription(e.target.value)}
+                            className="w-full border rounded-lg px-5 py-4 resize-none focus:ring-2 focus:ring-blue-500 outline-none"
+                        />
+
+                        {/* EDITOR - TỰ ĐỘNG KÉO DÀI THEO NỘI DUNG */}
                         <div>
-                            <label className="block font-medium mb-2 text-gray-700">
-                                Nội dung bài viết
-                            </label>
-                            <div className="border border-gray-300 rounded-lg overflow-hidden">
+                            <label className="block text-lg font-semibold mb-3">Nội dung bài viết</label>
+                            <div className="border border-gray-300 rounded-lg overflow-hidden quill-auto-height">
                                 <ReactQuill
                                     ref={quillRef}
                                     theme="snow"
@@ -267,81 +349,111 @@ const BlogCreateNew = () => {
                                     onChange={setContent}
                                     modules={modules}
                                     formats={formats}
-                                    placeholder="Nhập nội dung bài viết (có thể chèn ảnh, định dạng...)"
+                                    placeholder="Viết nội dung... Paste/drop ảnh để chèn!"
                                     className="bg-white"
-                                    style={{ minHeight: '400px' }}
                                 />
                             </div>
                         </div>
 
-                        {/* Nút lưu */}
-                        <div className="flex justify-end pt-6">
+                        {/* DEBUG */}
+                        <div className="bg-yellow-100 p-4 rounded-lg border-2 border-yellow-400">
+                            <p className="font-bold text-lg mb-2">Debug Info:</p>
+                            <p className="mb-1">Số ảnh trong content: <strong>{Object.keys(imageMapping).length}</strong></p>
+                            <p className="mb-1">Featured Image: {featuredImageFile ? 'Có' : 'Chưa có'}</p>
+                            {Object.keys(imageMapping).length > 0 && (
+                                <div className="mt-2 pl-4 border-l-4 border-yellow-600">
+                                    {Object.values(imageMapping)
+                                        .sort((a, b) => a.display_order - b.display_order)
+                                        .map((img, i) => (
+                                            <p key={i} className="text-sm">
+                                                • IMAGE_{img.display_order}: {img.file.name}
+                                            </p>
+                                        ))}
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="flex justify-end">
                             <button
                                 type="submit"
-                                className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow-md transition flex items-center gap-2"
+                                disabled={submitting}
+                                className="px-10 py-4 bg-blue-600 text-white text-lg font-medium rounded-lg hover:bg-blue-700 disabled:opacity-60"
                             >
-                                Lưu bài viết
+                                {submitting ? 'Đang đăng...' : 'Đăng bài viết'}
                             </button>
                         </div>
                     </form>
                 </div>
 
-                {/* Sidebar - Cài đặt */}
-                <div className="w-full md:w-80 bg-white p-6 rounded-2xl shadow-sm space-y-6">
-                    <h3 className="text-lg font-semibold mb-4">
-                        Cài đặt & Trạng thái
-                    </h3>
-
-                    {/* Tác giả */}
-                    <div>
-                        <label className="block font-medium mb-1 text-gray-700">
-                            Tác giả
-                        </label>
-                        <input
-                            type="text"
-                            value={author}
-                            onChange={e => setAuthor(e.target.value)}
-                            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
-                        />
+                {/* SIDEBAR */}
+                <div className="w-full md:w-96 space-y-6">
+                    <div className="bg-white p-6 rounded-xl shadow">
+                        <h3 className="font-bold mb-4">Loại bài viết</h3>
+                        <select
+                            value={postTypeId}
+                            onChange={e => setPostTypeId(e.target.value)}
+                            className="w-full border rounded-lg px-4 py-2"
+                        >
+                            <option value="">-- Chọn loại --</option>
+                            {postTypes.map(pt => (
+                                <option key={pt.id} value={pt.id}>{pt.name}</option>
+                            ))}
+                        </select>
                     </div>
 
-                    {/* Ngày phát hành */}
-                    <div>
-                        <label className="block font-medium mb-1 text-gray-700">
-                            Ngày phát hành
-                        </label>
-                        <input
-                            type="datetime-local"
-                            value={publishedAt}
-                            onChange={e => setPublishedAt(e.target.value)}
-                            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
-                        />
+                    <div className="bg-white p-6 rounded-xl shadow">
+                        <h3 className="font-bold mb-4">Danh mục</h3>
+                        <div className="max-h-64 overflow-y-auto space-y-2">
+                            {categories.map(cat => (
+                                <label key={cat.id} className="flex items-center gap-3 cursor-pointer">
+                                    <input
+                                        type="checkbox"
+                                        checked={selectedCategoryIds.includes(cat.id)}
+                                        onChange={e => {
+                                            if (e.target.checked) {
+                                                setSelectedCategoryIds(prev => [...prev, cat.id])
+                                            } else {
+                                                setSelectedCategoryIds(prev => prev.filter(id => id !== cat.id))
+                                            }
+                                        }}
+                                        className="w-4 h-4"
+                                    />
+                                    <span>{cat.name}</span>
+                                </label>
+                            ))}
+                        </div>
                     </div>
 
-                    {/* Trạng thái */}
-                    <div className="flex items-center justify-between">
-                        <span className="font-medium text-gray-700">
-                            Trạng thái
-                        </span>
-                        <label className="relative inline-flex items-center cursor-pointer">
+                    <div className="bg-white p-6 rounded-xl shadow space-y-5">
+                        <div>
+                            <label className="block font-medium mb-2">Tác giả</label>
+                            <input
+                                type="text"
+                                value={author}
+                                onChange={e => setAuthor(e.target.value)}
+                                className="w-full border rounded px-4 py-2"
+                            />
+                        </div>
+
+                        <div>
+                            <label className="block font-medium mb-2">Ngày đăng</label>
+                            <input
+                                type="datetime-local"
+                                value={publishedAt}
+                                onChange={e => setPublishedAt(e.target.value)}
+                                className="w-full border rounded px-4 py-2"
+                            />
+                        </div>
+
+                        <div className="flex items-center justify-between">
+                            <span className="font-medium">Công khai</span>
                             <input
                                 type="checkbox"
-                                className="sr-only peer"
                                 checked={status}
                                 onChange={e => setStatus(e.target.checked)}
+                                className="w-5 h-5"
                             />
-                            <div className="w-12 h-6 bg-gray-300 rounded-full peer peer-checked:bg-green-500 transition"></div>
-                            <span className="absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition peer-checked:translate-x-6"></span>
-                        </label>
-                    </div>
-
-                    <div className="pt-6 border-t border-gray-200 space-y-3">
-                        <button className="w-full py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-lg transition">
-                            Lưu nháp
-                        </button>
-                        <button className="w-full py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition flex items-center justify-center gap-2">
-                            Đăng bài
-                        </button>
+                        </div>
                     </div>
                 </div>
             </div>

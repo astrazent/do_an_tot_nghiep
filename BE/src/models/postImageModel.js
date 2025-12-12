@@ -9,6 +9,9 @@ const POST_IMAGES_SCHEMA = Joi.object({
         'any.only': 'is_main chỉ nhận 0 hoặc 1',
         'any.required': 'is_main là bắt buộc',
     }),
+    display_order: Joi.number().integer().optional().messages({
+        'number.base': 'display_order phải là số',
+    }),
     image_url: Joi.string().max(255).required().messages({
         'string.empty': 'Image URL không được để trống',
         'string.max': 'Image URL tối đa 255 ký tự',

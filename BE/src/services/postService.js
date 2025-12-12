@@ -2,6 +2,8 @@ import { PostsModel } from '~/models/postModel'
 import { StatusCodes } from 'http-status-codes'
 import { PostImagesModel } from '~/models/postImageModel'
 import ApiError from '~/utils/ApiError'
+import { PostCategoriesModel } from '~/models/postCategoryModel'
+import { CategoriesModel } from '~/models/categoryModel'
 const attachImagesToPosts = async posts => {
     if (!posts) return []
     const postArray = Array.isArray(posts) ? posts : [posts]
@@ -67,8 +69,37 @@ const attachImagesToRelatedPosts = async relatedData => {
     }
 }
 
-const createPostService = async data => {
-    const post = await PostsModel.createPost(data)
+const createPostService = async (data, images) => {
+    const post = await PostsModel.createPost({
+        title: data.title,
+        slug: data.slug,
+        content: data.content,
+        author_name: data.author_name,
+        description: data.description,
+        status: data.status,
+        post_type_id: data.post_type_id,
+        published_at: data.published_at,
+        admin_id: data.admin_id,
+    })
+
+    for ( const categoryId of data.category_ids ) {
+        await PostCategoriesModel.createLink({
+            post_id: post.id,
+            category_id: categoryId,
+        })
+    }
+
+    const postImages = images.map((imgUrl, index) => ({
+        post_id: post.id,
+        image_url: imgUrl,
+        is_main: data.images_meta.is_main[index],
+        display_order: data.images_meta.display_order[index],
+    }))
+
+    for( const imgData of postImages) {
+        await PostImagesModel.createPostImage(imgData)
+    }
+
     return post
 }
 
@@ -80,7 +111,23 @@ const getByIdPostService = async postId => {
             `Không tìm thấy bài viết với ID: ${postId}`
         )
     }
-    return attachImagesToPosts(post)
+    const postImages = await PostImagesModel.getImagesByPost(postId)
+
+    post.images = postImages.map(i => ({
+        url: i.image_url,
+        is_main: i.is_main,
+        display_order: i.display_order,
+    }))
+
+    post.post_categories = []
+
+    const Categories = await PostCategoriesModel.getCategoriesByPost(postId)
+    for (const category of Categories) {
+        const postCategory = await CategoriesModel.getCategoryById(category.category_id)
+        post.post_categories.push(postCategory.name)
+    }
+
+    return post
 }
 
 const getBySlugService = async data => {

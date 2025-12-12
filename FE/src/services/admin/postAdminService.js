@@ -10,6 +10,18 @@ export const getListPost = async () => {
     }
 }
 
+export const createPost = async (data) => {
+    try {
+        const response = await axios.post('http://localhost:8023/v1/post', data,
+            { headers: { 'Content-Type': 'multipart/form-data' } }
+        )
+        return response.data
+    } catch (error) {
+        console.error('Đã xảy ra lỗi khi lấy dữ liệu', error)
+        throw error
+    }
+}
+
 export const getByIdPost = async postId => {
     try {
         const response = await axios.get('http://localhost:8023/v1/post', {

@@ -3,6 +3,7 @@ import { StatusCodes } from 'http-status-codes'
 
 const createProduct = async (req, res, next) => {
     try {
+
         const data = await productService.createProductService(req.body, req.uploadedImageUrls)
         return res.status(StatusCodes.OK).json({
             message: 'Sản phẩm đã được tạo thành công',

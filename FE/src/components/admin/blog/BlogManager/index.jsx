@@ -14,6 +14,7 @@ import {
     FaFileAlt
 } from 'react-icons/fa'
 import { getListPost, getByIdPost } from '~/services/admin/postAdminService'
+import PostDetailModal from '../PostDetailModal'
 
 // Utility Functions
 const formatDate = (dateString) => {
@@ -158,7 +159,7 @@ const ActionDropdown = ({ post, onToggleStatus, onEdit, onPreview, onDelete }) =
                         onClick={() => handleAction(() => onPreview(post.id))} 
                         className="w-full px-4 py-3 text-left hover:bg-indigo-50 text-sm text-gray-700 flex items-center gap-3 transition-colors"
                     >
-                        <FaEye className="text-indigo-500"/> Xem trước
+                        <FaEye className="text-indigo-500"/> Xem chi tiết
                     </button>
                     <button 
                         onClick={() => handleAction(() => onEdit(post.id))} 
@@ -181,180 +182,6 @@ const ActionDropdown = ({ post, onToggleStatus, onEdit, onPreview, onDelete }) =
                     </button>
                 </div>
             )}
-        </div>
-    )
-}
-
-// Detail Modal Component
-const PostDetailModal = ({ post, isOpen, onClose }) => {
-    const [postDetail, setPostDetail] = useState(null)
-    const [isLoadingDetail, setIsLoadingDetail] = useState(false)
-    const [detailError, setDetailError] = useState(null)
-
-    useEffect(() => {
-        if (isOpen && post) {
-            fetchPostDetail()
-        }
-    }, [isOpen, post])
-
-    const fetchPostDetail = async () => {
-        if (!post?.id) return
-        
-        setIsLoadingDetail(true)
-        setDetailError(null)
-        try {
-            const response = await getByIdPost(post.id)
-            setPostDetail(response.data)
-        } catch (error) {
-            console.error('Lỗi khi tải chi tiết bài viết:', error)
-            setDetailError('Không thể tải chi tiết bài viết')
-        } finally {
-            setIsLoadingDetail(false)
-        }
-    }
-
-    if (!isOpen) return null
-
-    const handleModalClick = (e) => e.stopPropagation()
-
-    const backdropStyle = {
-        backdropFilter: 'blur(8px)',
-        WebkitBackdropFilter: 'blur(8px)'
-    }
-
-    // Parse content và thay thế [IMAGE_X] bằng ảnh thật
-    const parseContent = (content, images) => {
-        if (!content) return 'Không có nội dung'
-        
-        let parsedContent = content
-        if (images && images.length > 0) {
-            images.forEach((img, index) => {
-                const placeholder = `[IMAGE_${index + 1}]`
-                const imgTag = `<img src="${img.url}" alt="${img.caption || ''}" class="w-full rounded-lg my-4" />`
-                parsedContent = parsedContent.replace(placeholder, imgTag)
-            })
-        }
-        return parsedContent
-    }
-
-    return (
-        <div
-            className="fixed inset-0 bg-black/30 flex justify-center items-center z-50 p-4"
-            style={backdropStyle}
-            onClick={onClose}
-        >
-            <div
-                className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto relative"
-                onClick={handleModalClick}
-            >
-                <button
-                    onClick={onClose}
-                    className="sticky top-4 right-4 float-right text-gray-400 hover:text-gray-600 p-2 rounded-full hover:bg-gray-100 transition-colors z-10 bg-white shadow-md"
-                >
-                    <FaTimes className="w-5 h-5" />
-                </button>
-
-                {isLoadingDetail ? (
-                    <div className="p-8 flex flex-col items-center justify-center min-h-[400px]">
-                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mb-4"></div>
-                        <p className="text-gray-500">Đang tải chi tiết bài viết...</p>
-                    </div>
-                ) : detailError ? (
-                    <div className="p-8 flex flex-col items-center justify-center min-h-[400px]">
-                        <div className="text-red-500 text-5xl mb-4">⚠️</div>
-                        <p className="text-red-600 font-medium">{detailError}</p>
-                        <button 
-                            onClick={fetchPostDetail}
-                            className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
-                        >
-                            Thử lại
-                        </button>
-                    </div>
-                ) : postDetail ? (
-                    <div className="p-8">
-                        {/* Header with main image */}
-                        {postDetail.images && postDetail.images.length > 0 && (
-                            <div className="mb-6 -mx-8 -mt-8">
-                                <img 
-                                    src={postDetail.images[0].url} 
-                                    alt={postDetail.images[0].caption || postDetail.title}
-                                    className="w-full h-64 object-cover rounded-t-2xl"
-                                />
-                            </div>
-                        )}
-
-                        {/* Title and metadata */}
-                        <div className="mb-6">
-                            <h2 className="text-3xl font-extrabold text-gray-900 mb-2">{postDetail.title}</h2>
-                            <p className="text-base text-gray-600 italic mb-3">{postDetail.description}</p>
-                            <div className="flex items-center gap-4 text-sm text-gray-500">
-                                <span className="flex items-center gap-1">
-                                    <FaUser className="text-indigo-500"/> {postDetail.author_name}
-                                </span>
-                                <span>•</span>
-                                <span className="flex items-center gap-1">
-                                    <FaCalendar className="text-indigo-500"/> {formatDateTime(postDetail.published_at)}
-                                </span>
-                                <span>•</span>
-                                <StatusBadge status={postDetail.status === 1 ? 'Đăng' : 'Ẩn'} />
-                            </div>
-                        </div>
-
-                        {/* Content */}
-                        <div className="prose max-w-none mb-6">
-                            <div 
-                                className="text-gray-700 leading-relaxed"
-                                dangerouslySetInnerHTML={{ 
-                                    __html: parseContent(postDetail.content, postDetail.images.slice(1)) 
-                                }}
-                            />
-                        </div>
-
-                        {/* Additional images gallery */}
-                        {postDetail.images && postDetail.images.length > 1 && (
-                            <div className="border-t pt-6">
-                                <h3 className="font-semibold text-gray-700 mb-3">Thư viện ảnh</h3>
-                                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                                    {postDetail.images.slice(1).map((img, index) => (
-                                        <div key={index} className="relative group">
-                                            <img 
-                                                src={img.url} 
-                                                alt={img.caption || `Image ${index + 1}`}
-                                                className="w-full h-40 object-cover rounded-lg"
-                                            />
-                                            {img.caption && (
-                                                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center p-2">
-                                                    <p className="text-white text-xs text-center">{img.caption}</p>
-                                                </div>
-                                            )}
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-
-                        {/* Meta information */}
-                        <div className="border-t pt-6 mt-6 grid grid-cols-2 gap-4 text-sm">
-                            <div>
-                                <span className="text-gray-500">Slug:</span>
-                                <span className="ml-2 font-mono text-gray-700">{postDetail.slug}</span>
-                            </div>
-                            <div>
-                                <span className="text-gray-500">ID bài viết:</span>
-                                <span className="ml-2 font-medium text-gray-700">#{postDetail.id}</span>
-                            </div>
-                            <div>
-                                <span className="text-gray-500">Ngày tạo:</span>
-                                <span className="ml-2 text-gray-700">{formatDateTime(postDetail.created_at)}</span>
-                            </div>
-                            <div>
-                                <span className="text-gray-500">Cập nhật lần cuối:</span>
-                                <span className="ml-2 text-gray-700">{formatDateTime(postDetail.updated_at)}</span>
-                            </div>
-                        </div>
-                    </div>
-                ) : null}
-            </div>
         </div>
     )
 }
@@ -390,7 +217,7 @@ const BlogManager = () => {
                     id: post.id,
                     title: post.title || 'Không có tiêu đề',
                     author: post.author || post.author_name || 'Không rõ',
-                    description: post.description || post.content || '',
+                    description: post.description || '',
                     published_at: post.published_at || post.created_at || '',
                     status: post.status === 1 || post.status === 'active' ? 'Đăng' : 'Ẩn',
                     views: post.views || post.view_count || 0,

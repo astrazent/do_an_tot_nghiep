@@ -1,8 +1,13 @@
 import express from 'express'
 import { postController } from '~/controllers/postController'
+import { upload, uploadCloudinary } from '~/middlewares/uploadCloudinary'
 const Router = express.Router()
 
-Router.route('/').post(postController.createPost)
+Router.route('/').post(
+    upload.array('images', 10),
+    uploadCloudinary,
+    postController.createPost
+)
 
 Router.route('/').get(postController.getByIdPost)
 

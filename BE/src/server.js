@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
+import rateLimit from 'express-rate-limit'
 import exitHook from 'async-exit-hook'
 import { createConnection, closeConnection } from '~/config/mysql.js'
 import { env } from '~/config/environment.js'
@@ -41,6 +42,11 @@ const START_SERVER = async () => {
         app.use('/v1', APIs_V1)
         app.use('/v2', APIs_V2)
         app.use(errorHandlingMiddleware)
+
+        const apiLimiter = rateLimit({
+            windowMs: 15 * 60 * 1000,
+            max: 10,
+        })
 
         serverInstance = app.listen(port, env.APP_HOST, () => {
             console.log(`Server running at Host: ${env.APP_HOST} Port: ${port}`)

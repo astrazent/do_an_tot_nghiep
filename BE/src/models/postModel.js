@@ -30,6 +30,10 @@ const POSTS_SCHEMA = Joi.object({
         'number.base': 'Status phải là số',
         'any.only': 'Status phải là 0 hoặc 1',
     }),
+    post_type_id: Joi.number().integer().required().messages({
+        'number.base': 'Post Type ID phải là số',
+        'any.required': 'Post Type ID là bắt buộc',
+    }),
     published_at: Joi.date().allow(null),
     admin_id: Joi.number().integer().required().messages({
         'number.base': 'Admin ID phải là số',
