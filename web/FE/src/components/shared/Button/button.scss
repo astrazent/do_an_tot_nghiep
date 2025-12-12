@@ -1,0 +1,40 @@
+// Base button styles
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.1s, color 0.1s;
+
+    .btn-icon {
+        display: flex;
+        align-items: center;
+    }
+
+    &:hover {
+        background-color: #2e7d32; // màu nền khi hover
+        color: #fff; // màu chữ khi hover
+        border-color: #2e7d32; // đổi màu viền khi hover nếu muốn
+    }
+}
+
+// Nút submit chính (xanh đậm hơn)
+.login-button {
+    border-color: #388e3c;
+    background-color: #ffffff;
+    color: #000000;
+
+    &:hover {
+        background-color: #1b5e20; // màu nền hover đậm hơn
+        color: #fff; // màu chữ hover
+        border-color: #1b5e20; // viền hover
+    }
+}

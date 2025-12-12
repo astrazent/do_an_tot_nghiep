@@ -1,0 +1,59 @@
+.shopping-cart-container {
+    display: flex;
+    font-family: Arial, sans-serif;
+    max-width: 1200px;
+    margin: 2rem auto;
+    gap: 2rem;
+}
+
+.cart-items {
+    flex-grow: 1;
+}
+
+.cart-items-wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 90%;
+}
+
+.cart-items-container h2 {
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+}
+
+.delivery-info {
+    border-top: 1px solid #eee;
+    padding-top: 1rem;
+    margin-top: 1rem;
+    color: #888;
+}
+
+.shopping-cart-container {
+    display: flex;
+    gap: 2rem;
+    min-height: 400px; // giữ kích thước tổng thể
+}
+
+.cart-items {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.order-summary {
+    flex: 1;
+}
+
+.cart-empty-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 2; // giữ khoảng trống cho phần cart-items
+    min-height: 400px; // bằng với khi có sản phẩm
+    color: #666;
+    font-size: 1.2rem;
+    gap: 1rem;
+}
