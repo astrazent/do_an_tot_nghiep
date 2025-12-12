@@ -1,0 +1,1135 @@
+-- Dữ liệu mẫu cho Roles
+INSERT INTO Roles (name, description) VALUES
+('admin', 'Quyền quản trị hệ thống, có thể thêm, sửa, xóa dữ liệu và quản lý user'),
+('user', 'Quyền người dùng bình thường, chỉ có thể xem và thao tác hạn chế trong hệ thống');
+
+-- Dữ liệu mẫu cho Admins
+INSERT INTO Admins (username, email, full_name, password_hash, level, description, role_id) VALUES
+('superadmin', 'superadmin@example.com', 'Nguyen Van A', '$2y$10$examplehash1', 3, 'Quản trị viên cao cấp, toàn quyền trên hệ thống', 1),
+('admin1', 'admin1@example.com', 'Tran Thi B', '$2y$10$examplehash2', 2, 'Quản lý nội dung và người dùng', 1),
+('admin2', 'admin2@example.com', 'Le Van C', '$2y$10$examplehash3', 1, 'Hỗ trợ quản lý vận hành', 1),
+('useradmin', 'useradmin@example.com', 'Pham Thi D', '$2y$10$examplehash4', 0, 'Admin cấp thấp, quyền hạn giới hạn', 1);
+
+-- Dữ liệu mẫu cho PostTypes
+INSERT INTO PostTypes (name, slug, description) VALUES
+('Mẹo hay tiêu dùng', 'meo-hay-tieu-dung', 'Tổng hợp các mẹo vặt hữu ích trong đời sống hàng ngày'),
+('Bài viết nổi bật', 'bai-viet-noi-bat', 'Những bài viết được đánh giá nổi bật, quan tâm nhiều nhất'),
+('Đặc sản vùng miền', 'dac-san-vung-mien', 'Giới thiệu các đặc sản nổi tiếng từ các vùng miền Việt Nam'),
+('Công thức nấu ăn', 'cong-thuc-nau-an', 'Các công thức nấu ăn dễ thực hiện tại nhà'),
+('Chăm sóc sức khỏe', 'cham-soc-suc-khoe', 'Mẹo và hướng dẫn chăm sóc sức khỏe và dinh dưỡng'),
+('Tin tức ẩm thực', 'tin-tuc-am-thuc', 'Các tin tức mới nhất về ẩm thực, nhà hàng và món ăn');
+
+-- Dữ liệu mẫu cho Posts
+INSERT INTO Posts (title, slug, content, author_name, description, status, published_at, admin_id, post_type_id) VALUES
+-- post_type_id = 1 (Mẹo hay tiêu dùng)
+('Cách tiết kiệm điện hiệu quả cho gia đình', 'cach-tiet-kiem-dien-hieu-qua', '<p>Xúc xích cốm là món ăn truyền thống đặc sắc của Hà Nội, nổi bật với hương vị độc đáo.</p>\n\n<p>[IMAGE_1]</p>\n\n<p>Thịt heo tươi kết hợp với cốm non tạo ra hương vị dẻo thơm khó quên, phù hợp với mọi bữa ăn gia đình.</p>\n\n<p>[IMAGE_2]</p>\n\n<p>Ngày nay, món ăn này được nhiều quán đặc sản và siêu thị giới thiệu rộng rãi, trở thành lựa chọn yêu thích của nhiều người.</p>', 'Nguyễn Thị Lan', 'Mẹo tiết kiệm điện hàng ngày', 1, '2025-10-10 08:00:00', 1, 1),
+('Bảo quản thực phẩm trong tủ lạnh đúng cách', 'bao-quan-thuc-pham-trong-tu-lanh', '<p>Xúc xích cốm là món ăn truyền thống đặc sắc của Hà Nội, nổi bật với hương vị độc đáo.</p>\n\n<p>[IMAGE_1]</p>\n\n<p>Thịt heo tươi kết hợp với cốm non tạo ra hương vị dẻo thơm khó quên, phù hợp với mọi bữa ăn gia đình.</p>\n\n<p>[IMAGE_2]</p>\n\n<p>Ngày nay, món ăn này được nhiều quán đặc sản và siêu thị giới thiệu rộng rãi, trở thành lựa chọn yêu thích của nhiều người.</p>', 'Trần Văn Mạnh', 'Các mẹo bảo quản thực phẩm', 1, '2025-10-10 09:30:00', 2, 1),
+('Cách khử mùi hôi trong bếp', 'cach-khu-mui-hoi-trong-bep', '<p>Xúc xích cốm là món ăn truyền thống đặc sắc của Hà Nội, nổi bật với hương vị độc đáo.</p>\n\n<p>[IMAGE_1]</p>\n\n<p>Thịt heo tươi kết hợp với cốm non tạo ra hương vị dẻo thơm khó quên, phù hợp với mọi bữa ăn gia đình.</p>\n\n<p>[IMAGE_2]</p>\n\n<p>Ngày nay, món ăn này được nhiều quán đặc sản và siêu thị giới thiệu rộng rãi, trở thành lựa chọn yêu thích của nhiều người.</p>', 'Lê Thị Hà', 'Mẹo khử mùi hôi đơn giản', 1, '2025-10-10 11:00:00', 3, 1),
+('Tối ưu không gian nhà cửa nhỏ', 'toi-uu-khong-gian-nha-cua-nho', '<p>Xúc xích cốm là món ăn truyền thống đặc sắc của Hà Nội, nổi bật với hương vị độc đáo.</p>\n\n<p>[IMAGE_1]</p>\n\n<p>Thịt heo tươi kết hợp với cốm non tạo ra hương vị dẻo thơm khó quên, phù hợp với mọi bữa ăn gia đình.</p>\n\n<p>[IMAGE_2]</p>\n\n<p>Ngày nay, món ăn này được nhiều quán đặc sản và siêu thị giới thiệu rộng rãi, trở thành lựa chọn yêu thích của nhiều người.</p>', 'Phạm Văn Long', 'Mẹo sắp xếp không gian sống', 1, '2025-10-10 12:30:00', 4, 1),
+('Chọn thực phẩm tươi ngon khi đi chợ', 'chon-thuc-pham-tuoi-ngon', '<p>Xúc xích cốm là món ăn truyền thống đặc sắc của Hà Nội, nổi bật với hương vị độc đáo.</p>\n\n<p>[IMAGE_1]</p>\n\n<p>Thịt heo tươi kết hợp với cốm non tạo ra hương vị dẻo thơm khó quên, phù hợp với mọi bữa ăn gia đình.</p>\n\n<p>[IMAGE_2]</p>\n\n<p>Ngày nay, món ăn này được nhiều quán đặc sản và siêu thị giới thiệu rộng rãi, trở thành lựa chọn yêu thích của nhiều người.</p>', 'Hoàng Thị Thu', 'Mẹo mua thực phẩm tươi', 1, '2025-10-10 14:00:00', 1, 1),
+('Cách bảo quản đồ dùng lâu hỏng', 'cach-bao-quan-do-dung-lau-hong', '<p>Xúc xích cốm là món ăn truyền thống đặc sắc của Hà Nội, nổi bật với hương vị độc đáo.</p>\n\n<p>[IMAGE_1]</p>\n\n<p>Thịt heo tươi kết hợp với cốm non tạo ra hương vị dẻo thơm khó quên, phù hợp với mọi bữa ăn gia đình.</p>\n\n<p>[IMAGE_2]</p>\n\n<p>Ngày nay, món ăn này được nhiều quán đặc sản và siêu thị giới thiệu rộng rãi, trở thành lựa chọn yêu thích của nhiều người.</p>', 'Đặng Văn Nam', 'Bí quyết bảo quản đồ dùng', 1, '2025-10-10 15:30:00', 2, 1),
+-- post_type_id = 2 (Bài viết nổi bật)
+('Những món ăn được săn lùng nhiều nhất', 'nhung-mon-an-duoc-san-lung-nhieu-nhat', '<p>Xúc xích cốm là món ăn truyền thống đặc sắc của Hà Nội, nổi bật với hương vị độc đáo.</p>\n\n<p>[IMAGE_1]</p>\n\n<p>Thịt heo tươi kết hợp với cốm non tạo ra hương vị dẻo thơm khó quên, phù hợp với mọi bữa ăn gia đình.</p>\n\n<p>[IMAGE_2]</p>\n\n<p>Ngày nay, món ăn này được nhiều quán đặc sản và siêu thị giới thiệu rộng rãi, trở thành lựa chọn yêu thích của nhiều người.</p>', 'Ngô Văn Bảo', 'Top món ăn nổi bật', 1, '2025-10-11 08:00:00', 1, 2),
+('Các nhà hàng hot nhất hiện nay', 'cac-nha-hang-hot-nhat', '<p>Xúc xích cốm là món ăn truyền thống đặc sắc của Hà Nội, nổi bật với hương vị độc đáo.</p>\n\n<p>[IMAGE_1]</p>\n\n<p>Thịt heo tươi kết hợp với cốm non tạo ra hương vị dẻo thơm khó quên, phù hợp với mọi bữa ăn gia đình.</p>\n\n<p>[IMAGE_2]</p>\n\n<p>Ngày nay, món ăn này được nhiều quán đặc sản và siêu thị giới thiệu rộng rãi, trở thành lựa chọn yêu thích của nhiều người.</p>', 'Vũ Thị Mai', 'Những nhà hàng được ưa chuộng', 1, '2025-10-11 09:30:00', 2, 2),
+('Địa điểm ăn uống đáng thử tại Hà Nội', 'dia-diem-an-uong-dang-thu-ha-noi', '<p>Xúc xích cốm là món ăn truyền thống đặc sắc của Hà Nội, nổi bật với hương vị độc đáo.</p>\n\n<p>[IMAGE_1]</p>\n\n<p>Thịt heo tươi kết hợp với cốm non tạo ra hương vị dẻo thơm khó quên, phù hợp với mọi bữa ăn gia đình.</p>\n\n<p>[IMAGE_2]</p>\n\n<p>Ngày nay, món ăn này được nhiều quán đặc sản và siêu thị giới thiệu rộng rãi, trở thành lựa chọn yêu thích của nhiều người.</p>', 'Trần Văn Mạnh', 'Địa điểm ẩm thực nổi bật', 1, '2025-10-11 11:00:00', 3, 2),
+('Món tráng miệng được yêu thích', 'mon-trang-mieng-duoc-yeu-thich', '<p>Xúc xích cốm là món ăn truyền thống đặc sắc của Hà Nội, nổi bật với hương vị độc đáo.</p>\n\n<p>[IMAGE_1]</p>\n\n<p>Thịt heo tươi kết hợp với cốm non tạo ra hương vị dẻo thơm khó quên, phù hợp với mọi bữa ăn gia đình.</p>\n\n<p>[IMAGE_2]</p>\n\n<p>Ngày nay, món ăn này được nhiều quán đặc sản và siêu thị giới thiệu rộng rãi, trở thành lựa chọn yêu thích của nhiều người.</p>', 'Nguyễn Thị Lan', 'Các món tráng miệng phổ biến', 1, '2025-10-11 12:30:00', 4, 2),
+('Xu hướng ẩm thực mới nhất', 'xu-huong-am-thuc-moi-nhat', '<p>Xúc xích cốm là món ăn truyền thống đặc sắc của Hà Nội, nổi bật với hương vị độc đáo.</p>\n\n<p>[IMAGE_1]</p>\n\n<p>Thịt heo tươi kết hợp với cốm non tạo ra hương vị dẻo thơm khó quên, phù hợp với mọi bữa ăn gia đình.</p>\n\n<p>[IMAGE_2]</p>\n\n<p>Ngày nay, món ăn này được nhiều quán đặc sản và siêu thị giới thiệu rộng rãi, trở thành lựa chọn yêu thích của nhiều người.</p>', 'Lê Thị Hà', 'Các xu hướng ẩm thực đang hot', 1, '2025-10-11 14:00:00', 1, 2),
+('Những công thức nấu ăn được chia sẻ nhiều', 'nhung-cong-thuc-nau-an-duoc-chia-se-nhieu', '<p>Xúc xích cốm là món ăn truyền thống đặc sắc của Hà Nội, nổi bật với hương vị độc đáo.</p>\n\n<p>[IMAGE_1]</p>\n\n<p>Thịt heo tươi kết hợp với cốm non tạo ra hương vị dẻo thơm khó quên, phù hợp với mọi bữa ăn gia đình.</p>\n\n<p>[IMAGE_2]</p>\n\n<p>Ngày nay, món ăn này được nhiều quán đặc sản và siêu thị giới thiệu rộng rãi, trở thành lựa chọn yêu thích của nhiều người.</p>', 'Phạm Văn Long', 'Các công thức nấu ăn nổi bật', 1, '2025-10-11 15:30:00', 2, 2),
+-- post_type_id = 3 (Đặc sản vùng miền)
+('Khám phá đặc sản miền Bắc', 'kham-pha-dac-san-mien-bac', '<p>Xúc xích cốm là món ăn truyền thống đặc sắc của Hà Nội, nổi bật với hương vị độc đáo.</p>\n\n<p>[IMAGE_1]</p>\n\n<p>Thịt heo tươi kết hợp với cốm non tạo ra hương vị dẻo thơm khó quên, phù hợp với mọi bữa ăn gia đình.</p>\n\n<p>[IMAGE_2]</p>\n\n<p>Ngày nay, món ăn này được nhiều quán đặc sản và siêu thị giới thiệu rộng rãi, trở thành lựa chọn yêu thích của nhiều người.</p>', 'Nguyễn Văn Dũng', 'Những món ngon miền Bắc', 1, '2025-10-12 08:00:00', 3, 3),
+('Đặc sản miền Trung nổi tiếng', 'dac-san-mien-trung-noi-tieng', '<p>Xúc xích cốm là món ăn truyền thống đặc sắc của Hà Nội, nổi bật với hương vị độc đáo.</p>\n\n<p>[IMAGE_1]</p>\n\n<p>Thịt heo tươi kết hợp với cốm non tạo ra hương vị dẻo thơm khó quên, phù hợp với mọi bữa ăn gia đình.</p>\n\n<p>[IMAGE_2]</p>\n\n<p>Ngày nay, món ăn này được nhiều quán đặc sản và siêu thị giới thiệu rộng rãi, trở thành lựa chọn yêu thích của nhiều người.</p>', 'Hoàng Văn Nam', 'Các đặc sản miền Trung', 1, '2025-10-12 09:30:00', 4, 3),
+('Món ăn đặc sắc miền Nam', 'mon-an-dac-sac-mien-nam', '<p>Xúc xích cốm là món ăn truyền thống đặc sắc của Hà Nội, nổi bật với hương vị độc đáo.</p>\n\n<p>[IMAGE_1]</p>\n\n<p>Thịt heo tươi kết hợp với cốm non tạo ra hương vị dẻo thơm khó quên, phù hợp với mọi bữa ăn gia đình.</p>\n\n<p>[IMAGE_2]</p>\n\n<p>Ngày nay, món ăn này được nhiều quán đặc sản và siêu thị giới thiệu rộng rãi, trở thành lựa chọn yêu thích của nhiều người.</p>', 'Lê Minh Hoàng', 'Các món ngon miền Nam', 1, '2025-10-12 11:00:00', 1, 3),
+('Ẩm thực Tây Bắc', 'am-thuc-tay-bac', '<p>Xúc xích cốm là món ăn truyền thống đặc sắc của Hà Nội, nổi bật với hương vị độc đáo.</p>\n\n<p>[IMAGE_1]</p>\n\n<p>Thịt heo tươi kết hợp với cốm non tạo ra hương vị dẻo thơm khó quên, phù hợp với mọi bữa ăn gia đình.</p>\n\n<p>[IMAGE_2]</p>\n\n<p>Ngày nay, món ăn này được nhiều quán đặc sản và siêu thị giới thiệu rộng rãi, trở thành lựa chọn yêu thích của nhiều người.</p>', 'Trần Thị Lan', 'Đặc sản Tây Bắc', 1, '2025-10-12 12:30:00', 2, 3),
+('Ẩm thực Tây Nguyên', 'am-thuc-tay-nguyen', '<p>Xúc xích cốm là món ăn truyền thống đặc sắc của Hà Nội, nổi bật với hương vị độc đáo.</p>\n\n<p>[IMAGE_1]</p>\n\n<p>Thịt heo tươi kết hợp với cốm non tạo ra hương vị dẻo thơm khó quên, phù hợp với mọi bữa ăn gia đình.</p>\n\n<p>[IMAGE_2]</p>\n\n<p>Ngày nay, món ăn này được nhiều quán đặc sản và siêu thị giới thiệu rộng rãi, trở thành lựa chọn yêu thích của nhiều người.</p>', 'Nguyễn Thị Lan', 'Các món ăn Tây Nguyên', 1, '2025-10-12 14:00:00', 3, 3),
+('Đặc sản ven biển miền Trung', 'dac-san-ven-bien-mien-trung', '<p>Xúc xích cốm là món ăn truyền thống đặc sắc của Hà Nội, nổi bật với hương vị độc đáo.</p>\n\n<p>[IMAGE_1]</p>\n\n<p>Thịt heo tươi kết hợp với cốm non tạo ra hương vị dẻo thơm khó quên, phù hợp với mọi bữa ăn gia đình.</p>\n\n<p>[IMAGE_2]</p>\n\n<p>Ngày nay, món ăn này được nhiều quán đặc sản và siêu thị giới thiệu rộng rãi, trở thành lựa chọn yêu thích của nhiều người.</p>', 'Phạm Thị Hương', 'Các hải sản đặc trưng', 1, '2025-10-12 15:30:00', 4, 3),
+-- post_type_id = 4 (Công thức nấu ăn)
+('Công thức món canh đơn giản', 'cong-thuc-mon-canh-don-gian', '<p>Xúc xích cốm là món ăn truyền thống đặc sắc của Hà Nội, nổi bật với hương vị độc đáo.</p>\n\n<p>[IMAGE_1]</p>\n\n<p>Thịt heo tươi kết hợp với cốm non tạo ra hương vị dẻo thơm khó quên, phù hợp với mọi bữa ăn gia đình.</p>\n\n<p>[IMAGE_2]</p>\n\n<p>Ngày nay, món ăn này được nhiều quán đặc sản và siêu thị giới thiệu rộng rãi, trở thành lựa chọn yêu thích của nhiều người.</p>', 'Hoàng Thị Thu', 'Hướng dẫn nấu canh', 1, '2025-10-13 08:00:00', 1, 4),
+('Công thức món xào nhanh', 'cong-thuc-mon-xao-nhanh', '<p>Xúc xích cốm là món ăn truyền thống đặc sắc của Hà Nội, nổi bật với hương vị độc đáo.</p>\n\n<p>[IMAGE_1]</p>\n\n<p>Thịt heo tươi kết hợp với cốm non tạo ra hương vị dẻo thơm khó quên, phù hợp với mọi bữa ăn gia đình.</p>\n\n<p>[IMAGE_2]</p>\n\n<p>Ngày nay, món ăn này được nhiều quán đặc sản và siêu thị giới thiệu rộng rãi, trở thành lựa chọn yêu thích của nhiều người.</p>', 'Đặng Văn Nam', 'Hướng dẫn nấu món xào', 1, '2025-10-13 09:30:00', 2, 4),
+('Công thức món chiên giòn', 'cong-thuc-mon-chien-gion', '<p>Xúc xích cốm là món ăn truyền thống đặc sắc của Hà Nội, nổi bật với hương vị độc đáo.</p>\n\n<p>[IMAGE_1]</p>\n\n<p>Thịt heo tươi kết hợp với cốm non tạo ra hương vị dẻo thơm khó quên, phù hợp với mọi bữa ăn gia đình.</p>\n\n<p>[IMAGE_2]</p>\n\n<p>Ngày nay, món ăn này được nhiều quán đặc sản và siêu thị giới thiệu rộng rãi, trở thành lựa chọn yêu thích của nhiều người.</p>', 'Nguyễn Thị Lan', 'Hướng dẫn chiên món ngon', 1, '2025-10-13 11:00:00', 3, 4),
+('Công thức món hấp', 'cong-thuc-mon-hap', '<p>Xúc xích cốm là món ăn truyền thống đặc sắc của Hà Nội, nổi bật với hương vị độc đáo.</p>\n\n<p>[IMAGE_1]</p>\n\n<p>Thịt heo tươi kết hợp với cốm non tạo ra hương vị dẻo thơm khó quên, phù hợp với mọi bữa ăn gia đình.</p>\n\n<p>[IMAGE_2]</p>\n\n<p>Ngày nay, món ăn này được nhiều quán đặc sản và siêu thị giới thiệu rộng rãi, trở thành lựa chọn yêu thích của nhiều người.</p>', 'Phạm Văn Long', 'Hướng dẫn hấp đơn giản', 1, '2025-10-13 12:30:00', 4, 4),
+('Công thức món nướng', 'cong-thuc-mon-nuong', '<p>Xúc xích cốm là món ăn truyền thống đặc sắc của Hà Nội, nổi bật với hương vị độc đáo.</p>\n\n<p>[IMAGE_1]</p>\n\n<p>Thịt heo tươi kết hợp với cốm non tạo ra hương vị dẻo thơm khó quên, phù hợp với mọi bữa ăn gia đình.</p>\n\n<p>[IMAGE_2]</p>\n\n<p>Ngày nay, món ăn này được nhiều quán đặc sản và siêu thị giới thiệu rộng rãi, trở thành lựa chọn yêu thích của nhiều người.</p>', 'Trần Văn Mạnh', 'Hướng dẫn nướng món ngon', 1, '2025-10-13 14:00:00', 1, 4),
+('Công thức món trộn', 'cong-thuc-mon-tron', '<p>Xúc xích cốm là món ăn truyền thống đặc sắc của Hà Nội, nổi bật với hương vị độc đáo.</p>\n\n<p>[IMAGE_1]</p>\n\n<p>Thịt heo tươi kết hợp với cốm non tạo ra hương vị dẻo thơm khó quên, phù hợp với mọi bữa ăn gia đình.</p>\n\n<p>[IMAGE_2]</p>\n\n<p>Ngày nay, món ăn này được nhiều quán đặc sản và siêu thị giới thiệu rộng rãi, trở thành lựa chọn yêu thích của nhiều người.</p>', 'Lê Thị Hà', 'Hướng dẫn trộn món ăn', 1, '2025-10-13 15:30:00', 2, 4),
+-- post_type_id = 5 (Chăm sóc sức khỏe)
+('Lợi ích của việc uống nước đúng cách', 'loi-ich-cua-viec-uong-nuoc-dung-cach', '<p>Xúc xích cốm là món ăn truyền thống đặc sắc của Hà Nội, nổi bật với hương vị độc đáo.</p>\n\n<p>[IMAGE_1]</p>\n\n<p>Thịt heo tươi kết hợp với cốm non tạo ra hương vị dẻo thơm khó quên, phù hợp với mọi bữa ăn gia đình.</p>\n\n<p>[IMAGE_2]</p>\n\n<p>Ngày nay, món ăn này được nhiều quán đặc sản và siêu thị giới thiệu rộng rãi, trở thành lựa chọn yêu thích của nhiều người.</p>', 'Nguyễn Văn Dũng', 'Cách uống nước tốt cho sức khỏe', 1, '2025-10-14 08:00:00', 3, 5),
+('Bài tập thể dục buổi sáng', 'bai-tap-the-duc-buoi-sang', '<p>Xúc xích cốm là món ăn truyền thống đặc sắc của Hà Nội, nổi bật với hương vị độc đáo.</p>\n\n<p>[IMAGE_1]</p>\n\n<p>Thịt heo tươi kết hợp với cốm non tạo ra hương vị dẻo thơm khó quên, phù hợp với mọi bữa ăn gia đình.</p>\n\n<p>[IMAGE_2]</p>\n\n<p>Ngày nay, món ăn này được nhiều quán đặc sản và siêu thị giới thiệu rộng rãi, trở thành lựa chọn yêu thích của nhiều người.</p>', 'Hoàng Thị Thu', 'Các bài tập sáng khỏe mạnh', 1, '2025-10-14 09:30:00', 1, 5),
+('Chế độ ăn uống lành mạnh', 'che-do-an-uong-lanh-manh', '<p>Xúc xích cốm là món ăn truyền thống đặc sắc của Hà Nội, nổi bật với hương vị độc đáo.</p>\n\n<p>[IMAGE_1]</p>\n\n<p>Thịt heo tươi kết hợp với cốm non tạo ra hương vị dẻo thơm khó quên, phù hợp với mọi bữa ăn gia đình.</p>\n\n<p>[IMAGE_2]</p>\n\n<p>Ngày nay, món ăn này được nhiều quán đặc sản và siêu thị giới thiệu rộng rãi, trở thành lựa chọn yêu thích của nhiều người.</p>', 'Trần Văn Mạnh', 'Hướng dẫn ăn uống khoa học', 1, '2025-10-14 11:00:00', 2, 5),
+('Thói quen ngủ đủ giấc', 'thoi-quen-ngu-du-giac', '<p>Xúc xích cốm là món ăn truyền thống đặc sắc của Hà Nội, nổi bật với hương vị độc đáo.</p>\n\n<p>[IMAGE_1]</p>\n\n<p>Thịt heo tươi kết hợp với cốm non tạo ra hương vị dẻo thơm khó quên, phù hợp với mọi bữa ăn gia đình.</p>\n\n<p>[IMAGE_2]</p>\n\n<p>Ngày nay, món ăn này được nhiều quán đặc sản và siêu thị giới thiệu rộng rãi, trở thành lựa chọn yêu thích của nhiều người.</p>', 'Phạm Thị Hương', 'Bí quyết ngủ ngon', 1, '2025-10-14 12:30:00', 3, 5),
+('Giảm stress hiệu quả', 'giam-stress-hieu-qua', '<p>Xúc xích cốm là món ăn truyền thống đặc sắc của Hà Nội, nổi bật với hương vị độc đáo.</p>\n\n<p>[IMAGE_1]</p>\n\n<p>Thịt heo tươi kết hợp với cốm non tạo ra hương vị dẻo thơm khó quên, phù hợp với mọi bữa ăn gia đình.</p>\n\n<p>[IMAGE_2]</p>\n\n<p>Ngày nay, món ăn này được nhiều quán đặc sản và siêu thị giới thiệu rộng rãi, trở thành lựa chọn yêu thích của nhiều người.</p>', 'Lê Minh Hoàng', 'Các phương pháp giảm stress', 1, '2025-10-14 14:00:00', 4, 5),
+('Các loại thực phẩm bổ sung', 'cac-loai-thuc-pham-bo-sung', '<p>Xúc xích cốm là món ăn truyền thống đặc sắc của Hà Nội, nổi bật với hương vị độc đáo.</p>\n\n<p>[IMAGE_1]</p>\n\n<p>Thịt heo tươi kết hợp với cốm non tạo ra hương vị dẻo thơm khó quên, phù hợp với mọi bữa ăn gia đình.</p>\n\n<p>[IMAGE_2]</p>\n\n<p>Ngày nay, món ăn này được nhiều quán đặc sản và siêu thị giới thiệu rộng rãi, trở thành lựa chọn yêu thích của nhiều người.</p>', 'Ngô Văn Bảo', 'Thực phẩm bổ sung cho cơ thể', 1, '2025-10-14 15:30:00', 1, 5),
+-- post_type_id = 6 (Tin tức ẩm thực)
+('Tin tức ẩm thực hôm nay', 'tin-tuc-am-thuc-hom-nay', '<p>Xúc xích cốm là món ăn truyền thống đặc sắc của Hà Nội, nổi bật với hương vị độc đáo.</p>\n\n<p>[IMAGE_1]</p>\n\n<p>Thịt heo tươi kết hợp với cốm non tạo ra hương vị dẻo thơm khó quên, phù hợp với mọi bữa ăn gia đình.</p>\n\n<p>[IMAGE_2]</p>\n\n<p>Ngày nay, món ăn này được nhiều quán đặc sản và siêu thị giới thiệu rộng rãi, trở thành lựa chọn yêu thích của nhiều người.</p>', 'Nguyễn Thị Lan', 'Các tin tức mới nhất', 1, '2025-10-15 08:00:00', 2, 6),
+('Xu hướng ẩm thực 2025', 'xu-huong-am-thuc-2025', '<p>Xúc xích cốm là món ăn truyền thống đặc sắc của Hà Nội, nổi bật với hương vị độc đáo.</p>\n\n<p>[IMAGE_1]</p>\n\n<p>Thịt heo tươi kết hợp với cốm non tạo ra hương vị dẻo thơm khó quên, phù hợp với mọi bữa ăn gia đình.</p>\n\n<p>[IMAGE_2]</p>\n\n<p>Ngày nay, món ăn này được nhiều quán đặc sản và siêu thị giới thiệu rộng rãi, trở thành lựa chọn yêu thích của nhiều người.</p>', 'Trần Văn Mạnh', 'Những xu hướng nổi bật năm 2025', 1, '2025-10-15 09:30:00', 3, 6),
+('Nhà hàng mở mới tại Hà Nội', 'nha-hang-mo-moi-ha-noi', '<p>Xúc xích cốm là món ăn truyền thống đặc sắc của Hà Nội, nổi bật với hương vị độc đáo.</p>\n\n<p>[IMAGE_1]</p>\n\n<p>Thịt heo tươi kết hợp với cốm non tạo ra hương vị dẻo thơm khó quên, phù hợp với mọi bữa ăn gia đình.</p>\n\n<p>[IMAGE_2]</p>\n\n<p>Ngày nay, món ăn này được nhiều quán đặc sản và siêu thị giới thiệu rộng rãi, trở thành lựa chọn yêu thích của nhiều người.</p>', 'Lê Thị Hà', 'Thông tin nhà hàng mới', 1, '2025-10-15 11:00:00', 4, 6),
+('Đặc sản Việt Nam được ưa chuộng', 'dac-san-viet-nam-duoc-ua-chuong', '<p>Xúc xích cốm là món ăn truyền thống đặc sắc của Hà Nội, nổi bật với hương vị độc đáo.</p>\n\n<p>[IMAGE_1]</p>\n\n<p>Thịt heo tươi kết hợp với cốm non tạo ra hương vị dẻo thơm khó quên, phù hợp với mọi bữa ăn gia đình.</p>\n\n<p>[IMAGE_2]</p>\n\n<p>Ngày nay, món ăn này được nhiều quán đặc sản và siêu thị giới thiệu rộng rãi, trở thành lựa chọn yêu thích của nhiều người.</p>', 'Hoàng Thị Thu', 'Top đặc sản Việt Nam', 1, '2025-10-15 12:30:00', 1, 6),
+('Sự kiện ẩm thực cuối tuần', 'su-kien-am-thuc-cuoi-tuan', '<p>Xúc xích cốm là món ăn truyền thống đặc sắc của Hà Nội, nổi bật với hương vị độc đáo.</p>\n\n<p>[IMAGE_1]</p>\n\n<p>Thịt heo tươi kết hợp với cốm non tạo ra hương vị dẻo thơm khó quên, phù hợp với mọi bữa ăn gia đình.</p>\n\n<p>[IMAGE_2]</p>\n\n<p>Ngày nay, món ăn này được nhiều quán đặc sản và siêu thị giới thiệu rộng rãi, trở thành lựa chọn yêu thích của nhiều người.</p>', 'Đặng Văn Nam', 'Các sự kiện ẩm thực nổi bật', 1, '2025-10-15 14:00:00', 2, 6),
+('Món ăn đường phố hấp dẫn', 'mon-an-duong-pho-hap-dan', '<p>Xúc xích cốm là món ăn truyền thống đặc sắc của Hà Nội, nổi bật với hương vị độc đáo.</p>\n\n<p>[IMAGE_1]</p>\n\n<p>Thịt heo tươi kết hợp với cốm non tạo ra hương vị dẻo thơm khó quên, phù hợp với mọi bữa ăn gia đình.</p>\n\n<p>[IMAGE_2]</p>\n\n<p>Ngày nay, món ăn này được nhiều quán đặc sản và siêu thị giới thiệu rộng rãi, trở thành lựa chọn yêu thích của nhiều người.</p>', 'Ngô Văn Bảo', 'Các món ăn đường phố đặc sắc', 1, '2025-10-15 15:30:00', 3, 6);
+
+
+-- Dữ liệu mẫu cho PostImages
+INSERT INTO PostImages (image_url, is_main, post_id, display_order, caption, alt_text) VALUES
+('https://example.com/images/posts/1_main.jpg', 1, 1, 0, 'Ảnh chính bài viết 1', 'Thumbnail bài viết 1'),
+('https://example.com/images/posts/1_1.jpg', 0, 1, 1, 'Ảnh phụ 1 bài viết 1', 'Ảnh phụ 1 bài viết 1'),
+('https://example.com/images/posts/1_2.jpg', 0, 1, 2, 'Ảnh phụ 2 bài viết 1', 'Ảnh phụ 2 bài viết 1'),
+('https://example.com/images/posts/2_main.jpg', 1, 2, 0, 'Ảnh chính bài viết 2', 'Thumbnail bài viết 2'),
+('https://example.com/images/posts/2_1.jpg', 0, 2, 1, 'Ảnh phụ 1 bài viết 2', 'Ảnh phụ 1 bài viết 2'),
+('https://example.com/images/posts/3_main.jpg', 1, 3, 0, 'Ảnh chính bài viết 3', 'Thumbnail bài viết 3'),
+('https://example.com/images/posts/3_1.jpg', 0, 3, 1, 'Ảnh phụ 1 bài viết 3', 'Ảnh phụ 1 bài viết 3'),
+('https://example.com/images/posts/3_2.jpg', 0, 3, 2, 'Ảnh phụ 2 bài viết 3', 'Ảnh phụ 2 bài viết 3'),
+('https://example.com/images/posts/4_main.jpg', 1, 4, 0, 'Ảnh chính bài viết 4', 'Thumbnail bài viết 4'),
+('https://example.com/images/posts/4_1.jpg', 0, 4, 1, 'Ảnh phụ 1 bài viết 4', 'Ảnh phụ 1 bài viết 4'),
+('https://example.com/images/posts/5_main.jpg', 1, 5, 0, 'Ảnh chính bài viết 5', 'Thumbnail bài viết 5'),
+('https://example.com/images/posts/5_1.jpg', 0, 5, 1, 'Ảnh phụ 1 bài viết 5', 'Ảnh phụ 1 bài viết 5'),
+('https://example.com/images/posts/6_main.jpg', 1, 6, 0, 'Ảnh chính bài viết 6', 'Thumbnail bài viết 6'),
+('https://example.com/images/posts/6_1.jpg', 0, 6, 1, 'Ảnh phụ 1 bài viết 6', 'Ảnh phụ 1 bài viết 6'),
+('https://example.com/images/posts/6_2.jpg', 0, 6, 2, 'Ảnh phụ 2 bài viết 6', 'Ảnh phụ 2 bài viết 6'),
+('https://example.com/images/posts/7_main.jpg', 1, 7, 0, 'Ảnh chính bài viết 7', 'Thumbnail bài viết 7'),
+('https://example.com/images/posts/7_1.jpg', 0, 7, 1, 'Ảnh phụ 1 bài viết 7', 'Ảnh phụ 1 bài viết 7'),
+('https://example.com/images/posts/8_main.jpg', 1, 8, 0, 'Ảnh chính bài viết 8', 'Thumbnail bài viết 8'),
+('https://example.com/images/posts/8_1.jpg', 0, 8, 1, 'Ảnh phụ 1 bài viết 8', 'Ảnh phụ 1 bài viết 8'),
+('https://example.com/images/posts/8_2.jpg', 0, 8, 2, 'Ảnh phụ 2 bài viết 8', 'Ảnh phụ 2 bài viết 8'),
+('https://example.com/images/posts/9_main.jpg', 1, 9, 0, 'Ảnh chính bài viết 9', 'Thumbnail bài viết 9'),
+('https://example.com/images/posts/9_1.jpg', 0, 9, 1, 'Ảnh phụ 1 bài viết 9', 'Ảnh phụ 1 bài viết 9'),
+('https://example.com/images/posts/10_main.jpg', 1, 10, 0, 'Ảnh chính bài viết 10', 'Thumbnail bài viết 10'),
+('https://example.com/images/posts/10_1.jpg', 0, 10, 1, 'Ảnh phụ 1 bài viết 10', 'Ảnh phụ 1 bài viết 10'),
+('https://example.com/images/posts/11_main.jpg', 1, 11, 0, 'Ảnh chính bài viết 11', 'Thumbnail bài viết 11'),
+('https://example.com/images/posts/11_1.jpg', 0, 11, 1, 'Ảnh phụ 1 bài viết 11', 'Ảnh phụ 1 bài viết 11'),
+('https://example.com/images/posts/12_main.jpg', 1, 12, 0, 'Ảnh chính bài viết 12', 'Thumbnail bài viết 12'),
+('https://example.com/images/posts/12_1.jpg', 0, 12, 1, 'Ảnh phụ 1 bài viết 12', 'Ảnh phụ 1 bài viết 12'),
+('https://example.com/images/posts/13_main.jpg', 1, 13, 0, 'Ảnh chính bài viết 13', 'Thumbnail bài viết 13'),
+('https://example.com/images/posts/13_1.jpg', 0, 13, 1, 'Ảnh phụ 1 bài viết 13', 'Ảnh phụ 1 bài viết 13'),
+('https://example.com/images/posts/14_main.jpg', 1, 14, 0, 'Ảnh chính bài viết 14', 'Thumbnail bài viết 14'),
+('https://example.com/images/posts/14_1.jpg', 0, 14, 1, 'Ảnh phụ 1 bài viết 14', 'Ảnh phụ 1 bài viết 14'),
+('https://example.com/images/posts/15_main.jpg', 1, 15, 0, 'Ảnh chính bài viết 15', 'Thumbnail bài viết 15'),
+('https://example.com/images/posts/15_1.jpg', 0, 15, 1, 'Ảnh phụ 1 bài viết 15', 'Ảnh phụ 1 bài viết 15'),
+('https://example.com/images/posts/16_main.jpg', 1, 16, 0, 'Ảnh chính bài viết 16', 'Thumbnail bài viết 16'),
+('https://example.com/images/posts/16_1.jpg', 0, 16, 1, 'Ảnh phụ 1 bài viết 16', 'Ảnh phụ 1 bài viết 16'),
+('https://example.com/images/posts/17_main.jpg', 1, 17, 0, 'Ảnh chính bài viết 17', 'Thumbnail bài viết 17'),
+('https://example.com/images/posts/17_1.jpg', 0, 17, 1, 'Ảnh phụ 1 bài viết 17', 'Ảnh phụ 1 bài viết 17'),
+('https://example.com/images/posts/18_main.jpg', 1, 18, 0, 'Ảnh chính bài viết 18', 'Thumbnail bài viết 18'),
+('https://example.com/images/posts/18_1.jpg', 0, 18, 1, 'Ảnh phụ 1 bài viết 18', 'Ảnh phụ 1 bài viết 18'),
+('https://example.com/images/posts/19_main.jpg', 1, 19, 0, 'Ảnh chính bài viết 19', 'Thumbnail bài viết 19'),
+('https://example.com/images/posts/19_1.jpg', 0, 19, 1, 'Ảnh phụ 1 bài viết 19', 'Ảnh phụ 1 bài viết 19'),
+('https://example.com/images/posts/20_main.jpg', 1, 20, 0, 'Ảnh chính bài viết 20', 'Thumbnail bài viết 20'),
+('https://example.com/images/posts/20_1.jpg', 0, 20, 1, 'Ảnh phụ 1 bài viết 20', 'Ảnh phụ 1 bài viết 20'),
+('https://example.com/images/posts/21_main.jpg', 1, 21, 0, 'Ảnh chính bài viết 21', 'Thumbnail bài viết 21'),
+('https://example.com/images/posts/21_1.jpg', 0, 21, 1, 'Ảnh phụ 1 bài viết 21', 'Ảnh phụ 1 bài viết 21'),
+('https://example.com/images/posts/22_main.jpg', 1, 22, 0, 'Ảnh chính bài viết 22', 'Thumbnail bài viết 22'),
+('https://example.com/images/posts/22_1.jpg', 0, 22, 1, 'Ảnh phụ 1 bài viết 22', 'Ảnh phụ 1 bài viết 22'),
+('https://example.com/images/posts/23_main.jpg', 1, 23, 0, 'Ảnh chính bài viết 23', 'Thumbnail bài viết 23'),
+('https://example.com/images/posts/23_1.jpg', 0, 23, 1, 'Ảnh phụ 1 bài viết 23', 'Ảnh phụ 1 bài viết 23'),
+('https://example.com/images/posts/24_main.jpg', 1, 24, 0, 'Ảnh chính bài viết 24', 'Thumbnail bài viết 24'),
+('https://example.com/images/posts/24_1.jpg', 0, 24, 1, 'Ảnh phụ 1 bài viết 24', 'Ảnh phụ 1 bài viết 24'),
+('https://example.com/images/posts/25_main.jpg', 1, 25, 0, 'Ảnh chính bài viết 25', 'Thumbnail bài viết 25'),
+('https://example.com/images/posts/25_1.jpg', 0, 25, 1, 'Ảnh phụ 1 bài viết 25', 'Ảnh phụ 1 bài viết 25'),
+('https://example.com/images/posts/26_main.jpg', 1, 26, 0, 'Ảnh chính bài viết 26', 'Thumbnail bài viết 26'),
+('https://example.com/images/posts/26_1.jpg', 0, 26, 1, 'Ảnh phụ 1 bài viết 26', 'Ảnh phụ 1 bài viết 26'),
+('https://example.com/images/posts/27_main.jpg', 1, 27, 0, 'Ảnh chính bài viết 27', 'Thumbnail bài viết 27'),
+('https://example.com/images/posts/27_1.jpg', 0, 27, 1, 'Ảnh phụ 1 bài viết 27', 'Ảnh phụ 1 bài viết 27'),
+('https://example.com/images/posts/28_main.jpg', 1, 28, 0, 'Ảnh chính bài viết 28', 'Thumbnail bài viết 28'),
+('https://example.com/images/posts/28_1.jpg', 0, 28, 1, 'Ảnh phụ 1 bài viết 28', 'Ảnh phụ 1 bài viết 28'),
+('https://example.com/images/posts/29_main.jpg', 1, 29, 0, 'Ảnh chính bài viết 29', 'Thumbnail bài viết 29'),
+('https://example.com/images/posts/29_1.jpg', 0, 29, 1, 'Ảnh phụ 1 bài viết 29', 'Ảnh phụ 1 bài viết 29'),
+('https://example.com/images/posts/30_main.jpg', 1, 30, 0, 'Ảnh chính bài viết 30', 'Thumbnail bài viết 30'),
+('https://example.com/images/posts/30_1.jpg', 0, 30, 1, 'Ảnh phụ 1 bài viết 30', 'Ảnh phụ 1 bài viết 30'),
+('https://example.com/images/posts/31_main.jpg', 1, 31, 0, 'Ảnh chính bài viết 31', 'Thumbnail bài viết 31'),
+('https://example.com/images/posts/31_1.jpg', 0, 31, 1, 'Ảnh phụ 1 bài viết 31', 'Ảnh phụ 1 bài viết 31'),
+('https://example.com/images/posts/32_main.jpg', 1, 32, 0, 'Ảnh chính bài viết 32', 'Thumbnail bài viết 32'),
+('https://example.com/images/posts/32_1.jpg', 0, 32, 1, 'Ảnh phụ 1 bài viết 32', 'Ảnh phụ 1 bài viết 32'),
+('https://example.com/images/posts/33_main.jpg', 1, 33, 0, 'Ảnh chính bài viết 33', 'Thumbnail bài viết 33'),
+('https://example.com/images/posts/33_1.jpg', 0, 33, 1, 'Ảnh phụ 1 bài viết 33', 'Ảnh phụ 1 bài viết 33'),
+('https://example.com/images/posts/34_main.jpg', 1, 34, 0, 'Ảnh chính bài viết 34', 'Thumbnail bài viết 34'),
+('https://example.com/images/posts/34_1.jpg', 0, 34, 1, 'Ảnh phụ 1 bài viết 34', 'Ảnh phụ 1 bài viết 34'),
+('https://example.com/images/posts/35_main.jpg', 1, 35, 0, 'Ảnh chính bài viết 35', 'Thumbnail bài viết 35'),
+('https://example.com/images/posts/35_1.jpg', 0, 35, 1, 'Ảnh phụ 1 bài viết 35', 'Ảnh phụ 1 bài viết 35'),
+('https://example.com/images/posts/36_main.jpg', 1, 36, 0, 'Ảnh chính bài viết 36', 'Thumbnail bài viết 36'),
+('https://example.com/images/posts/36_1.jpg', 0, 36, 1, 'Ảnh phụ 1 bài viết 36', 'Ảnh phụ 1 bài viết 36');
+
+
+-- Dữ liệu mẫu cho Categories
+INSERT INTO Categories (id, name, slug, description, parent_id) VALUES
+(1, 'Thực phẩm khác', 'thuc-pham-khac', 'Tổng hợp các món ăn, sản vật đặc trưng của các địa phương trên cả nước.', NULL),
+(2, 'Hải sản', 'hai-san', 'Các món ăn được chế biến sẵn từ hải sản tươi sống.', NULL),
+(3, 'Ruốc', 'ruoc', 'Ruốc (chà bông) làm từ các loại thịt, cá, tôm.', NULL),
+(4, 'Sản phẩm từ gà', 'san-pham-tu-ga', 'Các món ăn ngon được chế biến từ thịt gà.', NULL),
+(5, 'Các loại hạt', 'cac-loai-hat', 'Tổng hợp các loại hạt sấy khô, rang muối tốt cho sức khỏe.', NULL),
+(6, 'Sản phẩm từ vịt', 'san-pham-tu-vit', 'Các món ăn ngon được chế biến từ thịt vịt.', NULL),
+(7, 'Sản phẩm từ cá', 'san-pham-tu-ca', 'Các món ăn được chế biến sẵn từ cá nước ngọt và cá biển.', NULL),
+(8, 'Sản phẩm từ heo', 'san-pham-tu-heo', 'Các món ăn ngon được chế biến từ thịt heo.', NULL),
+(9, 'Sản phẩm từ ngan', 'san-pham-tu-ngan', 'Các món ăn ngon được chế biến từ thịt ngan.', NULL);
+
+-- Dữ liệu mẫu cho PostCategories
+INSERT INTO PostCategories (post_id, category_id) VALUES
+(1, 1),
+(1, 2),
+(2, 2),
+(3, 3),
+(4, 4),
+(5, 5),
+(6, 6),
+(7, 7),
+(8, 8);
+
+-- Dữ liệu mẫu cho Users
+INSERT INTO Users 
+(`username`, `password_hash`, `provider`, `provider_id`, `email`, `phone`, `full_name`, `gender`, `address`, `city`, `district`, `ward`, `avatar_url`, `status`) VALUES
+('nguyen55', '$2a$10$.RiX67BDw3k4Uw22rewLJ.KrZfOD0PdIGqc9DUUl4RZatU61f4gaa', 'local', NULL, 'nguyen55@example.com', '0912345678', 'Phạm Thành Nguyên', 'male', '12B Thanh Xuân Nam', 'Ha Noi', 'Quan Thanh Xuan', 'Phuong Thanh Xuan Nam', 'assets/image/user/avatar/user_1', 1),
+('minhtuan89', '$2a$10$oa596XbyvbHkScXJggYg5uFXWyRNYC.BdDKE6UHeXGWhbVeWM30Wy', 'local', NULL, 'minhtuan89@example.com', '0987654321', 'Trần Minh Tuấn', 'male', '45 Trần Duy Hưng', 'Ha Noi', 'Quan Cau Giay', 'Phuong Trung Hoa', 'assets/image/user/avatar/user_2', 1),
+('hoanglong_hn', '$2a$10$8G72fEPvu.cUDTN50lAk9ef3Hvwae8kC.D11QxMYQr7MBh38bmHhy', 'local', NULL, 'hoanglong.hn@example.com', '0903456789', 'Lê Hoàng Long', 'male', '789 Nguyễn Chí Thanh', 'Ha Noi', 'Quan Dong Da', 'Phuong Lang Thuong', 'assets/image/user/avatar/user_3', 0),
+('maiphuong_95', '$2a$10$WpCHIYYXjYEaTDWx1BYnd.xiS85olPsigfI9W0m3GRrbTN/YK7D6K', 'local', NULL, 'maiphuong95@example.com', '0904567890', 'Phạm Thị Mai Phương', 'female', '101 Láng Hạ', 'Ha Noi', 'Quan Ba Dinh', 'Phuong Thanh Cong', 'assets/image/user/avatar/user_4', 1),
+('quanghuy.dev', '$2a$10$L9.OA7ociHXQAOQE46UUeufy2QOi.sJ3pDgdqNNoJummTA6H5p1c2', 'local', NULL, 'quanghuy.dev@example.com', '0905678901', 'Hoàng Quang Huy', 'male', '202 Tôn Đức Thắng', 'Ha Noi', 'Quan Dong Da', 'Phuong Hang Bot', 'assets/image/user/avatar/user_5', 1),
+('thanhthao_88', '$2a$10$TmrNsumGD2Ttdoxf8LCFcOGwW5iCNJ2n.R6yo612vovsZ4bxIwnwC', 'local', NULL, 'thanhthao_88@example.com', '0915111222', 'Vũ Thanh Thảo', 'female', '55 Nguyễn Lương Bằng', 'Ha Noi', 'Quan Dong Da', 'Phuong Quang Trung', 'assets/image/user/avatar/user_6', 1),
+('duc.anh.le', '$2a$10$fulj8uZoGsYremHzos.eDuApDVHlOdvbc0cx8HAgNDj9rdHVxftE2', 'local', NULL, 'duc.anh.le@example.com', '0978888999', 'Lê Đức Anh', 'male', '88 Lò Đúc', 'Ha Noi', 'Quan Hai Ba Trung', 'Phuong Dong Mac', 'assets/image/user/avatar/user_7', 1),
+('ngocbich2000', '$2a$10$mS3vKfM8b86QdFtAB86KQecZ13j9xg70A3h41/eZDSCSKS7fXte0O', 'local', NULL, 'ngocbich2000@example.com', '0355123456', 'Đặng Ngọc Bích', 'female', '15 Hàng Bài', 'Ha Noi', 'Quan Hoan Kiem', 'Phuong Hang Bai', 'assets/image/user/avatar/user_8', 0),
+('trungdung_it', '$2a$10$QYKYYBCSJywmw/sKSSoy2uAKJDeFfakXNbVVWzPyfCgTXdFSgYwCa', 'local', NULL, 'trungdung_it@example.com', '0368246810', 'Phan Trung Dũng', 'male', '334 Nguyễn Trãi', 'Ha Noi', 'Quan Thanh Xuan', 'Phuong Thanh Xuan Trung', 'assets/image/user/avatar/user_9', 1),
+('linhchi_beauty', '$2a$10$o9mNPculqAv1YtdLhVuIKu3oOVv9nf0aTKK2ABmi6GXSd88YVyqxq', 'local', NULL, 'linhchi_beauty@example.com', '0918777888', 'Ngô Linh Chi', 'female', '18 Lý Thường Kiệt', 'Ha Noi', 'Quan Hoan Kiem', 'Phuong Phan Chu Trinh', 'assets/image/user/avatar/user_10', 1),
+('nnn', '$2a$10$RMTnNJ0gnaUirk7/PnepmusCA8.vZtad.Ty7iBz6/niY9je8Q9y1m', 'local', NULL, 'nnn@example.com', '0918777882', 'Ngô Ngọc Nguyên', 'male', '18 Lý Thường Kiệt', 'Thành phố Hà Nội', 'Quận Thanh Xuân', 'Phường Thanh Xuân Bắc', 'https://avatar.iran.liara.run/public', 1);
+
+-- Dữ liệu mẫu cho bảng OtpCodes
+INSERT INTO OtpCodes (user_id, code, type, is_used, attempts, expires_at, ip_address) VALUES
+(1, '482915', 'login', 0, 0, DATE_ADD(NOW(), INTERVAL 5 MINUTE), '192.168.1.10'),
+(2, '937421', 'change_password', 0, 1, DATE_ADD(NOW(), INTERVAL 10 MINUTE), '192.168.1.11'),
+(3, '120583', 'verify_email', 1, 2, DATE_SUB(NOW(), INTERVAL 2 MINUTE), '192.168.1.5'),  -- hết hạn
+(4, '553201', 'login', 0, 0, DATE_ADD(NOW(), INTERVAL 3 MINUTE), '192.168.1.9'),
+(5, '778402', 'change_password', 1, 3, DATE_SUB(NOW(), INTERVAL 1 MINUTE), '192.168.1.20'), -- hết hạn
+(6, '991244', 'verify_email', 0, 0, DATE_ADD(NOW(), INTERVAL 7 MINUTE), '192.168.1.30'),
+(7, '341298', 'login', 0, 0, DATE_ADD(NOW(), INTERVAL 8 MINUTE), '192.168.1.40'),
+(8, '662910', 'change_password', 0, 1, DATE_ADD(NOW(), INTERVAL 6 MINUTE), '192.168.1.14'),
+(9, '274501', 'verify_email', 1, 2, DATE_SUB(NOW(), INTERVAL 3 MINUTE), '192.168.1.99'), -- hết hạn
+(10, '834729', 'login', 0, 0, DATE_ADD(NOW(), INTERVAL 9 MINUTE), '192.168.1.200'),
+(11, '559802', 'change_password', 0, 0, DATE_ADD(NOW(), INTERVAL 4 MINUTE), '192.168.1.55');
+
+-- Dữ liệu mẫu cho Tokens
+INSERT INTO Tokens (`user_id`, `refresh_token`, `device_info`, `ip_address`, `token_started_at`, `token_expired_at`, `is_revoked`, `revoked_at`) VALUES
+(1, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ik5ndXllbjU1IiwiaWF0IjoxNzM1Njg5NjAwfQ.fake_token_for_user1', 'Chrome on Windows 11', '192.168.1.10', '2025-01-01 00:00:00', '2026-01-01 00:00:00', FALSE, NULL),
+(2, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ik1pbmhUdWFuODkiLCJpYXQiOjE3Mzg0NTQ0MDB9.fake_token_for_user2', 'Safari on macOS Sonoma', '10.0.0.5', '2025-02-01 00:00:00', '2026-02-01 00:00:00', FALSE, NULL),
+(3, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkhvYW5nTG9uZ0hOIiwiaWF0IjoxNzQwOTYwMDAwfQ.fake_token_for_user3', 'Firefox on Linux', '172.16.0.20', '2025-03-01 00:00:00', '2025-09-01 00:00:00', FALSE, NULL),
+(4, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ik1haVBodW9uZzk1IiwiaWF0IjoxNzQzNTY4MDAwfQ.fake_token_for_user4', 'Edge on Windows 11', '192.168.1.15', '2025-04-01 00:00:00', '2026-04-01 00:00:00', FALSE, NULL),
+(5, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IlF1YW5nSHV5RGV2IiwiaWF0IjoxNzQ2MTc2MDAwfQ.fake_token_for_user5', 'Chrome on Android 13', '192.168.2.100', '2025-05-01 00:00:00', '2026-05-01 00:00:00', FALSE, NULL),
+(6, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IlRoYW5oVGhhbzciLCJpYXQiOjE3NDg4NzY4MDB9.revoked_token_for_user6', 'Safari on iOS 17', '10.10.10.10', '2025-06-01 00:00:00', '2026-06-01 00:00:00', TRUE, '2025-06-15 10:30:00'),
+(7, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkR1Y0FuaExlIiwiaWF0IjoxNzUxNDg0ODAwfQ.fake_token_for_user7', 'Brave on Windows 11', '203.0.113.25', '2025-07-01 00:00:00', '2026-07-01 00:00:00', FALSE, NULL),
+(8, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ik5nb2NCaWNoMjAwMCIsImlhdCI6MTc1NDE4MjQwMH0.expired_token_for_user8', 'Chrome on macOS', '198.51.100.2', '2025-08-01 00:00:00', '2025-11-01 00:00:00', FALSE, NULL),
+(9, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IlRydW5nRHVuZ0lUIiwiaWF0IjoxNzU2ODc2ODAwfQ.fake_token_for_user9', 'Firefox on Windows 10', '192.168.1.50', '2025-09-01 00:00:00', '2026-09-01 00:00:00', FALSE, NULL),
+(10, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkxpbmhDaGlCZWF1dHkiLCJpYXQiOjE3NTk0ODQ4MDB9.fake_token_for_user10', 'Safari on iPhone 15 Pro', '172.17.0.5', '2025-10-01 00:00:00', '2026-10-01 00:00:00', FALSE, NULL),
+(11, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ik5nbyBOZ29jIE5ndXllbiIsImlhdCI6MTc1OTQ4NDgwMH0.fake_token_for_user11', 'Chrome on Ubuntu 24.04', '10.0.1.12', '2025-10-01 00:00:00', '2026-10-01 00:00:00', FALSE, NULL);
+
+-- Dữ liệu mẫu cho Products với cột import_price
+INSERT INTO Products (id, name, slug, description, origin_price, price, import_price, buyed, rate_point_total, rate_count, stock_qty, low_stock_threshold, status, ocop_rating, category_id)
+VALUES (1, 'Bánh pía Sóc Trăng', 'banh-pia-soc-trang', 'Bánh pía Sóc Trăng thơm ngon, đặc sản miền Tây với lớp vỏ mỏng và nhân đậu xanh sầu riêng béo ngậy.', 70000.00, 65000.00, 50000.00, 150, 48, 10, 200, 20, 1, 4, 1),
+    (2, 'Bò một nắng Krông Pa', 'bo-mot-nang-krong-pa', 'Đặc sản bò một nắng Krông Pa, thịt bò tươi được tẩm ướp gia vị đậm đà và phơi qua một nắng giòn.', 550000.00, 525000.00, 450000.00, 80, 95, 20, 100, 10, 1, NULL, 1),
+    (3, 'Cà phê Buôn Ma Thuột', 'ca-phe-buon-ma-thuot', 'Cà phê rang xay nguyên chất từ thủ phủ cà phê Buôn Ma Thuột, hương thơm nồng nàn, vị đậm đà.', 150000.00, 135000.00, 110000.00, 250, 190, 40, 300, 30, 1, 4, 1),
+    (4, 'Chả ốc', 'cha-oc', 'Chả ốc dai giòn sần sật, kết hợp giữa thịt ốc tươi và các loại gia vị truyền thống, món ngon khó cưỡng.', 120000.00, 110000.00, 90000.00, 120, 68, 15, 150, 15, 1, NULL, 1),
+    (5, 'Dê chiên giòn Tây Ninh', 'de-chien-gion-tay-ninh', 'Thịt dê tươi được chế biến theo công thức đặc biệt của Tây Ninh, chiên giòn rụm, thơm nức mũi.', 250000.00, 230000.00, 200000.00, 60, 45, 10, 80, 10, 1, NULL, 1),
+    (6, 'Gân bò rau tiến vua', 'gan-bo-rau-tien-vua', 'Món gỏi gân bò giòn sần sật kết hợp với rau tiến vua thanh mát, nước sốt chua ngọt đậm vị.', 180000.00, 175000.00, 150000.00, 90, 88, 20, 120, 10, 1, 3, 1),
+    (7, 'Hạt điều rang muối Bình Phước', 'hat-dieu-rang-muoi-binh-phuoc', 'Hạt điều Bình Phước loại 1, được rang muối thủ công, giữ trọn vị bùi béo và hương thơm tự nhiên.', 300000.00, 280000.00, 240000.00, 300, 240, 50, 400, 40, 1, 4, 1),
+    (8, 'Mắm tép chưng thịt', 'mam-tep-chung-thit', 'Mắm tép chưng thịt đậm đà hương vị truyền thống, sản phẩm sạch, không chất bảo quản, ăn cùng cơm nóng tuyệt ngon.', 160000.00, 150000.00, 130000.00, 180, 145, 30, 250, 25, 1, 4, 1),
+    (9, 'Mật ong rừng U Minh', 'mat-ong-rung-u-minh', 'Mật ong nguyên chất khai thác từ rừng tràm U Minh, có màu vàng óng, hương thơm đặc trưng và vị ngọt thanh.', 800000.00, 750000.00, 650000.00, 100, 115, 25, 100, 10, 1, 4, 1),
+    (10, 'Mè xửng Huế', 'me-xung-hue', 'Đặc sản Mè xửng Huế dẻo thơm, ngọt bùi, là sự hòa quyện của mạch nha, đậu phộng và mè rang.', 50000.00, 45000.00, 35000.00, 400, 285, 60, 500, 50, 1, 3, 1),
+    (11, 'Mọc ốc', 'moc-oc', 'Mọc ốc được làm từ thịt ốc tươi xay nhuyễn, nấm mèo và giò sống, viên mọc dai ngon, đậm đà.', 130000.00, 120000.00, 100000.00, 110, 76, 18, 130, 15, 1, NULL, 1),
+    (12, 'Rượu cần Tây Nguyên', 'ruou-can-tay-nguyen', 'Rượu cần là tinh hoa văn hóa của núi rừng Tây Nguyên, được ủ từ men lá cây và gạo nếp, hương vị độc đáo.', 200000.00, 180000.00, 150000.00, 70, 92, 20, 90, 10, 1, 4, 1),
+    (13, 'Trà sen Tây Hồ', 'tra-sen-tay-ho', 'Trà sen Tây Hồ được ướp hương từ những bông sen Bách Diệp, mang đến hương thơm thanh khiết và tinh tế.', 450000.00, 420000.00, 380000.00, 130, 140, 30, 150, 15, 1, 4, 1),
+    (14, 'Trứng kiến Tây Bắc', 'trung-kien-tay-bac', 'Đặc sản độc đáo của núi rừng Tây Bắc, trứng kiến non béo ngậy, thường dùng để nấu xôi hoặc làm gỏi.', 350000.00, 330000.00, 290000.00, 50, 38, 8, 60, 10, 1, NULL, 1),
+    (15, 'Bề bề rang muối', 'be-be-rang-muoi', 'Bề bề tươi ngon được rang cùng muối và sả ớt, vỏ giòn, thịt ngọt đậm đà, là món nhậu hấp dẫn.', 280000.00, 260000.00, 220000.00, 140, 130, 28, 180, 20, 1, NULL, 2),
+    (16, 'Cá bóp nấu me', 'ca-bop-nau-me', 'Lẩu cá bóp nấu me chua thanh, thịt cá bóp ngọt và chắc, là món ăn giải nhiệt và bổ dưỡng.', 320000.00, 290000.00, 250000.00, 110, 98, 22, 120, 10, 1, 4, 2),
+    (17, 'Cá linh bông', 'ca-linh-bong', 'Cá linh mùa nước nổi, thân nhỏ, xương mềm, thịt ngọt, thường dùng để nấu lẩu hoặc kho lạt.', 180000.00, 165000.00, 140000.00, 200, 175, 38, 250, 25, 1, 3, 2),
+    (18, 'Chả cá Móng', 'cha-ca-mong', 'Chả cá Móng Cái nổi tiếng với độ dai, giòn và hương vị đậm đà từ thịt cá tươi nguyên chất.', 240000.00, 220000.00, 190000.00, 160, 150, 32, 200, 20, 1, NULL, 2),
+    (19, 'Chả cá mực tôm', 'cha-ca-muc-tom', 'Sự kết hợp hoàn hảo giữa cá, mực và tôm tươi, tạo nên món chả dai ngon, đậm vị biển.', 260000.00, 245000.00, 210000.00, 130, 112, 25, 150, 15, 1, NULL, 2),
+    (20, 'Chả mỡ ghẹ', 'cha-mo-ghe', 'Chả mỡ ghẹ béo ngậy, thơm lừng mùi ghẹ tươi, là món ăn độc đáo và đầy dinh dưỡng từ hải sản.', 300000.00, 280000.00, 240000.00, 100, 89, 20, 110, 10, 1, 4, 2),
+    (21, 'Chả mực Hạ Long', 'cha-muc-ha-long', 'Đặc sản trứ danh Hạ Long, chả mực được giã tay dai giòn, thơm nức hương mực mai tươi.', 480000.00, 450000.00, 390000.00, 220, 230, 50, 250, 25, 1, 4, 2),
+    (22, 'Chả tôm', 'cha-tom', 'Chả tôm được làm từ tôm tươi xay nhuyễn, có độ dai và vị ngọt tự nhiên, thích hợp chiên hoặc nấu canh.', 230000.00, 210000.00, 180000.00, 170, 155, 35, 220, 20, 1, NULL, 2),
+    (23, 'Cua Cà Mau', 'cua-ca-mau', 'Cua Cà Mau nổi tiếng chắc thịt, ngọt và nhiều gạch. Sản phẩm được giao sống tận nơi.', 600000.00, 580000.00, 500000.00, 120, 142, 30, 100, 10, 1, 4, 2),
+    (24, 'Gỏi cá trích', 'goi-ca-trich', 'Gỏi cá trích Phú Quốc với cá tươi, dừa nạo và rau thơm, cuốn bánh tráng chấm nước mắm chua ngọt.', 190000.00, 175000.00, 150000.00, 150, 130, 29, 160, 15, 1, 4, 2),
+    (25, 'Hàu nướng mỡ hành', 'hau-nuong-mo-hanh', 'Hàu sữa tươi sống được nướng trên bếp than cùng mỡ hành thơm lừng, đậu phộng béo bùi.', 150000.00, 140000.00, 110000.00, 250, 210, 45, 300, 30, 1, NULL, 2),
+    (26, 'Mực một nắng', 'muc-mot-nang', 'Mực lá được phơi qua đúng một nắng, giữ được độ dẻo, ngọt và hương thơm đặc trưng của biển.', 700000.00, 650000.00, 580000.00, 180, 195, 42, 200, 20, 1, 4, 2),
+    (27, 'Nem hải sản', 'nem-hai-san', 'Nem hải sản với vỏ ngoài giòn tan, bên trong là nhân tôm, cua, ghẹ hòa quyện cùng sốt mayonnaise béo ngậy.', 140000.00, 125000.00, 100000.00, 280, 250, 55, 350, 35, 1, NULL, 2),
+    (28, 'Sá sùng nướng', 'sa-sung-nuong', 'Sá sùng khô, đặc sản quý hiếm của vùng biển Quan Lạn, nướng lên có vị ngọt đậm, dai và thơm.', 900000.00, 880000.00, 780000.00, 70, 85, 18, 80, 10, 1, NULL, 2),
+    (29, 'Tôm sú Bạc Liêu', 'tom-su-bac-lieu', 'Tôm sú Bạc Liêu được nuôi trồng theo mô hình sinh thái, thịt chắc, ngọt và an toàn cho sức khỏe.', 450000.00, 430000.00, 380000.00, 190, 180, 40, 200, 20, 1, 4, 2),
+    (30, 'Ruốc bề bề', 'ruoc-be-be', 'Ruốc làm từ 100% thịt bề bề tươi, sợi ruốc bông, tơi, vị ngọt đậm đà, giàu canxi.', 180000.00, 170000.00, 145000.00, 130, 96, 22, 150, 15, 1, NULL, 3),
+    (31, 'Ruốc cá basa', 'ruoc-ca-basa', 'Ruốc cá basa thơm ngon, không tanh, giàu Omega-3, thích hợp cho cả trẻ em và người lớn.', 120000.00, 110000.00, 90000.00, 200, 158, 35, 250, 25, 1, NULL, 3),
+    (32, 'Ruốc cá lóc', 'ruoc-ca-loc', 'Ruốc cá lóc đồng nguyên chất, sợi vàng ươm, thơm ngon, bổ dưỡng, tốt cho người ốm và trẻ nhỏ.', 160000.00, 150000.00, 130000.00, 180, 140, 30, 200, 20, 1, 3, 3),
+    (33, 'Ruốc cá rô đồng', 'ruoc-ca-ro-dong', 'Ruốc làm từ cá rô đồng tự nhiên, thịt dai, thơm, được sao khô thủ công, giữ trọn vị ngọt của cá.', 170000.00, 155000.00, 135000.00, 150, 110, 25, 180, 15, 1, NULL, 3),
+    (34, 'Ruốc cá thu', 'ruoc-ca-thu', 'Ruốc cá thu giàu dinh dưỡng, thịt cá thơm, sợi ruốc bông, là lựa chọn tuyệt vời cho bữa ăn gia đình.', 250000.00, 235000.00, 200000.00, 210, 190, 40, 250, 25, 1, 4, 3),
+    (35, 'Ruốc mắm Huế', 'ruoc-mam-hue', 'Đặc sản mắm ruốc Huế thơm nồng đặc trưng, dùng để nêm nếm các món bún bò, lẩu hoặc xào nấu.', 80000.00, 70000.00, 55000.00, 300, 245, 50, 400, 40, 1, 3, 3),
+    (36, 'Ruốc tép Đồng Tháp', 'ruoc-tep-dong-thap', 'Ruốc làm từ tép đồng tươi, có màu đỏ tự nhiên, vị ngọt đậm, thơm mùi tép, ăn kèm cơm trắng hoặc cháo.', 140000.00, 130000.00, 110000.00, 220, 180, 40, 300, 30, 1, NULL, 3),
+    (37, 'Ruốc thịt lợn Nam Định', 'ruoc-thit-lon-nam-dinh', 'Ruốc thịt lợn làm theo công thức gia truyền Nam Định, sợi ruốc bông, tơi, vàng óng và thơm ngon.', 320000.00, 290000.00, 250000.00, 350, 320, 65, 400, 40, 1, 4, 3),
+    (38, 'Ruốc tôm Bình Định', 'ruoc-tom-binh-dinh', 'Ruốc tôm Bình Định được làm từ tôm đất tươi, giã tay, có vị ngọt thanh, thơm mùi tôm và màu sắc hấp dẫn.', 280000.00, 260000.00, 220000.00, 240, 220, 48, 300, 30, 1, NULL, 3),
+    (39, 'Ruốc tôm đất Cà Mau', 'ruoc-tom-dat-ca-mau', 'Ruốc làm từ tôm đất Cà Mau 100%, không pha trộn, sợi ruốc dai, ngọt và đậm đà hương vị miền sông nước.', 300000.00, 285000.00, 245000.00, 190, 170, 36, 220, 20, 1, 4, 3),
+    (40, 'Ruốc tôm Hạ Long', 'ruoc-tom-ha-long', 'Ruốc tôm Hạ Long nổi tiếng với sợi ruốc bông, tơi, vị ngọt đậm của tôm he, món quà ý nghĩa từ biển.', 290000.00, 270000.00, 230000.00, 230, 205, 45, 280, 25, 1, 4, 3),
+    (41, 'Ruốc tôm rong biển', 'ruoc-tom-rong-bien', 'Sự kết hợp độc đáo giữa ruốc tôm và rong biển, mang lại hương vị mới lạ và bổ sung nhiều khoáng chất.', 200000.00, 185000.00, 160000.00, 160, 135, 30, 200, 20, 1, NULL, 3),
+    (42, 'Da Gà Chiên Giòn', 'da-ga-chien-gion', 'Da gà được làm sạch, tẩm ướp gia vị đậm đà rồi chiên giòn rụm, là món ăn vặt hấp dẫn khó cưỡng.', 75000.00, 69000.00, 55000.00, 180, 142, 30, 200, 20, 1, NULL, 4),
+    (43, 'Gà Cháy Tỏi', 'ga-chay-toi', 'Thịt gà mềm ngọt hòa quyện với hương thơm nồng nàn của tỏi phi vàng, tạo nên món ăn đưa cơm hấp dẫn.', 180000.00, 169000.00, 145000.00, 150, 115, 25, 150, 15, 1, 3, 4),
+    (44, 'Gà Đông Tảo Ủ Muối', 'ga-dong-tao-u-muoi', 'Đặc sản gà Đông Tảo trứ danh với lớp da giòn, thịt ngọt và chắc, được ủ muối hoa tiêu thơm lừng.', 450000.00, 429000.00, 380000.00, 90, 85, 18, 100, 10, 1, 4, 4),
+    (45, 'Gà Nướng Muối Ớt', 'ga-nuong-muoi-ot', 'Gà ta được tẩm ướp muối ớt cay nồng, nướng trên than hồng cho lớp da vàng giòn, thịt mềm và mọng nước.', 250000.00, 235000.00, 200000.00, 210, 190, 40, 200, 20, 1, 4, 4),
+    (46, 'Gà Nướng Thảo Mộc', 'ga-nuong-thao-moc', 'Hương vị độc đáo từ các loại thảo mộc núi rừng thấm đượm trong từng thớ thịt gà nướng mềm thơm.', 260000.00, 245000.00, 210000.00, 130, 110, 24, 150, 15, 1, NULL, 4),
+    (47, 'Gà Ủ Muối', 'ga-u-muoi', 'Gà ta nguyên con được ủ muối thảo dược, da vàng óng, thịt dai ngọt và giữ trọn hương vị tự nhiên.', 220000.00, 209000.00, 180000.00, 300, 280, 60, 250, 25, 1, 3, 4),
+    (48, 'Gà Ủ Xì Dầu', 'ga-u-xi-dau', 'Món gà ủ xì dầu với công thức đặc biệt, thịt gà mềm thấm vị, đậm đà, hương thơm quyến rũ.', 230000.00, 219000.00, 190000.00, 180, 165, 35, 180, 20, 1, NULL, 4),
+    (49, 'Gà Viên Chiên', 'ga-vien-chien', 'Gà viên chiên vàng giòn bên ngoài, mềm ngọt bên trong, là món ăn vặt yêu thích của mọi lứa tuổi.', 90000.00, 85000.00, 70000.00, 250, 210, 45, 300, 30, 1, NULL, 4),
+    (50, 'Há Cảo Gà', 'ha-cao-ga', 'Lớp vỏ bánh mềm dai bọc lấy nhân thịt gà và rau củ tươi ngon, hấp lên thơm phức, chấm cùng nước tương đậm đà.', 110000.00, 99000.00, 80000.00, 160, 130, 28, 200, 20, 1, NULL, 4),
+    (51, 'Gà Kho Mắm', 'ga-kho-mam', 'Hương vị dân dã mà đậm đà khó quên của món gà kho mắm, thịt gà săn chắc thấm đượm vị mắm thơm nồng.', 150000.00, 139000.00, 115000.00, 190, 175, 38, 220, 20, 1, 3, 4),
+    (52, 'Bánh Hạt Điều', 'banh-hat-dieu', 'Bánh quy bơ giòn tan kết hợp với những hạt điều bùi béo, tạo nên món ăn vặt thơm ngon, dinh dưỡng.', 130000.00, 120000.00, 95000.00, 140, 112, 25, 180, 15, 1, NULL, 5),
+    (53, 'Bánh Thanh Hạnh Nhân', 'banh-thanh-hanh-nhan', 'Những thanh bánh giòn rụm phủ đầy lát hạnh nhân rang vàng, vị ngọt nhẹ, béo bùi tự nhiên.', 150000.00, 139000.00, 110000.00, 200, 185, 40, 250, 25, 1, 3, 5),
+    (54, 'Bánh Thuyền Macca', 'banh-thuyen-macca', 'Đế bánh giòn tan hình chiếc thuyền, bên trên là sự kết hợp của macca, hạt điều, hạnh nhân và bí xanh.', 160000.00, 149000.00, 120000.00, 170, 150, 32, 200, 20, 1, NULL, 5),
+    (55, 'Hạnh Nhân Rang Bơ', 'hanh-nhan-rang-bo', 'Hạnh nhân nhập khẩu được rang cùng bơ và muối, giòn rụm, thơm lừng, là món ăn vặt tốt cho sức khỏe.', 280000.00, 265000.00, 220000.00, 220, 200, 42, 250, 25, 1, NULL, 5),
+    (56, 'Hạt Điều Rang Muối', 'hat-dieu-rang-muoi', 'Hạt điều Bình Phước loại A, hạt to đều, được rang muối thủ công, giữ vị ngọt bùi tự nhiên.', 320000.00, 299000.00, 250000.00, 400, 380, 80, 350, 35, 1, 4, 5),
+    (57, 'Hạt Macca Sấy Nứt Vỏ', 'hat-macca-say-nut-vo', 'Nữ hoàng của các loại hạt, hạt macca sấy khô tự nhiên, nứt vỏ dễ dàng, vị béo ngậy, thơm ngon.', 350000.00, 330000.00, 280000.00, 250, 230, 50, 300, 30, 1, 4, 5),
+    (58, 'Hạt Óc Chó', 'hat-oc-cho', 'Hạt óc chó chứa nhiều Omega-3, tốt cho trí não và tim mạch, vị bùi, béo nhẹ, dễ ăn.', 300000.00, 285000.00, 240000.00, 210, 195, 41, 220, 20, 1, NULL, 5),
+    (59, 'Hạt Sen Sấy Giòn', 'hat-sen-say-gion', 'Hạt sen được sấy giòn bằng công nghệ hiện đại, giữ nguyên giá trị dinh dưỡng, vị bùi, ngọt thanh.', 180000.00, 169000.00, 140000.00, 190, 170, 36, 250, 25, 1, 3, 5),
+    (60, 'Mix 5 Loại Hạt Dinh Dưỡng', 'mix-5-loai-hat-dinh-duong', 'Hỗn hợp 5 loại hạt cao cấp: óc chó, macca, hạnh nhân, hạt điều, bí xanh. Cung cấp năng lượng và dưỡng chất.', 340000.00, 325000.00, 280000.00, 280, 260, 55, 300, 30, 1, NULL, 5),
+    (61, 'Thanh Rong Biển Kẹp Hạt', 'thanh-rong-bien-kep-hat', 'Rong biển sấy giòn kẹp các loại hạt dinh dưỡng, là món ăn vặt lạ miệng, thơm ngon và tốt cho sức khỏe.', 120000.00, 110000.00, 90000.00, 240, 215, 48, 300, 30, 1, NULL, 5),
+    (62, 'Chả Chân Vịt', 'cha-chan-vit', 'Món chả độc đáo làm từ chân vịt rút xương, giòn sần sật, đậm đà gia vị, thích hợp làm món nhậu hoặc ăn chơi.', 140000.00, 129000.00, 110000.00, 130, 105, 23, 150, 15, 1, NULL, 6),
+    (63, 'Chả Vịt Thúy Hạnh', 'cha-vit-thuy-hanh', 'Đặc sản chả vịt Thúy Hạnh nổi tiếng với hương vị thơm ngon đặc trưng, thịt vịt mềm ngọt quyện mỡ hành béo ngậy.', 190000.00, 179000.00, 155000.00, 110, 98, 22, 130, 10, 1, 4, 6),
+    (64, 'Chân Vịt Rút Xương Ủ Muối', 'chan-vit-rut-xuong-u-muoi', 'Chân vịt rút xương tiện lợi, được ủ muối thảo mộc, giòn sần sật, chấm cùng sốt chấm cay cay là hết ý.', 150000.00, 135000.00, 115000.00, 200, 180, 40, 250, 25, 1, NULL, 6),
+    (65, 'Chân Vịt Rút Xương Ủ Xì Dầu', 'chan-vit-rut-xuong-u-xi-dau', 'Chân vịt rút xương ngâm trong nước sốt xì dầu thảo mộc đậm đà, vị mặn ngọt hài hòa, thơm nức.', 155000.00, 140000.00, 120000.00, 180, 160, 35, 220, 20, 1, NULL, 6),
+    (66, 'Mọc Vịt', 'moc-vit', 'Viên mọc làm từ thịt vịt xay nhuyễn, nấm hương và gia vị, dai ngon, ngọt thanh, dùng để nấu canh hoặc thả lẩu.', 130000.00, 119000.00, 99000.00, 150, 125, 28, 180, 15, 1, NULL, 6),
+    (67, 'Pate Gan Vịt', 'pate-gan-vit', 'Pate gan vịt kiểu Pháp béo ngậy, mềm mịn, thơm lừng hương vị của rượu cognac và các loại gia vị hảo hạng.', 250000.00, 230000.00, 190000.00, 100, 90, 20, 120, 10, 1, 4, 6),
+    (68, 'Vịt Quay', 'vit-quay', 'Vịt quay da giòn rụm màu cánh gián, thịt mềm ngọt, được tẩm ướp công phu theo công thức gia truyền.', 350000.00, 329000.00, 280000.00, 160, 145, 30, 150, 15, 1, 3, 6),
+    (69, 'Vịt Tiềm Hạt Sen', 'vit-tiem-hat-sen', 'Món ăn bổ dưỡng với thịt vịt mềm rục, hạt sen bùi thơm và nước dùng ngọt thanh từ các vị thuốc bắc.', 280000.00, 265000.00, 225000.00, 120, 108, 24, 130, 10, 1, NULL, 6),
+    (70, 'Vịt Ủ Xì Dầu', 'vit-u-xi-dau', 'Thịt vịt mềm ngọt thấm đẫm trong nước sốt xì dầu và hoa hồi, quế, thảo quả, hương vị khó quên.', 270000.00, 255000.00, 220000.00, 140, 120, 26, 160, 15, 1, NULL, 6),
+    (71, 'Chả Cá Thác Lác Tươi', 'cha-ca-thac-lac-tuoi', 'Chả cá thác lác nguyên chất, được quết tay dai ngon, không hàn the, ngọt vị cá tự nhiên.', 200000.00, 185000.00, 155000.00, 250, 230, 50, 300, 30, 1, 4, 7),
+    (72, 'Cá Chiên Tẩm Gia Vị Sấy Khô', 'ca-chien-tam-gia-vi-say-kho', 'Cá nục được chiên giòn rồi rim với gia vị mặn ngọt, sau đó sấy khô, món ăn vặt hoặc ăn với cơm đều ngon.', 150000.00, 139000.00, 110000.00, 180, 160, 35, 200, 20, 1, NULL, 7),
+    (73, 'Cá Chua Ngọt Đông Hũ', 'ca-chua-ngot-dong-hu', 'Cá được kho rim chua ngọt đậm đà, đóng trong hũ tiện lợi, chỉ cần hâm nóng là có thể dùng ngay.', 130000.00, 119000.00, 95000.00, 150, 130, 28, 180, 15, 1, 3, 7),
+    (74, 'Cá Hộp', 'ca-hop', 'Cá nục hoặc cá trích sốt cà chua, sản phẩm tiện lợi, giàu dinh dưỡng cho bữa ăn nhanh.', 40000.00, 35000.00, 25000.00, 500, 450, 95, 600, 60, 1, NULL, 7),
+    (75, 'Cá Khô', 'ca-kho', 'Cá lóc hoặc cá sặc khô, được phơi nắng tự nhiên, thịt dai ngọt, dùng để nướng, chiên hoặc làm gỏi.', 250000.00, 230000.00, 190000.00, 200, 185, 40, 250, 25, 1, 3, 7),
+    (76, 'Cá Lóc Rim Me', 'ca-loc-rim-me', 'Thịt cá lóc đồng chiên vàng, rim cùng nước sốt me chua ngọt đậm đà, món ăn hao cơm trứ danh.', 160000.00, 149000.00, 125000.00, 170, 155, 33, 200, 20, 1, NULL, 7),
+    (77, 'Cá Một Nắng', 'ca-mot-nang', 'Cá dứa hoặc cá đù một nắng, thịt dẻo, vị ngọt tự nhiên, không quá khô, chiên lên thơm lừng.', 300000.00, 280000.00, 240000.00, 220, 205, 44, 250, 25, 1, 4, 7),
+    (78, 'Cá Mực Một Nắng Tẩm Gia Vị', 'ca-muc-mot-nang-tam-gia-vi', 'Mực một nắng dẻo ngọt, được tẩm ướp gia vị cay cay mặn mặn, nướng lên thơm nức mũi.', 380000.00, 359000.00, 300000.00, 190, 178, 38, 200, 20, 1, NULL, 7),
+    (79, 'Cá Rim', 'ca-rim', 'Cá cơm hoặc cá bống rim mặn ngọt, món ăn dân dã nhưng đậm đà hương vị quê hương.', 120000.00, 110000.00, 90000.00, 280, 260, 55, 300, 30, 1, NULL, 7),
+    (80, 'Cá Rô Phi Sấy Giòn', 'ca-ro-phi-say-gion', 'Thịt cá rô phi được phi lê, tẩm ướp và sấy giòn tan, có thể ăn liền như snack.', 140000.00, 129000.00, 105000.00, 160, 140, 30, 200, 20, 1, NULL, 7),
+    (81, 'Cá Thu Rim Tỏi Ớt', 'ca-thu-rim-toi-ot', 'Khúc cá thu tươi được chiên vàng, rim trong nước sốt tỏi ớt mặn ngọt, đậm đà, thơm lừng.', 280000.00, 265000.00, 220000.00, 190, 175, 37, 220, 20, 1, 4, 7),
+    (82, 'Chả Cá Thác Lác Hậu Giang', 'cha-ca-thac-lac-hau-giang', 'Đặc sản Hậu Giang, chả cá thác lác dai ngon, thơm mùi thì là, chiên vàng hoặc nấu lẩu đều tuyệt.', 210000.00, 195000.00, 165000.00, 210, 198, 42, 250, 25, 1, 4, 7),
+    (83, 'Chả Cá Thác Lác Tẩm Gia Vị', 'cha-ca-thac-lac-tam-gia-vi', 'Chả cá thác lác đã được quết dai và tẩm ướp gia vị vừa ăn, tiện lợi cho việc chế biến.', 220000.00, 205000.00, 175000.00, 180, 165, 36, 200, 20, 1, NULL, 7),
+    (84, 'Pate Cá Hồi Hạ Long', 'pate-ca-hoi-ha-long', 'Pate làm từ cá hồi tươi vùng biển Hạ Long, béo ngậy, thơm ngon, giàu Omega-3, dùng kèm bánh mì.', 190000.00, 175000.00, 150000.00, 140, 128, 28, 160, 15, 1, 3, 7),
+    (85, 'Chả Giò Chả Lụa', 'cha-gio-cha-lua', 'Combo chả giò và chả lụa truyền thống, được làm từ thịt heo tươi ngon theo công thức gia truyền, thơm ngon, đậm đà.', 180000.00, 169000.00, 140000.00, 250, 235, 50, 300, 30, 1, 4, 8),
+    (86, 'Chân Giò Giả Cầy', 'chan-gio-gia-cay', 'Chân giò heo được thui vàng, nấu cùng riềng, mẻ, mắm tôm, tạo nên hương vị giả cầy đặc trưng, thơm nức mũi.', 220000.00, 205000.00, 175000.00, 180, 168, 36, 200, 20, 1, 3, 8),
+    (87, 'Đặc Sản Chả Chìa Hải Phòng', 'dac-san-cha-chia-hai-phong', 'Chả chìa (chả sả) Hải Phòng, thịt heo băm nhuyễn bọc quanh cây sả, nướng thơm lừng, hương vị khó quên.', 190000.00, 179000.00, 150000.00, 160, 145, 31, 180, 15, 1, 4, 8),
+    (88, 'Đặc Sản Chả Cốm Hà Nội', 'dac-san-cha-com-ha-noi', 'Thức quà của mùa thu Hà Nội, chả cốm dẻo thơm, sự hòa quyện giữa thịt heo xay và những hạt cốm non xanh mướt.', 210000.00, 199000.00, 170000.00, 300, 280, 60, 250, 25, 1, 4, 8),
+    (89, 'Đặc Sản Chả Sụn', 'dac-san-cha-sun', 'Chả sụn giòn sần sật, được làm từ thịt heo và sụn non, chiên vàng hay nướng đều thơm ngon khó cưỡng.', 200000.00, 185000.00, 155000.00, 220, 205, 44, 250, 25, 1, NULL, 8),
+    (90, 'Khâu Nhục Lạng Sơn', 'khau-nhuc-lang-son', 'Món ăn đặc sản Lạng Sơn, thịt ba chỉ được tẩm ướp công phu, hầm mềm tan, béo ngậy mà không ngán.', 250000.00, 235000.00, 200000.00, 150, 140, 30, 150, 15, 1, 3, 8),
+    (91, 'Mắm Nêm Tai Heo', 'mam-nem-tai-heo', 'Tai heo giòn sần sật ngâm trong mắm nêm đậm đà, thêm chút dứa và gia vị, món nhậu hay ăn kèm bún đều tuyệt.', 140000.00, 129000.00, 105000.00, 130, 115, 25, 160, 15, 1, NULL, 8),
+    (92, 'Nem Chua Thanh Hóa', 'nem-chua-thanh-hoa', 'Đặc sản nem chua Thanh Hóa, vị chua thanh, cay nồng của tỏi ớt, thơm mùi lá chuối, món quà quê ý nghĩa.', 90000.00, 80000.00, 65000.00, 400, 380, 85, 500, 50, 1, 4, 8),
+    (93, 'Nem Rán Hà Nội', 'nem-ran-ha-noi', 'Nem rán (chả giò) theo phong vị Hà Nội, vỏ giòn rụm, nhân đầy đặn thịt, mộc nhĩ, miến, chấm nước mắm chua ngọt.', 120000.00, 110000.00, 85000.00, 350, 320, 70, 400, 40, 1, NULL, 8),
+    (94, 'Nem Lụi Nha Trang', 'nem-lui-nha-trang', 'Nem nướng làm từ thịt heo xay, được lụi trên que sả hoặc que tre, nướng than hồng thơm lừng, ăn kèm rau sống và bánh tráng.', 160000.00, 149000.00, 120000.00, 280, 265, 58, 300, 30, 1, 3, 8),
+    (95, 'Pate Gan Heo', 'pate-gan-heo', 'Pate gan heo nhà làm, mềm mịn, béo ngậy, thơm mùi tiêu, không chất bảo quản, hoàn hảo cho bữa sáng.', 150000.00, 135000.00, 110000.00, 210, 198, 42, 250, 25, 1, NULL, 8),
+    (96, 'Tai Heo Cuộn Lưỡi', 'tai-heo-cuon-luoi', 'Món nhậu hấp dẫn với tai heo giòn và lưỡi heo mềm được cuộn chặt, luộc chín, thái mỏng chấm mắm gừng.', 180000.00, 165000.00, 140000.00, 170, 158, 34, 200, 20, 1, NULL, 8),
+    (97, 'Tai Heo Ủ Muối', 'tai-heo-u-muoi', 'Tai heo được làm sạch, ủ muối hoa tiêu, giòn sần sật, thơm mùi gia vị, là món khai vị tuyệt vời.', 170000.00, 159000.00, 135000.00, 190, 175, 38, 220, 20, 1, 3, 8),
+    (98, 'Tai Heo Ủ Xì Dầu', 'tai-heo-u-xi-dau', 'Tai heo ngâm trong nước sốt xì dầu thảo mộc đậm đà, vị mặn ngọt hài hòa, thơm nức mùi hoa hồi, quế.', 175000.00, 162000.00, 140000.00, 160, 145, 31, 180, 15, 1, NULL, 8),
+    (99, 'Thịt Chưng Mắm Tép', 'thit-chung-mam-tep', 'Món ăn hao cơm trứ danh, thịt vai heo xay chưng cùng mắm tép, riềng, hành khô cho đến khi keo lại, thơm lừng.', 190000.00, 175000.00, 150000.00, 240, 225, 48, 260, 25, 1, 4, 8),
+    (100, 'Thịt Heo Sấy Khô', 'thit-heo-say-kho', 'Thịt heo sấy khô kiểu gác bếp, được tẩm ướp gia vị đậm đà, dai ngọt, cay cay, là món nhậu lai rai hấp dẫn.', 350000.00, 329000.00, 280000.00, 200, 190, 40, 220, 20, 1, 3, 8),
+    (101, 'Thịt Heo Xông Khói', 'thit-heo-xong-khoi', 'Thịt ba chỉ heo được ướp gia vị và xông khói bằng gỗ sồi, mang lại hương vị thơm ngon đặc trưng.', 400000.00, 379000.00, 320000.00, 180, 170, 35, 200, 20, 1, NULL, 8),
+    (102, 'Xúc Xích Cốm', 'xuc-xich-com', 'Sự kết hợp độc đáo giữa xúc xích heo và cốm xanh, khi chiên lên vỏ ngoài giòn, bên trong dẻo thơm.', 130000.00, 119000.00, 95000.00, 260, 240, 52, 300, 30, 1, NULL, 8),
+    (103, 'Chả Ngan', 'cha-ngan', 'Chả ngan được làm từ thịt ngan tươi, xay nhuyễn và tẩm ướp gia vị, chiên vàng thơm nức, vị ngọt đậm đà.', 240000.00, 225000.00, 190000.00, 150, 138, 29, 170, 15, 1, 4, 9),
+    (104, 'Ngan Một Nắng', 'ngan-mot-nang', 'Thịt ngan được tẩm ướp gia vị rồi phơi qua một nắng, thịt dẻo, đậm vị, chiên hoặc nướng đều rất ngon.', 280000.00, 260000.00, 220000.00, 120, 110, 24, 140, 10, 1, NULL, 9),
+    (105, 'Ngan Xông Khói', 'ngan-xong-khoi', 'Thịt ức ngan được tẩm ướp và xông khói theo quy trình nghiêm ngặt, thái lát mỏng ăn liền, hương vị hảo hạng.', 320000.00, 299000.00, 260000.00, 140, 130, 28, 150, 15, 1, 3, 9);
+
+-- Dữ liệu mẫu cho Coupons
+INSERT INTO Coupons 
+(code, description, type, value, max_value, min_order_value, quantity, used_count, start_date, end_date, status)
+VALUES
+('MTAY10', 'Áp dụng cho các sản phẩm đặc sản miền Tây như bánh pía, mật ong U Minh.', 1, 10, NULL, 100000, 100, 0, '2025-10-01', '2025-12-31', 1),
+
+('MBIEN20K', 'Áp dụng cho các sản phẩm hải sản vùng biển như chả mực, tôm sú.', 1, 20000, NULL, 150000, 80, 0, '2025-10-01', '2025-12-30', 1),
+
+('MTRUNGSHIP', 'Áp dụng cho các đơn hàng đặc sản miền Trung như ruốc Huế, ruốc cá.', 0, 100, NULL, 100000, 150, 0, '2025-10-05', '2025-12-31', 1),
+
+('MBAC15', 'Giảm giá các sản phẩm miền Bắc như gà Đông Tảo, gà cháy tỏi.', 1, 15, NULL, 120000, 100, 0, '2025-10-10', '2025-12-25', 1),
+
+('DINHDUONG50K', 'Giảm 50,000đ cho các loại hạt dinh dưỡng cao cấp.', 1, 50000, NULL, 200000, 200, 0, '2025-10-01', '2025-12-31', 1),
+
+('VITSHIP', 'Áp dụng miễn phí vận chuyển cho các món đặc sản từ vịt như chả vịt, pate gan vịt.', 0, 100, NULL, 80000, 120, 0, '2025-10-01', '2025-12-31', 1);
+
+-- Dữ liệu mẫu cho CouponScopes
+INSERT INTO CouponScopes (coupon_id, scope_type, product_id) VALUES
+-- Giảm 10% toàn shop
+(1, 0, NULL),
+
+-- Giảm 20k toàn shop
+(2, 0, NULL),
+
+-- Miễn phí ship toàn shop
+(3, 0, NULL),
+
+-- Giảm 15% toàn shop
+(4, 0, NULL),
+
+-- Giảm 50k toàn shop
+(5, 0, NULL),
+
+-- Miễn phí ship toàn shop
+(6, 0, NULL);
+
+-- Dữ liệu mẫu cho CartItems
+INSERT INTO CartItems (qty_total, price_total, user_id, product_id) VALUES
+(1, 45000, 1, 1),
+(2, 56000, 1, 2),
+(1, 28000, 2, 3),
+(3, 330000, 3, 4),
+(5, 375000, 4, 6),
+(2, 170000, 4, 7),
+(10, 1100000, 5, 8),
+(3, 690000, 5, 9),
+(2, 130000, 2, 10);
+
+-- Dữ liệu mẫu cho Discounts
+INSERT INTO Discounts (name, description, value, start_date, end_date, status) VALUES
+('Giảm 10% mùa hè', 'Áp dụng cho tất cả đặc sản mùa hè', 10, '2025-06-01 00:00:00', '2025-08-31 23:59:59', 1),
+('Flash Sale 50k', 'Giảm trực tiếp 50.000 VND cho đơn hàng đặc sản', 50000, '2025-09-20 00:00:00', '2025-09-25 23:59:59', 1),
+('Mua 1 tặng 1', 'Chương trình mua 1 tặng 1 cho một số đặc sản chọn lọc', 100, '2025-10-01 00:00:00', '2025-10-10 23:59:59', 0),
+('Giảm 20% dịp lễ', 'Khuyến mại 20% tất cả đặc sản dịp lễ', 20, '2025-12-20 00:00:00', '2025-12-31 23:59:59', 1),
+('Free Ship 0đ', 'Miễn phí vận chuyển cho đơn hàng đặc sản', 0, '2025-09-01 00:00:00', '2025-09-30 23:59:59', 1);
+
+-- Dữ liệu mẫu cho DiscountProducts
+INSERT INTO DiscountProducts (discount_id, product_id) VALUES
+(1, 1),
+(1, 2),
+(2, 3),
+(2, 4),
+(3, 5),
+(4, 6),
+(4, 7),
+(5, 8),
+(5, 9),
+(5, 10);
+
+-- Dữ liệu mẫu cho Sliders
+INSERT INTO Sliders (name, image_url, link_url, description, sort_order, status)
+VALUES
+('Khuyến mãi mùa hè', 'https://via.placeholder.com/800x300?text=Summer+Sale', '/sale/summer', 'Giảm giá sốc lên đến 50% cho toàn bộ sản phẩm mùa hè', 1, 1),
+('Đặc sản bán chạy', 'https://via.placeholder.com/800x300?text=Best+Sellers', '/collections/best-sellers', 'Top sản phẩm được yêu thích nhất trong tháng', 2, 1),
+('Mới ra mắt', 'https://via.placeholder.com/800x300?text=New+Arrivals', '/collections/new-arrivals', 'Khám phá bộ sưu tập sản phẩm mới nhất', 3, 1),
+('Ưu đãi cuối tuần', 'https://via.placeholder.com/800x300?text=Weekend+Deals', '/sale/weekend', 'Giảm giá đặc biệt chỉ trong cuối tuần này', 4, 1),
+('Sản phẩm nổi bật', 'https://via.placeholder.com/800x300?text=Featured+Products', '/collections/featured', 'Những sản phẩm được đánh giá cao và đáng mua nhất', 5, 1);
+
+-- Dữ liệu mẫu cho ProductImages
+INSERT INTO ProductImages (is_main, image_url, product_id, alt_text)
+VALUES
+    -- Bánh pía Sóc Trăng (1)
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/banh-pia-soc-trang/banh-pia-soc-trang-1.jpg', 1, 'Ảnh chi tiết bánh pía Sóc Trăng'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/banh-pia-soc-trang/banh-pia-soc-trang-2.jpg', 1, 'Cận cảnh nhân bánh pía Sóc Trăng'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/banh-pia-soc-trang/banh-pia-soc-trang-3.jpeg', 1, 'Bánh pía Sóc Trăng được đóng gói'),
+    (1, 'assets/image/shared/product/cac-thuc-pham-khac/banh-pia-soc-trang/banh-pia-soc-trang-ctpk.jpeg', 1, 'Ảnh đại diện sản phẩm Bánh pía Sóc Trăng'),
+    -- Bò một nắng Krông Pa (2)
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/bo-mot-nang-rong-pa/bo-mot-nang-rong-pa-1.jpg', 2, 'Thớ thịt bò một nắng Krông Pa'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/bo-mot-nang-rong-pa/bo-mot-nang-rong-pa-2.jpg', 2, 'Bò một nắng Krông Pa sau khi nướng'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/bo-mot-nang-rong-pa/bo-mot-nang-rong-pa-3.jpg', 2, 'Bò một nắng ăn kèm muối kiến vàng'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/bo-mot-nang-rong-pa/bo-mot-nang-rong-pa-4.jpg', 2, 'Sản phẩm bò một nắng Krông Pa hút chân không'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/bo-mot-nang-rong-pa/bo-mot-nang-rong-pa-5.jpg', 2, 'Đặc sản bò một nắng Krông Pa'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/bo-mot-nang-rong-pa/bo-mot-nang-rong-pa-6.jpg', 2, 'Món bò một nắng nướng trên than'),
+    (1, 'assets/image/shared/product/cac-thuc-pham-khac/bo-mot-nang-rong-pa/bo-mot-nang-rong-pa-ctpk.jpg', 2, 'Ảnh đại diện sản phẩm Bò một nắng Krông Pa'),
+    -- Cà phê Buôn Ma Thuột (3)
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/ca-phe-buon-ma-thuot/ca-phe-buon-ma-thuot-1.jpg', 3, 'Hạt cà phê Buôn Ma Thuột rang'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/ca-phe-buon-ma-thuot/ca-phe-buon-ma-thuot-2.jpg', 3, 'Ly cà phê pha phin'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/ca-phe-buon-ma-thuot/ca-phe-buon-ma-thuot-3.jpg', 3, 'Bao bì sản phẩm cà phê Buôn Ma Thuột'),
+    (1, 'assets/image/shared/product/cac-thuc-pham-khac/ca-phe-buon-ma-thuot/ca-phe-buon-ma-thuot-ctpk.jpg', 3, 'Ảnh đại diện sản phẩm Cà phê Buôn Ma Thuột'),
+    -- Chả ốc (4)
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/cha-oc-nua/cha-oc-nua-1.jpg', 4, 'Chả ốc chiên vàng'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/cha-oc-nua/cha-oc-nua-2.jpg', 4, 'Chả ốc ăn kèm rau thơm'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/cha-oc-nua/cha-oc-nua-3.png', 4, 'Chả ốc tươi chưa chế biến'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/cha-oc-nua/cha-oc-nua-4.jpg', 4, 'Món bún chả ốc'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/cha-oc-nua/cha-oc-nua-5.jpg', 4, 'Cận cảnh miếng chả ốc'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/cha-oc-nua/cha-oc-nua-6.jpg', 4, 'Chả ốc được bày trên đĩa'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/cha-oc-nua/cha-oc-nua-7.jpg', 4, 'Thành phẩm chả ốc'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/cha-oc-nua/cha-oc-nua-8.jpg', 4, 'Chả ốc ăn với nước chấm'),
+    (1, 'assets/image/shared/product/cac-thuc-pham-khac/cha-oc-nua/cha-oc-nua-ctpk.jpg', 4, 'Ảnh đại diện sản phẩm Chả ốc'),
+    -- Dê chiên giòn Tây Ninh (5)
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/de-chien-gion-tay-ninh/de-chien-gion-tay-ninh-1.jpg', 5, 'Món dê chiên giòn Tây Ninh'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/de-chien-gion-tay-ninh/de-chien-gion-tay-ninh-2.jpg', 5, 'Dê chiên giòn ăn kèm rau sống'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/de-chien-gion-tay-ninh/de-chien-gion-tay-ninh-3.jpg', 5, 'Cận cảnh miếng thịt dê chiên giòn'),
+    (1, 'assets/image/shared/product/cac-thuc-pham-khac/de-chien-gion-tay-ninh/de-chien-gion-tay-ninh-ctpk.jpg', 5, 'Ảnh đại diện sản phẩm Dê chiên giòn Tây Ninh'),
+    -- Gân bò rau tiến vua (6)
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/gan-bo-rau-tien-vua/gan-bo-rau-tien-vua-1.jpg', 6, 'Món gân bò ngâm rau tiến vua'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/gan-bo-rau-tien-vua/gan-bo-rau-tien-vua-2.png', 6, 'Gân bò và rau tiến vua đóng hũ'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/gan-bo-rau-tien-vua/gan-bo-rau-tien-vua-3.jpg', 6, 'Gân bò rau tiến vua bày ra đĩa'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/gan-bo-rau-tien-vua/gan-bo-rau-tien-vua-4.jpg', 6, 'Cận cảnh gân bò ngâm'),
+    (1, 'assets/image/shared/product/cac-thuc-pham-khac/gan-bo-rau-tien-vua/gan-bo-rau-tien-vua-ctpk.jpeg', 6, 'Ảnh đại diện sản phẩm Gân bò rau tiến vua'),
+    -- Hạt điều rang muối Bình Phước (7)
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/hat-dieu-rang-muoi-binh-phuoc/hat-dieu-rang-muoi-binh-phuoc-1.jpg', 7, 'Hạt điều rang muối còn vỏ lụa'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/hat-dieu-rang-muoi-binh-phuoc/hat-dieu-rang-muoi-binh-phuoc-2.jpg', 7, 'Hạt điều rang muối tách vỏ'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/hat-dieu-rang-muoi-binh-phuoc/hat-dieu-rang-muoi-binh-phuoc-3.jpg', 7, 'Hạt điều đóng hộp'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/hat-dieu-rang-muoi-binh-phuoc/hat-dieu-rang-muoi-binh-phuoc-4.jpg', 7, 'Đặc sản hạt điều Bình Phước'),
+    (1, 'assets/image/shared/product/cac-thuc-pham-khac/hat-dieu-rang-muoi-binh-phuoc/hat-dieu-rang-muoi-binh-phuoc-ctpk.jpg', 7, 'Ảnh đại diện sản phẩm Hạt điều rang muối Bình Phước'),
+    -- Mắm tép chưng thịt (8)
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/mam-tep-chung-thit/mam-tep-chung-thit-1.png', 8, 'Mắm tép chưng thịt trong hũ thủy tinh'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/mam-tep-chung-thit/mam-tep-chung-thit-2.jpg', 8, 'Mắm tép chưng thịt ăn với cơm trắng'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/mam-tep-chung-thit/mam-tep-chung-thit-3.jpg', 8, 'Cận cảnh mắm tép chưng thịt'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/mam-tep-chung-thit/mam-tep-chung-thit-4.jpg', 8, 'Mắm tép chưng thịt và dưa chuột'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/mam-tep-chung-thit/mam-tep-chung-thit-5.jpg', 8, 'Sản phẩm mắm tép chưng thịt'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/mam-tep-chung-thit/mam-tep-chung-thit-6.jpg', 8, 'Chế biến mắm tép chưng thịt'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/mam-tep-chung-thit/mam-tep-chung-thit-7.jpg', 8, 'Món ăn từ mắm tép chưng thịt'),
+    (1, 'assets/image/shared/product/cac-thuc-pham-khac/mam-tep-chung-thit/mam-tep-chung-thit-ctpk.jpg', 8, 'Ảnh đại diện sản phẩm Mắm tép chưng thịt'),
+    -- Mật ong rừng U Minh (9)
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/mat-ong-rung-u-minh/mat-ong-rung-u-minh-1.jpg', 9, 'Mật ong rừng U Minh nguyên chất'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/mat-ong-rung-u-minh/mat-ong-rung-u-minh-2.jpg', 9, 'Mật ong và sáp ong U Minh'),
+    (1, 'assets/image/shared/product/cac-thuc-pham-khac/mat-ong-rung-u-minh/mat-ong-rung-u-minh-ctpk.jpg', 9, 'Ảnh đại diện sản phẩm Mật ong rừng U Minh'),
+    -- Mè xửng Huế (10)
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/me-sung-hue/me-sung-hue-1.jpg', 10, 'Đặc sản mè xửng Huế'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/me-sung-hue/me-sung-hue-2.jpg', 10, 'Mè xửng giòn Huế'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/me-sung-hue/me-sung-hue-3.jpg', 10, 'Thưởng thức mè xửng với trà'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/me-sung-hue/me-sung-hue-4.jpg', 10, 'Các loại mè xửng Huế'),
+    (1, 'assets/image/shared/product/cac-thuc-pham-khac/me-sung-hue/me-sung-hue-ctpk.jpg', 10, 'Ảnh đại diện sản phẩm Mè xửng Huế'),
+    -- Mọc ốc (11)
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/moc-oc/moc-oc-1.jpg', 11, 'Mọc ốc đã chế biến'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/moc-oc/moc-oc-2.jpg', 11, 'Mọc ốc tươi'),
+    (1, 'assets/image/shared/product/cac-thuc-pham-khac/moc-oc/moc-oc-ctpk.png', 11, 'Ảnh đại diện sản phẩm Mọc ốc'),
+    -- Rượu cần Tây Nguyên (12)
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/ruou-can-tay-nguyen/ruou-can-tay-nguyen-1.jpg', 12, 'Bình rượu cần Tây Nguyên'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/ruou-can-tay-nguyen/ruou-can-tay-nguyen-2.jpg', 12, 'Uống rượu cần'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/ruou-can-tay-nguyen/ruou-can-tay-nguyen-3.jpg', 12, 'Đặc sản rượu cần Tây Nguyên'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/ruou-can-tay-nguyen/ruou-can-tay-nguyen-4.jpg', 12, 'Các loại bình rượu cần'),
+    (1, 'assets/image/shared/product/cac-thuc-pham-khac/ruou-can-tay-nguyen/ruou-can-tay-nguyen-ctpk.jpg', 12, 'Ảnh đại diện sản phẩm Rượu cần Tây Nguyên'),
+    -- Trà sen Tây Hồ (13)
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/tra-sen-tay-ho/tra-sen-tay-ho-1.jpg', 13, 'Bông sen để ướp trà'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/tra-sen-tay-ho/tra-sen-tay-ho-2.jpg', 13, 'Ấm trà sen Tây Hồ'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/tra-sen-tay-ho/tra-sen-tay-ho-3.jpg', 13, 'Quy trình ướp trà sen'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/tra-sen-tay-ho/tra-sen-tay-ho-4.jpg', 13, 'Trà sen và hoa sen'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/tra-sen-tay-ho/tra-sen-tay-ho-5.jpg', 13, 'Hộp trà sen Tây Hồ'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/tra-sen-tay-ho/tra-sen-tay-ho-6.jpg', 13, 'Thưởng thức trà sen'),
+    (1, 'assets/image/shared/product/cac-thuc-pham-khac/tra-sen-tay-ho/tra-sen-tay-ho-ctpk.jpg', 13, 'Ảnh đại diện sản phẩm Trà sen Tây Hồ'),
+    -- Trứng kiến Tây Bắc (14)
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/trung-kien-tay-bac/trung-kien-tay-bac-1.jpg', 14, 'Món xôi trứng kiến Tây Bắc'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/trung-kien-tay-bac/trung-kien-tay-bac-2.jpg', 14, 'Trứng kiến non'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/trung-kien-tay-bac/trung-kien-tay-bac-3.jpg', 14, 'Bánh trứng kiến'),
+    (0, 'assets/image/shared/product/cac-thuc-pham-khac/trung-kien-tay-bac/trung-kien-tay-bac-4.jpg', 14, 'Cận cảnh trứng kiến Tây Bắc'),
+    (1, 'assets/image/shared/product/cac-thuc-pham-khac/trung-kien-tay-bac/trung-kien-tay-bac-ctpk.jpg', 14, 'Ảnh đại diện sản phẩm Trứng kiến Tây Bắc'),
+    -- Bề bề rang muối (15)
+    (0, 'assets/image/shared/product/hai-san/be-be-rang-muoi/be-be-rang-muoi-1.jpg', 15, 'Món bề bề rang muối ớt'),
+    (0, 'assets/image/shared/product/hai-san/be-be-rang-muoi/be-be-rang-muoi-2.jpg', 15, 'Bề bề rang muối sả'),
+    (0, 'assets/image/shared/product/hai-san/be-be-rang-muoi/be-be-rang-muoi-3.jpg', 15, 'Đĩa bề bề rang muối hấp dẫn'),
+    (0, 'assets/image/shared/product/hai-san/be-be-rang-muoi/be-be-rang-muoi-4.jpg', 15, 'Cận cảnh bề bề rang muối'),
+    (0, 'assets/image/shared/product/hai-san/be-be-rang-muoi/be-be-rang-muoi-5.jpg', 15, 'Bề bề tươi'),
+    (1, 'assets/image/shared/product/hai-san/be-be-rang-muoi/be-be-rang-muoi-hs.jpg', 15, 'Ảnh đại diện sản phẩm Bề bề rang muối'),
+    -- Cá bóp nấu me (16)
+    (0, 'assets/image/shared/product/hai-san/ca-bop-nau-me/ca-bop-nau-me-1.jpg', 16, 'Canh chua cá bóp nấu me'),
+    (0, 'assets/image/shared/product/hai-san/ca-bop-nau-me/ca-bop-nau-me-2.jpg', 16, 'Nguyên liệu nấu cá bóp nấu me'),
+    (0, 'assets/image/shared/product/hai-san/ca-bop-nau-me/ca-bop-nau-me-3.jpg', 16, 'Bát canh cá bóp nấu me'),
+    (0, 'assets/image/shared/product/hai-san/ca-bop-nau-me/ca-bop-nau-me-4.jpg', 16, 'Lẩu cá bóp nấu me'),
+    (1, 'assets/image/shared/product/hai-san/ca-bop-nau-me/ca-bop-nau-me-hs.jpg', 16, 'Ảnh đại diện sản phẩm Cá bóp nấu me'),
+    -- Cá linh bông (17)
+    (0, 'assets/image/shared/product/hai-san/ca-linh-bong/ca-linh-bong-1.jpg', 17, 'Lẩu mắm cá linh bông điên điển'),
+    (0, 'assets/image/shared/product/hai-san/ca-linh-bong/ca-linh-bong-2.jpg', 17, 'Cá linh kho'),
+    (0, 'assets/image/shared/product/hai-san/ca-linh-bong/ca-linh-bong-3.jpg', 17, 'Cá linh tươi'),
+    (0, 'assets/image/shared/product/hai-san/ca-linh-bong/ca-linh-bong-4.jpg', 17, 'Cá linh chiên giòn'),
+    (0, 'assets/image/shared/product/hai-san/ca-linh-bong/ca-linh-bong-5.jpg', 17, 'Đặc sản cá linh mùa nước nổi'),
+    (1, 'assets/image/shared/product/hai-san/ca-linh-bong/ca-linh-bong-hs.jpg', 17, 'Ảnh đại diện sản phẩm Cá linh bông'),
+    -- Chả cá Móng Cái (18)
+    (0, 'assets/image/shared/product/hai-san/cha-ca-mong/cha-ca-mong-1.png', 18, 'Chả cá Móng Cái chiên'),
+    (0, 'assets/image/shared/product/hai-san/cha-ca-mong/cha-ca-mong-2.jpg', 18, 'Bún chả cá Móng Cái'),
+    (0, 'assets/image/shared/product/hai-san/cha-ca-mong/cha-ca-mong-3.jpg', 18, 'Chả cá Móng Cái tươi'),
+    (1, 'assets/image/shared/product/hai-san/cha-ca-mong/cha-ca-mong-hs.jpg', 18, 'Ảnh đại diện sản phẩm Chả cá Móng Cái'),
+    -- Chả cá mực tôm (19)
+    (0, 'assets/image/shared/product/hai-san/cha-ca-muc-tom/cha-ca-muc-tom-1.png', 19, 'Chả cá mực tôm chiên'),
+    (0, 'assets/image/shared/product/hai-san/cha-ca-muc-tom/cha-ca-muc-tom-2.jpg', 19, 'Thành phần chả cá mực tôm'),
+    (0, 'assets/image/shared/product/hai-san/cha-ca-muc-tom/cha-ca-muc-tom-3.jpg', 19, 'Chả cá mực tôm ăn kèm'),
+    (1, 'assets/image/shared/product/hai-san/cha-ca-muc-tom/cha-ca-muc-tom-hs.jpg', 19, 'Ảnh đại diện sản phẩm Chả cá mực tôm'),
+    -- Chả mỡ ghẹ (20)
+    (0, 'assets/image/shared/product/hai-san/cha-mo-ghe/cha-mo-ghe-1.jpg', 20, 'Món chả mỡ ghẹ chiên'),
+    (0, 'assets/image/shared/product/hai-san/cha-mo-ghe/cha-mo-ghe-2.jpg', 20, 'Cận cảnh miếng chả mỡ ghẹ'),
+    (0, 'assets/image/shared/product/hai-san/cha-mo-ghe/cha-mo-ghe-3.jpg', 20, 'Chả mỡ ghẹ tươi'),
+    (1, 'assets/image/shared/product/hai-san/cha-mo-ghe/cha-mo-ghe-hs.jpg', 20, 'Ảnh đại diện sản phẩm Chả mỡ ghẹ'),
+    -- Chả mực Hạ Long (21)
+    (0, 'assets/image/shared/product/hai-san/cha-muc-ha-long/cha-muc-ha-long-1.png', 21, 'Chả mực Hạ Long giã tay'),
+    (0, 'assets/image/shared/product/hai-san/cha-muc-ha-long/cha-muc-ha-long-2.png', 21, 'Chả mực Hạ Long chiên vàng'),
+    (0, 'assets/image/shared/product/hai-san/cha-muc-ha-long/cha-muc-ha-long-3.png', 21, 'Bánh cuốn chả mực'),
+    (0, 'assets/image/shared/product/hai-san/cha-muc-ha-long/cha-muc-ha-long-4.png', 21, 'Xôi trắng chả mực'),
+    (0, 'assets/image/shared/product/hai-san/cha-muc-ha-long/cha-muc-ha-long-5.png', 21, 'Chả mực tươi'),
+    (0, 'assets/image/shared/product/hai-san/cha-muc-ha-long/cha-muc-ha-long-6.png', 21, 'Đóng gói chả mực Hạ Long'),
+    (0, 'assets/image/shared/product/hai-san/cha-muc-ha-long/cha-muc-ha-long-7.png', 21, 'Cận cảnh miếng chả mực'),
+    (1, 'assets/image/shared/product/hai-san/cha-muc-ha-long/cha-muc-ha-long-hs.jpg', 21, 'Ảnh đại diện sản phẩm Chả mực Hạ Long'),
+    -- Chả tôm (22)
+    (0, 'assets/image/shared/product/hai-san/cha-tom/cha-tom-1.jpg', 22, 'Chả tôm Thanh Hóa'),
+    (0, 'assets/image/shared/product/hai-san/cha-tom/cha-tom-2.jpg', 22, 'Chả tôm nướng'),
+    (0, 'assets/image/shared/product/hai-san/cha-tom/cha-tom-3.jpg', 22, 'Chả tôm tươi'),
+    (1, 'assets/image/shared/product/hai-san/cha-tom/cha-tom-hs.jpg', 22, 'Ảnh đại diện sản phẩm Chả tôm'),
+    -- Cua Cà Mau (23)
+    (0, 'assets/image/shared/product/hai-san/cua-ca-mau/cua-ca-mau-1.jpg', 23, 'Cua Cà Mau hấp'),
+    (0, 'assets/image/shared/product/hai-san/cua-ca-mau/cua-ca-mau-2.jpg', 23, 'Cua Cà Mau rang me'),
+    (0, 'assets/image/shared/product/hai-san/cua-ca-mau/cua-ca-mau-3.jpg', 23, 'Cua thịt Cà Mau'),
+    (0, 'assets/image/shared/product/hai-san/cua-ca-mau/cua-ca-mau-4.jpg', 23, 'Cua gạch Cà Mau'),
+    (0, 'assets/image/shared/product/hai-san/cua-ca-mau/cua-ca-mau-5.jpg', 23, 'Cua Cà Mau tươi sống'),
+    (1, 'assets/image/shared/product/hai-san/cua-ca-mau/cua-ca-mau-hs.jpg', 23, 'Ảnh đại diện sản phẩm Cua Cà Mau'),
+    -- Gỏi cá trích (24)
+    (0, 'assets/image/shared/product/hai-san/goi-ca-trich/goi-ca-trich-1.jpg', 24, 'Đặc sản gỏi cá trích Phú Quốc'),
+    (0, 'assets/image/shared/product/hai-san/goi-ca-trich/goi-ca-trich-2.jpg', 24, 'Cách cuốn gỏi cá trích'),
+    (0, 'assets/image/shared/product/hai-san/goi-ca-trich/goi-ca-trich-3.jpg', 24, 'Gỏi cá trích và rau sống'),
+    (0, 'assets/image/shared/product/hai-san/goi-ca-trich/goi-ca-trich-4.jpg', 24, 'Nước chấm gỏi cá trích'),
+    (0, 'assets/image/shared/product/hai-san/goi-ca-trich/goi-ca-trich-5.jpg', 24, 'Cá trích tươi'),
+    (1, 'assets/image/shared/product/hai-san/goi-ca-trich/goi-ca-trich-hs.jpg', 24, 'Ảnh đại diện sản phẩm Gỏi cá trích'),
+    -- Hàu nướng mỡ hành (25)
+    (0, 'assets/image/shared/product/hai-san/hau-nuong-mo-hanh/hau-nuong-mo-hanh-1.jpg', 25, 'Hàu nướng mỡ hành trên bếp than'),
+    (0, 'assets/image/shared/product/hai-san/hau-nuong-mo-hanh/hau-nuong-mo-hanh-2.jpg', 25, 'Đĩa hàu nướng mỡ hành'),
+    (0, 'assets/image/shared/product/hai-san/hau-nuong-mo-hanh/hau-nuong-mo-hanh-3.jpg', 25, 'Hàu nướng phô mai'),
+    (0, 'assets/image/shared/product/hai-san/hau-nuong-mo-hanh/hau-nuong-mo-hanh-4.jpg', 25, 'Hàu sữa tươi'),
+    (1, 'assets/image/shared/product/hai-san/hau-nuong-mo-hanh/hau-nuong-mo-hanh-hs.jpg', 25, 'Ảnh đại diện sản phẩm Hàu nướng mỡ hành'),
+    -- Mực một nắng (26)
+    (0, 'assets/image/shared/product/hai-san/muc-mot-nang/muc-mot-nang-1.jpg', 26, 'Mực một nắng nướng'),
+    (0, 'assets/image/shared/product/hai-san/muc-mot-nang/muc-mot-nang-2.jpg', 26, 'Mực một nắng chiên'),
+    (0, 'assets/image/shared/product/hai-san/muc-mot-nang/muc-mot-nang-3.jpg', 26, 'Mực một nắng tươi'),
+    (0, 'assets/image/shared/product/hai-san/muc-mot-nang/muc-mot-nang-4.jpg', 26, 'Đóng gói mực một nắng'),
+    (0, 'assets/image/shared/product/hai-san/muc-mot-nang/muc-mot-nang-5.png', 26, 'Phơi mực một nắng'),
+    (1, 'assets/image/shared/product/hai-san/muc-mot-nang/muc-mot-nang-hs.jpg', 26, 'Ảnh đại diện sản phẩm Mực một nắng'),
+    -- Nem hải sản (27)
+    (0, 'assets/image/shared/product/hai-san/nem-hai-san/nem-hai-san-1.jpg', 27, 'Nem hải sản chiên giòn'),
+    (0, 'assets/image/shared/product/hai-san/nem-hai-san/nem-hai-san-2.jpg', 27, 'Cắt đôi nem hải sản'),
+    (0, 'assets/image/shared/product/hai-san/nem-hai-san/nem-hai-san-3.jpg', 27, 'Nem hải sản chưa chiên'),
+    (0, 'assets/image/shared/product/hai-san/nem-hai-san/nem-hai-san-4.jpg', 27, 'Nem hải sản sốt mayonnaise'),
+    (0, 'assets/image/shared/product/hai-san/nem-hai-san/nem-hai-san-5.jpg', 27, 'Nhân nem hải sản'),
+    (1, 'assets/image/shared/product/hai-san/nem-hai-san/nem-hai-san-hs.jpg', 27, 'Ảnh đại diện sản phẩm Nem hải sản'),
+    -- Sá sùng nướng (28)
+    (0, 'assets/image/shared/product/hai-san/sa-sung-nuong/sa-sung-nuong-1.jpg', 28, 'Sá sùng nướng'),
+    (0, 'assets/image/shared/product/hai-san/sa-sung-nuong/sa-sung-nuong-2.jpg', 28, 'Sá sùng khô'),
+    (0, 'assets/image/shared/product/hai-san/sa-sung-nuong/sa-sung-nuong-3.jpg', 28, 'Sá sùng tươi'),
+    (1, 'assets/image/shared/product/hai-san/sa-sung-nuong/sa-sung-nuong-hs.jpg', 28, 'Ảnh đại diện sản phẩm Sá sùng'),
+    -- Tôm sú Bạc Liêu (29)
+    (0, 'assets/image/shared/product/hai-san/tom-su-bac-lieu/tom-su-bac-lieu-1.jpg', 29, 'Tôm sú hấp'),
+    (0, 'assets/image/shared/product/hai-san/tom-su-bac-lieu/tom-su-bac-lieu-2.jpg', 29, 'Tôm sú nướng'),
+    (0, 'assets/image/shared/product/hai-san/tom-su-bac-lieu/tom-su-bac-lieu-3.jpg', 29, 'Tôm sú tươi Bạc Liêu'),
+    (0, 'assets/image/shared/product/hai-san/tom-su-bac-lieu/tom-su-bac-lieu-4.png', 29, 'Tôm sú Bạc Liêu đông lạnh'),
+    (0, 'assets/image/shared/product/hai-san/tom-su-bac-lieu/tom-su-bac-lieu-5.jpg', 29, 'Đặc sản tôm sú Bạc Liêu'),
+    (1, 'assets/image/shared/product/hai-san/tom-su-bac-lieu/tom-su-bac-lieu-hs.jpg', 29, 'Ảnh đại diện sản phẩm Tôm sú Bạc Liêu'),
+    -- Ruốc bề bề (30)
+    (0, 'assets/image/shared/product/ruoc/ruoc-be-be/ruoc-be-be-1.jpg', 30, 'Ruốc bề bề tơi xốp'),
+    (0, 'assets/image/shared/product/ruoc/ruoc-be-be/ruoc-be-be-2.jpg', 30, 'Ruốc bề bề đóng hũ'),
+    (0, 'assets/image/shared/product/ruoc/ruoc-be-be/ruoc-be-be-3.jpg', 30, 'Cận cảnh sợi ruốc bề bề'),
+    (1, 'assets/image/shared/product/ruoc/ruoc-be-be/ruoc-be-be-r.jpg', 30, 'Ảnh đại diện sản phẩm Ruốc bề bề'),
+    -- Ruốc cá basa (31)
+    (0, 'assets/image/shared/product/ruoc/ruoc-ca-basa/ruoc-ca-basa-1.jpg', 31, 'Ruốc cá basa cho bé'),
+    (0, 'assets/image/shared/product/ruoc/ruoc-ca-basa/ruoc-ca-basa-2.jpg', 31, 'Ruốc cá basa vàng ươm'),
+    (0, 'assets/image/shared/product/ruoc/ruoc-ca-basa/ruoc-ca-basa-3.jpg', 31, 'Hũ ruốc cá basa'),
+    (1, 'assets/image/shared/product/ruoc/ruoc-ca-basa/ruoc-ca-basa-r.jpg', 31, 'Ảnh đại diện sản phẩm Ruốc cá basa'),
+    -- Ruốc cá lóc (32)
+    (0, 'assets/image/shared/product/ruoc/ruoc-ca-loc/ruoc-ca-loc-1.jpg', 32, 'Ruốc cá lóc đồng'),
+    (0, 'assets/image/shared/product/ruoc/ruoc-ca-loc/ruoc-ca-loc-hs-2.jpg', 32, 'Cháo ruốc cá lóc'),
+    (0, 'assets/image/shared/product/ruoc/ruoc-ca-loc/ruoc-ca-loc-hs-3.jpg', 32, 'Sợi ruốc cá lóc'),
+    (1, 'assets/image/shared/product/ruoc/ruoc-ca-loc/ruoc-ca-loc-r.jpg', 32, 'Ảnh đại diện sản phẩm Ruốc cá lóc'),
+    -- Ruốc cá rô đồng (33)
+    (0, 'assets/image/shared/product/ruoc/ruoc-ca-ro-dong/ruoc-ca-ro-dong-1.jpg', 33, 'Ruốc cá rô đồng tự làm'),
+    (0, 'assets/image/shared/product/ruoc/ruoc-ca-ro-dong/ruoc-ca-ro-dong-2.jpg', 33, 'Cận cảnh ruốc cá rô'),
+    (0, 'assets/image/shared/product/ruoc/ruoc-ca-ro-dong/ruoc-ca-ro-dong-3.jpg', 33, 'Ruốc cá rô đồng thơm ngon'),
+    (0, 'assets/image/shared/product/ruoc/ruoc-ca-ro-dong/ruoc-ca-ro-dong-4.jpg', 33, 'Ruốc cá rô ăn với cơm'),
+    (0, 'assets/image/shared/product/ruoc/ruoc-ca-ro-dong/ruoc-ca-ro-dong-5.jpg', 33, 'Hũ ruốc cá rô đồng'),
+    (1, 'assets/image/shared/product/ruoc/ruoc-ca-ro-dong/ruoc-ca-ro-dong-r.jpg', 33, 'Ảnh đại diện sản phẩm Ruốc cá rô đồng'),
+    -- Ruốc cá thu (34)
+    (0, 'assets/image/shared/product/ruoc/ruoc-ca-thu/ruoc-ca-thu-1.jpg', 34, 'Ruốc cá thu cho bé ăn dặm'),
+    (0, 'assets/image/shared/product/ruoc/ruoc-ca-thu/ruoc-ca-thu-2.jpg', 34, 'Ruốc cá thu xé sợi'),
+    (0, 'assets/image/shared/product/ruoc/ruoc-ca-thu/ruoc-ca-thu-3.jpg', 34, 'Ruốc cá thu đóng hộp'),
+    (0, 'assets/image/shared/product/ruoc/ruoc-ca-thu/ruoc-ca-thu-4.jpg', 34, 'Thịt cá thu làm ruốc'),
+    (1, 'assets/image/shared/product/ruoc/ruoc-ca-thu/ruoc-ca-thu-r.jpg', 34, 'Ảnh đại diện sản phẩm Ruốc cá thu'),
+    -- Ruốc mắm Huế (35)
+    (0, 'assets/image/shared/product/ruoc/ruoc-mam-hue/ruoc-mam-hue-1.jpg', 35, 'Đặc sản mắm ruốc Huế'),
+    (0, 'assets/image/shared/product/ruoc/ruoc-mam-hue/ruoc-mam-hue-2.jpg', 35, 'Thịt kho mắm ruốc'),
+    (0, 'assets/image/shared/product/ruoc/ruoc-mam-hue/ruoc-mam-hue-3.jpg', 35, 'Mắm ruốc Huế nguyên chất'),
+    (1, 'assets/image/shared/product/ruoc/ruoc-mam-hue/ruoc-mam-hue-r.jpg', 35, 'Ảnh đại diện sản phẩm Mắm ruốc Huế'),
+    -- Ruốc tép Đồng Tháp (36)
+    (0, 'assets/image/shared/product/ruoc/ruoc-tep-dong-thap/ruoc-tep-dong-thap-1.jpg', 36, 'Ruốc tép đồng'),
+    (0, 'assets/image/shared/product/ruoc/ruoc-tep-dong-thap/ruoc-tep-dong-thap-2.jpg', 36, 'Ruốc tép ăn với xôi'),
+    (0, 'assets/image/shared/product/ruoc/ruoc-tep-dong-thap/ruoc-tep-dong-thap-3.jpg', 36, 'Cận cảnh ruốc tép'),
+    (1, 'assets/image/shared/product/ruoc/ruoc-tep-dong-thap/ruoc-tep-dong-thap-r.jpg', 36, 'Ảnh đại diện sản phẩm Ruốc tép Đồng Tháp'),
+    -- Ruốc thịt lợn Nam Định (37)
+    (0, 'assets/image/shared/product/ruoc/ruoc-thit-lon-nam-dinh/ruoc-thit-lon-nam-dinh-1.jpg', 37, 'Ruốc thịt lợn sợi vàng'),
+    (0, 'assets/image/shared/product/ruoc/ruoc-thit-lon-nam-dinh/ruoc-thit-lon-nam-dinh-2.jpg', 37, 'Ruốc thịt lợn ăn với bánh mì'),
+    (0, 'assets/image/shared/product/ruoc/ruoc-thit-lon-nam-dinh/ruoc-thit-lon-nam-dinh-3.jpg', 37, 'Ruốc thịt lợn làm tại nhà'),
+    (0, 'assets/image/shared/product/ruoc/ruoc-thit-lon-nam-dinh/ruoc-thit-lon-nam-dinh-4.jpg', 37, 'Sợi ruốc bông'),
+    (0, 'assets/image/shared/product/ruoc/ruoc-thit-lon-nam-dinh/ruoc-thit-lon-nam-dinh-5.jpg', 37, 'Ruốc thịt lợn Nam Định'),
+    (1, 'assets/image/shared/product/ruoc/ruoc-thit-lon-nam-dinh/ruoc-thit-lon-nam-dinh-r.jpg', 37, 'Ảnh đại diện sản phẩm Ruốc thịt lợn Nam Định'),
+    -- Ruốc tôm Bình Định (38)
+    (0, 'assets/image/shared/product/ruoc/ruoc-tom-binh-dinh/ruoc-tom-binh-dinh-1.jpg', 38, 'Ruốc tôm Bình Định màu cam tự nhiên'),
+    (0, 'assets/image/shared/product/ruoc/ruoc-tom-binh-dinh/ruoc-tom-binh-dinh-1.png', 38, 'Hũ ruốc tôm Bình Định'),
+    (0, 'assets/image/shared/product/ruoc/ruoc-tom-binh-dinh/ruoc-tom-binh-dinh-2.jpg', 38, 'Cận cảnh ruốc tôm'),
+    (0, 'assets/image/shared/product/ruoc/ruoc-tom-binh-dinh/ruoc-tom-binh-dinh-3.jpg', 38, 'Ruốc tôm ăn kèm'),
+    (0, 'assets/image/shared/product/ruoc/ruoc-tom-binh-dinh/ruoc-tom-binh-dinh-4.jpg', 38, 'Tôm tươi làm ruốc'),
+    (0, 'assets/image/shared/product/ruoc/ruoc-tom-binh-dinh/ruoc-tom-binh-dinh-5.jpg', 38, 'Đặc sản ruốc tôm'),
+    (1, 'assets/image/shared/product/ruoc/ruoc-tom-binh-dinh/ruoc-tom-binh-dinh-r.jpg', 38, 'Ảnh đại diện sản phẩm Ruốc tôm Bình Định'),
+    -- Ruốc tôm đất Cà Mau (39)
+    (0, 'assets/image/shared/product/ruoc/ruoc-tom-dat-ca-mau/ruoc-tom-dat-ca-mau-1.jpg', 39, 'Ruốc tôm đất Cà Mau thơm ngon'),
+    (0, 'assets/image/shared/product/ruoc/ruoc-tom-dat-ca-mau/ruoc-tom-dat-ca-mau-2.jpg', 39, 'Tôm đất làm ruốc'),
+    (1, 'assets/image/shared/product/ruoc/ruoc-tom-dat-ca-mau/ruoc-tom-dat-ca-mau-r.jpg', 39, 'Ảnh đại diện sản phẩm Ruốc tôm đất Cà Mau'),
+    -- Ruốc tôm Hạ Long (40)
+    (0, 'assets/image/shared/product/ruoc/ruoc-tom-ha-long/ruoc-tom-ha-long-1.jpg', 40, 'Ruốc tôm Hạ Long đặc sản'),
+    (0, 'assets/image/shared/product/ruoc/ruoc-tom-ha-long/ruoc-tom-ha-long-2.jpg', 40, 'Ruốc tôm ăn với cháo'),
+    (0, 'assets/image/shared/product/ruoc/ruoc-tom-ha-long/ruoc-tom-ha-long-3.jpg', 40, 'Hộp ruốc tôm Hạ Long'),
+    (1, 'assets/image/shared/product/ruoc/ruoc-tom-ha-long/ruoc-tom-ha-long-r.jpg', 40, 'Ảnh đại diện sản phẩm Ruốc tôm Hạ Long'),
+    -- Ruốc tôm rong biển (41)
+    (0, 'assets/image/shared/product/ruoc/ruoc-tom-rong-bien/ruoc-tom-rong-bien-1.jpg', 41, 'Ruốc tôm rong biển cho bé'),
+    (0, 'assets/image/shared/product/ruoc/ruoc-tom-rong-bien/ruoc-tom-rong-bien-2.jpg', 41, 'Thành phần ruốc tôm rong biển'),
+    (0, 'assets/image/shared/product/ruoc/ruoc-tom-rong-bien/ruoc-tom-rong-bien-3.jpg', 41, 'Sợi ruốc tôm rong biển'),
+    (1, 'assets/image/shared/product/ruoc/ruoc-tom-rong-bien/ruoc-tom-rong-bien-r.jpg', 41, 'Ảnh đại diện sản phẩm Ruốc tôm rong biển'),
+    -- Da Gà Chiên Giòn (42)
+    (0, 'assets/image/shared/product/ga/da-ga-chien-gion/da-ga-chien-gion-1.jpg', 42, 'Da gà chiên giòn vị mắm tỏi'),
+    (0, 'assets/image/shared/product/ga/da-ga-chien-gion/da-ga-chien-gion-2.jpg', 42, 'Da gà chiên giòn đóng hộp'),
+    (1, 'assets/image/shared/product/ga/da-ga-chien-gion/da-ga-chien-gion-g.png', 42, 'Ảnh đại diện sản phẩm Da Gà Chiên Giòn'),
+    -- Gà Cháy Tỏi (43)
+    (0, 'assets/image/shared/product/ga/ga-chay-toi/ga-chay-toi-1.png', 43, 'Món gà cháy tỏi thơm lừng'),
+    (0, 'assets/image/shared/product/ga/ga-chay-toi/ga-chay-toi-2.jpg', 43, 'Cận cảnh miếng gà cháy tỏi'),
+    (1, 'assets/image/shared/product/ga/ga-chay-toi/ga-chay-toi-g.png', 43, 'Ảnh đại diện sản phẩm Gà Cháy Tỏi'),
+    -- Gà Đông Tảo Ủ Muối (44)
+    (0, 'assets/image/shared/product/ga/ga-dong-tao-u-muoi/ga-dong-tao-u-muoi-1.jpg', 44, 'Đặc sản gà Đông Tảo ủ muối'),
+    (0, 'assets/image/shared/product/ga/ga-dong-tao-u-muoi/ga-dong-tao-u-muoi-2.jpg', 44, 'Gà Đông Tảo ủ muối da giòn'),
+    (1, 'assets/image/shared/product/ga/ga-dong-tao-u-muoi/ga-dong-tao-u-muoi-g.png', 44, 'Ảnh đại diện sản phẩm Gà Đông Tảo Ủ Muối'),
+    -- Gà Nướng Muối Ớt (45)
+    (0, 'assets/image/shared/product/ga/ga-nuong-muoi-ot/ga-nuong-muoi-ot-1.jpg', 45, 'Gà nướng muối ớt nguyên con'),
+    (0, 'assets/image/shared/product/ga/ga-nuong-muoi-ot/ga-nuong-muoi-ot-2.jpg', 45, 'Gà nướng muối ớt trên bếp than'),
+    (0, 'assets/image/shared/product/ga/ga-nuong-muoi-ot/ga-nuong-muoi-ot-3.jpg', 45, 'Gà nướng muối ớt chặt miếng'),
+    (1, 'assets/image/shared/product/ga/ga-nuong-muoi-ot/ga-nuong-muoi-ot-g.jpg', 45, 'Ảnh đại diện sản phẩm Gà Nướng Muối Ớt'),
+    -- Gà Nướng Thảo Mộc (46)
+    (0, 'assets/image/shared/product/ga/ga-nuong-thao-moc/ga-nuong-thao-moc-1.jpg', 46, 'Gà nướng thảo mộc kiểu Âu'),
+    (0, 'assets/image/shared/product/ga/ga-nuong-thao-moc/ga-nuong-thao-moc-2.jpg', 46, 'Gà nướng thảo mộc với rau củ'),
+    (0, 'assets/image/shared/product/ga/ga-nuong-thao-moc/ga-nuong-thao-moc-3.jpg', 46, 'Gà nướng thảo mộc nguyên con'),
+    (1, 'assets/image/shared/product/ga/ga-nuong-thao-moc/ga-nuong-thao-moc-g.jpg', 46, 'Ảnh đại diện sản phẩm Gà Nướng Thảo Mộc'),
+    -- Gà Ủ Muối (47)
+    (0, 'assets/image/shared/product/ga/ga-u-muoi/ga-u-muoi-1.jpg', 47, 'Gà ủ muối hoa tiêu da vàng'),
+    (0, 'assets/image/shared/product/ga/ga-u-muoi/ga-u-muoi-2.jpg', 47, 'Gà ủ muối chặt miếng'),
+    (0, 'assets/image/shared/product/ga/ga-u-muoi/ga-u-muoi-3.jpg', 47, 'Gà ủ muối hút chân không'),
+    (1, 'assets/image/shared/product/ga/ga-u-muoi/ga-u-muoi-g.jpg', 47, 'Ảnh đại diện sản phẩm Gà Ủ Muối'),
+    -- Gà Ủ Xì Dầu (48)
+    (0, 'assets/image/shared/product/ga/ga-u-xi-dau/ga-u-xi-dau-1.jpg', 48, 'Gà ủ xì dầu hấp'),
+    (0, 'assets/image/shared/product/ga/ga-u-xi-dau/ga-u-xi-dau-2.jpg', 48, 'Màu sắc hấp dẫn của gà ủ xì dầu'),
+    (0, 'assets/image/shared/product/ga/ga-u-xi-dau/ga-u-xi-dau-3.jpg', 48, 'Gà ủ xì dầu nguyên con'),
+    (1, 'assets/image/shared/product/ga/ga-u-xi-dau/ga-u-xi-dau-g.jpg', 48, 'Ảnh đại diện sản phẩm Gà Ủ Xì Dầu'),
+    -- Gà Viên Chiên (49)
+    (0, 'assets/image/shared/product/ga/ga-vien-chien/ga-vien-chien-1.jpg', 49, 'Gà viên chiên xù'),
+    (0, 'assets/image/shared/product/ga/ga-vien-chien/ga-vien-chien-2.jpg', 49, 'Gà viên chiên sốt chua ngọt'),
+    (0, 'assets/image/shared/product/ga/ga-vien-chien/ga-vien-chien-3.jpg', 49, 'Gà viên chiên đông lạnh'),
+    (1, 'assets/image/shared/product/ga/ga-vien-chien/ga-vien-chien-g.jpg', 49, 'Ảnh đại diện sản phẩm Gà Viên Chiên'),
+    -- Há Cảo Gà (50)
+    (0, 'assets/image/shared/product/ga/ha-cao-ga/ha-cao-ga-1.jpg', 50, 'Há cảo gà hấp'),
+    (0, 'assets/image/shared/product/ga/ha-cao-ga/ha-cao-ga-2.jpg', 50, 'Há cảo gà chiên'),
+    (1, 'assets/image/shared/product/ga/ha-cao-ga/ha-cao-ga-g.jpg', 50, 'Ảnh đại diện sản phẩm Há Cảo Gà'),
+    -- Gà Kho Mắm (51)
+    (0, 'assets/image/shared/product/ga/ga-kho-mam/ga-kho-mam-1.jpg', 51, 'Món gà kho mắm đậm đà'),
+    (0, 'assets/image/shared/product/ga/ga-kho-mam/ga-kho-mam-2.jpg', 51, 'Gà kho mắm gừng'),
+    (0, 'assets/image/shared/product/ga/ga-kho-mam/ga-kho-mam-3.jpg', 51, 'Gà kho mắm ăn với cơm'),
+    (1, 'assets/image/shared/product/ga/ga-kho-mam/ga-kho-mam-g.jpg', 51, 'Ảnh đại diện sản phẩm Gà Kho Mắm'),
+    -- Bánh Hạt Điều (52)
+    (0, 'assets/image/shared/product/hat/banh-hat-dieu/banh-hat-dieu-1.jpg', 52, 'Bánh ngói hạt điều'),
+    (0, 'assets/image/shared/product/hat/banh-hat-dieu/banh-hat-dieu-2.jpg', 52, 'Bánh quy hạt điều'),
+    (1, 'assets/image/shared/product/hat/banh-hat-dieu/banh-hat-dieu-h.jpg', 52, 'Ảnh đại diện sản phẩm Bánh Hạt Điều'),
+    -- Bánh Thanh Hạnh Nhân (53)
+    (0, 'assets/image/shared/product/hat/banh-thanh-hanh-nhan/banh-thanh-hanh-nhan-1.jpg', 53, 'Bánh thanh hạt hạnh nhân'),
+    (0, 'assets/image/shared/product/hat/banh-thanh-hanh-nhan/banh-thanh-hanh-nhan-2.jpg', 53, 'Thanh bánh hạnh nhân dinh dưỡng'),
+    (1, 'assets/image/shared/product/hat/banh-thanh-hanh-nhan/banh-thanh-hanh-nhan-h.jpg', 53, 'Ảnh đại diện sản phẩm Bánh Thanh Hạnh Nhân'),
+    -- Bánh Thuyền Macca (54)
+    (0, 'assets/image/shared/product/hat/banh-thuyen-macca/banh-thuyen-macca-1.jpg', 54, 'Bánh thuyền mix hạt macca'),
+    (0, 'assets/image/shared/product/hat/banh-thuyen-macca/banh-thuyen-macca-2.jpg', 54, 'Cận cảnh bánh thuyền macca'),
+    (0, 'assets/image/shared/product/hat/banh-thuyen-macca/banh-thuyen-macca-3.jpg', 54, 'Hộp bánh thuyền macca'),
+    (1, 'assets/image/shared/product/hat/banh-thuyen-macca/banh-thuyen-macca-h.jpg', 54, 'Ảnh đại diện sản phẩm Bánh Thuyền Macca'),
+    -- Hạnh Nhân (55)
+    (0, 'assets/image/shared/product/hat/hanh-nhan/hanh-nhan-1.png', 55, 'Hạnh nhân rang bơ'),
+    (0, 'assets/image/shared/product/hat/hanh-nhan/hanh-nhan-2.jpg', 55, 'Hạnh nhân tự nhiên'),
+    (1, 'assets/image/shared/product/hat/hanh-nhan/hanh-nhan-h.jpg', 55, 'Ảnh đại diện sản phẩm Hạnh Nhân'),
+    -- Hạt Điều (56)
+    (0, 'assets/image/shared/product/hat/hat-dieu/hat-dieu-1.jpg', 56, 'Hạt điều rang muối'),
+    (0, 'assets/image/shared/product/hat/hat-dieu/hat-dieu-2.jpg', 56, 'Hạt điều tươi'),
+    (1, 'assets/image/shared/product/hat/hat-dieu/hat-dieu-h.png', 56, 'Ảnh đại diện sản phẩm Hạt Điều'),
+    -- Hạt Macca (57)
+    (0, 'assets/image/shared/product/hat/hat-macca/hat-macca-1.png', 57, 'Hạt macca nứt vỏ'),
+    (0, 'assets/image/shared/product/hat/hat-macca/hat-macca-2.png', 57, 'Nhân hạt macca'),
+    (0, 'assets/image/shared/product/hat/hat-macca/hat-macca-3.jpg', 57, 'Hạt macca Việt Nam'),
+    (1, 'assets/image/shared/product/hat/hat-macca/hat-macca-h.png', 57, 'Ảnh đại diện sản phẩm Hạt Macca'),
+    -- Hạt Óc Chó (58)
+    (0, 'assets/image/shared/product/hat/hat-oc-cho/hat-oc-cho-1.jpg', 58, 'Quả óc chó'),
+    (0, 'assets/image/shared/product/hat/hat-oc-cho/hat-oc-cho-2.jpg', 58, 'Nhân hạt óc chó'),
+    (1, 'assets/image/shared/product/hat/hat-oc-cho/hat-oc-cho-h.png', 58, 'Ảnh đại diện sản phẩm Hạt Óc Chó'),
+    -- Hạt Sen Sấy (59)
+    (0, 'assets/image/shared/product/hat/hat-sen-say/hat-sen-say-1.png', 59, 'Hạt sen sấy giòn'),
+    (0, 'assets/image/shared/product/hat/hat-sen-say/hat-sen-say-2.jpg', 59, 'Hạt sen sấy ăn liền'),
+    (0, 'assets/image/shared/product/hat/hat-sen-say/hat-sen-say-3.jpg', 59, 'Đóng gói hạt sen sấy'),
+    (1, 'assets/image/shared/product/hat/hat-sen-say/hat-sen-say-h.jpg', 59, 'Ảnh đại diện sản phẩm Hạt Sen Sấy'),
+    -- Mix 5 Loại Hạt Dinh Dưỡng (60)
+    (0, 'assets/image/shared/product/hat/mix-5-loai-hat-dinh-duong/mix-5-loai-hat-dinh-duong-1.png', 60, 'Hỗn hợp các loại hạt dinh dưỡng'),
+    (0, 'assets/image/shared/product/hat/mix-5-loai-hat-dinh-duong/mix-5-loai-hat-dinh-duong-2.jpg', 60, 'Hạt dinh dưỡng mix'),
+    (0, 'assets/image/shared/product/hat/mix-5-loai-hat-dinh-duong/mix-5-loai-hat-dinh-duong-3.jpg', 60, 'Hộp hạt mix 5 loại'),
+    (1, 'assets/image/shared/product/hat/mix-5-loai-hat-dinh-duong/mix-5-loai-hat-dinh-duong-h.png', 60, 'Ảnh đại diện sản phẩm Mix 5 Loại Hạt Dinh Dưỡng'),
+    -- Thanh Rong Biển Kẹp Hạt (61)
+    (0, 'assets/image/shared/product/hat/thanh-rong-bien-kep-hat/thanh-rong-bien-kep-hat-1.jpg', 61, 'Thanh rong biển kẹp hạt dinh dưỡng'),
+    (0, 'assets/image/shared/product/hat/thanh-rong-bien-kep-hat/thanh-rong-bien-kep-hat-2.jpg', 61, 'Cận cảnh thanh rong biển kẹp hạt'),
+    (0, 'assets/image/shared/product/hat/thanh-rong-bien-kep-hat/thanh-rong-bien-kep-hat-3.jpg', 61, 'Snack rong biển kẹp hạt'),
+    (1, 'assets/image/shared/product/hat/thanh-rong-bien-kep-hat/thanh-rong-bien-kep-hat-h.jpg', 61, 'Ảnh đại diện sản phẩm Thanh Rong Biển Kẹp Hạt'),
+    -- Chả Chân Vịt (62)
+    (0, 'assets/image/shared/product/vit/cha-chan-vit/cha-chan-vit-1.png', 62, 'Chả chân vịt rút xương'),
+    (0, 'assets/image/shared/product/vit/cha-chan-vit/cha-chan-vit-2.png', 62, 'Món ngon từ chả chân vịt'),
+    (0, 'assets/image/shared/product/vit/cha-chan-vit/cha-chan-vit-3.png', 62, 'Cận cảnh chả chân vịt'),
+    (1, 'assets/image/shared/product/vit/cha-chan-vit/cha-chan-vit-v.png', 62, 'Ảnh đại diện sản phẩm Chả Chân Vịt'),
+    -- Chả Vịt Thúy Hạnh (63)
+    (0, 'assets/image/shared/product/vit/cha-vit-thuy-manh/cha-vit-thuy-hanh-2.png', 63, 'Chả vịt Thúy Hạnh chiên'),
+    (0, 'assets/image/shared/product/vit/cha-vit-thuy-manh/cha-vit-thuy-manh-1.png', 63, 'Đặc sản chả vịt Thúy Hạnh'),
+    (1, 'assets/image/shared/product/vit/cha-vit-thuy-manh/cha-vit-thuy-manh-v.jpg', 63, 'Ảnh đại diện sản phẩm Chả Vịt Thúy Hạnh'),
+    -- Chân Vịt Rút Xương Ủ Muối (64)
+    (0, 'assets/image/shared/product/vit/chan-vit-rut-xuong-u-muoi/chan-vit-rut-xuong-u-muoi-1.jpg', 64, 'Chân vịt rút xương ủ muối hoa tiêu'),
+    (0, 'assets/image/shared/product/vit/chan-vit-rut-xuong-u-muoi/chan-vit-rut-xuong-u-muoi-2.jpg', 64, 'Chân vịt ủ muối ăn liền'),
+    (0, 'assets/image/shared/product/vit/chan-vit-rut-xuong-u-muoi/chan-vit-rut-xuong-u-muoi-3.jpg', 64, 'Chân vịt ủ muối đóng gói'),
+    (1, 'assets/image/shared/product/vit/chan-vit-rut-xuong-u-muoi/chan-vit-rut-xuong-u-muoi-v.jpg', 64, 'Ảnh đại diện sản phẩm Chân Vịt Rút Xương Ủ Muối'),
+    -- Chân Vịt Rút Xương Ủ Xì Dầu (65)
+    (0, 'assets/image/shared/product/vit/chan-vit-rut-xuong-u-xi-dau/chan-vit-rut-xuong-u-xi-dau-1.jpg', 65, 'Chân vịt rút xương ủ xì dầu đậm vị'),
+    (0, 'assets/image/shared/product/vit/chan-vit-rut-xuong-u-xi-dau/chan-vit-rut-xuong-u-xi-dau-2.jpg', 65, 'Món nhậu chân vịt ủ xì dầu'),
+    (1, 'assets/image/shared/product/vit/chan-vit-rut-xuong-u-xi-dau/chan-vit-rut-xuong-u-xi-dau-v.jpg', 65, 'Ảnh đại diện sản phẩm Chân Vịt Rút Xương Ủ Xì Dầu'),
+    -- Mọc Vịt (66)
+    (0, 'assets/image/shared/product/vit/moc-vit/moc-vit-1.png', 66, 'Mọc vịt tươi'),
+    (0, 'assets/image/shared/product/vit/moc-vit/moc-vit-2.png', 66, 'Canh mọc vịt'),
+    (0, 'assets/image/shared/product/vit/moc-vit/moc-vit-3.png', 66, 'Mọc vịt chiên'),
+    (1, 'assets/image/shared/product/vit/moc-vit/moc-vit-v.png', 66, 'Ảnh đại diện sản phẩm Mọc Vịt'),
+    -- Pate Gan Vịt (67)
+    (0, 'assets/image/shared/product/vit/pate-gan-vit/pate-gan-vit-1.png', 67, 'Pate gan vịt kiểu Pháp'),
+    (0, 'assets/image/shared/product/vit/pate-gan-vit/pate-gan-vit-2.png', 67, 'Pate gan vịt ăn với bánh mì'),
+    (1, 'assets/image/shared/product/vit/pate-gan-vit/pate-gan-vit-v.jpg', 67, 'Ảnh đại diện sản phẩm Pate Gan Vịt'),
+    -- Vịt Quay (68)
+    (0, 'assets/image/shared/product/vit/vit-quay/vit-quay-1.jpg', 68, 'Vịt quay Bắc Kinh'),
+    (0, 'assets/image/shared/product/vit/vit-quay/vit-quay-2.jpg', 68, 'Vịt quay chặt miếng'),
+    (0, 'assets/image/shared/product/vit/vit-quay/vit-quay-3.jpg', 68, 'Vịt quay da giòn'),
+    (1, 'assets/image/shared/product/vit/vit-quay/vit-quay-v.jpg', 68, 'Ảnh đại diện sản phẩm Vịt Quay'),
+    -- Vịt Tiềm Hạt Sen (69)
+    (0, 'assets/image/shared/product/vit/vit-tiem-hat-sen/vit-tiem-hat-sen-1.jpg', 69, 'Món vịt tiềm hạt sen thuốc bắc'),
+    (0, 'assets/image/shared/product/vit/vit-tiem-hat-sen/vit-tiem-hat-sen-2.jpg', 69, 'Vịt tiềm hạt sen bổ dưỡng'),
+    (1, 'assets/image/shared/product/vit/vit-tiem-hat-sen/vit-tiem-hat-sen-v.jpg', 69, 'Ảnh đại diện sản phẩm Vịt Tiềm Hạt Sen'),
+    -- Vịt Ủ Xì Dầu (70)
+    (0, 'assets/image/shared/product/vit/vit-u-xi-dau/vit-u-xi-dau-1.png', 70, 'Vịt ủ xì dầu nguyên con'),
+    (0, 'assets/image/shared/product/vit/vit-u-xi-dau/vit-u-xi-dau-2.png', 70, 'Thịt vịt ủ xì dầu mềm thơm'),
+    (1, 'assets/image/shared/product/vit/vit-u-xi-dau/vit-u-xi-dau-v.png', 70, 'Ảnh đại diện sản phẩm Vịt Ủ Xì Dầu'),
+    -- Chả Cá Thác Lác Tươi (71)
+    (0, 'assets/image/shared/product/ca/cha-ca-thac-lac-tuoi/cha-ca-thac-lac-tuoi-1.jpg', 71, 'Chả cá thác lác tươi quết dai'),
+    (0, 'assets/image/shared/product/ca/cha-ca-thac-lac-tuoi/cha-ca-thac-lac-tuoi-2.jpg', 71, 'Chả cá thác lác chiên'),
+    (0, 'assets/image/shared/product/ca/cha-ca-thac-lac-tuoi/cha-ca-thac-lac-tuoi-3.jpeg', 71, 'Canh khổ qua chả cá thác lác'),
+    (0, 'assets/image/shared/product/ca/cha-ca-thac-lac-tuoi/cha-ca-thac-lac-tuoi-4.jpeg', 71, 'Chả cá thác lác viên'),
+    (0, 'assets/image/shared/product/ca/cha-ca-thac-lac-tuoi/cha-ca-thac-lac-tuoi-5.jpg', 71, 'Cá thác lác tươi'),
+    (1, 'assets/image/shared/product/ca/cha-ca-thac-lac-tuoi/cha-ca-thac-lac-tuoi-c.jpg', 71, 'Ảnh đại diện sản phẩm Chả Cá Thác Lác Tươi'),
+    -- Cá Chiên Tẩm Gia Vị Sấy Khô (72)
+    (0, 'assets/image/shared/product/ca/ca-chien-tam-gia-vi-say-kho/ca-chien-tam-gia-vi-say-kho-1.jpg', 72, 'Cá chiên tẩm gia vị ăn liền'),
+    (0, 'assets/image/shared/product/ca/ca-chien-tam-gia-vi-say-kho/ca-chien-tam-gia-vi-say-kho-2.jpg', 72, 'Snack cá chiên tẩm gia vị'),
+    (1, 'assets/image/shared/product/ca/ca-chien-tam-gia-vi-say-kho/ca-chien-tam-gia-vi-say-kho-c.jpg', 72, 'Ảnh đại diện sản phẩm Cá Chiên Tẩm Gia Vị Sấy Khô'),
+    -- Cá Chua Ngọt Đông Hũ (73)
+    (1, 'assets/image/shared/product/ca/ca-chua-ngot-dong-hu/ca-chua-ngot-dong-hu-c.jpg', 73, 'Ảnh đại diện sản phẩm Cá Chua Ngọt Đông Hũ'),
+    -- Cá Hộp (74)
+    (1, 'assets/image/shared/product/ca/ca-hop/ca-hop-c.jpg', 74, 'Ảnh đại diện sản phẩm Cá Hộp'),
+    -- Cá Khô (75)
+    (0, 'assets/image/shared/product/ca/ca-kho/ca-kho-1.jpg', 75, 'Các loại cá khô'),
+    (0, 'assets/image/shared/product/ca/ca-kho/ca-kho-2.jpg', 75, 'Khô cá lóc'),
+    (0, 'assets/image/shared/product/ca/ca-kho/ca-kho-3.jpg', 75, 'Khô cá sặc'),
+    (1, 'assets/image/shared/product/ca/ca-kho/ca-kho-c.jpg', 75, 'Ảnh đại diện sản phẩm Cá Khô'),
+    -- Cá Lóc Rim Me (76)
+    (0, 'assets/image/shared/product/ca/ca-loc-rim-me/ca-loc-rim-me-1.jpg', 76, 'Món cá lóc rim me chua ngọt'),
+    (0, 'assets/image/shared/product/ca/ca-loc-rim-me/ca-loc-rim-me-2.jpg', 76, 'Cá lóc rim me đậm đà'),
+    (1, 'assets/image/shared/product/ca/ca-loc-rim-me/ca-loc-rim-me-c.jpg', 76, 'Ảnh đại diện sản phẩm Cá Lóc Rim Me'),
+    -- Cá Một Nắng (77)
+    (0, 'assets/image/shared/product/ca/ca-mot-nang/ca-mot-nang-2.jpg', 77, 'Cá một nắng chiên'),
+    (1, 'assets/image/shared/product/ca/ca-mot-nang/ca-mot-nang-c.png', 77, 'Ảnh đại diện sản phẩm Cá Một Nắng'),
+    (0, 'assets/image/shared/product/ca/ca-mot-nang/ca-mot-nang-1.jpg', 77, 'Phơi cá một nắng'),
+    -- Cá Mực Một Nắng Tẩm Gia Vị (78)
+    (1, 'assets/image/shared/product/ca/ca-muc-mot-nang-tam-gia-vi/ca-muc-mot-nang-tam-gia-vi-c.jpg', 78, 'Ảnh đại diện sản phẩm Cá Mực Một Nắng Tẩm Gia Vị'),
+    (1, 'assets/image/shared/product/ca/ca-muc-mot-nang-tam-gia-vi/ca-muc-mot-nang-tam-gia-vi-1.jpg', 78, 'Cá mực tẩm gia vị nướng'),
+    -- Cá Rim (79)
+    (0, 'assets/image/shared/product/ca/ca-rim/ca-rim-1.jpg', 79, 'Cá cơm rim'),
+    (0, 'assets/image/shared/product/ca/ca-rim/ca-rim-2.jpg', 79, 'Cá nục rim'),
+    (0, 'assets/image/shared/product/ca/ca-rim/ca-rim-3.jpg', 79, 'Cá rim mặn ngọt'),
+    (1, 'assets/image/shared/product/ca/ca-rim/ca-rim-c.jpg', 79, 'Ảnh đại diện sản phẩm Cá Rim'),
+    -- Cá Rô Phi Sấy Giòn (80)
+    (0, 'assets/image/shared/product/ca/ca-ro-phi-say-gion/ca-ro-phi-say-gion-1.jpg', 80, 'Cá rô phi sấy giòn ăn liền'),
+    (0, 'assets/image/shared/product/ca/ca-ro-phi-say-gion/ca-ro-phi-say-gion-2.jpg', 80, 'Snack cá rô phi sấy giòn'),
+    (1, 'assets/image/shared/product/ca/ca-ro-phi-say-gion/ca-ro-phi-say-gion-c.jpg', 80, 'Ảnh đại diện sản phẩm Cá Rô Phi Sấy Giòn'),
+    -- Cá Thu Rim Tỏi Ớt (81)
+    (0, 'assets/image/shared/product/ca/ca-thu-rim-toi-ot/ca-thu-rim-toi-ot-1.jpg', 81, 'Món cá thu rim tỏi ớt'),
+    (1, 'assets/image/shared/product/ca/ca-thu-rim-toi-ot/ca-thu-rim-toi-ot-c.jpg', 81, 'Ảnh đại diện sản phẩm Cá Thu Rim Tỏi Ớt'),
+    -- Chả Cá Thác Lác Hậu Giang (82)
+    (0, 'assets/image/shared/product/ca/cha-ca-thac-lac-hau-giang/cha-ca-thac-lac-hau-giang-1.jpg', 82, 'Đặc sản chả cá thác lác Hậu Giang'),
+    (1, 'assets/image/shared/product/ca/cha-ca-thac-lac-hau-giang/cha-ca-thac-lac-hau-giang-c.jpg', 82, 'Ảnh đại diện sản phẩm Chả Cá Thác Lác Hậu Giang'),
+    -- Chả Cá Thác Lác Tươi Tẩm Gia Vị (83)
+    (0, 'assets/image/shared/product/ca/cha-ca-thac-lac-tuoi-tam-gia-vi/cha-ca-thac-lac-tuoi-tam-gia-vi-1.jpg', 83, 'Chả cá thác lác tẩm gia vị'),
+    (0, 'assets/image/shared/product/ca/cha-ca-thac-lac-tuoi-tam-gia-vi/cha-ca-thac-lac-tuoi-tam-gia-vi-2.jpg', 83, 'Chả cá tẩm gia vị chiên'),
+    (0, 'assets/image/shared/product/ca/cha-ca-thac-lac-tuoi-tam-gia-vi/cha-ca-thac-lac-tuoi-tam-gia-vi-3.jpg', 83, 'Nguyên liệu chả cá thác lác'),
+    (0, 'assets/image/shared/product/ca/cha-ca-thac-lac-tuoi-tam-gia-vi/cha-ca-thac-lac-tuoi-tam-gia-vi-5.jpg', 83, 'Chả cá thác lác tẩm  Cà Mau'),
+    (1, 'assets/image/shared/product/ca/cha-ca-thac-lac-tuoi-tam-gia-vi/cha-ca-thac-lac-tuoi-tam-gia-vi-c.jpg', 83, 'Ảnh đại diện sản phẩm Chả Cá Thác Lác Tươi Tẩm Gia Vị'),
+    -- Pate Cá Hồi Hạ Long (84)
+    (0, 'assets/image/shared/product/ca/pa-te-ca-hoi-ha-long/pa-te-ca-hoi-ha-long-1.jpg', 84, 'Pate cá hồi Hạ Long'),
+    (1, 'assets/image/shared/product/ca/pa-te-ca-hoi-ha-long/pa-te-ca-hoi-ha-long-c.jpg', 84, 'Ảnh đại diện sản phẩm Pate Cá Hồi Hạ Long'),
+    -- Chả Giò Chả Lụa (85)
+    (0, 'assets/image/shared/product/heo/cha-gio-cha-lua/cha-gio-cha-lua-1.jpg', 85, 'Chả giò và chả lụa'),
+    (1, 'assets/image/shared/product/heo/cha-gio-cha-lua/cha-gio-cha-lua-h.jpg', 85, 'Ảnh đại diện sản phẩm Chả Giò Chả Lụa'),
+    -- Chân Giò Giả Cầy (86)
+    (0, 'assets/image/shared/product/heo/chan-gio-gia-cay/chan-gio-gia-cay-1.jpg', 86, 'Món chân giò giả cầy'),
+    (1, 'assets/image/shared/product/heo/chan-gio-gia-cay/chan-gio-gia-cay-h.jpg', 86, 'Ảnh đại diện sản phẩm Chân Giò Giả Cầy'),
+    -- Đặc Sản Chả Mực Hải Phòng (87)
+    (0, 'assets/image/shared/product/heo/dac-san-cha-chia-hai-phong/dac-san-cha-chia-hai-phong-1.jpg', 87, 'Đặc sản chả chìa Hải Phòng'),
+    (1, 'assets/image/shared/product/heo/dac-san-cha-chia-hai-phong/dac-san-cha-chia-hai-phong-h.jpg', 87, 'Ảnh đại diện sản phẩm Chả Chìa Hải Phòng'),
+    -- Đặc Sản Chả Cốm Hà Nội (88)
+    (0, 'assets/image/shared/product/heo/dac-san-cha-com-ha-noi/dac-san-cha-com-ha-noi-1.jpg', 88, 'Chả cốm Hà Nội chiên'),
+    (0, 'assets/image/shared/product/heo/dac-san-cha-com-ha-noi/dac-san-cha-com-ha-noi-2.jpg', 88, 'Bún đậu mắm tôm chả cốm'),
+    (0, 'assets/image/shared/product/heo/dac-san-cha-com-ha-noi/dac-san-cha-com-ha-noi-3.jpg', 88, 'Chả cốm tươi'),
+    (0, 'assets/image/shared/product/heo/dac-san-cha-com-ha-noi/dac-san-cha-com-ha-noi-4.jpg', 88, 'Chả cốm làng Vòng'),
+    (0, 'assets/image/shared/product/heo/dac-san-cha-com-ha-noi/dac-san-cha-com-ha-noi-5.jpg', 88, 'Cận cảnh miếng chả cốm'),
+    (0, 'assets/image/shared/product/heo/dac-san-cha-com-ha-noi/dac-san-cha-com-ha-noi-6.jpg', 88, 'Chả cốm và cốm tươi'),
+    (1, 'assets/image/shared/product/heo/dac-san-cha-com-ha-noi/dac-san-cha-com-ha-noi-h.jpg', 88, 'Ảnh đại diện sản phẩm Chả Cốm Hà Nội'),
+    -- Đặc Sản Chả Sụn (89)
+    (0, 'assets/image/shared/product/heo/dac-san-cha-sun/dac-san-cha-sun-1.jpg', 89, 'Chả sụn nướng'),
+    (0, 'assets/image/shared/product/heo/dac-san-cha-sun/dac-san-cha-sun-2.jpg', 89, 'Chả sụn chiên'),
+    (1, 'assets/image/shared/product/heo/dac-san-cha-sun/dac-san-cha-sun-h.jpg', 89, 'Ảnh đại diện sản phẩm Chả Sụn'),
+    -- Khâu Nhục Lạng Sơn (90)
+    (0, 'assets/image/shared/product/heo/khau-nhuc-lang-son/khau-nhuc-lang-son-1.png', 90, 'Đặc sản khâu nhục Lạng Sơn'),
+    (0, 'assets/image/shared/product/heo/khau-nhuc-lang-son/khau-nhuc-lang-son-2.png', 90, 'Khâu nhục hấp'),
+    (1, 'assets/image/shared/product/heo/khau-nhuc-lang-son/khau-nhuc-lang-son-h.jpg', 90, 'Ảnh đại diện sản phẩm Khâu Nhục Lạng Sơn'),
+    -- Mắm Heo (91)
+    (0, 'assets/image/shared/product/heo/mam-heo/mam-heo-1.jpg', 91, 'Mắm thịt heo'),
+    (1, 'assets/image/shared/product/heo/mam-heo/mam-heo-h.jpg', 91, 'Ảnh đại diện sản phẩm Mắm Heo'),
+    -- Nem Chua (92)
+    (0, 'assets/image/shared/product/heo/nem-chua/nem-chua-1.jpg', 92, 'Nem chua Thanh Hóa'),
+    (1, 'assets/image/shared/product/heo/nem-chua/nem-chua-h.jpg', 92, 'Ảnh đại diện sản phẩm Nem Chua'),
+    -- Nem Hà Nội (93)
+    (0, 'assets/image/shared/product/heo/nem-ha-noi/nem-ha-noi-1.jpg', 93, 'Nem rán Hà Nội'),
+    (0, 'assets/image/shared/product/heo/nem-ha-noi/nem-ha-noi-2.jpg', 93, 'Nem chua rán Hà Nội'),
+    (0, 'assets/image/shared/product/heo/nem-ha-noi/nem-ha-noi-3.jpg', 93, 'Bún chả nem Hà Nội'),
+    (1, 'assets/image/shared/product/heo/nem-ha-noi/nem-ha-noi-h.jpg', 93, 'Ảnh đại diện sản phẩm Nem Hà Nội'),
+    -- Nem Lụi Nha Trang (94)
+    (0, 'assets/image/shared/product/heo/nem-lui-nha-trang/nem-lui-nha-trang-3.jpg', 94, 'Nem lụi nướng Nha Trang'),
+    (1, 'assets/image/shared/product/heo/nem-lui-nha-trang/nem-lui-nha-trang-h.jpg', 94, 'Ảnh đại diện sản phẩm Nem Lụi Nha Trang'),
+    -- Pate Gan Heo (95)
+    (1, 'assets/image/shared/product/heo/pa-te-gan-heo/pa-te-gan-heo-h.jpg', 95, 'Ảnh đại diện sản phẩm Pate Gan Heo'),
+    -- Tai Heo Cuộn Lưỡi (96)
+    (0, 'assets/image/shared/product/heo/tai-heo-cuon-luoi/tai-heo-cuon-luoi-1.jpg', 96, 'Món tai heo cuộn lưỡi'),
+    (0, 'assets/image/shared/product/heo/tai-heo-cuon-luoi/tai-heo-cuon-luoi-2.jpg', 96, 'Tai heo cuộn lưỡi thái lát'),
+    (0, 'assets/image/shared/product/heo/tai-heo-cuon-luoi/tai-heo-cuon-luoi-3.jpg', 96, 'Giò tai lưỡi'),
+    (0, 'assets/image/shared/product/heo/tai-heo-cuon-luoi/tai-heo-cuon-luoi-4.jpg', 96, 'Nguyên liệu tai heo cuộn lưỡi'),
+    (0, 'assets/image/shared/product/heo/tai-heo-cuon-luoi/tai-heo-cuon-luoi-5.jpg', 96, 'Tai heo cuộn lưỡi ăn kèm'),
+    (0, 'assets/image/shared/product/heo/tai-heo-cuon-luoi/tai-heo-cuon-luoi-6.jpg', 96, 'Cận cảnh tai heo cuộn lưỡi'),
+    (1, 'assets/image/shared/product/heo/tai-heo-cuon-luoi/tai-heo-cuon-luoi-h.jpg', 96, 'Ảnh đại diện sản phẩm Tai Heo Cuộn Lưỡi'),
+    -- Tai Heo Ủ Muối (97)
+    (0, 'assets/image/shared/product/heo/tai-heo-u-muoi/tai-heo-u-muoi-1.png', 97, 'Tai heo ủ muối giòn sần sật'),
+    (0, 'assets/image/shared/product/heo/tai-heo-u-muoi/tai-heo-u-muoi-2.jpg', 97, 'Tai heo ủ muối thái mỏng'),
+    (1, 'assets/image/shared/product/heo/tai-heo-u-muoi/tai-heo-u-muoi-h.jpg', 97, 'Ảnh đại diện sản phẩm Tai Heo Ủ Muối'),
+    -- Tai Heo Ủ Xì Dầu (98)
+    (0, 'assets/image/shared/product/heo/tai-heo-u-xi-dau/tai-heo-u-xi-dau-1.jpg', 98, 'Tai heo ủ xì dầu đậm vị'),
+    (0, 'assets/image/shared/product/heo/tai-heo-u-xi-dau/tai-heo-u-xi-dau-2.jpg', 98, 'Tai heo ủ xì dầu ăn liền'),
+    (1, 'assets/image/shared/product/heo/tai-heo-u-xi-dau/tai-heo-u-xi-dau-h.jpeg', 98, 'Ảnh đại diện sản phẩm Tai Heo Ủ Xì Dầu'),
+    -- Thịt Chưng Mắm Tép (99)
+    (0, 'assets/image/shared/product/heo/thit-chung-mam-tep/thit-chung-mam-tep-1.jpg', 99, 'Thịt chưng mắm tép ăn với cơm'),
+    (0, 'assets/image/shared/product/heo/thit-chung-mam-tep/thit-chung-mam-tep-2.jpg', 99, 'Hũ thịt chưng mắm tép'),
+    (1, 'assets/image/shared/product/heo/thit-chung-mam-tep/thit-chung-mam-tep-h.jpg', 99, 'Ảnh đại diện sản phẩm Thịt Chưng Mắm Tép'),
+    -- Thịt Heo Sấy Khô (100)
+    (0, 'assets/image/shared/product/heo/thit-heo-say-kho/thit-heo-say-kho-1.jpg', 100, 'Khô heo cháy tỏi'),
+    (0, 'assets/image/shared/product/heo/thit-heo-say-kho/thit-heo-say-kho-2.jpg', 100, 'Thịt heo sấy khô miếng'),
+    (1, 'assets/image/shared/product/heo/thit-heo-say-kho/thit-heo-say-kho-h.jpg', 100, 'Ảnh đại diện sản phẩm Thịt Heo Sấy Khô'),
+    -- Thịt Heo Xông Khói (101)
+    (0, 'assets/image/shared/product/heo/thit-heo-xong-khoi/thit-heo-xong-khoi-1.png', 101, 'Thịt heo xông khói thái lát'),
+    (1, 'assets/image/shared/product/heo/thit-heo-xong-khoi/thit-heo-xong-khoi-h.jpg', 101, 'Ảnh đại diện sản phẩm Thịt Heo Xông Khói'),
+    -- Xúc Xích Cốm (102)
+    (0, 'assets/image/shared/product/heo/xuc-xich-com/xuc-xich-com-1.jpg', 102, 'Xúc xích cốm chiên'),
+    (0, 'assets/image/shared/product/heo/xuc-xich-com/xuc-xich-com-2.jpg', 102, 'Xúc xích cốm tươi'),
+    (0, 'assets/image/shared/product/heo/xuc-xich-com/xuc-xich-com-3.jpg', 102, 'Cận cảnh xúc xích cốm'),
+    (0, 'assets/image/shared/product/heo/xuc-xich-com/xuc-xich-com-4.jpg', 102, 'Xúc xích cốm ăn kèm'),
+    (0, 'assets/image/shared/product/heo/xuc-xich-com/xuc-xich-com-5.jpg', 102, 'Đặc sản xúc xích cốm'),
+    (1, 'assets/image/shared/product/heo/xuc-xich-com/xuc-xich-com-h.jpg', 102, 'Ảnh đại diện sản phẩm Xúc Xích Cốm'),
+    -- Chả Ngan (103)
+    (0, 'assets/image/shared/product/ngan/cha-ngan/cha-ngan-1.jpg', 103, 'Chả ngan nướng'),
+    (0, 'assets/image/shared/product/ngan/cha-ngan/cha-ngan-2.jpg', 103, 'Bún chả ngan'),
+    (0, 'assets/image/shared/product/ngan/cha-ngan/cha-ngan-3.jpg', 103, 'Chả ngan viên'),
+    (1, 'assets/image/shared/product/ngan/cha-ngan/cha-ngan-n.jpg', 103, 'Ảnh đại diện sản phẩm Chả Ngan'),
+    -- Ngan Một Nắng (104)
+    (1, 'assets/image/shared/product/ngan/ngan-mot-nang/bo-kho-mot-nang-n.jpg', 104, 'Ảnh đại diện sản phẩm Ngan Một Nắng'),
+    (0, 'assets/image/shared/product/ngan/ngan-mot-nang/ngan-mot-nang-1.jpg', 104, 'Thịt ngan một nắng'),
+    -- Ngan Xông Khói (105)
+    (0, 'assets/image/shared/product/ngan/ngan-xong-khoi/ngan-xong-khoi-1.jpg', 105, 'Thịt ngan xông khói'),
+    (1, 'assets/image/shared/product/ngan/ngan-xong-khoi/ngan-xong-khoi-n.jpg', 105, 'Ảnh đại diện sản phẩm Ngan Xông Khói');
+
+-- Dữ liệu mẫu cho Comments đã được sửa để tuân thủ UNIQUE KEY (user_id, product_id)
+INSERT INTO Comments (rate, content, product_id, user_id, created_at, updated_at, likes, dislikes) VALUES
+-- Dữ liệu gốc đã thêm likes/dislikes
+(5, 'Bánh pía Sóc Trăng ngon tuyệt, nhân sầu riêng thơm lừng, béo ngậy. Sẽ ủng hộ shop dài dài.', 1, 1, '2025-09-20 10:15:00', '2025-09-20 10:15:00', 85, 2),
+(4, 'Bò một nắng Krông Pa thịt mềm, tẩm ướp đậm đà, rất hợp khẩu vị. Chấm với muối kiến vàng là hết sảy.', 2, 2, '2025-09-21 12:30:00', '2025-09-21 12:30:00', 92, 5),
+(3, 'Cà phê Buôn Ma Thuột thơm, nhưng vị hơi gắt so với gu của mình. Nói chung là ổn.', 3, 3, '2025-09-22 14:00:00', '2025-09-22 14:00:00', 45, 11),
+(5, 'Chả ốc dai giòn sần sật, thơm mùi lá lốt. Chấm tương ớt ăn cực cuốn, rất ngon!', 4, 4, '2025-09-23 16:45:00', '2025-09-23 16:45:00', 100, 0),
+(4, 'Dê chiên giòn Tây Ninh thơm, lớp vỏ giòn rụm nhưng thịt bên trong không bị khô. Ăn khá ổn.', 5, 5, '2025-09-24 09:20:00', '2025-09-24 09:20:00', 73, 6),
+(2, 'Món gân bò rau tiến vua hơi mặn so với mong đợi của mình. Gân bò thì giòn nhưng nước sốt cần điều chỉnh lại.', 6, 1, '2025-09-25 11:10:00', '2025-09-25 11:10:00', 21, 15),
+(5, 'Hạt điều rang muối Bình Phước hạt to, giòn rụm, béo ngậy. Ăn cực đã, không bị hôi dầu.', 7, 2, '2025-09-26 13:35:00', '2025-09-26 13:35:00', 95, 2),
+(4, 'Mắm tép chưng thịt đậm đà, thơm mùi riềng, ăn với cơm trắng rất tốn cơm. Giao hàng nhanh.', 8, 3, '2025-09-27 15:00:00', '2025-09-27 15:00:00', 88, 4),
+(3, 'Mật ong rừng U Minh hơi đặc, nhưng có mùi thơm tràm đặc trưng. Vẫn ok.', 9, 4, '2025-09-27 16:20:00', '2025-09-27 16:20:00', 50, 8),
+(5, 'Mè xửng Huế dẻo thơm, ngọt vừa phải, đậu phộng giòn bùi. Đúng chuẩn hương vị Huế, rất ngon.', 10, 5, '2025-09-27 17:45:00', '2025-09-27 17:45:00', 98, 1),
+(5, 'Chả mực Hạ Long giã tay dai giòn sần sật, thơm nức. Đắt nhưng xắt ra miếng, chất lượng tuyệt vời.', 21, 6, '2025-09-28 09:05:00', '2025-09-28 09:05:00', 99, 1),
+(4, 'Bề bề rang muối đậm đà, vỏ giòn. Thịt tươi ngọt nhưng hơi ít.', 15, 7, '2025-09-28 10:10:00', '2025-09-28 10:10:00', 65, 7),
+(5, 'Nem chua Thanh Hóa chuẩn vị, chua cay vừa phải, thơm mùi tỏi ớt và lá ổi. Sẽ mua lại.', 92, 8, '2025-09-28 11:25:00', '2025-09-28 11:25:00', 93, 3),
+(4, 'Chả cốm Hà Nội dẻo thơm, cảm nhận được hạt cốm bên trong. Chiên lên ăn nóng rất ngon.', 88, 9, '2025-09-28 14:00:00', '2025-09-28 14:00:00', 82, 4),
+(5, 'Hạt điều to, đều, không bị vỡ. Rang muối vừa miệng, bùi và béo. Đóng gói cẩn thận.', 56, 10, '2025-09-29 08:30:00', '2025-09-29 08:30:00', 91, 2),
+(5, 'Cua Cà Mau chắc thịt, gạch đầy ụ. Shop giao hàng sống, cua rất khỏe và tươi. Rất hài lòng.', 23, 1, '2025-09-29 12:00:00', '2025-09-29 12:00:00', 100, 0),
+(3, 'Gà ủ muối da giòn, thịt dai nhưng hơi nhạt so với khẩu vị của gia đình mình.', 47, 2, '2025-09-29 15:45:00', '2025-09-29 15:45:00', 40, 12),
+(5, 'Ruốc thịt lợn sợi bông, tơi, vàng ươm và rất thơm. Bé nhà mình rất thích ăn với cháo.', 37, 3, '2025-09-30 09:50:00', '2025-09-30 09:50:00', 89, 1),
+(4, 'Vịt quay da giòn, thịt mềm, tẩm ướp vừa phải. Nước chấm đi kèm cũng khá ngon.', 68, 4, '2025-09-30 11:00:00', '2025-09-30 11:00:00', 79, 5),
+(4, 'Thịt heo sấy khô đậm đà vị mắc khén, cay cay ngọt ngọt. Nhâm nhi xem phim là hết bài.', 100, 5, '2025-09-30 16:20:00', '2025-09-30 16:20:00', 85, 6),
+(5, 'Nem hải sản vỏ giòn tan, nhân bên trong béo ngậy vị mayonnaise và hải sản. Rất đáng thử!', 27, 6, '2025-10-01 10:30:00', '2025-10-01 10:30:00', 96, 2),
+(5, 'Trà sen Tây Hồ thơm dịu, vị thanh khiết. Uống một tách trà vào buổi sáng cảm thấy rất thư thái.', 13, 7, '2025-10-01 13:00:00', '2025-10-01 13:00:00', 90, 3),
+(4, 'Hạt Macca sấy nứt vỏ dễ tách, hạt to tròn, ăn béo và thơm. Chất lượng tốt.', 57, 8, '2025-10-02 11:15:00', '2025-10-02 11:15:00', 77, 4),
+(4, 'Pate gan vịt béo ngậy, mềm mịn, thơm mùi đặc trưng. Ăn kèm bánh mì nướng là tuyệt vời.', 67, 9, '2025-10-02 14:40:00', '2025-10-02 14:40:00', 83, 3),
+(5, 'Chả cá thác lác Hậu Giang dai ngon, thơm mùi thì là. Nấu lẩu hay chiên đều ngon.', 82, 10, '2025-10-03 09:00:00', '2025-10-03 09:00:00', 94, 2),
+(5, 'Mè xửng dẻo, thơm, ngọt thanh. Mua làm quà ai cũng khen.', 10, 3, '2025-10-05 09:10:00', '2025-10-05 09:10:00', 77, 1),
+(4, 'Ăn cũng được, hơi dính răng một chút nhưng vị ngon.', 10, 7, '2025-10-05 11:25:00', '2025-10-05 11:25:00', 42, 3),
+(5, 'Đúng chuẩn mè xửng Huế, đậu phộng giòn, không bị hôi dầu. Rất hài lòng.', 10, 10, '2025-10-05 14:00:00', '2025-10-05 14:00:00', 89, 0),
+(3, 'Hơi ngọt so với mình, nhưng gia đình thì thích.', 10, 1, '2025-10-05 16:45:00', '2025-10-05 16:45:00', 31, 9),
+(5, 'Tuyệt vời! Sẽ mua thêm để biếu.', 10, 9, '2025-10-05 18:20:00', '2025-10-05 18:20:00', 95, 2),
+(4, 'Bánh pía ngon, nhân sầu riêng thơm nhưng hơi ngọt gắt.', 1, 6, '2025-10-06 08:30:00', '2025-10-06 08:30:00', 58, 4),
+(5, 'Bò một nắng rất mềm và thấm vị. Giao hàng nhanh.', 2, 8, '2025-10-06 09:45:00', '2025-10-06 09:45:00', 91, 2),
+(4, 'Cà phê đậm đà, thơm nức. Pha phin uống buổi sáng là hết ý.', 3, 10, '2025-10-06 10:15:00', '2025-10-06 10:15:00', 67, 3),
+(5, 'Chả ốc giòn sần sật, rất ngon. Sẽ ủng hộ shop tiếp tục.', 4, 1, '2025-10-06 11:00:00', '2025-10-06 11:00:00', 100, 0),
+(3, 'Dê chiên hơi khô, không được như mình mong đợi.', 5, 10, '2025-10-06 12:30:00', '2025-10-06 12:30:00', 25, 11),
+(4, 'Gân bò giòn, rau tiến vua cũng giòn, ăn vui miệng nhưng hơi mặn.', 6, 3, '2025-10-06 14:00:00', '2025-10-06 14:00:00', 48, 6),
+(5, 'Hạt điều rang muối rất ngon, hạt to đều, không bị vỡ vụn.', 7, 7, '2025-10-06 15:20:00', '2025-10-06 15:20:00', 93, 1),
+(5, 'Mắm tép chưng thịt này ăn với cơm trắng thì không còn gì bằng.', 8, 9, '2025-10-06 16:50:00', '2025-10-06 16:50:00', 82, 3),
+(4, 'Mật ong thơm mùi hoa tràm đặc trưng, chất lượng tốt.', 9, 10, '2025-10-06 18:00:00', '2025-10-06 18:00:00', 60, 2),
+(5, 'Bánh pía giao nhanh, date mới, ăn rất thơm ngon.', 1, 2, '2025-10-07 09:05:00', '2025-10-07 09:05:00', 76, 1),
+(2, 'Bò một nắng bị dai và mặn, không ngon như quảng cáo.', 2, 10, '2025-10-07 10:30:00', '2025-10-07 10:30:00', 15, 20),
+(4, 'Cà phê ổn, gu mình thích đắng hơn chút nữa.', 3, 5, '2025-10-07 11:45:00', '2025-10-07 11:45:00', 51, 5),
+(5, 'Chả ốc này chiên lên ăn với bún đậu là hết bài.', 4, 6, '2025-10-07 13:00:00', '2025-10-07 13:00:00', 99, 1),
+(4, 'Dê chiên giòn ăn được, chấm với tương ớt khá hợp.', 5, 4, '2025-10-07 14:10:00', '2025-10-07 14:10:00', 63, 7),
+(4, 'Hạt điều béo, bùi, rang muối vừa miệng. Sẽ mua lại.', 7, 8, '2025-10-07 15:30:00', '2025-10-07 15:30:00', 88, 3),
+(3, 'Mắm tép hơi ngọt so với khẩu vị miền Bắc của mình.', 8, 1, '2025-10-07 17:00:00', '2025-10-07 17:00:00', 39, 8),
+-- Sửa lỗi: user_id=10 đã comment cho product_id=9. Đổi user_id thành 1.
+(5, 'Mật ong rất đặc và thơm, pha nước chanh uống rất ngon.', 9, 1, '2025-10-07 18:45:00', '2025-10-07 18:45:00', 85, 2),
+(5, 'Bánh pía trứng muối tan chảy ngon lắm shop ơi.', 1, 9, '2025-10-08 08:55:00', '2025-10-08 08:55:00', 92, 2),
+(5, 'Bò một nắng chấm muối kiến vàng là đặc sản, rất đáng thử.', 2, 3, '2025-10-08 10:00:00', '2025-10-08 10:00:00', 96, 1),
+-- Sửa lỗi: user_id=10 đã comment cho product_id=3. Đổi user_id thành 6.
+(3, 'Cà phê bị cháy khét, uống không thơm.', 3, 6, '2025-10-08 11:20:00', '2025-10-08 11:20:00', 22, 14),
+(5, 'Chả ốc ngon, giòn, thơm. Giao hàng nhanh chóng.', 4, 2, '2025-10-08 12:40:00', '2025-10-08 12:40:00', 97, 0),
+-- Sửa lỗi: user_id=10 đã comment cho product_id=5. Đổi user_id thành 1.
+(4, 'Dê chiên giòn, lớp vỏ mỏng, thịt bên trong mềm.', 5, 1, '2025-10-08 14:00:00', '2025-10-08 14:00:00', 71, 4),
+(1, 'Gân bò quá mặn, không ăn được. Shop nên xem lại công thức.', 6, 5, '2025-10-08 15:15:00', '2025-10-08 15:15:00', 5, 30),
+(5, 'Hạt điều chất lượng cao, đáng tiền.', 7, 4, '2025-10-08 16:30:00', '2025-10-08 16:30:00', 90, 1),
+(4, 'Mắm tép ăn với xôi trắng cũng rất ngon. Đậm đà.', 8, 10, '2025-10-08 17:50:00', '2025-10-08 17:50:00', 78, 4),
+(4, 'Mật ong có vẻ nguyên chất, vị ngọt thanh.', 9, 6, '2025-10-08 19:00:00', '2025-10-08 19:00:00', 65, 3),
+(4, 'Shop đóng gói bánh pía cẩn thận, không bị vỡ.', 1, 7, '2025-10-09 09:20:00', '2025-10-09 09:20:00', 68, 2),
+(4, 'Thịt bò một nắng ngon, nhưng giá hơi cao.', 2, 1, '2025-10-09 10:40:00', '2025-10-09 10:40:00', 72, 9),
+(5, 'Cà phê này đúng gu của mình, thơm và không bị chua.', 3, 9, '2025-10-09 11:50:00', '2025-10-09 11:50:00', 84, 2),
+(5, 'Chả ốc tuyệt vời, gia đình mình ai cũng thích.', 4, 10, '2025-10-09 13:10:00', '2025-10-09 13:10:00', 94, 1),
+(3, 'Dê chiên nhiều dầu mỡ quá, ăn hơi ngán.', 5, 8, '2025-10-09 14:30:00', '2025-10-09 14:30:00', 41, 10),
+(4, 'Gân bò ăn sần sật, nhưng cần giảm mặn đi một chút là hoàn hảo.', 6, 2, '2025-10-09 15:45:00', '2025-10-09 15:45:00', 53, 5),
+(5, 'Hạt điều không bị hôi dầu, ăn rất thơm.', 7, 10, '2025-10-09 17:00:00', '2025-10-09 17:00:00', 89, 0),
+(5, 'Mắm tép chưng thịt này là chân ái của những ngày lười nấu cơm.', 8, 7, '2025-10-09 18:15:00', '2025-10-09 18:15:00', 87, 2),
+(4, 'Mật ong tốt, nhưng giao hàng hơi lâu.', 9, 3, '2025-10-09 19:30:00', '2025-10-09 19:30:00', 59, 4),
+(5, 'Bánh pía ngon, nhân mềm, vỏ bánh nhiều lớp.', 1, 5, '2025-10-10 09:00:00', '2025-10-10 09:00:00', 81, 1),
+-- Sửa lỗi: user_id=10 đã comment cho product_id=2. Đổi user_id thành 4.
+(5, 'Bò một nắng tẩm ướp vừa miệng, nướng lên thơm lừng.', 2, 4, '2025-10-10 10:20:00', '2025-10-10 10:20:00', 91, 3),
+(4, 'Cà phê chất lượng, sẽ tiếp tục ủng hộ.', 3, 4, '2025-10-10 11:35:00', '2025-10-10 11:35:00', 74, 3),
+-- Sửa lỗi: user_id=1 đã comment cho product_id=4. Đổi user_id thành 3.
+(5, 'Chả ốc giòn dai, không bị bở. Rất đáng tiền.', 4, 3, '2025-10-10 12:50:00', '2025-10-10 12:50:00', 96, 1),
+(4, 'Dê chiên giòn rụm, giao đến vẫn còn nóng.', 5, 7, '2025-10-10 14:15:00', '2025-10-10 14:15:00', 70, 5),
+(5, 'Hạt điều rang muối ngon, không có hạt nào bị mốc hay hỏng.', 7, 9, '2025-10-10 15:40:00', '2025-10-10 15:40:00', 92, 0),
+(4, 'Mắm tép đóng hộp sạch sẽ, tiện lợi.', 8, 2, '2025-10-10 17:00:00', '2025-10-10 17:00:00', 80, 4),
+(5, 'Mật ong nguyên chất, pha nước ấm uống buổi sáng rất tốt cho sức khỏe.', 9, 8, '2025-10-10 18:25:00', '2025-10-10 18:25:00', 86, 1),
+-- Sửa lỗi: user_id=10 đã comment cho product_id=3. Đổi user_id thành 7.
+(4, 'Cà phê có hậu vị ngọt, khá đặc biệt.', 3, 7, '2025-10-10 19:40:00', '2025-10-10 19:40:00', 69, 6);
+
+-- CommentImages
+INSERT INTO CommentImages (comment_id, image_url, created_at, updated_at) VALUES
+-- Comment của user_id = 11 cho product_id = 1, 2, 3, 4 (giả sử comment_id là 1, 2, 3, 4)
+(1, 'https://fakeimg.pl/250x250/?text=Image1', '2025-10-11 09:00:00', '2025-10-11 09:00:00'),
+(1, 'https://fakeimg.pl/250x250/?text=Image2', '2025-10-11 09:05:00', '2025-10-11 09:05:00'),
+(2, 'https://fakeimg.pl/250x250/?text=Image3', '2025-10-11 10:00:00', '2025-10-11 10:00:00'),
+(2, 'https://fakeimg.pl/250x250/?text=Image4', '2025-10-11 10:05:00', '2025-10-11 10:05:00'),
+(2, 'https://fakeimg.pl/250x250/?text=Image5', '2025-10-11 10:10:00', '2025-10-11 10:10:00'),
+(3, 'https://fakeimg.pl/250x250/?text=Image6', '2025-10-11 11:00:00', '2025-10-11 11:00:00'),
+(4, 'https://fakeimg.pl/250x250/?text=Image7', '2025-10-11 12:00:00', '2025-10-11 12:00:00'),
+(4, 'https://fakeimg.pl/250x250/?text=Image8', '2025-10-11 12:05:00', '2025-10-11 12:05:00');
+
+-- Dữ liệu mẫu bảng AIFeedback
+INSERT INTO AIFeedback (product_id, voter_id, vote, created_at, updated_at) VALUES
+(5, 1, 1, '2025-11-04 20:00:00', '2025-11-04 20:00:00'),
+(12, 2, 0, '2025-11-04 20:01:00', '2025-11-04 20:01:00'),
+(7, NULL, 1, '2025-11-04 20:02:00', '2025-11-04 20:02:00'),
+(23, 3, 1, '2025-11-04 20:03:00', '2025-11-04 20:03:00'),
+(15, 4, 0, '2025-11-04 20:04:00', '2025-11-04 20:04:00'),
+(42, NULL, 0, '2025-11-04 20:05:00', '2025-11-04 20:05:00'),
+(33, 5, 1, '2025-11-04 20:06:00', '2025-11-04 20:06:00'),
+(56, 6, 1, '2025-11-04 20:07:00', '2025-11-04 20:07:00'),
+(11, NULL, 0, '2025-11-04 20:08:00', '2025-11-04 20:08:00'),
+(8, 7, 1, '2025-11-04 20:09:00', '2025-11-04 20:09:00'),
+(19, 8, 0, '2025-11-04 20:10:00', '2025-11-04 20:10:00'),
+(60, NULL, 1, '2025-11-04 20:11:00', '2025-11-04 20:11:00'),
+(27, 9, 1, '2025-11-04 20:12:00', '2025-11-04 20:12:00'),
+(34, 10, 0, '2025-11-04 20:13:00', '2025-11-04 20:13:00'),
+(48, NULL, 1, '2025-11-04 20:14:00', '2025-11-04 20:14:00'),
+(2, 11, 0, '2025-11-04 20:15:00', '2025-11-04 20:15:00'),
+(76, NULL, 1, '2025-11-04 20:16:00', '2025-11-04 20:16:00'),
+(89, 1, 0, '2025-11-04 20:17:00', '2025-11-04 20:17:00'),
+(95, NULL, 1, '2025-11-04 20:18:00', '2025-11-04 20:18:00'),
+(100, 2, 1, '2025-11-04 20:19:00', '2025-11-04 20:19:00');
+
+-- Dữ liệu mẫu cho bảng CommentReactions
+INSERT INTO 
+    CommentReactions (user_id, product_id, comment_id, reaction, created_at) 
+VALUES
+    -- Reactions cho comment có id=10 (product_id=10, của user_id=5)
+    (1, 10, 10, 'like', '2025-09-27 18:00:00'),
+    (2, 10, 10, 'like', '2025-09-27 18:05:00'),
+    (4, 10, 10, 'like', '2025-09-27 19:10:00'),
+    (8, 10, 10, 'dislike', '2025-09-28 09:00:00'),
+    -- Reactions cho comment có id=26 (product_id=10, của user_id=3)
+    (2, 10, 26, 'like', '2025-10-05 09:30:15'),
+    (5, 10, 26, 'like', '2025-10-05 10:00:00'),
+    (9, 10, 26, 'like', '2025-10-05 11:00:00'),
+    -- Reactions cho comment có id=27 (product_id=10, của user_id=7) - comment này chê dính răng
+    (1, 10, 27, 'like', '2025-10-05 11:30:00'),  -- User 1 đồng ý là 'ăn cũng được'
+    (6, 10, 27, 'dislike', '2025-10-05 12:00:00'), -- User 6 không thích vì dính răng
+    (8, 10, 27, 'dislike', '2025-10-05 12:05:20'),
+    -- Reactions cho comment có id=28 (product_id=10, của user_id=10) - comment rất tích cực
+    (1, 10, 28, 'like', '2025-10-05 14:05:00'),
+    (2, 10, 28, 'like', '2025-10-05 14:10:00'),
+    (3, 10, 28, 'like', '2025-10-05 14:12:00'),
+    (4, 10, 28, 'like', '2025-10-05 15:00:00'),
+    (6, 10, 28, 'like', '2025-10-05 15:30:00'),
+    (7, 10, 28, 'like', '2025-10-05 16:00:00'),
+    -- Reactions cho comment có id=29 (product_id=10, của user_id=1) - comment chê ngọt
+    (4, 10, 29, 'dislike', '2025-10-05 17:00:00'), -- User 4 cũng thấy ngọt
+    (5, 10, 29, 'dislike', '2025-10-05 17:30:00'),
+    (7, 10, 29, 'like', '2025-10-05 18:00:00'),   -- User 7 lại thích vị ngọt này
+    -- Reactions cho comment có id=30 (product_id=10, của user_id=9)
+    (3, 10, 30, 'like', '2025-10-05 18:30:00'),
+    (5, 10, 30, 'like', '2025-10-05 18:35:10'),
+    (10, 10, 30, 'like', '2025-10-05 19:00:00'),
+    -- Thêm một vài reactions cho các comment của sản phẩm khác để dữ liệu đa dạng hơn
+    -- Reactions cho comment có id=1 (product_id=1) - comment rất tích cực
+    (3, 1, 1, 'like', '2025-09-20 11:00:00'),
+    (6, 1, 1, 'like', '2025-09-20 11:30:00'),
+    (7, 1, 1, 'like', '2025-09-20 12:00:00'),
+    (9, 1, 1, 'like', '2025-09-20 14:00:00'),
+    -- Reactions cho comment có id=6 (product_id=6) - comment chê mặn
+    (2, 6, 6, 'dislike', '2025-09-25 11:20:00'), -- User 2 không đồng tình
+    (4, 6, 6, 'like', '2025-09-25 11:25:00'),   -- User 4 lại thấy ngon
+    (5, 6, 6, 'dislike', '2025-09-25 12:00:00'),
+    -- Reactions cho comment có id=51 (product_id=2) - comment chê dai và mặn
+    (1, 2, 51, 'dislike', '2025-10-07 11:00:00'),
+    (4, 2, 51, 'dislike', '2025-10-07 11:05:00'),
+    (6, 2, 51, 'dislike', '2025-10-07 11:15:00'),
+    (8, 2, 51, 'like', '2025-10-07 12:00:00'); -- User 8 lại không thấy vậy
+
+-- Dữ liệu mẫu cho Payments
+INSERT INTO Payments (method, status, icon_url) VALUES
+('COD', 1, 'https://cdn-icons-png.flaticon.com/512/3796/3796142.png'),
+('CreditCard', 1, 'https://cdn-icons-png.flaticon.com/512/6963/6963703.png'),
+('Momo', 0, 'https://img.mservice.com.vn/app/img/portal_documents/mini-app_design-guideline_branding-guide-2-2.png'),
+('VNPay', 1, 'https://i.pinimg.com/736x/f9/5e/a2/f95ea23c297af3170d9d75173bed9d7e.jpg'),
+('ZaloPay', 1, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwPynD27LbXlPsbofv1AX-5ZXDn_XMGo-1TA&s'),
+('Paypal', 0, 'https://png.pngtree.com/element_our/png/20180723/paypal-logo-icon-png_44635.jpg');
+
+-- Dữ liệu mẫu cho Shipments
+INSERT INTO Shipments (name, description, base_fee, icon_url, status) VALUES
+('GHN', 'Giao Hàng Nhanh, giao trong 1-2 ngày nội thành', 20000, 'https://cdn.haitrieu.com/wp-content/uploads/2022/05/Logo-GHN-Slogan-En.png', 1),
+('GHTK', 'Giao Hàng Tiết Kiệm, chi phí thấp, giao trong 2-3 ngày', 15000, 'https://cdn.haitrieu.com/wp-content/uploads/2022/05/Logo-GHTK-V.png', 1),
+('Viettel Post', 'Viettel Post, giao hàng toàn quốc', 25000, 'https://cdn.haitrieu.com/wp-content/uploads/2022/05/Logo-Viettel-Post-Transparent.png', 1),
+('J&T Express', 'Giao hàng nhanh, phù hợp nội thành và ngoại thành', 22000, 'https://i.pinimg.com/474x/29/4d/14/294d1488cebbfd40db530843c96dc68e.jpg', 1);
+
+-- Dữ liệu mẫu cho Transactions
+INSERT INTO Transactions 
+(status, deli_name, deli_phone, deli_email, deli_address, deli_city, deli_district, deli_ward, message, tracking_number, shipping_fee, shipment_status, amount, shipped_at, delivered_at, user_id, payment_id, shipment_id) VALUES
+('pending', 'Nguyen Van A', '0901234567', 'a.nguyen@example.com', '123 Le Loi', 'Ho Chi Minh', 'Quan 1', 'Phuong Ben Nghe', 'Giao giờ hành chính', 'TRK00001', 20000, 'pending', 33020000, NULL, NULL, 1, 1, 1),
+('confirmed', 'Tran Thi B', '0902345678', 'b.tran@example.com', '456 Nguyen Trai', 'Ho Chi Minh', 'Quan 3', 'Phuong 5', 'Để hàng ở bảo vệ', 'TRK00002', 15000, 'shipped', 29515000, '2025-09-22 10:00:00', NULL, 2, 2, 2),
+('completed', 'Le Van C', '0903456789', 'c.le@example.com', '789 Tran Hung Dao', 'Ho Chi Minh', 'Quan 5', 'Phuong 10', 'Giao nhanh nếu có thể', 'TRK00003', 22000, 'delivered', 21522000, '2025-09-23 09:00:00', '2025-09-24 14:00:00', 3, 3, 3),
+('canceled', 'Pham Thi D', '0904567890', NULL, '1010 Cach Mang Thang 8', 'Ho Chi Minh', 'Quan Binh Thanh', 'Phuong 12', 'Không cần gọi điện', 'TRK00004', 25000, 'returned', 5500000, '2025-09-24 11:00:00', NULL, 4, 4, 4),
+('completed', 'Hoang Van E', '0905678901', 'e.hoang@example.com', '2020 Dien Bien Phu', 'Ho Chi Minh', 'Quan Tan Binh', 'Phuong 15', 'Giao ngoài giờ hành chính', 'TRK00005', 30000, 'delivered', 28030000, '2025-09-25 13:00:00', '2025-09-26 16:00:00', 5, 5, 1),
+('confirmed', 'Nguyen Van A', '0901234567', NULL, '123 Le Loi', 'Ho Chi Minh', 'Quan 1', 'Phuong Ben Nghe', 'Đóng gói cẩn thận', 'TRK00006', 15000, 'shipped', 11015000, '2025-09-26 08:00:00', NULL, 1, 2, 2),
+('pending', 'Tran Thi B', '0902345678', 'b.tran@example.com', '456 Nguyen Trai', 'Ho Chi Minh', 'Quan 3', 'Phuong 5', 'Giao tại cửa', 'TRK00007', 20000, 'pending', 1202000, NULL, NULL, 2, 1, 3),
+('completed', 'Le Van C', '0903456789', NULL, '789 Tran Hung Dao', 'Ho Chi Minh', 'Quan 5', 'Phuong 10', 'Nhận hàng tại văn phòng', 'TRK00008', 25000, 'delivered', 64525000, '2025-09-22 14:00:00', '2025-09-23 17:00:00', 3, 3, 4),
+('confirmed', 'Pham Thi D', '0904567890', 'd.pham@example.com', '1010 Cach Mang Thang 8', 'Ho Chi Minh', 'Quan Binh Thanh', 'Phuong 12', 'Giao vào buổi sáng', 'TRK00009', 22000, 'shipped', 4202200, '2025-09-25 09:30:00', NULL, 4, 2, 1),
+('completed', 'Hoang Van E', '0905678901', 'e.hoang@example.com', '2020 Dien Bien Phu', 'Ho Chi Minh', 'Quan Tan Binh', 'Phuong 15', 'Hàng fragile, cẩn thận', 'TRK00010', 30000, 'delivered', 7503000, '2025-09-24 13:00:00', '2025-09-25 15:00:00', 5, 5, 2);
+
+-- Dữ liệu mẫu cho OrderItems
+INSERT INTO OrderItems (qty_total, amount_total, transaction_id, product_id) VALUES
+(1, 33000000, 1, 1),
+(2, 29500000, 2, 2),
+(1, 21500000, 3, 3),
+(1, 5500000, 4, 6),
+(1, 28000000, 5, 7),
+(3, 11000000, 6, 5),
+(2, 1200000, 7, 9),
+(1, 64500000, 8, 4),
+(1, 4200000, 9, 8),
+(2, 7500000, 10, 10);

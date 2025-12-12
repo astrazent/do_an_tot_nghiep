@@ -1,0 +1,91 @@
+import { PaymentsModel } from '~/models/paymentModel.js'
+import { StatusCodes } from 'http-status-codes'
+import ApiError from '~/utils/ApiError'
+
+const addPaymentService = async (method, status) => {
+    const existingPayment = await PaymentsModel.getPaymentsByMethod(method)
+    if (existingPayment.length != 0) {
+        throw new ApiError(
+            StatusCodes.CONFLICT,
+            'Phương thức thanh toán đã tồn tại'
+        )
+    }
+    const newPayment = await PaymentsModel.createPayment({
+        method,
+        status,
+    })
+    return newPayment
+}
+
+const getPaymentByIdService = async paymentId => {
+    const payment = await PaymentsModel.getPaymentById(paymentId)
+    if (!payment) {
+        throw new ApiError(
+            StatusCodes.NOT_FOUND,
+            'Không tìm thấy phương thức thanh toán'
+        )
+    }
+    return payment
+}
+
+const getPaymentByMethodService = async paymentMethod => {
+    const payment = await PaymentsModel.getPaymentsByMethod(paymentMethod)
+    if (!payment) {
+        throw new ApiError(
+            StatusCodes.NOT_FOUND,
+            'Không tìm thấy phương thức thanh toán'
+        )
+    }
+    return payment
+}
+
+const getAllPaymentsService = async () => {
+    const payments = await PaymentsModel.getAllPayments()
+    return payments
+}
+
+const getActivePaymentService = async () => {
+    const activePayment = await PaymentsModel.getActivePayments()
+    if (!activePayment) {
+        throw new ApiError(
+            StatusCodes.NOT_FOUND,
+            'Không tìm thấy phương thức thanh toán nào đang hoạt động'
+        )
+    }
+    return activePayment
+}
+
+const updatePaymentService = async (id, method, status) => {
+    const payment = await PaymentsModel.getPaymentById(id)
+    if (!payment) {
+        throw new ApiError(
+            StatusCodes.NOT_FOUND,
+            'Không tìm thấy phương thức thanh toán'
+        )
+    }
+    await PaymentsModel.updatePayment(id, { method, status })
+    const updatedPayment = await PaymentsModel.getPaymentById(id)
+    return updatedPayment
+}
+
+const deletePaymentService = async paymentId => {
+    const existingPayment = await PaymentsModel.getPaymentById(paymentId)
+    if (!existingPayment) {
+        throw new ApiError(
+            StatusCodes.NOT_FOUND,
+            'Không tìm thấy phương thức thanh toán'
+        )
+    }
+    await PaymentsModel.deletePayment(paymentId)
+    return { message: 'Xóa phương thức thanh toán thành công' }
+}
+
+export const paymentService = {
+    addPaymentService,
+    getAllPaymentsService,
+    updatePaymentService,
+    getPaymentByIdService,
+    getPaymentByMethodService,
+    deletePaymentService,
+    getActivePaymentService,
+}
