@@ -10,7 +10,7 @@ from redis.commands.search.field import TextField, NumericField, TagField
 from redis.commands.search.index_definition import IndexDefinition, IndexType
 
 ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-BASE_URL = settings.BASE_URL
+BASE_URL = settings.BACKEND_URL
 DOCSTORE_DIR = os.path.join(ROOT_DIR, "docstore", "purchase-info")
 os.makedirs(DOCSTORE_DIR, exist_ok=True)
 

@@ -383,11 +383,11 @@ const FloatingContactBar = () => {
                                     <p className="text-gray-500 text-sm mb-3 line-clamp-1 h-5">
                                         {lastMsg
                                             ? (lastMsg.sender === 'user'
-                                                  ? 'Bạn: '
-                                                  : 'Bot: ') +
-                                              parseMessageContent(
-                                                  lastMsg.content
-                                              )
+                                                ? 'Bạn: '
+                                                : 'Bot: ') +
+                                            parseMessageContent(
+                                                lastMsg.content
+                                            )
                                             : 'Chưa có tin nhắn'}
                                     </p>
                                     <div className="flex items-center gap-2 text-xs">
