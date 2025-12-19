@@ -85,7 +85,8 @@ services:
         volumes:
             - ./web/fe:/app
             - /app/node_modules
-
+        depends_on:
+            - backend
     chatbot_worker_1:
         build:
             context: ./worker

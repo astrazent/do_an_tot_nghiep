@@ -1,6 +1,4 @@
 #!/bin/bash
-export CHROMA_TELEMETRY=False
-export LANGCHAIN_TELEMETRY=False
 
 while true; do
     uvicorn app.main:app --host 0.0.0.0 --port 8000 &
