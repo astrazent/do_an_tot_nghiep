@@ -1,5 +1,6 @@
 import os
 import time
+import json
 import redis
 from datetime import datetime, timezone, timedelta
 from sqlalchemy.orm import Session
@@ -11,18 +12,10 @@ GROUP = "writeback_group"
 CONSUMER = f"worker-{os.getpid()}"
 STREAM = "chat:writeback"
 
-vn_tz = timezone(timedelta(hours=7))  # Giờ Việt Nam UTC+7
+vn_tz = timezone(timedelta(hours=7))
 
 def writeback_worker():
     print(f"[{datetime.now(vn_tz).isoformat()}] writeback_worker started", flush=True)
-    try:
-        redis_client.xgroup_create(STREAM, GROUP, mkstream=True, id="$")
-        print(f"XGroup '{GROUP}' created")
-    except redis.exceptions.ResponseError as e:
-        if "BUSYGROUP" in str(e):
-            print(f"XGroup '{GROUP}' already exists")
-        else:
-            raise
 
     last_log = time.time()
 
@@ -42,28 +35,30 @@ def writeback_worker():
                     last_log = time.time()
                 continue
 
-            for stream_name, events in msgs:
+            for _, events in msgs:
                 db: Session = SessionLocal()
                 try:
                     for msg_id, data in events:
                         conversation_id = int(data["conversation_id"])
+                        messages = json.loads(data["messages"])
 
-                        created_at = datetime.fromisoformat(data["created_at"])
-                        # Nếu dữ liệu từ Redis chưa có timezone, mặc định UTC
-                        if created_at.tzinfo is None:
-                            created_at = created_at.replace(tzinfo=timezone.utc)
-                        created_at = created_at.astimezone(vn_tz)
+                        for m in messages:
+                            created_at = datetime.fromisoformat(m["created_at"])
+                            if created_at.tzinfo is None:
+                                created_at = created_at.replace(tzinfo=timezone.utc)
+                            created_at = created_at.astimezone(vn_tz)
 
-                        message = models.Message(
-                            conversation_id=conversation_id,
-                            sender=data["sender"],
-                            content=data["content"],
-                            created_at=created_at
-                        )
-                        db.add(message)
+                            db.add(
+                                models.Message(
+                                    conversation_id=conversation_id,
+                                    sender=m["sender"],
+                                    content=m["content"],
+                                    created_at=created_at
+                                )
+                            )
 
                         redis_client.xack(STREAM, GROUP, msg_id)
-                        print(f"[{datetime.now(vn_tz).isoformat()}] Saved message {msg_id} from conversation {conversation_id}")
+                        print(f"[{datetime.now(vn_tz).isoformat()}] Saved conversation {conversation_id}")
 
                     db.commit()
                 except Exception as e:

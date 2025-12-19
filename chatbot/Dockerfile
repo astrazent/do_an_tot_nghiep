@@ -8,9 +8,11 @@ WORKDIR /app
 COPY requirements.txt .
 
 # Cài đặt dependencies
-# Không dùng --no-cache-dir để cache được lưu vào volume
 RUN pip install --upgrade pip \
-    && pip install -r requirements.txt
+    && pip install --no-cache-dir \
+    --extra-index-url https://download.pytorch.org/whl/cpu \
+    torch==2.9.1 \
+    -r requirements.txt
 
 # Copy toàn bộ source code vào container
 COPY . .

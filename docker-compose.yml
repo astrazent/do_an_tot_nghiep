@@ -1,6 +1,6 @@
 services:
-    maridb_web:
-        image: mariadb:latest
+    mariadb_web:
+        image: mariadb:10.11
         container_name: web_database
         restart: always
         environment:
@@ -19,7 +19,7 @@ services:
             start_period: 10s
 
     mariadb_chatbot:
-        image: mariadb:latest
+        image: mariadb:10.11
         container_name: chatbot_database
         restart: always
         environment:
@@ -69,8 +69,15 @@ services:
         volumes:
             - ./web/be:/app
             - /app/node_modules
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://localhost:2082/v1/ping"]
+            interval: 10s       # Khoảng thời gian giữa các lần kiểm tra
+            timeout: 10s        # Thời gian chờ mỗi lần kiểm tra
+            retries: 10         # Số lần thử lại nếu thất bại
+            start_period: 20s   # Thời gian đợi trước khi bắt đầu kiểm tra
         depends_on:
-            - maridb_web
+            mariadb_web:
+                condition: service_healthy
 
     frontend:
         build:
@@ -85,6 +92,9 @@ services:
         volumes:
             - ./web/fe:/app
             - /app/node_modules
+        depends_on:
+            backend:
+                condition: service_healthy
 
     chatbot_worker_1:
         build:
@@ -97,8 +107,10 @@ services:
         volumes:
             - ./worker:/app
         depends_on:
-            - redis
-            - mariadb_chatbot
+            redis:
+                condition: service_healthy
+            mariadb_chatbot:
+                condition: service_healthy
 
     chatbot_worker_2:
         build:
@@ -111,8 +123,10 @@ services:
         volumes:
             - ./worker:/app
         depends_on:
-            - redis
-            - mariadb_chatbot
+            redis:
+                condition: service_healthy
+            mariadb_chatbot:
+                condition: service_healthy
 
     chatbot:
         build:
@@ -126,12 +140,11 @@ services:
             - "8000:8000"
         volumes:
             - ./chatbot:/app
-            - pip_cache:/root/.cache/pip
         depends_on:
-            - mariadb_chatbot
+            mariadb_chatbot:
+                condition: service_healthy
 
 volumes:
     web_database_data:
     mariadb_chatbot_data:
-    pip_cache:
     redis_data:
