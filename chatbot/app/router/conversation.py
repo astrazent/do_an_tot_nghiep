@@ -214,19 +214,24 @@ def add_message(
     if len(history) > 10:
         JSON.set(redis_key, Path(".messages"), history[-10:])
 
-    redis_client.xadd(STREAM, {
-        "conversation_id": conversation_id,
-        "sender": "user",
-        "content": content,
-        "created_at": user_msg["created_at"]
-    })
-
-    redis_client.xadd(STREAM, {
-        "conversation_id": conversation_id,
-        "sender": "bot",
-        "content": bot_reply,
-        "created_at": bot_msg["created_at"]
-    })
+    redis_client.xadd(
+        STREAM,
+        {
+            "conversation_id": conversation_id,
+            "messages": json.dumps([
+                {
+                    "sender": "user",
+                    "content": content,
+                    "created_at": user_msg["created_at"]
+                },
+                {
+                    "sender": "bot",
+                    "content": bot_reply,
+                    "created_at": bot_msg["created_at"]
+                }
+            ])
+        }
+    )
 
     return bot_msg
 
