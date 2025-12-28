@@ -8,6 +8,7 @@ import { processPayment } from '~/services/user/paymentService'
 import { useAllActivePayments } from '~/hooks/user/usePayment'
 import { useAlert } from '~/contexts/AlertContext'
 import { useDispatch } from 'react-redux'
+import ReactGA from 'react-ga4'
 
 const CheckoutPopup = ({
     total,
@@ -38,6 +39,7 @@ const CheckoutPopup = ({
     const [districts, setDistricts] = useState([])
     const [wards, setWards] = useState([])
     const [shipments, setShipments] = useState([])
+    const [hasBeginCheckout, setHasBeginCheckout] = useState(false)
 
     useEffect(() => {
         if (paymentsData) {
@@ -249,6 +251,32 @@ const CheckoutPopup = ({
 
     const subtotal = total
     const finalTotal = subtotal + shippingFee
+
+    useEffect(() => {
+        if (hasBeginCheckout) return
+        if (!cartItems || cartItems.length === 0) return
+
+        const ga4Items = cartItems.map(item => ({
+            item_id: String(item.productId),
+            item_name: item.name,
+            price: Number(item.price),
+            quantity: Number(item.quantity),
+        }))
+
+        const totalValue = cartItems.reduce(
+            (sum, item) => sum + Number(item.price) * Number(item.quantity),
+            0
+        )
+
+        ReactGA.event('begin_checkout', {
+            currency: 'VND',
+            value: totalValue,
+            items: ga4Items,
+            debug_mode: true,
+        })
+
+        setHasBeginCheckout(true)
+    }, [cartItems, hasBeginCheckout])
 
     return (
         <BasePopup title="Thông tin thanh toán" onClose={onClose}>
