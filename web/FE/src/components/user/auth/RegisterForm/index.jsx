@@ -8,6 +8,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { HiOutlineUser, HiOutlineMail, HiOutlinePhone } from 'react-icons/hi'
 import { RiLockPasswordLine } from 'react-icons/ri'
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai'
+import ReactGA from 'react-ga4'
 
 const RegisterForm = () => {
     const { showAlert } = useAlert()
@@ -22,6 +23,10 @@ const RegisterForm = () => {
 
     const { mutate: register, isPending } = useRegisterUser({
         onSuccess: data => {
+            ReactGA.event('sign_up', {
+                method: 'username_password',
+                debug_mode:true
+            })
             showAlert(data.message, { type: 'success', duration: 2000 })
             navigate('/login')
         },

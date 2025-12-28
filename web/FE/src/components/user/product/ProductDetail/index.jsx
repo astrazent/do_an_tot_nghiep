@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
     FaStar,
     FaCheckCircle,
@@ -12,6 +12,7 @@ import { useAddCartItem } from '~/hooks/user/useCartItem'
 import { useCurrentUser } from '~/hooks/user/useUser'
 import { addCart } from '~/Redux/reducers/cartItemReducer'
 import { useAlert } from '~/contexts/AlertContext'
+import ReactGA from 'react-ga4'
 
 const ProductDetail = ({ slug }) => {
     const {
@@ -26,7 +27,24 @@ const ProductDetail = ({ slug }) => {
     const { showAlert } = useAlert()
 
     const addCartItemMutation = useAddCartItem(user?.user_id)
+    useEffect(() => {
+        if (!product || !product.id) return
 
+        ReactGA.event('view_item', {
+            currency: 'VND',
+            value: Number(product.price),
+            items: [
+                {
+                    item_id: String(product.id),
+                    item_name: product.name,
+                    price: Number(product.price),
+                    quantity: 1,
+                    item_category: product.category_name || 'Sản phẩm',
+                },
+            ],
+            debug_mode: true,
+        })
+    }, [product])
     const handleAddToCart = () => {
         if (!product || !product.id) return
 
@@ -44,6 +62,19 @@ const ProductDetail = ({ slug }) => {
                                 type: 'success',
                             }
                         )
+                        ReactGA.gtag('event', 'add_to_cart', {
+                            currency: 'VND',
+                            value: product.price,
+                            items: [
+                                {
+                                    item_id: String(product.id),
+                                    item_name: product.name,
+                                    price: Number(product.price),
+                                    quantity: 1,
+                                },
+                            ],
+                            debug_mode: true,
+                        })
                     },
                     onError: error => {
                         showAlert(
@@ -73,6 +104,20 @@ const ProductDetail = ({ slug }) => {
                 showAlert('Thêm vào giỏ hàng thành công!', {
                     type: 'success',
                 })
+                ReactGA.gtag('event', 'add_to_cart', {
+                    currency: 'VND',
+                    value: product.price,
+                    items: [
+                        {
+                            item_id: String(product.id),
+                            item_name: product.name,
+                            price: Number(product.price),
+                            quantity: 1,
+                        },
+                    ],
+                    debug_mode: true,
+                })
+                console.log(Number(product.price))
             } catch (e) {
                 showAlert('Lỗi khi thêm sản phẩm vào giỏ hàng.', {
                     type: 'error',
@@ -118,7 +163,6 @@ const ProductDetail = ({ slug }) => {
         rate_count = 0,
         stock_qty = 0,
     } = product
-
     const averageRating =
         rate_count > 0 ? Math.round(rate_point_total / rate_count) : 0
     const isAvailable = stock_qty > 0

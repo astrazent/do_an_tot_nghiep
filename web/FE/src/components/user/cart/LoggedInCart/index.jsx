@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { formatCurrency } from '~/utils/formatCurrency'
 
@@ -16,6 +16,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAlert } from '~/contexts/AlertContext'
 import { FiShoppingCart } from 'react-icons/fi'
 import './cart.scss'
+import ReactGA from 'react-ga4'
 
 const LoggedInCart = () => {
     const { user, isAuthenticated, loading: userLoading } = useCurrentUser()
@@ -60,6 +61,22 @@ const LoggedInCart = () => {
     const { mutate: createTransaction, isLoading: creatingTransaction } =
         useCreateTransaction({
             onSuccess: async data => {
+                const transaction = data.data
+                const ga4Items = transaction.items.map(item => ({
+                    item_id: String(item.product_id),
+                    item_name: item.product_name,
+                    price: Number(item.amount_total / item.qty_total),
+                    quantity: Number(item.qty_total),
+                }))
+
+                ReactGA.event('purchase', {
+                    transaction_id: transaction.tracking_number,
+                    value: Number(transaction.amount),
+                    currency: 'VND',
+                    shipping: Number(transaction.shipping_fee || 0),
+                    items: ga4Items,
+                    debug_mode: true,
+                })
                 showAlert('Đặt hàng thành công! Cảm ơn bạn đã mua sắm.')
                 try {
                     await deleteCartByUser(userId)
@@ -104,6 +121,23 @@ const LoggedInCart = () => {
     }
 
     const handleRemoveItem = cartItemId => {
+        const item = items.find(i => i.id === cartItemId)
+        if (!item) return
+
+        ReactGA.event('remove_from_cart', {
+            currency: 'VND',
+            value: item.price * item.quantity,
+            items: [
+                {
+                    item_id: String(item.productId),
+                    item_name: item.name,
+                    price: Number(item.price),
+                    quantity: Number(item.quantity),
+                },
+            ],
+            debug_mode: true,
+        })
+
         deleteItem(cartItemId)
     }
 
@@ -111,6 +145,26 @@ const LoggedInCart = () => {
         () => items.reduce((acc, item) => acc + item.price * item.quantity, 0),
         [items]
     )
+
+    useEffect(() => {
+        if (cartLoading) return
+        if (!items || items.length === 0) return
+
+        const ga4Items = items.map(item => ({
+            item_id: String(item.productId),
+            item_name: item.name,
+            price: Number(item.price),
+            quantity: Number(item.quantity),
+        }))
+
+        ReactGA.event('view_cart', {
+            currency: 'VND',
+            value: subtotal,
+            items: ga4Items,
+            debug_mode: true,
+        })
+    }, [cartLoading])
+
     const tax = useMemo(
         () => Math.ceil((subtotal * 0.1) / 1000) * 1000,
         [subtotal]

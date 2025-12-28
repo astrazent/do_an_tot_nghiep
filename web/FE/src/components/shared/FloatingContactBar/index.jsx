@@ -14,7 +14,7 @@ import {
 import MarkdownRenderer from '../MarkdownRender'
 import { IoMdSend } from 'react-icons/io'
 import { RiRobot2Line } from 'react-icons/ri'
-
+import ReactGA from 'react-ga4'
 import logo from '~/assets/icon/logo/brand-logo.png'
 import ScrollToTop from '../ScrollToTop'
 import ConfirmModal from '../ConfirmModal'
@@ -153,6 +153,13 @@ const FloatingContactBar = () => {
         setView('chat')
         setShowOptions(false)
         setIsCreating(false)
+        // GA4 event
+        ReactGA.event('select_content', {
+            content_type: 'chatbot',
+            content_id: conv.id, // id cuộc hội thoại
+            content_name: conv.title || `Hội thoại #${conv.id}`,
+            debug_mode: true,
+        })
     }
 
     const handleStartCreate = () => {
@@ -383,11 +390,11 @@ const FloatingContactBar = () => {
                                     <p className="text-gray-500 text-sm mb-3 line-clamp-1 h-5">
                                         {lastMsg
                                             ? (lastMsg.sender === 'user'
-                                                ? 'Bạn: '
-                                                : 'Bot: ') +
-                                            parseMessageContent(
-                                                lastMsg.content
-                                            )
+                                                  ? 'Bạn: '
+                                                  : 'Bot: ') +
+                                              parseMessageContent(
+                                                  lastMsg.content
+                                              )
                                             : 'Chưa có tin nhắn'}
                                     </p>
                                     <div className="flex items-center gap-2 text-xs">
@@ -622,7 +629,18 @@ const FloatingContactBar = () => {
 
             <div className="fixed bottom-25 right-6 flex flex-col-reverse items-center gap-3 z-50">
                 <button
-                    onClick={() => setIsChatOpen(!isChatOpen)}
+                    onClick={() => {
+                        setIsChatOpen(!isChatOpen)
+                        if (!isChatOpen) {
+                            // Chỉ gửi khi mở
+                            ReactGA.event('select_content', {
+                                content_type: 'chatbot',
+                                content_id: 'floating_contact_bar',
+                                content_name: 'Chatbot BSV',
+                                debug_mode: true,
+                            })
+                        }
+                    }}
                     className={`
                         !p-0 !m-0 !appearance-none !border-0 !outline-none
                         w-10 h-10 !rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-105
