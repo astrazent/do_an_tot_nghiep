@@ -82,6 +82,17 @@ const ProductsModel = {
         return rows.length ? rows[0] : null
     },
 
+    async getProductsByIds(ids) {
+        if (!Array.isArray(ids) || !ids.length) return []
+        const conn = getConnection()
+        const placeholders = ids.map(() => '?').join(',')
+        const [rows] = await conn.execute(
+            `SELECT * FROM ${PRODUCTS_TABLE} WHERE id IN (${placeholders})`,
+            ids
+        )
+        return rows
+    },
+
     async updateProduct(id, data) {
         const schema = PRODUCTS_SCHEMA.fork(
             Object.keys(PRODUCTS_SCHEMA.describe().keys),
@@ -350,30 +361,42 @@ const ProductsModel = {
     },
 
     async getSearchByCategory(categorySlug, keyword, limit = 10, offset = 0) {
-        if (!categorySlug) return []
-
         const conn = getConnection()
 
-        const [catRows] = await conn.execute(
-            `SELECT id FROM Categories WHERE slug = ?`,
-            [categorySlug]
-        )
-
-        if (catRows.length === 0) return []
-
-        const categoryId = catRows[0].id
-
-        const [rows] = await conn.execute(
-            `SELECT *
+        let query = `
+        SELECT *
         FROM Products
-        WHERE category_id = ?
-        AND name LIKE CONCAT('%', ?, '%')
+        WHERE name LIKE CONCAT('%', ?, '%')
         COLLATE utf8mb4_unicode_ci
         ORDER BY rate_point_total DESC
-        LIMIT ? OFFSET ?`,
-            [categoryId, keyword, Number(limit), Number(offset)]
-        )
+        LIMIT ? OFFSET ?
+    `
+        let params = [keyword, Number(limit), Number(offset)]
 
+        if (categorySlug && categorySlug !== 'all') {
+            // Lấy category_id
+            const [catRows] = await conn.execute(
+                `SELECT id FROM Categories WHERE slug = ?`,
+                [categorySlug]
+            )
+
+            if (catRows.length === 0) return []
+            const categoryId = catRows[0].id
+
+            // Thêm điều kiện category_id
+            query = `
+            SELECT *
+            FROM Products
+            WHERE category_id = ?
+            AND name LIKE CONCAT('%', ?, '%')
+            COLLATE utf8mb4_unicode_ci
+            ORDER BY rate_point_total DESC
+            LIMIT ? OFFSET ?
+        `
+            params = [categoryId, keyword, Number(limit), Number(offset)]
+        }
+
+        const [rows] = await conn.execute(query, params)
         return rows
     },
 
