@@ -14,6 +14,7 @@ import {
     HiOutlineUsers,
     HiOutlineNewspaper,
     HiOutlineDocumentAdd,
+    HiTag,
     HiX,
 } from 'react-icons/hi'
 import { MdLocalOffer, MdAdsClick, MdArticle } from 'react-icons/md'
@@ -97,6 +98,7 @@ const mainNavLinks = [
         ],
     },
     { name: 'Tin nhắn', icon: <HiOutlineChatAlt2 />, path: '/admin/messages' },
+    { name: 'Giảm giá', icon: <HiTag />, path: '/admin/discount' },
 ]
 
 const NavItem = ({ item, onClick }) => {

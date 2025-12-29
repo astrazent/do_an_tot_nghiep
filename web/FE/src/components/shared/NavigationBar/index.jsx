@@ -55,7 +55,7 @@ function NavigationBar() {
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to="/gioi-thieu" className={getNavLinkClass}>
+                        <NavLink to="/about-us" className={getNavLinkClass}>
                             GIỚI THIỆU
                         </NavLink>
                     </li>
@@ -79,7 +79,7 @@ function NavigationBar() {
 
                         <div
                             className={`
-                                absolute top-full left-0 w-60 z-10
+                                absolute top-full left-0 w-60 z-50
                                 origin-top rounded-md bg-white shadow-lg border border-gray-200/75
                                 transition-all duration-300 ease-in-out
                                 ${

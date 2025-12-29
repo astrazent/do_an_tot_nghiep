@@ -15,7 +15,7 @@ import AdminBlogManagement from '~/pages/admin/AdminBlogManagement'
 import AdminBlogCreateNew from '~/pages/admin/AdminBlogCreateNew'
 import AdminMessage from '~/pages/admin/AdminMessage'
 import AdminLayout from '~/layouts/admin/AdminLayout'
-
+import DiscountManagement from '~/pages/admin/DiscountManagement'
 export const adminRoutes = [
     {
         path: '/admin/login',
@@ -41,6 +41,7 @@ export const adminRoutes = [
                     { path: 'blog/management', element: <AdminBlogManagement /> },
                     { path: 'blog/create-new', element: <AdminBlogCreateNew /> },
                     { path: 'messages', element: <AdminMessage /> },
+                    { path: 'discount', element: <DiscountManagement /> },
                 ],
             },
         ],

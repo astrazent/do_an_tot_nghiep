@@ -188,7 +188,7 @@ const GuestCart = () => {
                     item_id: String(item.product_id),
                     item_name: item.product_name,
                     price: Number(item.amount_total / item.qty_total),
-                    quantity: Number(item.amount_total),
+                    quantity: Number(item.qty_total),
                 }))
                 ReactGA.event('purchase', {
                     transaction_id: transaction.tracking_number,
