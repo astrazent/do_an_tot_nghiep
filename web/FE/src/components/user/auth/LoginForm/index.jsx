@@ -13,6 +13,7 @@ import { RiLockPasswordLine } from 'react-icons/ri'
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai'
 import { useDispatch } from 'react-redux'
 import { persistor } from '~/Redux/store'
+import ReactGA from 'react-ga4'
 
 const LoginForm = () => {
     const { showAlert } = useAlert()
@@ -28,6 +29,10 @@ const LoginForm = () => {
             dispatch({ type: 'auth/logout' })
             await persistor.purge()
             dispatch(updateUser({ ...data.data }))
+            ReactGA.event('login', {
+                method: 'username_password',
+                debug_mode: true,
+            })
             showAlert(data.message, { type: 'success', duration: 2000 })
             if (data.data.role_id === 1) {
                 navigate('/admin')
@@ -46,6 +51,10 @@ const LoginForm = () => {
     const { mutate: loginGoogle, isPending: isGooglePending } = useLoginGoogle({
         onSuccess: data => {
             dispatch(updateUser({ ...data.data }))
+            ReactGA.event('login', {
+                method: 'google',
+                debug_mode: true,
+            })
             showAlert(data.message, { type: 'success', duration: 2000 })
             navigate('/')
         },

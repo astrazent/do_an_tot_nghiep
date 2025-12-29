@@ -13,7 +13,7 @@ RUN yarn install --frozen-lockfile
 COPY . .
 
 # Expose port backend
-EXPOSE 2082
+EXPOSE 2000
 
 # Chạy backend (development)
 CMD ["yarn", "dev", "--host"]

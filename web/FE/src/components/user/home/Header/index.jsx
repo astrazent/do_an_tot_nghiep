@@ -4,7 +4,6 @@ import FloatingContactBar from '~/components/shared/FloatingContactBar'
 import NavigationBar from '~/components/shared/NavigationBar'
 import MainHeader from '~/components/shared/MainHeader'
 import TopBar from '~/components/shared/TopBar'
-// import ChatWidget from '~/components/shared/ChatWidget'
 const Header = () => {
     return (
         <header className="shadow">
@@ -12,7 +11,6 @@ const Header = () => {
             <MainHeader />
             <NavigationBar />
             <FloatingContactBar />
-            {/* <ChatWidget /> */}
         </header>
     )
 }

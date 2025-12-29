@@ -15,7 +15,6 @@ DROP TABLE IF EXISTS CouponScopes;
 DROP TABLE IF EXISTS Coupons;
 DROP TABLE IF EXISTS Products;
 DROP TABLE IF EXISTS Tokens;
-DROP TABLE IF EXISTS OtpCodes;
 DROP TABLE IF EXISTS Users;
 DROP TABLE IF EXISTS PostCategories;
 DROP TABLE IF EXISTS Categories;
@@ -152,27 +151,6 @@ CREATE TABLE
     INDEX idx_users_provider (provider),
     INDEX idx_users_provider_id (provider_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- OtpCodes
-CREATE TABLE 
-    OtpCodes (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    user_id INT UNSIGNED NOT NULL,
-    code VARCHAR(10) NOT NULL,
-    type ENUM('login', 'change_password', 'verify_email') NOT NULL DEFAULT 'login' COMMENT 'login: đăng nhập, change_password: đổi mật khẩu, verify_email: xác thực email',
-    is_used TINYINT(1) NOT NULL DEFAULT 0,
-    attempts INT UNSIGNED NOT NULL DEFAULT 0,
-    expires_at DATETIME NOT NULL,
-    ip_address VARCHAR(45) DEFAULT NULL,
-    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE
-);
-
-CREATE EVENT IF NOT EXISTS delete_expired_otps
-ON SCHEDULE EVERY 5 MINUTE
-DO
-    DELETE FROM OtpCodes
-    WHERE expires_at < NOW();
 
 -- Tokens
 CREATE TABLE 

@@ -15,10 +15,6 @@ const DISCOUNTS_SCHEMA = Joi.object({
         'number.base': 'Value phải là số',
         'number.min': 'Value tối thiểu 0',
     }),
-    min_price: Joi.number().precision(2).min(0).default(0).messages({
-        'number.base': 'Min price phải là số',
-        'number.min': 'Min price tối thiểu 0',
-    }),
     start_date: Joi.date().default(() => new Date()),
     end_date: Joi.date().default(() => new Date()),
     status: Joi.number().integer().valid(0, 1).default(0).messages({

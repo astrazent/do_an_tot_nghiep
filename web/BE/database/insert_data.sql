@@ -184,20 +184,6 @@ INSERT INTO Users
 ('linhchi_beauty', '$2a$10$o9mNPculqAv1YtdLhVuIKu3oOVv9nf0aTKK2ABmi6GXSd88YVyqxq', 'local', NULL, 'linhchi_beauty@example.com', '0918777888', 'Ngô Linh Chi', 'female', '18 Lý Thường Kiệt', 'Ha Noi', 'Quan Hoan Kiem', 'Phuong Phan Chu Trinh', 'assets/image/user/avatar/user_10', 1),
 ('nnn', '$2a$10$RMTnNJ0gnaUirk7/PnepmusCA8.vZtad.Ty7iBz6/niY9je8Q9y1m', 'local', NULL, 'nnn@example.com', '0918777882', 'Ngô Ngọc Nguyên', 'male', '18 Lý Thường Kiệt', 'Thành phố Hà Nội', 'Quận Thanh Xuân', 'Phường Thanh Xuân Bắc', 'https://avatar.iran.liara.run/public', 1);
 
--- Dữ liệu mẫu cho bảng OtpCodes
-INSERT INTO OtpCodes (user_id, code, type, is_used, attempts, expires_at, ip_address) VALUES
-(1, '482915', 'login', 0, 0, DATE_ADD(NOW(), INTERVAL 5 MINUTE), '192.168.1.10'),
-(2, '937421', 'change_password', 0, 1, DATE_ADD(NOW(), INTERVAL 10 MINUTE), '192.168.1.11'),
-(3, '120583', 'verify_email', 1, 2, DATE_SUB(NOW(), INTERVAL 2 MINUTE), '192.168.1.5'),  -- hết hạn
-(4, '553201', 'login', 0, 0, DATE_ADD(NOW(), INTERVAL 3 MINUTE), '192.168.1.9'),
-(5, '778402', 'change_password', 1, 3, DATE_SUB(NOW(), INTERVAL 1 MINUTE), '192.168.1.20'), -- hết hạn
-(6, '991244', 'verify_email', 0, 0, DATE_ADD(NOW(), INTERVAL 7 MINUTE), '192.168.1.30'),
-(7, '341298', 'login', 0, 0, DATE_ADD(NOW(), INTERVAL 8 MINUTE), '192.168.1.40'),
-(8, '662910', 'change_password', 0, 1, DATE_ADD(NOW(), INTERVAL 6 MINUTE), '192.168.1.14'),
-(9, '274501', 'verify_email', 1, 2, DATE_SUB(NOW(), INTERVAL 3 MINUTE), '192.168.1.99'), -- hết hạn
-(10, '834729', 'login', 0, 0, DATE_ADD(NOW(), INTERVAL 9 MINUTE), '192.168.1.200'),
-(11, '559802', 'change_password', 0, 0, DATE_ADD(NOW(), INTERVAL 4 MINUTE), '192.168.1.55');
-
 -- Dữ liệu mẫu cho Tokens
 INSERT INTO Tokens (`user_id`, `refresh_token`, `device_info`, `ip_address`, `token_started_at`, `token_expired_at`, `is_revoked`, `revoked_at`) VALUES
 (1, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ik5ndXllbjU1IiwiaWF0IjoxNzM1Njg5NjAwfQ.fake_token_for_user1', 'Chrome on Windows 11', '192.168.1.10', '2025-01-01 00:00:00', '2026-01-01 00:00:00', FALSE, NULL),

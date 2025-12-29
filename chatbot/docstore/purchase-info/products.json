@@ -8,6 +8,7 @@
       "điểm_trung_bình": 4.8,
       "số_lượt_đánh_giá": 10,
       "từ_khóa": [
+<<<<<<< HEAD
         "pía",
         "pia",
         "sóc",
@@ -17,6 +18,17 @@
         "trăng",
         "bánh",
         "banh"
+=======
+        "trăng",
+        "banh",
+        "trang",
+        "pia",
+        "pía",
+        "thực phẩm khác",
+        "sóc",
+        "soc",
+        "bánh"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/cac-thuc-pham-khac/banh-pia-soc-trang/banh-pia-soc-trang-ctpk.jpeg",
       "khuyến_mãi": [
@@ -39,16 +51,16 @@
       "điểm_trung_bình": 4.75,
       "số_lượt_đánh_giá": 20,
       "từ_khóa": [
-        "mot",
-        "bò",
         "pa",
-        "bo",
-        "nắng",
         "krông",
-        "thực phẩm khác",
-        "nang",
+        "nắng",
+        "một",
         "krong",
-        "một"
+        "bo",
+        "bò",
+        "nang",
+        "thực phẩm khác",
+        "mot"
       ],
       "url": "assets/image/shared/product/cac-thuc-pham-khac/bo-mot-nang-rong-pa/bo-mot-nang-rong-pa-ctpk.jpg",
       "khuyến_mãi": [
@@ -71,6 +83,7 @@
       "điểm_trung_bình": 4.75,
       "số_lượt_đánh_giá": 40,
       "từ_khóa": [
+<<<<<<< HEAD
         "thuot",
         "cà",
         "phe",
@@ -80,6 +93,17 @@
         "buon",
         "phê",
         "ma",
+=======
+        "ca",
+        "buon",
+        "cà",
+        "ma",
+        "thuot",
+        "buôn",
+        "phê",
+        "thực phẩm khác",
+        "phe",
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
         "thuột"
       ],
       "url": "assets/image/shared/product/cac-thuc-pham-khac/ca-phe-buon-ma-thuot/ca-phe-buon-ma-thuot-ctpk.jpg",
@@ -103,11 +127,19 @@
       "điểm_trung_bình": 4.533333333333333,
       "số_lượt_đánh_giá": 15,
       "từ_khóa": [
+<<<<<<< HEAD
         "cha",
         "thực phẩm khác",
         "ốc",
         "chả",
         "oc"
+=======
+        "oc",
+        "cha",
+        "chả",
+        "ốc",
+        "thực phẩm khác"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/cac-thuc-pham-khac/cha-oc-nua/cha-oc-nua-ctpk.jpg",
       "khuyến_mãi": [
@@ -130,6 +162,7 @@
       "điểm_trung_bình": 4.5,
       "số_lượt_đánh_giá": 10,
       "từ_khóa": [
+<<<<<<< HEAD
         "ninh",
         "dê",
         "tây",
@@ -140,6 +173,18 @@
         "chien",
         "de",
         "giòn"
+=======
+        "gion",
+        "ninh",
+        "dê",
+        "tây",
+        "giòn",
+        "tay",
+        "thực phẩm khác",
+        "de",
+        "chien",
+        "chiên"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/cac-thuc-pham-khac/de-chien-gion-tay-ninh/de-chien-gion-tay-ninh-ctpk.jpg",
       "khuyến_mãi": []
@@ -154,6 +199,7 @@
       "điểm_trung_bình": 4.4,
       "số_lượt_đánh_giá": 20,
       "từ_khóa": [
+<<<<<<< HEAD
         "tien",
         "bò",
         "gân",
@@ -163,6 +209,17 @@
         "rau",
         "vua",
         "gan"
+=======
+        "gan",
+        "rau",
+        "bo",
+        "bò",
+        "thực phẩm khác",
+        "tiến",
+        "gân",
+        "tien",
+        "vua"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/cac-thuc-pham-khac/gan-bo-rau-tien-vua/gan-bo-rau-tien-vua-ctpk.jpeg",
       "khuyến_mãi": [
@@ -185,6 +242,7 @@
       "điểm_trung_bình": 4.8,
       "số_lượt_đánh_giá": 50,
       "từ_khóa": [
+<<<<<<< HEAD
         "muoi",
         "dieu",
         "binh",
@@ -197,6 +255,20 @@
         "phuoc",
         "muối",
         "rang"
+=======
+        "dieu",
+        "muối",
+        "hat",
+        "điều",
+        "hạt",
+        "bình",
+        "muoi",
+        "phuoc",
+        "binh",
+        "phước",
+        "rang",
+        "thực phẩm khác"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/cac-thuc-pham-khac/hat-dieu-rang-muoi-binh-phuoc/hat-dieu-rang-muoi-binh-phuoc-ctpk.jpg",
       "khuyến_mãi": [
@@ -219,6 +291,7 @@
       "điểm_trung_bình": 4.833333333333333,
       "số_lượt_đánh_giá": 30,
       "từ_khóa": [
+<<<<<<< HEAD
         "thịt",
         "tép",
         "mam",
@@ -228,6 +301,17 @@
         "chưng",
         "thit",
         "mắm"
+=======
+        "tép",
+        "tep",
+        "thit",
+        "mắm",
+        "mam",
+        "thực phẩm khác",
+        "chung",
+        "thịt",
+        "chưng"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/cac-thuc-pham-khac/mam-tep-chung-thit/mam-tep-chung-thit-ctpk.jpg",
       "khuyến_mãi": [
@@ -250,6 +334,7 @@
       "điểm_trung_bình": 4.6,
       "số_lượt_đánh_giá": 25,
       "từ_khóa": [
+<<<<<<< HEAD
         "mat",
         "rung",
         "thực phẩm khác",
@@ -258,6 +343,16 @@
         "minh",
         "u",
         "ong"
+=======
+        "mật",
+        "ong",
+        "mat",
+        "rừng",
+        "minh",
+        "u",
+        "thực phẩm khác",
+        "rung"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/cac-thuc-pham-khac/mat-ong-rung-u-minh/mat-ong-rung-u-minh-ctpk.jpg",
       "khuyến_mãi": [
@@ -281,12 +376,21 @@
       "số_lượt_đánh_giá": 60,
       "từ_khóa": [
         "huế",
+<<<<<<< HEAD
         "xửng",
         "thực phẩm khác",
         "me",
         "xung",
         "mè",
         "hue"
+=======
+        "hue",
+        "me",
+        "xửng",
+        "mè",
+        "thực phẩm khác",
+        "xung"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/cac-thuc-pham-khac/me-sung-hue/me-sung-hue-ctpk.jpg",
       "khuyến_mãi": [
@@ -309,11 +413,19 @@
       "điểm_trung_bình": 4.222222222222222,
       "số_lượt_đánh_giá": 18,
       "từ_khóa": [
+<<<<<<< HEAD
         "thực phẩm khác",
         "moc",
         "ốc",
         "oc",
         "mọc"
+=======
+        "oc",
+        "moc",
+        "mọc",
+        "ốc",
+        "thực phẩm khác"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/cac-thuc-pham-khac/moc-oc/moc-oc-ctpk.png",
       "khuyến_mãi": []
@@ -329,6 +441,7 @@
       "số_lượt_đánh_giá": 20,
       "từ_khóa": [
         "ruou",
+<<<<<<< HEAD
         "can",
         "tây",
         "nguyen",
@@ -336,6 +449,15 @@
         "cần",
         "tay",
         "nguyên",
+=======
+        "nguyên",
+        "nguyen",
+        "tây",
+        "tay",
+        "can",
+        "thực phẩm khác",
+        "cần",
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
         "rượu"
       ],
       "url": "assets/image/shared/product/cac-thuc-pham-khac/ruou-can-tay-nguyen/ruou-can-tay-nguyen-ctpk.jpg",
@@ -351,6 +473,7 @@
       "điểm_trung_bình": 4.666666666666667,
       "số_lượt_đánh_giá": 30,
       "từ_khóa": [
+<<<<<<< HEAD
         "tra",
         "hồ",
         "tây",
@@ -359,6 +482,16 @@
         "ho",
         "tay",
         "sen"
+=======
+        "sen",
+        "tây",
+        "tra",
+        "tay",
+        "thực phẩm khác",
+        "hồ",
+        "trà",
+        "ho"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/cac-thuc-pham-khac/tra-sen-tay-ho/tra-sen-tay-ho-ctpk.jpg",
       "khuyến_mãi": []
@@ -373,6 +506,7 @@
       "điểm_trung_bình": 4.75,
       "số_lượt_đánh_giá": 8,
       "từ_khóa": [
+<<<<<<< HEAD
         "kiến",
         "bac",
         "bắc",
@@ -382,6 +516,17 @@
         "trứng",
         "thực phẩm khác",
         "tay"
+=======
+        "trứng",
+        "kien",
+        "tây",
+        "bắc",
+        "kiến",
+        "trung",
+        "tay",
+        "bac",
+        "thực phẩm khác"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/cac-thuc-pham-khac/trung-kien-tay-bac/trung-kien-tay-bac-ctpk.jpg",
       "khuyến_mãi": []
@@ -396,11 +541,19 @@
       "điểm_trung_bình": 4.642857142857143,
       "số_lượt_đánh_giá": 28,
       "từ_khóa": [
+<<<<<<< HEAD
         "muoi",
         "bề",
         "be",
         "hải sản",
         "muối",
+=======
+        "muối",
+        "be",
+        "hải sản",
+        "muoi",
+        "bề",
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
         "rang"
       ],
       "url": "assets/image/shared/product/hai-san/be-be-rang-muoi/be-be-rang-muoi-hs.jpg",
@@ -416,6 +569,7 @@
       "điểm_trung_bình": 4.454545454545454,
       "số_lượt_đánh_giá": 22,
       "từ_khóa": [
+<<<<<<< HEAD
         "bop",
         "nau",
         "cá",
@@ -424,6 +578,16 @@
         "bóp",
         "nấu",
         "hải sản"
+=======
+        "ca",
+        "nau",
+        "me",
+        "bóp",
+        "bop",
+        "hải sản",
+        "nấu",
+        "cá"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/hai-san/ca-bop-nau-me/ca-bop-nau-me-hs.jpg",
       "khuyến_mãi": []
@@ -438,12 +602,21 @@
       "điểm_trung_bình": 4.605263157894737,
       "số_lượt_đánh_giá": 38,
       "từ_khóa": [
+<<<<<<< HEAD
         "bong",
         "cá",
         "linh",
         "bông",
         "ca",
         "hải sản"
+=======
+        "ca",
+        "bông",
+        "bong",
+        "hải sản",
+        "linh",
+        "cá"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/hai-san/ca-linh-bong/ca-linh-bong-hs.jpg",
       "khuyến_mãi": []
@@ -458,6 +631,7 @@
       "điểm_trung_bình": 4.6875,
       "số_lượt_đánh_giá": 32,
       "từ_khóa": [
+<<<<<<< HEAD
         "cha",
         "hải sản",
         "cá",
@@ -465,6 +639,15 @@
         "mong",
         "chả",
         "móng"
+=======
+        "ca",
+        "mong",
+        "móng",
+        "hải sản",
+        "cha",
+        "chả",
+        "cá"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/hai-san/cha-ca-mong/cha-ca-mong-hs.jpg",
       "khuyến_mãi": []
@@ -479,6 +662,7 @@
       "điểm_trung_bình": 4.48,
       "số_lượt_đánh_giá": 25,
       "từ_khóa": [
+<<<<<<< HEAD
         "cha",
         "tôm",
         "cá",
@@ -488,6 +672,17 @@
         "tom",
         "hải sản",
         "mực"
+=======
+        "ca",
+        "muc",
+        "mực",
+        "hải sản",
+        "tôm",
+        "cha",
+        "chả",
+        "tom",
+        "cá"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/hai-san/cha-ca-muc-tom/cha-ca-muc-tom-hs.jpg",
       "khuyến_mãi": []
@@ -502,6 +697,7 @@
       "điểm_trung_bình": 4.45,
       "số_lượt_đánh_giá": 20,
       "từ_khóa": [
+<<<<<<< HEAD
         "cha",
         "ghe",
         "mo",
@@ -509,6 +705,15 @@
         "chả",
         "hải sản",
         "ghẹ"
+=======
+        "ghe",
+        "ghẹ",
+        "hải sản",
+        "cha",
+        "chả",
+        "mỡ",
+        "mo"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/hai-san/cha-mo-ghe/cha-mo-ghe-hs.jpg",
       "khuyến_mãi": []
@@ -523,6 +728,7 @@
       "điểm_trung_bình": 4.6,
       "số_lượt_đánh_giá": 50,
       "từ_khóa": [
+<<<<<<< HEAD
         "cha",
         "hải sản",
         "hạ",
@@ -531,6 +737,16 @@
         "muc",
         "ha",
         "mực"
+=======
+        "long",
+        "muc",
+        "mực",
+        "hạ",
+        "hải sản",
+        "cha",
+        "chả",
+        "ha"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/hai-san/cha-muc-ha-long/cha-muc-ha-long-hs.jpg",
       "khuyến_mãi": []
@@ -545,11 +761,19 @@
       "điểm_trung_bình": 4.428571428571429,
       "số_lượt_đánh_giá": 35,
       "từ_khóa": [
+<<<<<<< HEAD
         "cha",
         "tôm",
         "chả",
         "tom",
         "hải sản"
+=======
+        "hải sản",
+        "tôm",
+        "cha",
+        "chả",
+        "tom"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/hai-san/cha-tom/cha-tom-hs.jpg",
       "khuyến_mãi": []
@@ -564,11 +788,19 @@
       "điểm_trung_bình": 4.733333333333333,
       "số_lượt_đánh_giá": 30,
       "từ_khóa": [
+<<<<<<< HEAD
         "hải sản",
         "mau",
         "ca",
         "cua",
         "cà"
+=======
+        "ca",
+        "hải sản",
+        "cà",
+        "mau",
+        "cua"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/hai-san/cua-ca-mau/cua-ca-mau-hs.jpg",
       "khuyến_mãi": []
@@ -583,6 +815,7 @@
       "điểm_trung_bình": 4.482758620689655,
       "số_lượt_đánh_giá": 29,
       "từ_khóa": [
+<<<<<<< HEAD
         "goi",
         "cá",
         "ca",
@@ -590,6 +823,15 @@
         "hải sản",
         "trích",
         "trich"
+=======
+        "ca",
+        "goi",
+        "trích",
+        "hải sản",
+        "trich",
+        "cá",
+        "gỏi"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/hai-san/goi-ca-trich/goi-ca-trich-hs.jpg",
       "khuyến_mãi": []
@@ -604,6 +846,7 @@
       "điểm_trung_bình": 4.666666666666667,
       "số_lượt_đánh_giá": 45,
       "từ_khóa": [
+<<<<<<< HEAD
         "nuong",
         "mo",
         "hanh",
@@ -612,6 +855,16 @@
         "hành",
         "hải sản",
         "hau",
+=======
+        "nướng",
+        "nuong",
+        "hau",
+        "hải sản",
+        "hành",
+        "mỡ",
+        "mo",
+        "hanh",
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
         "hàu"
       ],
       "url": "assets/image/shared/product/hai-san/hau-nuong-mo-hanh/hau-nuong-mo-hanh-hs.jpg",
@@ -627,6 +880,7 @@
       "điểm_trung_bình": 4.642857142857143,
       "số_lượt_đánh_giá": 42,
       "từ_khóa": [
+<<<<<<< HEAD
         "mot",
         "nắng",
         "mực",
@@ -634,6 +888,15 @@
         "muc",
         "hải sản",
         "một"
+=======
+        "muc",
+        "mực",
+        "nắng",
+        "hải sản",
+        "một",
+        "nang",
+        "mot"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/hai-san/muc-mot-nang/muc-mot-nang-hs.jpg",
       "khuyến_mãi": []
@@ -648,12 +911,21 @@
       "điểm_trung_bình": 4.545454545454546,
       "số_lượt_đánh_giá": 55,
       "từ_khóa": [
+<<<<<<< HEAD
         "hải sản",
         "nem",
         "hải",
         "san",
         "sản",
         "hai"
+=======
+        "sản",
+        "nem",
+        "san",
+        "hải sản",
+        "hai",
+        "hải"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/hai-san/nem-hai-san/nem-hai-san-hs.jpg",
       "khuyến_mãi": []
@@ -668,6 +940,7 @@
       "điểm_trung_bình": 4.722222222222222,
       "số_lượt_đánh_giá": 18,
       "từ_khóa": [
+<<<<<<< HEAD
         "nuong",
         "sùng",
         "nướng",
@@ -675,6 +948,15 @@
         "hải sản",
         "sá",
         "sung"
+=======
+        "nướng",
+        "nuong",
+        "hải sản",
+        "sung",
+        "sùng",
+        "sá",
+        "sa"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/hai-san/sa-sung-nuong/sa-sung-nuong-hs.jpg",
       "khuyến_mãi": []
@@ -689,6 +971,7 @@
       "điểm_trung_bình": 4.5,
       "số_lượt_đánh_giá": 40,
       "từ_khóa": [
+<<<<<<< HEAD
         "sú",
         "liêu",
         "bac",
@@ -698,6 +981,17 @@
         "su",
         "tom",
         "hải sản"
+=======
+        "hải sản",
+        "liêu",
+        "tôm",
+        "lieu",
+        "tom",
+        "bac",
+        "sú",
+        "su",
+        "bạc"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/hai-san/tom-su-bac-lieu/tom-su-bac-lieu-hs.jpg",
       "khuyến_mãi": []
@@ -712,9 +1006,15 @@
       "điểm_trung_bình": 4.363636363636363,
       "số_lượt_đánh_giá": 22,
       "từ_khóa": [
+<<<<<<< HEAD
         "ruốc",
         "ruoc",
         "bề",
+=======
+        "ruoc",
+        "bề",
+        "ruốc",
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
         "be"
       ],
       "url": "assets/image/shared/product/ruoc/ruoc-be-be/ruoc-be-be-r.jpg",
@@ -730,11 +1030,19 @@
       "điểm_trung_bình": 4.514285714285714,
       "số_lượt_đánh_giá": 35,
       "từ_khóa": [
+<<<<<<< HEAD
         "ruoc",
         "cá",
         "ca",
         "ruốc",
         "basa"
+=======
+        "ca",
+        "ruoc",
+        "cá",
+        "basa",
+        "ruốc"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/ruoc/ruoc-ca-basa/ruoc-ca-basa-r.jpg",
       "khuyến_mãi": []
@@ -749,10 +1057,17 @@
       "điểm_trung_bình": 4.666666666666667,
       "số_lượt_đánh_giá": 30,
       "từ_khóa": [
+<<<<<<< HEAD
         "ruoc",
         "cá",
         "ca",
         "lóc",
+=======
+        "ca",
+        "lóc",
+        "ruoc",
+        "cá",
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
         "loc",
         "ruốc"
       ],
@@ -769,6 +1084,7 @@
       "điểm_trung_bình": 4.4,
       "số_lượt_đánh_giá": 25,
       "từ_khóa": [
+<<<<<<< HEAD
         "ruoc",
         "cá",
         "rô",
@@ -776,6 +1092,15 @@
         "ro",
         "đồng",
         "dong",
+=======
+        "ca",
+        "dong",
+        "rô",
+        "đồng",
+        "ruoc",
+        "cá",
+        "ro",
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
         "ruốc"
       ],
       "url": "assets/image/shared/product/ruoc/ruoc-ca-ro-dong/ruoc-ca-ro-dong-r.jpg",
@@ -791,10 +1116,17 @@
       "điểm_trung_bình": 4.75,
       "số_lượt_đánh_giá": 40,
       "từ_khóa": [
+<<<<<<< HEAD
         "ruoc",
         "thu",
         "cá",
         "ca",
+=======
+        "ca",
+        "thu",
+        "ruoc",
+        "cá",
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
         "ruốc"
       ],
       "url": "assets/image/shared/product/ruoc/ruoc-ca-thu/ruoc-ca-thu-r.jpg",
@@ -810,12 +1142,21 @@
       "điểm_trung_bình": 4.9,
       "số_lượt_đánh_giá": 50,
       "từ_khóa": [
+<<<<<<< HEAD
         "ruoc",
         "huế",
         "mam",
         "ruốc",
         "hue",
         "mắm"
+=======
+        "huế",
+        "hue",
+        "mắm",
+        "mam",
+        "ruoc",
+        "ruốc"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/ruoc/ruoc-mam-hue/ruoc-mam-hue-r.jpg",
       "khuyến_mãi": []
@@ -830,6 +1171,7 @@
       "điểm_trung_bình": 4.5,
       "số_lượt_đánh_giá": 40,
       "từ_khóa": [
+<<<<<<< HEAD
         "tháp",
         "ruoc",
         "tép",
@@ -837,6 +1179,15 @@
         "tep",
         "đồng",
         "dong",
+=======
+        "tép",
+        "tep",
+        "dong",
+        "thap",
+        "tháp",
+        "đồng",
+        "ruoc",
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
         "ruốc"
       ],
       "url": "assets/image/shared/product/ruoc/ruoc-tep-dong-thap/ruoc-tep-dong-thap-r.jpg",
@@ -852,6 +1203,7 @@
       "điểm_trung_bình": 4.923076923076923,
       "số_lượt_đánh_giá": 65,
       "từ_khóa": [
+<<<<<<< HEAD
         "lợn",
         "ruoc",
         "thịt",
@@ -861,6 +1213,17 @@
         "định",
         "ruốc",
         "thit"
+=======
+        "nam",
+        "lon",
+        "dinh",
+        "thit",
+        "thịt",
+        "ruoc",
+        "định",
+        "lợn",
+        "ruốc"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/ruoc/ruoc-thit-lon-nam-dinh/ruoc-thit-lon-nam-dinh-r.jpg",
       "khuyến_mãi": []
@@ -875,6 +1238,7 @@
       "điểm_trung_bình": 4.583333333333333,
       "số_lượt_đánh_giá": 48,
       "từ_khóa": [
+<<<<<<< HEAD
         "binh",
         "ruoc",
         "tôm",
@@ -883,6 +1247,16 @@
         "định",
         "ruốc",
         "dinh"
+=======
+        "dinh",
+        "bình",
+        "tôm",
+        "binh",
+        "tom",
+        "ruoc",
+        "định",
+        "ruốc"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/ruoc/ruoc-tom-binh-dinh/ruoc-tom-binh-dinh-r.jpg",
       "khuyến_mãi": []
@@ -897,6 +1271,7 @@
       "điểm_trung_bình": 4.722222222222222,
       "số_lượt_đánh_giá": 36,
       "từ_khóa": [
+<<<<<<< HEAD
         "ruoc",
         "dat",
         "cà",
@@ -905,6 +1280,16 @@
         "ca",
         "đất",
         "tom",
+=======
+        "ca",
+        "dat",
+        "cà",
+        "tôm",
+        "đất",
+        "mau",
+        "tom",
+        "ruoc",
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
         "ruốc"
       ],
       "url": "assets/image/shared/product/ruoc/ruoc-tom-dat-ca-mau/ruoc-tom-dat-ca-mau-r.jpg",
@@ -920,12 +1305,21 @@
       "điểm_trung_bình": 4.555555555555555,
       "số_lượt_đánh_giá": 45,
       "từ_khóa": [
+<<<<<<< HEAD
         "ruoc",
         "tôm",
         "ha",
         "hạ",
         "long",
         "tom",
+=======
+        "long",
+        "hạ",
+        "tôm",
+        "tom",
+        "ha",
+        "ruoc",
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
         "ruốc"
       ],
       "url": "assets/image/shared/product/ruoc/ruoc-tom-ha-long/ruoc-tom-ha-long-r.jpg",
@@ -942,11 +1336,19 @@
       "số_lượt_đánh_giá": 30,
       "từ_khóa": [
         "rong",
+<<<<<<< HEAD
         "ruoc",
         "tôm",
         "bien",
         "biển",
         "tom",
+=======
+        "biển",
+        "tôm",
+        "tom",
+        "ruoc",
+        "bien",
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
         "ruốc"
       ],
       "url": "assets/image/shared/product/ruoc/ruoc-tom-rong-bien/ruoc-tom-rong-bien-r.jpg",
@@ -962,6 +1364,7 @@
       "điểm_trung_bình": 4.733333333333333,
       "số_lượt_đánh_giá": 30,
       "từ_khóa": [
+<<<<<<< HEAD
         "sản phẩm từ gà",
         "gà",
         "chiên",
@@ -970,17 +1373,32 @@
         "chien",
         "ga",
         "giòn"
+=======
+        "gion",
+        "da",
+        "ga",
+        "gà",
+        "giòn",
+        "sản phẩm từ gà",
+        "chien",
+        "chiên"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/ga/da-ga-chien-gion/da-ga-chien-gion-g.png",
       "khuyến_mãi": []
     }
   },
   {
+<<<<<<< HEAD
     "text": "Tên sản phẩm: Gà Cháy Tỏi\n        Mô tả sản phẩm: Thịt gà mềm ngọt hòa quyện với hương thơm nồng nàn của tỏi phi vàng, tạo nên món ăn đưa cơm hấp dẫn.\n        Giá gốc: 190000.00 VND\n        Giá bán: 169000.00 VND\n        Danh mục: Sản phẩm từ gà\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt gà.",
+=======
+    "text": "Tên sản phẩm: Gà Cháy Tỏi\n        Mô tả sản phẩm: Thịt gà mềm ngọt hòa quyện với hương thơm nồng nàn của tỏi phi vàng, tạo nên món ăn đưa cơm hấp dẫn.\n        Giá gốc: 180000.00 VND\n        Giá bán: 169000.00 VND\n        Danh mục: Sản phẩm từ gà\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt gà.",
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
     "metadata": {
       "id": 43,
       "tồn_kho": "150 sản phẩm",
       "trạng_thái": "đang_kinh_doanh",
+<<<<<<< HEAD
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
@@ -991,6 +1409,18 @@
         "chay",
         "tỏi",
         "ga"
+=======
+      "điểm_trung_bình": 4.6,
+      "số_lượt_đánh_giá": 25,
+      "từ_khóa": [
+        "tỏi",
+        "toi",
+        "cháy",
+        "ga",
+        "gà",
+        "sản phẩm từ gà",
+        "chay"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/ga/ga-chay-toi/ga-chay-toi-g.png",
       "khuyến_mãi": []
@@ -1005,6 +1435,7 @@
       "điểm_trung_bình": 4.722222222222222,
       "số_lượt_đánh_giá": 18,
       "từ_khóa": [
+<<<<<<< HEAD
         "ủ",
         "muoi",
         "ga",
@@ -1016,6 +1447,19 @@
         "đông",
         "dong",
         "muối"
+=======
+        "tảo",
+        "muối",
+        "ủ",
+        "dong",
+        "tao",
+        "muoi",
+        "ga",
+        "đông",
+        "gà",
+        "u",
+        "sản phẩm từ gà"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/ga/ga-dong-tao-u-muoi/ga-dong-tao-u-muoi-g.png",
       "khuyến_mãi": []
@@ -1030,6 +1474,7 @@
       "điểm_trung_bình": 4.75,
       "số_lượt_đánh_giá": 40,
       "từ_khóa": [
+<<<<<<< HEAD
         "muoi",
         "nuong",
         "ớt",
@@ -1039,6 +1484,17 @@
         "nướng",
         "ot",
         "muối"
+=======
+        "nướng",
+        "ớt",
+        "muối",
+        "nuong",
+        "muoi",
+        "ot",
+        "ga",
+        "gà",
+        "sản phẩm từ gà"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/ga/ga-nuong-muoi-ot/ga-nuong-muoi-ot-g.jpg",
       "khuyến_mãi": []
@@ -1053,6 +1509,7 @@
       "điểm_trung_bình": 4.583333333333333,
       "số_lượt_đánh_giá": 24,
       "từ_khóa": [
+<<<<<<< HEAD
         "nuong",
         "sản phẩm từ gà",
         "gà",
@@ -1062,6 +1519,17 @@
         "mộc",
         "thảo",
         "ga"
+=======
+        "nướng",
+        "nuong",
+        "ga",
+        "thảo",
+        "moc",
+        "gà",
+        "sản phẩm từ gà",
+        "thao",
+        "mộc"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/ga/ga-nuong-thao-moc/ga-nuong-thao-moc-g.jpg",
       "khuyến_mãi": []
@@ -1076,6 +1544,7 @@
       "điểm_trung_bình": 4.666666666666667,
       "số_lượt_đánh_giá": 60,
       "từ_khóa": [
+<<<<<<< HEAD
         "ủ",
         "muoi",
         "ga",
@@ -1083,6 +1552,15 @@
         "sản phẩm từ gà",
         "gà",
         "muối"
+=======
+        "muối",
+        "ủ",
+        "muoi",
+        "ga",
+        "gà",
+        "u",
+        "sản phẩm từ gà"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/ga/ga-u-muoi/ga-u-muoi-g.jpg",
       "khuyến_mãi": []
@@ -1098,6 +1576,7 @@
       "số_lượt_đánh_giá": 35,
       "từ_khóa": [
         "ủ",
+<<<<<<< HEAD
         "u",
         "sản phẩm từ gà",
         "xi",
@@ -1106,6 +1585,16 @@
         "dầu",
         "dau",
         "ga"
+=======
+        "xì",
+        "dau",
+        "ga",
+        "gà",
+        "u",
+        "sản phẩm từ gà",
+        "dầu",
+        "xi"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/ga/ga-u-xi-dau/ga-u-xi-dau-g.jpg",
       "khuyến_mãi": []
@@ -1120,6 +1609,7 @@
       "điểm_trung_bình": 4.666666666666667,
       "số_lượt_đánh_giá": 45,
       "từ_khóa": [
+<<<<<<< HEAD
         "vien",
         "sản phẩm từ gà",
         "gà",
@@ -1127,6 +1617,15 @@
         "viên",
         "ga",
         "chien"
+=======
+        "viên",
+        "ga",
+        "gà",
+        "sản phẩm từ gà",
+        "chien",
+        "chiên",
+        "vien"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/ga/ga-vien-chien/ga-vien-chien-g.jpg",
       "khuyến_mãi": []
@@ -1142,12 +1641,21 @@
       "số_lượt_đánh_giá": 28,
       "từ_khóa": [
         "cao",
+<<<<<<< HEAD
         "sản phẩm từ gà",
         "gà",
         "há",
         "cảo",
         "ha",
         "ga"
+=======
+        "ga",
+        "gà",
+        "há",
+        "ha",
+        "cảo",
+        "sản phẩm từ gà"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/ga/ha-cao-ga/ha-cao-ga-g.jpg",
       "khuyến_mãi": []
@@ -1162,12 +1670,21 @@
       "điểm_trung_bình": 4.605263157894737,
       "số_lượt_đánh_giá": 38,
       "từ_khóa": [
+<<<<<<< HEAD
         "sản phẩm từ gà",
         "mam",
         "gà",
         "kho",
         "ga",
         "mắm"
+=======
+        "ga",
+        "gà",
+        "mắm",
+        "mam",
+        "sản phẩm từ gà",
+        "kho"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/ga/ga-kho-mam/ga-kho-mam-g.jpg",
       "khuyến_mãi": []
@@ -1182,6 +1699,7 @@
       "điểm_trung_bình": 4.48,
       "số_lượt_đánh_giá": 25,
       "từ_khóa": [
+<<<<<<< HEAD
         "dieu",
         "hat",
         "các loại hạt",
@@ -1191,6 +1709,17 @@
         "banh"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1766404996/BSV/ubvoh5zybsnt9yrjlnh9.jpg",
+=======
+        "banh",
+        "dieu",
+        "hat",
+        "điều",
+        "hạt",
+        "các loại hạt",
+        "bánh"
+      ],
+      "url": "assets/image/shared/product/hat/banh-hat-dieu/banh-hat-dieu-h.jpg",
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       "khuyến_mãi": []
     }
   },
@@ -1203,6 +1732,7 @@
       "điểm_trung_bình": 4.625,
       "số_lượt_đánh_giá": 40,
       "từ_khóa": [
+<<<<<<< HEAD
         "nhan",
         "thanh",
         "hạnh",
@@ -1211,6 +1741,16 @@
         "nhân",
         "bánh",
         "banh"
+=======
+        "banh",
+        "các loại hạt",
+        "nhân",
+        "hạnh",
+        "thanh",
+        "nhan",
+        "hanh",
+        "bánh"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/hat/banh-thanh-hanh-nhan/banh-thanh-hanh-nhan-h.jpg",
       "khuyến_mãi": []
@@ -1225,12 +1765,21 @@
       "điểm_trung_bình": 4.6875,
       "số_lượt_đánh_giá": 32,
       "từ_khóa": [
+<<<<<<< HEAD
         "macca",
         "các loại hạt",
         "thuyền",
         "thuyen",
         "bánh",
         "banh"
+=======
+        "thuyền",
+        "banh",
+        "các loại hạt",
+        "macca",
+        "thuyen",
+        "bánh"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/hat/banh-thuyen-macca/banh-thuyen-macca-h.jpg",
       "khuyến_mãi": []
@@ -1245,6 +1794,7 @@
       "điểm_trung_bình": 4.761904761904762,
       "số_lượt_đánh_giá": 42,
       "từ_khóa": [
+<<<<<<< HEAD
         "nhan",
         "hanh",
         "hạnh",
@@ -1253,6 +1803,16 @@
         "bơ",
         "nhân",
         "rang"
+=======
+        "các loại hạt",
+        "bơ",
+        "nhân",
+        "bo",
+        "hạnh",
+        "nhan",
+        "rang",
+        "hanh"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/hat/hanh-nhan/hanh-nhan-h.jpg",
       "khuyến_mãi": []
@@ -1267,6 +1827,7 @@
       "điểm_trung_bình": 4.75,
       "số_lượt_đánh_giá": 80,
       "từ_khóa": [
+<<<<<<< HEAD
         "muoi",
         "dieu",
         "hat",
@@ -1274,6 +1835,15 @@
         "hạt",
         "điều",
         "muối",
+=======
+        "dieu",
+        "muối",
+        "hat",
+        "điều",
+        "hạt",
+        "các loại hạt",
+        "muoi",
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
         "rang"
       ],
       "url": "assets/image/shared/product/hat/hat-dieu/hat-dieu-h.png",
@@ -1290,6 +1860,7 @@
       "số_lượt_đánh_giá": 50,
       "từ_khóa": [
         "nứt",
+<<<<<<< HEAD
         "macca",
         "hat",
         "các loại hạt",
@@ -1299,6 +1870,17 @@
         "say",
         "vỏ",
         "sấy"
+=======
+        "hat",
+        "hạt",
+        "vỏ",
+        "các loại hạt",
+        "vo",
+        "macca",
+        "sấy",
+        "nut",
+        "say"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/hat/hat-macca/hat-macca-h.png",
       "khuyến_mãi": []
@@ -1313,6 +1895,7 @@
       "điểm_trung_bình": 4.7560975609756095,
       "số_lượt_đánh_giá": 41,
       "từ_khóa": [
+<<<<<<< HEAD
         "chó",
         "hat",
         "các loại hạt",
@@ -1320,6 +1903,15 @@
         "óc",
         "hạt",
         "oc"
+=======
+        "cho",
+        "oc",
+        "óc",
+        "hat",
+        "hạt",
+        "các loại hạt",
+        "chó"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/hat/hat-oc-cho/hat-oc-cho-h.png",
       "khuyến_mãi": []
@@ -1334,6 +1926,7 @@
       "điểm_trung_bình": 4.722222222222222,
       "số_lượt_đánh_giá": 36,
       "từ_khóa": [
+<<<<<<< HEAD
         "hat",
         "các loại hạt",
         "hạt",
@@ -1342,6 +1935,16 @@
         "sen",
         "sấy",
         "giòn"
+=======
+        "gion",
+        "hat",
+        "sen",
+        "hạt",
+        "các loại hạt",
+        "sấy",
+        "giòn",
+        "say"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/hat/hat-sen-say/hat-sen-say-h.jpg",
       "khuyến_mãi": []
@@ -1356,6 +1959,7 @@
       "điểm_trung_bình": 4.7272727272727275,
       "số_lượt_đánh_giá": 55,
       "từ_khóa": [
+<<<<<<< HEAD
         "loai",
         "hat",
         "loại",
@@ -1366,6 +1970,18 @@
         "mix",
         "duong",
         "dinh"
+=======
+        "hat",
+        "hạt",
+        "dinh",
+        "mix",
+        "các loại hạt",
+        "5",
+        "loai",
+        "loại",
+        "dưỡng",
+        "duong"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/hat/mix-5-loai-hat-dinh-duong/mix-5-loai-hat-dinh-duong-h.png",
       "khuyến_mãi": []
@@ -1381,6 +1997,7 @@
       "số_lượt_đánh_giá": 48,
       "từ_khóa": [
         "rong",
+<<<<<<< HEAD
         "kep",
         "hat",
         "thanh",
@@ -1389,6 +2006,16 @@
         "hạt",
         "biển",
         "kẹp"
+=======
+        "hat",
+        "hạt",
+        "các loại hạt",
+        "biển",
+        "kep",
+        "thanh",
+        "kẹp",
+        "bien"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/hat/thanh-rong-bien-kep-hat/thanh-rong-bien-kep-hat-h.jpg",
       "khuyến_mãi": []
@@ -1403,6 +2030,7 @@
       "điểm_trung_bình": 4.565217391304348,
       "số_lượt_đánh_giá": 23,
       "từ_khóa": [
+<<<<<<< HEAD
         "cha",
         "chân",
         "vit",
@@ -1410,6 +2038,15 @@
         "chả",
         "vịt",
         "sản phẩm từ vịt"
+=======
+        "chân",
+        "sản phẩm từ vịt",
+        "vit",
+        "cha",
+        "chả",
+        "chan",
+        "vịt"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/vit/cha-chan-vit/cha-chan-vit-v.png",
       "khuyến_mãi": []
@@ -1424,6 +2061,7 @@
       "điểm_trung_bình": 4.454545454545454,
       "số_lượt_đánh_giá": 22,
       "từ_khóa": [
+<<<<<<< HEAD
         "cha",
         "hanh",
         "hạnh",
@@ -1433,6 +2071,17 @@
         "chả",
         "vịt",
         "sản phẩm từ vịt"
+=======
+        "thuy",
+        "sản phẩm từ vịt",
+        "vit",
+        "cha",
+        "chả",
+        "hạnh",
+        "thúy",
+        "hanh",
+        "vịt"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/vit/cha-vit-thuy-manh/cha-vit-thuy-manh-v.jpg",
       "khuyến_mãi": []
@@ -1447,6 +2096,7 @@
       "điểm_trung_bình": 4.5,
       "số_lượt_đánh_giá": 40,
       "từ_khóa": [
+<<<<<<< HEAD
         "ủ",
         "muoi",
         "chân",
@@ -1460,17 +2110,37 @@
         "vịt",
         "sản phẩm từ vịt",
         "rút"
+=======
+        "chân",
+        "ủ",
+        "muối",
+        "muoi",
+        "sản phẩm từ vịt",
+        "xương",
+        "vit",
+        "u",
+        "chan",
+        "rút",
+        "xuong",
+        "vịt",
+        "rut"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/vit/chan-vit-rut-xuong-u-muoi/chan-vit-rut-xuong-u-muoi-v.jpg",
       "khuyến_mãi": []
     }
   },
   {
+<<<<<<< HEAD
     "text": "Tên sản phẩm: Chân Vịt Rút Xương Ủ Xì Dầu\n        Mô tả sản phẩm: Chân vịt rút xương ngâm trong nước sốt xì dầu thảo mộc đậm đà, vị mặn ngọt hài hòa, thơm nức.\n        Giá gốc: 150000.00 VND\n        Giá bán: 140000.00 VND\n        Danh mục: Sản phẩm từ vịt\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt vịt.",
+=======
+    "text": "Tên sản phẩm: Chân Vịt Rút Xương Ủ Xì Dầu\n        Mô tả sản phẩm: Chân vịt rút xương ngâm trong nước sốt xì dầu thảo mộc đậm đà, vị mặn ngọt hài hòa, thơm nức.\n        Giá gốc: 155000.00 VND\n        Giá bán: 140000.00 VND\n        Danh mục: Sản phẩm từ vịt\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt vịt.",
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
     "metadata": {
       "id": 65,
       "tồn_kho": "220 sản phẩm",
       "trạng_thái": "đang_kinh_doanh",
+<<<<<<< HEAD
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
@@ -1489,6 +2159,26 @@
         "vịt",
         "sản phẩm từ vịt",
         "rút"
+=======
+      "điểm_trung_bình": 4.571428571428571,
+      "số_lượt_đánh_giá": 35,
+      "từ_khóa": [
+        "chân",
+        "ủ",
+        "xì",
+        "dau",
+        "sản phẩm từ vịt",
+        "xương",
+        "vit",
+        "u",
+        "dầu",
+        "xi",
+        "chan",
+        "rút",
+        "xuong",
+        "vịt",
+        "rut"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/vit/chan-vit-rut-xuong-u-xi-dau/chan-vit-rut-xuong-u-xi-dau-v.jpg",
       "khuyến_mãi": []
@@ -1503,11 +2193,19 @@
       "điểm_trung_bình": 4.464285714285714,
       "số_lượt_đánh_giá": 28,
       "từ_khóa": [
+<<<<<<< HEAD
         "vit",
         "moc",
         "mọc",
         "vịt",
         "sản phẩm từ vịt"
+=======
+        "moc",
+        "sản phẩm từ vịt",
+        "vit",
+        "mọc",
+        "vịt"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/vit/moc-vit/moc-vit-v.png",
       "khuyến_mãi": []
@@ -1522,11 +2220,19 @@
       "điểm_trung_bình": 4.5,
       "số_lượt_đánh_giá": 20,
       "từ_khóa": [
+<<<<<<< HEAD
         "vit",
         "gan",
         "pate",
         "vịt",
         "sản phẩm từ vịt"
+=======
+        "gan",
+        "sản phẩm từ vịt",
+        "pate",
+        "vit",
+        "vịt"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/vit/pate-gan-vit/pate-gan-vit-v.jpg",
       "khuyến_mãi": []
@@ -1541,10 +2247,17 @@
       "điểm_trung_bình": 4.833333333333333,
       "số_lượt_đánh_giá": 30,
       "từ_khóa": [
+<<<<<<< HEAD
         "vit",
         "vịt",
         "sản phẩm từ vịt",
         "quay"
+=======
+        "quay",
+        "sản phẩm từ vịt",
+        "vịt",
+        "vit"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/vit/vit-quay/vit-quay-v.jpg",
       "khuyến_mãi": []
@@ -1559,6 +2272,7 @@
       "điểm_trung_bình": 4.5,
       "số_lượt_đánh_giá": 24,
       "từ_khóa": [
+<<<<<<< HEAD
         "tiem",
         "sản phẩm từ vịt",
         "hat",
@@ -1567,6 +2281,16 @@
         "sen",
         "vịt",
         "tiềm"
+=======
+        "sen",
+        "hạt",
+        "hat",
+        "sản phẩm từ vịt",
+        "vit",
+        "tiềm",
+        "tiem",
+        "vịt"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/vit/vit-tiem-hat-sen/vit-tiem-hat-sen-v.jpg",
       "khuyến_mãi": []
@@ -1582,6 +2306,7 @@
       "số_lượt_đánh_giá": 26,
       "từ_khóa": [
         "ủ",
+<<<<<<< HEAD
         "xi",
         "vit",
         "xì",
@@ -1590,6 +2315,16 @@
         "u",
         "vịt",
         "sản phẩm từ vịt"
+=======
+        "xì",
+        "dau",
+        "sản phẩm từ vịt",
+        "vit",
+        "u",
+        "dầu",
+        "xi",
+        "vịt"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/vit/vit-u-xi-dau/vit-u-xi-dau-v.png",
       "khuyến_mãi": []
@@ -1604,6 +2339,7 @@
       "điểm_trung_bình": 4.6,
       "số_lượt_đánh_giá": 50,
       "từ_khóa": [
+<<<<<<< HEAD
         "cha",
         "cá",
         "lác",
@@ -1615,6 +2351,19 @@
         "tươi",
         "thác",
         "sản phẩm từ cá"
+=======
+        "ca",
+        "thac",
+        "thác",
+        "lác",
+        "cha",
+        "chả",
+        "lac",
+        "tươi",
+        "tuoi",
+        "sản phẩm từ cá",
+        "cá"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/ca/cha-ca-thac-lac-tuoi/cha-ca-thac-lac-tuoi-c.jpg",
       "khuyến_mãi": []
@@ -1629,6 +2378,7 @@
       "điểm_trung_bình": 4.571428571428571,
       "số_lượt_đánh_giá": 35,
       "từ_khóa": [
+<<<<<<< HEAD
         "vi",
         "gia",
         "tam",
@@ -1645,6 +2395,24 @@
         "sản phẩm từ cá"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1766417478/BSV/cs3d5dqc0lalkedj1oic.jpg",
+=======
+        "ca",
+        "sản phẩm từ cá",
+        "vị",
+        "sấy",
+        "vi",
+        "gia",
+        "tẩm",
+        "tam",
+        "say",
+        "cá",
+        "chien",
+        "kho",
+        "chiên",
+        "khô"
+      ],
+      "url": "assets/image/shared/product/ca/ca-chien-tam-gia-vi-say-kho/ca-chien-tam-gia-vi-say-kho-c.jpg",
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       "khuyến_mãi": []
     }
   },
@@ -1657,6 +2425,7 @@
       "điểm_trung_bình": 4.642857142857143,
       "số_lượt_đánh_giá": 28,
       "từ_khóa": [
+<<<<<<< HEAD
         "ngot",
         "cá",
         "đông",
@@ -1667,6 +2436,18 @@
         "hu",
         "dong",
         "sản phẩm từ cá"
+=======
+        "ca",
+        "dong",
+        "ngọt",
+        "đông",
+        "ngot",
+        "chua",
+        "sản phẩm từ cá",
+        "cá",
+        "hu",
+        "hũ"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/ca/ca-chua-ngot-dong-hu/ca-chua-ngot-dong-hu-c.jpg",
       "khuyến_mãi": []
@@ -1681,11 +2462,19 @@
       "điểm_trung_bình": 4.7368421052631575,
       "số_lượt_đánh_giá": 95,
       "từ_khóa": [
+<<<<<<< HEAD
         "hộp",
         "cá",
         "ca",
         "hop",
         "sản phẩm từ cá"
+=======
+        "ca",
+        "hộp",
+        "hop",
+        "sản phẩm từ cá",
+        "cá"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/ca/ca-hop/ca-hop-c.jpg",
       "khuyến_mãi": []
@@ -1700,11 +2489,19 @@
       "điểm_trung_bình": 4.625,
       "số_lượt_đánh_giá": 40,
       "từ_khóa": [
+<<<<<<< HEAD
         "cá",
         "ca",
         "khô",
         "kho",
         "sản phẩm từ cá"
+=======
+        "ca",
+        "sản phẩm từ cá",
+        "cá",
+        "kho",
+        "khô"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/ca/ca-kho/ca-kho-c.jpg",
       "khuyến_mãi": []
@@ -1719,6 +2516,7 @@
       "điểm_trung_bình": 4.696969696969697,
       "số_lượt_đánh_giá": 33,
       "từ_khóa": [
+<<<<<<< HEAD
         "rim",
         "cá",
         "ca",
@@ -1726,6 +2524,15 @@
         "lóc",
         "loc",
         "sản phẩm từ cá"
+=======
+        "ca",
+        "lóc",
+        "me",
+        "rim",
+        "sản phẩm từ cá",
+        "cá",
+        "loc"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/ca/ca-loc-rim-me/ca-loc-rim-me-c.jpg",
       "khuyến_mãi": []
@@ -1740,6 +2547,7 @@
       "điểm_trung_bình": 4.659090909090909,
       "số_lượt_đánh_giá": 44,
       "từ_khóa": [
+<<<<<<< HEAD
         "mot",
         "cá",
         "ca",
@@ -1747,6 +2555,15 @@
         "nang",
         "một",
         "sản phẩm từ cá"
+=======
+        "ca",
+        "nắng",
+        "một",
+        "nang",
+        "sản phẩm từ cá",
+        "cá",
+        "mot"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/ca/ca-mot-nang/ca-mot-nang-c.png",
       "khuyến_mãi": []
@@ -1761,6 +2578,7 @@
       "điểm_trung_bình": 4.684210526315789,
       "số_lượt_đánh_giá": 38,
       "từ_khóa": [
+<<<<<<< HEAD
         "mot",
         "vi",
         "gia",
@@ -1775,6 +2593,22 @@
         "vị",
         "một",
         "sản phẩm từ cá"
+=======
+        "ca",
+        "muc",
+        "mực",
+        "nắng",
+        "vị",
+        "một",
+        "vi",
+        "gia",
+        "nang",
+        "tẩm",
+        "tam",
+        "sản phẩm từ cá",
+        "cá",
+        "mot"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/ca/ca-muc-mot-nang-tam-gia-vi/ca-muc-mot-nang-tam-gia-vi-c.jpg",
       "khuyến_mãi": []
@@ -1789,6 +2623,7 @@
       "điểm_trung_bình": 4.684210526315789,
       "số_lượt_đánh_giá": 38,
       "từ_khóa": [
+<<<<<<< HEAD
         "mot",
         "vi",
         "gia",
@@ -1803,6 +2638,22 @@
         "vị",
         "một",
         "sản phẩm từ cá"
+=======
+        "ca",
+        "muc",
+        "mực",
+        "nắng",
+        "vị",
+        "một",
+        "vi",
+        "gia",
+        "nang",
+        "tẩm",
+        "tam",
+        "sản phẩm từ cá",
+        "cá",
+        "mot"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/ca/ca-muc-mot-nang-tam-gia-vi/ca-muc-mot-nang-tam-gia-vi-1.jpg",
       "khuyến_mãi": []
@@ -1817,10 +2668,17 @@
       "điểm_trung_bình": 4.7272727272727275,
       "số_lượt_đánh_giá": 55,
       "từ_khóa": [
+<<<<<<< HEAD
         "rim",
         "cá",
         "ca",
         "sản phẩm từ cá"
+=======
+        "cá",
+        "sản phẩm từ cá",
+        "ca",
+        "rim"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/ca/ca-rim/ca-rim-c.jpg",
       "khuyến_mãi": []
@@ -1835,6 +2693,7 @@
       "điểm_trung_bình": 4.666666666666667,
       "số_lượt_đánh_giá": 30,
       "từ_khóa": [
+<<<<<<< HEAD
         "cá",
         "rô",
         "ca",
@@ -1845,6 +2704,18 @@
         "sấy",
         "giòn",
         "sản phẩm từ cá"
+=======
+        "ca",
+        "phi",
+        "gion",
+        "sản phẩm từ cá",
+        "rô",
+        "sấy",
+        "giòn",
+        "say",
+        "cá",
+        "ro"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/ca/ca-ro-phi-say-gion/ca-ro-phi-say-gion-c.jpg",
       "khuyến_mãi": []
@@ -1859,6 +2730,7 @@
       "điểm_trung_bình": 4.72972972972973,
       "số_lượt_đánh_giá": 37,
       "từ_khóa": [
+<<<<<<< HEAD
         "rim",
         "ớt",
         "thu",
@@ -1868,6 +2740,17 @@
         "tỏi",
         "ot",
         "sản phẩm từ cá"
+=======
+        "tỏi",
+        "thu",
+        "ớt",
+        "ca",
+        "rim",
+        "toi",
+        "ot",
+        "sản phẩm từ cá",
+        "cá"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/ca/ca-thu-rim-toi-ot/ca-thu-rim-toi-ot-c.jpg",
       "khuyến_mãi": []
@@ -1882,6 +2765,7 @@
       "điểm_trung_bình": 4.714285714285714,
       "số_lượt_đánh_giá": 42,
       "từ_khóa": [
+<<<<<<< HEAD
         "cha",
         "hậu",
         "cá",
@@ -1894,6 +2778,20 @@
         "thác",
         "hau",
         "sản phẩm từ cá"
+=======
+        "ca",
+        "thac",
+        "thác",
+        "hau",
+        "lác",
+        "cha",
+        "chả",
+        "hậu",
+        "lac",
+        "giang",
+        "sản phẩm từ cá",
+        "cá"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/ca/cha-ca-thac-lac-hau-giang/cha-ca-thac-lac-hau-giang-c.jpg",
       "khuyến_mãi": []
@@ -1908,6 +2806,7 @@
       "điểm_trung_bình": 4.583333333333333,
       "số_lượt_đánh_giá": 36,
       "từ_khóa": [
+<<<<<<< HEAD
         "cha",
         "vi",
         "gia",
@@ -1922,6 +2821,22 @@
         "vị",
         "thác",
         "sản phẩm từ cá"
+=======
+        "ca",
+        "thac",
+        "thác",
+        "vị",
+        "lác",
+        "vi",
+        "gia",
+        "chả",
+        "cha",
+        "lac",
+        "tẩm",
+        "tam",
+        "sản phẩm từ cá",
+        "cá"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/ca/cha-ca-thac-lac-tuoi-tam-gia-vi/cha-ca-thac-lac-tuoi-tam-gia-vi-c.jpg",
       "khuyến_mãi": []
@@ -1936,6 +2851,7 @@
       "điểm_trung_bình": 4.571428571428571,
       "số_lượt_đánh_giá": 28,
       "từ_khóa": [
+<<<<<<< HEAD
         "hoi",
         "cá",
         "ca",
@@ -1945,6 +2861,17 @@
         "ha",
         "pate",
         "sản phẩm từ cá"
+=======
+        "long",
+        "ca",
+        "hạ",
+        "pate",
+        "hồi",
+        "ha",
+        "sản phẩm từ cá",
+        "cá",
+        "hoi"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/ca/pa-te-ca-hoi-ha-long/pa-te-ca-hoi-ha-long-c.jpg",
       "khuyến_mãi": []
@@ -1959,6 +2886,7 @@
       "điểm_trung_bình": 4.7,
       "số_lượt_đánh_giá": 50,
       "từ_khóa": [
+<<<<<<< HEAD
         "cha",
         "gio",
         "giò",
@@ -1966,6 +2894,15 @@
         "sản phẩm từ heo",
         "chả",
         "lụa"
+=======
+        "giò",
+        "sản phẩm từ heo",
+        "lụa",
+        "cha",
+        "chả",
+        "gio",
+        "lua"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/heo/cha-gio-cha-lua/cha-gio-cha-lua-h.jpg",
       "khuyến_mãi": []
@@ -1980,6 +2917,7 @@
       "điểm_trung_bình": 4.666666666666667,
       "số_lượt_đánh_giá": 36,
       "từ_khóa": [
+<<<<<<< HEAD
         "cầy",
         "chân",
         "giả",
@@ -1989,6 +2927,17 @@
         "chan",
         "sản phẩm từ heo",
         "cay"
+=======
+        "chân",
+        "cay",
+        "giả",
+        "cầy",
+        "giò",
+        "sản phẩm từ heo",
+        "gio",
+        "gia",
+        "chan"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/heo/chan-gio-gia-cay/chan-gio-gia-cay-h.jpg",
       "khuyến_mãi": []
@@ -2003,6 +2952,7 @@
       "điểm_trung_bình": 4.67741935483871,
       "số_lượt_đánh_giá": 31,
       "từ_khóa": [
+<<<<<<< HEAD
         "cha",
         "phong",
         "chia",
@@ -2016,6 +2966,21 @@
         "đặc",
         "hai",
         "chìa"
+=======
+        "phòng",
+        "chìa",
+        "sản",
+        "san",
+        "sản phẩm từ heo",
+        "hai",
+        "dac",
+        "hải",
+        "cha",
+        "chả",
+        "phong",
+        "đặc",
+        "chia"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/heo/dac-san-cha-chia-hai-phong/dac-san-cha-chia-hai-phong-h.jpg",
       "khuyến_mãi": []
@@ -2030,6 +2995,7 @@
       "điểm_trung_bình": 4.666666666666667,
       "số_lượt_đánh_giá": 60,
       "từ_khóa": [
+<<<<<<< HEAD
         "cha",
         "cốm",
         "noi",
@@ -2042,6 +3008,20 @@
         "san",
         "dac",
         "sản",
+=======
+        "noi",
+        "nội",
+        "sản",
+        "san",
+        "sản phẩm từ heo",
+        "dac",
+        "cốm",
+        "chả",
+        "hà",
+        "cha",
+        "ha",
+        "com",
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
         "đặc"
       ],
       "url": "assets/image/shared/product/heo/dac-san-cha-com-ha-noi/dac-san-cha-com-ha-noi-h.jpg",
@@ -2057,6 +3037,7 @@
       "điểm_trung_bình": 4.659090909090909,
       "số_lượt_đánh_giá": 44,
       "từ_khóa": [
+<<<<<<< HEAD
         "cha",
         "sụn",
         "sản phẩm từ heo",
@@ -2065,6 +3046,16 @@
         "san",
         "dac",
         "sản",
+=======
+        "sản",
+        "san",
+        "sản phẩm từ heo",
+        "dac",
+        "sun",
+        "cha",
+        "chả",
+        "sụn",
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
         "đặc"
       ],
       "url": "assets/image/shared/product/heo/dac-san-cha-sun/dac-san-cha-sun-h.jpg",
@@ -2080,6 +3071,7 @@
       "điểm_trung_bình": 4.666666666666667,
       "số_lượt_đánh_giá": 30,
       "từ_khóa": [
+<<<<<<< HEAD
         "nhục",
         "khau",
         "khâu",
@@ -2089,6 +3081,17 @@
         "sản phẩm từ heo",
         "son",
         "lạng"
+=======
+        "khâu",
+        "nhuc",
+        "sản phẩm từ heo",
+        "lang",
+        "sơn",
+        "son",
+        "lạng",
+        "khau",
+        "nhục"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/heo/khau-nhuc-lang-son/khau-nhuc-lang-son-h.jpg",
       "khuyến_mãi": []
@@ -2103,6 +3106,7 @@
       "điểm_trung_bình": 4.6,
       "số_lượt_đánh_giá": 25,
       "từ_khóa": [
+<<<<<<< HEAD
         "mam",
         "nem",
         "tai",
@@ -2110,6 +3114,15 @@
         "heo",
         "nêm",
         "mắm"
+=======
+        "nem",
+        "sản phẩm từ heo",
+        "nêm",
+        "heo",
+        "mắm",
+        "mam",
+        "tai"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/heo/mam-heo/mam-heo-h.jpg",
       "khuyến_mãi": []
@@ -2124,12 +3137,21 @@
       "điểm_trung_bình": 4.470588235294118,
       "số_lượt_đánh_giá": 85,
       "từ_khóa": [
+<<<<<<< HEAD
         "thanh",
         "chua",
         "nem",
         "hóa",
         "hoa",
         "sản phẩm từ heo"
+=======
+        "nem",
+        "sản phẩm từ heo",
+        "hóa",
+        "thanh",
+        "chua",
+        "hoa"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/heo/nem-chua/nem-chua-h.jpg",
       "khuyến_mãi": []
@@ -2145,6 +3167,7 @@
       "số_lượt_đánh_giá": 70,
       "từ_khóa": [
         "noi",
+<<<<<<< HEAD
         "hà",
         "nem",
         "nội",
@@ -2152,6 +3175,15 @@
         "ran",
         "rán",
         "ha"
+=======
+        "nội",
+        "rán",
+        "nem",
+        "sản phẩm từ heo",
+        "hà",
+        "ha",
+        "ran"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/heo/nem-ha-noi/nem-ha-noi-h.jpg",
       "khuyến_mãi": []
@@ -2166,12 +3198,21 @@
       "điểm_trung_bình": 4.568965517241379,
       "số_lượt_đánh_giá": 58,
       "từ_khóa": [
+<<<<<<< HEAD
         "lụi",
         "nem",
         "trang",
         "sản phẩm từ heo",
         "nha",
         "lui"
+=======
+        "trang",
+        "nem",
+        "sản phẩm từ heo",
+        "lui",
+        "lụi",
+        "nha"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/heo/nem-lui-nha-trang/nem-lui-nha-trang-h.jpg",
       "khuyến_mãi": []
@@ -2186,10 +3227,17 @@
       "điểm_trung_bình": 4.714285714285714,
       "số_lượt_đánh_giá": 42,
       "từ_khóa": [
+<<<<<<< HEAD
         "gan",
         "pate",
         "heo",
         "sản phẩm từ heo"
+=======
+        "sản phẩm từ heo",
+        "gan",
+        "pate",
+        "heo"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/heo/pa-te-gan-heo/pa-te-gan-heo-h.jpg",
       "khuyến_mãi": []
@@ -2204,6 +3252,7 @@
       "điểm_trung_bình": 4.647058823529412,
       "số_lượt_đánh_giá": 34,
       "từ_khóa": [
+<<<<<<< HEAD
         "lưỡi",
         "luoi",
         "tai",
@@ -2211,6 +3260,15 @@
         "cuon",
         "heo",
         "cuộn"
+=======
+        "cuộn",
+        "sản phẩm từ heo",
+        "heo",
+        "cuon",
+        "luoi",
+        "tai",
+        "lưỡi"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/heo/tai-heo-cuon-luoi/tai-heo-cuon-luoi-h.jpg",
       "khuyến_mãi": []
@@ -2225,6 +3283,7 @@
       "điểm_trung_bình": 4.605263157894737,
       "số_lượt_đánh_giá": 38,
       "từ_khóa": [
+<<<<<<< HEAD
         "ủ",
         "muoi",
         "u",
@@ -2232,6 +3291,15 @@
         "sản phẩm từ heo",
         "heo",
         "muối"
+=======
+        "muối",
+        "ủ",
+        "sản phẩm từ heo",
+        "muoi",
+        "heo",
+        "u",
+        "tai"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/heo/tai-heo-u-muoi/tai-heo-u-muoi-h.jpg",
       "khuyến_mãi": []
@@ -2247,6 +3315,7 @@
       "số_lượt_đánh_giá": 31,
       "từ_khóa": [
         "ủ",
+<<<<<<< HEAD
         "u",
         "xi",
         "xì",
@@ -2255,6 +3324,16 @@
         "sản phẩm từ heo",
         "dau",
         "heo"
+=======
+        "sản phẩm từ heo",
+        "xì",
+        "dau",
+        "heo",
+        "u",
+        "tai",
+        "dầu",
+        "xi"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/heo/tai-heo-u-xi-dau/tai-heo-u-xi-dau-h.jpeg",
       "khuyến_mãi": []
@@ -2269,6 +3348,7 @@
       "điểm_trung_bình": 4.6875,
       "số_lượt_đánh_giá": 48,
       "từ_khóa": [
+<<<<<<< HEAD
         "thịt",
         "tép",
         "mam",
@@ -2278,6 +3358,17 @@
         "chưng",
         "thit",
         "mắm"
+=======
+        "tép",
+        "tep",
+        "sản phẩm từ heo",
+        "thit",
+        "mắm",
+        "mam",
+        "chung",
+        "thịt",
+        "chưng"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/heo/thit-chung-mam-tep/thit-chung-mam-tep-h.jpg",
       "khuyến_mãi": []
@@ -2292,6 +3383,7 @@
       "điểm_trung_bình": 4.75,
       "số_lượt_đánh_giá": 40,
       "từ_khóa": [
+<<<<<<< HEAD
         "thịt",
         "khô",
         "sản phẩm từ heo",
@@ -2300,6 +3392,16 @@
         "heo",
         "thit",
         "sấy"
+=======
+        "sản phẩm từ heo",
+        "thit",
+        "sấy",
+        "heo",
+        "say",
+        "thịt",
+        "kho",
+        "khô"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/heo/thit-heo-say-kho/thit-heo-say-kho-h.jpg",
       "khuyến_mãi": []
@@ -2314,6 +3416,7 @@
       "điểm_trung_bình": 4.857142857142857,
       "số_lượt_đánh_giá": 35,
       "từ_khóa": [
+<<<<<<< HEAD
         "xong",
         "thịt",
         "sản phẩm từ heo",
@@ -2322,6 +3425,16 @@
         "heo",
         "thit",
         "khoi"
+=======
+        "khói",
+        "sản phẩm từ heo",
+        "thit",
+        "heo",
+        "xông",
+        "xong",
+        "khoi",
+        "thịt"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/heo/thit-heo-xong-khoi/thit-heo-xong-khoi-h.jpg",
       "khuyến_mãi": []
@@ -2336,6 +3449,7 @@
       "điểm_trung_bình": 4.615384615384615,
       "số_lượt_đánh_giá": 52,
       "từ_khóa": [
+<<<<<<< HEAD
         "xích",
         "cốm",
         "sản phẩm từ heo",
@@ -2343,6 +3457,15 @@
         "xich",
         "xuc",
         "xúc"
+=======
+        "sản phẩm từ heo",
+        "cốm",
+        "xúc",
+        "xuc",
+        "com",
+        "xich",
+        "xích"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/heo/xuc-xich-com/xuc-xich-com-h.jpg",
       "khuyến_mãi": []
@@ -2357,10 +3480,17 @@
       "điểm_trung_bình": 4.758620689655173,
       "số_lượt_đánh_giá": 29,
       "từ_khóa": [
+<<<<<<< HEAD
         "cha",
         "ngan",
         "sản phẩm từ ngan",
         "chả"
+=======
+        "chả",
+        "sản phẩm từ ngan",
+        "ngan",
+        "cha"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/ngan/cha-ngan/cha-ngan-n.jpg",
       "khuyến_mãi": []
@@ -2375,12 +3505,21 @@
       "điểm_trung_bình": 4.583333333333333,
       "số_lượt_đánh_giá": 24,
       "từ_khóa": [
+<<<<<<< HEAD
         "mot",
         "nắng",
         "nang",
         "sản phẩm từ ngan",
         "ngan",
         "một"
+=======
+        "nắng",
+        "ngan",
+        "một",
+        "nang",
+        "sản phẩm từ ngan",
+        "mot"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/ngan/ngan-mot-nang/bo-kho-mot-nang-n.jpg",
       "khuyến_mãi": []
@@ -2395,12 +3534,21 @@
       "điểm_trung_bình": 4.642857142857143,
       "số_lượt_đánh_giá": 28,
       "từ_khóa": [
+<<<<<<< HEAD
         "xong",
         "sản phẩm từ ngan",
         "khói",
         "xông",
         "ngan",
         "khoi"
+=======
+        "khói",
+        "ngan",
+        "xông",
+        "xong",
+        "khoi",
+        "sản phẩm từ ngan"
+>>>>>>> fc0c05e64b9b223d4b1ee4ce6212675df23a12cd
       ],
       "url": "assets/image/shared/product/ngan/ngan-xong-khoi/ngan-xong-khoi-n.jpg",
       "khuyến_mãi": []

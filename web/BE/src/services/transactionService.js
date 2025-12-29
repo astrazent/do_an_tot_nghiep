@@ -46,6 +46,27 @@ export const addTransactionService = async data => {
         }))
     }
 
+    if (!items.length) throw new Error('Danh sách sản phẩm trống')
+
+    const productIds = [...new Set(items.map(i => i.product_id))]
+    const products = await ProductsModel.getProductsByIds(productIds)
+
+    if (!products || products.length !== productIds.length) {
+        const existingIds = products.map(p => p.id)
+        const missingIds = productIds.filter(id => !existingIds.includes(id))
+        throw new Error(`Sản phẩm không tồn tại: ${missingIds.join(', ')}`)
+    }
+
+    const productMap = new Map(products.map(p => [p.id, p]))
+
+    const itemsWithName = items.map(i => {
+        const product = productMap.get(i.product_id)
+        return {
+            ...i,
+            product_name: product.name,
+        }
+    })
+
     const transactionData = {
         user_id: data.user_id || null,
         payment_id: paymentRecord.id,
@@ -66,7 +87,7 @@ export const addTransactionService = async data => {
         amount: data.amount || 0,
         shipped_at: data.shipped_at || null,
         delivered_at: data.delivered_at || null,
-        items,
+        items: itemsWithName,
     }
 
     return await TransactionsModel.createTransaction(transactionData)

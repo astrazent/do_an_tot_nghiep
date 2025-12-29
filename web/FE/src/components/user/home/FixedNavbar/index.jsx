@@ -126,7 +126,7 @@ const FixedNavbar = ({ login = true }) => {
                             </li>
                             <li>
                                 <NavLink
-                                    to="/gioi-thieu"
+                                    to="/about-us"
                                     className={getNavLinkClass}
                                     end
                                 >
@@ -193,7 +193,7 @@ const FixedNavbar = ({ login = true }) => {
                             </li>
                             <li>
                                 <NavLink
-                                    to="/tuyen-dung"
+                                    to="/recruitment"
                                     className={getNavLinkClass}
                                     end
                                 >
@@ -202,7 +202,7 @@ const FixedNavbar = ({ login = true }) => {
                             </li>
                             <li>
                                 <NavLink
-                                    to="/lien-he"
+                                    to="/contact"
                                     className={getNavLinkClass}
                                     end
                                 >

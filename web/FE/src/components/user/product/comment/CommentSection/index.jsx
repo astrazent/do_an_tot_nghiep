@@ -124,7 +124,7 @@ const CommentSection = ({ slug }) => {
         if (!comments || comments.length === 0) return []
         return comments.map(comment => {
             const apiBaseUrl =
-                import.meta.env.VITE_API_BACKEND || 'http://localhost:2082'
+                import.meta.env.VITE_API_BACKEND || 'http://localhost:2000'
             const absoluteAvatarUrl = comment.avatar_url
                 ? comment.avatar_url.startsWith('http')
                     ? comment.avatar_url

@@ -70,7 +70,7 @@ const DiscountProductsModel = {
         return result.affectedRows > 0
     },
 
-    async listLinks(limit = 50, offset = 0) {
+    async listLinks(limit = 5000, offset = 0) {
         const conn = getConnection()
         const [rows] = await conn.execute(
             `SELECT * FROM ${DISCOUNT_PRODUCTS_TABLE_NAME} ORDER BY id DESC LIMIT ? OFFSET ?`,

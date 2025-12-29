@@ -18,6 +18,7 @@ import { useAlert } from '~/contexts/AlertContext'
 import { useCreateTransaction } from '~/hooks/user/useTransaction'
 import { useQueryClient } from '@tanstack/react-query'
 import './cart.scss'
+import ReactGA from 'react-ga4'
 
 const GuestCart = () => {
     const dispatch = useDispatch()
@@ -50,6 +51,24 @@ const GuestCart = () => {
         () => items.reduce((acc, item) => acc + item.price * item.quantity, 0),
         [items]
     )
+
+    useEffect(() => {
+        if (!cartItems || cartItems.length === 0) return
+
+        const ga4Items = items.map(item => ({
+            item_id: String(item.productId),
+            item_name: item.name,
+            price: Number(item.price),
+            quantity: Number(item.quantity),
+        }))
+
+        ReactGA.event('view_cart', {
+            currency: 'VND',
+            value: subtotal,
+            items: ga4Items,
+            debug_mode: true,
+        })
+    }, [cartItems.length])
 
     useEffect(() => {
         if (!couponData) {
@@ -136,6 +155,22 @@ const GuestCart = () => {
         setAppliedCouponCode('')
         setTimeout(() => {
             setAppliedCouponCode(couponCode)
+
+            if (cartItems.length > 0) {
+                const ga4Items = cartItems.map(item => ({
+                    item_id: String(item.product_id),
+                    item_name: item.name,
+                    price: Number(item.price),
+                    quantity: Number(item.qty_total),
+                }))
+
+                ReactGA.event('select_promotion', {
+                    promotion_id: couponData?.id || couponCode,
+                    promotion_name: couponData?.code || couponCode,
+                    items: ga4Items,
+                    debug_mode: true,
+                })
+            }
         }, 0)
     }
 
@@ -148,6 +183,22 @@ const GuestCart = () => {
     const { mutate: createTransaction, isLoading: creatingTransaction } =
         useCreateTransaction({
             onSuccess: data => {
+                const transaction = data.data
+                const ga4Items = transaction.items.map(item => ({
+                    item_id: String(item.product_id),
+                    item_name: item.product_name,
+                    price: Number(item.amount_total / item.qty_total),
+                    quantity: Number(item.qty_total),
+                }))
+                ReactGA.event('purchase', {
+                    transaction_id: transaction.tracking_number,
+                    value: transaction.amount,
+                    currency: 'VND',
+                    shipping: transaction.shipping_fee,
+                    items: ga4Items,
+                    debug_mode: true,
+                })
+
                 showAlert('Đặt hàng thành công! Cảm ơn bạn đã mua sắm.', {
                     type: 'success',
                 })
@@ -184,6 +235,22 @@ const GuestCart = () => {
     }
 
     const handleRemoveItem = productId => {
+        const item = cartItems.find(i => i.product_id === productId)
+        if (!item) return
+
+        ReactGA.event('remove_from_cart', {
+            currency: 'VND',
+            value: item.amount_total,
+            items: [
+                {
+                    item_id: String(item.product_id),
+                    item_name: item.name,
+                    price: Number(item.price),
+                    quantity: Number(item.qty_total),
+                },
+            ],
+            debug_mode: true,
+        })
         dispatch(removeCartItem({ product_id: productId }))
     }
 

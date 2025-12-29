@@ -29,20 +29,50 @@ export const adminRoutes = [
     },
     {
         path: '/admin',
-        element: (
-            <ProtectedAdmin>
-                <SidebarLayout />
-            </ProtectedAdmin>
-        ),
+        element: <AdminLayout />,
         children: [
-            { index: true, element: <AdminDashboard /> },
-
-            { path: 'revenue/analysis', element: <AdminRevenueAnalysis /> },
-            { path: 'revenue/sources', element: <AdminRevenueSources /> },
-            { path: 'customers/analysis', element: <AdminCustomersAnalysis /> },
             {
-                path: 'customers/management',
-                element: <AdminCustomersManagement />,
+                element: <SidebarLayout />,
+                children: [
+                    { index: true, element: <AdminDashboard /> },
+                    {
+                        path: 'revenue/analysis',
+                        element: <AdminRevenueAnalysis />,
+                    },
+                    {
+                        path: 'revenue/sources',
+                        element: <AdminRevenueSources />,
+                    },
+                    {
+                        path: 'customers/analysis',
+                        element: <AdminCustomersAnalysis />,
+                    },
+                    {
+                        path: 'customers/management',
+                        element: <AdminCustomersManagement />,
+                    },
+                    {
+                        path: 'inventory/analysis',
+                        element: <AdminProductAnalysis />,
+                    },
+                    {
+                        path: 'inventory/management',
+                        element: <AdminProductManagement />,
+                    },
+                    { path: 'orders', element: <AdminOrder /> },
+                    { path: 'promotions', element: <AdminPromotion /> },
+                    { path: 'banner', element: <AdminBanner /> },
+                    {
+                        path: 'blog/management',
+                        element: <AdminBlogManagement />,
+                    },
+                    {
+                        path: 'blog/create-new',
+                        element: <AdminBlogCreateNew />,
+                    },
+                    { path: 'messages', element: <AdminMessage /> },
+                    { path: 'discount', element: <DiscountManagement /> },
+                ],
             },
             { path: 'inventory/analysis', element: <AdminProductAnalysis /> },
             {

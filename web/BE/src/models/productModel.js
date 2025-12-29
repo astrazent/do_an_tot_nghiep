@@ -8,6 +8,53 @@ const PRODUCT_IMAGES_TABLE = 'ProductImages'
 const DISCOUNT_PRODUCTS_TABLE = 'DiscountProducts'
 const DISCOUNTS_TABLE = 'Discounts'
 
+const calculateProductPrice = item => {
+    if (!item) return item
+
+    const originPrice = Number(item.origin_price) || 0
+    if (originPrice === 0) return item
+
+    const calculatedDiscountAmount = Number(item.discount_amount_calc) || 0
+
+    if (calculatedDiscountAmount > 0) {
+        item.price = Math.max(0, originPrice - calculatedDiscountAmount)
+
+        item.discount_value = calculatedDiscountAmount
+    } else {
+        const discountValue = Number(item.discount_value) || 0
+        let finalPrice = originPrice
+
+        if (discountValue > 0) {
+            if (discountValue > 100) {
+                finalPrice = originPrice - discountValue
+            } else if (discountValue >= 1 && discountValue <= 100) {
+                finalPrice = originPrice - (originPrice * discountValue) / 100
+            }
+        }
+        item.price = Math.max(0, finalPrice)
+    }
+
+    return item
+}
+
+const DISCOUNT_JOIN_QUERY = `
+    LEFT JOIN ${DISCOUNT_PRODUCTS_TABLE} dp ON dp.product_id = p.id
+    LEFT JOIN ${DISCOUNTS_TABLE} d ON d.id = dp.discount_id 
+        AND d.status = 1 
+        AND d.start_date <= NOW() 
+        AND d.end_date >= NOW()
+`
+
+const DISCOUNT_CALC_SELECT = `
+    MAX(
+        CASE 
+            WHEN d.value > 100 THEN d.value 
+            WHEN d.value > 0 AND d.value <= 100 THEN (p.origin_price * d.value / 100)
+            ELSE 0 
+        END
+    ) AS discount_amount_calc
+`
+
 const PRODUCTS_SCHEMA = Joi.object({
     name: Joi.string().min(3).max(200).required().messages({
         'string.empty': 'Name không được để trống',
@@ -75,11 +122,33 @@ const ProductsModel = {
     async getProductById(id) {
         if (!id) return null
         const conn = getConnection()
+
         const [rows] = await conn.execute(
-            `SELECT * FROM ${PRODUCTS_TABLE} WHERE id = ? LIMIT 1`,
+            `SELECT p.*, ${DISCOUNT_CALC_SELECT}
+            FROM ${PRODUCTS_TABLE} p
+            ${DISCOUNT_JOIN_QUERY}
+            WHERE p.id = ? 
+            GROUP BY p.id
+            LIMIT 1`,
             [id]
         )
-        return rows.length ? rows[0] : null
+        return rows.length ? calculateProductPrice(rows[0]) : null
+    },
+
+    async getProductsByIds(ids) {
+        if (!Array.isArray(ids) || !ids.length) return []
+        const conn = getConnection()
+        const placeholders = ids.map(() => '?').join(',')
+
+        const [rows] = await conn.execute(
+            `SELECT p.*, ${DISCOUNT_CALC_SELECT}
+            FROM ${PRODUCTS_TABLE} p
+            ${DISCOUNT_JOIN_QUERY}
+            WHERE p.id IN (${placeholders})
+            GROUP BY p.id`,
+            ids
+        )
+        return rows.map(calculateProductPrice)
     },
 
     async updateProduct(id, data) {
@@ -122,10 +191,12 @@ const ProductsModel = {
         maxPrice = null
     ) {
         const conn = getConnection()
+
         let query = `
-        SELECT p.*
+        SELECT p.*, ${DISCOUNT_CALC_SELECT}
         FROM ${PRODUCTS_TABLE} p
         INNER JOIN ${CATEGORIES_TABLE} c ON p.category_id = c.id
+        ${DISCOUNT_JOIN_QUERY}
         `
         const params = []
         const whereClauses = []
@@ -148,21 +219,14 @@ const ProductsModel = {
             query += ` WHERE ` + whereClauses.join(' AND ')
         }
 
+        query += ` GROUP BY p.id `
+
         switch (sort) {
             case 'ocop-3':
-                query += ` ORDER BY 
-                CASE 
-                    WHEN p.ocop_rating = 3 THEN 1
-                    WHEN p.ocop_rating = 4 THEN 2
-                    ELSE 3
-                END, p.id DESC`
+                query += ` ORDER BY CASE WHEN p.ocop_rating = 3 THEN 1 WHEN p.ocop_rating = 4 THEN 2 ELSE 3 END, p.id DESC`
                 break
             case 'ocop-4':
-                query += ` ORDER BY 
-                CASE 
-                    WHEN p.ocop_rating = 4 THEN 1
-                    ELSE 2
-                END, p.id DESC`
+                query += ` ORDER BY CASE WHEN p.ocop_rating = 4 THEN 1 ELSE 2 END, p.id DESC`
                 break
             case 'price-asc':
                 query += ` ORDER BY p.price ASC`
@@ -171,14 +235,10 @@ const ProductsModel = {
                 query += ` ORDER BY p.price DESC`
                 break
             case 'rating-asc':
-                query += ` ORDER BY 
-                (CASE WHEN p.rate_count > 0 THEN p.rate_point_total / p.rate_count ELSE 0 END) ASC,
-                p.rate_count ASC`
+                query += ` ORDER BY (CASE WHEN p.rate_count > 0 THEN p.rate_point_total / p.rate_count ELSE 0 END) ASC, p.rate_count ASC`
                 break
             case 'rating-desc':
-                query += ` ORDER BY 
-                (CASE WHEN p.rate_count > 0 THEN p.rate_point_total / p.rate_count ELSE 0 END) DESC,
-                p.rate_count DESC`
+                query += ` ORDER BY (CASE WHEN p.rate_count > 0 THEN p.rate_point_total / p.rate_count ELSE 0 END) DESC, p.rate_count DESC`
                 break
             case 'promotion':
                 query += ` AND p.origin_price != 0 ORDER BY p.updated_at DESC`
@@ -193,11 +253,12 @@ const ProductsModel = {
         params.push(limit, offset)
 
         const [rows] = await conn.execute(query, params)
-        return rows
+        return rows.map(calculateProductPrice)
     },
 
     async getListProductChatBot({ limit = 150, offset = 0 } = {}) {
         const conn = getConnection()
+
         const query = `
         SELECT
             p.id AS id,
@@ -220,28 +281,24 @@ const ProductsModel = {
             c.description AS category_description,
 
             pi.image_url AS main_image_url,
-
-            d.name AS discount_name,
-            d.description AS discount_description,
-            d.value AS discount_value,
-            d.start_date AS discount_start_date,
-            d.end_date AS discount_end_date,
-            d.status AS discount_status
+            
+            ${DISCOUNT_CALC_SELECT},
+            MAX(d.name) AS discount_name, -- Lấy tượng trưng 1 tên discount
+            MAX(d.end_date) AS discount_end_date
 
         FROM ${PRODUCTS_TABLE} p
         LEFT JOIN ${CATEGORIES_TABLE} c ON p.category_id = c.id
         LEFT JOIN ${PRODUCT_IMAGES_TABLE} pi 
             ON pi.product_id = p.id AND pi.is_main = 1
-        LEFT JOIN ${DISCOUNT_PRODUCTS_TABLE} dp 
-            ON dp.product_id = p.id
-        LEFT JOIN ${DISCOUNTS_TABLE} d 
-            ON dp.discount_id = d.id
+        ${DISCOUNT_JOIN_QUERY}
 
+        GROUP BY p.id
         LIMIT ? OFFSET ?
     `
         const params = [limit, offset]
         const [rows] = await conn.execute(query, params)
-        return rows
+
+        return rows.map(calculateProductPrice)
     },
 
     async listPromotionProducts({
@@ -253,10 +310,11 @@ const ProductsModel = {
     } = {}) {
         const conn = getConnection()
         let query = `
-        SELECT p.*
-        FROM ${PRODUCTS_TABLE} p
-        INNER JOIN ${CATEGORIES_TABLE} c ON p.category_id = c.id
-        WHERE p.origin_price != 0
+            SELECT p.*, ${DISCOUNT_CALC_SELECT}
+            FROM ${PRODUCTS_TABLE} p
+            INNER JOIN ${CATEGORIES_TABLE} c ON p.category_id = c.id
+            ${DISCOUNT_JOIN_QUERY}
+            WHERE p.origin_price != 0
         `
         const params = []
 
@@ -269,25 +327,14 @@ const ProductsModel = {
             params.push(maxPrice)
         }
 
+        query += ` GROUP BY p.id `
+
         switch (sort) {
             case 'ocop-3':
-                query += `
-                ORDER BY 
-                CASE 
-                    WHEN p.ocop_rating = 3 THEN 1
-                    WHEN p.ocop_rating = 4 THEN 2
-                    ELSE 3
-                END, p.id DESC
-            `
+                query += ` ORDER BY CASE WHEN p.ocop_rating = 3 THEN 1 WHEN p.ocop_rating = 4 THEN 2 ELSE 3 END, p.id DESC`
                 break
             case 'ocop-4':
-                query += `
-                ORDER BY 
-                CASE 
-                    WHEN p.ocop_rating = 4 THEN 1
-                    ELSE 2
-                END, p.id DESC
-            `
+                query += ` ORDER BY CASE WHEN p.ocop_rating = 4 THEN 1 ELSE 2 END, p.id DESC`
                 break
             case 'price-asc':
                 query += ` ORDER BY p.price ASC`
@@ -296,18 +343,10 @@ const ProductsModel = {
                 query += ` ORDER BY p.price DESC`
                 break
             case 'rating-asc':
-                query += `
-                ORDER BY 
-                (CASE WHEN p.rate_count > 0 THEN p.rate_point_total / p.rate_count ELSE 0 END) ASC,
-                p.rate_count ASC
-            `
+                query += ` ORDER BY (CASE WHEN p.rate_count > 0 THEN p.rate_point_total / p.rate_count ELSE 0 END) ASC, p.rate_count ASC`
                 break
             case 'rating-desc':
-                query += `
-                ORDER BY 
-                (CASE WHEN p.rate_count > 0 THEN p.rate_point_total / p.rate_count ELSE 0 END) DESC,
-                p.rate_count DESC
-            `
+                query += ` ORDER BY (CASE WHEN p.rate_count > 0 THEN p.rate_point_total / p.rate_count ELSE 0 END) DESC, p.rate_count DESC`
                 break
             case 'newest':
             default:
@@ -319,17 +358,22 @@ const ProductsModel = {
         params.push(limit, offset)
 
         const [rows] = await conn.execute(query, params)
-        return rows
+        return rows.map(calculateProductPrice)
     },
 
     async getProductBySlug(slug) {
         if (!slug) return null
         const conn = getConnection()
         const [rows] = await conn.execute(
-            `SELECT * FROM ${PRODUCTS_TABLE} WHERE slug = ? LIMIT 1`,
+            `SELECT p.*, ${DISCOUNT_CALC_SELECT}
+            FROM ${PRODUCTS_TABLE} p 
+            ${DISCOUNT_JOIN_QUERY}
+            WHERE p.slug = ? 
+            GROUP BY p.id
+            LIMIT 1`,
             [slug]
         )
-        return rows.length ? rows[0] : null
+        return rows.length ? calculateProductPrice(rows[0]) : null
     },
 
     async getSearchProduct(slug, limit = 10) {
@@ -337,69 +381,93 @@ const ProductsModel = {
 
         const conn = getConnection()
         const [rows] = await conn.execute(
-            `SELECT name, slug, id
-            FROM ${PRODUCTS_TABLE}
-            WHERE name LIKE CONCAT('%', ?, '%')
+            `SELECT p.name, p.slug, p.id, p.origin_price, p.price, pi.image_url, ${DISCOUNT_CALC_SELECT}
+            FROM ${PRODUCTS_TABLE} p
+            LEFT JOIN ${PRODUCT_IMAGES_TABLE} pi ON pi.product_id = p.id AND pi.is_main = 1
+            ${DISCOUNT_JOIN_QUERY}
+            WHERE p.name LIKE CONCAT('%', ?, '%')
             COLLATE utf8mb4_unicode_ci
-            ORDER BY rate_point_total DESC
+            GROUP BY p.id
+            ORDER BY p.rate_point_total DESC
             LIMIT ?`,
             [slug, Number(limit)]
         )
 
-        return rows
+        return rows.map(calculateProductPrice)
     },
 
     async getSearchByCategory(categorySlug, keyword, limit = 10, offset = 0) {
-        if (!categorySlug) return []
-
         const conn = getConnection()
 
-        const [catRows] = await conn.execute(
-            `SELECT id FROM Categories WHERE slug = ?`,
-            [categorySlug]
-        )
+        let baseQuery = `
+            SELECT p.*, ${DISCOUNT_CALC_SELECT}
+            FROM ${PRODUCTS_TABLE} p
+            ${DISCOUNT_JOIN_QUERY}
+        `
+        let whereConditions = [
+            `p.name LIKE CONCAT('%', ?, '%') COLLATE utf8mb4_unicode_ci`,
+        ]
+        let params = [keyword]
 
-        if (catRows.length === 0) return []
+        if (categorySlug && categorySlug !== 'all') {
+            const [catRows] = await conn.execute(
+                `SELECT id FROM ${CATEGORIES_TABLE} WHERE slug = ?`,
+                [categorySlug]
+            )
 
-        const categoryId = catRows[0].id
+            if (catRows.length === 0) return []
+            const categoryId = catRows[0].id
 
-        const [rows] = await conn.execute(
-            `SELECT *
-        FROM Products
-        WHERE category_id = ?
-        AND name LIKE CONCAT('%', ?, '%')
-        COLLATE utf8mb4_unicode_ci
-        ORDER BY rate_point_total DESC
-        LIMIT ? OFFSET ?`,
-            [categoryId, keyword, Number(limit), Number(offset)]
-        )
+            whereConditions.push(`p.category_id = ?`)
+            params.push(categoryId)
+        }
 
-        return rows
+        const finalQuery = `
+            ${baseQuery}
+            WHERE ${whereConditions.join(' AND ')}
+            GROUP BY p.id
+            ORDER BY p.rate_point_total DESC
+            LIMIT ? OFFSET ?
+        `
+        params.push(Number(limit), Number(offset))
+
+        const [rows] = await conn.execute(finalQuery, params)
+        return rows.map(calculateProductPrice)
     },
 
     async getHotProduct(limit = 6) {
         const conn = getConnection()
         try {
             const halfLimit = Math.floor(limit / 2)
+
             const [hotProducts] = await conn.execute(
                 `SELECT 
-                p.*, 
-                SUM(oi.qty_total) AS total_sold
-            FROM ${PRODUCTS_TABLE} p
-            LEFT JOIN ${ORDER_ITEMS_TABLE} oi ON p.id = oi.product_id
-            GROUP BY p.id
-            ORDER BY total_sold DESC
-            LIMIT ?`,
+                    p.*, 
+                    SUM(oi.qty_total) AS total_sold,
+                    ${DISCOUNT_CALC_SELECT}
+                FROM ${PRODUCTS_TABLE} p
+                LEFT JOIN ${ORDER_ITEMS_TABLE} oi ON p.id = oi.product_id
+                ${DISCOUNT_JOIN_QUERY}
+                GROUP BY p.id
+                ORDER BY total_sold DESC
+                LIMIT ?`,
                 [halfLimit]
             )
+
             const [occopProducts] = await conn.execute(
-                `SELECT *
-                FROM ${PRODUCTS_TABLE}
-                WHERE ocop_rating IS NOT NULL
+                `SELECT p.*, ${DISCOUNT_CALC_SELECT}
+                FROM ${PRODUCTS_TABLE} p
+                ${DISCOUNT_JOIN_QUERY}
+                WHERE p.ocop_rating IS NOT NULL
+                GROUP BY p.id
                 LIMIT ?`,
                 [limit - halfLimit]
             )
-            return { hotProducts, occopProducts }
+
+            return {
+                hotProducts: hotProducts.map(calculateProductPrice),
+                occopProducts: occopProducts.map(calculateProductPrice),
+            }
         } catch (error) {
             console.error('Lỗi khi lấy sản phẩm sidebar:', error)
             throw error
@@ -418,15 +486,18 @@ const ProductsModel = {
             const product = productRows[0]
 
             const [categoryRows] = await conn.execute(
-                `SELECT * FROM ${PRODUCTS_TABLE} 
-                WHERE category_id = ? AND slug != ?
-                ORDER BY created_at DESC
+                `SELECT p.*, ${DISCOUNT_CALC_SELECT}
+                FROM ${PRODUCTS_TABLE} p
+                ${DISCOUNT_JOIN_QUERY}
+                WHERE p.category_id = ? AND p.slug != ?
+                GROUP BY p.id
+                ORDER BY p.created_at DESC
                 LIMIT ?`,
                 [product.category_id, slug, limit]
             )
 
             const [coBoughtRows] = await conn.execute(
-                `SELECT DISTINCT p.*
+                `SELECT DISTINCT p.*, ${DISCOUNT_CALC_SELECT}
                 FROM ${ORDER_ITEMS_TABLE} oi1
                 INNER JOIN ${ORDER_ITEMS_TABLE} oi2 
                     ON oi1.transaction_id = oi2.transaction_id 
@@ -435,12 +506,17 @@ const ProductsModel = {
                     ON p.id = oi2.product_id
                 INNER JOIN ${PRODUCTS_TABLE} target 
                     ON target.id = oi1.product_id
+                ${DISCOUNT_JOIN_QUERY}
                 WHERE target.slug = ?
+                GROUP BY p.id
                 LIMIT ?`,
                 [slug, limit]
             )
 
-            return { sameCategory: categoryRows, coBought: coBoughtRows }
+            return {
+                sameCategory: categoryRows.map(calculateProductPrice),
+                coBought: coBoughtRows.map(calculateProductPrice),
+            }
         } catch (error) {
             console.error('Lỗi khi lấy sản phẩm liên quan:', error)
             throw error

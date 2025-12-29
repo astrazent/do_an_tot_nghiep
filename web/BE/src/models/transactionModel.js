@@ -88,6 +88,7 @@ const TRANSACTIONS_SCHEMA = Joi.object({
         .items(
             Joi.object({
                 product_id: Joi.number().integer().required(),
+                product_name: Joi.string().trim().optional(),
                 qty_total: Joi.number().integer().min(1).required(),
                 amount_total: Joi.number().precision(2).min(0).required(),
             })

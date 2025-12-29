@@ -49,12 +49,9 @@ function validateRegister(req, res, next) {
     })
 
     if (error) {
-        return next(
-            new ApiError(
-                StatusCodes.UNPROCESSABLE_ENTITY,
-                'Định dạng không hợp lệ'
-            )
-        )
+        const message = error.details.map(detail => detail.message).join(', ')
+
+        return next(new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, message))
     }
 
     req.validated = value

@@ -1,6 +1,5 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import Home from '~/pages/user/Home'
-import About from '~/pages/user/About'
 import Login from '~/pages/user/Login'
 import Register from '~/pages/user/Register'
 import Profile from '~/pages/user/Profile'
@@ -19,6 +18,10 @@ import Promotion from '~/pages/user/Promotion'
 import SearchPage from '~/pages/user/SearchPage'
 import { useCurrentUser } from '~/hooks/user/useUser'
 import ReturnPageVNPay from '~/components/user/payment/ReturnPageVNPay'
+import UserLayout from '~/layouts/user/UserLayout'
+import AboutUs from '~/pages/user/AboutUs'
+import Recruitment from '~/pages/user/Recruitment'
+import Contact from '~/pages/user/Contact'
 const ProtectedRoute = ({ children }) => {
     const { isAuthenticated } = useCurrentUser()
     const location = useLocation()
@@ -41,59 +44,74 @@ function UserProtectedLayout() {
 }
 
 export const userRoutes = [
-    { path: '/', element: <Home /> },
     {
-        element: <MainLayout />,
+        element: <UserLayout />,
         children: [
-            { path: '/cart', element: <Cart /> },
-            { path: '/test-alert', element: <TestAlert /> },
-            { path: '/vnpay/return', element: <ReturnPageVNPay /> },
-        ],
-    },
-    {
-        element: (
-            <SidebarLayout
-                leftHidePriority={['hot', 'featured', 'categories', 'search']}
-            />
-        ),
-        children: [
-            { path: '/sale', element: <Promotion /> },
-            { path: '/category/:slug', element: <Category /> },
-            { path: '/about', element: <About /> },
-            { path: '/search', element: <SearchPage /> },
-            { path: '/product/:slug', element: <Product /> },
-        ],
-    },
-    {
-        element: (
-            <SidebarLayout
-                sidebarRight={<RightSidebar />}
-                initialSectionsStateLeft={{
-                    search: false,
-                    categories: true,
-                    featured: true,
-                    hot: true,
-                }}
-                initialSectionsStateRight={{
-                    featuredPosts: true,
-                    consumerTips: true,
-                }}
-                paddingX={50}
-            />
-        ),
-        children: [
-            { path: '/news', element: <News /> },
-            { path: '/news-detail/:slug', element: <NewsDetail /> },
-        ],
-    },
-    { path: '/login', element: <Login /> },
-    { path: '/register', element: <Register /> },
-    {
-        path: '/user',
-        element: <UserProtectedLayout />,
-        children: [
-            { path: 'profile', element: <Profile /> },
-            { path: 'purchase', element: <Purchase /> },
+            { path: '/', element: <Home /> },
+            { path: '/login', element: <Login /> },
+            { path: '/register', element: <Register /> },
+            { path: '/about-us', element: <AboutUs /> },
+            { path: '/recruitment', element: <Recruitment /> },
+            { path: '/contact', element: <Contact /> },
+            {
+                element: <MainLayout />,
+                children: [
+                    { path: '/cart', element: <Cart /> },
+                    { path: '/test-alert', element: <TestAlert /> },
+                    { path: '/vnpay/return', element: <ReturnPageVNPay /> },
+                ],
+            },
+
+            {
+                element: (
+                    <SidebarLayout
+                        leftHidePriority={[
+                            'hot',
+                            'featured',
+                            'categories',
+                            'search',
+                        ]}
+                    />
+                ),
+                children: [
+                    { path: '/sale', element: <Promotion /> },
+                    { path: '/category/:slug', element: <Category /> },
+                    { path: '/search', element: <SearchPage /> },
+                    { path: '/product/:slug', element: <Product /> },
+                ],
+            },
+
+            {
+                element: (
+                    <SidebarLayout
+                        sidebarRight={<RightSidebar />}
+                        initialSectionsStateLeft={{
+                            search: false,
+                            categories: true,
+                            featured: true,
+                            hot: true,
+                        }}
+                        initialSectionsStateRight={{
+                            featuredPosts: true,
+                            consumerTips: true,
+                        }}
+                        paddingX={50}
+                    />
+                ),
+                children: [
+                    { path: '/news', element: <News /> },
+                    { path: '/news-detail/:slug', element: <NewsDetail /> },
+                ],
+            },
+
+            {
+                path: '/user',
+                element: <UserProtectedLayout />,
+                children: [
+                    { path: 'profile', element: <Profile /> },
+                    { path: 'purchase', element: <Purchase /> },
+                ],
+            },
         ],
     },
 ]

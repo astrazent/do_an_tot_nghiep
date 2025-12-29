@@ -14,6 +14,7 @@ import {
     HiOutlineUsers,
     HiOutlineNewspaper,
     HiOutlineDocumentAdd,
+    HiTag,
     HiX,
     HiOutlineTag,
     HiOutlineChip,
