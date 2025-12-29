@@ -89,7 +89,7 @@ const mainNavLinks = [
         path: '/admin/category',
     },
     { name: 'Đơn hàng', icon: <HiOutlineShoppingBag />, path: '/admin/orders' },
-    { name: 'Khuyến mãi', icon: <MdLocalOffer />, path: '/admin/promotions' },
+    { name: 'Khuyến mãi', icon: <MdLocalOffer />, path: '/admin/discount' },
     { name: 'Banner', icon: <MdAdsClick />, path: '/admin/banner' },
     {
         name: 'Blog',

@@ -17,6 +17,8 @@ import AdminBlogTypeManagement from '~/pages/admin/AdminBlogTypeManagement'
 import AdminCategoryManagement from '~/pages/admin/AdminCategoryManagement'
 import PostMarketingAI from '~/pages/admin/PostMarketingAI'
 import EmailAI from '~/pages/admin/EmailMarketingAI'
+import AdminLayout from '~/layouts/admin/AdminLayout'
+import DiscountManagement from '~/pages/admin/DiscountManagement'
 
 function ProtectedAdmin({ children }) {
     return children
@@ -59,6 +61,7 @@ export const adminRoutes = [
                         path: 'inventory/management',
                         element: <AdminProductManagement />,
                     },
+                    { path: 'category', element: <AdminCategoryManagement /> },
                     { path: 'orders', element: <AdminOrder /> },
                     { path: 'promotions', element: <AdminPromotion /> },
                     { path: 'banner', element: <AdminBanner /> },
@@ -70,24 +73,15 @@ export const adminRoutes = [
                         path: 'blog/create-new',
                         element: <AdminBlogCreateNew />,
                     },
-                    { path: 'messages', element: <AdminMessage /> },
                     { path: 'discount', element: <DiscountManagement /> },
+                    { path: 'blog/type', element: <AdminBlogTypeManagement /> },
+                    {
+                        path: 'ai_marketing/content',
+                        element: <PostMarketingAI />,
+                    },
+                    { path: 'ai_marketing/email', element: <EmailAI /> },
                 ],
             },
-            { path: 'inventory/analysis', element: <AdminProductAnalysis /> },
-            {
-                path: 'inventory/management',
-                element: <AdminProductManagement />,
-            },
-            { path: 'category', element: <AdminCategoryManagement /> },
-            { path: 'orders', element: <AdminOrder /> },
-            { path: 'promotions', element: <AdminPromotion /> },
-            { path: 'banner', element: <AdminBanner /> },
-            { path: 'blog/management', element: <AdminBlogManagement /> },
-            { path: 'blog/create-new', element: <AdminBlogCreateNew /> },
-            { path: 'blog/type', element: <AdminBlogTypeManagement /> },
-            { path: 'ai_marketing/content', element: <PostMarketingAI /> },
-            { path: 'ai_marketing/email', element: <EmailAI /> },
         ],
     },
 ]
