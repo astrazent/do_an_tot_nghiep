@@ -1,4 +1,3 @@
-// src/pages/admin/category/AdminCategoryManagement.jsx
 import React, { useState, useEffect, useRef } from 'react'
 import {
     FaEdit,
@@ -14,9 +13,10 @@ import {
     FaSitemap,
 } from 'react-icons/fa'
 import { getListCategory } from '~/services/admin/productAdminService'
+import { deleteCategory } from '~/services/admin/categoryAdminService'
 import CategoryCreateModal from '~/components/admin/category/CategoryCreateModal'
 import CategoryEditModal from '~/components/admin/category/CategoryEditModal'
-import { deleteCategory } from '~/services/admin/categoryAdminService'
+import Alert from '~/components/shared/Alert'
 
 const formatDateTime = (dateString) => {
     if (!dateString) return 'N/A'
@@ -26,6 +26,7 @@ const formatDateTime = (dateString) => {
     return `${time} ${day}`
 }
 
+// Skeleton Row
 const SkeletonRow = () => (
     <div className="grid grid-cols-12 gap-4 px-6 py-4 border-b border-gray-100 animate-pulse">
         <div className="col-span-3"><div className="h-4 bg-gray-200 rounded w-full mb-2"></div><div className="h-3 bg-gray-200 rounded w-2/3"></div></div>
@@ -37,6 +38,7 @@ const SkeletonRow = () => (
     </div>
 )
 
+// Parent Filter Dropdown (giữ nguyên)
 const ParentFilterDropdown = ({ value, onChange, categories }) => {
     const [open, setOpen] = useState(false)
     const ref = useRef(null)
@@ -85,6 +87,7 @@ const ParentFilterDropdown = ({ value, onChange, categories }) => {
     )
 }
 
+// Action Dropdown (giữ nguyên)
 const ActionDropdown = ({ category, onEdit, onDelete }) => {
     const [isOpen, setIsOpen] = useState(false)
     const ref = useRef(null)
@@ -122,6 +125,42 @@ const ActionDropdown = ({ category, onEdit, onDelete }) => {
     )
 }
 
+// Modal xác nhận xóa (tương tự ProductTable)
+const ConfirmDeleteModal = ({ isOpen, onClose, onConfirm, categoryName }) => {
+    if (!isOpen) return null
+
+    return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
+            <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 p-6 border border-gray-200">
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                    Xác nhận xóa danh mục
+                </h3>
+                <p className="text-gray-600 mb-6 leading-relaxed">
+                    Bạn có chắc chắn muốn xóa danh mục 
+                    <span className="font-medium text-red-600"> "{categoryName}"</span>?
+                    <br />
+                    Các danh mục con sẽ chuyển thành gốc. Sản phẩm liên quan có thể bị ảnh hưởng.
+                </p>
+                <div className="flex justify-end gap-4">
+                    <button
+                        onClick={onClose}
+                        className="px-5 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors font-medium"
+                    >
+                        Hủy
+                    </button>
+                    <button
+                        onClick={onConfirm}
+                        className="px-5 py-2.5 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium flex items-center gap-2"
+                    >
+                        <FaTrashAlt className="w-4 h-4" />
+                        Xóa
+                    </button>
+                </div>
+            </div>
+        </div>
+    )
+}
+
 const AdminCategoryManagement = () => {
     const [categories, setCategories] = useState([])
     const [filteredCategories, setFilteredCategories] = useState([])
@@ -134,7 +173,19 @@ const AdminCategoryManagement = () => {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false)
     const [selectedCategory, setSelectedCategory] = useState(null)
     const [refreshTrigger, setRefreshTrigger] = useState(0)
-    const [deletingId, setDeletingId] = useState(null) // Loading khi xóa
+    const [deletingId, setDeletingId] = useState(null)
+
+    // State cho Alert
+    const [alert, setAlert] = useState({ show: false, message: '', type: 'success' })
+
+    const showAlert = (message, type = 'success') => {
+        setAlert({ show: true, message, type })
+        setTimeout(() => setAlert({ show: false, message: '', type: 'success' }), 2500)
+    }
+
+    // State cho modal xóa
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+    const [categoryToDelete, setCategoryToDelete] = useState(null)
 
     const itemsPerPage = 6
 
@@ -180,28 +231,38 @@ const AdminCategoryManagement = () => {
         setIsEditModalOpen(true)
     }
 
-    const handleDelete = async (category) => {
-        if (!window.confirm(
-            `Bạn có chắc chắn muốn xóa danh mục "${category.name}"?\n\n` +
-            `• Các danh mục con sẽ bị chuyển thành danh mục gốc\n` +
-            `• Sản phẩm thuộc danh mục này có thể bị ảnh hưởng`
-        )) return
+    const handleDeleteClick = (category) => {
+        setCategoryToDelete(category)
+        setIsDeleteModalOpen(true)
+    }
 
-        setDeletingId(category.id)
+    const handleConfirmDelete = async () => {
+        if (!categoryToDelete) return
+
+        setDeletingId(categoryToDelete.id)
         try {
-            await deleteCategory(category.id)
+            await deleteCategory(categoryToDelete.id)
+            showAlert('Xóa danh mục thành công!', 'success')
             setRefreshTrigger(prev => prev + 1)
-            // Có thể thêm toast success ở đây
         } catch (err) {
             const msg = err.response?.data?.message || 'Không thể xóa danh mục này (có thể có sản phẩm hoặc danh mục con)'
-            alert(msg)
+            showAlert(msg, 'error')
         } finally {
             setDeletingId(null)
+            setIsDeleteModalOpen(false)
+            setCategoryToDelete(null)
         }
     }
 
-    const handleCreateSuccess = () => setRefreshTrigger(prev => prev + 1)
-    const handleUpdateSuccess = () => setRefreshTrigger(prev => prev + 1)
+    const handleCreateSuccess = () => {
+        showAlert('Thêm danh mục mới thành công!', 'success')
+        setRefreshTrigger(prev => prev + 1)
+    }
+
+    const handleUpdateSuccess = () => {
+        showAlert('Cập nhật danh mục thành công!', 'success')
+        setRefreshTrigger(prev => prev + 1)
+    }
 
     const totalPages = Math.ceil(filteredCategories.length / itemsPerPage)
     const currentItems = filteredCategories.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
@@ -229,6 +290,16 @@ const AdminCategoryManagement = () => {
                     Thêm danh mục mới
                 </button>
             </div>
+
+            {/* Alert hiển thị */}
+            {alert.show && (
+                <Alert
+                    message={alert.message}
+                    type={alert.type}
+                    duration={2500}
+                    onClose={() => setAlert({ show: false, message: '', type: 'success' })}
+                />
+            )}
 
             {error && (
                 <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg flex items-center justify-between">
@@ -323,7 +394,7 @@ const AdminCategoryManagement = () => {
                                     {deletingId === cat.id ? (
                                         <div className="w-8 h-8 border-2 border-red-500 border-t-transparent rounded-full animate-spin"></div>
                                     ) : (
-                                        <ActionDropdown category={cat} onEdit={handleEdit} onDelete={handleDelete} />
+                                        <ActionDropdown category={cat} onEdit={handleEdit} onDelete={handleDeleteClick} />
                                     )}
                                 </div>
                             </div>
@@ -364,6 +435,17 @@ const AdminCategoryManagement = () => {
                 onClose={() => setIsEditModalOpen(false)}
                 category={selectedCategory}
                 onSuccess={handleUpdateSuccess}
+            />
+
+            {/* Modal Xác nhận xóa */}
+            <ConfirmDeleteModal
+                isOpen={isDeleteModalOpen}
+                onClose={() => {
+                    setIsDeleteModalOpen(false)
+                    setCategoryToDelete(null)
+                }}
+                onConfirm={handleConfirmDelete}
+                categoryName={categoryToDelete?.name || ''}
             />
         </div>
     )

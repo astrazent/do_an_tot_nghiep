@@ -187,6 +187,12 @@ const getDashboardSummary = async date => {
     return result
 }
 
+const getListCustomerByExpense = async ({ minSpending }) => {
+    console.log('minSpending', minSpending);
+    const result = await UsersModel.getListCustomerByExpense(minSpending)
+    return result
+}
+
 export const userService = {
     registerService,
     loginService,
@@ -198,4 +204,5 @@ export const userService = {
     updateUserService,
     deleteUserService,
     getDashboardSummary,
+    getListCustomerByExpense
 }

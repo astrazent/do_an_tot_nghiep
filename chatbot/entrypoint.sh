@@ -1,10 +1,7 @@
 #!/bin/bash
-<<<<<<< HEAD
-=======
 
 echo "🔧 Init Redis..."
 python -m load_data.init_redis
->>>>>>> 15ddbb6f75289aac4ab308c5153d907a6f5a420d
 
 while true; do
     uvicorn app.main:app --host 0.0.0.0 --port 8000 &

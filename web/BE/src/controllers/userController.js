@@ -88,6 +88,18 @@ const getDashboardSummary = async (req, res, next) => {
     }
 }
 
+const getListCustomerByExpense = async (req, res, next) => {
+    try {
+        const result = await userService.getListCustomerByExpense(req.query)
+        return res.status(StatusCodes.OK).json({
+            message: 'Lấy data thành công',
+            data: result,
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
 
 export const userController = {
     getByIdUser,
@@ -95,5 +107,6 @@ export const userController = {
     checkPasswordAndUpdate,
     updateUser,
     deleteUser,
-    getDashboardSummary
+    getDashboardSummary,
+    getListCustomerByExpense
 }

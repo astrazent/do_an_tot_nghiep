@@ -96,7 +96,7 @@ const SingleSection = ({
                                     <ProductCard
                                         image={
                                             product.image
-                                                ? `${IMAGE_BASE_URL}${product.image}`
+                                                ? `${product.image}`
                                                 : null
                                         }
                                         name={product.name}
@@ -118,7 +118,7 @@ const SingleSection = ({
                                     key={product.id}
                                     image={
                                         product.image
-                                            ? `${IMAGE_BASE_URL}${product.image}`
+                                            ? `${product.image}`
                                             : null
                                     }
                                     name={product.name}

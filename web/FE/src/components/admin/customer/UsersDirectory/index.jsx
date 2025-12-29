@@ -13,12 +13,9 @@ import {
 
 import { getListUser, deleteUser } from '~/services/admin/userAdminService'
 import UserProfileModal from '../UserProfileModal'
+import Alert from '~/components/shared/Alert'
 
-/* ================================================================
-   UI COMPONENTS (Giữ nguyên)
-================================================================ */
-
-// 1. Skeleton Loading Row
+// Skeleton Loading Row (giữ nguyên)
 const SkeletonRow = () => (
     <div className="grid grid-cols-12 gap-4 px-6 py-4 border-b border-gray-100 animate-pulse">
         <div className="col-span-3 flex items-center gap-3">
@@ -44,7 +41,7 @@ const SkeletonRow = () => (
     </div>
 )
 
-// 2. Status Badge
+// Status Badge (giữ nguyên)
 const UserStatus = ({ status }) => {
     const config =
         status === 1
@@ -67,15 +64,13 @@ const UserStatus = ({ status }) => {
         <span
             className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${config.bg} ${config.text} ${config.border}`}
         >
-            <span
-                className={`w-1.5 h-1.5 rounded-full mr-1.5 ${config.dot}`}
-            ></span>
+            <span className={`w-1.5 h-1.5 rounded-full mr-1.5 ${config.dot}`}></span>
             {config.label}
         </span>
     )
 }
 
-// 3. Dropdown Status
+// Dropdown Status (giữ nguyên)
 const DropdownStatus = ({ value, onChange }) => {
     const [open, setOpen] = useState(false)
     const ref = useRef(null)
@@ -85,8 +80,7 @@ const DropdownStatus = ({ value, onChange }) => {
             if (ref.current && !ref.current.contains(e.target)) setOpen(false)
         }
         document.addEventListener('mousedown', handleClickOutside)
-        return () =>
-            document.removeEventListener('mousedown', handleClickOutside)
+        return () => document.removeEventListener('mousedown', handleClickOutside)
     }, [])
 
     const statuses = [
@@ -94,7 +88,7 @@ const DropdownStatus = ({ value, onChange }) => {
         { key: 1, label: 'Hoạt động' },
         { key: 0, label: 'Ngừng hoạt động' },
     ]
-    const currentLabel = statuses.find(s => s.key === value)?.label
+    const currentLabel = statuses.find(s => s.key === value)?.label || 'Tất cả trạng thái'
 
     return (
         <div className="relative w-full" ref={ref}>
@@ -127,19 +121,17 @@ const DropdownStatus = ({ value, onChange }) => {
     )
 }
 
-// 4. Actions Dropdown
+// Actions Dropdown (thêm onDelete)
 const ActionsDropdown = ({ onViewDetail, onDelete }) => {
     const [open, setOpen] = useState(false)
     const ref = useRef(null)
 
     useEffect(() => {
         const handleClickOutside = event => {
-            if (ref.current && !ref.current.contains(event.target))
-                setOpen(false)
+            if (ref.current && !ref.current.contains(event.target)) setOpen(false)
         }
         document.addEventListener('mousedown', handleClickOutside)
-        return () =>
-            document.removeEventListener('mousedown', handleClickOutside)
+        return () => document.removeEventListener('mousedown', handleClickOutside)
     }, [])
 
     return (
@@ -177,9 +169,42 @@ const ActionsDropdown = ({ onViewDetail, onDelete }) => {
     )
 }
 
-/* ================================================================
-   MAIN COMPONENT
-================================================================ */
+// Modal xác nhận xóa (tương tự ProductTable)
+const ConfirmDeleteModal = ({ isOpen, onClose, onConfirm, userName }) => {
+    if (!isOpen) return null
+
+    return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
+            <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 p-6 border border-gray-200">
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                    Xác nhận xóa người dùng
+                </h3>
+                <p className="text-gray-600 mb-6 leading-relaxed">
+                    Bạn có chắc chắn muốn xóa người dùng 
+                    <span className="font-medium text-red-600"> "{userName}"</span>?
+                    <br />
+                    Hành động này không thể hoàn tác.
+                </p>
+                <div className="flex justify-end gap-4">
+                    <button
+                        onClick={onClose}
+                        className="px-5 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors font-medium"
+                    >
+                        Hủy
+                    </button>
+                    <button
+                        onClick={onConfirm}
+                        className="px-5 py-2.5 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium flex items-center gap-2"
+                    >
+                        <FiTrash2 className="w-4 h-4" />
+                        Xóa
+                    </button>
+                </div>
+            </div>
+        </div>
+    )
+}
+
 const UsersTable = () => {
     const [users, setUsers] = useState([])
     const [isLoading, setIsLoading] = useState(false)
@@ -192,17 +217,27 @@ const UsersTable = () => {
     const [dateTo, setDateTo] = useState('')
 
     // Pagination
-    // 💡 API FETCH LIMIT: Mặc định 100 user/lần fetch, có thể thay đổi bằng input "Số bản ghi"
     const [limit, setLimit] = useState(100)
     const [offset, setOffset] = useState(0)
     const [currentPage, setCurrentPage] = useState(1)
-
-    // 💡 FRONTEND DISPLAY LIMIT: Cố định 10 user hiển thị trên 1 trang
     const displayPerPage = 10
 
-    // Modal
+    // Modal chi tiết
     const [selectedUserId, setSelectedUserId] = useState(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
+
+    // Modal xóa
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+    const [userToDelete, setUserToDelete] = useState(null)
+    const [deletingId, setDeletingId] = useState(null) // Loading khi xóa
+
+    // Alert state
+    const [alert, setAlert] = useState({ show: false, message: '', type: 'success' })
+
+    const showAlert = (message, type = 'success') => {
+        setAlert({ show: true, message, type })
+        setTimeout(() => setAlert({ show: false, message: '', type: 'success' }), 2500)
+    }
 
     const handleCloseModal = () => {
         setIsModalOpen(false)
@@ -214,11 +249,11 @@ const UsersTable = () => {
         const fetchUsers = async () => {
             setIsLoading(true)
             try {
-                // Sử dụng "limit" để gọi API
                 const res = await getListUser({ limit, offset })
-                setUsers(res.data)
+                setUsers(res.data || [])
             } catch (error) {
-                console.error('Lỗi tải danh sách:', error)
+                console.error('Lỗi tải danh sách người dùng:', error)
+                showAlert('Không thể tải danh sách người dùng.', 'error')
             } finally {
                 setTimeout(() => setIsLoading(false), 300)
             }
@@ -226,15 +261,26 @@ const UsersTable = () => {
         fetchUsers()
     }, [limit, offset, refreshKey])
 
-    const handleDeleteUser = async id => {
-        if (window.confirm('Bạn có chắc chắn muốn xóa người dùng này không?')) {
-            try {
-                await deleteUser({ userId: id })
-                alert('Xóa thành công!')
-                setRefreshKey(old => old + 1)
-            } catch (error) {
-                alert('Xóa thất bại!')
-            }
+    const handleDeleteClick = user => {
+        setUserToDelete(user)
+        setIsDeleteModalOpen(true)
+    }
+
+    const handleConfirmDelete = async () => {
+        if (!userToDelete) return
+
+        setDeletingId(userToDelete.id)
+        try {
+            await deleteUser({ userId: userToDelete.id })
+            showAlert('Xóa người dùng thành công!', 'success')
+            setRefreshKey(prev => prev + 1)
+        } catch (error) {
+            console.error('Lỗi xóa người dùng:', error)
+            showAlert('Không thể xóa người dùng. Vui lòng thử lại.', 'error')
+        } finally {
+            setDeletingId(null)
+            setIsDeleteModalOpen(false)
+            setUserToDelete(null)
         }
     }
 
@@ -250,15 +296,13 @@ const UsersTable = () => {
             normalize(u.full_name)?.includes(searchLower) ||
             normalize(u.email)?.includes(searchLower)
         const matchStatus =
-            statusFilter !== '' ? u.status === statusFilter : true
+            statusFilter !== '' ? u.status === Number(statusFilter) : true
         const createdDate = u.created_at?.split('T')[0]
         const matchFrom = dateFrom ? createdDate >= dateFrom : true
         const matchTo = dateTo ? createdDate <= dateTo : true
         return matchSearch && matchStatus && matchFrom && matchTo
     })
 
-    // Pagination Logic
-    // Sử dụng "displayPerPage" (10) để tính toán số trang
     const totalPages = Math.ceil(filtered.length / displayPerPage)
     const currentUsers = filtered.slice(
         (currentPage - 1) * displayPerPage,
@@ -270,29 +314,13 @@ const UsersTable = () => {
             return [...Array(totalPages).keys()].map(i => i + 1)
         if (currentPage <= 3) return [1, 2, 3, 4, '...', totalPages]
         if (currentPage >= totalPages - 2)
-            return [
-                1,
-                '...',
-                totalPages - 3,
-                totalPages - 2,
-                totalPages - 1,
-                totalPages,
-            ]
-
-        return [
-            1,
-            '...',
-            currentPage - 1,
-            currentPage,
-            currentPage + 1,
-            '...',
-            totalPages,
-        ]
+            return [1, '...', totalPages - 3, totalPages - 2, totalPages - 1, totalPages]
+        return [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages]
     }
 
     return (
         <div className="space-y-6 fade-in">
-            {/* --- HEADER --- */}
+            {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
                     <h1 className="text-2xl font-bold text-gray-900">
@@ -304,14 +332,23 @@ const UsersTable = () => {
                 </div>
             </div>
 
-            {/* --- FILTER CARD --- */}
+            {/* Alert */}
+            {alert.show && (
+                <Alert
+                    message={alert.message}
+                    type={alert.type}
+                    duration={2500}
+                    onClose={() => setAlert({ show: false, message: '', type: 'success' })}
+                />
+            )}
+
+            {/* Filter Card */}
             <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
                 <div className="flex items-center gap-2 mb-4 text-gray-700 font-semibold text-sm uppercase tracking-wide">
                     <FiFilter className="text-indigo-500" /> Bộ lọc tìm kiếm
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
-                    {/* Search */}
                     <div className="md:col-span-4 relative">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <FiSearch className="text-gray-400" />
@@ -320,20 +357,18 @@ const UsersTable = () => {
                             type="text"
                             placeholder="Tìm theo tên hoặc email..."
                             value={search}
-                            onChange={e => setSearch(e.target.value)}
+                            onChange={e => {
+                                setSearch(e.target.value)
+                                setCurrentPage(1)
+                            }}
                             className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
                         />
                     </div>
 
-                    {/* Status */}
                     <div className="md:col-span-3">
-                        <DropdownStatus
-                            value={statusFilter}
-                            onChange={setStatusFilter}
-                        />
+                        <DropdownStatus value={statusFilter} onChange={setStatusFilter} />
                     </div>
 
-                    {/* Limit (Số bản ghi) - Thay đổi giá trị này sẽ thay đổi số lượng user được fetch từ API */}
                     <div className="md:col-span-2">
                         <input
                             type="number"
@@ -348,7 +383,6 @@ const UsersTable = () => {
                         />
                     </div>
 
-                    {/* Date Range */}
                     <div className="md:col-span-3 flex items-center gap-2">
                         <input
                             type="date"
@@ -373,18 +407,17 @@ const UsersTable = () => {
                 </div>
             </div>
 
-            {/* --- DATA TABLE CARD --- */}
+            {/* Data Table */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden pb-4">
-                {/* Table Header */}
                 <div className="grid grid-cols-12 gap-4 px-6 py-4 bg-gray-50 border-b border-gray-100 text-xs font-semibold text-gray-500 uppercase tracking-wider">
                     <div className="col-span-2">Họ và tên</div>
                     <div className="col-span-3">Liên hệ</div>
                     <div className="col-span-2">Địa chỉ</div>
                     <div className="col-span-2 text-center">Trạng thái</div>
                     <div className="col-span-2 text-center">Ngày tham gia</div>
+                    <div className="col-span-1 text-center">Thao tác</div>
                 </div>
 
-                {/* Table Body */}
                 <div className="divide-y divide-gray-50">
                     {isLoading ? (
                         [...Array(displayPerPage)].map((_, i) => (
@@ -411,9 +444,6 @@ const UsersTable = () => {
                                             title={u.full_name}
                                         >
                                             {u.full_name}
-                                        </div>
-                                        <div className="text-xs text-gray-500 font-mono mt-0.5">
-                                            ID: #{u.id}
                                         </div>
                                     </div>
                                 </div>
@@ -457,34 +487,31 @@ const UsersTable = () => {
                                     <div className="text-xs text-gray-500 flex flex-col text-center">
                                         <span className="font-medium text-gray-700">
                                             {u.created_at
-                                                ? new Date(
-                                                      u.created_at
-                                                  ).toLocaleDateString('vi-VN')
+                                                ? new Date(u.created_at).toLocaleDateString('vi-VN')
                                                 : ''}
                                         </span>
                                         <span className="text-[10px]">
                                             {u.created_at
-                                                ? new Date(
-                                                      u.created_at
-                                                  ).toLocaleTimeString(
-                                                      'vi-VN',
-                                                      {
-                                                          hour: '2-digit',
-                                                          minute: '2-digit',
-                                                      }
-                                                  )
+                                                ? new Date(u.created_at).toLocaleTimeString('vi-VN', {
+                                                      hour: '2-digit',
+                                                      minute: '2-digit',
+                                                  })
                                                 : ''}
                                         </span>
                                     </div>
                                 </div>
-                                <div className="col-span-1 flex items-center justify-between pl-4">
-                                    <ActionsDropdown
-                                        onViewDetail={() => {
-                                            setSelectedUserId(u.id)
-                                            setIsModalOpen(true)
-                                        }}
-                                        onDelete={() => handleDeleteUser(u.id)}
-                                    />
+                                <div className="col-span-1 flex items-center justify-center">
+                                    {deletingId === u.id ? (
+                                        <div className="w-8 h-8 border-2 border-red-500 border-t-transparent rounded-full animate-spin"></div>
+                                    ) : (
+                                        <ActionsDropdown
+                                            onViewDetail={() => {
+                                                setSelectedUserId(u.id)
+                                                setIsModalOpen(true)
+                                            }}
+                                            onDelete={() => handleDeleteClick(u)}
+                                        />
+                                    )}
                                 </div>
                             </div>
                         ))
@@ -503,7 +530,7 @@ const UsersTable = () => {
                     )}
                 </div>
 
-                {/* ===================== PAGINATION ===================== */}
+                {/* Pagination */}
                 <div className="flex justify-center gap-2 mt-6 mb-2">
                     <button
                         disabled={currentPage === 1}
@@ -512,7 +539,6 @@ const UsersTable = () => {
                     >
                         «
                     </button>
-
                     <button
                         disabled={currentPage === 1}
                         onClick={() => setCurrentPage(p => p - 1)}
@@ -520,27 +546,21 @@ const UsersTable = () => {
                     >
                         ‹
                     </button>
-
                     {pages().map((p, i) =>
                         p === '...' ? (
-                            <span key={i} className="px-3 py-2">
-                                …
-                            </span>
+                            <span key={i} className="px-3 py-2">…</span>
                         ) : (
                             <button
                                 key={i}
                                 onClick={() => setCurrentPage(p)}
                                 className={`px-3 py-2 border rounded-lg transition-colors ${
-                                    currentPage === p
-                                        ? 'bg-indigo-500 text-white'
-                                        : 'hover:bg-gray-50'
+                                    currentPage === p ? 'bg-indigo-500 text-white' : 'hover:bg-gray-50'
                                 }`}
                             >
                                 {p}
                             </button>
                         )
                     )}
-
                     <button
                         disabled={currentPage === totalPages}
                         onClick={() => setCurrentPage(p => p + 1)}
@@ -548,7 +568,6 @@ const UsersTable = () => {
                     >
                         ›
                     </button>
-
                     <button
                         disabled={currentPage === totalPages}
                         onClick={() => setCurrentPage(totalPages)}
@@ -559,10 +578,21 @@ const UsersTable = () => {
                 </div>
             </div>
 
+            {/* Modals */}
             <UserProfileModal
                 userId={selectedUserId}
                 isOpen={isModalOpen}
                 onClose={handleCloseModal}
+            />
+
+            <ConfirmDeleteModal
+                isOpen={isDeleteModalOpen}
+                onClose={() => {
+                    setIsDeleteModalOpen(false)
+                    setUserToDelete(null)
+                }}
+                onConfirm={handleConfirmDelete}
+                userName={userToDelete?.full_name || ''}
             />
         </div>
     )

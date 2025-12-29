@@ -65,7 +65,7 @@ const EditSliderModal = ({ isOpen, onClose, onSuccess, slider }) => {
 
     const validate = () => {
         const newErrors = {}
-        if (!formData.name.trim()) newErrors.name = 'Vui lòng nhập tên slider'
+        if (!formData.name.trim()) newErrors.name = 'Vui lòng nhập tên banner'
         if (!formData.sort_order || formData.sort_order < 1) newErrors.sort_order = 'Thứ tự phải ≥ 1'
         if (!formData.start_date) newErrors.start_date = 'Chọn ngày bắt đầu'
         if (!formData.end_date) newErrors.end_date = 'Chọn ngày kết thúc'
@@ -101,7 +101,7 @@ const EditSliderModal = ({ isOpen, onClose, onSuccess, slider }) => {
             onSuccess(result.data || result)
             onClose()
         } catch (err) {
-            const msg = err.response?.data?.message || 'Không thể cập nhật slider. Vui lòng thử lại!'
+            const msg = err.response?.data?.message || 'Không thể cập nhật banner. Vui lòng thử lại!'
             alert(msg)
         } finally {
             setSubmitting(false)
@@ -115,7 +115,7 @@ const EditSliderModal = ({ isOpen, onClose, onSuccess, slider }) => {
             <div className="relative bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-screen overflow-y-auto">
                 <div className="flex items-center justify-between p-6 border-b border-gray-200 sticky top-0 bg-white z-10">
                     <div>
-                        <h2 className="text-2xl font-bold text-gray-900">Chỉnh sửa Slider</h2>
+                        <h2 className="text-2xl font-bold text-gray-900">Chỉnh sửa Banner</h2>
                         <p className="text-sm text-gray-500 mt-1">ID: #{slider.id}</p>
                     </div>
                     <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-lg">
@@ -127,7 +127,7 @@ const EditSliderModal = ({ isOpen, onClose, onSuccess, slider }) => {
                     {/* Tên slider */}
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Tên slider <span className="text-red-500">*</span>
+                            Tên banner <span className="text-red-500">*</span>
                         </label>
                         <input
                             type="text"
@@ -156,7 +156,7 @@ const EditSliderModal = ({ isOpen, onClose, onSuccess, slider }) => {
                     {/* Upload ảnh + Preview */}
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-3">
-                            Ảnh slider {selectedFile && <span className="text-blue-600">(Ảnh mới sẽ thay thế ảnh cũ)</span>}
+                            Ảnh banner {selectedFile && <span className="text-blue-600">(Ảnh mới sẽ thay thế ảnh cũ)</span>}
                         </label>
 
                         <label className="block">
@@ -291,7 +291,7 @@ const EditSliderModal = ({ isOpen, onClose, onSuccess, slider }) => {
                             {submitting ? 'Đang cập nhật...' : (
                                 <>
                                     <FiSave className="text-lg" />
-                                    Cập nhật Slider
+                                    Cập nhật Banner
                                 </>
                             )}
                         </button>

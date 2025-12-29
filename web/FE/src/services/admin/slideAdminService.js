@@ -2,7 +2,7 @@ import axios from "axios"
 
 export const getListSlider = async () => {
     try {
-        const response = await axios.get('http://localhost:8023/v1/slider/list')
+        const response = await axios.get('http://localhost:2082/v1/slider/list')
         return response.data
     } catch (error) {
         console.error('Đã xảy ra lỗi khi lấy dữ liệu', error)
@@ -12,7 +12,7 @@ export const getListSlider = async () => {
 
 export const createSlider = async (data) => {
     try {
-        const response = await axios.post('http://localhost:8023/v1/slider', data)
+        const response = await axios.post('http://localhost:2082/v1/slider', data)
         return response.data
     } catch (error) {
         console.error('Đã xảy ra lỗi khi lấy dữ liệu', error)
@@ -23,7 +23,7 @@ export const createSlider = async (data) => {
 export const updateSlider = async (data, sliderId) => {
     try {
         const response = await axios.patch(
-            `http://localhost:8023/v1/slider/${sliderId}`, 
+            `http://localhost:2082/v1/slider/${sliderId}`, 
             data,
             {
                 headers: {
@@ -41,7 +41,7 @@ export const updateSlider = async (data, sliderId) => {
 export const deleteSlider = async (sliderId) => {
     try {
         const response = await axios.delete(
-            `http://localhost:8023/v1/slider`, 
+            `http://localhost:2082/v1/slider`, 
             { params: { sliderId: sliderId } }
         )
         return response.data

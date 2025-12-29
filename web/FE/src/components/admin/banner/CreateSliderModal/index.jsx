@@ -52,8 +52,8 @@ const CreateSliderModal = ({ isOpen, onClose, onSuccess }) => {
 
     const validate = () => {
         const newErrors = {}
-        if (!formData.name.trim()) newErrors.name = 'Vui lòng nhập tên slider'
-        if (!selectedFile) newErrors.image = 'Vui lòng chọn ảnh slider'
+        if (!formData.name.trim()) newErrors.name = 'Vui lòng nhập tên banner'
+        if (!selectedFile) newErrors.image = 'Vui lòng chọn ảnh banner'
         if (!formData.sort_order || formData.sort_order < 1) newErrors.sort_order = 'Thứ tự phải ≥ 1'
         if (!formData.start_date) newErrors.start_date = 'Chọn ngày bắt đầu'
         if (!formData.end_date) newErrors.end_date = 'Chọn ngày kết thúc'
@@ -85,7 +85,7 @@ const CreateSliderModal = ({ isOpen, onClose, onSuccess }) => {
             onSuccess(result.data || result)
             onClose()
         } catch (err) {
-            const msg = err.response?.data?.message || 'Không thể tạo slider. Vui lòng thử lại!'
+            const msg = err.response?.data?.message || 'Không thể tạo banner. Vui lòng thử lại!'
             alert(msg)
         } finally {
             setSubmitting(false)
@@ -99,7 +99,7 @@ const CreateSliderModal = ({ isOpen, onClose, onSuccess }) => {
 
             <div className="relative bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-screen overflow-y-auto">
                 <div className="flex items-center justify-between p-6 border-b border-gray-200 sticky top-0 bg-white z-10">
-                    <h2 className="text-2xl font-bold text-gray-900">Thêm Slider Mới</h2>
+                    <h2 className="text-2xl font-bold text-gray-900">Thêm banner Mới</h2>
                     <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-lg">
                         <FiX className="w-6 h-6 text-gray-500" />
                     </button>
@@ -109,7 +109,7 @@ const CreateSliderModal = ({ isOpen, onClose, onSuccess }) => {
                     {/* Tên slider */}
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Tên slider <span className="text-red-500">*</span>
+                            Tên banner <span className="text-red-500">*</span>
                         </label>
                         <input
                             type="text"
@@ -138,7 +138,7 @@ const CreateSliderModal = ({ isOpen, onClose, onSuccess }) => {
                     {/* Upload ảnh + Preview bên dưới */}
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-3">
-                            Ảnh slider <span className="text-red-500">*</span>
+                            Ảnh banner <span className="text-red-500">*</span>
                         </label>
 
                         {/* Khu vực chọn file */}
@@ -271,7 +271,7 @@ const CreateSliderModal = ({ isOpen, onClose, onSuccess }) => {
                             {submitting ? 'Đang tạo...' : (
                                 <>
                                     <FiPlus className="text-lg" />
-                                    Thêm Slider
+                                    Thêm banner
                                 </>
                             )}
                         </button>

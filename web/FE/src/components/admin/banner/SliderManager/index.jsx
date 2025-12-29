@@ -1,4 +1,3 @@
-// src/pages/admin/slider/SliderManager.jsx
 import React, { useState, useEffect, useRef } from 'react'
 import {
     FiMoreVertical,
@@ -19,14 +18,13 @@ import {
 import { getListSlider, deleteSlider } from '~/services/admin/slideAdminService'
 import EditSliderModal from '../EditSliderModal'
 import CreateSliderModal from '../CreateSliderModal'
-
+import Alert from '~/components/shared/Alert' 
 
 /* ====================== HELPER ====================== */
 const formatDate = (dateString) => {
     if (!dateString || dateString === 'null') return '—'
     return new Date(dateString).toLocaleDateString('vi-VN')
 }
-
 
 /* ====================== UI COMPONENTS ====================== */
 const SliderStatus = ({ status }) => {
@@ -84,7 +82,43 @@ const DropdownStatus = ({ value, onChange }) => {
     )
 }
 
+// Modal xác nhận xóa (tương tự các file trước)
+const ConfirmDeleteModal = ({ isOpen, onClose, onConfirm, sliderName }) => {
+    if (!isOpen) return null
 
+    return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
+            <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 p-6 border border-gray-200">
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                    Xác nhận xóa Banner
+                </h3>
+                <p className="text-gray-600 mb-6 leading-relaxed">
+                    Bạn có chắc chắn muốn xóa Banner 
+                    <span className="font-medium text-red-600"> "{sliderName || 'không tên'}"</span>?
+                    <br />
+                    Hành động này không thể hoàn tác.
+                </p>
+                <div className="flex justify-end gap-4">
+                    <button
+                        onClick={onClose}
+                        className="px-5 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors font-medium"
+                    >
+                        Hủy
+                    </button>
+                    <button
+                        onClick={onConfirm}
+                        className="px-5 py-2.5 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium flex items-center gap-2"
+                    >
+                        <FiTrash2 className="w-4 h-4" />
+                        Xóa
+                    </button>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+// Actions Dropdown (giống UsersTable, ProductTable)
 const ActionsDropdown = ({ slider, onEdit, onDelete }) => {
     const [open, setOpen] = useState(false)
     const ref = useRef(null)
@@ -127,17 +161,16 @@ const ActionsDropdown = ({ slider, onEdit, onDelete }) => {
                     <div className="h-px bg-gray-100 mx-3"></div>
 
                     <button
-                        onClick={() => { onDelete(slider.id); setOpen(false) }}
+                        onClick={() => { onDelete(slider); setOpen(false) }}
                         className="w-full px-4 py-3 text-left hover:bg-red-50 text-sm text-red-600 flex items-center gap-3"
                     >
-                        <FiTrash2 /> Xóa slider
+                        <FiTrash2 /> Xóa banner
                     </button>
                 </div>
             )}
         </div>
     )
 }
-
 
 /* ====================== PHÂN TRANG ====================== */
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
@@ -181,7 +214,6 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
     )
 }
 
-
 /* ====================== MAIN COMPONENT ====================== */
 const SliderManager = () => {
     const [sliders, setSliders] = useState([])
@@ -189,7 +221,7 @@ const SliderManager = () => {
     const [error, setError] = useState(null)
 
     const [search, setSearch] = useState('')
-       const [statusFilter, setStatusFilter] = useState('')
+    const [statusFilter, setStatusFilter] = useState('')
     const [dateFrom, setDateFrom] = useState('')
     const [dateTo, setDateTo] = useState('')
 
@@ -201,6 +233,18 @@ const SliderManager = () => {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false)
     const [selectedSlider, setSelectedSlider] = useState(null)
 
+    // Delete modal states
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+    const [sliderToDelete, setSliderToDelete] = useState(null)
+    const [deletingId, setDeletingId] = useState(null)
+
+    // Alert state
+    const [alert, setAlert] = useState({ show: false, message: '', type: 'success' })
+
+    const showAlert = (message, type = 'success') => {
+        setAlert({ show: true, message, type })
+        setTimeout(() => setAlert({ show: false, message: '', type: 'success' }), 2500)
+    }
 
     /* ================== LOAD SLIDER ================== */
     const fetchSliders = async () => {
@@ -221,12 +265,10 @@ const SliderManager = () => {
         fetchSliders()
     }, [])
 
-
     // Reset trang khi filter thay đổi
     useEffect(() => {
         setCurrentPage(1)
     }, [search, statusFilter, dateFrom, dateTo])
-
 
     /* ================== EDIT SLIDER ================== */
     const handleEdit = (slider) => {
@@ -238,27 +280,32 @@ const SliderManager = () => {
         setSliders(prev => prev.map(s => s.id === updatedSlider.id ? updatedSlider : s))
         setIsEditModalOpen(false)
         setSelectedSlider(null)
+        showAlert('Cập nhật slider thành công!', 'success')
     }
-
 
     /* ================== DELETE SLIDER ================== */
-    const handleDelete = async (sliderId) => {
-        const confirmDelete = window.confirm("Bạn có chắc chắn muốn xóa slider này?")
-
-        if (!confirmDelete) return;
-
-        try {
-            await deleteSlider(sliderId)
-
-            setSliders(prev => prev.filter(s => s.id !== sliderId))
-
-            alert("Xóa slider thành công!")
-        } catch (err) {
-            console.error(err)
-            alert("Xóa slider thất bại!")
-        }
+    const handleDeleteClick = (slider) => {
+        setSliderToDelete(slider)
+        setIsDeleteModalOpen(true)
     }
 
+    const handleConfirmDelete = async () => {
+        if (!sliderToDelete) return
+
+        setDeletingId(sliderToDelete.id)
+        try {
+            await deleteSlider(sliderToDelete.id)
+            setSliders(prev => prev.filter(s => s.id !== sliderToDelete.id))
+            showAlert('Xóa slider thành công!', 'success')
+        } catch (err) {
+            console.error(err)
+            showAlert('Xóa slider thất bại!', 'error')
+        } finally {
+            setDeletingId(null)
+            setIsDeleteModalOpen(false)
+            setSliderToDelete(null)
+        }
+    }
 
     /* ================== FILTER ================== */
     const filtered = sliders.filter(s => {
@@ -283,7 +330,6 @@ const SliderManager = () => {
     const endIndex = Math.min(currentPage * itemsPerPage, totalItems)
     const currentItems = filtered.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
 
-
     /* ================== RENDER ================== */
     return (
         <div className="space-y-6">
@@ -291,31 +337,35 @@ const SliderManager = () => {
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-900">Quản lý Slider</h1>
+                    <h1 className="text-2xl font-bold text-gray-900">Quản lý Banner</h1>
                     <p className="text-sm text-gray-500 mt-1">
-                        Hiển thị {startIndex}–{endIndex} trong tổng số {totalItems} slider
+                        Hiển thị {startIndex}–{endIndex} trong tổng số {totalItems} banner
                     </p>
                 </div>
 
                 <div className="flex gap-3">
-                    <button onClick={fetchSliders} className="px-4 py-3 border border-gray-300 rounded-xl hover:bg-gray-50 flex items-center gap-2">
-                        <FiRefreshCw className={`text-lg ${loading ? 'animate-spin' : ''}`} />
-                        Làm mới
-                    </button>
 
                     <button
                         onClick={() => setIsCreateModalOpen(true)}
                         className="px-5 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl shadow-sm hover:shadow-md transition-all flex items-center gap-2"
                     >
-                        <FiPlus className="text-xl" /> Thêm slider mới
+                        <FiPlus className="text-xl" /> Thêm banner mới
                     </button>
                 </div>
             </div>
 
+            {/* Alert */}
+            {alert.show && (
+                <Alert
+                    message={alert.message}
+                    type={alert.type}
+                    duration={2500}
+                    onClose={() => setAlert({ show: false, message: '', type: 'success' })}
+                />
+            )}
 
             {/* Filter Card */}
             <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
-
                 <div className="flex items-center gap-2 mb-4 text-gray-700 font-semibold text-sm uppercase tracking-wide">
                     <FiFilter className="text-indigo-500" /> Bộ lọc tìm kiếm
                 </div>
@@ -368,12 +418,10 @@ const SliderManager = () => {
                 )}
             </div>
 
-
             {/* Table */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-
                 <div className="grid grid-cols-12 gap-4 px-6 py-4 bg-gray-50 border-b border-gray-100 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                    <div className="col-span-4">Slider</div>
+                    <div className="col-span-4">Banner</div>
                     <div className="col-span-2">Liên kết</div>
                     <div className="col-span-2 text-center">Trạng thái</div>
                     <div className="col-span-2 text-center">Thời gian</div>
@@ -401,7 +449,7 @@ const SliderManager = () => {
                             </div>
                         ))
                     ) : currentItems.length === 0 ? (
-                        <div className="py-12 text-center text-gray-500">Không tìm thấy slider nào</div>
+                        <div className="py-12 text-center text-gray-500">Không tìm thấy banner nào</div>
                     ) : (
                         currentItems.map(slider => (
                             <div
@@ -448,11 +496,15 @@ const SliderManager = () => {
                                 </div>
 
                                 <div className="col-span-1 flex justify-center">
-                                    <ActionsDropdown
-                                        slider={slider}
-                                        onEdit={handleEdit}
-                                        onDelete={handleDelete}
-                                    />
+                                    {deletingId === slider.id ? (
+                                        <div className="w-8 h-8 border-2 border-red-500 border-t-transparent rounded-full animate-spin"></div>
+                                    ) : (
+                                        <ActionsDropdown
+                                            slider={slider}
+                                            onEdit={handleEdit}
+                                            onDelete={handleDeleteClick}
+                                        />
+                                    )}
                                 </div>
                             </div>
                         ))
@@ -466,7 +518,6 @@ const SliderManager = () => {
                 />
             </div>
 
-
             {/* Modal Thêm Slider */}
             <CreateSliderModal
                 isOpen={isCreateModalOpen}
@@ -474,6 +525,7 @@ const SliderManager = () => {
                 onSuccess={(newSlider) => {
                     setSliders(prev => [newSlider, ...prev])
                     setIsCreateModalOpen(false)
+                    showAlert('Thêm slider mới thành công!', 'success')
                 }}
             />
 
@@ -486,6 +538,17 @@ const SliderManager = () => {
                 }}
                 onSuccess={handleUpdateSuccess}
                 slider={selectedSlider}
+            />
+
+            {/* Modal Xác nhận xóa */}
+            <ConfirmDeleteModal
+                isOpen={isDeleteModalOpen}
+                onClose={() => {
+                    setIsDeleteModalOpen(false)
+                    setSliderToDelete(null)
+                }}
+                onConfirm={handleConfirmDelete}
+                sliderName={sliderToDelete?.name || 'không tên'}
             />
         </div>
     )

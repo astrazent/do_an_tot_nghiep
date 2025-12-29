@@ -3,7 +3,7 @@ import axios from 'axios'
 export const getRevenueAnalysisKPIs = async data => {
     try {
         const response = await axios.get(
-            'http://localhost:8023/v1/revenue/revenue_analysis_KPIs',
+            'http://localhost:2082/v1/revenue/revenue_analysis_KPIs',
             {
                 params: { startDate: data.startDate, endDate: data.endDate },
             }
@@ -18,7 +18,7 @@ export const getRevenueAnalysisKPIs = async data => {
 export const getYearRevenueAndOrders = async (data) => {
     try {
         const response = await axios.get(
-            'http://localhost:8023/v1/revenue/year_revenue_and_orders',
+            'http://localhost:2082/v1/revenue/year_revenue_and_orders',
             {
                 params: { year: data.year },
             }
@@ -33,7 +33,7 @@ export const getYearRevenueAndOrders = async (data) => {
 export const getNewVsReturningRevenue = async (data) => {
     try {
         const response = await axios.get(
-            'http://localhost:8023/v1/revenue/customer_new_vs_returning_revenue',
+            'http://localhost:2082/v1/revenue/customer_new_vs_returning_revenue',
             {
                 params: { startDate: data.startDate, endDate: data.endDate },
             }
@@ -48,7 +48,7 @@ export const getNewVsReturningRevenue = async (data) => {
 export const getRevenueByCategory = async (data) => {
     try {
         const response = await axios.get(
-            'http://localhost:8023/v1/revenue/revenue_by_category',
+            'http://localhost:2082/v1/revenue/revenue_by_category',
             {
                 params: { startDate: data.startDate, endDate: data.endDate },
             }
@@ -63,7 +63,7 @@ export const getRevenueByCategory = async (data) => {
 export const getProductRevenueList = async (data) => {
     try {
         const response = await axios.get(
-            'http://localhost:8023/v1/revenue/product_revenue_list',
+            'http://localhost:2082/v1/revenue/product_revenue_list',
             {
                 params: { startDate: data.startDate, endDate: data.endDate },
             }
@@ -78,7 +78,7 @@ export const getProductRevenueList = async (data) => {
 export const getRevenueByPaymentMethod = async (data) => {
     try {
         const response = await axios.get(
-            'http://localhost:8023/v1/revenue/revenue_by_payment_method',
+            'http://localhost:2082/v1/revenue/revenue_by_payment_method',
             {
                 params: { startDate: data.startDate, endDate: data.endDate },
             }
@@ -93,7 +93,7 @@ export const getRevenueByPaymentMethod = async (data) => {
 export const getRevenueByShipmentMethod = async (data) => {
     try {
         const response = await axios.get(
-            'http://localhost:8023/v1/revenue/revenue_by_shipment_method',
+            'http://localhost:2082/v1/revenue/revenue_by_shipment_method',
             {
                 params: { startDate: data.startDate, endDate: data.endDate },
             }

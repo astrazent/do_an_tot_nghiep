@@ -46,10 +46,10 @@ const TotalRevenue = ({ dateRange }) => {
                     Sản phẩm có số lượng bán cao nhất
                 </p>
                 <h3 className="text-2xl font-bold text-gray-800">
-                    {topProduct.total_sold} sản phẩm - {topProduct.product_name}
+                    {topProduct?.total_sold} sản phẩm - {topProduct?.product_name}
                 </h3>
                 <p className="text-sm text-gray-400">
-                    Được đặt bởi {topProduct.total_buyers} khách hàng
+                    Được đặt bởi {topProduct?.total_buyers} khách hàng
                 </p>
             </div>
             <div className="h-40 mt-4">

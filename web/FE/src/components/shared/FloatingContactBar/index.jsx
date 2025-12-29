@@ -1,11 +1,78 @@
-import React from 'react'
-import { FaPhone, FaMapMarkerAlt } from 'react-icons/fa'
+import React, { useState, useEffect, useRef } from 'react'
+import { useQueryClient } from '@tanstack/react-query'
+import { useNavigate } from 'react-router-dom'
+import { FaPhone, FaMapMarkerAlt, FaTrashAlt, FaUserLock } from 'react-icons/fa'
 import { SiZalo, SiMessenger } from 'react-icons/si'
-import ScrollToTop from '~/components/shared/ScrollToTop'
+import {
+    MdClose,
+    MdChevronLeft,
+    MdAddCircleOutline,
+    MdMoreHoriz,
+    MdOutlineBlock,
+    MdCheck,
+} from 'react-icons/md'
+import MarkdownRenderer from '../MarkdownRender'
+import { IoMdSend } from 'react-icons/io'
+import { RiRobot2Line } from 'react-icons/ri'
+
+import logo from '~/assets/icon/logo/brand-logo.png'
+import ScrollToTop from '../ScrollToTop'
+import ConfirmModal from '../ConfirmModal'
+
+import {
+    useCreateConversation,
+    useEndConversation,
+    useGetConversations,
+    useCreateMessage,
+    useDeleteConversation,
+} from '~/hooks/user/useChatBot'
+import { useCurrentUser } from '~/hooks/user/useUser'
+
+const formatTime = isoString => {
+    if (!isoString) return ''
+    const date = new Date(isoString)
+    const now = new Date()
+    const isToday = date.toDateString() === now.toDateString()
+
+    if (isToday) {
+        return date.toLocaleTimeString('vi-VN', {
+            hour: '2-digit',
+            minute: '2-digit',
+        })
+    }
+    return date.toLocaleDateString('vi-VN', {
+        day: '2-digit',
+        month: '2-digit',
+    })
+}
+
+const parseMessageContent = content => {
+    let finalContent = content
+
+    try {
+        if (
+            typeof content === 'string' &&
+            content.trim().startsWith('{') &&
+            content.trim().endsWith('}')
+        ) {
+            const parsed = JSON.parse(content)
+
+            if (parsed.status === 'order_ready' && parsed.message) {
+                return parsed.message
+            }
+
+            finalContent = parsed.message || parsed.content || content
+        }
+    } catch (error) {}
+
+    if (typeof finalContent === 'string' && finalContent.includes('||')) {
+        finalContent = finalContent.split('||')[0].trim()
+    }
+
+    return finalContent
+}
 
 const FloatingContactBar = () => {
-<<<<<<< HEAD
-=======
     const queryClient = useQueryClient()
     const navigate = useNavigate()
 
@@ -520,49 +587,95 @@ const FloatingContactBar = () => {
         )
     }
 
->>>>>>> 15ddbb6f75289aac4ab308c5153d907a6f5a420d
     return (
         <>
-            <div className="fixed top-2/3 right-4 -translate-y-1/2 flex flex-col space-y-3 z-50">
-                <a
-                    href="https://zalo.me/YOUR_ZALO_NUMBER"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-12 h-12 bg-[#0068FF] rounded-full flex items-center justify-center shadow-lg hover:bg-[#0055D4] transition-all hover:scale-110"
-                    title="Chat qua Zalo"
-                >
-                    <SiZalo size={22} className="text-white" />
-                </a>
-
-                <a
-                    href="tel:YOUR_PHONE_NUMBER"
-                    className="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center shadow-lg hover:bg-red-600 transition-all hover:scale-110"
-                    title="Gọi ngay"
-                >
-                    <FaPhone size={18} className="text-white" />
-                </a>
-
-                <a
-                    href="https://m.me/YOUR_FACEBOOK_PAGE_ID"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-12 h-12 bg-gradient-to-br from-purple-600 to-blue-500 rounded-full flex items-center justify-center shadow-lg hover:opacity-90 transition-all hover:scale-110"
-                    title="Chat qua Messenger"
-                >
-                    <SiMessenger size={20} className="text-white" />
-                </a>
-
-                <a
-                    href="YOUR_GOOGLE_MAPS_LINK"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-12 h-12 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center shadow-lg hover:opacity-90 transition-all hover:scale-110"
-                    title="Xem địa chỉ"
-                >
-                    <FaMapMarkerAlt size={18} className="text-white" />
-                </a>
+            {isChatOpen && (
+                <div
+                    onClick={() => setIsChatOpen(false)}
+                    className="fixed inset-0 bg-black/40 backdrop-blur-[1px] z-[50]"
+                />
+            )}
+            <div
+                ref={chatRef}
+                className={`
+                fixed bottom-20 right-20 z-[60] 
+                w-[360px] h-[580px] bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden flex flex-col font-sans
+                transition-all duration-300 origin-bottom-right ease-out
+                ${isChatOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-10 pointer-events-none'}
+            `}
+            >
+                {authLoading ? (
+                    <div className="flex flex-col items-center justify-center h-full gap-2">
+                        <div className="w-8 h-8 border-4 border-green-500 border-t-transparent rounded-full animate-spin"></div>
+                        <span className="text-gray-500 text-sm">
+                            Đang tải...
+                        </span>
+                    </div>
+                ) : !isAuthenticated ? (
+                    renderLoginRequired()
+                ) : view === 'list' ? (
+                    renderConversationList()
+                ) : (
+                    renderChatWindow()
+                )}
             </div>
 
+            <div className="fixed bottom-25 right-6 flex flex-col-reverse items-center gap-3 z-50">
+                <button
+                    onClick={() => setIsChatOpen(!isChatOpen)}
+                    className={`
+                        !p-0 !m-0 !appearance-none !border-0 !outline-none
+                        w-10 h-10 !rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-105
+                        ${isChatOpen ? 'bg-gray-800 rotate-90' : 'bg-green-500 hover:bg-green-600'}
+                    `}
+                >
+                    {isChatOpen ? (
+                        <MdClose size={28} className="text-white" />
+                    ) : (
+                        <RiRobot2Line size={20} className="text-white" />
+                    )}
+                </button>
+
+                <>
+                    <a
+                        href="https://zalo.me/"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center shadow-md hover:scale-110 transition-transform"
+                    >
+                        <SiZalo size={20} className="text-white" />
+                    </a>
+                    <a
+                        href="tel:123456"
+                        className="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center shadow-md hover:scale-110 transition-transform"
+                    >
+                        <FaPhone size={16} className="text-white" />
+                    </a>
+                    <a
+                        href="#"
+                        className="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center shadow-md hover:scale-110 transition-transform"
+                    >
+                        <SiMessenger size={20} className="text-white" />
+                    </a>
+                    <a
+                        href="#"
+                        className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center shadow-md hover:scale-110 transition-transform"
+                    >
+                        <FaMapMarkerAlt size={18} className="text-white" />
+                    </a>
+                </>
+            </div>
+            {isDeleteModalOpen && (
+                <ConfirmModal
+                    isOpen={isDeleteModalOpen}
+                    message={`Bạn có chắc chắn muốn xóa cuộc hội thoại "${conversationToDelete?.title || 'Cuộc trò chuyện'}"?`}
+                    onConfirm={handleConfirmDelete}
+                    onCancel={() => {
+                        setIsDeleteModalOpen(false)
+                        setConversationToDelete(null)
+                    }}
+                />
+            )}
             <ScrollToTop />
         </>
     )

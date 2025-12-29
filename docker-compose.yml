@@ -140,6 +140,7 @@ services:
             - "8000:8000"
         volumes:
             - ./chatbot:/app
+        entrypoint: ["bash", "/app/entrypoint.sh"]
         depends_on:
             mariadb_chatbot:
                 condition: service_healthy

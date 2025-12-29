@@ -176,7 +176,7 @@ const ProductDetailModal = ({ productId, isOpen, onClose }) => {
 
                                     {/* Các ảnh phụ */}
                                     <div className="md:col-span-2 grid grid-cols-2 gap-4">
-                                        {otherImages.slice(0, 4).map(img => (
+                                        {otherImages.map(img => (
                                             <div
                                                 className="relative overflow-hidden rounded-xl group cursor-pointer"
                                             >
@@ -185,29 +185,8 @@ const ProductDetailModal = ({ productId, isOpen, onClose }) => {
                                                     alt={product.name}
                                                     className="w-full h-32 object-cover border border-gray-200 rounded-xl shadow group-hover:scale-110 group-hover:border-indigo-400 transition-all duration-300"
                                                 />
-                                                {img.is_main && (
-                                                    <span className="absolute top-2 left-2 bg-emerald-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                                                        Chính
-                                                    </span>
-                                                )}
                                             </div>
                                         ))}
-
-                                        {/* Hơn 4 ảnh phụ → hiện +số */}
-                                        {otherImages.length > 4 && (
-                                            <div className="relative flex items-center justify-center rounded-xl overflow-hidden bg-gray-900/80">
-                                                <span className="text-white text-3xl font-bold z-10">
-                                                    +{otherImages.length - 4}
-                                                </span>
-                                                <img
-                                                    src={
-                                                        otherImages[4].image_url
-                                                    }
-                                                    alt="more"
-                                                    className="absolute inset-0 w-full h-full object-cover opacity-30"
-                                                />
-                                            </div>
-                                        )}
                                     </div>
                                 </div>
                             )}

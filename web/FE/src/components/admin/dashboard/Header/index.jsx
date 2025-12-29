@@ -10,18 +10,6 @@ import {
 } from 'react-icons/hi'
 import { useTheme } from '~/contexts/ThemeContext'
 import logo from '~/assets/icon/logo/brand-logo.png'
-const Logo = () => (
-    <div className="flex items-center gap-2">
-        <img
-            src={logo}
-            alt="Avatar"
-            className="w-8 h-8 rounded-full object-cover"
-        />
-        <span className="text-xl font-bold text-gray-800 dark:text-gray-200">
-            Bếp Sạch Việt
-        </span>
-    </div>
-)
 
 const Header = ({ onMenuClick }) => {
     const { theme, toggleTheme } = useTheme()
@@ -30,10 +18,6 @@ const Header = ({ onMenuClick }) => {
         <header className="bg-white dark:bg-gray-800 h-16 w-full px-6 border-b border-gray-200 dark:border-gray-700">
             <div className="flex items-center justify-between h-full">
                 <div className="flex items-center gap-4">
-                    <div className="lg:hidden">
-                        <Logo />
-                    </div>
-
                     <button
                         onClick={onMenuClick}
                         className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 lg:hidden"
@@ -46,15 +30,16 @@ const Header = ({ onMenuClick }) => {
                 </div>
 
                 <div className="hidden md:block relative">
-                    <HiOutlineSearch
-                        size={20}
-                        className="text-gray-400 absolute top-1/2 left-3 -translate-y-1/2"
-                    />
-                    <input
-                        type="text"
-                        placeholder="Search... (Ctrl+K)"
-                        className="text-sm focus:outline-none w-72 h-10 border border-gray-300 dark:border-gray-600 rounded-lg pl-10 pr-4 bg-gray-50 dark:bg-gray-700 dark:text-gray-300"
-                    />
+                    <div className="flex items-center gap-2">
+                        <img
+                            src={logo}
+                            alt="Avatar"
+                            className="w-10 h-10 rounded-full object-cover"
+                        />
+                        <span className="text-3xl font-bold text-green-800 dark:text-gray-200">
+                            Bếp Sạch Việt
+                        </span>
+                    </div>
                 </div>
 
                 <div className="flex items-center gap-4">

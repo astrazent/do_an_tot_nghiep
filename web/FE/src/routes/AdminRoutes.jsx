@@ -13,9 +13,10 @@ import AdminPromotion from '~/pages/admin/AdminPromotion'
 import AdminBanner from '~/pages/admin/AdminBanner'
 import AdminBlogManagement from '~/pages/admin/AdminBlogManagement'
 import AdminBlogCreateNew from '~/pages/admin/AdminBlogCreateNew'
-import AdminMessage from '~/pages/admin/AdminMessage'
 import AdminBlogTypeManagement from '~/pages/admin/AdminBlogTypeManagement'
 import AdminCategoryManagement from '~/pages/admin/AdminCategoryManagement'
+import PostMarketingAI from '~/pages/admin/PostMarketingAI'
+import EmailAI from '~/pages/admin/EmailMarketingAI'
 
 function ProtectedAdmin({ children }) {
     return children
@@ -55,7 +56,8 @@ export const adminRoutes = [
             { path: 'blog/management', element: <AdminBlogManagement /> },
             { path: 'blog/create-new', element: <AdminBlogCreateNew /> },
             { path: 'blog/type', element: <AdminBlogTypeManagement /> },
-            { path: 'messages', element: <AdminMessage /> },
+            { path: 'ai_marketing/content', element: <PostMarketingAI /> },
+            { path: 'ai_marketing/email', element: <EmailAI /> },
         ],
     },
 ]

@@ -9,6 +9,8 @@ Router.route('/').get(userController.getByIdUser)
 
 Router.route('/list').get(userController.getListUser)
 
+Router.route('/customer_type').get(userController.getListCustomerByExpense)
+
 Router.route('/check_and_update').post(
     verifyToken,
     userController.checkPasswordAndUpdate

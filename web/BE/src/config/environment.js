@@ -7,7 +7,7 @@ export const env = {
     DB_USER: process.env.DB_USER || 'root',
     DB_PASSWORD: process.env.DB_PASSWORD || '',
     DB_NAME: process.env.DB_NAME || 'bep_sach_viet',
-    APP_PORT: process.env.APP_PORT || 8023,
+    APP_PORT: process.env.APP_PORT || 2082,
     APP_HOST: process.env.APP_HOST || 'localhost',
     BUILD_MODE: process.env.BUILD_MODE || 'development',
     JWT_SECRET: process.env.JWT_SECRET || 'bepsachviet123',

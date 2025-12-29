@@ -1,11 +1,23 @@
 import { marketingAIService } from "~/services/marketingAIService"
 import { StatusCodes } from 'http-status-codes'
 
-const marketing = async (req, res, next) => {
+const marketingPost = async (req, res, next) => {
     try {
-        const data = await marketingAIService.marketing(req.body, req.uploadedImageUrls)
+        const data = await marketingAIService.marketingPost(req.body, req.uploadedImageUrls)
         return res.status(StatusCodes.CREATED).json({
-            message: 'Tạo marketing AI thành công',
+            message: 'Tạo bài viết thành công',
+            data,
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
+const marketingEmail = async (req, res, next) => {
+    try {
+        const data = await marketingAIService.marketingEmail(req.body, req.uploadedImageUrls)
+        return res.status(StatusCodes.CREATED).json({
+            message: 'Tạo nội dung email thành công',
             data,
         })
     } catch (error) {
@@ -14,5 +26,6 @@ const marketing = async (req, res, next) => {
 }
 
 export const marketingAIController = {
-    marketing,
+    marketingPost,
+    marketingEmail
 }

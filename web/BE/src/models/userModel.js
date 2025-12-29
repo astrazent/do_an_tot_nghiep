@@ -151,7 +151,7 @@ const UsersModel = {
         return result.affectedRows > 0
     },
 
-    async listUsers(limit,offset) {
+    async listUsers(limit, offset) {
         const conn = getConnection()
         const [rows] = await conn.execute(
             `SELECT * FROM ${USERS_TABLE_NAME} ORDER BY created_at DESC LIMIT ? OFFSET ?`,
@@ -280,6 +280,42 @@ const UsersModel = {
         )
 
         return rows[0]
+    },
+
+    async getListCustomerByExpense(minSpending) {
+        const conn = getConnection()
+
+        try {
+            const [rows] = await conn.execute(
+                `
+            SELECT 
+                u.full_name as name,
+                u.email
+            FROM 
+                ${USERS_TABLE_NAME} u
+            LEFT JOIN 
+                Transactions t ON t.user_id = u.id
+            WHERE 
+                t.status = 'completed'
+                AND t.payment_status = 'paid'
+            GROUP BY 
+                u.id, u.full_name, u.email
+            HAVING 
+                COALESCE(SUM(t.amount), 0) >= ?
+            ORDER BY 
+                COALESCE(SUM(t.amount), 0) DESC
+            `,
+                [minSpending]
+            )
+
+            return rows
+        } catch (error) {
+            console.error(
+                'Lỗi khi lấy danh sách khách hàng giá trị cao:',
+                error
+            )
+            throw error
+        }
     },
 }
 

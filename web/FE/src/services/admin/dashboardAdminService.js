@@ -3,7 +3,7 @@ import axios from 'axios'
 export const getTotalProductsSold = async data => {
     try {
         const response = await axios.get(
-            'http://localhost:8023/v1/boards/total_products_sold',
+            'http://localhost:2082/v1/boards/total_products_sold',
             {
                 params: { startDate: data.startDate, endDate: data.endDate },
             }
@@ -18,7 +18,7 @@ export const getTotalProductsSold = async data => {
 export const getTotalUsers = async data => {
     try {
         const response = await axios.get(
-            'http://localhost:8023/v1/boards/total_users',
+            'http://localhost:2082/v1/boards/total_users',
             {
                 params: { startDate: data.startDate, endDate: data.endDate },
             }
@@ -33,7 +33,7 @@ export const getTotalUsers = async data => {
 export const getTotalInventory = async () => {
     try {
         const response = await axios.get(
-            'http://localhost:8023/v1/boards/total_inventory'
+            'http://localhost:2082/v1/boards/total_inventory'
         )
         return response.data
     } catch (error) {
@@ -45,7 +45,7 @@ export const getTotalInventory = async () => {
 export const getMonthlyRevenue = async data => {
     try {
         const response = await axios.get(
-            'http://localhost:8023/v1/boards/monthly_revenue',
+            'http://localhost:2082/v1/boards/monthly_revenue',
             {
                 params: { startDate: data.startDate, endDate: data.endDate },
             }
@@ -61,7 +61,7 @@ export const getMonthlyRevenue = async data => {
 export const getTopCustomers = async data => {
     try {
         const response = await axios.get(
-            'http://localhost:8023/v1/boards/top_customers',
+            'http://localhost:2082/v1/boards/top_customers',
             {
                 params: { startDate: data.startDate, endDate: data.endDate },
             }
@@ -76,7 +76,7 @@ export const getTopCustomers = async data => {
 export const getTopProduct = async data => {
     try {
         const response = await axios.get(
-            'http://localhost:8023/v1/boards/top_product',
+            'http://localhost:2082/v1/boards/top_product',
             {
                 params: { startDate: data.startDate, endDate: data.endDate },
             }
@@ -91,7 +91,7 @@ export const getTopProduct = async data => {
 export const getOrderCountByStatus = async data => {
     try {
         const response = await axios.get(
-            'http://localhost:8023/v1/boards/oder_count_by_status',
+            'http://localhost:2082/v1/boards/oder_count_by_status',
             {
                 params: { startDate: data.startDate, endDate: data.endDate },
             }
@@ -106,7 +106,7 @@ export const getOrderCountByStatus = async data => {
 export const getNewUsersByMonths = async () => {
     try {
         const response = await axios.get(
-            'http://localhost:8023/v1/boards/new_users_by_months'
+            'http://localhost:2082/v1/boards/new_users_by_months'
         )
         return response.data
     } catch (error) {
@@ -118,7 +118,7 @@ export const getNewUsersByMonths = async () => {
 export const getYearRevenue = async () => {
     try {
         const response = await axios.get(
-            'http://localhost:8023/v1/boards/year_revenue'
+            'http://localhost:2082/v1/boards/year_revenue'
         )
         return response.data
     } catch (error) {
@@ -130,7 +130,7 @@ export const getYearRevenue = async () => {
 export const getFinancialData = async data => {
     try {
         const response = await axios.get(
-            'http://localhost:8023/v1/boards/financial_data',
+            'http://localhost:2082/v1/boards/financial_data',
             {
                 params: { startDate: data.startDate, endDate: data.endDate },
             }
@@ -145,7 +145,7 @@ export const getFinancialData = async data => {
 export const getReturningCustomerRate = async data => {
     try {
         const response = await axios.get(
-            'http://localhost:8023/v1/boards/returning_customer_rate',
+            'http://localhost:2082/v1/boards/returning_customer_rate',
             {
                 params: { startDate: data.startDate, endDate: data.endDate },
             }
@@ -160,7 +160,7 @@ export const getReturningCustomerRate = async data => {
 export const getCustomerConversionRate = async data => {
     try {
         const response = await axios.get(
-            'http://localhost:8023/v1/boards/customer_conversion_rate',
+            'http://localhost:2082/v1/boards/customer_conversion_rate',
             {
                 params: { startDate: data.startDate, endDate: data.endDate },
             }
@@ -175,7 +175,7 @@ export const getCustomerConversionRate = async data => {
 export const getOrderConversionRate = async data => {
     try {
         const response = await axios.get(
-            'http://localhost:8023/v1/boards/order_conversion_rate',
+            'http://localhost:2082/v1/boards/order_conversion_rate',
             {
                 params: { startDate: data.startDate, endDate: data.endDate },
             }
@@ -190,7 +190,7 @@ export const getOrderConversionRate = async data => {
 export const getCancelRefundRate = async data => {
     try {
         const response = await axios.get(
-            'http://localhost:8023/v1/boards/cancel_refund_rate',
+            'http://localhost:2082/v1/boards/cancel_refund_rate',
             {
                 params: { startDate: data.startDate, endDate: data.endDate },
             }
@@ -205,7 +205,7 @@ export const getCancelRefundRate = async data => {
 export const getRevenueByLocation = async data => {
     try {
         const response = await axios.get(
-            'http://localhost:8023/v1/boards/revenue_by_location',
+            'http://localhost:2082/v1/boards/revenue_by_location',
             {
                 params: { startDate: data.startDate, endDate: data.endDate },
             }

@@ -8,33 +8,14 @@ import {
     FiShoppingBag,
     FiEdit,
     FiPlus,
+    FiTrash2,
 } from 'react-icons/fi'
 
-import { getListProduct } from '~/services/admin/productAdminService'
+import { getListProduct, deleteProduct } from '~/services/admin/productAdminService'
 import CreateProductModal from '../CreateProduct'
 import ProductDetailModal from '../ProductDetailModal'
 import UpdateStockModal from '../UpdateProductModal'
-
-const formatCurrency = amount => {
-    return new Intl.NumberFormat('vi-VN', {
-        style: 'currency',
-        currency: 'VND',
-    }).format(amount)
-}
-const formatDateTime = isoString => {
-    if (!isoString) return 'N/A'
-    const date = new Date(isoString)
-    const time = date.toLocaleTimeString('vi-VN', {
-        hour: '2-digit',
-        minute: '2-digit',
-    })
-    const day = date.toLocaleDateString('vi-VN')
-    return `${time} ${day}`
-}
-
-/* ================================================================
-    1. UI COMPONENTS
-================================================================ */
+import Alert from '../../../shared/Alert'  
 
 // Skeleton Loading Row
 const SkeletonRow = () => (
@@ -98,9 +79,7 @@ const ProductStatus = ({ status, stock_qty, low_stock_threshold }) => {
         <span
             className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${config.bg} ${config.text}`}
         >
-            <span
-                className={`w-1.5 h-1.5 rounded-full mr-1.5 ${config.dot}`}
-            ></span>
+            <span className={`w-1.5 h-1.5 rounded-full mr-1.5 ${config.dot}`}></span>
             {config.label}
         </span>
     )
@@ -116,8 +95,7 @@ const DropdownStatus = ({ value, onChange }) => {
             if (ref.current && !ref.current.contains(e.target)) setOpen(false)
         }
         document.addEventListener('mousedown', handleClickOutside)
-        return () =>
-            document.removeEventListener('mousedown', handleClickOutside)
+        return () => document.removeEventListener('mousedown', handleClickOutside)
     }, [])
 
     const statuses = [
@@ -127,8 +105,7 @@ const DropdownStatus = ({ value, onChange }) => {
         { key: 'out_of_stock', label: 'Hết hàng' },
         { key: 'stopped', label: 'Ngừng bán' },
     ]
-    const currentLabel =
-        statuses.find(s => s.key === value)?.label || 'Tất cả trạng thái'
+    const currentLabel = statuses.find(s => s.key === value)?.label || 'Tất cả trạng thái'
 
     return (
         <div className="relative w-full" ref={ref}>
@@ -161,19 +138,49 @@ const DropdownStatus = ({ value, onChange }) => {
     )
 }
 
+// Confirmation Delete Modal
+const ConfirmDeleteModal = ({ isOpen, onClose, onConfirm, productName }) => {
+    if (!isOpen) return null
+
+    return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
+            <div className="bg-white rounded-xl shadow-2xl max-w-md w-full mx-4 p-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-3">Xác nhận xóa sản phẩm</h3>
+                <p className="text-gray-600 mb-6">
+                    Bạn có chắc chắn muốn xóa sản phẩm <span className="font-medium text-red-600">"{productName}"</span>?
+                    <br />
+                    Hành động này không thể hoàn tác.
+                </p>
+                <div className="flex justify-end gap-3">
+                    <button
+                        onClick={onClose}
+                        className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition"
+                    >
+                        Hủy
+                    </button>
+                    <button
+                        onClick={onConfirm}
+                        className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition flex items-center gap-2"
+                    >
+                        <FiTrash2 /> Xóa
+                    </button>
+                </div>
+            </div>
+        </div>
+    )
+}
+
 // Actions Dropdown
-const ActionsDropdown = ({ onViewDetail, onUpdateStock }) => {
+const ActionsDropdown = ({ onViewDetail, onUpdateStock, onDelete }) => {
     const [open, setOpen] = useState(false)
     const ref = useRef(null)
 
     useEffect(() => {
         const handleClickOutside = event => {
-            if (ref.current && !ref.current.contains(event.target))
-                setOpen(false)
+            if (ref.current && !ref.current.contains(event.target)) setOpen(false)
         }
         document.addEventListener('mousedown', handleClickOutside)
-        return () =>
-            document.removeEventListener('mousedown', handleClickOutside)
+        return () => document.removeEventListener('mousedown', handleClickOutside)
     }, [])
 
     return (
@@ -205,6 +212,16 @@ const ActionsDropdown = ({ onViewDetail, onUpdateStock }) => {
                     >
                         <FiEdit /> Cập nhật sản phẩm
                     </button>
+                    <div className="h-px bg-gray-100 mx-3"></div>
+                    <button
+                        onClick={() => {
+                            onDelete()
+                            setOpen(false)
+                        }}
+                        className="w-full px-4 py-3 text-left hover:bg-red-50 text-sm text-red-600 flex items-center gap-3 transition-colors"
+                    >
+                        <FiTrash2 /> Xóa sản phẩm
+                    </button>
                 </div>
             )}
         </div>
@@ -230,16 +247,58 @@ const ProductTable = () => {
     const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false)
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
 
+    // Delete states
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+    const [productToDelete, setProductToDelete] = useState(null)
+
+    // Alert state
+    const [alert, setAlert] = useState({ show: false, message: '', type: 'success' })
+
+    const showAlert = (message, type = 'success') => {
+        setAlert({ show: true, message, type })
+        setTimeout(() => setAlert({ show: false, message: '', type: 'success' }), 2500)
+    }
+
     const handleViewDetail = product => {
         setSelectedProduct(product)
         setIsDetailModalOpen(true)
     }
+
     const handleUpdateStock = product => {
         setSelectedProduct(product)
         setIsUpdateModalOpen(true)
     }
-    const handleUpdateSuccess = () => setRefreshKey(prev => prev + 1)
-    const handleCreateSuccess = () => setRefreshKey(prev => prev + 1)
+
+    const handleDeleteClick = product => {
+        setProductToDelete(product)
+        setIsDeleteModalOpen(true)
+    }
+
+    const handleConfirmDelete = async () => {
+        if (!productToDelete) return
+
+        try {
+            await deleteProduct({ productId: productToDelete.id })
+            showAlert('Xóa sản phẩm thành công!', 'success')
+            setRefreshKey(prev => prev + 1)
+        } catch (error) {
+            console.error('Lỗi khi xóa sản phẩm:', error)
+            showAlert('Không thể xóa sản phẩm. Vui lòng thử lại.', 'error')
+        } finally {
+            setIsDeleteModalOpen(false)
+            setProductToDelete(null)
+        }
+    }
+
+    const handleUpdateSuccess = () => {
+        showAlert('Cập nhật sản phẩm thành công!', 'success')
+        setRefreshKey(prev => prev + 1)
+    }
+
+    const handleCreateSuccess = () => {
+        showAlert('Thêm sản phẩm mới thành công!', 'success')
+        setRefreshKey(prev => prev + 1)
+    }
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -249,6 +308,7 @@ const ProductTable = () => {
                 setProducts(res.data || [])
             } catch (error) {
                 console.error('Lỗi tải danh sách sản phẩm:', error)
+                showAlert('Không thể tải danh sách sản phẩm.', 'error')
             } finally {
                 setTimeout(() => setIsLoading(false), 300)
             }
@@ -274,8 +334,7 @@ const ProductTable = () => {
         if (statusFilter === 'selling')
             matchStatus = p.status === 1 && stockQty > lowStockThreshold
         else if (statusFilter === 'low_stock')
-            matchStatus =
-                p.status === 1 && stockQty > 0 && stockQty <= lowStockThreshold
+            matchStatus = p.status === 1 && stockQty > 0 && stockQty <= lowStockThreshold
         else if (statusFilter === 'out_of_stock') matchStatus = stockQty <= 0
         else if (statusFilter === 'stopped') matchStatus = p.status === 0
 
@@ -293,27 +352,11 @@ const ProductTable = () => {
     )
 
     const pages = () => {
-        if (totalPages <= 5)
-            return [...Array(totalPages).keys()].map(i => i + 1)
+        if (totalPages <= 5) return [...Array(totalPages).keys()].map(i => i + 1)
         if (currentPage <= 3) return [1, 2, 3, 4, '...', totalPages]
         if (currentPage >= totalPages - 2)
-            return [
-                1,
-                '...',
-                totalPages - 3,
-                totalPages - 2,
-                totalPages - 1,
-                totalPages,
-            ]
-        return [
-            1,
-            '...',
-            currentPage - 1,
-            currentPage,
-            currentPage + 1,
-            '...',
-            totalPages,
-        ]
+            return [1, '...', totalPages - 3, totalPages - 2, totalPages - 1, totalPages]
+        return [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages]
     }
 
     return (
@@ -321,12 +364,8 @@ const ProductTable = () => {
             {/* HEADER + NÚT TẠO MỚI */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-900">
-                        Quản lý Kho hàng
-                    </h1>
-                    <p className="text-sm text-gray-500 mt-1">
-                        Tổng cộng: {products.length} sản phẩm
-                    </p>
+                    <h1 className="text-2xl font-bold text-gray-900">Quản lý Kho hàng</h1>
+                    <p className="text-sm text-gray-500 mt-1">Tổng cộng: {products.length} sản phẩm</p>
                 </div>
                 <button
                     onClick={() => setIsCreateModalOpen(true)}
@@ -359,10 +398,7 @@ const ProductTable = () => {
                         />
                     </div>
                     <div className="md:col-span-3">
-                        <DropdownStatus
-                            value={statusFilter}
-                            onChange={setStatusFilter}
-                        />
+                        <DropdownStatus value={statusFilter} onChange={setStatusFilter} />
                     </div>
                     <div className="md:col-span-2">
                         <input
@@ -405,12 +441,8 @@ const ProductTable = () => {
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden pb-4">
                 <div className="grid grid-cols-12 gap-4 px-6 py-4 bg-gray-50 border-b border-gray-100 text-xs font-semibold text-gray-500 uppercase tracking-wider">
                     <div className="col-span-3">Sản phẩm</div>
-                    <div className="col-span-2 text-center">
-                        Giá bán / Giá gốc
-                    </div>
-                    <div className="col-span-2 text-center">
-                        Tồn kho / Ngưỡng
-                    </div>
+                    <div className="col-span-2 text-center">Giá bán / Giá gốc</div>
+                    <div className="col-span-2 text-center">Tồn kho / Ngưỡng</div>
                     <div className="col-span-2 text-center">Trạng thái</div>
                     <div className="col-span-2 text-center">Cập nhật cuối</div>
                     <div className="col-span-1 text-center">...</div>
@@ -418,9 +450,7 @@ const ProductTable = () => {
 
                 <div className="divide-y divide-gray-50">
                     {isLoading ? (
-                        [...Array(displayPerPage)].map((_, i) => (
-                            <SkeletonRow key={i} />
-                        ))
+                        [...Array(displayPerPage)].map((_, i) => <SkeletonRow key={i} />)
                     ) : currentUsers.length > 0 ? (
                         currentUsers.map(p => (
                             <div
@@ -428,15 +458,10 @@ const ProductTable = () => {
                                 className="grid grid-cols-12 gap-4 px-6 py-4 items-center hover:bg-gray-50/80 transition-colors group"
                             >
                                 <div className="col-span-3 flex flex-col justify-center overflow-hidden">
-                                    <div
-                                        className="font-medium text-gray-900 text-sm truncate"
-                                        title={p.name}
-                                    >
+                                    <div className="font-medium text-gray-900 text-sm truncate" title={p.name}>
                                         {p.name}
                                     </div>
-                                    <div className="text-xs text-gray-500 font-mono mt-0.5">
-                                        ID: #{p.id}
-                                    </div>
+                                    <div className="text-xs text-gray-500 font-mono mt-0.5">ID: #{p.id}</div>
                                 </div>
                                 <div className="col-span-2 flex flex-col items-end justify-center">
                                     <div className="font-semibold text-sm text-blue-600 mx-auto text-center">
@@ -448,21 +473,19 @@ const ProductTable = () => {
                                 </div>
                                 <div className="col-span-2 text-center flex flex-col justify-center">
                                     <div
-                                        className={`font-bold text-base ${p.stock_qty <= p.low_stock_threshold && p.status === 1 ? 'text-red-600' : 'text-gray-900'}`}
+                                        className={`font-bold text-base ${
+                                            p.stock_qty <= p.low_stock_threshold && p.status === 1 ? 'text-red-600' : 'text-gray-900'
+                                        }`}
                                     >
                                         {p.stock_qty || 0}
                                     </div>
-                                    <div className="text-xs text-gray-500">
-                                        / {p.low_stock_threshold || 0}
-                                    </div>
+                                    <div className="text-xs text-gray-500">/ {p.low_stock_threshold || 0}</div>
                                 </div>
                                 <div className="col-span-2 text-center">
                                     <ProductStatus
                                         status={p.status}
                                         stock_qty={p.stock_qty}
-                                        low_stock_threshold={
-                                            p.low_stock_threshold
-                                        }
+                                        low_stock_threshold={p.low_stock_threshold}
                                     />
                                 </div>
                                 <div className="col-span-2 text-right">
@@ -471,17 +494,15 @@ const ProductTable = () => {
                                             {formatDateTime(p.updated_at)}
                                         </span>
                                         <span className="text-[10px] text-gray-400 mx-auto">
-                                            ({formatDateTime(p.created_at)}:
-                                            Created)
+                                            ({formatDateTime(p.created_at)}: Created)
                                         </span>
                                     </div>
                                 </div>
                                 <div className="col-span-1 flex items-center justify-center">
                                     <ActionsDropdown
                                         onViewDetail={() => handleViewDetail(p)}
-                                        onUpdateStock={() =>
-                                            handleUpdateStock(p)
-                                        }
+                                        onUpdateStock={() => handleUpdateStock(p)}
+                                        onDelete={() => handleDeleteClick(p)}
                                     />
                                 </div>
                             </div>
@@ -491,9 +512,7 @@ const ProductTable = () => {
                             <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
                                 <FiShoppingBag className="text-gray-400 text-2xl" />
                             </div>
-                            <h3 className="text-gray-900 font-medium">
-                                Không tìm thấy sản phẩm nào
-                            </h3>
+                            <h3 className="text-gray-900 font-medium">Không tìm thấy sản phẩm nào</h3>
                             <p className="text-gray-500 text-sm mt-1">
                                 Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm
                             </p>
@@ -501,6 +520,7 @@ const ProductTable = () => {
                     )}
                 </div>
 
+                {/* Pagination */}
                 <div className="flex justify-center gap-2 mt-6 mb-2">
                     <button
                         disabled={currentPage === 1}
@@ -518,14 +538,14 @@ const ProductTable = () => {
                     </button>
                     {pages().map((p, i) =>
                         p === '...' ? (
-                            <span key={i} className="px-3 py-2">
-                                …
-                            </span>
+                            <span key={i} className="px-3 py-2">…</span>
                         ) : (
                             <button
                                 key={i}
                                 onClick={() => setCurrentPage(p)}
-                                className={`px-3 py-2 border rounded-lg transition-colors ${currentPage === p ? 'bg-indigo-500 text-white' : 'hover:bg-gray-50'}`}
+                                className={`px-3 py-2 border rounded-lg transition-colors ${
+                                    currentPage === p ? 'bg-indigo-500 text-white' : 'hover:bg-gray-50'
+                                }`}
                             >
                                 {p}
                             </button>
@@ -547,6 +567,16 @@ const ProductTable = () => {
                     </button>
                 </div>
             </div>
+
+            {/* Alert hiển thị khi có thông báo */}
+            {alert.show && (
+                <Alert
+                    message={alert.message}
+                    type={alert.type}
+                    duration={2500}
+                    onClose={() => setAlert({ show: false, message: '', type: 'success' })}
+                />
+            )}
 
             {/* Các Modal */}
             <ProductDetailModal
@@ -571,8 +601,34 @@ const ProductTable = () => {
                 onClose={() => setIsCreateModalOpen(false)}
                 onCreateSuccess={handleCreateSuccess}
             />
+
+            {/* Modal Xác nhận xóa */}
+            <ConfirmDeleteModal
+                isOpen={isDeleteModalOpen}
+                onClose={() => {
+                    setIsDeleteModalOpen(false)
+                    setProductToDelete(null)
+                }}
+                onConfirm={handleConfirmDelete}
+                productName={productToDelete?.name || ''}
+            />
         </div>
     )
+}
+
+const formatCurrency = amount => {
+    return new Intl.NumberFormat('vi-VN', {
+        style: 'currency',
+        currency: 'VND',
+    }).format(amount)
+}
+
+const formatDateTime = isoString => {
+    if (!isoString) return 'N/A'
+    const date = new Date(isoString)
+    const time = date.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })
+    const day = date.toLocaleDateString('vi-VN')
+    return `${time} ${day}`
 }
 
 export default ProductTable

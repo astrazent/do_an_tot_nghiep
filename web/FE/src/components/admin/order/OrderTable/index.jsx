@@ -10,7 +10,9 @@ import {
     FiSearch,
     FiFilter,
     FiShoppingCart,
-    FiX
+    FiX,
+    FiEye,
+    FiTrash2,
 } from 'react-icons/fi'
 
 import OrderDetailPopup from '../OrderDetailPopup'
@@ -21,10 +23,9 @@ import {
 } from '../../../../services/admin/adminOrderService'
 
 import { formatCurrency } from '~/utils/formatCurrency'
+import Alert from '~/components/shared/Alert'
 
-/* ================================================================
-    SKELETON LOADING
-================================================================= */
+// Skeleton Loading Row
 const SkeletonRow = () => (
     <div className="grid grid-cols-12 gap-4 px-6 py-4 border-b border-gray-100 animate-pulse">
         <div className="col-span-2"><div className="h-4 bg-gray-200 rounded w-full"></div></div>
@@ -37,9 +38,7 @@ const SkeletonRow = () => (
     </div>
 )
 
-/* ================================================================
-    DROPDOWN TRẠNG THÁI (CUSTOM SELECT)
-================================================================= */
+// Dropdown Status
 const DropdownStatus = ({ value, onChange }) => {
     const [open, setOpen] = useState(false)
     const ref = useRef()
@@ -97,58 +96,26 @@ const DropdownStatus = ({ value, onChange }) => {
     )
 }
 
-/* ================================================================
-    STATUS BADGE
-================================================================= */
+// Order Status Badge
 const OrderStatus = ({ status }) => {
     const getStyle = () => {
         switch (status) {
             case 'completed':
-                return {
-                    icon: <FiCheckCircle />,
-                    classes: 'bg-emerald-50 text-emerald-700',
-                    dot: 'bg-emerald-500',
-                    label: 'Hoàn thành'
-                }
+                return { classes: 'bg-emerald-50 text-emerald-700', dot: 'bg-emerald-500', label: 'Hoàn thành' }
             case 'pending':
-                return {
-                    icon: <FiPackage />,
-                    classes: 'bg-blue-50 text-blue-700',
-                    dot: 'bg-blue-500',
-                    label: 'Chờ xử lý'
-                }
+                return { classes: 'bg-blue-50 text-blue-700', dot: 'bg-blue-500', label: 'Chờ xử lý' }
             case 'confirmed':
-                return {
-                    icon: <FiClock />,
-                    classes: 'bg-indigo-50 text-indigo-700',
-                    dot: 'bg-indigo-500',
-                    label: 'Đã xác nhận'
-                }
+                return { classes: 'bg-indigo-50 text-indigo-700', dot: 'bg-indigo-500', label: 'Đã xác nhận' }
             case 'refunded':
-                return {
-                    icon: <FiClock />,
-                    classes: 'bg-purple-50 text-purple-700',
-                    dot: 'bg-purple-500',
-                    label: 'Đã hoàn tiền'
-                }
+                return { classes: 'bg-purple-50 text-purple-700', dot: 'bg-purple-500', label: 'Đã hoàn tiền' }
             case 'canceled':
-                return {
-                    icon: <FiXCircle />,
-                    classes: 'bg-red-50 text-red-700',
-                    dot: 'bg-red-500',
-                    label: 'Đã hủy'
-                }
+                return { classes: 'bg-red-50 text-red-700', dot: 'bg-red-500', label: 'Đã hủy' }
             default:
-                return {
-                    icon: <FiClock />,
-                    classes: 'bg-gray-100 text-gray-600',
-                    dot: 'bg-gray-400',
-                    label: status
-                }
+                return { classes: 'bg-gray-100 text-gray-600', dot: 'bg-gray-400', label: status }
         }
     }
 
-    const { icon, classes, dot, label } = getStyle()
+    const { classes, dot, label } = getStyle()
 
     return (
         <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${classes}`}>
@@ -158,87 +125,110 @@ const OrderStatus = ({ status }) => {
     )
 }
 
-/* ================================================================
-    ACTIONS DROPDOWN
-================================================================= */
-const ActionsDropdown = ({ order, onOpenDetails, onUpdateStatus }) => {
+// Shipment Status Badge
+const ShipmentStatus = ({ status }) => {
+    const getStyle = () => {
+        switch (status?.toLowerCase()) {
+            case 'pending':
+                return {
+                    classes: 'bg-yellow-50 text-yellow-700',
+                    dot: 'bg-yellow-500',
+                    label: 'Chờ xử lý',
+                };
+            case 'shipped':
+                return {
+                    classes: 'bg-indigo-50 text-indigo-700',
+                    dot: 'bg-indigo-500',
+                    label: 'Đã giao cho vận chuyển',
+                };
+            case 'in_transit':
+                return {
+                    classes: 'bg-blue-50 text-blue-700',
+                    dot: 'bg-blue-500',
+                    label: 'Đang vận chuyển',
+                };
+            case 'delivered':
+                return {
+                    classes: 'bg-emerald-50 text-emerald-700',
+                    dot: 'bg-emerald-500',
+                    label: 'Đã giao',
+                };
+            case 'returned':
+                return {
+                    classes: 'bg-orange-50 text-orange-700',
+                    dot: 'bg-orange-500',
+                    label: 'Đã trả lại',
+                };
+            default:
+                return {
+                    classes: 'bg-gray-100 text-gray-600',
+                    dot: 'bg-gray-400',
+                    label: status || 'N/A',
+                };
+        }
+    };
+
+    const { classes, dot, label } = getStyle();
+
+    return (
+        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${classes}`}>
+            <span className={`w-1.5 h-1.5 rounded-full mr-1.5 ${dot}`}></span>
+            {label}
+        </span>
+    );
+};
+
+// Actions Dropdown
+const ActionsDropdown = ({ onViewDetail, onUpdateStatus, onDelete }) => {
     const [open, setOpen] = useState(false)
-    const [showStatus, setShowStatus] = useState(false)
-    const dropdownRef = useRef(null)
+    const ref = useRef(null)
 
     useEffect(() => {
         const handleClickOutside = event => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-                setOpen(false)
-                setShowStatus(false)
-            }
+            if (ref.current && !ref.current.contains(event.target)) setOpen(false)
         }
         document.addEventListener('mousedown', handleClickOutside)
         return () => document.removeEventListener('mousedown', handleClickOutside)
     }, [])
 
-    const statuses = [
-        { key: 'pending', label: 'Chờ xử lý' },
-        { key: 'confirmed', label: 'Đã xác nhận' },
-        { key: 'completed', label: 'Hoàn thành' },
-        { key: 'refunded', label: 'Đã hoàn tiền' },
-        { key: 'canceled', label: 'Đã hủy' },
-    ]
-
-    const handleAction = action => {
-        action()
-        setOpen(false)
-        setShowStatus(false)
-    }
-
     return (
-        <div className="relative" ref={dropdownRef}>
+        <div className="relative" ref={ref}>
             <button
-                onClick={() => {
-                    setOpen(!open)
-                    setShowStatus(false)
-                }}
+                onClick={() => setOpen(!open)}
                 className="p-2 rounded-full hover:bg-gray-100 text-gray-400 hover:text-indigo-600 transition-colors"
             >
-                <FiMoreVertical className="w-4 h-4" />
+                <FiMoreVertical className="w-5 h-5" />
             </button>
-
             {open && (
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-gray-100 z-40 overflow-hidden">
                     <button
-                        onClick={() => handleAction(onOpenDetails)}
+                        onClick={() => {
+                            onViewDetail()
+                            setOpen(false)
+                        }}
                         className="w-full px-4 py-3 text-left hover:bg-indigo-50 text-sm text-gray-700 flex items-center gap-3 transition-colors"
                     >
-                        <FiPackage className="text-indigo-500"/> Xem chi tiết
+                        <FiEye className="text-indigo-500" /> Xem chi tiết
                     </button>
-
+                    <div className="h-px bg-gray-100 mx-3"></div>
                     <button
-                        onClick={() => setShowStatus(!showStatus)}
-                        className="w-full px-4 py-3 text-sm hover:bg-blue-50 text-gray-700 flex items-center justify-between transition-colors"
+                        onClick={() => {
+                            onUpdateStatus()
+                            setOpen(false)
+                        }}
+                        className="w-full px-4 py-3 text-left hover:bg-blue-50 text-sm text-blue-600 flex items-center gap-3 transition-colors"
                     >
-                        <span className="flex items-center gap-3">
-                            <FiClock className="text-blue-500"/> Cập nhật trạng thái
-                        </span>
-                        <FiChevronRight className={`transition-transform ${showStatus ? 'rotate-90' : ''}`} />
+                        <FiClock className="text-blue-500" /> Cập nhật trạng thái
                     </button>
-
-                    {showStatus && (
-                        <div className="bg-gray-50 border-t border-gray-100">
-                            {statuses.map(s => (
-                                <button
-                                    key={s.key}
-                                    onClick={() => handleAction(() => onUpdateStatus(s.key))}
-                                    className="w-full px-6 py-2 text-left hover:bg-white text-sm text-gray-600 transition-colors"
-                                >
-                                    {s.label}
-                                </button>
-                            ))}
-                        </div>
-                    )}
-
-                    <div className="h-px bg-gray-100"></div>
-                    <button className="w-full px-4 py-3 text-left text-red-600 hover:bg-red-50 text-sm flex items-center gap-3 transition-colors">
-                        <FiXCircle className="text-red-500"/> Hủy đơn
+                    <div className="h-px bg-gray-100 mx-3"></div>
+                    <button
+                        onClick={() => {
+                            onDelete()
+                            setOpen(false)
+                        }}
+                        className="w-full px-4 py-3 text-left hover:bg-red-50 text-sm text-red-600 flex items-center gap-3 transition-colors"
+                    >
+                        <FiTrash2 /> Xóa đơn hàng
                     </button>
                 </div>
             )}
@@ -246,30 +236,147 @@ const ActionsDropdown = ({ order, onOpenDetails, onUpdateStatus }) => {
     )
 }
 
-/* ================================================================
-    MAIN TABLE
-================================================================= */
+// Modal xác nhận xóa
+const ConfirmDeleteModal = ({ isOpen, onClose, onConfirm, orderCode }) => {
+    if (!isOpen) return null
+
+    return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
+            <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 p-6 border border-gray-200">
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                    Xác nhận xóa đơn hàng
+                </h3>
+                <p className="text-gray-600 mb-6 leading-relaxed">
+                    Bạn có chắc chắn muốn xóa đơn hàng 
+                    <span className="font-medium text-red-600"> "{orderCode}"</span>?
+                    <br />
+                    Hành động này không thể hoàn tác.
+                </p>
+                <div className="flex justify-end gap-4">
+                    <button
+                        onClick={onClose}
+                        className="px-5 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors font-medium"
+                    >
+                        Hủy
+                    </button>
+                    <button
+                        onClick={onConfirm}
+                        className="px-5 py-2.5 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium flex items-center gap-2"
+                    >
+                        <FiTrash2 className="w-4 h-4" />
+                        Xóa
+                    </button>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+// Modal cập nhật trạng thái
+const UpdateStatusModal = ({ isOpen, onClose, order, onUpdate }) => {
+    const [status, setStatus] = useState(order?.status || 'pending')
+    const [shipmentStatus, setShipmentStatus] = useState(order?.shipment_status || 'processing')
+
+    if (!isOpen || !order) return null
+
+    const handleSave = () => {
+        onUpdate({ status, shipment_status: shipmentStatus })
+        onClose()
+    }
+
+    return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
+            <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full mx-4 p-6">
+                <h3 className="text-xl font-semibold text-gray-900 mb-6">
+                    Cập nhật trạng thái đơn hàng #{order.tracking_number}
+                </h3>
+
+                <div className="space-y-6">
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Trạng thái đơn hàng
+                        </label>
+                        <select
+                            value={status}
+                            onChange={e => setStatus(e.target.value)}
+                            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+                        >
+                            <option value="pending">Chờ xử lý</option>
+                            <option value="confirmed">Đã xác nhận</option>
+                            <option value="completed">Hoàn thành</option>
+                            <option value="refunded">Đã hoàn tiền</option>
+                            <option value="canceled">Đã hủy</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Trạng thái vận chuyển
+                        </label>
+                        <select
+                            value={shipmentStatus}
+                            onChange={e => setShipmentStatus(e.target.value)}
+                            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+                        >
+                            <option value="processing">Đang xử lý</option>
+                            <option value="shipped">Đã giao cho vận chuyển</option>
+                            <option value="in_transit">Đang vận chuyển</option>
+                            <option value="delivered">Đã giao</option>
+                            <option value="returned">Đã trả lại</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div className="flex justify-end gap-4 mt-8">
+                    <button
+                        onClick={onClose}
+                        className="px-5 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors font-medium"
+                    >
+                        Hủy
+                    </button>
+                    <button
+                        onClick={handleSave}
+                        className="px-5 py-2.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors font-medium"
+                    >
+                        Lưu thay đổi
+                    </button>
+                </div>
+            </div>
+        </div>
+    )
+}
+
 const OrdersTable = () => {
     const [orders, setOrders] = useState([])
     const [selectedOrder, setSelectedOrder] = useState(null)
     const [isPopupOpen, setIsPopupOpen] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
+    const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false)
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+    const [orderToDelete, setOrderToDelete] = useState(null)
+    const [deletingId, setDeletingId] = useState(null)
+    const [updatingId, setUpdatingId] = useState(null)
 
-    // FILTERS
+    // Alert state
+    const [alert, setAlert] = useState({ show: false, message: '', type: 'success' })
+
+    const showAlert = (message, type = 'success') => {
+        setAlert({ show: true, message, type })
+        setTimeout(() => setAlert({ show: false, message: '', type: 'success' }), 2500)
+    }
+
+    // Filters
     const [search, setSearch] = useState('')
     const [statusFilter, setStatusFilter] = useState('')
     const [dateFrom, setDateFrom] = useState('')
     const [dateTo, setDateTo] = useState('')
-
-    // LIMIT
     const [limit, setLimit] = useState(100)
     const [offset, setOffset] = useState(0)
 
-    // PAGINATION
+    // Pagination
     const [currentPage, setCurrentPage] = useState(1)
     const itemsPerPage = 10
 
-    /* ---------------- GET DATA ---------------- */
     useEffect(() => {
         const fetchData = async () => {
             setIsLoading(true)
@@ -285,7 +392,6 @@ const OrdersTable = () => {
         fetchData()
     }, [limit, offset])
 
-    /* ---------------- FILTER ---------------- */
     const filtered = orders.filter(o => {
         const t = o.raw
         const searchLower = search.toLowerCase()
@@ -310,54 +416,62 @@ const OrdersTable = () => {
     )
 
     const pages = () => {
-        if (totalPages <= 5)
-            return [...Array(totalPages).keys()].map(i => i + 1)
+        if (totalPages <= 5) return [...Array(totalPages).keys()].map(i => i + 1)
         if (currentPage <= 3) return [1, 2, 3, 4, '...', totalPages]
         if (currentPage >= totalPages - 2)
-            return [
-                1,
-                '...',
-                totalPages - 3,
-                totalPages - 2,
-                totalPages - 1,
-                totalPages,
-            ]
-
-        return [
-            1,
-            '...',
-            currentPage - 1,
-            currentPage,
-            currentPage + 1,
-            '...',
-            totalPages,
-        ]
+            return [1, '...', totalPages - 3, totalPages - 2, totalPages - 1, totalPages]
+        return [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages]
     }
 
-    /* ---------------- RESET FILTERS ---------------- */
-    const handleResetFilters = () => {
-        setSearch('')
-        setStatusFilter('')
-        setDateFrom('')
-        setDateTo('')
-        setCurrentPage(1)
-    }
-
-    /* ---------------- DETAIL ---------------- */
     const handleViewDetails = async order => {
         const res = await getDetailTransaction(order.raw.id)
         setSelectedOrder(res.data)
         setIsPopupOpen(true)
     }
 
-    /* ---------------- UPDATE STATUS ---------------- */
-    const handleUpdateOrderStatus = async (order, newStatus) => {
-        const res = await updateTransaction(order.raw.id, { status: newStatus })
-        const updated = res.data
+    const handleUpdateStatusClick = order => {
+        setSelectedOrder(order.raw)
+        setIsUpdateModalOpen(true)
+    }
 
-        setOrders(prev =>
-            prev.map(o => (o.raw.id === updated.id ? { raw: updated } : o))
-        )
+    const handleSaveUpdate = async (updatedData) => {
+        setUpdatingId(selectedOrder.id)
+        try {
+            const res = await updateTransaction(selectedOrder.id, updatedData)
+            setOrders(prev =>
+                prev.map(o => (o.raw.id === res.data.id ? { raw: res.data } : o))
+            )
+            showAlert('Cập nhật trạng thái thành công!', 'success')
+        } catch (error) {
+            console.error('Lỗi cập nhật trạng thái:', error)
+            showAlert('Không thể cập nhật trạng thái. Vui lòng thử lại.', 'error')
+        } finally {
+            setUpdatingId(null)
+            setIsUpdateModalOpen(false)
+        }
+    }
+
+    const handleDeleteClick = order => {
+        setOrderToDelete(order)
+        setIsDeleteModalOpen(true)
+    }
+
+    const handleConfirmDelete = async () => {
+        if (!orderToDelete) return
+
+        setDeletingId(orderToDelete.raw.id)
+        try {
+            // Giả sử có API deleteTransaction (nếu không có thì comment phần này)
+            // await deleteTransaction(orderToDelete.raw.id)
+            showAlert('Xóa đơn hàng thành công!', 'success')
+            setOrders(prev => prev.filter(o => o.raw.id !== orderToDelete.raw.id))
+        } catch (error) {
+            showAlert('Không thể xóa đơn hàng. Vui lòng thử lại.', 'error')
+        } finally {
+            setDeletingId(null)
+            setIsDeleteModalOpen(false)
+            setOrderToDelete(null)
+        }
     }
 
     return (
@@ -369,6 +483,16 @@ const OrdersTable = () => {
                     <p className="text-sm text-gray-500 mt-1">Theo dõi và quản lý các đơn hàng của bạn</p>
                 </div>
             </div>
+
+            {/* Alert */}
+            {alert.show && (
+                <Alert
+                    message={alert.message}
+                    type={alert.type}
+                    duration={2500}
+                    onClose={() => setAlert({ show: false, message: '', type: 'success' })}
+                />
+            )}
 
             {/* Filter Card */}
             <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
@@ -397,18 +521,18 @@ const OrdersTable = () => {
                     <div className="md:col-span-2">
                         <input
                             type="date"
-                            className="w-full px-3 py-2.5 bg-white border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none text-gray-600"
                             value={dateFrom}
                             onChange={e => setDateFrom(e.target.value)}
+                            className="w-full px-3 py-2.5 bg-white border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none text-gray-600"
                         />
                     </div>
 
                     <div className="md:col-span-2">
                         <input
                             type="date"
-                            className="w-full px-3 py-2.5 bg-white border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none text-gray-600"
                             value={dateTo}
                             onChange={e => setDateTo(e.target.value)}
+                            className="w-full px-3 py-2.5 bg-white border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none text-gray-600"
                         />
                     </div>
 
@@ -416,29 +540,27 @@ const OrdersTable = () => {
                         <input
                             type="number"
                             min={1}
-                            className="w-full px-3 py-2.5 bg-white border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none text-gray-600"
                             value={limit}
                             onChange={e => setLimit(Number(e.target.value))}
+                            className="w-full px-3 py-2.5 bg-white border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none text-gray-600"
                             placeholder="Số bản ghi..."
                         />
                     </div>
                 </div>
             </div>
 
-            {/* Data Table Card */}
+            {/* Data Table */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden pb-4">
-                {/* Table Header */}
                 <div className="grid grid-cols-12 gap-4 px-6 py-4 bg-gray-50 border-b border-gray-100 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                    <div className="col-span-2">Mã đơn hàng</div>
-                    <div className="col-span-2">Người nhận</div>
-                    <div className="col-span-2">Ngày đặt</div>
-                    <div className="col-span-2">Tổng tiền</div>
-                    <div className="col-span-2">Trạng thái</div>
-                    <div className="col-span-1">Vận chuyển</div>
+                    <div className="col-span-2 text-center">Mã đơn hàng</div>
+                    <div className="col-span-2 text-center">Người nhận</div>
+                    <div className="col-span-2 text-center">Ngày đặt</div>
+                    <div className="col-span-1 text-center">Tổng tiền</div>
+                    <div className="col-span-2 text-center">Trạng thái</div>
+                    <div className="col-span-2 text-center">Vận chuyển</div>
                     <div className="col-span-1 text-center">Thao tác</div>
                 </div>
 
-                {/* Table Body */}
                 <div className="divide-y divide-gray-50">
                     {isLoading ? (
                         [...Array(itemsPerPage)].map((_, i) => <SkeletonRow key={i} />)
@@ -451,35 +573,31 @@ const OrdersTable = () => {
                                 <div className="col-span-2">
                                     <div className="font-medium text-gray-900 text-sm">{order.raw.tracking_number}</div>
                                 </div>
-                                
                                 <div className="col-span-2">
                                     <div className="text-sm text-gray-700 font-medium">{order.raw.deli_name}</div>
                                 </div>
-                                
                                 <div className="col-span-2">
-                                    <div className="text-sm text-gray-700">{order.raw.created_at?.split('T')[0]}</div>
+                                    <div className="text-sm text-gray-700 text-center">{order.raw.created_at?.split('T')[0]}</div>
                                 </div>
-                                
-                                <div className="col-span-2">
-                                    <div className="text-sm font-semibold text-gray-900">{formatCurrency(Number(order.raw.amount))}</div>
+                                <div className="col-span-1">
+                                    <div className="text-sm font-semibold text-gray-900 text-center">{formatCurrency(Number(order.raw.amount))}</div>
                                 </div>
-                                
-                                <div className="col-span-2">
+                                <div className="col-span-2 text-center">
                                     <OrderStatus status={order.raw.status} />
                                 </div>
-
-                                <div className="col-span-1">
-                                    <div className="text-sm text-gray-600">{order.raw.shipment_status}</div>
+                                <div className="col-span-2 text-center">
+                                    <ShipmentStatus status={order.raw.shipment_status} />
                                 </div>
-
                                 <div className="col-span-1 flex items-center justify-center">
-                                    <ActionsDropdown
-                                        order={order}
-                                        onOpenDetails={() => handleViewDetails(order)}
-                                        onUpdateStatus={newStatus =>
-                                            handleUpdateOrderStatus(order, newStatus)
-                                        }
-                                    />
+                                    {deletingId === order.raw.id ? (
+                                        <div className="w-8 h-8 border-2 border-red-500 border-t-transparent rounded-full animate-spin"></div>
+                                    ) : (
+                                        <ActionsDropdown
+                                            onViewDetail={() => handleViewDetails(order)}
+                                            onUpdateStatus={() => handleUpdateStatusClick(order)}
+                                            onDelete={() => handleDeleteClick(order)}
+                                        />
+                                    )}
                                 </div>
                             </div>
                         ))
@@ -548,7 +666,7 @@ const OrdersTable = () => {
                 )}
             </div>
 
-            {/* POPUP DETAILS */}
+            {/* Modals */}
             {isPopupOpen && selectedOrder && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
                     <div 
@@ -563,6 +681,23 @@ const OrdersTable = () => {
                     </div>
                 </div>
             )}
+
+            <UpdateStatusModal
+                isOpen={isUpdateModalOpen}
+                onClose={() => setIsUpdateModalOpen(false)}
+                order={selectedOrder}
+                onUpdate={handleSaveUpdate}
+            />
+
+            <ConfirmDeleteModal
+                isOpen={isDeleteModalOpen}
+                onClose={() => {
+                    setIsDeleteModalOpen(false)
+                    setOrderToDelete(null)
+                }}
+                onConfirm={handleConfirmDelete}
+                orderCode={orderToDelete?.raw.tracking_number || ''}
+            />
         </div>
     )
 }

@@ -16,7 +16,10 @@ import {
     HiOutlineDocumentAdd,
     HiX,
     HiOutlineTag,
+    HiOutlineChip,
     HiOutlineTemplate,
+    HiOutlineDocumentText,
+    HiOutlineMail,
 } from 'react-icons/hi'
 import { MdLocalOffer, MdAdsClick, MdArticle } from 'react-icons/md'
 import { BiCategoryAlt } from 'react-icons/bi'
@@ -79,7 +82,11 @@ const mainNavLinks = [
             },
         ],
     },
-    { name: 'Danh mục sản phẩm', icon: <HiOutlineTag />, path: '/admin/category' },
+    {
+        name: 'Danh mục sản phẩm',
+        icon: <HiOutlineTag />,
+        path: '/admin/category',
+    },
     { name: 'Đơn hàng', icon: <HiOutlineShoppingBag />, path: '/admin/orders' },
     { name: 'Khuyến mãi', icon: <MdLocalOffer />, path: '/admin/promotions' },
     { name: 'Banner', icon: <MdAdsClick />, path: '/admin/banner' },
@@ -105,7 +112,23 @@ const mainNavLinks = [
             },
         ],
     },
-    { name: 'Tin nhắn', icon: <HiOutlineChatAlt2 />, path: '/admin/messages' },
+    {
+        name: 'AI Marketing',
+        icon: <HiOutlineChip />,
+        hasSubmenu: true,
+        submenu: [
+            {
+                name: 'Bài viết AI',
+                path: '/admin/ai_marketing/content',
+                icon: <HiOutlineDocumentText />,
+            },
+            {
+                name: 'Email AI',
+                path: '/admin/ai_marketing/email',
+                icon: <HiOutlineMail />,
+            },
+        ],
+    },
 ]
 
 const NavItem = ({ item, onClick }) => {
@@ -125,7 +148,8 @@ const NavItem = ({ item, onClick }) => {
 
     const toggleSubmenu = () => setOpen(!open)
 
-    const activeClasses = 'bg-indigo-600 text-white'
+    // Màu active: green-700 + text-white
+    const activeClasses = 'bg-green-700 text-white'
     const inactiveClasses =
         'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
     const activeParentClasses = 'bg-gray-100 dark:bg-gray-700'
@@ -211,13 +235,13 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                 ${isOpen ? 'translate-x-0' : '-translate-x-full'} 
                 lg:translate-x-0 lg:fixed`}
             >
-                <div className="p-4 h-16 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center shrink-0">
-                    <h1 className="text-xl font-bold text-indigo-600 dark:text-indigo-400 uppercase">
+                <div className="h-16 border-b border-gray-200 dark:border-gray-700 flex items-center justify-center relative shrink-0">
+                    <h1 className="text-xl font-bold text-green-800 dark:text-indigo-400 uppercase tracking-wide">
                         Trang quản trị
                     </h1>
                     <button
                         onClick={() => setIsOpen(false)}
-                        className="!p-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 lg:hidden"
+                        className="absolute right-4 p-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 lg:hidden"
                     >
                         <HiX
                             size={24}
@@ -225,6 +249,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                         />
                     </button>
                 </div>
+
                 <nav className="flex-grow px-4 py-4 space-y-2 overflow-y-auto">
                     {mainNavLinks.map(item => (
                         <NavItem

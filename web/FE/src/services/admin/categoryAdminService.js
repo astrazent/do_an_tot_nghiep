@@ -1,21 +1,24 @@
-import axios from "axios"
+import axios from 'axios'
 
-    export const createCategory = async (data) => {
-        try {
-            const response = await axios.post('http://localhost:8023/v1/category', data)
-            return response.data
-        } catch (error) {
-            console.error('Đã xảy ra lỗi khi lấy dữ liệu', error)
-            throw error
-        }
+export const createCategory = async data => {
+    try {
+        const response = await axios.post(
+            'http://localhost:2082/v1/category',
+            data
+        )
+        return response.data
+    } catch (error) {
+        console.error('Đã xảy ra lỗi khi lấy dữ liệu', error)
+        throw error
     }
+}
 
 export const updateCategory = async (data, categoryId) => {
     try {
         console.log(data)
         const response = await axios.patch(
-            `http://localhost:8023/v1/category/${categoryId}`, 
-            data,
+            `http://localhost:2082/v1/category/${categoryId}`,
+            data
         )
         return response.data
     } catch (error) {
@@ -24,10 +27,10 @@ export const updateCategory = async (data, categoryId) => {
     }
 }
 
-export const deleteCategory = async (categoryId) => {
+export const deleteCategory = async categoryId => {
     try {
         const response = await axios.delete(
-            `http://localhost:8023/v1/category`, 
+            `http://localhost:2082/v1/category`,
             { params: { categoryId: categoryId } }
         )
         return response.data
