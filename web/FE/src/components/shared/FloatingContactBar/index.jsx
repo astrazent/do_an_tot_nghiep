@@ -153,10 +153,10 @@ const FloatingContactBar = () => {
         setView('chat')
         setShowOptions(false)
         setIsCreating(false)
-        // GA4 event
+
         ReactGA.event('select_content', {
             content_type: 'chatbot',
-            content_id: conv.id, // id cuộc hội thoại
+            content_id: conv.id,
             content_name: conv.title || `Hội thoại #${conv.id}`,
             debug_mode: true,
         })
@@ -632,7 +632,6 @@ const FloatingContactBar = () => {
                     onClick={() => {
                         setIsChatOpen(!isChatOpen)
                         if (!isChatOpen) {
-                            // Chỉ gửi khi mở
                             ReactGA.event('select_content', {
                                 content_type: 'chatbot',
                                 content_id: 'floating_contact_bar',

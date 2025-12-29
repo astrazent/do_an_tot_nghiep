@@ -6,7 +6,8 @@ const HeroSection = () => {
             <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')] bg-cover bg-center"></div>
             <div className="container mx-auto px-4 relative z-10 text-center">
                 <h1 className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
-                    Hợp Tác Cùng <span className="text-green-400">Bếp Sạch Việt</span>
+                    Hợp Tác Cùng{' '}
+                    <span className="text-green-400">Bếp Sạch Việt</span>
                     <br />
                     Phân Phối Đặc Sản Cao Cấp
                 </h1>

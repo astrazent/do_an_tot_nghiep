@@ -15,24 +15,28 @@ const CoreValues = () => {
     const values = [
         {
             icon: FaLeaf,
-            title: "Chất lượng & An toàn",
-            description: "Nguyên liệu tuyển chọn kỹ lưỡng, quy trình chế biến sạch sẽ, giữ trọn hương vị tự nhiên và đạt chuẩn an toàn cao nhất."
+            title: 'Chất lượng & An toàn',
+            description:
+                'Nguyên liệu tuyển chọn kỹ lưỡng, quy trình chế biến sạch sẽ, giữ trọn hương vị tự nhiên và đạt chuẩn an toàn cao nhất.',
         },
         {
             icon: FaGlobeAsia,
-            title: "Tôn vinh truyền thống",
-            description: "Đại sứ văn hóa ẩm thực, mang câu chuyện và tinh thần của từng vùng đất vào trong mỗi món ăn đặc sản."
+            title: 'Tôn vinh truyền thống',
+            description:
+                'Đại sứ văn hóa ẩm thực, mang câu chuyện và tinh thần của từng vùng đất vào trong mỗi món ăn đặc sản.',
         },
         {
             icon: FaClock,
-            title: "Tiện lợi tối đa",
-            description: "Sơ chế sẵn sàng, giúp bạn tiết kiệm thời gian mà vẫn thưởng thức được món ngon như chính tay mình làm."
+            title: 'Tiện lợi tối đa',
+            description:
+                'Sơ chế sẵn sàng, giúp bạn tiết kiệm thời gian mà vẫn thưởng thức được món ngon như chính tay mình làm.',
         },
         {
             icon: FaHeart,
-            title: "Bền vững & Trách nhiệm",
-            description: "Cam kết bảo vệ môi trường, sử dụng nguyên liệu bền vững và đóng góp tích cực cho cộng đồng."
-        }
+            title: 'Bền vững & Trách nhiệm',
+            description:
+                'Cam kết bảo vệ môi trường, sử dụng nguyên liệu bền vững và đóng góp tích cực cho cộng đồng.',
+        },
     ]
 
     return (

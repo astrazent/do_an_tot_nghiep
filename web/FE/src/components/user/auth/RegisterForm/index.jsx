@@ -25,7 +25,7 @@ const RegisterForm = () => {
         onSuccess: data => {
             ReactGA.event('sign_up', {
                 method: 'username_password',
-                debug_mode:true
+                debug_mode: true,
             })
             showAlert(data.message, { type: 'success', duration: 2000 })
             navigate('/login')

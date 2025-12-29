@@ -1,8 +1,8 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { 
-    getAllDiscountProducts, 
-    createDiscountProduct, 
-    deleteDiscountProduct 
+import {
+    getAllDiscountProducts,
+    createDiscountProduct,
+    deleteDiscountProduct,
 } from '~/services/admin/discountProductService'
 
 export const useAllDiscountProducts = () => {

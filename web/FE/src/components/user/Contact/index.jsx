@@ -21,7 +21,7 @@ const ContactPage = () => {
 
     const handleSubmit = e => {
         e.preventDefault()
-        // Xử lý logic gửi form ở đây (API call)
+
         console.log('Form data:', formData)
         alert('Cảm ơn bạn! Chúng tôi đã nhận được tin nhắn.')
     }
@@ -29,9 +29,7 @@ const ContactPage = () => {
     return (
         <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
             <div className="max-w-7xl w-full bg-white shadow-2xl rounded-3xl overflow-hidden flex flex-col lg:flex-row">
-                {/* CỘT TRÁI: THÔNG TIN LIÊN HỆ */}
                 <div className="lg:w-5/12 bg-gradient-to-br from-slate-900 to-slate-800 text-white p-10 flex flex-col justify-between relative overflow-hidden">
-                    {/* Decorative Circle */}
                     <div className="absolute -top-10 -right-10 w-40 h-40 bg-white opacity-10 rounded-full blur-2xl"></div>
                     <div className="absolute bottom-10 -left-10 w-40 h-40 bg-pink-500 opacity-10 rounded-full blur-2xl"></div>
 
@@ -45,7 +43,6 @@ const ContactPage = () => {
                         </p>
 
                         <div className="space-y-8">
-                            {/* Địa chỉ */}
                             <div className="flex items-start space-x-4 group">
                                 <div className="p-3 bg-white/10 rounded-full group-hover:bg-white/20 transition-all duration-300 shrink-0">
                                     <FaMapMarkerAlt className="text-xl text-emerald-400" />
@@ -64,7 +61,6 @@ const ContactPage = () => {
                                 </div>
                             </div>
 
-                            {/* Điện thoại */}
                             <div className="flex items-start space-x-4 group">
                                 <div className="p-3 bg-white/10 rounded-full group-hover:bg-white/20 transition-all duration-300 shrink-0">
                                     <FaPhoneAlt className="text-xl text-emerald-400" />
@@ -86,7 +82,6 @@ const ContactPage = () => {
                                 </div>
                             </div>
 
-                            {/* Email */}
                             <div className="flex items-start space-x-4 group">
                                 <div className="p-3 bg-white/10 rounded-full group-hover:bg-white/20 transition-all duration-300 shrink-0">
                                     <FaEnvelope className="text-xl text-emerald-400" />
@@ -101,7 +96,6 @@ const ContactPage = () => {
                                 </div>
                             </div>
 
-                            {/* Giờ làm việc */}
                             <div className="flex items-start space-x-4 group">
                                 <div className="p-3 bg-white/10 rounded-full group-hover:bg-white/20 transition-all duration-300 shrink-0">
                                     <FaClock className="text-xl text-emerald-400" />
@@ -118,7 +112,6 @@ const ContactPage = () => {
                         </div>
                     </div>
 
-                    {/* Social Links / Footer Text */}
                     <div className="mt-10 pt-6 border-t border-white/10">
                         <p className="text-xs text-slate-400 text-center lg:text-left">
                             © 2024 Bếp Sạch Việt. All rights reserved.
@@ -126,7 +119,6 @@ const ContactPage = () => {
                     </div>
                 </div>
 
-                {/* CỘT PHẢI: FORM LIÊN HỆ & BẢN ĐỒ */}
                 <div className="lg:w-7/12 p-8 md:p-12 relative">
                     <div className="mb-10">
                         <h2 className="text-3xl font-bold text-gray-800 mb-2">
@@ -140,7 +132,6 @@ const ContactPage = () => {
 
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            {/* Họ và tên */}
                             <div className="relative">
                                 <input
                                     type="text"
@@ -159,7 +150,6 @@ const ContactPage = () => {
                                 </label>
                             </div>
 
-                            {/* Số điện thoại */}
                             <div className="relative">
                                 <input
                                     type="tel"
@@ -180,7 +170,6 @@ const ContactPage = () => {
                             </div>
                         </div>
 
-                        {/* Email */}
                         <div className="relative">
                             <input
                                 type="email"
@@ -200,7 +189,6 @@ const ContactPage = () => {
                             </label>
                         </div>
 
-                        {/* Nội dung */}
                         <div className="relative">
                             <textarea
                                 name="message"
@@ -231,7 +219,6 @@ const ContactPage = () => {
                         </div>
                     </form>
 
-                    {/* Nhúng Bản đồ Google Maps */}
                     <div className="mt-12 rounded-2xl overflow-hidden shadow-inner border border-gray-200 h-64 w-full">
                         <iframe
                             title="Google Map"

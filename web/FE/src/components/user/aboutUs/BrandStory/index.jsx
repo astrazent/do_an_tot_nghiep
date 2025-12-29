@@ -38,16 +38,22 @@ const BrandStory = () => {
                         </span>
                     </h2>
                     <p className="text-stone-600 leading-relaxed text-lg">
-                        <span className="font-bold text-green-700">BẾP SẠCH VIỆT</span> ra đời từ niềm đam mê đối với ẩm thực
-                        truyền thống. Chúng tôi là những người con đất Việt,
-                        mang sứ mệnh kết nối mọi người với tinh hoa quê hương.
+                        <span className="font-bold text-green-700">
+                            BẾP SẠCH VIỆT
+                        </span>{' '}
+                        ra đời từ niềm đam mê đối với ẩm thực truyền thống.
+                        Chúng tôi là những người con đất Việt, mang sứ mệnh kết
+                        nối mọi người với tinh hoa quê hương.
                     </p>
                     <p className="text-stone-600 leading-relaxed">
-                        Từ Tây Bắc hùng vĩ đến miền Tây sông nước, chúng tôi
-                        đã đi khắp các vùng miền để tuyển chọn những nguyên
-                        liệu đặc trưng nhất. Mỗi món ăn không chỉ là thực
-                        phẩm, mà là một câu chuyện văn hóa, là hương vị độc
-                        đáo mà <span className="font-semibold text-green-700">BẾP SẠCH VIỆT</span> muốn mang đến bàn ăn gia đình bạn.
+                        Từ Tây Bắc hùng vĩ đến miền Tây sông nước, chúng tôi đã
+                        đi khắp các vùng miền để tuyển chọn những nguyên liệu
+                        đặc trưng nhất. Mỗi món ăn không chỉ là thực phẩm, mà là
+                        một câu chuyện văn hóa, là hương vị độc đáo mà{' '}
+                        <span className="font-semibold text-green-700">
+                            BẾP SẠCH VIỆT
+                        </span>{' '}
+                        muốn mang đến bàn ăn gia đình bạn.
                     </p>
                     <div className="pt-4">
                         <div className="inline-flex items-center gap-2 text-green-800 font-semibold border-b-2 border-green-500 pb-1">

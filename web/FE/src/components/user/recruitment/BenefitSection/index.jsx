@@ -19,7 +19,6 @@ const BenefitsSection = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-                    {/* Card 1 */}
                     <div className="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-green-600">
                         <div className="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center text-green-600 mb-6 text-2xl">
                             <FaMoneyBillWave />
@@ -44,7 +43,6 @@ const BenefitsSection = () => {
                         </ul>
                     </div>
 
-                    {/* Card 2 */}
                     <div className="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-blue-500">
                         <div className="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mb-6 text-2xl">
                             <FaShieldAlt />
@@ -91,7 +89,6 @@ const BenefitsSection = () => {
                         </ul>
                     </div>
 
-                    {/* Card 3 */}
                     <div className="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-emerald-500">
                         <div className="w-14 h-14 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600 mb-6 text-2xl">
                             <FaBullhorn />

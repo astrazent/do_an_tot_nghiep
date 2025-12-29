@@ -1,5 +1,9 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { getAllDiscount, createDiscount, deleteDiscount } from '~/services/admin/discountService'
+import {
+    getAllDiscount,
+    createDiscount,
+    deleteDiscount,
+} from '~/services/admin/discountService'
 
 export const useAllDiscounts = () => {
     return useQuery({

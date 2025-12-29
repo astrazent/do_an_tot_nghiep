@@ -1,5 +1,11 @@
 import React, { useState, useMemo } from 'react'
-import { HiTrash, HiEye, HiChevronUp, HiChevronDown, HiSelector } from 'react-icons/hi'
+import {
+    HiTrash,
+    HiEye,
+    HiChevronUp,
+    HiChevronDown,
+    HiSelector,
+} from 'react-icons/hi'
 
 const DiscountTable = ({
     discounts,
@@ -12,12 +18,12 @@ const DiscountTable = ({
     onDeleteSelected,
     isDeleting,
 }) => {
-    // 1. State lưu cấu hình sort
-    const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' })
+    const [sortConfig, setSortConfig] = useState({
+        key: null,
+        direction: 'asc',
+    })
 
-    // 2. Xử lý dữ liệu: Tính toán số lượng SP trước -> Sắp xếp
     const sortedDiscounts = useMemo(() => {
-        // Tạo mảng mới kèm theo thuộc tính productCount để dễ sort
         let sortableItems = discounts.map(d => {
             const productCount = discountRelations
                 ? discountRelations.filter(r => r.discount_id === d.id).length
@@ -30,7 +36,6 @@ const DiscountTable = ({
                 let aValue = a[sortConfig.key]
                 let bValue = b[sortConfig.key]
 
-                // Xử lý riêng cho trường hợp chuỗi (tên) để sort không phân biệt hoa thường
                 if (typeof aValue === 'string') {
                     aValue = aValue.toLowerCase()
                     bValue = bValue.toLowerCase()
@@ -48,7 +53,6 @@ const DiscountTable = ({
         return sortableItems
     }, [discounts, discountRelations, sortConfig])
 
-    // Hàm xử lý khi click vào header
     const requestSort = key => {
         let direction = 'asc'
         if (sortConfig.key === key && sortConfig.direction === 'asc') {
@@ -57,7 +61,6 @@ const DiscountTable = ({
         setSortConfig({ key, direction })
     }
 
-    // Component nhỏ để hiển thị Icon sort
     const SortIcon = ({ columnKey }) => {
         if (sortConfig.key !== columnKey) {
             return <HiSelector className="text-gray-400 opacity-50" size={16} />
@@ -69,8 +72,12 @@ const DiscountTable = ({
         )
     }
 
-    // Helper tạo th có khả năng sort
-    const SortableHeader = ({ label, sortKey, align = 'left', className = '' }) => (
+    const SortableHeader = ({
+        label,
+        sortKey,
+        align = 'left',
+        className = '',
+    }) => (
         <th
             className={`p-4 cursor-pointer hover:bg-gray-100 transition select-none ${className}`}
             onClick={() => requestSort(sortKey)}
@@ -131,14 +138,29 @@ const DiscountTable = ({
                                     onChange={onSelectAll}
                                 />
                             </th>
-                            
-                            {/* Các cột có chức năng sort */}
-                            <SortableHeader label="Tên chương trình" sortKey="name" />
-                            <SortableHeader label="Giá trị giảm" sortKey="value" />
-                            <SortableHeader label="Số lượng SP" sortKey="productCount" align="center" />
-                            <SortableHeader label="Bắt đầu" sortKey="start_date" />
-                            <SortableHeader label="Trạng thái" sortKey="status" />
-                            
+
+                            <SortableHeader
+                                label="Tên chương trình"
+                                sortKey="name"
+                            />
+                            <SortableHeader
+                                label="Giá trị giảm"
+                                sortKey="value"
+                            />
+                            <SortableHeader
+                                label="Số lượng SP"
+                                sortKey="productCount"
+                                align="center"
+                            />
+                            <SortableHeader
+                                label="Bắt đầu"
+                                sortKey="start_date"
+                            />
+                            <SortableHeader
+                                label="Trạng thái"
+                                sortKey="status"
+                            />
+
                             <th className="p-4 text-center">Chi tiết</th>
                         </tr>
                     </thead>
@@ -190,7 +212,9 @@ const DiscountTable = ({
 
                                 <td className="p-4 text-sm text-gray-600">
                                     <div>{formatDate(d.start_date)}</div>
-                                    <div className="text-xs text-gray-400">đến {formatDate(d.end_date)}</div>
+                                    <div className="text-xs text-gray-400">
+                                        đến {formatDate(d.end_date)}
+                                    </div>
                                 </td>
 
                                 <td className="p-4">

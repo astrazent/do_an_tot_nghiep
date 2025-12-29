@@ -10,9 +10,12 @@ export const getAllDiscountProducts = async () => {
     }
 }
 
-export const createDiscountProduct = async (discountProductData) => {
+export const createDiscountProduct = async discountProductData => {
     try {
-        const response = await api.post('/discount_product/', discountProductData)
+        const response = await api.post(
+            '/discount_product/',
+            discountProductData
+        )
         return response.data.data
     } catch (error) {
         console.error('Lỗi khi tạo discount_product:', error)
@@ -20,14 +23,17 @@ export const createDiscountProduct = async (discountProductData) => {
     }
 }
 
-export const deleteDiscountProduct = async (discountProductId) => {
+export const deleteDiscountProduct = async discountProductId => {
     try {
-        const response = await api.delete('/discount_product/', { 
-            params: { discountProductId } 
+        const response = await api.delete('/discount_product/', {
+            params: { discountProductId },
         })
         return response.data.data
     } catch (error) {
-        console.error(`Lỗi khi xoá discount_product với id=${discountProductId}:`, error)
+        console.error(
+            `Lỗi khi xoá discount_product với id=${discountProductId}:`,
+            error
+        )
         throw error
     }
 }

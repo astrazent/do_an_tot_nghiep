@@ -1,4 +1,3 @@
-// ViewDiscountDetailModal.jsx
 import React from 'react'
 import BaseModal from '../BaseModal'
 import { formatCurrency } from '~/utils/formatCurrency'

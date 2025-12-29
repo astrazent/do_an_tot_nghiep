@@ -2,7 +2,8 @@ import React from 'react'
 import BaseModal from '~/components/admin/discount/BaseModal'
 import { formatCurrency } from '~/utils/formatCurrency'
 
-const calculateDiscountedPrice = (price, value) => (value <= 100) ? price * (1 - value / 100) : Math.max(0, price - value)
+const calculateDiscountedPrice = (price, value) =>
+    value <= 100 ? price * (1 - value / 100) : Math.max(0, price - value)
 
 const AddProductPreviewModal = ({
     isOpen,
@@ -14,7 +15,11 @@ const AddProductPreviewModal = ({
     if (!isOpen || !data?.discount) return null
 
     return (
-        <BaseModal isOpen={isOpen} onClose={onClose} title="Xác nhận thêm sản phẩm">
+        <BaseModal
+            isOpen={isOpen}
+            onClose={onClose}
+            title="Xác nhận thêm sản phẩm"
+        >
             <div className="max-h-[500px] overflow-y-auto">
                 <table className="w-full text-left">
                     <thead className="bg-gray-50 text-xs uppercase text-gray-600">

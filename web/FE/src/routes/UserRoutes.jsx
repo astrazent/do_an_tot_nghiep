@@ -65,7 +65,12 @@ export const userRoutes = [
             {
                 element: (
                     <SidebarLayout
-                        leftHidePriority={['hot', 'featured', 'categories', 'search']}
+                        leftHidePriority={[
+                            'hot',
+                            'featured',
+                            'categories',
+                            'search',
+                        ]}
                     />
                 ),
                 children: [

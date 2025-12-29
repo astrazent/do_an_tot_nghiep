@@ -158,7 +158,6 @@ const AddSliderModal = ({ onClose, onAddSlider }) => {
                 <h2 className="text-2xl font-bold mb-6">Thêm Slider Mới</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        
                         <div>
                             <label className="block text-sm font-medium text-gray-700">
                                 Tên slider
@@ -172,7 +171,7 @@ const AddSliderModal = ({ onClose, onAddSlider }) => {
                                 required
                             />
                         </div>
-                        
+
                         <div>
                             <label className="block text-sm font-medium text-gray-700">
                                 Thứ tự
@@ -187,7 +186,7 @@ const AddSliderModal = ({ onClose, onAddSlider }) => {
                             />
                         </div>
                     </div>
-                    
+
                     <div>
                         <label className="block text-sm font-medium text-gray-700">
                             Mô tả
@@ -201,7 +200,6 @@ const AddSliderModal = ({ onClose, onAddSlider }) => {
                         />
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        
                         <div>
                             <label className="block text-sm font-medium text-gray-700">
                                 Liên kết
@@ -214,7 +212,7 @@ const AddSliderModal = ({ onClose, onAddSlider }) => {
                                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                             />
                         </div>
-                        
+
                         <div>
                             <label className="block text-sm font-medium text-gray-700">
                                 URL Ảnh
@@ -229,7 +227,7 @@ const AddSliderModal = ({ onClose, onAddSlider }) => {
                                 required
                             />
                         </div>
-                        
+
                         <div>
                             <label className="block text-sm font-medium text-gray-700">
                                 Ngày bắt đầu hiển thị
@@ -243,7 +241,7 @@ const AddSliderModal = ({ onClose, onAddSlider }) => {
                                 required
                             />
                         </div>
-                        
+
                         <div>
                             <label className="block text-sm font-medium text-gray-700">
                                 Ngày kết thúc hiển thị
@@ -257,7 +255,7 @@ const AddSliderModal = ({ onClose, onAddSlider }) => {
                                 required
                             />
                         </div>
-                        
+
                         <div>
                             <label className="block text-sm font-medium text-gray-700">
                                 Trạng thái
@@ -274,7 +272,6 @@ const AddSliderModal = ({ onClose, onAddSlider }) => {
                         </div>
                     </div>
 
-                    
                     <div className="mt-8 flex justify-end space-x-4">
                         <button
                             type="button"

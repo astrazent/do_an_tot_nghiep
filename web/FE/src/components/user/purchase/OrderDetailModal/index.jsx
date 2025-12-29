@@ -165,7 +165,7 @@ const OrderDetailModal = ({ order, onClose }) => {
                                         order.deli_city,
                                     ]
                                         .filter(Boolean)
-                                        .join(', ')|| 'Chưa cập nhật'}
+                                        .join(', ') || 'Chưa cập nhật'}
                                 </p>
                                 {order.message && (
                                     <p className="mt-1 pt-1 italic">

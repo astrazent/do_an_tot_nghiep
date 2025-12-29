@@ -9,19 +9,30 @@ const CreateDiscountModal = ({
     onSubmit,
     isSubmitting,
 }) => (
-    <BaseModal isOpen={isOpen} onClose={onClose} title="Tạo chương trình khuyến mãi mới">
+    <BaseModal
+        isOpen={isOpen}
+        onClose={onClose}
+        title="Tạo chương trình khuyến mãi mới"
+    >
         <div className="p-6">
-            <form id="createDiscountForm" onSubmit={onSubmit} className="space-y-6">
+            <form
+                id="createDiscountForm"
+                onSubmit={onSubmit}
+                className="space-y-6"
+            >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="col-span-2">
                         <label className="block font-medium mb-1 text-sm text-gray-700">
-                            Tên chương trình <span className="text-red-500">*</span>
+                            Tên chương trình{' '}
+                            <span className="text-red-500">*</span>
                         </label>
                         <input
                             type="text"
                             required
                             value={form.name}
-                            onChange={e => setForm({ ...form, name: e.target.value })}
+                            onChange={e =>
+                                setForm({ ...form, name: e.target.value })
+                            }
                             className="w-full border rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-blue-200"
                             placeholder="VD: Sale Hè 2025"
                         />
@@ -36,7 +47,9 @@ const CreateDiscountModal = ({
                             step="0.01"
                             required
                             value={form.value}
-                            onChange={e => setForm({ ...form, value: e.target.value })}
+                            onChange={e =>
+                                setForm({ ...form, value: e.target.value })
+                            }
                             className="w-full border rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-blue-200"
                         />
                         <p className="text-xs text-gray-500 mt-1">
@@ -55,7 +68,10 @@ const CreateDiscountModal = ({
                                     className="sr-only peer"
                                     checked={form.status}
                                     onChange={e =>
-                                        setForm({ ...form, status: e.target.checked })
+                                        setForm({
+                                            ...form,
+                                            status: e.target.checked,
+                                        })
                                     }
                                 />
                                 <div className="w-11 h-6 bg-gray-300 rounded-full peer peer-checked:bg-green-500 relative transition-all">
@@ -102,7 +118,10 @@ const CreateDiscountModal = ({
                         <textarea
                             value={form.description}
                             onChange={e =>
-                                setForm({ ...form, description: e.target.value })
+                                setForm({
+                                    ...form,
+                                    description: e.target.value,
+                                })
                             }
                             className="w-full border rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-blue-200"
                             rows={2}

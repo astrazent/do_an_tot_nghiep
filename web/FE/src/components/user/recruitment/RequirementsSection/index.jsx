@@ -25,9 +25,12 @@ const RequirementsSection = () => {
                                     </div>
                                 </div>
                                 <div className="ml-4">
-                                    <h4 className="text-lg font-bold text-gray-900">Cơ sở vật chất</h4>
+                                    <h4 className="text-lg font-bold text-gray-900">
+                                        Cơ sở vật chất
+                                    </h4>
                                     <p className="mt-1 text-gray-600">
-                                        Có mặt bằng kinh doanh, kho lạnh hoặc tủ đông đảm bảo vệ sinh ATTT.
+                                        Có mặt bằng kinh doanh, kho lạnh hoặc tủ
+                                        đông đảm bảo vệ sinh ATTT.
                                     </p>
                                 </div>
                             </div>
@@ -39,9 +42,12 @@ const RequirementsSection = () => {
                                     </div>
                                 </div>
                                 <div className="ml-4">
-                                    <h4 className="text-lg font-bold text-gray-900">Cam kết doanh số</h4>
+                                    <h4 className="text-lg font-bold text-gray-900">
+                                        Cam kết doanh số
+                                    </h4>
                                     <p className="mt-1 text-gray-600">
-                                        Cam kết nhập đơn hàng & doanh số tháng/quý tùy thuộc vào khu vực đăng ký.
+                                        Cam kết nhập đơn hàng & doanh số
+                                        tháng/quý tùy thuộc vào khu vực đăng ký.
                                     </p>
                                 </div>
                             </div>
@@ -53,9 +59,13 @@ const RequirementsSection = () => {
                                     </div>
                                 </div>
                                 <div className="ml-4">
-                                    <h4 className="text-lg font-bold text-gray-900">Năng lực vận hành</h4>
+                                    <h4 className="text-lg font-bold text-gray-900">
+                                        Năng lực vận hành
+                                    </h4>
                                     <p className="mt-1 text-gray-600">
-                                        Chủ động vận chuyển (được hỗ trợ phí tùy chính sách), chủ động phát triển thị trường và không bán phá giá.
+                                        Chủ động vận chuyển (được hỗ trợ phí tùy
+                                        chính sách), chủ động phát triển thị
+                                        trường và không bán phá giá.
                                     </p>
                                 </div>
                             </div>

@@ -10,7 +10,7 @@ export const getAllDiscount = async () => {
     }
 }
 
-export const createDiscount = async (discountData) => {
+export const createDiscount = async discountData => {
     try {
         const response = await api.post('/discount/', discountData)
         return response.data.data
@@ -20,10 +20,10 @@ export const createDiscount = async (discountData) => {
     }
 }
 
-export const deleteDiscount = async (discountId) => {
+export const deleteDiscount = async discountId => {
     try {
-        const response = await api.delete('/discount/', { 
-            params: { discountId } 
+        const response = await api.delete('/discount/', {
+            params: { discountId },
         })
         return response.data.data
     } catch (error) {

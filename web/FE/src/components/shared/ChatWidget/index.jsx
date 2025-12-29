@@ -139,7 +139,6 @@ const ChatWidget = () => {
                     onClick={handleNewChat}
                     className="mt-4 w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-lg font-medium transition-colors shadow-sm"
                 >
-                    
                     <MdAddCircleOutline size={20} />
                     Bắt đầu đoạn chat mới
                 </button>
@@ -184,14 +183,12 @@ const ChatWidget = () => {
 
     const renderChatWindow = () => (
         <div className="flex flex-col h-full bg-gray-50">
-            
             <div className="flex items-center justify-between p-3 bg-white border-b shadow-sm sticky top-0 z-10">
                 <div className="flex items-center gap-2">
                     <button
                         onClick={handleBackToList}
                         className="p-1 hover:bg-gray-100 rounded-full text-gray-600 transition"
                     >
-                        
                         <MdChevronLeft size={24} />
                     </button>
                     <div>
@@ -211,12 +208,10 @@ const ChatWidget = () => {
                     </div>
                 </div>
                 <button className="text-gray-400 hover:text-gray-600">
-                    
                     <MdMoreHoriz size={24} />
                 </button>
             </div>
 
-            
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
                 {messages.map(msg => {
                     const isUser = msg.sender === 'user'
@@ -253,7 +248,6 @@ const ChatWidget = () => {
                 )}
             </div>
 
-            
             <div className="p-3 bg-white border-t">
                 <form onSubmit={handleSendMessage} className="flex gap-2">
                     <input
@@ -276,7 +270,6 @@ const ChatWidget = () => {
                         }
                         className="p-2.5 bg-blue-600 text-white rounded-full hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm flex items-center justify-center"
                     >
-                        
                         <IoMdSend size={18} className="ml-0.5" />
                     </button>
                 </form>
@@ -286,7 +279,6 @@ const ChatWidget = () => {
 
     return (
         <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-4 font-sans antialiased">
-            
             <div
                 className={`
             bg-white w-[360px] h-[550px] rounded-2xl shadow-2xl overflow-hidden flex flex-col border border-gray-100
@@ -299,7 +291,6 @@ const ChatWidget = () => {
                     : renderChatWindow()}
             </div>
 
-            
             <button
                 onClick={() => setIsOpen(!isOpen)}
                 className={`

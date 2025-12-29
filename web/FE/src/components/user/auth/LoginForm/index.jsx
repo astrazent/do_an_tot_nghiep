@@ -31,7 +31,7 @@ const LoginForm = () => {
             dispatch(updateUser({ ...data.data }))
             ReactGA.event('login', {
                 method: 'username_password',
-                debug_mode: true
+                debug_mode: true,
             })
             showAlert(data.message, { type: 'success', duration: 2000 })
             navigate('/')
@@ -49,7 +49,7 @@ const LoginForm = () => {
             dispatch(updateUser({ ...data.data }))
             ReactGA.event('login', {
                 method: 'google',
-                debug_mode: true
+                debug_mode: true,
             })
             showAlert(data.message, { type: 'success', duration: 2000 })
             navigate('/')

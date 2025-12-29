@@ -20,8 +20,12 @@ const ProductTable = ({
 
     useEffect(() => {
         const observer = new IntersectionObserver(
-            (entries) => {
-                if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
+            entries => {
+                if (
+                    entries[0].isIntersecting &&
+                    hasNextPage &&
+                    !isFetchingNextPage
+                ) {
                     fetchNextPage()
                 }
             },
@@ -34,7 +38,11 @@ const ProductTable = ({
     }, [hasNextPage, isFetchingNextPage, fetchNextPage])
 
     if (isLoading) {
-        return <div className="p-8 text-center text-gray-500">Đang tải danh sách sản phẩm...</div>
+        return (
+            <div className="p-8 text-center text-gray-500">
+                Đang tải danh sách sản phẩm...
+            </div>
+        )
     }
 
     return (
@@ -47,27 +55,43 @@ const ProductTable = ({
                                 type="checkbox"
                                 className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                                 onChange={onSelectAll}
-                                checked={selectableCount > 0 && selectedIds.length === selectableCount}
+                                checked={
+                                    selectableCount > 0 &&
+                                    selectedIds.length === selectableCount
+                                }
                                 disabled={selectableCount === 0}
                             />
                         </th>
-                        <th className="p-4 cursor-pointer hover:text-blue-600 bg-gray-50" onClick={() => onSort('name')}>
-                            Tên Sản phẩm <HiSelector className="inline h-4 w-4" />
+                        <th
+                            className="p-4 cursor-pointer hover:text-blue-600 bg-gray-50"
+                            onClick={() => onSort('name')}
+                        >
+                            Tên Sản phẩm{' '}
+                            <HiSelector className="inline h-4 w-4" />
                         </th>
-                        <th className="p-4 cursor-pointer hover:text-blue-600 bg-gray-50" onClick={() => onSort('category_name')}>
+                        <th
+                            className="p-4 cursor-pointer hover:text-blue-600 bg-gray-50"
+                            onClick={() => onSort('category_name')}
+                        >
                             Danh mục <HiSelector className="inline h-4 w-4" />
                         </th>
-                        <th className="p-4 cursor-pointer hover:text-blue-600 bg-gray-50" onClick={() => onSort('price')}>
+                        <th
+                            className="p-4 cursor-pointer hover:text-blue-600 bg-gray-50"
+                            onClick={() => onSort('price')}
+                        >
                             Giá bán <HiSelector className="inline h-4 w-4" />
                         </th>
-                        <th className="p-4 cursor-pointer hover:text-blue-600 bg-gray-50" onClick={() => onSort('stock_qty')}>
+                        <th
+                            className="p-4 cursor-pointer hover:text-blue-600 bg-gray-50"
+                            onClick={() => onSort('stock_qty')}
+                        >
                             Tồn kho <HiSelector className="inline h-4 w-4" />
                         </th>
                         <th className="p-4 text-center bg-gray-50">Chi tiết</th>
                     </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
-                    {products.map((product) => {
+                    {products.map(product => {
                         const isDisabled = disabledIds.includes(product.id)
                         const isSelected = selectedIds.includes(product.id)
                         return (
@@ -77,8 +101,8 @@ const ProductTable = ({
                                     isDisabled
                                         ? 'bg-gray-100 opacity-50 cursor-not-allowed'
                                         : isSelected
-                                        ? 'bg-blue-50/30 hover:bg-blue-50/50'
-                                        : 'hover:bg-gray-50'
+                                          ? 'bg-blue-50/30 hover:bg-blue-50/50'
+                                          : 'hover:bg-gray-50'
                                 }`}
                             >
                                 <td className="p-4 text-center">
@@ -103,8 +127,12 @@ const ProductTable = ({
                                         {product.category_name}
                                     </span>
                                 </td>
-                                <td className="p-4 text-gray-600 font-mono">{formatCurrency(product.price)}</td>
-                                <td className="p-4 text-gray-600">{product.stock_qty}</td>
+                                <td className="p-4 text-gray-600 font-mono">
+                                    {formatCurrency(product.price)}
+                                </td>
+                                <td className="p-4 text-gray-600">
+                                    {product.stock_qty}
+                                </td>
                                 <td className="p-4 text-center">
                                     <button
                                         onClick={() => onViewDetail(product)}
@@ -117,7 +145,10 @@ const ProductTable = ({
                         )
                     })}
                     <tr ref={observerRef} className="bg-gray-50">
-                        <td colSpan="6" className="p-4 text-center text-sm text-gray-500">
+                        <td
+                            colSpan="6"
+                            className="p-4 text-center text-sm text-gray-500"
+                        >
                             {isFetchingNextPage ? (
                                 <span className="flex items-center justify-center gap-2">
                                     <svg
