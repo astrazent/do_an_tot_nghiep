@@ -65,16 +65,16 @@ services:
         environment:
             - TZ=Asia/Ho_Chi_Minh
         ports:
-            - "2082:2082"
+            - "2000:2000"
         volumes:
             - ./web/be:/app
             - /app/node_modules
         healthcheck:
-            test: ["CMD", "curl", "-f", "http://localhost:2082/v1/ping"]
-            interval: 10s       # Khoảng thời gian giữa các lần kiểm tra
-            timeout: 10s        # Thời gian chờ mỗi lần kiểm tra
-            retries: 10         # Số lần thử lại nếu thất bại
-            start_period: 20s   # Thời gian đợi trước khi bắt đầu kiểm tra
+            test: ["CMD", "curl", "-f", "http://localhost:2000/v1/ping"]
+            interval: 5s
+            timeout: 5s
+            retries: 8
+            start_period: 20s
         depends_on:
             mariadb_web:
                 condition: service_healthy
