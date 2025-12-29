@@ -16,10 +16,6 @@ const DISCOUNTS_SCHEMA = Joi.object({
         'number.base': 'Value phải là số',
         'number.min': 'Value tối thiểu 0',
     }),
-    min_price: Joi.number().precision(2).min(0).default(0).messages({
-        'number.base': 'Min price phải là số',
-        'number.min': 'Min price tối thiểu 0',
-    }),
     start_date: Joi.date().default(() => new Date()),
     end_date: Joi.date().default(() => new Date()),
     status: Joi.number().integer().valid(0, 1).default(0).messages({
@@ -34,17 +30,16 @@ const DiscountsModel = {
             abortEarly: false,
         })
         if (error) throw error
-
+        console.log(value)
         const conn = getConnection()
         const [result] = await conn.execute(
             `INSERT INTO ${DISCOUNTS_TABLE_NAME} 
-                (name, description, value, min_price, start_date, end_date, status)
-                VALUES (?, ?, ?, ?, ?, ?, ?)`,
+                (name, description, value, start_date, end_date, status)
+                VALUES (?, ?, ?, ?, ?, ?)`,
             [
                 value.name,
                 value.description,
                 value.value,
-                value.min_price,
                 value.start_date,
                 value.end_date,
                 value.status,
@@ -94,7 +89,7 @@ const DiscountsModel = {
         return result.affectedRows > 0
     },
 
-    async listDiscounts(limit = 50, offset = 0) {
+    async listDiscounts(limit = 5000, offset = 0) {
         const conn = getConnection()
         const [rows] = await conn.execute(
             `SELECT * FROM ${DISCOUNTS_TABLE_NAME} ORDER BY id DESC LIMIT ? OFFSET ?`,
