@@ -10,8 +10,7 @@ import { errorHandlingMiddleware } from './middlewares/errorHandling.js'
 import sseRoute from './routes/sseRoute.js'
 import getPort from 'get-port'
 
-const APP_PORT = parseInt(env.APP_PORT) || 2000
-
+const APP_PORT = parseInt(env.APP_PORT) || 2082
 const fallbackPorts = Array.from(
     { length: 5000 - 2000 + 1 },
     (_, i) => 2000 + i

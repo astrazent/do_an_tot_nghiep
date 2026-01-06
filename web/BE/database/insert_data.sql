@@ -323,24 +323,24 @@ VALUES
 ('VITSHIP', 'Áp dụng miễn phí vận chuyển cho các món đặc sản từ vịt như chả vịt, pate gan vịt.', 0, 100, NULL, 80000, 120, 0, '2025-10-01', '2025-12-31', 1);
 
 -- Dữ liệu mẫu cho CouponScopes
-INSERT INTO CouponScopes (coupon_id, scope_type, product_id) VALUES
+INSERT INTO CouponsProducts (coupon_id, product_id) VALUES
 -- Giảm 10% toàn shop
-(1, 0, NULL),
+(1, NULL),
 
 -- Giảm 20k toàn shop
-(2, 0, NULL),
+(2, NULL),
 
 -- Miễn phí ship toàn shop
-(3, 0, NULL),
+(3, NULL),
 
 -- Giảm 15% toàn shop
-(4, 0, NULL),
+(4, NULL),
 
 -- Giảm 50k toàn shop
-(5, 0, NULL),
+(5, NULL),
 
 -- Miễn phí ship toàn shop
-(6, 0, NULL);
+(6, NULL);
 
 -- Dữ liệu mẫu cho CartItems
 INSERT INTO CartItems (qty_total, price_total, user_id, product_id) VALUES
@@ -1094,18 +1094,18 @@ INSERT INTO Shipments (name, description, base_fee, icon_url, status) VALUES
 ('J&T Express', 'Giao hàng nhanh, phù hợp nội thành và ngoại thành', 22000, 'https://i.pinimg.com/474x/29/4d/14/294d1488cebbfd40db530843c96dc68e.jpg', 1);
 
 -- Dữ liệu mẫu cho Transactions
-INSERT INTO Transactions 
-(status, deli_name, deli_phone, deli_email, deli_address, deli_city, deli_district, deli_ward, message, tracking_number, shipping_fee, shipment_status, amount, shipped_at, delivered_at, user_id, payment_id, shipment_id) VALUES
-('pending', 'Nguyen Van A', '0901234567', 'a.nguyen@example.com', '123 Le Loi', 'Ho Chi Minh', 'Quan 1', 'Phuong Ben Nghe', 'Giao giờ hành chính', 'TRK00001', 20000, 'pending', 33020000, NULL, NULL, 1, 1, 1),
-('confirmed', 'Tran Thi B', '0902345678', 'b.tran@example.com', '456 Nguyen Trai', 'Ho Chi Minh', 'Quan 3', 'Phuong 5', 'Để hàng ở bảo vệ', 'TRK00002', 15000, 'shipped', 29515000, '2025-09-22 10:00:00', NULL, 2, 2, 2),
-('completed', 'Le Van C', '0903456789', 'c.le@example.com', '789 Tran Hung Dao', 'Ho Chi Minh', 'Quan 5', 'Phuong 10', 'Giao nhanh nếu có thể', 'TRK00003', 22000, 'delivered', 21522000, '2025-09-23 09:00:00', '2025-09-24 14:00:00', 3, 3, 3),
-('canceled', 'Pham Thi D', '0904567890', NULL, '1010 Cach Mang Thang 8', 'Ho Chi Minh', 'Quan Binh Thanh', 'Phuong 12', 'Không cần gọi điện', 'TRK00004', 25000, 'returned', 5500000, '2025-09-24 11:00:00', NULL, 4, 4, 4),
-('completed', 'Hoang Van E', '0905678901', 'e.hoang@example.com', '2020 Dien Bien Phu', 'Ho Chi Minh', 'Quan Tan Binh', 'Phuong 15', 'Giao ngoài giờ hành chính', 'TRK00005', 30000, 'delivered', 28030000, '2025-09-25 13:00:00', '2025-09-26 16:00:00', 5, 5, 1),
-('confirmed', 'Nguyen Van A', '0901234567', NULL, '123 Le Loi', 'Ho Chi Minh', 'Quan 1', 'Phuong Ben Nghe', 'Đóng gói cẩn thận', 'TRK00006', 15000, 'shipped', 11015000, '2025-09-26 08:00:00', NULL, 1, 2, 2),
-('pending', 'Tran Thi B', '0902345678', 'b.tran@example.com', '456 Nguyen Trai', 'Ho Chi Minh', 'Quan 3', 'Phuong 5', 'Giao tại cửa', 'TRK00007', 20000, 'pending', 1202000, NULL, NULL, 2, 1, 3),
-('completed', 'Le Van C', '0903456789', NULL, '789 Tran Hung Dao', 'Ho Chi Minh', 'Quan 5', 'Phuong 10', 'Nhận hàng tại văn phòng', 'TRK00008', 25000, 'delivered', 64525000, '2025-09-22 14:00:00', '2025-09-23 17:00:00', 3, 3, 4),
-('confirmed', 'Pham Thi D', '0904567890', 'd.pham@example.com', '1010 Cach Mang Thang 8', 'Ho Chi Minh', 'Quan Binh Thanh', 'Phuong 12', 'Giao vào buổi sáng', 'TRK00009', 22000, 'shipped', 4202200, '2025-09-25 09:30:00', NULL, 4, 2, 1),
-('completed', 'Hoang Van E', '0905678901', 'e.hoang@example.com', '2020 Dien Bien Phu', 'Ho Chi Minh', 'Quan Tan Binh', 'Phuong 15', 'Hàng fragile, cẩn thận', 'TRK00010', 30000, 'delivered', 7503000, '2025-09-24 13:00:00', '2025-09-25 15:00:00', 5, 5, 2);
+INSERT INTO Transactions
+(status, deli_name, deli_phone, deli_email, deli_address, deli_city, deli_district, deli_ward, message, tracking_number, shipping_fee, shipment_status, amount, shipped_at, delivered_at, user_id, payment_id, shipment_id, created_at, updated_at) VALUES
+('pending', 'Nguyen Van A', '0901234567', 'a.nguyen@example.com', '123 Le Loi', 'Ho Chi Minh', 'Quan 1', 'Phuong Ben Nghe', 'Giao giờ hành chính', 'TRK00001', 20000, 'pending', 33020000, NULL, NULL, 1, 1, 1, '2025-12-27 09:15:00', '2025-12-28 10:20:00'),
+('confirmed', 'Tran Thi B', '0902345678', 'b.tran@example.com', '456 Nguyen Trai', 'Ho Chi Minh', 'Quan 3', 'Phuong 5', 'Để hàng ở bảo vệ', 'TRK00002', 15000, 'shipped', 29515000, '2025-09-22 10:00:00', NULL, 2, 2, 2, '2025-12-26 08:00:00', '2025-12-27 09:50:00'),
+('completed', 'Le Van C', '0903456789', 'c.le@example.com', '789 Tran Hung Dao', 'Ho Chi Minh', 'Quan 5', 'Phuong 10', 'Giao nhanh nếu có thể', 'TRK00003', 22000, 'delivered', 21522000, '2025-09-23 09:00:00', '2025-09-24 14:00:00', 3, 3, 3, '2025-12-26 11:30:00', '2025-12-28 14:00:00'),
+('canceled', 'Pham Thi D', '0904567890', NULL, '1010 Cach Mang Thang 8', 'Ho Chi Minh', 'Quan Binh Thanh', 'Phuong 12', 'Không cần gọi điện', 'TRK00004', 25000, 'returned', 5500000, '2025-09-24 11:00:00', NULL, 4, 4, 4, '2025-12-27 12:00:00', '2025-12-28 09:50:00'),
+('completed', 'Hoang Van E', '0905678901', 'e.hoang@example.com', '2020 Dien Bien Phu', 'Ho Chi Minh', 'Quan Tan Binh', 'Phuong 15', 'Giao ngoài giờ hành chính', 'TRK00005', 30000, 'delivered', 28030000, '2025-09-25 13:00:00', '2025-09-26 16:00:00', 5, 5, 1, '2025-12-26 14:00:00', '2025-12-28 16:20:00'),
+('confirmed', 'Nguyen Van A', '0901234567', NULL, '123 Le Loi', 'Ho Chi Minh', 'Quan 1', 'Phuong Ben Nghe', 'Đóng gói cẩn thận', 'TRK00006', 15000, 'shipped', 11015000, '2025-09-26 08:00:00', NULL, 1, 2, 2, '2025-12-26 09:15:00', '2025-12-27 07:50:00'),
+('pending', 'Tran Thi B', '0902345678', 'b.tran@example.com', '456 Nguyen Trai', 'Ho Chi Minh', 'Quan 3', 'Phuong 5', 'Giao tại cửa', 'TRK00007', 20000, 'pending', 1202000, NULL, NULL, 2, 1, 3, '2025-12-28 10:00:00', '2025-12-28 10:00:00'),
+('completed', 'Le Van C', '0903456789', NULL, '789 Tran Hung Dao', 'Ho Chi Minh', 'Quan 5', 'Phuong 10', 'Nhận hàng tại văn phòng', 'TRK00008', 25000, 'delivered', 64525000, '2025-09-22 14:00:00', '2025-09-23 17:00:00', 3, 3, 4, '2025-12-27 13:00:00', '2025-12-28 16:50:00'),
+('confirmed', 'Pham Thi D', '0904567890', 'd.pham@example.com', '1010 Cach Mang Thang 8', 'Ho Chi Minh', 'Quan Binh Thanh', 'Phuong 12', 'Giao vào buổi sáng', 'TRK00009', 22000, 'shipped', 4202200, '2025-09-25 09:30:00', NULL, 4, 2, 1, '2025-12-26 08:30:00', '2025-12-28 09:20:00'),
+('completed', 'Hoang Van E', '0905678901', 'e.hoang@example.com', '2020 Dien Bien Phu', 'Ho Chi Minh', 'Quan Tan Binh', 'Phuong 15', 'Hàng fragile, cẩn thận', 'TRK00010', 30000, 'delivered', 7503000, '2025-09-24 13:00:00', '2025-09-25 15:00:00', 5, 5, 2, '2025-12-27 12:30:00', '2025-12-28 14:50:00');
 
 -- Dữ liệu mẫu cho OrderItems
 INSERT INTO OrderItems (qty_total, amount_total, transaction_id, product_id) VALUES

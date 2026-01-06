@@ -54,7 +54,7 @@ const getActiveDiscount = async (req, res, next) => {
 const updateDiscount = async (req, res, next) => {
     try {
         const data = await discountService.updateDiscountService(
-            req.query.discountId,
+            req.query.id,
             req.body
         )
         return res.status(StatusCodes.OK).json({

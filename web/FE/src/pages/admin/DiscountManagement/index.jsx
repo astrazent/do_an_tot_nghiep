@@ -1,8 +1,5 @@
-import React, { useState, useMemo, useEffect, useRef } from 'react'
-import {
-    HiSearch,
-    HiPlus,
-} from 'react-icons/hi'
+import React, { useState, useMemo, useEffect } from 'react'
+import { HiSearch, HiPlus } from 'react-icons/hi'
 import { useInfiniteProductCollections } from '~/hooks/user/useProduct'
 import { useAllCategories } from '~/hooks/user/useCategory'
 import {
@@ -15,7 +12,6 @@ import {
     useCreateDiscountProduct,
     useDeleteDiscountProduct,
 } from '~/hooks/user/useDiscountProduct'
-import BaseModal from '~/components/admin/discount/BaseModal'
 import { useAlert } from '~/contexts/AlertContext'
 import ConfirmModal from '~/components/shared/ConfirmModal'
 import ViewDiscountDetailModal from '~/components/admin/discount/ViewDiscountDetailModal'
@@ -26,6 +22,9 @@ import DiscountTable from '~/components/admin/discount/DiscountTable'
 import ProductTable from '~/components/admin/discount/ProductTable'
 import CreateDiscountModal from '~/components/admin/discount/CreateDiscountModal'
 import AddProductPreviewModal from '~/components/admin/discount/AddProductPreviewModal'
+import EditDiscountModal from '~/components/admin/discount/EditDiscountModal'
+import { updateDiscount } from '~/services/admin/discountService'
+
 const formatDateTimeForApi = dateStr => {
     if (!dateStr) return null
     return new Date(dateStr).toISOString()
@@ -73,6 +72,10 @@ const DiscountManagement = () => {
         discount: null,
         products: [],
     })
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+    const [editingDiscount, setEditingDiscount] = useState(null)
+    const [isSubmittingEdit, setIsSubmittingEdit] = useState(false)
+
     const [discountForm, setDiscountForm] = useState({
         name: '',
         description: '',
@@ -190,11 +193,13 @@ const DiscountManagement = () => {
                     ? 'desc'
                     : 'asc',
         })
+
     const handleSelectProduct = id =>
         !disabledProductIds.includes(id) &&
         setSelectedIds(prev =>
             prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
         )
+
     const handleSelectAllProducts = e =>
         setSelectedIds(
             e.target.checked
@@ -203,6 +208,7 @@ const DiscountManagement = () => {
                       .map(p => p.id)
                 : []
         )
+
     const handleSelectDiscount = id =>
         setSelectedDiscountIds(prev =>
             prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
@@ -380,6 +386,34 @@ const DiscountManagement = () => {
         )
     }
 
+    const handleEditDiscount = discount => {
+        setEditingDiscount(discount)
+        setIsEditModalOpen(true)
+    }
+
+    const handleUpdateDiscount = async (id, payload) => {
+        setIsSubmittingEdit(true)
+        try {
+            // Gọi hàm updateDiscount từ service
+            await updateDiscount(id, payload)
+
+            // Cập nhật state discounts cục bộ để UI phản ánh ngay
+            const updatedDiscounts = discounts.map(d =>
+                d.id === id ? { ...d, ...payload } : d
+            )
+            setDiscounts(updatedDiscounts)
+
+            showAlert('Cập nhật chương trình khuyến mãi thành công!', {
+                type: 'success',
+            })
+        } catch (error) {
+            console.error('Lỗi khi cập nhật khuyến mãi:', error)
+            showAlert('Lỗi khi cập nhật!', { type: 'error' })
+        } finally {
+            setIsSubmittingEdit(false)
+        }
+    }
+
     return (
         <div className="flex flex-col gap-6 min-h-screen font-sans">
             <DiscountTable
@@ -389,6 +423,7 @@ const DiscountManagement = () => {
                 onSelect={handleSelectDiscount}
                 onSelectAll={handleSelectAllDiscounts}
                 onView={handleViewDiscount}
+                onEdit={handleEditDiscount}
                 formatDate={formatDateTime}
                 onDeleteSelected={handleDeleteSelectedDiscounts}
                 isDeleting={deleteDiscountMutation.isPending}
@@ -414,30 +449,7 @@ const DiscountManagement = () => {
                         </div>
                     </div>
                     <div className="flex flex-col sm:flex-row gap-2 w-full xl:w-auto">
-                        <select
-                            className="border border-gray-300 rounded-xl px-4 py-2.5 bg-white focus:ring-2 focus:ring-blue-200 outline-none text-gray-700 min-w-[200px]"
-                            value={targetDiscountId}
-                            onChange={e => {
-                                setTargetDiscountId(e.target.value)
-                                setSelectedIds([])
-                            }}
-                        >
-                            <option
-                                value="NEW"
-                                className="font-bold text-blue-600"
-                            >
-                                Tạo mới
-                            </option>
-                            {discounts.map(d => (
-                                <option key={d.id} value={d.id}>
-                                    {d.name} (
-                                    {d.value <= 100
-                                        ? `-${d.value}%`
-                                        : `-${(d.value / 1000).toLocaleString()}k`}
-                                    )
-                                </option>
-                            ))}
-                        </select>
+                        
                         <button
                             onClick={handleAddProductsToDiscount}
                             className={`flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-medium transition shadow-lg whitespace-nowrap ${selectedIds.length > 0 && targetDiscountId ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-blue-200' : 'bg-gray-200 text-gray-400 cursor-not-allowed shadow-none'}`}
@@ -513,6 +525,17 @@ const DiscountManagement = () => {
                 onClose={() => setIsAddPreviewModalOpen(false)}
                 onConfirm={handleConfirmAdd}
                 isAdding={createDiscountProductMutation.isPending}
+            />
+
+            <EditDiscountModal
+                isOpen={isEditModalOpen}
+                onClose={() => {
+                    setIsEditModalOpen(false)
+                    setEditingDiscount(null)
+                }}
+                discount={editingDiscount}
+                onSubmit={handleUpdateDiscount}
+                isSubmitting={isSubmittingEdit}
             />
 
             <ProductDetailModal

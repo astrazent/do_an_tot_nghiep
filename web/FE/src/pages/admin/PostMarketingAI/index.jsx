@@ -1,389 +1,230 @@
-import React, { useState } from 'react'
-import { createPostMarketing } from '~/services/admin/aiMarketingService'
+import React, { useState } from 'react';
+import * as XLSX from 'xlsx';
+import Alert from '~/components/shared/Alert';
+import { createPostMarketing } from '~/services/admin/aiMarketingService';
 
 const PostMarketingAI = () => {
-    const [formData, setFormData] = useState({
-        product_name: '',
-        content_requirement: '',
-        product_image: null,
-    })
+  const [sheetFile, setSheetFile] = useState(null);
+  const [fileName, setFileName] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
 
-    const [imagePreview, setImagePreview] = useState(null)
-    const [generatedMessage, setGeneratedMessage] = useState('')
-    const [attachedMedia, setAttachedMedia] = useState([])
-    const [loading, setLoading] = useState(false)
-    const [publishing, setPublishing] = useState(false)
-    const [error, setError] = useState(null)
-    const [success, setSuccess] = useState(false)
-    const [scheduleTime, setScheduleTime] = useState('') // Unix timestamp cho scheduled time
+  const REQUIRED_COLUMNS_DISPLAY = [
+    'product_scope',
+    'content_requirement',
+    'product_image',
+    'time',
+    'type',
+  ];
 
-    const handleInputChange = e => {
-        const { name, value } = e.target
-        setFormData(prev => ({ ...prev, [name]: value }))
+  const handleFileChange = e => {
+    const file = e.target.files[0];
+    if (file) {
+      if (!file.name.endsWith('.xlsx') && !file.name.endsWith('.xls')) {
+        setErrorMessage('Vui lòng chọn file Excel (.xlsx hoặc .xls)!');
+        setTimeout(() => setErrorMessage(null), 3000);
+        return;
+      }
+      setSheetFile(file);
+      setFileName(file.name);
+      setErrorMessage(null);
     }
+  };
 
-    const handleScheduleChange = e => {
-        const date = new Date(e.target.value)
-        const unixTime = Math.floor(date.getTime() / 1000)
-        setScheduleTime(unixTime)
-    }
+  const handleRemoveFile = () => {
+    setSheetFile(null);
+    setFileName('');
+    setErrorMessage(null);
+  };
 
-    const handleImageChange = e => {
-        const file = e.target.files[0]
-        if (file) {
-            setFormData(prev => ({ ...prev, product_image: file }))
-            const reader = new FileReader()
-            reader.onloadend = () => {
-                setImagePreview(reader.result)
-            }
-            reader.readAsDataURL(file)
-        }
-    }
-
-    const handleSubmit = async e => {
-        e.preventDefault()
-        setLoading(true)
-        setError(null)
-        setSuccess(false)
-        setAttachedMedia([])
-
-        const data = new FormData()
-        data.append('product_name', formData.product_name)
-        data.append('content_requirement', formData.content_requirement)
-        if (formData.product_image) {
-            data.append('product_image', formData.product_image)
-        }
-
+  const validateSheetHeaders = () => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = e => {
         try {
-            const response = await createPostMarketing(data)
-            let respData = response?.data || {}
+          const data = e.target.result;
+          const workbook = XLSX.read(data, { type: 'array' });
+          const firstSheet = workbook.SheetNames[0];
+          const worksheet = workbook.Sheets[firstSheet];
+          const headers = XLSX.utils.sheet_to_json(worksheet, { header: 1 })[0] || [];
 
-            const attachedMediaArray = []
-            Object.keys(respData).forEach(key => {
-                if (key.startsWith('attached_media[')) {
-                    try {
-                        const mediaObj = JSON.parse(respData[key])
-                        attachedMediaArray.push(mediaObj)
-                    } catch (err) {
-                        console.error('Parse media error:', err)
-                    }
-                }
-            })
-
-            const finalRespData = {
-                message: respData.message || '',
-                attached_media: attachedMediaArray,
-                page_id: respData.page_id || '',
+          const errors = [];
+          REQUIRED_COLUMNS_DISPLAY.forEach(required => {
+            if (!headers.includes(required)) {
+              errors.push(`File thiếu cột bắt buộc: '${required}'.`);
             }
+          });
 
-            setGeneratedMessage(finalRespData.message)
-            setAttachedMedia(finalRespData.attached_media)
-
-            if (!finalRespData.message.trim()) {
-                setError(
-                    'Hệ thống AI đang lỗi hoặc không trả về nội dung. Vui lòng thử lại sau!'
-                )
-                setSuccess(false)
-            } else {
-                setSuccess(true)
-            }
+          if (errors.length > 0) {
+            reject(errors.join(' '));
+          } else {
+            resolve(true);
+          }
         } catch (err) {
-            console.error('API Error:', err)
-            setError(
-                err.response?.data?.message || 'Có lỗi xảy ra khi tạo bài viết'
-            )
-        } finally {
-            setLoading(false)
+          reject('Không thể đọc file Excel. Vui lòng kiểm tra file có đúng định dạng không!');
         }
+      };
+      reader.onerror = () => reject('Lỗi khi đọc file!');
+      reader.readAsArrayBuffer(sheetFile);
+    });
+  };
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    if (!sheetFile) {
+      setErrorMessage('Vui lòng chọn file Excel!');
+      setTimeout(() => setErrorMessage(null), 3000);
+      return;
     }
 
-    const handlePublish = async () => {
-        if (!generatedMessage.trim()) {
-            alert('Vui lòng tạo nội dung trước')
-            return
-        }
+    setLoading(true);
+    setErrorMessage(null);
+    setSuccessMessage(null);
 
-        setPublishing(true)
+    try {
+      await validateSheetHeaders();
 
-        const data = new FormData()
-        data.append('message', generatedMessage)
+      const formData = new FormData();
+      formData.append('google_sheet', sheetFile);
 
-        attachedMedia.forEach((media, index) => {
-            data.append(`attached_media[${index}]`, JSON.stringify(media))
-        })
+      const response = await createPostMarketing(formData);
 
-        // Thêm lên lịch nếu có
-        if (scheduleTime) {
-            data.append('scheduled_publish_time', scheduleTime)
-            data.append('published', 'false')
-        }
+      setSuccessMessage(
+        response.message || 'Đã gửi file Excel lên server và xử lý thành công!'
+      );
 
-        try {
-            const response = await fetch(
-                'https://tienduy20031.app.n8n.cloud/webhook/post',
-                {
-                    method: 'POST',
-                    body: data,
-                }
-            )
-
-            if (!response.ok) {
-                const errorText = await response.text()
-                throw new Error(`Lỗi: ${response.status} - ${errorText}`)
-            }
-
-            const result = await response.json()
-            console.log('Đăng bài thành công:', result)
-            alert(
-                scheduleTime
-                    ? 'Bài đã được lên lịch đăng!'
-                    : 'Đăng bài lên Facebook thành công!'
-            )
-        } catch (err) {
-            console.error('Lỗi khi đăng bài:', err)
-            alert('Có lỗi khi đăng bài: ' + err.message)
-        } finally {
-            setPublishing(false)
-        }
+      setSheetFile(null);
+      setFileName('');
+    } catch (error) {
+      let errorMsg = 'Có lỗi xảy ra khi xử lý file kiểm tra lại các trường trong file.';
+      if (error.message) {
+        errorMsg = error.message;
+      } else if (error.response?.data?.message) {
+        errorMsg = error.response.data.message;
+      }
+      setErrorMessage(errorMsg);
+    } finally {
+      setLoading(false);
     }
+  };
 
-    return (
-        <div className="min-h-screen bg-gray-50 flex flex-col">
-            <div className="flex-1 flex items-stretch p-0">
-                <div className="flex-1 bg-white border border-gray-200 overflow-hidden flex flex-col">
-                    <div className="px-8 py-6 border-b border-gray-200 bg-gray-50">
-                        <h1 className="text-2xl font-semibold text-gray-900">
-                            Tạo Bài Đăng Marketing AI
-                        </h1>
-                        <p className="mt-1 text-sm text-gray-500">
-                            Điền thông tin sản phẩm để AI tạo nội dung bài đăng
-                            chuyên nghiệp
-                        </p>
-                    </div>
+  return (
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4 sm:p-6 lg:p-8">
+      <div className="w-full max-w-4xl bg-white rounded-2xl shadow-xl border border-gray-200 p-6 sm:p-8 lg:p-10">
+        <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3 text-center">
+          Đăng Bài Marketing
+        </h1>
+        <p className="text-base text-gray-600 mb-6 text-center">
+          Upload file Excel (.xlsx) chứa thông tin sản phẩm để tự động tạo và đăng bài
+        </p>
 
-                    <div className="flex-1 overflow-auto p-8">
-                        <form
-                            onSubmit={handleSubmit}
-                            className="space-y-6 max-w-4xl mx-auto"
-                        >
-                            {/* Tên sản phẩm */}
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">
-                                    Tên sản phẩm{' '}
-                                    <span className="text-red-500">*</span>
-                                </label>
-                                <input
-                                    type="text"
-                                    name="product_name"
-                                    value={formData.product_name}
-                                    onChange={handleInputChange}
-                                    className="block w-full rounded-lg border border-gray-300 px-4 py-2.5 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
-                                    required
-                                    placeholder="Ví dụ: Áo thun nam cotton cao cấp"
-                                />
-                            </div>
-
-                            {/* Yêu cầu nội dung */}
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">
-                                    Yêu cầu nội dung{' '}
-                                    <span className="text-red-500">*</span>
-                                </label>
-                                <textarea
-                                    name="content_requirement"
-                                    value={formData.content_requirement}
-                                    onChange={handleInputChange}
-                                    rows={5}
-                                    className="block w-full rounded-lg border border-gray-300 px-4 py-2.5 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none resize-y transition-all"
-                                    required
-                                    placeholder="Ví dụ: Tập trung vào ưu đãi Black Friday, giọng điệu trẻ trung, thêm emoji, kêu gọi hành động mua ngay"
-                                />
-                            </div>
-
-                            {/* Upload ảnh */}
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">
-                                    Ảnh sản phẩm
-                                </label>
-                                <div className="mt-1 flex items-center space-x-4">
-                                    <label className="cursor-pointer">
-                                        <input
-                                            type="file"
-                                            accept="image/*"
-                                            onChange={handleImageChange}
-                                            className="hidden"
-                                        />
-                                        <span className="inline-flex items-center px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-200 transition-colors">
-                                            Chọn ảnh
-                                        </span>
-                                    </label>
-                                    {formData.product_image && (
-                                        <span className="text-sm text-gray-600 truncate max-w-xs">
-                                            {formData.product_image.name}
-                                        </span>
-                                    )}
-                                </div>
-
-                                {imagePreview && (
-                                    <div className="mt-4">
-                                        <img
-                                            src={imagePreview}
-                                            alt="Preview"
-                                            className="max-h-80 w-auto rounded-lg border border-gray-200 object-contain shadow-sm"
-                                        />
-                                    </div>
-                                )}
-                            </div>
-
-                            {/* Nút submit */}
-                            <div className="pt-4">
-                                <button
-                                    type="submit"
-                                    disabled={loading}
-                                    className={`w-full px-8 py-3 bg-blue-600 text-white font-medium rounded-lg shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
-                                        loading ? 'cursor-not-allowed' : ''
-                                    }`}
-                                >
-                                    {loading ? (
-                                        <span className="flex items-center justify-center">
-                                            <svg
-                                                className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                fill="none"
-                                                viewBox="0 0 24 24"
-                                            >
-                                                <circle
-                                                    className="opacity-25"
-                                                    cx="12"
-                                                    cy="12"
-                                                    r="10"
-                                                    stroke="currentColor"
-                                                    strokeWidth="4"
-                                                />
-                                                <path
-                                                    className="opacity-75"
-                                                    fill="currentColor"
-                                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                                />
-                                            </svg>
-                                            Đang tạo...
-                                        </span>
-                                    ) : (
-                                        'Tạo bài đăng'
-                                    )}
-                                </button>
-                            </div>
-                        </form>
-
-                        {/* Phần hiển thị nội dung sau khi tạo thành công */}
-                        {success && generatedMessage && (
-                            <div className="mt-12 max-w-4xl mx-auto">
-                                <div className="bg-gray-50 rounded-xl border border-gray-200 p-6">
-                                    <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                                        Nội dung bài đăng (có thể chỉnh sửa)
-                                    </h2>
-                                    <textarea
-                                        value={generatedMessage}
-                                        onChange={e =>
-                                            setGeneratedMessage(e.target.value)
-                                        }
-                                        rows={12}
-                                        className="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-800 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none resize-y transition-all font-medium"
-                                    />
-
-                                    {/* Input lên lịch đăng */}
-                                    <div className="mt-6">
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">
-                                            Lên lịch đăng bài (tùy chọn)
-                                        </label>
-                                        <input
-                                            type="datetime-local"
-                                            onChange={handleScheduleChange}
-                                            className="block w-full rounded-lg border border-gray-300 px-4 py-2.5 text-gray-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
-                                            min={new Date()
-                                                .toISOString()
-                                                .slice(0, 16)} // Không cho chọn quá khứ
-                                        />
-                                        <p className="mt-1 text-xs text-gray-500">
-                                            Nếu để trống, bài sẽ đăng ngay lập
-                                            tức
-                                        </p>
-                                    </div>
-
-                                    {/* Nút đăng */}
-                                    <div className="mt-6 flex justify-end space-x-4">
-                                        <button
-                                            onClick={handlePublish}
-                                            disabled={
-                                                publishing ||
-                                                !generatedMessage.trim()
-                                            }
-                                            className={`px-8 py-3 bg-green-600 text-white font-medium rounded-lg shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
-                                                publishing
-                                                    ? 'cursor-not-allowed'
-                                                    : ''
-                                            }`}
-                                        >
-                                            {publishing ? (
-                                                <span className="flex items-center justify-center">
-                                                    <svg
-                                                        className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        fill="none"
-                                                        viewBox="0 0 24 24"
-                                                    >
-                                                        <circle
-                                                            className="opacity-25"
-                                                            cx="12"
-                                                            cy="12"
-                                                            r="10"
-                                                            stroke="currentColor"
-                                                            strokeWidth="4"
-                                                        />
-                                                        <path
-                                                            className="opacity-75"
-                                                            fill="currentColor"
-                                                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                                        />
-                                                    </svg>
-                                                    Đang đăng...
-                                                </span>
-                                            ) : (
-                                                'Đăng bài ngay'
-                                            )}
-                                        </button>
-                                        <button
-                                            onClick={handlePublish}
-                                            disabled={
-                                                publishing ||
-                                                !generatedMessage.trim() ||
-                                                !scheduleTime
-                                            }
-                                            className={`px-8 py-3 bg-purple-600 text-white font-medium rounded-lg shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
-                                                publishing || !scheduleTime
-                                                    ? 'cursor-not-allowed'
-                                                    : ''
-                                            }`}
-                                        >
-                                            {publishing
-                                                ? 'Đang lên lịch...'
-                                                : 'Lên lịch đăng'}
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-
-                        {error && (
-                            <div className="mt-6 max-w-4xl mx-auto p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
-                                {error}
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </div>
+        {/* Danh sách cột bắt buộc */}
+        <div className="mb-8 p-5 bg-blue-50 border border-blue-200 rounded-xl">
+          <p className="text-base font-semibold text-blue-800 mb-3">
+            File Excel cần có các cột sau (tên cột phải chính xác):
+          </p>
+          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 text-sm text-blue-700">
+            {REQUIRED_COLUMNS_DISPLAY.map(col => (
+              <li key={col} className="font-mono bg-white px-3 py-1.5 rounded-md shadow-sm">
+                {col}
+              </li>
+            ))}
+          </ul>
         </div>
-    )
-}
 
-export default PostMarketingAI
+        <form onSubmit={handleSubmit} className="space-y-8">
+          {/* Upload file */}
+          <div className="text-center">
+            <label className="block text-lg font-semibold text-gray-800 mb-3">
+              File Excel (.xlsx) <span className="text-red-500">*</span>
+            </label>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <label className="cursor-pointer">
+                <input
+                  type="file"
+                  accept=".xlsx,.xls"
+                  onChange={handleFileChange}
+                  className="hidden"
+                />
+                <span className="inline-flex items-center px-6 py-3 bg-blue-600 text-white text-base font-medium rounded-lg hover:bg-blue-700 transition-colors">
+                  Chọn file Excel
+                </span>
+              </label>
+
+              {fileName && (
+                <div className="flex items-center space-x-3 bg-gray-100 px-4 py-2 rounded-lg shadow-sm">
+                  <span className="text-base text-gray-800 truncate max-w-[220px] sm:max-w-[300px]">
+                    {fileName}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={handleRemoveFile}
+                    className="text-red-500 hover:text-red-700 transition-colors p-1"
+                    title="Xóa file"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Nút Submit */}
+          <div className="flex justify-center pt-6">
+            <button
+              type="submit"
+              disabled={loading || !sheetFile}
+              className={`px-10 py-4 bg-green-600 text-white text-lg font-semibold rounded-lg shadow-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 ${
+                loading ? 'cursor-not-allowed' : ''
+              }`}
+            >
+              {loading ? (
+                <>
+                  <svg
+                    className="animate-spin h-6 w-6 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    />
+                  </svg>
+                  Đang gửi...
+                </>
+              ) : (
+                'Gửi file và đăng bài'
+              )}
+            </button>
+          </div>
+        </form>
+
+        {/* Alert */}
+        {errorMessage && (
+          <Alert
+            message={errorMessage}
+            type="error"
+            duration={5000}
+            onClose={() => setErrorMessage(null)}
+          />
+        )}
+        {successMessage && (
+          <Alert
+            message={successMessage}
+            type="success"
+            duration={5000}
+            onClose={() => setSuccessMessage(null)}
+          />
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default PostMarketingAI;

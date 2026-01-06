@@ -84,7 +84,6 @@ const CreateProductModal = ({ isOpen, onClose, onCreateSuccess }) => {
         return () => document.removeEventListener('mousedown', handleClickOutside)
     }, [])
 
-    // Xử lý tất cả input (text, number, checkbox)
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target
         setFormData(prev => ({
@@ -124,7 +123,6 @@ const CreateProductModal = ({ isOpen, onClose, onCreateSuccess }) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        // DEBUG – XEM DỮ LIỆU GỬI ĐI
         console.log('Gửi đi:', { ...formData, images: images.length })
 
         if (!formData.name.trim()) return setError('Vui lòng nhập tên sản phẩm!')
@@ -186,7 +184,6 @@ const CreateProductModal = ({ isOpen, onClose, onCreateSuccess }) => {
                 )}
 
                 <form onSubmit={handleSubmit} className="space-y-6">
-
                     {/* Tên & Slug */}
                     <div className="grid grid-cols-2 gap-6">
                         <label className="block">
@@ -367,8 +364,21 @@ const CreateProductModal = ({ isOpen, onClose, onCreateSuccess }) => {
                         </div>
                     </div>
 
-                    {/* Nút submit */}
-                    <div className="flex justify-end pt-6 border-t">
+                    {/* Nút submit + Hủy */}
+                    <div className="flex justify-end gap-4 pt-6 border-t">
+                        <button
+                            type="button"
+                            onClick={onClose}
+                            disabled={isSaving}
+                            className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+                                isSaving
+                                    ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
+                                    : 'bg-gray-200 hover:bg-gray-300 text-gray-800'
+                            }`}
+                        >
+                            Hủy
+                        </button>
+
                         <button
                             type="submit"
                             disabled={isSaving || isLoadingCategories}

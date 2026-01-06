@@ -2,6 +2,7 @@ import { AdminsModel } from '~/models/adminModel'
 import bcrypt from 'bcryptjs/dist/bcrypt'
 import ApiError from '~/utils/ApiError'
 import { StatusCodes } from 'http-status-codes'
+import { generateAccessToken } from '~/utils/token'
 
 const addAdminService = async payload => {
     const existedEmail = await AdminsModel.getAdminByEmail(payload.email)
@@ -45,7 +46,18 @@ const loginAdminService = async payload => {
         throw new ApiError(StatusCodes.UNAUTHORIZED, 'Sai password')
     }
 
-    return admin
+    const accessToken = generateAccessToken({
+        id: admin.id,
+        username: admin.username,
+        full_name: admin.full_name,
+        email: admin.email,
+        role: admin.role,
+    })
+
+    return {
+        admin,
+        accessToken
+    }
 }
 
 export const adminService = {

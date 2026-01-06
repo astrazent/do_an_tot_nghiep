@@ -1,3 +1,4 @@
+import { min } from 'moment-timezone'
 import { getConnection } from '../config/mysql.js'
 import Joi from 'joi'
 
@@ -13,11 +14,13 @@ const COUPONS_SCHEMA = Joi.object({
             'Type chỉ có thể là 0 (giảm phí ship) hoặc 1 (giảm giá sản phẩm)',
     }),
     value: Joi.number().precision(2).min(0).required(),
-    measure: Joi.number().integer().valid(0, 1).required().messages({
-        'any.only': 'Measure chỉ có thể là 0 (VND) hoặc 1 (%)',
-    }),
     max_value: Joi.number().precision(2).min(0).allow(null),
-    expire_date: Joi.date().allow(null),
+    min_order_value: Joi.number().precision(2).min(0).allow(null),
+    quantity: Joi.number().integer().min(0).allow(null),
+    used_count: Joi.number().integer().min(0).allow(null),
+    start_date: Joi.date().allow(null),
+    end_date: Joi.date().greater(Joi.ref('start_date')).allow(null),
+    status: Joi.number().integer().valid(0, 1).allow(null),
 })
 
 const CouponsModel = {
@@ -30,16 +33,19 @@ const CouponsModel = {
         const conn = getConnection()
         const [result] = await conn.execute(
             `INSERT INTO ${COUPONS_TABLE_NAME} 
-            (code, description, type, value, measure, max_value, expire_date)
-            VALUES (?, ?, ?, ?, ?, ?, ?)`,
+            (code, description, type, value, max_value, min_order_value, quantity, start_date, end_date, status)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
                 value.code,
                 value.description,
                 value.type,
                 value.value,
-                value.measure,
                 value.max_value,
-                value.expire_date,
+                value.min_order_value,
+                value.quantity,
+                value.start_date,
+                value.end_date,
+                value.status,
             ]
         )
 

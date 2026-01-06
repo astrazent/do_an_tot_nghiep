@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes'
 
 const marketingPost = async (req, res, next) => {
     try {
-        const data = await marketingAIService.marketingPost(req.body, req.uploadedImageUrls)
+        const data = await marketingAIService.marketingPost(req.file)
         return res.status(StatusCodes.CREATED).json({
             message: 'Tạo bài viết thành công',
             data,

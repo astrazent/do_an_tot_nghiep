@@ -1,46 +1,54 @@
 import fetch from 'node-fetch'
+import FormData from 'form-data'
 
-const N8N_Post_URL = 'https://tienduy20031.app.n8n.cloud/webhook/api/marketing-writer'
+const N8N_Post_URL ='https://tienduy20031.app.n8n.cloud/webhook/api/marketing-writer'
 const N8N_Email_URL = 'https://tienduy20031.app.n8n.cloud/webhook/email_vip'
 
-const marketingPost = async (data, uploadedImageUrls) => {
-    if (!N8N_Post_URL) throw new Error('Missing N8N_Post_URL')
-
-    const payload = {
-        product_name: data.product_name ?? '',
-        content_requirement: data.content_requirement ?? '',
-        product_image: uploadedImageUrls || [],  
+const marketingPost = async file => {
+    if (!file) {
+        throw new Error('Không có file Excel được gửi')
     }
 
-    console.log('⏰ Bắt đầu gọi n8n:', new Date().toISOString());
+    if (!N8N_Post_URL) {
+        throw new Error('Missing N8N_Post_URL')
+    }
+
+    console.log('⏰ Bắt đầu forward file đến n8n:', new Date().toISOString())
+    console.log('Tên file:', file.originalname)
+    console.log('Kích thước file:', file.size)
 
     try {
-        const res = await fetch(N8N_Post_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(payload),
+        const form = new FormData()
+        form.append('sheet_file', file.buffer, {
+            filename: file.originalname,
+            contentType: file.mimetype,
         })
 
-        const text = await res.text();
+        const response = await fetch(N8N_Post_URL, {
+            method: 'POST',
+            body: form,
+            headers: form.getHeaders(), 
+        })
 
-        let json;
+        const text = await response.text()
+        let json
+
         try {
-            json = JSON.parse(text);
+            json = JSON.parse(text)
         } catch (parseError) {
-            console.error('Failed to parse JSON:', parseError);
-            json = { raw: text };
+            console.error('Failed to parse n8n response:', parseError)
+            json = { raw: text }
         }
 
-        if (!res.ok) {
-            throw new Error(`n8n responded ${res.status}: ${text}`);
+        if (!response.ok) {
+            throw new Error(`n8n responded ${response.status}: ${text}`)
         }
 
-        return json;
+        console.log('n8n response:', json)
+        return json
     } catch (error) {
-        console.error('❌ Lỗi khi gọi n8n:', error.message);
-        throw error;
+        console.error('❌ Lỗi khi forward file đến n8n:', error.message)
+        throw error
     }
 }
 
@@ -51,10 +59,10 @@ const marketingEmail = async (data, uploadedImageUrls) => {
         customers: data.customers ?? [],
         message: data.message ?? '',
         subject: data.subject ?? '',
-        image: uploadedImageUrls || [],  
+        image: uploadedImageUrls || [],
     }
 
-    console.log('⏰ Bắt đầu gọi n8n:', new Date().toISOString());
+    console.log('⏰ Bắt đầu gọi n8n:', new Date().toISOString())
 
     try {
         const res = await fetch(N8N_Email_URL, {
@@ -65,31 +73,35 @@ const marketingEmail = async (data, uploadedImageUrls) => {
             body: JSON.stringify(payload),
         })
 
-        const text = await res.text();
+        const text = await res.text()
 
         // Luôn thử parse JSON trước
-        let json;
+        let json
         try {
-            json = JSON.parse(text);
+            json = JSON.parse(text)
         } catch (parseError) {
-            console.error('Failed to parse JSON from n8n:', parseError);
-            console.error('Raw response:', text);
-            throw new Error(`n8n trả về không phải JSON hợp lệ (status ${res.status}): ${text.slice(0, 200)}...`);
+            console.error('Failed to parse JSON from n8n:', parseError)
+            console.error('Raw response:', text)
+            throw new Error(
+                `n8n trả về không phải JSON hợp lệ (status ${res.status}): ${text.slice(0, 200)}...`
+            )
         }
 
         // Sau khi parse thành công mới check status
         if (!res.ok) {
-            throw new Error(`n8n responded ${res.status}: ${JSON.stringify(json)}`);
+            throw new Error(
+                `n8n responded ${res.status}: ${JSON.stringify(json)}`
+            )
         }
 
-        return json;
+        return json
     } catch (error) {
-        console.error('❌ Lỗi khi gọi n8n:', error.message);
-        throw error;
+        console.error('❌ Lỗi khi gọi n8n:', error.message)
+        throw error
     }
 }
 
 export const marketingAIService = {
     marketingPost,
-    marketingEmail
+    marketingEmail,
 }

@@ -1,6 +1,5 @@
 import React from 'react'
 import AdminDashboard from '../pages/admin/Dashboard'
-import AdminLogin from '../pages/admin/Login'
 import AdminProductAnalysis from '../pages/admin/ProductAnalysis'
 import AdminProductManagement from '~/pages/admin/ProductManagement'
 import SidebarLayout from '~/layouts/admin/SidebarLayout'
@@ -9,7 +8,6 @@ import AdminRevenueSources from '~/pages/admin/RevenueSource'
 import AdminCustomersAnalysis from '~/pages/admin/AdminCustomersAnalysis'
 import AdminCustomersManagement from '~/pages/admin/AdminCustomersManagement'
 import AdminOrder from '~/pages/admin/AdminOrder'
-import AdminPromotion from '~/pages/admin/AdminPromotion'
 import AdminBanner from '~/pages/admin/AdminBanner'
 import AdminBlogManagement from '~/pages/admin/AdminBlogManagement'
 import AdminBlogCreateNew from '~/pages/admin/AdminBlogCreateNew'
@@ -19,9 +17,24 @@ import PostMarketingAI from '~/pages/admin/PostMarketingAI'
 import EmailAI from '~/pages/admin/EmailMarketingAI'
 import AdminLayout from '~/layouts/admin/AdminLayout'
 import DiscountManagement from '~/pages/admin/DiscountManagement'
+import AdminCouponManagement from '~/pages/admin/AdminCouponManagement'
+import AdminLogin from '~/pages/admin/AdminLogin'
+import { Navigate, useLocation } from 'react-router-dom'
+import Cookies from 'js-cookie'
 
-function ProtectedAdmin({ children }) {
-    return children
+const ProtectedAdmin = ({ children }) => {
+    const location = useLocation()
+    const accessToken = Cookies.get('access_token')
+
+    if (location.pathname === '/admin/login') {
+        return children
+    }
+
+    if (accessToken) {
+        return children
+    }
+
+    return <Navigate to="/admin/login" state={{ from: location }} replace />
 }
 
 export const adminRoutes = [
@@ -31,7 +44,11 @@ export const adminRoutes = [
     },
     {
         path: '/admin',
-        element: <AdminLayout />,
+        element: (
+            <ProtectedAdmin>
+                <AdminLayout />
+            </ProtectedAdmin>
+        ),
         children: [
             {
                 element: <SidebarLayout />,
@@ -63,7 +80,7 @@ export const adminRoutes = [
                     },
                     { path: 'category', element: <AdminCategoryManagement /> },
                     { path: 'orders', element: <AdminOrder /> },
-                    { path: 'promotions', element: <AdminPromotion /> },
+                    { path: 'coupon', element: <AdminCouponManagement /> },
                     { path: 'banner', element: <AdminBanner /> },
                     {
                         path: 'blog/management',
@@ -83,5 +100,10 @@ export const adminRoutes = [
                 ],
             },
         ],
+    },
+    // Optional: redirect /admin trực tiếp về dashboard nếu đã login
+    {
+        path: '/admin/*',
+        element: <Navigate to="/admin" replace />,
     },
 ]

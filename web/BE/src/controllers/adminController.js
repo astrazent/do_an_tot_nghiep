@@ -15,11 +15,18 @@ const addAmin = async (req, res, next) => {
 
 const loginAmin = async (req, res, next) => {
     try {
-        const data = await adminService.loginAdminService(req.validated)
+        const {admin, accessToken} = await adminService.loginAdminService(req.validated)
+
+        res.cookie('access_token', accessToken, {
+            httpOnly: false,     
+            secure: process.env.FE_BASE_URL === 'production',
+            sameSite: 'strict', 
+            maxAge: 100 * 24 * 60 * 60 * 1000 
+        })
 
         return res.status(StatusCodes.OK).json({
             message: 'Đăng nhập thành công',
-            data,
+            admin
         })
     } catch (error) {
         next(error)

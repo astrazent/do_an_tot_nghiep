@@ -21,6 +21,7 @@ import {
     HiOutlineTemplate,
     HiOutlineDocumentText,
     HiOutlineMail,
+    HiOutlineTicket,
 } from 'react-icons/hi'
 import { MdLocalOffer, MdAdsClick, MdArticle } from 'react-icons/md'
 import { BiCategoryAlt } from 'react-icons/bi'
@@ -90,6 +91,11 @@ const mainNavLinks = [
     },
     { name: 'Đơn hàng', icon: <HiOutlineShoppingBag />, path: '/admin/orders' },
     { name: 'Khuyến mãi', icon: <MdLocalOffer />, path: '/admin/discount' },
+    {
+        name: 'Mã giảm giá',
+        icon: <HiOutlineTicket />, 
+        path: '/admin/coupon',    
+    },
     { name: 'Banner', icon: <MdAdsClick />, path: '/admin/banner' },
     {
         name: 'Blog',

@@ -15,7 +15,7 @@ const ArticleListSection = ({ title, articles }) => {
                         className="flex items-center gap-4 group p-2 rounded-lg hover:bg-gray-100 transition-colors"
                     >
                         <img
-                            src={article.imageUrl}
+                            src={article.images[0]?.url}
                             alt={article.title}
                             className="w-16 h-16 object-cover rounded-md flex-shrink-0"
                         />

@@ -132,12 +132,22 @@ const CreateDiscountModal = ({
             </form>
         </div>
 
-        <div className="p-6 bg-gray-50 flex justify-end">
+        {/* Footer với 2 nút: Hủy và Lưu */}
+        <div className="p-6 bg-gray-50 border-t border-gray-200 flex justify-end gap-3">
+            <button
+                type="button"
+                onClick={onClose}
+                className="px-6 py-2 bg-white text-gray-700 font-medium rounded-lg border border-gray-300 hover:bg-gray-50 transition"
+                disabled={isSubmitting}
+            >
+                Hủy
+            </button>
+
             <button
                 type="submit"
                 form="createDiscountForm"
                 disabled={isSubmitting}
-                className="px-6 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition shadow-sm flex items-center gap-2"
+                className="px-6 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition shadow-sm flex items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
             >
                 {isSubmitting && (
                     <svg
@@ -159,7 +169,7 @@ const CreateDiscountModal = ({
                         />
                     </svg>
                 )}
-                Lưu chương trình
+                {isSubmitting ? 'Đang lưu...' : 'Lưu chương trình'}
             </button>
         </div>
     </BaseModal>

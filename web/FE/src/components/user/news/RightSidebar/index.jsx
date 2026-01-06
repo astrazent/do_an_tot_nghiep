@@ -16,6 +16,7 @@ const RightSidebar = ({
         isError: isFeaturedError,
     } = usePosts({ type: 'postType', slug: 'tin-tuc-am-thuc', limit: 3 })
 
+    console.log('Featured Posts:', featuredPostsResult)
     const {
         data: consumerTipsResult,
         isLoading: isTipsLoading,

@@ -1,7 +1,9 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useRef, useEffect } from 'react'
 import {
     HiTrash,
     HiEye,
+    HiPencil,
+    HiDotsVertical,
     HiChevronUp,
     HiChevronDown,
     HiSelector,
@@ -14,6 +16,7 @@ const DiscountTable = ({
     onSelect,
     onSelectAll,
     onView,
+    onEdit,          // <-- Prop mới: hàm mở modal chỉnh sửa
     formatDate,
     onDeleteSelected,
     isDeleting,
@@ -22,6 +25,8 @@ const DiscountTable = ({
         key: null,
         direction: 'asc',
     })
+    const [openMenuId, setOpenMenuId] = useState(null)
+    const menuRefs = useRef({})
 
     const sortedDiscounts = useMemo(() => {
         let sortableItems = discounts.map(d => {
@@ -93,6 +98,27 @@ const DiscountTable = ({
         </th>
     )
 
+    // Đóng menu khi click ra ngoài
+    useEffect(() => {
+        const handleClickOutside = e => {
+            if (
+                openMenuId !== null &&
+                menuRefs.current[openMenuId] &&
+                !menuRefs.current[openMenuId].contains(e.target)
+            ) {
+                setOpenMenuId(null)
+            }
+        }
+
+        document.addEventListener('mousedown', handleClickOutside)
+        return () => document.removeEventListener('mousedown', handleClickOutside)
+    }, [openMenuId])
+
+    const toggleMenu = (id, e) => {
+        e.stopPropagation()
+        setOpenMenuId(prev => (prev === id ? null : id))
+    }
+
     return (
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
             <div className="p-5 flex items-center justify-between bg-white min-h-[80px]">
@@ -139,38 +165,23 @@ const DiscountTable = ({
                                 />
                             </th>
 
-                            <SortableHeader
-                                label="Tên chương trình"
-                                sortKey="name"
-                            />
-                            <SortableHeader
-                                label="Giá trị giảm"
-                                sortKey="value"
-                            />
+                            <SortableHeader label="Tên chương trình" sortKey="name" />
+                            <SortableHeader label="Giá trị giảm" sortKey="value" />
                             <SortableHeader
                                 label="Số lượng SP"
                                 sortKey="productCount"
                                 align="center"
                             />
-                            <SortableHeader
-                                label="Bắt đầu"
-                                sortKey="start_date"
-                            />
-                            <SortableHeader
-                                label="Trạng thái"
-                                sortKey="status"
-                            />
+                            <SortableHeader label="Bắt đầu" sortKey="start_date" />
+                            <SortableHeader label="Trạng thái" sortKey="status" />
 
-                            <th className="p-4 text-center">Chi tiết</th>
+                            <th className="p-4 text-center">Thao tác</th>
                         </tr>
                     </thead>
 
                     <tbody className="divide-y divide-gray-100">
                         {sortedDiscounts.map(d => (
-                            <tr
-                                key={d.id}
-                                className="hover:bg-gray-50 transition"
-                            >
+                            <tr key={d.id} className="hover:bg-gray-50 transition">
                                 <td className="p-4 text-center">
                                     <input
                                         type="checkbox"
@@ -180,9 +191,7 @@ const DiscountTable = ({
                                     />
                                 </td>
 
-                                <td className="p-4 font-medium text-gray-900">
-                                    {d.name}
-                                </td>
+                                <td className="p-4 font-medium text-gray-900">{d.name}</td>
 
                                 <td className="p-4">
                                     <span
@@ -227,22 +236,48 @@ const DiscountTable = ({
                                     >
                                         <span
                                             className={`w-1.5 h-1.5 rounded-full ${
-                                                d.status
-                                                    ? 'bg-green-500'
-                                                    : 'bg-gray-500'
+                                                d.status ? 'bg-green-500' : 'bg-gray-500'
                                             }`}
                                         ></span>
                                         {d.status ? 'Đang chạy' : 'Tạm dừng'}
                                     </span>
                                 </td>
 
-                                <td className="p-4 text-center">
+                                <td className="p-4 text-center relative">
                                     <button
-                                        onClick={() => onView(d)}
-                                        className="p-2 bg-white border rounded-lg text-gray-400 hover:text-blue-600 hover:border-blue-300 transition shadow-sm cursor-pointer"
+                                        onClick={e => toggleMenu(d.id, e)}
+                                        className="p-2 bg-white border rounded-lg text-gray-500 hover:text-gray-700 hover:border-gray-300 transition shadow-sm cursor-pointer"
                                     >
-                                        <HiEye size={20} />
+                                        <HiDotsVertical size={20} />
                                     </button>
+
+                                    {openMenuId === d.id && (
+                                        <div
+                                            ref={el => (menuRefs.current[d.id] = el)}
+                                            className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-20 border border-gray-200 py-1"
+                                        >
+                                            <button
+                                                onClick={() => {
+                                                    onView(d)
+                                                    setOpenMenuId(null)
+                                                }}
+                                                className="w-full px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                                            >
+                                                <HiEye size={16} />
+                                                Xem chi tiết
+                                            </button>
+                                            <button
+                                                onClick={() => {
+                                                    onEdit(d)
+                                                    setOpenMenuId(null)
+                                                }}
+                                                className="w-full px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                                            >
+                                                <HiPencil size={16} />
+                                                Chỉnh sửa
+                                            </button>
+                                        </div>
+                                    )}
                                 </td>
                             </tr>
                         ))}

@@ -241,11 +241,11 @@ const BlogCreateNew = () => {
         }
     }
 
-    if (loading) return <div className="p-10 text-center text-xl">Đang tải dữ liệu...</div>
+    if (loading) return <div className="p-6 text-center text-xl">Đang tải dữ liệu...</div>
 
     return (
         <>
-            {/* CSS TỰ ĐỘNG MỞ RỘNG CHIỀU CAO EDITOR - BẮT BUỘC */}
+            {/* CSS responsive */}
             <style jsx>{`
                 .quill-auto-height .ql-container {
                     min-height: 300px;
@@ -267,192 +267,221 @@ const BlogCreateNew = () => {
                     border-color: #3b82f6 !important;
                     box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
                 }
+
+                /* Responsive adjustments */
+                @media (max-width: 768px) {
+                    .quill-auto-height .ql-editor {
+                        padding-bottom: 100px;
+                    }
+                    .featured-preview img {
+                        height: 240px !important;
+                    }
+                    .sidebar-section {
+                        padding: 1.25rem !important;
+                    }
+                }
+
+                @media (max-width: 640px) {
+                    .quill-auto-height .ql-editor {
+                        min-height: 350px;
+                    }
+                    .featured-preview img {
+                        height: 200px !important;
+                    }
+                }
             `}</style>
 
-            <div className="flex flex-col md:flex-row gap-8 p-6 bg-gray-50 min-h-screen">
-                {/* PHẦN CHÍNH */}
-                <div className="flex-1 bg-white rounded-2xl shadow-lg p-8">
-                    <h1 className="text-3xl font-bold mb-8">Tạo bài viết mới</h1>
+            <div className="min-h-screen bg-gray-50 px-4 py-6 sm:px-6 lg:px-8">
+                <div className="mx-auto max-w-7xl">
+                    <h1 className="text-3xl font-bold text-gray-900 mb-6 md:mb-8">
+                        Tạo bài viết mới
+                    </h1>
 
-                    <form onSubmit={handleSubmit} className="space-y-8">
-
-                        <input
-                            type="text"
-                            placeholder="Tiêu đề bài viết *"
-                            value={title}
-                            onChange={e => setTitle(e.target.value)}
-                            className="w-full text-4xl font-bold border-b-2 focus:border-blue-500 outline-none pb-4"
-                            required
-                        />
-
-                        <div className="flex items-center gap-3 text-gray-600">
-                            <span>Slug:</span>
-                            <input
-                                type="text"
-                                value={slug}
-                                onChange={e => setSlug(e.target.value)}
-                                className="flex-1 bg-gray-100 rounded px-4 py-2 outline-none"
-                            />
-                        </div>
-
-                        {/* ẢNH ĐẠI DIỆN */}
-                        <div>
-                            <label className="block text-lg font-semibold mb-4">Ảnh đại diện *</label>
-                            {!featuredImagePreview ? (
-                                <div
-                                    onClick={() => featuredInputRef.current?.click()}
-                                    className="border-2 border-dashed border-gray-400 rounded-xl h-80 flex items-center justify-center cursor-pointer hover:border-blue-500 bg-gray-50"
-                                >
-                                    <p className="text-lg text-gray-500">Click để chọn ảnh đại diện</p>
-                                </div>
-                            ) : (
-                                <div className="relative">
-                                    <img src={featuredImagePreview} alt="Featured" className="w-full h-96 object-cover rounded-xl" />
-                                    <button
-                                        type="button"
-                                        onClick={() => { setFeaturedImageFile(null); setFeaturedImagePreview(null) }}
-                                        className="absolute top-4 right-4 bg-red-600 text-white w-10 h-10 rounded-full hover:bg-red-700"
-                                    >X</button>
-                                </div>
-                            )}
-                            <input
-                                ref={featuredInputRef}
-                                type="file"
-                                accept="image/*"
-                                onChange={e => {
-                                    const file = e.target.files?.[0]
-                                    if (file) {
-                                        setFeaturedImageFile(file)
-                                        setFeaturedImagePreview(URL.createObjectURL(file))
-                                    }
-                                }}
-                                className="hidden"
-                            />
-                        </div>
-
-                        <textarea
-                            placeholder="Mô tả ngắn (SEO)..."
-                            rows={4}
-                            value={description}
-                            onChange={e => setDescription(e.target.value)}
-                            className="w-full border rounded-lg px-5 py-4 resize-none focus:ring-2 focus:ring-blue-500 outline-none"
-                        />
-
-                        {/* EDITOR - TỰ ĐỘNG KÉO DÀI THEO NỘI DUNG */}
-                        <div>
-                            <label className="block text-lg font-semibold mb-3">Nội dung bài viết</label>
-                            <div className="border border-gray-300 rounded-lg overflow-hidden quill-auto-height">
-                                <ReactQuill
-                                    ref={quillRef}
-                                    theme="snow"
-                                    value={content}
-                                    onChange={setContent}
-                                    modules={modules}
-                                    formats={formats}
-                                    placeholder="Viết nội dung... Paste/drop ảnh để chèn!"
-                                    className="bg-white"
+                    <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
+                        {/* PHẦN CHÍNH - FORM */}
+                        <div className="flex-1 bg-white rounded-2xl shadow-lg p-5 sm:p-6 lg:p-8 order-2 lg:order-1">
+                            <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
+                                <input
+                                    type="text"
+                                    placeholder="Tiêu đề bài viết *"
+                                    value={title}
+                                    onChange={e => setTitle(e.target.value)}
+                                    className="w-full text-3xl sm:text-4xl font-bold border-b-2 focus:border-blue-500 outline-none pb-3 sm:pb-4"
+                                    required
                                 />
-                            </div>
-                        </div>
 
-                        {/* DEBUG */}
-                        <div className="bg-yellow-100 p-4 rounded-lg border-2 border-yellow-400">
-                            <p className="font-bold text-lg mb-2">Debug Info:</p>
-                            <p className="mb-1">Số ảnh trong content: <strong>{Object.keys(imageMapping).length}</strong></p>
-                            <p className="mb-1">Featured Image: {featuredImageFile ? 'Có' : 'Chưa có'}</p>
-                            {Object.keys(imageMapping).length > 0 && (
-                                <div className="mt-2 pl-4 border-l-4 border-yellow-600">
-                                    {Object.values(imageMapping)
-                                        .sort((a, b) => a.display_order - b.display_order)
-                                        .map((img, i) => (
-                                            <p key={i} className="text-sm">
-                                                • IMAGE_{img.display_order}: {img.file.name}
-                                            </p>
-                                        ))}
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="flex justify-end">
-                            <button
-                                type="submit"
-                                disabled={submitting}
-                                className="px-10 py-4 bg-blue-600 text-white text-lg font-medium rounded-lg hover:bg-blue-700 disabled:opacity-60"
-                            >
-                                {submitting ? 'Đang đăng...' : 'Đăng bài viết'}
-                            </button>
-                        </div>
-                    </form>
-                </div>
-
-                {/* SIDEBAR */}
-                <div className="w-full md:w-96 space-y-6">
-                    <div className="bg-white p-6 rounded-xl shadow">
-                        <h3 className="font-bold mb-4">Loại bài viết</h3>
-                        <select
-                            value={postTypeId}
-                            onChange={e => setPostTypeId(e.target.value)}
-                            className="w-full border rounded-lg px-4 py-2"
-                        >
-                            <option value="">-- Chọn loại --</option>
-                            {postTypes.map(pt => (
-                                <option key={pt.id} value={pt.id}>{pt.name}</option>
-                            ))}
-                        </select>
-                    </div>
-
-                    <div className="bg-white p-6 rounded-xl shadow">
-                        <h3 className="font-bold mb-4">Danh mục</h3>
-                        <div className="max-h-64 overflow-y-auto space-y-2">
-                            {categories.map(cat => (
-                                <label key={cat.id} className="flex items-center gap-3 cursor-pointer">
+                                <div className="flex flex-col sm:flex-row sm:items-center gap-3 text-gray-600">
+                                    <span className="font-medium">Slug:</span>
                                     <input
-                                        type="checkbox"
-                                        checked={selectedCategoryIds.includes(cat.id)}
+                                        type="text"
+                                        value={slug}
+                                        onChange={e => setSlug(e.target.value)}
+                                        className="flex-1 bg-gray-100 rounded-lg px-4 py-2 outline-none"
+                                    />
+                                </div>
+
+                                {/* ẢNH ĐẠI DIỆN */}
+                                <div>
+                                    <label className="block text-lg font-semibold mb-3 sm:mb-4">
+                                        Ảnh đại diện *
+                                    </label>
+                                    {!featuredImagePreview ? (
+                                        <div
+                                            onClick={() => featuredInputRef.current?.click()}
+                                            className="border-2 border-dashed border-gray-400 rounded-xl h-64 sm:h-80 flex items-center justify-center cursor-pointer hover:border-blue-500 transition-colors bg-gray-50"
+                                        >
+                                            <p className="text-base sm:text-lg text-gray-500 px-4 text-center">
+                                                Nhấn để chọn ảnh đại diện
+                                            </p>
+                                        </div>
+                                    ) : (
+                                        <div className="relative featured-preview">
+                                            <img
+                                                src={featuredImagePreview}
+                                                alt="Featured"
+                                                className="w-full h-64 sm:h-96 object-cover rounded-xl"
+                                            />
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    setFeaturedImageFile(null)
+                                                    setFeaturedImagePreview(null)
+                                                }}
+                                                className="absolute top-3 right-3 bg-red-600 text-white w-9 h-9 sm:w-10 sm:h-10 rounded-full hover:bg-red-700 flex items-center justify-center text-lg sm:text-xl"
+                                            >
+                                                ×
+                                            </button>
+                                        </div>
+                                    )}
+                                    <input
+                                        ref={featuredInputRef}
+                                        type="file"
+                                        accept="image/*"
                                         onChange={e => {
-                                            if (e.target.checked) {
-                                                setSelectedCategoryIds(prev => [...prev, cat.id])
-                                            } else {
-                                                setSelectedCategoryIds(prev => prev.filter(id => id !== cat.id))
+                                            const file = e.target.files?.[0]
+                                            if (file) {
+                                                setFeaturedImageFile(file)
+                                                setFeaturedImagePreview(URL.createObjectURL(file))
                                             }
                                         }}
-                                        className="w-4 h-4"
+                                        className="hidden"
                                     />
-                                    <span>{cat.name}</span>
-                                </label>
-                            ))}
-                        </div>
-                    </div>
+                                </div>
 
-                    <div className="bg-white p-6 rounded-xl shadow space-y-5">
-                        <div>
-                            <label className="block font-medium mb-2">Tác giả</label>
-                            <input
-                                type="text"
-                                value={author}
-                                onChange={e => setAuthor(e.target.value)}
-                                className="w-full border rounded px-4 py-2"
-                            />
+                                <textarea
+                                    placeholder="Mô tả ngắn (SEO)..."
+                                    rows={4}
+                                    value={description}
+                                    onChange={e => setDescription(e.target.value)}
+                                    className="w-full border rounded-lg px-4 sm:px-5 py-3 sm:py-4 resize-none focus:ring-2 focus:ring-blue-500 outline-none text-base"
+                                />
+
+                                {/* EDITOR */}
+                                <div>
+                                    <label className="block text-lg font-semibold mb-3">
+                                        Nội dung bài viết
+                                    </label>
+                                    <div className="border border-gray-300 rounded-lg overflow-hidden quill-auto-height">
+                                        <ReactQuill
+                                            ref={quillRef}
+                                            theme="snow"
+                                            value={content}
+                                            onChange={setContent}
+                                            modules={modules}
+                                            formats={formats}
+                                            placeholder="Viết nội dung... Paste/drop ảnh để chèn!"
+                                            className="bg-white text-base"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="flex justify-end">
+                                    <button
+                                        type="submit"
+                                        disabled={submitting}
+                                        className="w-full sm:w-auto px-8 sm:px-10 py-3 sm:py-4 bg-blue-600 text-white text-base sm:text-lg font-medium rounded-lg hover:bg-blue-700 disabled:opacity-60 transition-colors"
+                                    >
+                                        {submitting ? 'Đang tạo...' : 'Tạo bài viết'}
+                                    </button>
+                                </div>
+                            </form>
                         </div>
 
-                        <div>
-                            <label className="block font-medium mb-2">Ngày đăng</label>
-                            <input
-                                type="datetime-local"
-                                value={publishedAt}
-                                onChange={e => setPublishedAt(e.target.value)}
-                                className="w-full border rounded px-4 py-2"
-                            />
-                        </div>
+                        {/* SIDEBAR */}
+                        <div className="w-full lg:w-96 space-y-5 sm:space-y-6 order-1 lg:order-2">
+                            <div className="bg-white p-5 sm:p-6 rounded-xl shadow sidebar-section">
+                                <h3 className="font-bold text-lg mb-4">Loại bài viết</h3>
+                                <select
+                                    value={postTypeId}
+                                    onChange={e => setPostTypeId(e.target.value)}
+                                    className="w-full border rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none"
+                                >
+                                    <option value="">-- Chọn loại --</option>
+                                    {postTypes.map(pt => (
+                                        <option key={pt.id} value={pt.id}>
+                                            {pt.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
 
-                        <div className="flex items-center justify-between">
-                            <span className="font-medium">Công khai</span>
-                            <input
-                                type="checkbox"
-                                checked={status}
-                                onChange={e => setStatus(e.target.checked)}
-                                className="w-5 h-5"
-                            />
+                            <div className="bg-white p-5 sm:p-6 rounded-xl shadow sidebar-section">
+                                <h3 className="font-bold text-lg mb-4">Danh mục</h3>
+                                <div className="max-h-56 sm:max-h-64 overflow-y-auto space-y-2.5">
+                                    {categories.map(cat => (
+                                        <label
+                                            key={cat.id}
+                                            className="flex items-center gap-3 cursor-pointer hover:bg-gray-50 p-1 rounded"
+                                        >
+                                            <input
+                                                type="checkbox"
+                                                checked={selectedCategoryIds.includes(cat.id)}
+                                                onChange={e => {
+                                                    if (e.target.checked) {
+                                                        setSelectedCategoryIds(prev => [...prev, cat.id])
+                                                    } else {
+                                                        setSelectedCategoryIds(prev => prev.filter(id => id !== cat.id))
+                                                    }
+                                                }}
+                                                className="w-5 h-5 text-blue-600 rounded"
+                                            />
+                                            <span className="text-gray-700">{cat.name}</span>
+                                        </label>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div className="bg-white p-5 sm:p-6 rounded-xl shadow space-y-5 sidebar-section">
+                                <div>
+                                    <label className="block font-medium mb-2">Tác giả</label>
+                                    <input
+                                        type="text"
+                                        value={author}
+                                        onChange={e => setAuthor(e.target.value)}
+                                        className="w-full border rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none"
+                                    />
+                                </div>
+
+                                <div>
+                                    <label className="block font-medium mb-2">Ngày đăng</label>
+                                    <input
+                                        type="datetime-local"
+                                        value={publishedAt}
+                                        onChange={e => setPublishedAt(e.target.value)}
+                                        className="w-full border rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none"
+                                    />
+                                </div>
+
+                                <div className="flex items-center justify-between">
+                                    <span className="font-medium">Công khai</span>
+                                    <input
+                                        type="checkbox"
+                                        checked={status}
+                                        onChange={e => setStatus(e.target.checked)}
+                                        className="w-5 h-5 text-blue-600 rounded"
+                                    />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

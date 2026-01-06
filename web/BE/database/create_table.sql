@@ -11,7 +11,7 @@ DROP TABLE IF EXISTS Sliders;
 DROP TABLE IF EXISTS DiscountProducts;
 DROP TABLE IF EXISTS Discounts;
 DROP TABLE IF EXISTS CartItems;
-DROP TABLE IF EXISTS CouponScopes;
+DROP TABLE IF EXISTS CouponsProducts;
 DROP TABLE IF EXISTS Coupons;
 DROP TABLE IF EXISTS Products;
 DROP TABLE IF EXISTS Tokens;
@@ -152,7 +152,7 @@ CREATE TABLE
     INDEX idx_users_provider_id (provider_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Tokens
+-- `Token`s
 CREATE TABLE 
     Tokens (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -228,10 +228,9 @@ CREATE TABLE
 
 -- CouponScopes
 CREATE TABLE 
-    CouponScopes (
+    CouponsProducts (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     coupon_id INT UNSIGNED NOT NULL,
-    scope_type TINYINT NOT NULL COMMENT '0: Toàn shop, 1: Theo sản phẩm',
     product_id INT UNSIGNED NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -239,7 +238,6 @@ CREATE TABLE
         ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (product_id) REFERENCES Products (id)
         ON DELETE CASCADE ON UPDATE CASCADE,
-    INDEX idx_coupon_scope_type (scope_type),
     INDEX idx_coupon_scope_coupon (coupon_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

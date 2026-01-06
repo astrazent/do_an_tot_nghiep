@@ -30,6 +30,7 @@
         "dotenv": "^16.0.3",
         "express": "^4.18.2",
         "express-rate-limit": "^8.2.1",
+        "form-data": "^4.0.5",
         "get-port": "^7.1.0",
         "google-auth-library": "^10.5.0",
         "http-status-codes": "^2.3.0",
