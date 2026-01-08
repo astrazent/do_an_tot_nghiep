@@ -11,12 +11,23 @@ import { HiOutlineDotsHorizontal } from 'react-icons/hi'
 import { getYearRevenue } from '../../../../services/admin/dashboardAdminService'
 
 const Overview = () => {
-    const [revenueData, setRevenueData] = useState(Array(12).fill(0))
+    // Năm hiện tại (2026 theo ngày hiện tại)
+    const currentYear = new Date().getFullYear() // 2026
+    const years = []
+    for (let y = currentYear; y >= 2021; y--) {
+        years.push(y)
+    }
 
-    // GỌN GÀNG – Fetch API
-    const fetchDashboard = async () => {
+    const [selectedYear, setSelectedYear] = useState(currentYear)
+    const [revenueData, setRevenueData] = useState(Array(12).fill(0))
+    const [loading, setLoading] = useState(false)
+
+    // Fetch dữ liệu theo năm được chọn
+    const fetchDashboard = async (year) => {
+        setLoading(true)
         try {
-            const res = await getYearRevenue()
+            // Giả sử API của bạn nhận tham số năm: getYearRevenue(year)
+            const res = await getYearRevenue(year)
 
             const formatted =
                 res?.data?.map(item => Number(item.total_revenue)) || []
@@ -24,18 +35,24 @@ const Overview = () => {
 
             // Đảm bảo luôn có đủ 12 tháng
             while (padded.length < 12) padded.push(0)
+            // Nếu API trả về nhiều hơn 12 tháng (hiếm), cắt bớt
+            if (padded.length > 12) padded.length = 12
 
             setRevenueData(padded)
         } catch (error) {
-            console.error('Lỗi tải doanh thu năm:', error)
+            console.error(`Lỗi tải doanh thu năm ${year}:`, error)
+            setRevenueData(Array(12).fill(0)) // fallback về 0 nếu lỗi
+        } finally {
+            setLoading(false)
         }
     }
 
+    // Load lần đầu và khi thay đổi năm
     useEffect(() => {
-        fetchDashboard()
-    }, [])
+        fetchDashboard(selectedYear)
+    }, [selectedYear])
 
-    // Chuẩn hóa dữ liệu theo 12 tháng
+    // Chuẩn hóa dữ liệu cho biểu đồ
     const data = [
         { name: 'Jan', value: revenueData[0] },
         { name: 'Feb', value: revenueData[1] },
@@ -57,10 +74,32 @@ const Overview = () => {
                 <h3 className="text-lg font-semibold text-gray-800">
                     Doanh thu tổng quan
                 </h3>
-                <button className="text-gray-400 hover:text-gray-600">
-                    <HiOutlineDotsHorizontal size={24} />
-                </button>
+
+                <div className="flex items-center gap-4">
+                    {/* Select năm */}
+                    <select
+                        value={selectedYear}
+                        onChange={(e) => setSelectedYear(Number(e.target.value))}
+                        disabled={loading}
+                        className="px-4 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                    >
+                        {years.map((year) => (
+                            <option key={year} value={year}>
+                                {year}
+                            </option>
+                        ))}
+                    </select>
+
+                    <button className="text-gray-400 hover:text-gray-600">
+                        <HiOutlineDotsHorizontal size={24} />
+                    </button>
+                </div>
             </div>
+
+            {/* Hiển thị loading nếu cần */}
+            {loading && (
+                <div className="text-center text-gray-500 mb-2">Đang tải...</div>
+            )}
 
             <div className="h-56">
                 <ResponsiveContainer width="100%" height="100%">
@@ -69,29 +108,14 @@ const Overview = () => {
                         margin={{ top: 5, right: 20, left: 11, bottom: 5 }}
                     >
                         <defs>
-                            <linearGradient
-                                id="colorValue"
-                                x1="0"
-                                y1="0"
-                                x2="0"
-                                y2="1"
-                            >
-                                <stop
-                                    offset="5%"
-                                    stopColor="#4ADE80"
-                                    stopOpacity={0.4}
-                                />
-                                <stop
-                                    offset="95%"
-                                    stopColor="#4ADE80"
-                                    stopOpacity={0}
-                                />
+                            <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="5%" stopColor="#4ADE80" stopOpacity={0.4} />
+                                <stop offset="95%" stopColor="#4ADE80" stopOpacity={0} />
                             </linearGradient>
                         </defs>
 
-                        {/* Tooltip hiển thị VND */}
                         <Tooltip
-                            formatter={value =>
+                            formatter={(value) =>
                                 value.toLocaleString('vi-VN', {
                                     style: 'currency',
                                     currency: 'VND',
@@ -100,12 +124,8 @@ const Overview = () => {
                         />
 
                         <XAxis dataKey="name" tick={{ fontSize: 12 }} />
-
-                        {/* Y-axis format tiền */}
                         <YAxis
-                            tickFormatter={value =>
-                                value.toLocaleString('vi-VN')
-                            }
+                            tickFormatter={(value) => value.toLocaleString('vi-VN')}
                             tick={{ fontSize: 12 }}
                         />
 

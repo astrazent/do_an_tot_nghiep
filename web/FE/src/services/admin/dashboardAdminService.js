@@ -115,10 +115,13 @@ export const getNewUsersByMonths = async () => {
     }
 }
 
-export const getYearRevenue = async () => {
+export const getYearRevenue = async (year) => {
     try {
         const response = await axios.get(
-            'http://localhost:2082/v1/boards/year_revenue'
+            'http://localhost:2082/v1/boards/year_revenue',
+            {
+                params: { year } 
+            }
         )
         return response.data
     } catch (error) {

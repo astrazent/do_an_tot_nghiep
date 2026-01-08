@@ -67,14 +67,6 @@ const ViewDiscountDetailModal = ({
                     <table className="w-full text-left">
                         <thead className="bg-white sticky top-0 shadow-sm z-10 text-gray-600 uppercase text-xs">
                             <tr>
-                                <th className="p-4 w-12">
-                                    <input
-                                        type="checkbox"
-                                        checked={isAllSelected}
-                                        onChange={onSelectAll}
-                                        className="cursor-pointer rounded border-gray-300 text-red-600 focus:ring-red-500"
-                                    />
-                                </th>
                                 <th className="p-4">Sản phẩm</th>
                                 <th className="p-4 text-right">Giá nhập</th>
                                 <th className="p-4 text-right">Giá gốc</th>
@@ -87,18 +79,7 @@ const ViewDiscountDetailModal = ({
                                     key={p.id}
                                     className="hover:bg-gray-50 transition-colors"
                                 >
-                                    <td className="p-4">
-                                        <input
-                                            type="checkbox"
-                                            checked={selectedProductIds.includes(
-                                                p.id
-                                            )}
-                                            onChange={() =>
-                                                onSelectProduct(p.id)
-                                            }
-                                            className="cursor-pointer rounded border-gray-300 text-red-600 focus:ring-red-500"
-                                        />
-                                    </td>
+
 
                                     <td className="p-4 font-medium text-gray-900">
                                         {p.name}

@@ -5,8 +5,15 @@ import { getAllDiscountProducts } from '~/services/admin/discountProductService'
 import { getListProduct } from '~/services/admin/productAdminService'
 import { getProductById } from '~/services/admin/productAdminService'
 
-const EditDiscountModal = ({ isOpen, onClose, discount, onSubmit, isSubmitting }) => {
+const EditDiscountModal = ({
+    isOpen,
+    onClose,
+    discount,
+    onSubmit,
+    isSubmitting,
+}) => {
     const { showAlert } = useAlert()
+
     const [form, setForm] = useState({
         name: '',
         description: '',
@@ -15,11 +22,12 @@ const EditDiscountModal = ({ isOpen, onClose, discount, onSubmit, isSubmitting }
         end_date: '',
         status: true,
     })
-    const [currentProducts, setCurrentProducts] = useState([]) // Sản phẩm hiện tại (UI + tạm thời)
+
+    const [currentProducts, setCurrentProducts] = useState([])
     const [allProducts, setAllProducts] = useState([])
     const [loadingProducts, setLoadingProducts] = useState(false)
-    const [addedProductIds, setAddedProductIds] = useState([]) // Sản phẩm mới thêm
-    const [removedProductIds, setRemovedProductIds] = useState([]) // Sản phẩm bị xóa trong lần này
+    const [addedProductIds, setAddedProductIds] = useState([])
+    const [removedProductIds, setRemovedProductIds] = useState([])
     const [searchTerm, setSearchTerm] = useState('')
 
     useEffect(() => {
@@ -27,7 +35,7 @@ const EditDiscountModal = ({ isOpen, onClose, discount, onSubmit, isSubmitting }
             setForm({
                 name: discount.name || '',
                 description: discount.description || '',
-                value: discount.value || 0,
+                value: discount.value || '',
                 start_date: discount.start_date
                     ? new Date(discount.start_date).toISOString().slice(0, 16)
                     : '',
@@ -36,7 +44,7 @@ const EditDiscountModal = ({ isOpen, onClose, discount, onSubmit, isSubmitting }
                     : '',
                 status: discount.status === 1 || discount.status === true,
             })
-            // Reset các state tạm
+
             setAddedProductIds([])
             setRemovedProductIds([])
             fetchCurrentProducts()
@@ -51,25 +59,27 @@ const EditDiscountModal = ({ isOpen, onClose, discount, onSubmit, isSubmitting }
             const discountProducts = response.filter(
                 dp => dp.discount_id === discount.id
             )
-            const productIds = discountProducts.map(dp => dp.product_id)
-            const productDetailsPromises = productIds.map(id => getProductById(id))
-            const productDetails = await Promise.all(productDetailsPromises)
-            const validProducts = productDetails.filter(p => p && p.data)
-            setCurrentProducts(validProducts.map(p => p.data))
-        } catch (error) {
-            console.error(error)
-            showAlert('Lỗi khi tải danh sách sản phẩm hiện tại', { type: 'error' })
+            const productDetails = await Promise.all(
+                discountProducts.map(dp => getProductById(dp.product_id))
+            )
+            setCurrentProducts(
+                productDetails.filter(p => p?.data).map(p => p.data)
+            )
+        } catch {
+            showAlert('Lỗi khi tải danh sách sản phẩm hiện tại', {
+                type: 'error',
+            })
         } finally {
             setLoadingProducts(false)
         }
     }
 
     const fetchAllProducts = async () => {
-        setLoadingProducts(true)
         try {
+            setLoadingProducts(true)
             const response = await getListProduct({ limit: 1000, offset: 0 })
             setAllProducts(response.data || [])
-        } catch (error) {
+        } catch {
             showAlert('Lỗi khi tải danh sách sản phẩm', { type: 'error' })
         } finally {
             setLoadingProducts(false)
@@ -84,68 +94,117 @@ const EditDiscountModal = ({ isOpen, onClose, discount, onSubmit, isSubmitting }
         }))
     }
 
-    const handleAddProduct = (productId) => {
+    const handleAddProduct = productId => {
         if (!addedProductIds.includes(productId)) {
             setAddedProductIds(prev => [...prev, productId])
         }
     }
 
-    const handleRemoveProduct = (productId) => {
-        // Xóa khỏi danh sách hiển thị hiện tại
+    const handleRemoveProduct = productId => {
         setCurrentProducts(prev => prev.filter(p => p.id !== productId))
-        // Đánh dấu là sẽ bị xóa khi submit
-        setRemovedProductIds(prev => [...prev, productId])
+        setRemovedProductIds(prev => [...new Set([...prev, productId])])
     }
 
-    const handleRestoreProduct = (productId) => {
-        // Khôi phục vào danh sách hiện tại
+    const handleRestoreProduct = productId => {
         const product = allProducts.find(p => p.id === productId)
         if (product) {
             setCurrentProducts(prev => [...prev, product])
         }
-        // Xóa khỏi danh sách bị gỡ
         setRemovedProductIds(prev => prev.filter(id => id !== productId))
     }
 
-    const handleRemoveAddedProduct = (productId) => {
+    const handleRemoveAddedProduct = productId => {
         setAddedProductIds(prev => prev.filter(id => id !== productId))
     }
 
+    /* ======================= VALIDATION + SUBMIT ======================= */
     const handleSubmit = async e => {
         e.preventDefault()
 
-        // Tính danh sách product_ids cuối cùng gửi lên backend
+        /* ---- NAME ---- */
+        if (!form.name || !form.name.trim()) {
+            return showAlert('Tên chương trình không được để trống', {
+                type: 'error',
+            })
+        }
+        if (form.name.trim().length < 3) {
+            return showAlert('Tên chương trình phải có ít nhất 3 ký tự', {
+                type: 'error',
+            })
+        }
+
+        /* ---- VALUE ---- */
+        const discountValue = Number(form.value)
+        if (isNaN(discountValue)) {
+            return showAlert('Giá trị giảm phải là số', { type: 'error' })
+        }
+        if (discountValue <= 0) {
+            return showAlert('Giá trị giảm phải lớn hơn 0', {
+                type: 'error',
+            })
+        }
+
+        /* ---- DATE ---- */
+        if (form.end_date && !form.start_date) {
+            return showAlert('Vui lòng chọn ngày bắt đầu trước', {
+                type: 'error',
+            })
+        }
+
+        if (form.start_date && form.end_date) {
+            const start = new Date(form.start_date)
+            const end = new Date(form.end_date)
+
+            if (end <= start) {
+                return showAlert('Ngày kết thúc phải sau ngày bắt đầu', {
+                    type: 'error',
+                })
+            }
+        }
+
+        /* ---- PRODUCTS ---- */
         const finalProductIds = [
-            // Các sản phẩm hiện tại trừ đi những cái bị xóa
             ...currentProducts
                 .map(p => p.id)
                 .filter(id => !removedProductIds.includes(id)),
-            // Cộng thêm các sản phẩm mới thêm
-            ...addedProductIds
+            ...addedProductIds,
         ]
 
+        if (finalProductIds.length === 0) {
+            return showAlert('Phải áp dụng khuyến mãi cho ít nhất 1 sản phẩm', {
+                type: 'error',
+            })
+        }
+
         const payload = {
-            name: form.name,
-            description: form.description || '',
-            value: parseFloat(form.value),
+            name: form.name.trim(),
+            description: form.description?.trim() || '',
+            value: discountValue,
             status: form.status ? 1 : 0,
-            start_date: form.start_date ? new Date(form.start_date).toISOString() : null,
-            end_date: form.end_date ? new Date(form.end_date).toISOString() : null,
-            product_ids: finalProductIds
+            start_date: form.start_date
+                ? new Date(form.start_date).toISOString()
+                : null,
+            end_date: form.end_date
+                ? new Date(form.end_date).toISOString()
+                : null,
+            product_ids: finalProductIds,
         }
 
         try {
             await onSubmit(discount.id, payload)
-            showAlert('Cập nhật chương trình khuyến mãi thành công!', { type: 'success' })
+            showAlert('Cập nhật chương trình khuyến mãi thành công!', {
+                type: 'success',
+            })
             onClose()
-        } catch (error) {
-            showAlert('Lỗi khi cập nhật!', { type: 'error' })
+        } catch {
+            showAlert('Lỗi khi cập nhật chương trình khuyến mãi', {
+                type: 'error',
+            })
         }
     }
 
-    // Lọc sản phẩm theo tìm kiếm
-    const filteredProducts = allProducts.filter(p => 
-        p && p.name && p.name.toLowerCase().includes(searchTerm.toLowerCase())
+    const filteredProducts = allProducts.filter(p =>
+        p?.name?.toLowerCase().includes(searchTerm.toLowerCase())
     )
 
     if (!isOpen) return null
@@ -155,7 +214,9 @@ const EditDiscountModal = ({ isOpen, onClose, discount, onSubmit, isSubmitting }
             <div className="bg-white rounded-lg shadow-xl max-w-5xl w-full max-h-[95vh] overflow-hidden flex flex-col">
                 {/* Header */}
                 <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-                    <h2 className="text-xl font-semibold text-gray-900">Chỉnh sửa chương trình khuyến mãi</h2>
+                    <h2 className="text-xl font-semibold text-gray-900">
+                        Chỉnh sửa chương trình khuyến mãi
+                    </h2>
                     <button
                         onClick={onClose}
                         className="text-gray-400 hover:text-gray-600 transition-colors"
@@ -171,7 +232,8 @@ const EditDiscountModal = ({ isOpen, onClose, discount, onSubmit, isSubmitting }
                         <div className="space-y-4">
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                                    Tên chương trình <span className="text-red-500">*</span>
+                                    Tên chương trình{' '}
+                                    <span className="text-red-500">*</span>
                                 </label>
                                 <input
                                     type="text"
@@ -184,7 +246,9 @@ const EditDiscountModal = ({ isOpen, onClose, discount, onSubmit, isSubmitting }
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1.5">Mô tả</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                                    Mô tả
+                                </label>
                                 <textarea
                                     name="description"
                                     value={form.description}
@@ -197,7 +261,8 @@ const EditDiscountModal = ({ isOpen, onClose, discount, onSubmit, isSubmitting }
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                                        Giá trị giảm (%) <span className="text-red-500">*</span>
+                                        Giá trị giảm {' '}
+                                        <span className="text-red-500">*</span>
                                     </label>
                                     <input
                                         type="number"
@@ -211,7 +276,9 @@ const EditDiscountModal = ({ isOpen, onClose, discount, onSubmit, isSubmitting }
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1.5">Ngày bắt đầu</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                                        Ngày bắt đầu
+                                    </label>
                                     <input
                                         type="datetime-local"
                                         name="start_date"
@@ -221,7 +288,9 @@ const EditDiscountModal = ({ isOpen, onClose, discount, onSubmit, isSubmitting }
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1.5">Ngày kết thúc</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                                        Ngày kết thúc
+                                    </label>
                                     <input
                                         type="datetime-local"
                                         name="end_date"
@@ -241,7 +310,10 @@ const EditDiscountModal = ({ isOpen, onClose, discount, onSubmit, isSubmitting }
                                     onChange={handleChange}
                                     className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
                                 />
-                                <label htmlFor="status" className="text-sm font-medium text-gray-700">
+                                <label
+                                    htmlFor="status"
+                                    className="text-sm font-medium text-gray-700"
+                                >
                                     Kích hoạt chương trình
                                 </label>
                             </div>
@@ -249,18 +321,23 @@ const EditDiscountModal = ({ isOpen, onClose, discount, onSubmit, isSubmitting }
 
                         {/* Quản lý sản phẩm */}
                         <div className="border-t border-gray-200 pt-6 space-y-6">
-                            <h3 className="text-lg font-semibold text-gray-900">Quản lý sản phẩm áp dụng</h3>
+                            <h3 className="text-lg font-semibold text-gray-900">
+                                Quản lý sản phẩm áp dụng
+                            </h3>
 
                             {/* Sản phẩm hiện có */}
                             <div>
                                 <div className="flex items-center justify-between mb-3">
                                     <h4 className="text-sm font-semibold text-gray-700">
-                                        Sản phẩm đang áp dụng ({currentProducts.length})
+                                        Sản phẩm đang áp dụng (
+                                        {currentProducts.length})
                                     </h4>
                                 </div>
-                                
+
                                 {loadingProducts ? (
-                                    <div className="text-center py-8 text-gray-500">Đang tải...</div>
+                                    <div className="text-center py-8 text-gray-500">
+                                        Đang tải...
+                                    </div>
                                 ) : (
                                     <div className="border border-gray-200 rounded-md overflow-hidden">
                                         <div className="overflow-x-auto">
@@ -279,35 +356,60 @@ const EditDiscountModal = ({ isOpen, onClose, discount, onSubmit, isSubmitting }
                                                     </tr>
                                                 </thead>
                                                 <tbody className="bg-white divide-y divide-gray-200">
-                                                    {currentProducts.length === 0 ? (
+                                                    {currentProducts.length ===
+                                                    0 ? (
                                                         <tr>
-                                                            <td colSpan="3" className="px-4 py-8 text-center text-gray-500">
-                                                                Chưa có sản phẩm nào được áp dụng
+                                                            <td
+                                                                colSpan="3"
+                                                                className="px-4 py-8 text-center text-gray-500"
+                                                            >
+                                                                Chưa có sản phẩm
+                                                                nào được áp dụng
                                                             </td>
                                                         </tr>
                                                     ) : (
-                                                        currentProducts.map(p => (
-                                                            p && p.id ? (
-                                                                <tr key={p.id} className="hover:bg-gray-50">
-                                                                    <td className="px-4 py-3 text-sm text-gray-900">
-                                                                        {p.name || 'Không có tên'}
-                                                                    </td>
-                                                                    <td className="px-4 py-3 text-sm text-gray-900 text-right">
-                                                                        {p.price ? p.price.toLocaleString('vi-VN') + 'đ' : 'N/A'}
-                                                                    </td>
-                                                                    <td className="px-4 py-3 text-center">
-                                                                        <button
-                                                                            type="button"
-                                                                            onClick={() => handleRemoveProduct(p.id)}
-                                                                            className="inline-flex items-center justify-center text-red-600 hover:text-red-800 hover:bg-red-50 p-1.5 rounded transition-colors"
-                                                                            title="Gỡ khỏi chương trình"
-                                                                        >
-                                                                            <HiTrash size={18} />
-                                                                        </button>
-                                                                    </td>
-                                                                </tr>
-                                                            ) : null
-                                                        ))
+                                                        currentProducts.map(
+                                                            p =>
+                                                                p && p.id ? (
+                                                                    <tr
+                                                                        key={
+                                                                            p.id
+                                                                        }
+                                                                        className="hover:bg-gray-50"
+                                                                    >
+                                                                        <td className="px-4 py-3 text-sm text-gray-900">
+                                                                            {p.name ||
+                                                                                'Không có tên'}
+                                                                        </td>
+                                                                        <td className="px-4 py-3 text-sm text-gray-900 text-right">
+                                                                            {p.price
+                                                                                ? p.price.toLocaleString(
+                                                                                      'vi-VN'
+                                                                                  ) +
+                                                                                  'đ'
+                                                                                : 'N/A'}
+                                                                        </td>
+                                                                        <td className="px-4 py-3 text-center">
+                                                                            <button
+                                                                                type="button"
+                                                                                onClick={() =>
+                                                                                    handleRemoveProduct(
+                                                                                        p.id
+                                                                                    )
+                                                                                }
+                                                                                className="inline-flex items-center justify-center text-red-600 hover:text-red-800 hover:bg-red-50 p-1.5 rounded transition-colors"
+                                                                                title="Gỡ khỏi chương trình"
+                                                                            >
+                                                                                <HiTrash
+                                                                                    size={
+                                                                                        18
+                                                                                    }
+                                                                                />
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
+                                                                ) : null
+                                                        )
                                                     )}
                                                 </tbody>
                                             </table>
@@ -320,17 +422,31 @@ const EditDiscountModal = ({ isOpen, onClose, discount, onSubmit, isSubmitting }
                             {removedProductIds.length > 0 && (
                                 <div className="bg-red-50 border border-red-200 rounded-md p-4">
                                     <h4 className="text-sm font-semibold text-red-900 mb-2">
-                                        Sản phẩm sẽ bị gỡ khỏi chương trình ({removedProductIds.length})
+                                        Sản phẩm sẽ bị gỡ khỏi chương trình (
+                                        {removedProductIds.length})
                                     </h4>
                                     <ul className="space-y-1">
                                         {removedProductIds.map(id => {
-                                            const prod = allProducts.find(p => p.id === id)
+                                            const prod = allProducts.find(
+                                                p => p.id === id
+                                            )
                                             return prod ? (
-                                                <li key={id} className="flex items-center justify-between text-sm text-red-900">
-                                                    <span>• {prod.name || 'Không có tên'}</span>
+                                                <li
+                                                    key={id}
+                                                    className="flex items-center justify-between text-sm text-red-900"
+                                                >
+                                                    <span>
+                                                        •{' '}
+                                                        {prod.name ||
+                                                            'Không có tên'}
+                                                    </span>
                                                     <button
                                                         type="button"
-                                                        onClick={() => handleRestoreProduct(id)}
+                                                        onClick={() =>
+                                                            handleRestoreProduct(
+                                                                id
+                                                            )
+                                                        }
                                                         className="text-red-600 hover:text-red-800 ml-2"
                                                         title="Khôi phục"
                                                     >
@@ -346,25 +462,34 @@ const EditDiscountModal = ({ isOpen, onClose, discount, onSubmit, isSubmitting }
                             {/* Thêm sản phẩm mới */}
                             <div>
                                 <div className="flex items-center justify-between mb-3">
-                                    <h4 className="text-sm font-semibold text-gray-700">Thêm sản phẩm</h4>
+                                    <h4 className="text-sm font-semibold text-gray-700">
+                                        Thêm sản phẩm
+                                    </h4>
                                 </div>
 
                                 {/* Ô tìm kiếm */}
                                 <div className="mb-3">
                                     <div className="relative">
-                                        <HiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                                        <HiSearch
+                                            className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                                            size={20}
+                                        />
                                         <input
                                             type="text"
                                             placeholder="Tìm kiếm sản phẩm theo tên..."
                                             value={searchTerm}
-                                            onChange={(e) => setSearchTerm(e.target.value)}
+                                            onChange={e =>
+                                                setSearchTerm(e.target.value)
+                                            }
                                             className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                         />
                                     </div>
                                 </div>
 
                                 {loadingProducts ? (
-                                    <div className="text-center py-8 text-gray-500">Đang tải danh sách sản phẩm...</div>
+                                    <div className="text-center py-8 text-gray-500">
+                                        Đang tải danh sách sản phẩm...
+                                    </div>
                                 ) : (
                                     <div className="border border-gray-200 rounded-md overflow-hidden">
                                         <div className="max-h-80 overflow-y-auto">
@@ -383,40 +508,74 @@ const EditDiscountModal = ({ isOpen, onClose, discount, onSubmit, isSubmitting }
                                                     </tr>
                                                 </thead>
                                                 <tbody className="bg-white divide-y divide-gray-200">
-                                                    {filteredProducts.length === 0 ? (
+                                                    {filteredProducts.length ===
+                                                    0 ? (
                                                         <tr>
-                                                            <td colSpan="3" className="px-4 py-8 text-center text-gray-500">
-                                                                {searchTerm ? 'Không tìm thấy sản phẩm phù hợp' : 'Không có sản phẩm nào'}
+                                                            <td
+                                                                colSpan="3"
+                                                                className="px-4 py-8 text-center text-gray-500"
+                                                            >
+                                                                {searchTerm
+                                                                    ? 'Không tìm thấy sản phẩm phù hợp'
+                                                                    : 'Không có sản phẩm nào'}
                                                             </td>
                                                         </tr>
                                                     ) : (
-                                                        filteredProducts.map(p => (
-                                                            p && p.id ? (
-                                                                <tr key={p.id} className="hover:bg-gray-50">
-                                                                    <td className="px-4 py-3 text-sm text-gray-900">
-                                                                        {p.name || 'Không có tên'}
-                                                                    </td>
-                                                                    <td className="px-4 py-3 text-sm text-gray-900 text-right">
-                                                                        {p.price ? p.price.toLocaleString('vi-VN') + 'đ' : 'N/A'}
-                                                                    </td>
-                                                                    <td className="px-4 py-3 text-center">
-                                                                        <button
-                                                                            type="button"
-                                                                            onClick={() => handleAddProduct(p.id)}
-                                                                            className="inline-flex items-center gap-1 px-3 py-1.5 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
-                                                                            disabled={
-                                                                                currentProducts.some(cp => cp.id === p.id) ||
-                                                                                addedProductIds.includes(p.id) ||
-                                                                                removedProductIds.includes(p.id) // tránh thêm lại cái vừa xóa
-                                                                            }
-                                                                        >
-                                                                            <HiPlus size={16} />
-                                                                            Thêm
-                                                                        </button>
-                                                                    </td>
-                                                                </tr>
-                                                            ) : null
-                                                        ))
+                                                        filteredProducts.map(
+                                                            p =>
+                                                                p && p.id ? (
+                                                                    <tr
+                                                                        key={
+                                                                            p.id
+                                                                        }
+                                                                        className="hover:bg-gray-50"
+                                                                    >
+                                                                        <td className="px-4 py-3 text-sm text-gray-900">
+                                                                            {p.name ||
+                                                                                'Không có tên'}
+                                                                        </td>
+                                                                        <td className="px-4 py-3 text-sm text-gray-900 text-right">
+                                                                            {p.price
+                                                                                ? p.price.toLocaleString(
+                                                                                      'vi-VN'
+                                                                                  ) +
+                                                                                  'đ'
+                                                                                : 'N/A'}
+                                                                        </td>
+                                                                        <td className="px-4 py-3 text-center">
+                                                                            <button
+                                                                                type="button"
+                                                                                onClick={() =>
+                                                                                    handleAddProduct(
+                                                                                        p.id
+                                                                                    )
+                                                                                }
+                                                                                className="inline-flex items-center gap-1 px-3 py-1.5 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
+                                                                                disabled={
+                                                                                    currentProducts.some(
+                                                                                        cp =>
+                                                                                            cp.id ===
+                                                                                            p.id
+                                                                                    ) ||
+                                                                                    addedProductIds.includes(
+                                                                                        p.id
+                                                                                    ) ||
+                                                                                    removedProductIds.includes(
+                                                                                        p.id
+                                                                                    ) // tránh thêm lại cái vừa xóa
+                                                                                }
+                                                                            >
+                                                                                <HiPlus
+                                                                                    size={
+                                                                                        16
+                                                                                    }
+                                                                                />
+                                                                                Thêm
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
+                                                                ) : null
+                                                        )
                                                     )}
                                                 </tbody>
                                             </table>
@@ -430,23 +589,39 @@ const EditDiscountModal = ({ isOpen, onClose, discount, onSubmit, isSubmitting }
                                 <div className="bg-blue-50 border border-blue-200 rounded-md p-4">
                                     <div className="flex items-center justify-between mb-2">
                                         <h4 className="text-sm font-semibold text-blue-900">
-                                            Sản phẩm sẽ được thêm ({addedProductIds.length})
+                                            Sản phẩm sẽ được thêm (
+                                            {addedProductIds.length})
                                         </h4>
                                     </div>
                                     <ul className="space-y-1">
                                         {addedProductIds.map(id => {
-                                            const prod = allProducts.find(p => p.id === id)
-                                            return prod && (
-                                                <li key={id} className="flex items-center justify-between text-sm text-blue-900">
-                                                    <span>• {prod.name || 'Không có tên'}</span>
-                                                    <button
-                                                        type="button"
-                                                        onClick={() => handleRemoveAddedProduct(id)}
-                                                        className="text-blue-600 hover:text-blue-800 ml-2"
+                                            const prod = allProducts.find(
+                                                p => p.id === id
+                                            )
+                                            return (
+                                                prod && (
+                                                    <li
+                                                        key={id}
+                                                        className="flex items-center justify-between text-sm text-blue-900"
                                                     >
-                                                        <HiX size={16} />
-                                                    </button>
-                                                </li>
+                                                        <span>
+                                                            •{' '}
+                                                            {prod.name ||
+                                                                'Không có tên'}
+                                                        </span>
+                                                        <button
+                                                            type="button"
+                                                            onClick={() =>
+                                                                handleRemoveAddedProduct(
+                                                                    id
+                                                                )
+                                                            }
+                                                            className="text-blue-600 hover:text-blue-800 ml-2"
+                                                        >
+                                                            <HiX size={16} />
+                                                        </button>
+                                                    </li>
+                                                )
                                             )
                                         })}
                                     </ul>

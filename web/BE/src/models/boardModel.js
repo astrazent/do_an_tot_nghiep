@@ -100,7 +100,7 @@ const BoardsModel = {
         return rows
     },
 
-    async getYearRevenue() {
+    async getYearRevenue(year) {
         const conn = getConnection()
 
         const [rows] = await conn.execute(`
@@ -114,12 +114,11 @@ const BoardsModel = {
             FROM months
             LEFT JOIN Transactions t 
                 ON MONTH(t.updated_at) = m
-                AND YEAR(t.updated_at) = YEAR(CURDATE())
+                AND YEAR(t.updated_at) = ? 
                 AND t.status = 'completed'
             GROUP BY m
             ORDER BY m;
-        `)
-
+        `, [year])
         return rows
     },
 

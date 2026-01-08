@@ -36,36 +36,14 @@ const mainNavLinks = [
     {
         name: 'Doanh thu',
         icon: <HiOutlineCurrencyDollar />,
-        hasSubmenu: true,
-        submenu: [
-            {
-                name: 'Phân tích',
-                path: '/admin/revenue/analysis',
-                icon: <HiOutlineChartBar />,
-            },
-            {
-                name: 'Nguồn tiền',
-                path: '/admin/revenue/sources',
-                icon: <HiOutlineCash />,
-            },
-        ],
+        path: '/admin/revenue/analysis',
+        end: true,
     },
     {
         name: 'Khách hàng',
         icon: <HiOutlineUserGroup />,
-        hasSubmenu: true,
-        submenu: [
-            {
-                name: 'Phân tích',
-                path: '/admin/customers/analysis',
-                icon: <HiOutlineChartBar />,
-            },
-            {
-                name: 'Quản lý người dùng',
-                path: '/admin/customers/management',
-                icon: <HiOutlineUsers />,
-            },
-        ],
+        path: '/admin/customers/management',
+        end: true,
     },
     {
         name: 'Kho',

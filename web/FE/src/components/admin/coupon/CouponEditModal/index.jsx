@@ -1,4 +1,3 @@
-// ~/components/admin/coupon/CouponEditModal.jsx
 import React, { useState, useEffect } from 'react'
 import { FaTimes } from 'react-icons/fa'
 import { updateCoupon } from '~/services/admin/couponAdminService'
@@ -17,26 +16,97 @@ const CouponEditModal = ({ isOpen, onClose, coupon, onSuccess }) => {
         status: true,
     })
     const [loading, setLoading] = useState(false)
+    const [errors, setErrors] = useState({})
 
     useEffect(() => {
         if (coupon && isOpen) {
             setForm({
                 code: coupon.code || '',
                 description: coupon.description || '',
-                type: coupon.type || 1,
-                value: coupon.value || '',
-                max_value: coupon.max_value || '',
-                min_order_value: coupon.min_order_value || '',
-                quantity: coupon.quantity || '',
+                type: typeof coupon.type !== 'undefined' ? coupon.type : 1,
+                value: typeof coupon.value !== 'undefined' ? String(coupon.value) : '',
+                max_value: typeof coupon.max_value !== 'undefined' && coupon.max_value !== null ? String(coupon.max_value) : '',
+                min_order_value:
+                    typeof coupon.min_order_value !== 'undefined' && coupon.min_order_value !== null ? String(coupon.min_order_value) : '',
+                quantity: typeof coupon.quantity !== 'undefined' ? String(coupon.quantity) : '',
                 start_date: coupon.start_date ? coupon.start_date.slice(0, 16) : '',
                 end_date: coupon.end_date ? coupon.end_date.slice(0, 16) : '',
                 status: coupon.status === 1,
             })
+            setErrors({})
         }
     }, [coupon, isOpen])
 
+    const clearFieldError = (field) => {
+        if (errors[field]) {
+            setErrors(prev => {
+                const copy = { ...prev }
+                delete copy[field]
+                return copy
+            })
+        }
+    }
+
+    const validate = () => {
+        const e = {}
+        if (!form.code || !form.code.trim()) {
+            e.code = 'Mã giảm giá là bắt buộc.'
+        }
+
+        if (form.type !== 0 && form.type !== 1) {
+            e.type = 'Loại mã không hợp lệ.'
+        }
+
+        if (form.value === '' || form.value === null || isNaN(Number(form.value))) {
+            e.value = 'Giá trị giảm không hợp lệ.'
+        } else if (Number(form.value) <= 0) {
+            e.value = 'Giá trị giảm phải lớn hơn  0.'
+        }
+
+        if (form.type === 1) {
+            if (form.max_value !== '' && isNaN(Number(form.max_value))) {
+                e.max_value = 'Giá trị tối đa không hợp lệ.'
+            } else if (form.max_value !== '' && Number(form.max_value) <= 0) {
+                e.max_value = 'Giá trị tối đa phải lớn hơn 0.'
+            }
+
+            if (form.min_order_value !== '' && isNaN(Number(form.min_order_value))) {
+                e.min_order_value = 'Đơn hàng tối thiểu không hợp lệ.'
+            } else if (form.min_order_value !== '' && Number(form.min_order_value) <= 0) {
+                e.min_order_value = 'Đơn hàng tối thiểu phải lớn hơn 0.'
+            }
+        }
+
+        if (form.quantity === '' || isNaN(Number(form.quantity)) || !Number.isInteger(Number(form.quantity))) {
+            e.quantity = 'Số lượng phải là số nguyên hợp lệ.'
+        } else if (Number(form.quantity) < 1) {
+            e.quantity = 'Số lượng phải lớn hơn hoặc bằng 1.'
+        }
+
+        if (form.start_date) {
+            const s = Date.parse(form.start_date)
+            if (isNaN(s)) e.start_date = 'Ngày bắt đầu không hợp lệ.'
+        }
+        if (form.end_date) {
+            const eDate = Date.parse(form.end_date)
+            if (isNaN(eDate)) e.end_date = 'Ngày kết thúc không hợp lệ.'
+        }
+        if (form.start_date && form.end_date) {
+            const s = Date.parse(form.start_date)
+            const eDate = Date.parse(form.end_date)
+            if (!isNaN(s) && !isNaN(eDate) && s > eDate) {
+                e.end_date = 'Ngày kết thúc phải sau hoặc bằng ngày bắt đầu.'
+            }
+        }
+
+        setErrors(e)
+        return Object.keys(e).length === 0
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault()
+        if (!validate()) return
+
         setLoading(true)
         try {
             const payload = {
@@ -86,9 +156,13 @@ const CouponEditModal = ({ isOpen, onClose, coupon, onSuccess }) => {
                                 type="text"
                                 required
                                 value={form.code}
-                                onChange={(e) => setForm({ ...form, code: e.target.value.toUpperCase() })}
-                                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                onChange={(e) => {
+                                    setForm({ ...form, code: e.target.value.toUpperCase() })
+                                    clearFieldError('code')
+                                }}
+                                className={`w-full px-4 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 ${errors.code ? 'border-red-400' : 'border-gray-300'}`}
                             />
+                            {errors.code && <p className="text-sm text-red-600 mt-1">{errors.code}</p>}
                         </div>
 
                         {/* Phần chọn type */}
@@ -98,12 +172,20 @@ const CouponEditModal = ({ isOpen, onClose, coupon, onSuccess }) => {
                             </label>
                             <select
                                 value={form.type}
-                                onChange={(e) => setForm({ ...form, type: Number(e.target.value) })}
-                                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                onChange={(e) => {
+                                    const v = Number(e.target.value)
+                                    setForm({ ...form, type: v })
+                                    clearFieldError('type')
+                                    // clear type-specific errors
+                                    clearFieldError('max_value')
+                                    clearFieldError('min_order_value')
+                                }}
+                                className={`w-full px-4 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 ${errors.type ? 'border-red-400' : 'border-gray-300'}`}
                             >
                                 <option value={1}>Giảm giá sản phẩm</option>
                                 <option value={0}>Giảm phí vận chuyển</option>
                             </select>
+                            {errors.type && <p className="text-sm text-red-600 mt-1">{errors.type}</p>}
                         </div>
 
                         {/* Giá trị giảm */}
@@ -116,10 +198,14 @@ const CouponEditModal = ({ isOpen, onClose, coupon, onSuccess }) => {
                                 required
                                 min="0"
                                 value={form.value}
-                                onChange={(e) => setForm({ ...form, value: e.target.value })}
-                                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                onChange={(e) => {
+                                    setForm({ ...form, value: e.target.value })
+                                    clearFieldError('value')
+                                }}
+                                className={`w-full px-4 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 ${errors.value ? 'border-red-400' : 'border-gray-300'}`}
                                 placeholder={form.type == 0 ? "VD: 30000 (0 = freeship hoàn toàn)" : "VD: 10 (%) hoặc 50000 (đ)"}
                             />
+                            {errors.value && <p className="text-sm text-red-600 mt-1">{errors.value}</p>}
                         </div>
 
                         {/* max_value và min_order_value chỉ hiện khi type = 1 */}
@@ -133,10 +219,14 @@ const CouponEditModal = ({ isOpen, onClose, coupon, onSuccess }) => {
                                         type="number"
                                         min="0"
                                         value={form.max_value}
-                                        onChange={(e) => setForm({ ...form, max_value: e.target.value })}
-                                        className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                        onChange={(e) => {
+                                            setForm({ ...form, max_value: e.target.value })
+                                            clearFieldError('max_value')
+                                        }}
+                                        className={`w-full px-4 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 ${errors.max_value ? 'border-red-400' : 'border-gray-300'}`}
                                         placeholder="VD: 100000"
                                     />
+                                    {errors.max_value && <p className="text-sm text-red-600 mt-1">{errors.max_value}</p>}
                                 </div>
 
                                 <div>
@@ -147,10 +237,14 @@ const CouponEditModal = ({ isOpen, onClose, coupon, onSuccess }) => {
                                         type="number"
                                         min="0"
                                         value={form.min_order_value}
-                                        onChange={(e) => setForm({ ...form, min_order_value: e.target.value })}
-                                        className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                        onChange={(e) => {
+                                            setForm({ ...form, min_order_value: e.target.value })
+                                            clearFieldError('min_order_value')
+                                        }}
+                                        className={`w-full px-4 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 ${errors.min_order_value ? 'border-red-400' : 'border-gray-300'}`}
                                         placeholder="VD: 300000"
                                     />
+                                    {errors.min_order_value && <p className="text-sm text-red-600 mt-1">{errors.min_order_value}</p>}
                                 </div>
                             </>
                         )}
@@ -165,9 +259,13 @@ const CouponEditModal = ({ isOpen, onClose, coupon, onSuccess }) => {
                                 required
                                 min="1"
                                 value={form.quantity}
-                                onChange={(e) => setForm({ ...form, quantity: e.target.value })}
-                                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                onChange={(e) => {
+                                    setForm({ ...form, quantity: e.target.value })
+                                    clearFieldError('quantity')
+                                }}
+                                className={`w-full px-4 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 ${errors.quantity ? 'border-red-400' : 'border-gray-300'}`}
                             />
+                            {errors.quantity && <p className="text-sm text-red-600 mt-1">{errors.quantity}</p>}
                         </div>
 
                         {/* Ngày bắt đầu */}
@@ -176,9 +274,14 @@ const CouponEditModal = ({ isOpen, onClose, coupon, onSuccess }) => {
                             <input
                                 type="datetime-local"
                                 value={form.start_date}
-                                onChange={(e) => setForm({ ...form, start_date: e.target.value })}
-                                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                onChange={(e) => {
+                                    setForm({ ...form, start_date: e.target.value })
+                                    clearFieldError('start_date')
+                                    clearFieldError('end_date')
+                                }}
+                                className={`w-full px-4 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 ${errors.start_date ? 'border-red-400' : 'border-gray-300'}`}
                             />
+                            {errors.start_date && <p className="text-sm text-red-600 mt-1">{errors.start_date}</p>}
                         </div>
 
                         {/* Ngày kết thúc */}
@@ -187,9 +290,13 @@ const CouponEditModal = ({ isOpen, onClose, coupon, onSuccess }) => {
                             <input
                                 type="datetime-local"
                                 value={form.end_date}
-                                onChange={(e) => setForm({ ...form, end_date: e.target.value })}
-                                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                onChange={(e) => {
+                                    setForm({ ...form, end_date: e.target.value })
+                                    clearFieldError('end_date')
+                                }}
+                                className={`w-full px-4 py-2.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 ${errors.end_date ? 'border-red-400' : 'border-gray-300'}`}
                             />
+                            {errors.end_date && <p className="text-sm text-red-600 mt-1">{errors.end_date}</p>}
                         </div>
 
                         {/* Mô tả */}

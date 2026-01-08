@@ -26,8 +26,8 @@ const monthlyRevenue = async (date) => {
     return result
 }
 
-const yearRevenue = async () => {
-    const result = await BoardsModel.getYearRevenue()
+const yearRevenue = async (year) => {
+    const result = await BoardsModel.getYearRevenue(year)
     return result
 }
 

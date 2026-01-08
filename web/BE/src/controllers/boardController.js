@@ -57,7 +57,7 @@ const monthlyRevenue = async (req, res, next) => {
 
 const yearRevenue = async (req, res, next) => {
     try {
-        const result = await boardService.yearRevenue()
+        const result = await boardService.yearRevenue(req.query.year)
         return res.status(StatusCodes.OK).json({
             message: 'Lấy doanh thu theo năm nay thành công',
             data: result,

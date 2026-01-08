@@ -236,7 +236,7 @@ const ProductTable = () => {
 
     const [search, setSearch] = useState('')
     const [statusFilter, setStatusFilter] = useState('')
-    const [limit, setLimit] = useState(100)
+    const [limit, setLimit] = useState(1000)
     const [currentPage, setCurrentPage] = useState(1)
     const [dateFrom, setDateFrom] = useState('')
     const [dateTo, setDateTo] = useState('')

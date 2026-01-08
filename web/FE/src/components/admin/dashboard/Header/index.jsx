@@ -61,16 +61,6 @@ const Header = ({ onMenuClick }) => {
 
                 {/* Phần bên phải: Thông báo + User + Đăng xuất */}
                 <div className="flex items-center gap-4">
-                    {/* Notification Bell */}
-                    <button className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 relative">
-                        <div className="absolute top-1.5 right-1.5 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                            3
-                        </div>
-                        <HiOutlineBell
-                            size={22}
-                            className="text-gray-600 dark:text-gray-300"
-                        />
-                    </button>
 
                     {/* Thông tin user + nút Đăng xuất */}
                     <div className="flex items-center gap-3">

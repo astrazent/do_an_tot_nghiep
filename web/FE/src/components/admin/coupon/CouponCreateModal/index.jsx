@@ -1,4 +1,3 @@
-// ~/components/admin/coupon/CouponCreateModal.jsx
 import React, { useState } from 'react'
 import { FaTimes } from 'react-icons/fa'
 import { createCoupon } from '~/services/admin/couponAdminService'
@@ -17,9 +16,92 @@ const CouponCreateModal = ({ isOpen, onClose, onSuccess }) => {
         status: true,
     })
     const [loading, setLoading] = useState(false)
+    const [errors, setErrors] = useState({})
 
-    const handleSubmit = async (e) => {
+    const clearFieldError = field => {
+        if (errors[field]) {
+            setErrors(prev => {
+                const copy = { ...prev }
+                delete copy[field]
+                return copy
+            })
+        }
+    }
+
+    const validate = () => {
+        const e = {}
+        if (!form.code || !form.code.trim()) {
+            e.code = 'Mã giảm giá là bắt buộc.'
+        }
+        if (form.type !== 0 && form.type !== 1) {
+            e.type = 'Loại mã không hợp lệ.'
+        }
+
+        if (
+            form.value === '' ||
+            form.value === null ||
+            isNaN(Number(form.value))
+        ) {
+            e.value = 'Giá trị giảm không hợp lệ.'
+        } else if (Number(form.value) <= 0) {
+            e.value = 'Giá trị giảm phải lớn hơn 0.'
+        }
+
+        if (form.type === 1) {
+            if (form.max_value !== '' && isNaN(Number(form.max_value))) {
+                e.max_value = 'Giá trị tối đa không hợp lệ.'
+            } else if (form.max_value !== '' && Number(form.max_value) <= 0) {
+                e.max_value = 'Giá trị tối đa phải lớn hơn 0.'
+            }
+
+            if (
+                form.min_order_value !== '' &&
+                isNaN(Number(form.min_order_value))
+            ) {
+                e.min_order_value = 'Đơn hàng tối thiểu không hợp lệ.'
+            } else if (
+                form.min_order_value !== '' &&
+                Number(form.min_order_value) <= 0
+            ) {
+                e.min_order_value =
+                    'Đơn hàng tối thiểu phải lớn hơn 0.'
+            }
+        }
+
+        if (
+            form.quantity === '' ||
+            isNaN(Number(form.quantity)) ||
+            !Number.isInteger(Number(form.quantity))
+        ) {
+            e.quantity = 'Số lượng phải là số nguyên hợp lệ.'
+        } else if (Number(form.quantity) < 1) {
+            e.quantity = 'Số lượng phải lớn hơn hoặc bằng 1.'
+        }
+
+        if (form.start_date) {
+            const s = Date.parse(form.start_date)
+            if (isNaN(s)) e.start_date = 'Ngày bắt đầu không hợp lệ.'
+        }
+        if (form.end_date) {
+            const eDate = Date.parse(form.end_date)
+            if (isNaN(eDate)) e.end_date = 'Ngày kết thúc không hợp lệ.'
+        }
+        if (form.start_date && form.end_date) {
+            const s = Date.parse(form.start_date)
+            const eDate = Date.parse(form.end_date)
+            if (!isNaN(s) && !isNaN(eDate) && s > eDate) {
+                e.end_date = 'Ngày kết thúc phải sau hoặc bằng ngày bắt đầu.'
+            }
+        }
+
+        setErrors(e)
+        return Object.keys(e).length === 0
+    }
+
+    const handleSubmit = async e => {
         e.preventDefault()
+        if (!validate()) return
+
         setLoading(true)
         try {
             const payload = {
@@ -27,19 +109,45 @@ const CouponCreateModal = ({ isOpen, onClose, onSuccess }) => {
                 description: form.description.trim() || null,
                 type: Number(form.type),
                 value: Number(form.value),
-                max_value: form.type === 1 && form.max_value ? Number(form.max_value) : null,
-                min_order_value: form.type === 1 && form.min_order_value ? Number(form.min_order_value) : null,
+                max_value:
+                    form.type === 1 && form.max_value
+                        ? Number(form.max_value)
+                        : null,
+                min_order_value:
+                    form.type === 1 && form.min_order_value
+                        ? Number(form.min_order_value)
+                        : null,
                 quantity: Number(form.quantity),
-                start_date: form.start_date ? new Date(form.start_date).toISOString() : null,
-                end_date: form.end_date ? new Date(form.end_date).toISOString() : null,
+                start_date: form.start_date
+                    ? new Date(form.start_date).toISOString()
+                    : null,
+                end_date: form.end_date
+                    ? new Date(form.end_date).toISOString()
+                    : null,
                 status: form.status ? 1 : 0,
             }
 
             await createCoupon(payload)
             onSuccess('Tạo mã giảm giá mới thành công!', 'success')
+            // reset form
+            setForm({
+                code: '',
+                description: '',
+                type: 1,
+                value: '',
+                max_value: '',
+                min_order_value: '',
+                quantity: '',
+                start_date: '',
+                end_date: '',
+                status: true,
+            })
+            setErrors({})
             onClose()
         } catch (err) {
-            const errorMsg = err.response?.data?.message || 'Đã xảy ra lỗi khi tạo mã giảm giá!'
+            const errorMsg =
+                err.response?.data?.message ||
+                'Đã xảy ra lỗi khi tạo mã giảm giá!'
             onSuccess(errorMsg, 'error')
         } finally {
             setLoading(false)
@@ -52,8 +160,13 @@ const CouponCreateModal = ({ isOpen, onClose, onSuccess }) => {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
             <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
                 <div className="flex justify-between items-center p-6 border-b border-gray-200">
-                    <h3 className="text-xl font-semibold text-gray-900">Tạo mã giảm giá mới</h3>
-                    <button onClick={onClose} className="text-gray-500 hover:text-gray-700 transition-colors">
+                    <h3 className="text-xl font-semibold text-gray-900">
+                        Tạo mã giảm giá mới
+                    </h3>
+                    <button
+                        onClick={onClose}
+                        className="text-gray-500 hover:text-gray-700 transition-colors"
+                    >
                         <FaTimes size={20} />
                     </button>
                 </div>
@@ -63,47 +176,86 @@ const CouponCreateModal = ({ isOpen, onClose, onSuccess }) => {
                         {/* Mã giảm giá */}
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                                Mã giảm giá <span className="text-red-500">*</span>
+                                Mã giảm giá{' '}
+                                <span className="text-red-500">*</span>
                             </label>
                             <input
                                 type="text"
                                 required
                                 value={form.code}
-                                onChange={(e) => setForm({ ...form, code: e.target.value.toUpperCase() })}
-                                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                onChange={e => {
+                                    setForm({
+                                        ...form,
+                                        code: e.target.value.toUpperCase(),
+                                    })
+                                    clearFieldError('code')
+                                }}
+                                className={`w-full px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 border ${errors.code ? 'border-red-400' : 'border-gray-300'}`}
                                 placeholder="VD: FREESHIP"
                             />
+                            {errors.code && (
+                                <p className="text-sm text-red-600 mt-1">
+                                    {errors.code}
+                                </p>
+                            )}
                         </div>
 
                         {/* Phần chọn type */}
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                                Loại mã giảm giá <span className="text-red-500">*</span>
+                                Loại mã giảm giá{' '}
+                                <span className="text-red-500">*</span>
                             </label>
                             <select
                                 value={form.type}
-                                onChange={(e) => setForm({ ...form, type: Number(e.target.value) })}
-                                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                onChange={e => {
+                                    setForm({
+                                        ...form,
+                                        type: Number(e.target.value),
+                                    })
+                                    clearFieldError('type')
+                                }}
+                                className={`w-full px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 border ${errors.type ? 'border-red-400' : 'border-gray-300'}`}
                             >
                                 <option value={1}>Giảm giá sản phẩm</option>
                                 <option value={0}>Giảm phí vận chuyển</option>
                             </select>
+                            {errors.type && (
+                                <p className="text-sm text-red-600 mt-1">
+                                    {errors.type}
+                                </p>
+                            )}
                         </div>
 
                         {/* Giá trị giảm */}
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                                {form.type == 0 ? 'Số tiền giảm ship (VND)' : 'Giá trị giảm'} <span className="text-red-500">*</span>
+                                {form.type == 0
+                                    ? 'Số tiền giảm ship (VND)'
+                                    : 'Giá trị giảm'}{' '}
+                                <span className="text-red-500">*</span>
                             </label>
                             <input
                                 type="number"
                                 required
                                 min="0"
                                 value={form.value}
-                                onChange={(e) => setForm({ ...form, value: e.target.value })}
-                                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                                placeholder={form.type == 0 ? "VD: 30000 (0 = freeship hoàn toàn)" : "VD: 10 (%) hoặc 50000 (đ)"}
+                                onChange={e => {
+                                    setForm({ ...form, value: e.target.value })
+                                    clearFieldError('value')
+                                }}
+                                className={`w-full px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 border ${errors.value ? 'border-red-400' : 'border-gray-300'}`}
+                                placeholder={
+                                    form.type == 0
+                                        ? 'VD: 30000 (0 = freeship hoàn toàn)'
+                                        : 'VD: 10 (%) hoặc 50000 (đ)'
+                                }
                             />
+                            {errors.value && (
+                                <p className="text-sm text-red-600 mt-1">
+                                    {errors.value}
+                                </p>
+                            )}
                         </div>
 
                         {/* max_value và min_order_value chỉ hiện khi type = 1 */}
@@ -117,10 +269,21 @@ const CouponCreateModal = ({ isOpen, onClose, onSuccess }) => {
                                         type="number"
                                         min="0"
                                         value={form.max_value}
-                                        onChange={(e) => setForm({ ...form, max_value: e.target.value })}
-                                        className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                        onChange={e => {
+                                            setForm({
+                                                ...form,
+                                                max_value: e.target.value,
+                                            })
+                                            clearFieldError('max_value')
+                                        }}
+                                        className={`w-full px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 border ${errors.max_value ? 'border-red-400' : 'border-gray-300'}`}
                                         placeholder="VD: 100000"
                                     />
+                                    {errors.max_value && (
+                                        <p className="text-sm text-red-600 mt-1">
+                                            {errors.max_value}
+                                        </p>
+                                    )}
                                 </div>
 
                                 <div>
@@ -131,10 +294,21 @@ const CouponCreateModal = ({ isOpen, onClose, onSuccess }) => {
                                         type="number"
                                         min="0"
                                         value={form.min_order_value}
-                                        onChange={(e) => setForm({ ...form, min_order_value: e.target.value })}
-                                        className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                        onChange={e => {
+                                            setForm({
+                                                ...form,
+                                                min_order_value: e.target.value,
+                                            })
+                                            clearFieldError('min_order_value')
+                                        }}
+                                        className={`w-full px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 border ${errors.min_order_value ? 'border-red-400' : 'border-gray-300'}`}
                                         placeholder="VD: 300000"
                                     />
+                                    {errors.min_order_value && (
+                                        <p className="text-sm text-red-600 mt-1">
+                                            {errors.min_order_value}
+                                        </p>
+                                    )}
                                 </div>
                             </>
                         )}
@@ -142,47 +316,93 @@ const CouponCreateModal = ({ isOpen, onClose, onSuccess }) => {
                         {/* Số lượng sử dụng */}
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                                Số lượng sử dụng <span className="text-red-500">*</span>
+                                Số lượng sử dụng{' '}
+                                <span className="text-red-500">*</span>
                             </label>
                             <input
                                 type="number"
                                 required
                                 min="1"
                                 value={form.quantity}
-                                onChange={(e) => setForm({ ...form, quantity: e.target.value })}
-                                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                onChange={e => {
+                                    setForm({
+                                        ...form,
+                                        quantity: e.target.value,
+                                    })
+                                    clearFieldError('quantity')
+                                }}
+                                className={`w-full px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 border ${errors.quantity ? 'border-red-400' : 'border-gray-300'}`}
                             />
+                            {errors.quantity && (
+                                <p className="text-sm text-red-600 mt-1">
+                                    {errors.quantity}
+                                </p>
+                            )}
                         </div>
 
                         {/* Ngày bắt đầu */}
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1.5">Ngày bắt đầu</label>
+                            <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                                Ngày bắt đầu
+                            </label>
                             <input
                                 type="datetime-local"
                                 value={form.start_date}
-                                onChange={(e) => setForm({ ...form, start_date: e.target.value })}
-                                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                onChange={e => {
+                                    setForm({
+                                        ...form,
+                                        start_date: e.target.value,
+                                    })
+                                    clearFieldError('start_date')
+                                    clearFieldError('end_date')
+                                }}
+                                className={`w-full px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 border ${errors.start_date ? 'border-red-400' : 'border-gray-300'}`}
                             />
+                            {errors.start_date && (
+                                <p className="text-sm text-red-600 mt-1">
+                                    {errors.start_date}
+                                </p>
+                            )}
                         </div>
 
                         {/* Ngày kết thúc */}
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1.5">Ngày kết thúc</label>
+                            <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                                Ngày kết thúc
+                            </label>
                             <input
                                 type="datetime-local"
                                 value={form.end_date}
-                                onChange={(e) => setForm({ ...form, end_date: e.target.value })}
-                                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                onChange={e => {
+                                    setForm({
+                                        ...form,
+                                        end_date: e.target.value,
+                                    })
+                                    clearFieldError('end_date')
+                                }}
+                                className={`w-full px-4 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 border ${errors.end_date ? 'border-red-400' : 'border-gray-300'}`}
                             />
+                            {errors.end_date && (
+                                <p className="text-sm text-red-600 mt-1">
+                                    {errors.end_date}
+                                </p>
+                            )}
                         </div>
 
                         {/* Mô tả */}
                         <div className="md:col-span-2">
-                            <label className="block text-sm font-medium text-gray-700 mb-1.5">Mô tả</label>
+                            <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                                Mô tả
+                            </label>
                             <textarea
                                 rows={3}
                                 value={form.description}
-                                onChange={(e) => setForm({ ...form, description: e.target.value })}
+                                onChange={e =>
+                                    setForm({
+                                        ...form,
+                                        description: e.target.value,
+                                    })
+                                }
                                 className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
                                 placeholder="Mô tả chi tiết về mã giảm giá..."
                             />
@@ -194,21 +414,39 @@ const CouponCreateModal = ({ isOpen, onClose, onSuccess }) => {
                                 type="checkbox"
                                 id="status-create"
                                 checked={form.status}
-                                onChange={(e) => setForm({ ...form, status: e.target.checked })}
+                                onChange={e =>
+                                    setForm({
+                                        ...form,
+                                        status: e.target.checked,
+                                    })
+                                }
                                 className="w-5 h-5 text-indigo-600 rounded focus:ring-indigo-500"
                             />
-                            <label htmlFor="status-create" className="text-sm font-medium text-gray-700">
+                            <label
+                                htmlFor="status-create"
+                                className="text-sm font-medium text-gray-700"
+                            >
                                 Kích hoạt mã giảm giá ngay khi tạo
                             </label>
                         </div>
                     </div>
 
                     <div className="flex justify-end gap-4 pt-6 border-t border-gray-200">
-                        <button type="button" onClick={onClose} className="px-6 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-medium transition-colors">
+                        <button
+                            type="button"
+                            onClick={onClose}
+                            className="px-6 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-medium transition-colors"
+                        >
                             Hủy
                         </button>
-                        <button type="submit" disabled={loading} className="px-6 py-2.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 font-medium transition-colors disabled:opacity-70 disabled:cursor-not-allowed flex items-center gap-2">
-                            {loading && <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>}
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            className="px-6 py-2.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 font-medium transition-colors disabled:opacity-70 disabled:cursor-not-allowed flex items-center gap-2"
+                        >
+                            {loading && (
+                                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                            )}
                             Tạo mới
                         </button>
                     </div>

@@ -1,21 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react'
 import {
     FiClock,
-    FiCheckCircle,
-    FiXCircle,
     FiMoreVertical,
-    FiPackage,
-    FiChevronRight,
     FiChevronDown,
     FiSearch,
     FiFilter,
     FiShoppingCart,
-    FiX,
     FiEye,
     FiTrash2,
 } from 'react-icons/fi'
 
 import OrderDetailPopup from '../OrderDetailPopup'
+import UpdateStatusModal from '../UpdateStatusModal' 
+
 import {
     getListTransaction,
     updateTransaction,
@@ -272,80 +269,6 @@ const ConfirmDeleteModal = ({ isOpen, onClose, onConfirm, orderCode }) => {
     )
 }
 
-// Modal cập nhật trạng thái
-const UpdateStatusModal = ({ isOpen, onClose, order, onUpdate }) => {
-    const [status, setStatus] = useState(order?.status || 'pending')
-    const [shipmentStatus, setShipmentStatus] = useState(order?.shipment_status || 'processing')
-
-    if (!isOpen || !order) return null
-
-    const handleSave = () => {
-        onUpdate({ status, shipment_status: shipmentStatus })
-        onClose()
-    }
-
-    return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
-            <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full mx-4 p-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-6">
-                    Cập nhật trạng thái đơn hàng #{order.tracking_number}
-                </h3>
-
-                <div className="space-y-6">
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Trạng thái đơn hàng
-                        </label>
-                        <select
-                            value={status}
-                            onChange={e => setStatus(e.target.value)}
-                            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
-                        >
-                            <option value="pending">Chờ xử lý</option>
-                            <option value="confirmed">Đã xác nhận</option>
-                            <option value="completed">Hoàn thành</option>
-                            <option value="refunded">Đã hoàn tiền</option>
-                            <option value="canceled">Đã hủy</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Trạng thái vận chuyển
-                        </label>
-                        <select
-                            value={shipmentStatus}
-                            onChange={e => setShipmentStatus(e.target.value)}
-                            className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
-                        >
-                            <option value="processing">Đang xử lý</option>
-                            <option value="shipped">Đã giao cho vận chuyển</option>
-                            <option value="in_transit">Đang vận chuyển</option>
-                            <option value="delivered">Đã giao</option>
-                            <option value="returned">Đã trả lại</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div className="flex justify-end gap-4 mt-8">
-                    <button
-                        onClick={onClose}
-                        className="px-5 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors font-medium"
-                    >
-                        Hủy
-                    </button>
-                    <button
-                        onClick={handleSave}
-                        className="px-5 py-2.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors font-medium"
-                    >
-                        Lưu thay đổi
-                    </button>
-                </div>
-            </div>
-        </div>
-    )
-}
-
 const OrdersTable = () => {
     const [orders, setOrders] = useState([])
     const [selectedOrder, setSelectedOrder] = useState(null)
@@ -370,7 +293,7 @@ const OrdersTable = () => {
     const [statusFilter, setStatusFilter] = useState('')
     const [dateFrom, setDateFrom] = useState('')
     const [dateTo, setDateTo] = useState('')
-    const [limit, setLimit] = useState(100)
+    const [limit, setLimit] = useState(1000)
     const [offset, setOffset] = useState(0)
 
     // Pagination
@@ -435,19 +358,21 @@ const OrdersTable = () => {
     }
 
     const handleSaveUpdate = async (updatedData) => {
+        if (!selectedOrder) return
         setUpdatingId(selectedOrder.id)
         try {
             const res = await updateTransaction(selectedOrder.id, updatedData)
-            setOrders(prev =>
-                prev.map(o => (o.raw.id === res.data.id ? { raw: res.data } : o))
-            )
+            const updated = res && res.data ? res.data : res
+            setOrders(prev => prev.map(o => (o.raw.id === updated.id ? { raw: updated } : o)))
+            setSelectedOrder(updated)
             showAlert('Cập nhật trạng thái thành công!', 'success')
+            setIsUpdateModalOpen(false)
+            return updated
         } catch (error) {
             console.error('Lỗi cập nhật trạng thái:', error)
             showAlert('Không thể cập nhật trạng thái. Vui lòng thử lại.', 'error')
         } finally {
             setUpdatingId(null)
-            setIsUpdateModalOpen(false)
         }
     }
 
@@ -673,7 +598,7 @@ const OrdersTable = () => {
                         className="absolute inset-0 bg-black/30 backdrop-blur-sm transition-opacity"
                         onClick={() => setIsPopupOpen(false)} 
                     ></div>
-                    <div className="relative z-10 w-full max-w-5xl max-h-[90vh] overflow-y-auto rounded-xl shadow-2xl">
+                    <div className="relative z-10 w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-xl shadow-2xl">
                         <OrderDetailPopup
                             order={selectedOrder}
                             onClose={() => setIsPopupOpen(false)}

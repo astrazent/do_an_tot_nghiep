@@ -141,7 +141,6 @@ const CreateProductModal = ({ isOpen, onClose, onCreateSuccess }) => {
 
         try {
             await createProduct(payload)
-            alert(`Tạo sản phẩm "${formData.name}" thành công!`)
             onCreateSuccess?.()
             onClose()
         } catch (err) {

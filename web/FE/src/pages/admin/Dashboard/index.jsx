@@ -188,6 +188,13 @@ function Dashboard() {
                                     dayjs().subtract(1, 'month').endOf('month'),
                                 ],
                             },
+                            {
+                                label: 'Năm trước',
+                                value: [
+                                    dayjs().subtract(1, 'year').startOf('year'),
+                                    dayjs().subtract(1, 'year').endOf('year'),
+                                ],
+                            },
                         ]}
                     />{' '}
                 </div>{' '}
@@ -282,7 +289,7 @@ function Dashboard() {
 
             {/* LOCATION CHART */}
             <div>
-                <SalesByLocationChart dateRange={dateRange}/>
+                <SalesByLocationChart dateRange={dateRange} />
             </div>
         </div>
     )

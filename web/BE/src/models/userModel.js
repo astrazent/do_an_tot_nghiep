@@ -297,7 +297,6 @@ const UsersModel = {
                 Transactions t ON t.user_id = u.id
             WHERE 
                 t.status = 'completed'
-                AND t.payment_status = 'paid'
             GROUP BY 
                 u.id, u.full_name, u.email
             HAVING 

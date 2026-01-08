@@ -47,37 +47,31 @@ const EmailAI = () => {
     const handleImageChange = e => {
         const files = Array.from(e.target.files)
         if (files.length > 0) {
-            // Thêm ảnh mới vào danh sách hiện tại
             setImages(prev => [...prev, ...files])
-
-            // Tạo preview cho các ảnh mới
             const newPreviews = files.map(file => URL.createObjectURL(file))
             setImagePreviews(prev => [...prev, ...newPreviews])
         }
     }
 
     const removeImage = index => {
-        // Xóa ảnh và preview tại vị trí index
         setImages(prev => prev.filter((_, i) => i !== index))
         setImagePreviews(prev => {
             const url = prev[index]
-            URL.revokeObjectURL(url) // Giải phóng bộ nhớ
+            URL.revokeObjectURL(url)
             return prev.filter((_, i) => i !== index)
         })
     }
 
     const clearAllImages = () => {
-        // Giải phóng tất cả preview URLs
         imagePreviews.forEach(url => URL.revokeObjectURL(url))
         setImages([])
         setImagePreviews([])
     }
 
-    // Reset form
     const resetForm = () => {
         setSubject('')
         setPrompt('')
-        clearAllImages() // Xóa hết ảnh
+        clearAllImages()
         setSelectedType(customerTypes[0])
     }
 
@@ -85,7 +79,6 @@ const EmailAI = () => {
         setAlert({ visible: true, message, type })
         setTimeout(() => {
             setAlert({ visible: false, message: '', type: 'success' })
-            // Chỉ reset form khi thành công
             if (type === 'success') {
                 resetForm()
             }
@@ -94,7 +87,6 @@ const EmailAI = () => {
 
     const handleCloseAlert = () => {
         setAlert({ visible: false, message: '', type: 'success' })
-        // Chỉ reset nếu là success (tránh reset khi lỗi)
         if (alert.type === 'success') {
             resetForm()
         }
@@ -115,7 +107,6 @@ const EmailAI = () => {
             const formData = new FormData()
             formData.append('subject', subject)
             formData.append('message', prompt)
-            // Append nhiều ảnh
             images.forEach((img) => {
                 formData.append('image', img)
             })
@@ -126,11 +117,9 @@ const EmailAI = () => {
 
             await createEmailMarketing(formData)
 
-            // Thành công: hiển thị alert success (sẽ tự reset form)
             showAlert('Email marketing đã được gửi thành công!', 'success', 2500)
         } catch (err) {
             const errMsg = 'Gửi email thất bại: ' + (err.response?.data?.message || err.message)
-            // Lỗi: hiển thị alert error (KHÔNG reset form)
             showAlert(errMsg, 'error', 3000)
         } finally {
             setLoading(false)
@@ -139,9 +128,9 @@ const EmailAI = () => {
 
     return (
         <div className="min-h-screen bg-gray-50 flex items-stretch justify-center">
-            <div className="w-full h-full flex flex-col bg-white shadow-2xl border-t-4 border-blue-600">
+            <div className="w-full h-full flex flex-col bg-white">
                 {/* Header */}
-                <div className="bg-gradient-to-r from-blue-600 to-blue-800 px-6 py-6 md:py-8 text-white text-center">
+                <div className=" bg-[#166534] px-6 py-6 md:py-8 text-white text-center">
                     <h1 className="text-2xl md:text-3xl font-bold tracking-wide">
                         Email Marketing AI
                     </h1>
@@ -164,7 +153,7 @@ const EmailAI = () => {
                                     const type = customerTypes.find(t => t.label === e.target.value)
                                     setSelectedType(type)
                                 }}
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700 text-base h-12"
+                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 text-gray-700 text-base h-12"
                             >
                                 {customerTypes.map(type => (
                                     <option key={type.label} value={type.label}>
@@ -185,7 +174,7 @@ const EmailAI = () => {
                             value={subject}
                             onChange={e => setSubject(e.target.value)}
                             placeholder="Ví dụ: Ưu đãi đặc biệt tháng 12 cho khách hàng thân thiết"
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700 text-base"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 text-gray-700 text-base"
                             required
                         />
                     </div>
@@ -200,17 +189,17 @@ const EmailAI = () => {
                             onChange={e => setPrompt(e.target.value)}
                             placeholder="Ví dụ: Viết email thông báo ưu đãi giảm 20% từ 30/11 đến 10/12 cho khách hàng VIP..."
                             rows={10}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700 text-base resize-none"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 text-gray-700 text-base resize-none"
                             required
                         />
                     </div>
 
-                    {/* Upload ảnh - hỗ trợ multiple */}
+                    {/* Upload ảnh */}
                     <div>
                         <label className="block text-base font-medium text-gray-800 mb-2">
                             Ảnh đính kèm (có thể chọn nhiều ảnh)
                         </label>
-                        <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-blue-500 transition-colors cursor-pointer bg-blue-50">
+                        <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-green-500 transition-colors cursor-pointer bg-green-50">
                             <input
                                 type="file"
                                 accept="image/*"
@@ -277,8 +266,9 @@ const EmailAI = () => {
                     {/* Nút gửi */}
                     <button
                         type="submit"
+                        onClick={() => console.log('submit button clicked', { customersLength: customers.length, loading })}
                         disabled={loading || customers.length === 0}
-                        className="w-full bg-gradient-to-r from-blue-600 to-blue-800 text-white py-4 rounded-lg font-semibold text-base hover:from-blue-700 hover:to-blue-900 disabled:opacity-60 transition-all shadow-md"
+                        className="w-full bg-[#166534] text-white py-4 rounded-lg font-semibold text-base hover:from-green-700 hover:to-green-900 disabled:opacity-60 transition-all shadow-md"
                     >
                         {loading ? 'Đang gửi...' : 'Gửi Email Marketing'}
                     </button>

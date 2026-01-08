@@ -1,8 +1,8 @@
 import fetch from 'node-fetch'
 import FormData from 'form-data'
 
-const N8N_Post_URL ='https://tienduy20031.app.n8n.cloud/webhook/api/marketing-writer'
-const N8N_Email_URL = 'https://tienduy20031.app.n8n.cloud/webhook/email_vip'
+const N8N_Post_URL ='https://tienduy20032.app.n8n.cloud/webhook/api/marketing-writer'
+const N8N_Email_URL = 'https://tienduy20032.app.n8n.cloud/webhook/email_vip'
 
 const marketingPost = async file => {
     if (!file) {

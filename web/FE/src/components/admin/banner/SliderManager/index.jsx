@@ -141,7 +141,7 @@ const ActionsDropdown = ({ slider, onEdit, onDelete }) => {
             </button>
 
             {open && (
-                <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-gray-100 z-40 overflow-hidden">
+                <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-gray-100 z-1000 overflow-hidden">
                     <button
                         onClick={() => { window.open(slider.image_url, '_blank'); setOpen(false) }}
                         className="w-full px-4 py-3 text-left hover:bg-indigo-50 text-sm text-gray-700 flex items-center gap-3"
