@@ -48,7 +48,7 @@ const formatTime = isoString => {
 
 const parseMessageContent = content => {
     let finalContent = content
-
+    console.log('Parsing message content:', content)
     try {
         if (
             typeof content === 'string' &&
@@ -56,19 +56,21 @@ const parseMessageContent = content => {
             content.trim().endsWith('}')
         ) {
             const parsed = JSON.parse(content)
-
+            console.log('Parsed JSON content:', parsed)
             if (parsed.status === 'order_ready' && parsed.message) {
                 return parsed.message
             }
 
             finalContent = parsed.message || parsed.content || content
         }
-    } catch (error) {}
+    } catch (error) {
+        console.error('Failed to parse message content', error)
+    }
 
     if (typeof finalContent === 'string' && finalContent.includes('||')) {
         finalContent = finalContent.split('||')[0].trim()
     }
-
+    console.log('Final content to render:', finalContent)
     return finalContent
 }
 
@@ -86,7 +88,6 @@ const FloatingContactBar = () => {
 
     const [isCreating, setIsCreating] = useState(false)
     const [newTitle, setNewTitle] = useState('')
-    const [pendingMessages, setPendingMessages] = useState([])
 
     const messagesEndRef = useRef(null)
     const chatRef = useRef(null)
@@ -94,6 +95,7 @@ const FloatingContactBar = () => {
 
     const { data: conversations = [], isLoading: isLoadingConversations } =
         useGetConversations()
+    console.log('Conversations data:', conversations)
     const createConversationMutation = useCreateConversation()
     const endConversationMutation = useEndConversation()
     const deleteConversationMutation = useDeleteConversation()
@@ -154,7 +156,6 @@ const FloatingContactBar = () => {
         setView('chat')
         setShowOptions(false)
         setIsCreating(false)
-        setPendingMessages([])
 
         ReactGA.event('select_content', {
             content_type: 'chatbot',
@@ -196,63 +197,16 @@ const FloatingContactBar = () => {
         const content = inputText
         setInputText('')
 
-        // Add pending messages to local state
-        const userMessage = {
-            sender: 'user',
-            content: content,
-            created_at: new Date().toISOString(),
-            isPending: true,
-        }
-        const thinkingMessage = {
-            sender: 'bot',
-            content: 'Đang suy nghĩ...',
-            isThinking: true,
-            isPending: true,
-        }
-        setPendingMessages([userMessage, thinkingMessage])
-
         createMessageMutation.mutate(content, {
-            onSuccess: (data) => {
-                queryClient.setQueryData(['conversations'], (oldConversations) => {
-                    if (!oldConversations) return []
-                    return oldConversations.map(conv => {
-                        if (conv.id === activeConversationId) {
-                            const userMsg = {
-                                sender: 'user',
-                                content: content,
-                                created_at: new Date().toISOString(),
-                            }
-                            const botContent = typeof data === 'string' ? data : (data?.message || data?.content || JSON.stringify(data));
-                            
-                            const botMsg = {
-                                sender: 'bot',
-                                content: botContent,
-                                created_at: new Date().toISOString(),
-                            }
-                            return {
-                                ...conv,
-                                last_message_time: new Date().toISOString(),
-                                messages: [
-                                    ...(conv.messages || []),
-                                    userMsg,
-                                    botMsg
-                                ]
-                            }
-                        }
-                        return conv
-                    })
-                })
-                // 2. Invalidate sau một khoảng thời gian (Safe fallback)
-                // Đợi 3 giây để đảm bảo Redis đã kịp đẩy xuống DB rồi mới fetch lại để đồng bộ ID, v.v.
-                setTimeout(() => {
-                    queryClient.invalidateQueries({ queryKey: ['conversations'] })
-                }, 3000)
+            onSuccess: data => {
+                console.log('Message created successfully:', data)
             },
-            onError: (error) => {
-                // On error, remove pending messages and show error
-                setPendingMessages([])
-                console.error('Failed to send message:', error)
-                // Optionally show an error toast/notification here
+            onSettled: () => {
+                console.log('Invalidate conversations triggered')
+                queryClient.invalidateQueries({ queryKey: ['conversations'] })
+            },
+            onError: error => {
+                console.error('Failed to create message:', error)
             },
         })
     }
@@ -281,7 +235,6 @@ const FloatingContactBar = () => {
                 setShowOptions(false)
                 setConversationToDelete(null)
                 setIsDeleteModalOpen(false)
-                setPendingMessages([])
             },
         })
     }
@@ -446,12 +399,12 @@ const FloatingContactBar = () => {
                                     </div>
                                     <p className="text-gray-500 text-sm mb-3 line-clamp-1 h-5">
                                         {lastMsg
-                                            ? (lastMsg.sender === 'user'
-                                                  ? 'Bạn: '
-                                                  : 'Bot: ') +
-                                              parseMessageContent(
-                                                  lastMsg.content
-                                              )
+                                        ? (lastMsg.sender === 'user'
+                                                ? 'Bạn: '
+                                                : 'Bot: ') +
+                                            parseMessageContent(
+                                                lastMsg.content
+                                            )
                                             : 'Chưa có tin nhắn'}
                                     </p>
                                     <div className="flex items-center gap-2 text-xs">
@@ -487,10 +440,20 @@ const FloatingContactBar = () => {
         let messagesToRender = activeConversation?.messages
             ? [...activeConversation.messages]
             : []
+        console.log('Active conversation:', activeConversation)
+        console.log('Messages to render:', messagesToRender)
+        if (createMessageMutation.isPending) {
+            messagesToRender.push({
+                sender: 'user',
+                content: createMessageMutation.variables,
+                created_at: new Date().toISOString(),
+            })
 
-        // Add pending messages that are being sent
-        if (pendingMessages.length > 0) {
-            messagesToRender = [...messagesToRender, ...pendingMessages]
+            messagesToRender.push({
+                sender: 'bot',
+                content: 'Đang suy nghĩ...',
+                isThinking: true,
+            })
         }
 
         return (

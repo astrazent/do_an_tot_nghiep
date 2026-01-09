@@ -43,7 +43,12 @@ class QueryTranslation:
 
     def HyDE(self, question: str) -> str:
         template = """
-        Bạn là trợ lý tư vấn tại Bếp Sạch Việt, hãy lấy ra các từ khóa quan trọng nhất từ câu hỏi dưới đây (hyDE). Chỉ in ra các từ khóa, phân tách bằng dấu phẩy.
+        Bạn là trợ lý tư vấn tại Bếp Sạch Việt. Bạn sẽ nhận một câu hỏi của khách hàng:
+        1. Tạo ra một văn bản ngữ cảnh giả (hypothetical document) mà câu hỏi có thể yêu cầu thông tin từ đó. Văn bản này phải:
+        2. Chứa các chi tiết quan trọng liên quan đến câu hỏi.
+            - Giúp tìm kiếm thông tin thật dễ hơn.
+            - Không cần đúng tuyệt đối, nhưng phải hợp lý và liên quan.
+        3. Chỉ in ra các từ khóa quan trọng từ câu hỏi, phân tách bằng dấu phẩy, để hỗ trợ bước retrieval tiếp theo.
         Câu hỏi: {question}
         """
         print("LLM 4:", get_api_key(self.llms[2]))

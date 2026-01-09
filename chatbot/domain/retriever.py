@@ -28,15 +28,15 @@ class Retriever(MultiVectorRetriever):
             namespace=collection_name
         )
         super().__init__(
-            vectorstore=vectorstore,
-            byte_store=redis_store,
-            id_key="doc_id",
-            search_type='mmr',
+            vectorstore=vectorstore,   # Lưu trữ vector embeddings của các tài liệu, dùng để tìm kiếm tương đồng
+            byte_store=redis_store,    # Lưu trữ nhị phân hoặc metadata bổ sung của tài liệu (ở đây dùng Redis)
+            id_key="doc_id",           # Tên trường dùng làm ID duy nhất cho mỗi tài liệu trong vectorstore/byte_store
+            search_type='mmr',         # Loại tìm kiếm: 'mmr' = Maximal Marginal Relevance (ưu tiên đa dạng & liên quan)
             search_kwargs={
-                'k': 5,
-                'ef': 50
+                'k': 5,                # Số lượng tài liệu trả về tối đa sau khi tìm kiếm
+                'ef': 50                # Tham số điều chỉnh độ chính xác/tốc độ của thuật toán tìm kiếm (dùng với ANN)
             },
-            embedding=embedding_instance
+            embedding=embedding_instance  # Instance của embedding model dùng để mã hóa tài liệu & câu hỏi
         )
 
     def split_documents(self, documents, chunk_size: int, chunk_overlap: int) -> tuple[list[Document], list[str]]:
@@ -61,10 +61,10 @@ class Retriever(MultiVectorRetriever):
     
     def add_documents_to_retriever(
         self,
-        chunk_size: int = 300,
-        chunk_overlap: int = 50,
-        max_batch_size: int = 166,
-        documents: list = None
+        chunk_size: int = 300,        # Kích thước mỗi đoạn (số ký tự) khi chia nhỏ tài liệu trước khi lưu vào vectorstore
+        chunk_overlap: int = 50,      # Số ký tự chồng lấn giữa các đoạn liền kề, giúp giữ ngữ cảnh khi tìm kiếm
+        max_batch_size: int = 166,    # Số lượng tài liệu xử lý cùng lúc khi thêm vào retriever (giúp tránh quá tải bộ nhớ)
+        documents: list = None        # Danh sách các tài liệu cần thêm vào retriever, mỗi phần tử thường là object Document
     ):
         if not documents:
             raise ValueError("Phải truyền documents")
@@ -106,47 +106,95 @@ class Retriever(MultiVectorRetriever):
 
         return unique_docs
 
+    # def multi_query(self, queries: list[str], top_k: int) -> list[Document]:
+    #     retrieved_results = self.map().invoke(queries)
+    #     documents = self.deduplicate_documents(retrieved_results)
+    #     return self.re_ranking(documents, top_k)
+    
     def multi_query(self, queries: list[str], top_k: int) -> list[Document]:
+        from sklearn.metrics.pairwise import cosine_similarity
+        import numpy as np
+        # Thử gọi map().invoke để lấy document
         retrieved_results = self.map().invoke(queries)
         documents = self.deduplicate_documents(retrieved_results)
+
+        # Nếu không có document nào, fallback bằng cosine similarity
+        if not documents:
+            # Lấy embedding của query đầu tiên (hoặc trung bình embedding nhiều query)
+            query_embedding = self.embedding.embed_query(queries[0])  # [dim]
+            
+            # Lấy embedding của tất cả document trong vectorstore
+            all_docs = self.vectorstore.get_all_documents()  # cần implement method trả về list[Document]
+            if not all_docs:
+                return []  # vectorstore trống, không còn cách nào khác
+
+            doc_embeddings = np.array([self.embedding.embed_query(d.page_content) for d in all_docs])  # [num_docs, dim]
+            
+            # Tính cosine similarity query với từng document
+            similarities = cosine_similarity([query_embedding], doc_embeddings)[0]  # shape = (num_docs,)
+            print(similarities)
+            # Lấy top_k document có similarity cao nhất
+            top_indices = similarities.argsort()[::-1][:top_k]
+            documents = [all_docs[i] for i in top_indices]
+
+        # Re-ranking các document trước khi trả về
         return self.re_ranking(documents, top_k)
 
     def re_ranking(self, documents: list[Document], top_k: int | None = None, k: int = 60):
+        # Khởi tạo danh sách để lưu các tài liệu kèm điểm số
         scored_docs = []
 
+        # Lặp qua tất cả các tài liệu, cùng với thứ hạng ban đầu (rank)
         for rank, doc in enumerate(documents):
+            # Tính điểm cơ bản dựa trên vị trí ban đầu của tài liệu
+            # Tài liệu đầu tiên có điểm cao hơn vì rank càng nhỏ thì 1/(rank+k) càng lớn
             base_score = 1 / (rank + k)
 
+            # Lấy mô tả từ metadata của tài liệu, nếu có
             desc = doc.metadata.get("description", "")
             if desc:
+                # Tách mô tả thành các từ riêng lẻ
                 desc_terms = desc.split()
+                # Khởi tạo biến tăng điểm dựa trên việc trùng khớp cụm từ
                 phrase_boost = 0.0
 
+                # Tạo danh sách các phrase dài 4 từ trở lên từ mô tả
                 desc_phrases = [desc_terms[i:j] for i in range(len(desc_terms)) for j in range(i+4, len(desc_terms)+1)]
+                # Chuyển nội dung tài liệu về chữ thường để so khớp
                 doc_content_lower = doc.page_content.lower()
+                
+                # Kiểm tra từng phrase có xuất hiện trong nội dung tài liệu không
                 for phrase in desc_phrases:
                     phrase_str = " ".join(phrase).lower()
                     if phrase_str in doc_content_lower:
+                        # Nếu phrase trùng, cộng thêm 3.0 điểm
                         phrase_boost += 3.0
 
+                # Kiểm tra từng bigram (2 từ liền nhau) trong mô tả có xuất hiện trong nội dung không
                 for i in range(len(desc_terms) - 1):
                     bigram = " ".join(desc_terms[i:i+2]).lower()
                     if bigram in doc_content_lower:
+                        # Nếu bigram trùng, cộng thêm 0.1 điểm
                         phrase_boost += 0.1
 
+                # Cộng điểm tăng phrase vào điểm cơ bản
                 base_score += phrase_boost
 
+            # Thêm tài liệu và điểm số của nó vào danh sách
             scored_docs.append((doc, base_score))
 
+        # Sắp xếp danh sách tài liệu theo điểm số giảm dần
         scored_docs.sort(key=lambda x: x[1], reverse=True)
         
+        # Nếu chỉ lấy top_k tài liệu, cắt danh sách xuống còn top_k
         if top_k is not None and top_k <= len(scored_docs):
             scored_docs = scored_docs[:top_k]
 
-        # In bảng xếp hạng
+        # In bảng xếp hạng ra màn hình (rank, doc_id, score)
         for i, (doc, score) in enumerate(scored_docs, start=1):
             print(f"Rank {i}: doc_id={doc.metadata.get('doc_id')}, score={score}")
 
+        # Trả về danh sách các tài liệu đã được sắp xếp lại
         return [doc for doc, _ in scored_docs]
     
     def delete(self, where: dict):
