@@ -79,25 +79,49 @@ const CommentsModel = {
         if (error) throw error
 
         const conn = getConnection()
-        const [result] = await conn.execute(
-            `INSERT INTO ${COMMENTS_TABLE} (rate, content, product_id, user_id) VALUES (?, ?, ?, ?)`,
-            [value.rate, value.content, value.product_id, value.user_id]
-        )
-        const commentId = result.insertId
-        if (
-            data.images &&
-            Array.isArray(data.images) &&
-            data.images.length > 0
-        ) {
-            const insertImagesQuery = `INSERT INTO ${COMMENTIMAGES_TABLE} (comment_id, image_url) VALUES ?`
-            const imagesValues = data.images.map(url => [commentId, url])
-            await conn.query(insertImagesQuery, [imagesValues])
-        }
 
-        return {
-            id: commentId,
-            ...value,
-            images: data.images || [],
+        await conn.beginTransaction()
+
+        try {
+            const [result] = await conn.execute(
+                `INSERT INTO ${COMMENTS_TABLE} (rate, content, product_id, user_id)
+                VALUES (?, ?, ?, ?)`,
+                [value.rate, value.content, value.product_id, value.user_id]
+            )
+
+            const commentId = result.insertId
+
+            if (
+                data.images &&
+                Array.isArray(data.images) &&
+                data.images.length > 0
+            ) {
+                const insertImagesQuery = `
+                INSERT INTO ${COMMENTIMAGES_TABLE} (comment_id, image_url)
+                VALUES ?
+            `
+                const imagesValues = data.images.map(url => [commentId, url])
+                await conn.query(insertImagesQuery, [imagesValues])
+            }
+
+            await conn.execute(
+                `UPDATE ${PRODUCTS_TABLE}
+                SET rate_point_total = rate_point_total + ?,
+                    rate_count = rate_count + 1
+                WHERE id = ?`,
+                [value.rate, value.product_id]
+            )
+
+            await conn.commit()
+
+            return {
+                id: commentId,
+                ...value,
+                images: data.images || [],
+            }
+        } catch (err) {
+            await conn.rollback()
+            throw err
         }
     },
 

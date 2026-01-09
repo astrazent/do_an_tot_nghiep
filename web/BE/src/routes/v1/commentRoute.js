@@ -43,7 +43,6 @@ Router.route('/by_product_slug').patch(
     verifyToken,
     upload.array('images', 4),
     uploadCloudinary,
-    commentValidation.validateUpdateComment,
     commentController.updateCommentByUserAndProduct
 )
 
