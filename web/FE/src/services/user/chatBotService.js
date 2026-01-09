@@ -54,7 +54,7 @@ export const endConversation = async conversationId => {
 
 export const getConversations = async () => {
     try {
-        const response = await api.get('/conversations', {
+        const response = await api.get('/conversations/', {
             headers: {
                 'Content-Type': 'application/json',
             },
