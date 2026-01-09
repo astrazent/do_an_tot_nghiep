@@ -3,7 +3,7 @@ import axios from 'axios'
 export const createCategory = async data => {
     try {
         const response = await axios.post(
-            'http://localhost:2082/v1/category',
+            'http://localhost:2000/v1/category',
             data
         )
         return response.data
@@ -15,9 +15,8 @@ export const createCategory = async data => {
 
 export const updateCategory = async (data, categoryId) => {
     try {
-        console.log(data)
         const response = await axios.patch(
-            `http://localhost:2082/v1/category/${categoryId}`,
+            `http://localhost:2000/v1/category/${categoryId}`,
             data
         )
         return response.data
@@ -30,7 +29,7 @@ export const updateCategory = async (data, categoryId) => {
 export const deleteCategory = async categoryId => {
     try {
         const response = await axios.delete(
-            `http://localhost:2082/v1/category`,
+            `http://localhost:2000/v1/category`,
             { params: { categoryId: categoryId } }
         )
         return response.data

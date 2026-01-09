@@ -153,7 +153,6 @@ const SingleTypeCollection = ({
         isError,
         error,
     } = useQueryHook(...hookArgs)
-
     if (isLoading)
         return <div className="text-center py-20">Đang tải sản phẩm...</div>
     if (isError)

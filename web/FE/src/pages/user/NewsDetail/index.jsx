@@ -22,7 +22,6 @@ function NewsDetail() {
         isLoading: isLoadingRelated,
         isError: isErrorRelated,
     } = useRelatedPostsBySlug(slug)
-
     const relatedArticles = useMemo(() => {
         if (!relatedPostsData) return []
         const { relatedByCategory, relatedByPostType } = relatedPostsData
@@ -35,6 +34,7 @@ function NewsDetail() {
         )
         return uniquePosts.map(post => ({
             id: post.id,
+            slug: post.slug,
             image:
                 post.images && post.images.length > 0
                     ? post.images[0]
@@ -47,7 +47,6 @@ function NewsDetail() {
             }),
         }))
     }, [relatedPostsData])
-
     if (isLoadingPost) {
         return (
             <div className="min-h-screen text-center p-10">

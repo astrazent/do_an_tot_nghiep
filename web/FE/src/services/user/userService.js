@@ -14,6 +14,31 @@ export const loginGoogleApi = async ({ tokenId }) => {
     const { data } = await api.post('/auth/google', { tokenId })
     return data
 }
+// Gửi email quên mật khẩu
+export const forgotPassword = async (email) => {
+    if (!email) throw new Error('Email là bắt buộc!')
+
+    const res = await api.post('/auth/forgot-password', { email })
+    return res.data
+}
+
+export const verifyResetPasswordToken = async (token) => {
+    if (!token) throw new Error('Token là bắt buộc!')
+
+    const res = await api.get('/auth/reset-password/verify', {
+        params: { token },
+    })
+    return res.data
+}
+
+export const resetPassword = async (token, newPassword) => {
+    if (!token || !newPassword) throw new Error('Token và mật khẩu mới là bắt buộc!')
+
+    const res = await api.post('/auth/reset-password', { token, newPassword }, {
+        headers: { 'Content-Type': 'application/json' }
+    })
+    return res.data
+}
 
 export const logoutUser = async data => {
     const res = await api.post('/auth/logout', data)

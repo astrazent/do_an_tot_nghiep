@@ -27,7 +27,6 @@ const RightSidebar = ({
         isLoading: isPromotionLoading,
         isError: isPromotionError,
     } = usePromotionProducts(3)
-
     return (
         <aside className="w-full max-w-xs rounded-lg font-sans">
             {featuredPosts && (

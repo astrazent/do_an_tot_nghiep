@@ -54,7 +54,6 @@ const CreateProductModal = ({ isOpen, onClose, onCreateSuccess }) => {
                 try {
                     setIsLoadingCategories(true)
                     const res = await getListCategory()
-                    console.log('Danh mục từ API:', res)
 
                     const list = Array.isArray(res) ? res : (res?.data || [])
                     setCategories(list)
@@ -123,10 +122,6 @@ const CreateProductModal = ({ isOpen, onClose, onCreateSuccess }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-
-        // DEBUG – XEM DỮ LIỆU GỬI ĐI
-        console.log('Gửi đi:', { ...formData, images: images.length })
-
         if (!formData.name.trim()) return setError('Vui lòng nhập tên sản phẩm!')
         if (formData.price <= 0) return setError('Giá bán phải lớn hơn 0!')
         if (images.length === 0) return setError('Vui lòng chọn ít nhất 1 ảnh!')

@@ -16,10 +16,8 @@ import {
     FaSpinner,
 } from 'react-icons/fa'
 import logo from '~/assets/icon/logo/brand-logo.png'
-
 import { useDebounce } from '~/hooks/shared/useDebounce'
 import { useSearchProducts } from '~/hooks/user/useProduct'
-
 import { useCartItemsByUser } from '~/hooks/user/useCartItem'
 
 const userMenuItems = [
@@ -44,7 +42,6 @@ function MainHeader() {
     const cartItemCount = isLoggedIn
         ? userCartData?.length || 0
         : guestCartItems?.length || 0
-
     const [searchValue, setSearchValue] = useState('')
     const [showResults, setShowResults] = useState(false)
     const debouncedSearchValue = useDebounce(searchValue, 500)
@@ -101,7 +98,6 @@ function MainHeader() {
             console.error('Logout failed:', err)
         }
     }
-
     return (
         <header className="bg-white py-4 px-30 shadow-md">
             <div className="container mx-auto px-4 flex justify-between items-center">
@@ -150,7 +146,7 @@ function MainHeader() {
                                                 <img
                                                     src={
                                                         product.images?.[0]
-                                                            ?.url ??
+                                                            ??
                                                         '/placeholder.jpg'
                                                     }
                                                     alt={product.name}

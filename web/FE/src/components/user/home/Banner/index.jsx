@@ -11,7 +11,6 @@ import { useListSlider } from '~/hooks/user/useSlider'
 
 const Banner = () => {
     const { data: slides, isLoading, isError } = useListSlider()
-
     if (isLoading) {
         return <div className="w-full h-[450px] bg-gray-200 animate-pulse" />
     }

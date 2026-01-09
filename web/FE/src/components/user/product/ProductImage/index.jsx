@@ -17,22 +17,22 @@ const ProductImage = ({ slug }) => {
         'https://img.freepik.com/free-vector/illustration-gallery-icon_53876-27002.jpg?semt=ais_hybrid&w=740&q=80'
 
     const mediaItems = React.useMemo(() => {
-        if (!product?.images || product.images.length === 0) {
-            return [
-                { type: 'video', src: videoFile, thumbnail: videoThumb },
-                { type: 'image', src: placeholderImg },
-            ]
-        }
-
-        const productImages = product.images.map(src => ({
+        const productImages = product?.images?.map(src => ({
             type: 'image',
             src,
-        }))
+        })) || [{ type: 'image', src: placeholderImg }]
 
-        return [
-            { type: 'video', src: videoFile, thumbnail: videoThumb },
-            ...productImages,
-        ]
+        const items = [...productImages]
+
+        if (product?.video) {
+            items.unshift({
+                type: 'video',
+                src: product.video,
+                thumbnail: product.videoThumbnail || videoThumb,
+            })
+        }
+
+        return items
     }, [product])
 
     useEffect(() => {
@@ -51,7 +51,7 @@ const ProductImage = ({ slug }) => {
 
     return (
         <div className="w-full">
-            <div className="mb-4 aspect-square flex items-center justify-center relative bg-gray-200 border border-gray-300 w-full rounded-xl overflow-hidden">
+            <div className="mb-4 aspect-square flex items-center justify-center relative bg-gray-200 border border-gray-300 w-full rounded-xl">
                 {!currentMedia ? (
                     <div className="text-gray-400 text-sm">
                         Đang tải hình...

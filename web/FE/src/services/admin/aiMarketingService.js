@@ -3,7 +3,7 @@ import axios from 'axios'
 export const createPostMarketing = async data => {
     try {
         const response = await axios.post(
-            'http://localhost:2082/v1/marketing/post',
+            'http://localhost:2000/v1/marketing/post',
             data
         )
         return response.data
@@ -16,7 +16,7 @@ export const createPostMarketing = async data => {
 export const createEmailMarketing = async data => {
     try {
         const response = await axios.post(
-            'http://localhost:2082/v1/marketing/email',
+            'http://localhost:2000/v1/marketing/email',
             data
         )
         return response.data

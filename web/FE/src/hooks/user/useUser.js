@@ -4,11 +4,10 @@ import {
     registerUser,
     updateUserById,
     checkPasswordAndUpdate,
+    loginGoogleApi, getUserById, forgotPassword, verifyResetPasswordToken, resetPassword
 } from '~/services/user/userService'
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { getUserById } from '~/services/user/userService'
-import { loginGoogleApi } from '~/services/user/userService'
 import { updateUser } from '~/Redux/reducers/userReducer'
 
 export const useLoginUser = (options = {}) => {
@@ -30,6 +29,27 @@ export const useLoginGoogle = ({ onSuccess, onError }) => {
         mutationFn: loginGoogleApi,
         onSuccess,
         onError,
+    })
+}
+
+export const useForgotPassword = (options = {}) => {
+    return useMutation({
+        mutationFn: (email) => forgotPassword(email),
+        ...options,
+    })
+}
+
+export const useVerifyResetPasswordToken = (options = {}) => {
+    return useMutation({
+        mutationFn: (token) => verifyResetPasswordToken(token),
+        ...options,
+    })
+}
+
+export const useResetPassword = (options = {}) => {
+    return useMutation({
+        mutationFn: ({ token, newPassword }) => resetPassword(token, newPassword),
+        ...options,
     })
 }
 

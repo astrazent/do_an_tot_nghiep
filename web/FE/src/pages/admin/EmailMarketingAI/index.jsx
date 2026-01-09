@@ -123,7 +123,6 @@ const EmailAI = () => {
                 formData.append(`customers[${index}][name]`, customer.name)
                 formData.append(`customers[${index}][email]`, customer.email)
             })
-
             await createEmailMarketing(formData)
 
             // Thành công: hiển thị alert success (sẽ tự reset form)

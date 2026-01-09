@@ -3,7 +3,7 @@ import axios from 'axios'
 export const getListProduct = async data => {
     try {
         const response = await axios.get(
-            'http://localhost:2082/v1/products/list',
+            'http://localhost:2000/v1/products/list',
             {
                 params: { limit: data.limit, offset: data.offset },
             }
@@ -23,7 +23,7 @@ export const updateProduct = async data => {
 
     try {
         const response = await axios.patch(
-            `http://localhost:2082/v1/products/${productId}`,
+            `http://localhost:2000/v1/products/${productId}`,
             updateData
         )
         return response.data
@@ -39,7 +39,7 @@ export const updateProduct = async data => {
 export const createProduct = async data => {
     try {
         const response = await axios.post(
-            `http://localhost:2082/v1/products`,
+            `http://localhost:2000/v1/products`,
             data
         )
         return response.data
@@ -51,7 +51,7 @@ export const createProduct = async data => {
 export const deleteProduct = async data => {
     try {
         const response = await axios.delete(
-            `http://localhost:2082/v1/products`,
+            `http://localhost:2000/v1/products`,
             {
                 params: { productId: data.productId },
             }
@@ -65,7 +65,7 @@ export const deleteProduct = async data => {
 export const getListCategory = async () => {
     try {
         const response = await axios.get(
-            `http://localhost:2082/v1/category/list`
+            `http://localhost:2000/v1/category/list`
         )
         return response.data
     } catch (error) {
@@ -76,7 +76,7 @@ export const getListCategory = async () => {
 export const getImageforProduct = async productId => {
     try {
         const response = await axios.get(
-            `http://localhost:2082/v1/product_image/by_product`,
+            `http://localhost:2000/v1/product_image/by_product`,
             { params: { productId: productId } }
         )
         return response.data
@@ -87,7 +87,7 @@ export const getImageforProduct = async productId => {
 
 export const getProductById = async productId => {
     try {
-        const response = await axios.get(`http://localhost:2082/v1/products`, {
+        const response = await axios.get(`http://localhost:2000/v1/products`, {
             params: { productId: productId },
         })
         return response.data
@@ -99,7 +99,7 @@ export const getProductById = async productId => {
 export const createProductImage = async data => {
     try {
         const response = await axios.post(
-            `http://localhost:2082/v1/product_image`,
+            `http://localhost:2000/v1/product_image`,
             data
         )
         return response.data
@@ -111,7 +111,7 @@ export const createProductImage = async data => {
 export const updateProductImage = async (imageId, data) => {
     try {
         const response = await axios.patch(
-            `http://localhost:2082/v1/product_image/${imageId}`,
+            `http://localhost:2000/v1/product_image/${imageId}`,
             data
         )
         return response.data
@@ -123,7 +123,7 @@ export const updateProductImage = async (imageId, data) => {
 export const deleteProductImage = async imageId => {
     try {
         const response = await axios.delete(
-            `http://localhost:2082/v1/product_image`,
+            `http://localhost:2000/v1/product_image`,
             { params: { imageId: imageId } }
         )
         return response.data
@@ -135,7 +135,7 @@ export const deleteProductImage = async imageId => {
 export const getInventoryDashboard = async () => {
     try {
         const response = await axios.get(
-            `http://localhost:2082/v1/products/inventory_dashboard`
+            `http://localhost:2000/v1/products/inventory_dashboard`
         )
         return response.data
     } catch (error) {
@@ -146,7 +146,7 @@ export const getInventoryDashboard = async () => {
 export const getSoldProductChartByYear = async (year) => {
     try {
         const response = await axios.get(
-            `http://localhost:2082/v1/products/sold_product_chart_by_year`,
+            `http://localhost:2000/v1/products/sold_product_chart_by_year`,
             { params: { year: year } }
         )
         return response.data
@@ -158,7 +158,7 @@ export const getSoldProductChartByYear = async (year) => {
 export const getProductStockByCategory = async () => {
     try {
         const response = await axios.get(
-            `http://localhost:2082/v1/products/product_stock_by_category`
+            `http://localhost:2000/v1/products/product_stock_by_category`
         )
         return response.data
     } catch (error) {
@@ -169,7 +169,7 @@ export const getProductStockByCategory = async () => {
 export const getUnsoldProductsThisMonth = async () => {
     try {
         const response = await axios.get(
-            `http://localhost:2082/v1/products/unsold_products_this_month`
+            `http://localhost:2000/v1/products/unsold_products_this_month`
         )
         return response.data
     } catch (error) {
@@ -180,7 +180,7 @@ export const getUnsoldProductsThisMonth = async () => {
 export const getTop5Customers = async () => {
     try {
         const response = await axios.get(
-            `http://localhost:2082/v1/products/top_5_customers`
+            `http://localhost:2000/v1/products/top_5_customers`
         )
         return response.data
     } catch (error) {

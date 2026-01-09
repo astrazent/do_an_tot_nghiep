@@ -3,7 +3,7 @@ import axios from 'axios'
 export const getDashboardSummary = async data => {
     try {
         const response = await axios.get(
-            'http://localhost:2082/v1/user/dashboard_summary',
+            'http://localhost:2000/v1/user/dashboard_summary',
             {
                 params: { startDate: data.startDate, endDate: data.endDate },
             }
@@ -17,7 +17,7 @@ export const getDashboardSummary = async data => {
 
 export const getListUser = async data => {
     try {
-        const response = await axios.get('http://localhost:2082/v1/user/list', {
+        const response = await axios.get('http://localhost:2000/v1/user/list', {
             params: { limit: data.limit, offset: data.offset },
         })
         return response.data
@@ -29,7 +29,7 @@ export const getListUser = async data => {
 
 export const getListCustomerByType = async (data) => {
     try {
-        const response = await axios.get('http://localhost:2082/v1/user/customer_type', {
+        const response = await axios.get('http://localhost:2000/v1/user/customer_type', {
             params: { minSpending: data.minSpending },
         })
         return response.data
@@ -41,7 +41,7 @@ export const getListCustomerByType = async (data) => {
 
 export const getByIdUser = async data => {
     try {
-        const response = await axios.get('http://localhost:2082/v1/user', {
+        const response = await axios.get('http://localhost:2000/v1/user', {
             params: { userId: data.userId },
         })
         return response.data
@@ -53,7 +53,7 @@ export const getByIdUser = async data => {
 
 export const deleteUser = async data => {
     try {
-        const response = await axios.delete('http://localhost:2082/v1/user', {
+        const response = await axios.delete('http://localhost:2000/v1/user', {
             params: { userId: data.userId },
         })
         return response.data

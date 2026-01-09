@@ -24,10 +24,6 @@ function RevenueAnalysis() {
         endDate: dayjs().format('YYYY-MM-DD HH:mm:ss'),
     })
 
-    useEffect(() => {
-        // console.log("DateRange changed:", dateRange)
-    }, [dateRange])
-
     return (
         <div className="bg-gray-100 min-h-screen flex flex-col gap-6">
             
