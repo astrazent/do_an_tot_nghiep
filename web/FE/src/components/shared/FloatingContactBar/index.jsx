@@ -195,7 +195,7 @@ const FloatingContactBar = () => {
         setInputText('')
 
         createMessageMutation.mutate(content, {
-            onSuccess: () => {
+            onSettled: () => {
                 queryClient.invalidateQueries({ queryKey: ['conversations'] })
             },
         })
