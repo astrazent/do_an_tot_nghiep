@@ -77,23 +77,21 @@ class ChatBot:
             results['multi'] = self.query_translation.multi_query(query, history, k=multi_k) if multi_k > 0 else []
             end = time.time()
             timings['multi'] = end - start
-            print("[multi] kết thúc")
-
+            print("[multi] Kết thúc, kết quả:", results['multi'], f"(thời gian: {timings['multi']:.3f}s)")
         def run_decomp():
             print("[decomp] bắt đầu")
             start = time.time()
             results['decomp'] = self.query_translation.decomposition(query, k=decomposition_k) if decomposition_k > 0 else []
             end = time.time()
             timings['decomp'] = end - start
-            print("[decomp] kết thúc")
-
+            print("[decomp] Kết thúc, kết quả:", results['decomp'], f"(thời gian: {timings['decomp']:.3f}s)")
         def run_hyde():
             print("[hyde] bắt đầu")
             start = time.time()
             results['hyde'] = [self.query_translation.HyDE(query)]
             end = time.time()
             timings['hyde'] = end - start
-            print("[hyde] kết thúc")
+            print("[hyde] Kết thúc, kết quả:", results['hyde'], f"(thời gian: {timings['hyde']:.3f}s)")
 
         # Chạy song song 3 tác vụ
         with ThreadPoolExecutor(max_workers=3) as executor:
@@ -113,6 +111,7 @@ class ChatBot:
             queries.extend(results.get('hyde', []))
 
         print("Thời gian thực hiện từng task (s):", timings)
+        print("")
 
         return queries[:k_query]
 
@@ -126,43 +125,39 @@ class ChatBot:
             results.extend(retriever.multi_query(queries, top_k=self.top_k))
         return results
 
-    def limit_docs_by_chars(self, docs, max_chars=3000):
-        out = []
-        length = 0
-        for d in docs:
-            c = d.page_content
-            if length + len(c) > max_chars:
-                break
-            out.append(c)
-            length += len(c)
-        return "\n\n".join(out)
-
     def mmr_engine(self, question: str, history_messages: list[str]) -> str:
         history_text = "\n".join(history_messages[-10:]) if len(history_messages) > 10 else "\n".join(history_messages)
-
+        print(f"[mmr_engine] History messages ({len(history_messages)}):\n{history_text}\n")
         start = time.perf_counter()
         queries = self.translate_query(question, history_text, k_query=6)
         end = time.perf_counter()
-        print(f"translate_query time: {end - start:.4f}s")
+        print(f"[mmr_engine] translate_query time: {end - start:.4f}s")
+        print(f"[mmr_engine] Queries sinh ra ({len(queries)}): {queries}\n")
 
         start = time.perf_counter()
         routing = self.router.routing_document(queries)
         end = time.perf_counter()
-        print(f"routing_document time: {end - start:.4f}s")
-
+        print(f"[mmr_engine] routing_document time: {end - start:.4f}s")
+        print("[mmr_engine] Routing chi tiết:")
+        for ds_slug, qs in routing.items():
+            print(f"  Datasource '{ds_slug}' có {len(qs)} query: {qs}")
+        print("")
         start = time.perf_counter()
         documents = self.retrival(routing)
         end = time.perf_counter()
-        print(f"retrival time: {end - start:.4f}s")
-        
+        print(f"[mmr_engine] retrival time: {end - start:.4f}s")
+        print(f"[mmr_engine] Tổng số tài liệu tìm được: {len(documents)}")
+        for i, doc in enumerate(documents[:10]):  # chỉ show tối đa 10 doc đầu tiên
+            print(f"  Doc {i+1}: {getattr(doc, 'title', 'No title')} / {getattr(doc, 'content', str(doc))[:100]}...") 
+        if len(documents) > 5:
+            print(f"  ... và {len(documents)-5} tài liệu khác\n")
         print("--------------------------")
         for ds_slug, qs in routing.items():
             print(f"có {len(qs)} câu hỏi thuộc về {ds_slug}")
         print(f"tìm được tổng cộng {len(documents)} tài liệu")
         print("--------------------------\n")
 
-        context = self.limit_docs_by_chars(documents, 3000)
-
+        context = "\n\n".join([d.page_content for d in documents])
         template = """
         Bạn là một chuyên gia tư vấn sản phẩm của Bếp Sạch Việt – website chuyên cung cấp các đặc sản vùng miền.
 
@@ -553,11 +548,17 @@ class ChatBot:
 
     # --- Hàm chính chat ---
     def chat(self, question: str, history_messages: list[str], conversation_id: str) -> str:
+        print(f"[chat] Nhận câu hỏi: {question}")
+        print(f"[chat] Lịch sử ({len(history_messages)} messages): {history_messages}\n")
         stat_check = self.is_stat_question(question, history_messages).lower()
+        print(f"[chat] Loại câu hỏi (stat_check): {stat_check}\n")
         if stat_check == "yes":
             # Xử lý câu hỏi thống kê
+            print("[chat] Xử lý câu hỏi thống kê")
             answer = self.statistic_answer(question, self.run_redis_query(question))
+            print(f"[chat] Kết quả thống kê trả về: {answer}\n")
         elif stat_check == "order":
+            print("[chat] Xử lý đặt hàng")
             answer = self.prepare_order(history_messages, question, conversation_id)
 
             # Nếu order_data là dict và có key "order_data" lồng trong, lấy ra
@@ -565,9 +566,11 @@ class ChatBot:
                 order_data = answer.get("order_data")
                 if isinstance(order_data, dict) and "order_data" in order_data:
                     answer["order_data"] = order_data["order_data"]
-
             answer = json.dumps(answer, ensure_ascii=False)
+            print(f"[chat] Kết quả đặt hàng trả về: {answer}")
         else:
+            print("[chat] Xử lý câu hỏi chung")
             # MMR engine tự xử lý toàn bộ và trả về answer
             answer = self.mmr_engine(question, history_messages)
+            print(f"[chat] Kết quả MMR engine trả về: {answer}\n")
         return answer
