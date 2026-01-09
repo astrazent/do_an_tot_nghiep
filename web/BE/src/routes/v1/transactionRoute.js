@@ -10,7 +10,6 @@ Router.route('/').post(
 )
 
 Router.route('/chatbot').post(
-    transactionValidation.validateTransaction,
     transactionController.addChatBotTransaction
 )
 
