@@ -1,11 +1,14 @@
 import express from 'express'
 import { productController } from '~/controllers/productController'
+import { productValidation } from '~/validations/productValidation.js'
 import { upload, uploadCloudinary } from '~/middlewares/uploadCloudinary'
+
 const Router = express.Router()
 
 Router.route('/').post(
     upload.array('images', 10),
     uploadCloudinary,
+    productValidation.validateCreateProduct,
     productController.createProduct
 )
 
@@ -37,7 +40,10 @@ Router.route('/search_by_category').get(productController.getSearchByCategory)
 
 Router.route('/search').get(productController.getSearchProduct)
 
-Router.route('/:productId').patch(productController.updateProduct)
+Router.route('/:productId').patch(
+    productValidation.validateUpdateProduct,
+    productController.updateProduct
+)
 
 Router.route('/').delete(productController.deleteProduct)
 

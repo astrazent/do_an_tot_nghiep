@@ -8,6 +8,7 @@ import {
     FiShoppingCart,
     FiEye,
     FiTrash2,
+    FiDollarSign, // Thêm icon tiền tệ
 } from 'react-icons/fi'
 
 import OrderDetailPopup from '../OrderDetailPopup'
@@ -22,20 +23,21 @@ import {
 import { formatCurrency } from '~/utils/formatCurrency'
 import Alert from '~/components/shared/Alert'
 
-// Skeleton Loading Row
+// Skeleton Loading Row - Đã cập nhật layout grid
 const SkeletonRow = () => (
     <div className="grid grid-cols-12 gap-4 px-6 py-4 border-b border-gray-100 animate-pulse">
         <div className="col-span-2"><div className="h-4 bg-gray-200 rounded w-full"></div></div>
         <div className="col-span-2"><div className="h-4 bg-gray-200 rounded w-3/4"></div></div>
-        <div className="col-span-2"><div className="h-4 bg-gray-200 rounded w-2/3"></div></div>
-        <div className="col-span-2"><div className="h-4 bg-gray-200 rounded w-full"></div></div>
-        <div className="col-span-2"><div className="h-6 bg-gray-200 rounded-full w-20"></div></div>
+        <div className="col-span-1"><div className="h-4 bg-gray-200 rounded w-2/3"></div></div>
         <div className="col-span-1"><div className="h-4 bg-gray-200 rounded w-full"></div></div>
+        <div className="col-span-2"><div className="h-6 bg-gray-200 rounded-full w-20"></div></div>
+        <div className="col-span-2"><div className="h-6 bg-gray-200 rounded-full w-20"></div></div>
+        <div className="col-span-1"><div className="h-6 bg-gray-200 rounded-full w-20"></div></div>
         <div className="col-span-1 flex justify-center"><div className="h-8 w-8 bg-gray-200 rounded"></div></div>
     </div>
 )
 
-// Dropdown Status
+// Dropdown Status (Giữ nguyên)
 const DropdownStatus = ({ value, onChange }) => {
     const [open, setOpen] = useState(false)
     const ref = useRef()
@@ -93,7 +95,7 @@ const DropdownStatus = ({ value, onChange }) => {
     )
 }
 
-// Order Status Badge
+// Order Status Badge (Giữ nguyên)
 const OrderStatus = ({ status }) => {
     const getStyle = () => {
         switch (status) {
@@ -122,46 +124,22 @@ const OrderStatus = ({ status }) => {
     )
 }
 
-// Shipment Status Badge
+// Shipment Status Badge (Giữ nguyên)
 const ShipmentStatus = ({ status }) => {
     const getStyle = () => {
         switch (status?.toLowerCase()) {
             case 'pending':
-                return {
-                    classes: 'bg-yellow-50 text-yellow-700',
-                    dot: 'bg-yellow-500',
-                    label: 'Chờ xử lý',
-                };
+                return { classes: 'bg-yellow-50 text-yellow-700', dot: 'bg-yellow-500', label: 'Chờ xử lý' };
             case 'shipped':
-                return {
-                    classes: 'bg-indigo-50 text-indigo-700',
-                    dot: 'bg-indigo-500',
-                    label: 'Đã giao cho vận chuyển',
-                };
+                return { classes: 'bg-indigo-50 text-indigo-700', dot: 'bg-indigo-500', label: 'Đã giao VC' }; // Rút gọn label một chút cho vừa
             case 'in_transit':
-                return {
-                    classes: 'bg-blue-50 text-blue-700',
-                    dot: 'bg-blue-500',
-                    label: 'Đang vận chuyển',
-                };
+                return { classes: 'bg-blue-50 text-blue-700', dot: 'bg-blue-500', label: 'Đang giao' };
             case 'delivered':
-                return {
-                    classes: 'bg-emerald-50 text-emerald-700',
-                    dot: 'bg-emerald-500',
-                    label: 'Đã giao',
-                };
+                return { classes: 'bg-emerald-50 text-emerald-700', dot: 'bg-emerald-500', label: 'Đã giao' };
             case 'returned':
-                return {
-                    classes: 'bg-orange-50 text-orange-700',
-                    dot: 'bg-orange-500',
-                    label: 'Đã trả lại',
-                };
+                return { classes: 'bg-orange-50 text-orange-700', dot: 'bg-orange-500', label: 'Đã trả lại' };
             default:
-                return {
-                    classes: 'bg-gray-100 text-gray-600',
-                    dot: 'bg-gray-400',
-                    label: status || 'N/A',
-                };
+                return { classes: 'bg-gray-100 text-gray-600', dot: 'bg-gray-400', label: status || 'N/A' };
         }
     };
 
@@ -175,7 +153,34 @@ const ShipmentStatus = ({ status }) => {
     );
 };
 
-// Actions Dropdown
+// --- MỚI: Payment Status Badge ---
+const PaymentStatus = ({ status }) => {
+    const getStyle = () => {
+        switch (status?.toLowerCase()) {
+            case 'paid':
+                return { classes: 'bg-emerald-50 text-emerald-700', dot: 'bg-emerald-500', label: 'Đã thanh toán' };
+            case 'pending':
+                return { classes: 'bg-yellow-50 text-yellow-700', dot: 'bg-yellow-500', label: 'Chờ thanh toán' };
+            case 'failed':
+                return { classes: 'bg-red-50 text-red-700', dot: 'bg-red-500', label: 'Thất bại' };
+            case 'refund':
+                return { classes: 'bg-purple-50 text-purple-700', dot: 'bg-purple-500', label: 'Hoàn tiền' };
+            default:
+                return { classes: 'bg-gray-100 text-gray-600', dot: 'bg-gray-400', label: status || 'N/A' };
+        }
+    };
+
+    const { classes, dot, label } = getStyle();
+
+    return (
+        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${classes}`}>
+            <span className={`w-1.5 h-1.5 rounded-full mr-1.5 ${dot}`}></span>
+            {label}
+        </span>
+    );
+};
+
+// Actions Dropdown (Giữ nguyên)
 const ActionsDropdown = ({ onViewDetail, onUpdateStatus, onDelete }) => {
     const [open, setOpen] = useState(false)
     const ref = useRef(null)
@@ -233,7 +238,7 @@ const ActionsDropdown = ({ onViewDetail, onUpdateStatus, onDelete }) => {
     )
 }
 
-// Modal xác nhận xóa
+// ConfirmDeleteModal (Giữ nguyên)
 const ConfirmDeleteModal = ({ isOpen, onClose, onConfirm, orderCode }) => {
     if (!isOpen) return null
 
@@ -476,13 +481,15 @@ const OrdersTable = () => {
 
             {/* Data Table */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden pb-4">
+                {/* Header Table - Đã điều chỉnh col-span cho phù hợp 12 cột */}
                 <div className="grid grid-cols-12 gap-4 px-6 py-4 bg-gray-50 border-b border-gray-100 text-xs font-semibold text-gray-500 uppercase tracking-wider">
                     <div className="col-span-2 text-center">Mã đơn hàng</div>
                     <div className="col-span-2 text-center">Người nhận</div>
-                    <div className="col-span-2 text-center">Ngày đặt</div>
+                    <div className="col-span-1 text-center">Ngày đặt</div>
                     <div className="col-span-1 text-center">Tổng tiền</div>
                     <div className="col-span-2 text-center">Trạng thái</div>
                     <div className="col-span-2 text-center">Vận chuyển</div>
+                    <div className="col-span-1 text-center">Thanh toán</div> {/* Cột mới */}
                     <div className="col-span-1 text-center">Thao tác</div>
                 </div>
 
@@ -499,9 +506,9 @@ const OrdersTable = () => {
                                     <div className="font-medium text-gray-900 text-sm">{order.raw.tracking_number}</div>
                                 </div>
                                 <div className="col-span-2">
-                                    <div className="text-sm text-gray-700 font-medium">{order.raw.deli_name}</div>
+                                    <div className="text-sm text-gray-700 font-medium truncate">{order.raw.deli_name}</div>
                                 </div>
-                                <div className="col-span-2">
+                                <div className="col-span-1">
                                     <div className="text-sm text-gray-700 text-center">{order.raw.created_at?.split('T')[0]}</div>
                                 </div>
                                 <div className="col-span-1">
@@ -512,6 +519,10 @@ const OrdersTable = () => {
                                 </div>
                                 <div className="col-span-2 text-center">
                                     <ShipmentStatus status={order.raw.shipment_status} />
+                                </div>
+                                {/* Column Payment Status */}
+                                <div className="col-span-1 text-center">
+                                    <PaymentStatus status={order.raw.payment_status} />
                                 </div>
                                 <div className="col-span-1 flex items-center justify-center">
                                     {deletingId === order.raw.id ? (

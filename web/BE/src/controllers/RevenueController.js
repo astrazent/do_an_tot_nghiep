@@ -75,7 +75,9 @@ const getRevenueByPaymentMethod = async (req, res, next) => {
 
 const getRevenueByShipmentMethod = async (req, res, next) => {
     try {
-        const result = await RevenueService.getRevenueByShipmentMethod(req.query)
+        const result = await RevenueService.getRevenueByShipmentMethod(
+            req.query
+        )
         return res.status(StatusCodes.OK).json({
             message: 'Lấy data thành công',
             data: result,
@@ -92,5 +94,5 @@ export const RevenueController = {
     getRevenueByCategory,
     getProductRevenueList,
     getRevenueByPaymentMethod,
-    getRevenueByShipmentMethod
+    getRevenueByShipmentMethod,
 }

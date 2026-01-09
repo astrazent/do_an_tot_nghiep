@@ -46,7 +46,6 @@ const DropdownMenu = ({ order, onViewDetails, onCancel }) => {
 }
 
 const ActionDropdown = ({ order, onViewDetails, onCancel }) => {
-    console.log('check: ', order)
     return (
         <div className="relative group flex justify-end">
             <button

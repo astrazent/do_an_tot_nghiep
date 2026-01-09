@@ -3,7 +3,6 @@ import Joi from 'joi'
 
 const BOARDS_TABLE_NAME = 'Boards'
 
-// Schema validate dữ liệu board
 const BOARDS_SCHEMA = Joi.object({
     title: Joi.string().min(3).max(255).required().messages({
         'string.empty': 'Title không được để trống',
@@ -30,10 +29,6 @@ const BoardsModel = {
         )
         return rows[0]
     },
-
-    /** ===============================
-     * 2. TOTAL USERS (FILTER)
-     * =============================== */
     async getTotalUsers({ startDate, endDate }) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -46,10 +41,6 @@ const BoardsModel = {
         )
         return rows[0]
     },
-
-    /** ===============================
-     * 3. TOTAL STOCK (NO FILTER)
-     * =============================== */
     async getTotalStock() {
         const conn = getConnection()
         const [rows] = await conn.execute(`
@@ -59,9 +50,6 @@ const BoardsModel = {
         return rows[0]
     },
 
-    /** ===============================
-     * 4. MONTHLY REVENUE (FILTER)
-     * =============================== */
     async getMonthlyRevenue({ startDate, endDate }) {
         const conn = getConnection()
         const [rows] = await conn.execute(
@@ -69,16 +57,12 @@ const BoardsModel = {
         SELECT COALESCE(SUM(amount) - SUM(shipping_fee), 0) AS total_revenue
         FROM Transactions
         WHERE status = 'completed'
-          AND updated_at BETWEEN ? AND ?
+        AND updated_at BETWEEN ? AND ?
         `,
             [startDate, endDate]
         )
         return rows[0]
     },
-
-    /** ===============================
-     * 5. TOP BUYING CUSTOMERS (FILTER)
-     * =============================== */
     async getTopCustomers({ startDate, endDate }) {
         const conn = getConnection()
 
@@ -162,10 +146,6 @@ const BoardsModel = {
 
         return rows
     },
-
-    /** ==========================================
-     * 6. BEST SELLING PRODUCT (FILTER)
-     * ========================================== */
     async getBestSellingProduct({ startDate, endDate }) {
         const conn = getConnection()
 
@@ -191,9 +171,6 @@ const BoardsModel = {
         return rows[0] || null
     },
 
-    /** ==========================================
-     * 7. ORDER COUNT BY STATUS (FILTER)
-     * ========================================== */
     async getOrderCountByStatus({ startDate, endDate }) {
         const conn = getConnection()
 
@@ -223,10 +200,6 @@ const BoardsModel = {
             total_orders: r.total_orders,
         }))
     },
-
-    /** ===============================
-     * OTHER FUNCTIONS — KEEP ORIGINAL
-     * =============================== */
 
     async getNewUsersByMonths() {
         const conn = getConnection()

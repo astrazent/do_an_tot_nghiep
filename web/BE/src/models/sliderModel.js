@@ -92,22 +92,18 @@ const SlidersModel = {
         return result.affectedRows > 0
     },
 
-    async listSliders(status = null, sort = 'desc') {
+    async listSliders(sort = 'desc') {
         const conn = getConnection()
-        let sql = `SELECT * FROM ${SLIDERS_TABLE_NAME}`
-        const params = []
-
-        if (status !== null) {
-            sql += ' WHERE status = ?'
-            params.push(status)
-        }
 
         const order = sort === 'asc' ? 'ASC' : 'DESC'
+        const sql = `
+        SELECT *
+        FROM ${SLIDERS_TABLE_NAME}
+        WHERE status = 1
+        ORDER BY created_at ${order}
+    `
 
-        // Chỉ sắp xếp theo ngày tạo
-        sql += ` ORDER BY created_at ${order}`
-
-        const [rows] = await conn.execute(sql, params)
+        const [rows] = await conn.execute(sql)
         return rows
     },
 }

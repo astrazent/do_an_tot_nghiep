@@ -1,12 +1,24 @@
 import express from 'express'
 import { commentController } from '../../controllers/commentController.js'
 import { verifyToken } from '~/middlewares/authMiddleware.js'
+import { uploadCloudinary, upload } from '~/middlewares/uploadCloudinary'
+import { commentValidation } from '~/validations/commentValidation.js'
+
 const Router = express.Router()
 
-Router.route('/').post(verifyToken, commentController.createComment)
+Router.route('/').post(
+    verifyToken,
+    upload.array('images', 4),
+    uploadCloudinary,
+    commentValidation.validateCreateComment,
+    commentController.createComment
+)
 
 Router.route('/by_product_slug').post(
     verifyToken,
+    upload.array('images', 4),
+    uploadCloudinary,
+    commentValidation.validateCreateComment,
     commentController.createCommentByProductSlug
 )
 
@@ -22,10 +34,17 @@ Router.route('/by_product_slug').get(commentController.getCommentByProductSlug)
 
 Router.route('/by_user').get(commentController.getListCommentByUser)
 
-Router.route('/').patch(verifyToken, commentController.updateComment)
+Router.route('/').patch(
+    verifyToken,
+    commentValidation.validateUpdateComment,
+    commentController.updateComment
+)
 
 Router.route('/by_product_slug').patch(
     verifyToken,
+    upload.array('images', 4),
+    uploadCloudinary,
+    commentValidation.validateUpdateComment,
     commentController.updateCommentByUserAndProduct
 )
 

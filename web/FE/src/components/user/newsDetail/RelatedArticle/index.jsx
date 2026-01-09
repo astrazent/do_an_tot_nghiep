@@ -20,7 +20,6 @@ const RelatedArticle = ({ title = 'Bài viết liên quan', articles = [] }) => 
     }
 
     if (!articles || articles.length === 0) return null
-
     return (
         <section className="pt-14">
             <div className="pt-8 border-t">
@@ -37,6 +36,7 @@ const RelatedArticle = ({ title = 'Bài viết liên quan', articles = [] }) => 
                             image={article.image}
                             title={article.title}
                             date={article.date}
+                            slug={article.slug}
                             hoverEffect={false}
                             imageHeight="h-40"
                         />

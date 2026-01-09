@@ -3,8 +3,10 @@ import { StatusCodes } from 'http-status-codes'
 
 const createProduct = async (req, res, next) => {
     try {
-
-        const data = await productService.createProductService(req.body, req.uploadedImageUrls)
+        const data = await productService.createProductService(
+            req.body,
+            req.uploadedImageUrls
+        )
         return res.status(StatusCodes.OK).json({
             message: 'Sản phẩm đã được tạo thành công',
             data,
@@ -198,7 +200,9 @@ const getInventoryDashboard = async (req, res, next) => {
 
 const getSoldProductChartByYear = async (req, res, next) => {
     try {
-        const data = await productService.getSoldProductChartByYear(req.query.year)
+        const data = await productService.getSoldProductChartByYear(
+            req.query.year
+        )
         return res.status(StatusCodes.OK).json({
             message: 'Lấy data thành công',
             data,
@@ -210,7 +214,9 @@ const getSoldProductChartByYear = async (req, res, next) => {
 
 const getProductStockByCategory = async (req, res, next) => {
     try {
-        const data = await productService.getProductStockByCategory(req.query.year)
+        const data = await productService.getProductStockByCategory(
+            req.query.year
+        )
         return res.status(StatusCodes.OK).json({
             message: 'Lấy data thành công',
             data,

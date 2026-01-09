@@ -2,6 +2,8 @@ import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import Home from '~/pages/user/Home'
 import Login from '~/pages/user/Login'
 import Register from '~/pages/user/Register'
+import ForgotPassword from '~/pages/user/ForgotPassword'
+import ResetPassword from '~/pages/user/ResetPassword'
 import Profile from '~/pages/user/Profile'
 import Cart from '~/pages/user/Cart'
 import Product from '~/pages/user/Product'
@@ -50,6 +52,8 @@ export const userRoutes = [
             { path: '/', element: <Home /> },
             { path: '/login', element: <Login /> },
             { path: '/register', element: <Register /> },
+            { path: '/forgot-password', element: <ForgotPassword /> },
+            { path: '/reset-password', element: <ResetPassword /> },
             { path: '/about-us', element: <AboutUs /> },
             { path: '/recruitment', element: <Recruitment /> },
             { path: '/contact', element: <Contact /> },

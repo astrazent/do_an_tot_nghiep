@@ -83,7 +83,6 @@ const UsersModel = {
             abortEarly: false,
         })
         if (error) throw error
-        console.log('Creating user with data:', data)
         const conn = getConnection()
         const [result] = await conn.execute(
             `INSERT INTO ${USERS_TABLE_NAME} 
@@ -119,6 +118,15 @@ const UsersModel = {
             [id]
         )
         return rows[0] || null
+    },
+
+    async resetPassword(userId, passwordHash) {
+        const conn = getConnection()
+        await conn.execute(
+            `UPDATE ${USERS_TABLE_NAME} SET password_hash = ? WHERE id = ?`,
+            [passwordHash, userId]
+        )
+        return this.getUserById(userId)
     },
 
     async updateUser(id, data) {
@@ -194,14 +202,14 @@ const UsersModel = {
             `
         WITH
 
-        /* 1. Người dùng mới */
+        
         new_users AS (
             SELECT id
             FROM Users
             WHERE created_at BETWEEN ? AND ?
         ),
 
-        /* 2. Đơn hàng trong thời gian lọc */
+        
         filtered_orders AS (
             SELECT t.*
             FROM Transactions t
@@ -209,19 +217,19 @@ const UsersModel = {
               AND t.updated_at BETWEEN ? AND ?
         ),
 
-        /* 3. Người dùng tạo ra đơn hàng */
+        
         users_with_orders AS (
             SELECT DISTINCT user_id
             FROM filtered_orders
         ),
 
-        /* 4. Tính doanh thu tổng */
+        
         revenue_sum AS (
             SELECT COALESCE(SUM(amount - shipping_fee), 0) AS total_revenue
             FROM filtered_orders
         ),
 
-        /* 5. Khách mới mua lần đầu trong thời gian lọc */
+        
         first_time_buyers AS (
             SELECT o.user_id
             FROM filtered_orders o
@@ -233,7 +241,7 @@ const UsersModel = {
             GROUP BY o.user_id
         ),
 
-        /* 6. Khách quay lại */
+        
         returning_customers AS (
             SELECT o.user_id
             FROM filtered_orders o

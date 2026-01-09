@@ -7,7 +7,7 @@ export const env = {
     DB_USER: process.env.DB_USER || 'root',
     DB_PASSWORD: process.env.DB_PASSWORD || '',
     DB_NAME: process.env.DB_NAME || 'bep_sach_viet',
-    APP_PORT: process.env.APP_PORT || 2082,
+    APP_PORT: process.env.APP_PORT || 2000,
     APP_HOST: process.env.APP_HOST || 'localhost',
     BUILD_MODE: process.env.BUILD_MODE || 'development',
     JWT_SECRET: process.env.JWT_SECRET || 'bepsachviet123',
@@ -24,4 +24,8 @@ export const env = {
     VNP_TMN_CODE: process.env.VNP_TMN_CODE,
     VNP_RETURN_URL: process.env.VNP_RETURN_URL,
     VNP_HASH_SECRET: process.env.VNP_HASH_SECRET,
+    EMAIL_USER: process.env.EMAIL_USER,
+    EMAIL_PASS: process.env.EMAIL_PASS,
+    RESET_PASSWORD_SECRET: process.env.RESET_PASSWORD_SECRET,
+    RESET_PASSWORD_EXPIRES: process.env.RESET_PASSWORD_EXPIRES,
 }

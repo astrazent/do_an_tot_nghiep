@@ -70,7 +70,7 @@ services:
             - ./web/be:/app
             - /app/node_modules
         healthcheck:
-            test: ["CMD", "curl", "-f", "http://localhost:2000/v1/ping"]
+            test: ["CMD", "curl", "-f", "http://localhost:2082/v1/ping"]
             interval: 5s
             timeout: 5s
             retries: 8

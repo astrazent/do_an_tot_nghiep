@@ -4,6 +4,7 @@ import Joi from 'joi'
 const COMMENTS_TABLE = 'Comments'
 const USERS_TABLE = 'Users'
 const PRODUCTS_TABLE = 'Products'
+const COMMENTIMAGES_TABLE = 'CommentImages'
 
 const COMMENTS_SCHEMA = Joi.object({
     rate: Joi.number().integer().min(1).max(5).required().messages({
@@ -32,6 +33,14 @@ const COMMENTS_SCHEMA = Joi.object({
         'number.base': 'Dislikes phải là số',
         'number.min': 'Dislikes không thể âm',
     }),
+    images: Joi.array()
+        .items(
+            Joi.string().uri().messages({
+                'string.uri': 'Mỗi phần tử trong images phải là URL hợp lệ',
+                'string.base': 'Mỗi phần tử trong images phải là chuỗi',
+            })
+        )
+        .default([]),
 })
 
 const CommentsModel = {
@@ -40,14 +49,27 @@ const CommentsModel = {
             abortEarly: false,
         })
         if (error) throw error
-
         const conn = getConnection()
         const [result] = await conn.execute(
             `INSERT INTO ${COMMENTS_TABLE} (rate, content, product_id, user_id) VALUES (?, ?, ?, ?)`,
             [value.rate, value.content, value.product_id, value.user_id]
         )
+        const commentId = result.insertId
+        if (
+            data.images &&
+            Array.isArray(data.images) &&
+            data.images.length > 0
+        ) {
+            const insertImagesQuery = `INSERT INTO ${COMMENTIMAGES_TABLE} (comment_id, image_url) VALUES ?`
+            const imagesValues = data.images.map(url => [commentId, url])
 
-        return { id: result.insertId, ...value }
+            await conn.query(insertImagesQuery, [imagesValues])
+        }
+        return {
+            id: commentId,
+            ...value,
+            images: data.images || [],
+        }
     },
 
     async createCommentByUserAndProduct(data) {
@@ -61,8 +83,22 @@ const CommentsModel = {
             `INSERT INTO ${COMMENTS_TABLE} (rate, content, product_id, user_id) VALUES (?, ?, ?, ?)`,
             [value.rate, value.content, value.product_id, value.user_id]
         )
+        const commentId = result.insertId
+        if (
+            data.images &&
+            Array.isArray(data.images) &&
+            data.images.length > 0
+        ) {
+            const insertImagesQuery = `INSERT INTO ${COMMENTIMAGES_TABLE} (comment_id, image_url) VALUES ?`
+            const imagesValues = data.images.map(url => [commentId, url])
+            await conn.query(insertImagesQuery, [imagesValues])
+        }
 
-        return { id: result.insertId, ...value }
+        return {
+            id: commentId,
+            ...value,
+            images: data.images || [],
+        }
     },
 
     async getCommentById(id) {
@@ -76,16 +112,53 @@ const CommentsModel = {
 
     async updateCommentByUserAndProduct(user_id, product_id, data) {
         const conn = getConnection()
-        const { content, rate } = data
+        const { content, rate, newImages, keep_image_ids } = data
 
-        const [result] = await conn.execute(
-            `UPDATE ${COMMENTS_TABLE} 
-            SET content = ?, rate = ?, updated_at = CURRENT_TIMESTAMP 
-            WHERE user_id = ? AND product_id = ?`,
-            [content, rate, user_id, product_id]
-        )
+        try {
+            const [result] = await conn.execute(
+                `UPDATE ${COMMENTS_TABLE}
+                SET content = ?, rate = ?, updated_at = CURRENT_TIMESTAMP
+                WHERE user_id = ? AND product_id = ?`,
+                [content, rate, user_id, product_id]
+            )
 
-        return result.affectedRows > 0
+            if (result.affectedRows === 0) return false
+
+            const [rows] = await conn.execute(
+                `SELECT id FROM ${COMMENTS_TABLE} WHERE user_id = ? AND product_id = ?`,
+                [user_id, product_id]
+            )
+
+            const commentId = rows[0]?.id
+            if (!commentId) return false
+
+            if (!Array.isArray(keep_image_ids) || keep_image_ids.length === 0) {
+                await conn.execute(
+                    `DELETE FROM ${COMMENTIMAGES_TABLE} WHERE comment_id = ?`,
+                    [commentId]
+                )
+            } else {
+                const placeholders = keep_image_ids.map(() => '?').join(',')
+                await conn.execute(
+                    `DELETE FROM ${COMMENTIMAGES_TABLE}
+                    WHERE comment_id = ?
+                    AND id NOT IN (${placeholders})`,
+                    [commentId, ...keep_image_ids]
+                )
+            }
+
+            if (newImages && newImages.length > 0) {
+                const imageValues = newImages.map(url => [commentId, url])
+                await conn.query(
+                    `INSERT INTO ${COMMENTIMAGES_TABLE} (comment_id, image_url) VALUES ?`,
+                    [imageValues]
+                )
+            }
+
+            return true
+        } catch (error) {
+            throw error
+        }
     },
 
     async updateComment(id, data) {
@@ -178,7 +251,6 @@ const CommentsModel = {
         const [rows] = await conn.execute(
             `
         SELECT 
-            -- Comment info
             c.id, 
             c.rate, 
             c.content, 
@@ -186,27 +258,46 @@ const CommentsModel = {
             c.dislikes,
             c.created_at, 
             c.updated_at, 
-            
-            -- User info
+
             u.id AS user_id,
             u.username,
             u.full_name,
             u.avatar_url,
 
-            -- Product info
             p.id AS product_id,
             p.name AS product_name,
-            p.slug AS product_slug
-            
-        FROM ${COMMENTS_TABLE} AS c
-        INNER JOIN ${PRODUCTS_TABLE} AS p ON c.product_id = p.id
-        INNER JOIN ${USERS_TABLE} AS u ON c.user_id = u.id
+            p.slug AS product_slug,
+
+            COALESCE(
+                JSON_ARRAYAGG(
+                    CASE 
+                        WHEN ci.id IS NOT NULL THEN
+                            JSON_OBJECT(
+                                'id', ci.id,
+                                'url', ci.image_url
+                            )
+                    END
+                ),
+                JSON_ARRAY()
+            ) AS images
+        FROM ${COMMENTS_TABLE} c
+        INNER JOIN ${PRODUCTS_TABLE} p ON c.product_id = p.id
+        INNER JOIN ${USERS_TABLE} u ON c.user_id = u.id
+        LEFT JOIN ${COMMENTIMAGES_TABLE} ci ON ci.comment_id = c.id
         WHERE c.user_id = ? AND c.product_id = ?
+        GROUP BY c.id
         ORDER BY c.created_at DESC
         `,
             [user_id, product_id]
         )
-        return rows
+
+        return rows.map(row => ({
+            ...row,
+            images:
+                typeof row.images === 'string'
+                    ? JSON.parse(row.images)
+                    : row.images,
+        }))
     },
 
     async getCommentsByUser(user_id) {

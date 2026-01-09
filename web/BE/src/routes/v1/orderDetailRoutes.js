@@ -1,5 +1,5 @@
 import express from 'express'
-import { getOrderDetail } from '../../controllers/oderDetailController.js'
+import { getOrderDetail } from '~/controllers/oderDetailController.js'
 
 const router = express.Router()
 

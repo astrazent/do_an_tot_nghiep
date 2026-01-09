@@ -1,9 +1,17 @@
-import { CouponsModel } from '~/models/couponModel'
+import { CouponsModel, CouponScopesModel } from '~/models/couponModel'
 import { StatusCodes } from 'http-status-codes'
 import ApiError from '~/utils/ApiError'
 
 const createCouponService = async data => {
+    const { product_ids } = data.product_ids
     const coupon = await CouponsModel.createCoupon(data)
+    product_ids.forEach(async product_id => {
+        await CouponScopesModel.createCouponScope({
+            coupon_id: coupon.id,
+            scope_type: data.scope_type,
+            product_id: product_id,
+        })
+    })
     return coupon
 }
 

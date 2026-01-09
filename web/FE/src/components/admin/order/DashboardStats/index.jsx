@@ -115,8 +115,6 @@ const DashboardStats = () => {
         fetchData()
     }, [])
 
-    console.log(data)
-
     const formatProcessingTime = minutes => {
         if (!minutes) return '0m'
         const h = Math.floor(minutes / 60)

@@ -3,7 +3,10 @@ import { StatusCodes } from 'http-status-codes'
 
 const createComment = async (req, res, next) => {
     try {
-        const data = await commentService.createCommentService(req.body)
+        const data = await commentService.createCommentService(
+            req.body,
+            req.uploadedImageUrls
+        )
         return res.status(StatusCodes.OK).json({
             message: 'Tạo mới comment thành công',
             data,
@@ -19,8 +22,10 @@ const createCommentByProductSlug = async (req, res, next) => {
         if (!user_id) throw new Error('Không xác định được user')
         const data = { ...req.body, user_id }
 
-        const comment =
-            await commentService.createCommentByProductSlugService(data)
+        const comment = await commentService.createCommentByProductSlugService(
+            data,
+            req.uploadedImageUrls
+        )
 
         return res.status(StatusCodes.OK).json({
             message: 'Tạo mới comment thành công',
@@ -139,7 +144,14 @@ const updateCommentByUserAndProduct = async (req, res, next) => {
     try {
         const user_id = req.user.user_id
         const slug = req.query.slug
-        const data = req.body
+
+        const rawData = req.body
+        const newImages = req.uploadedImageUrls ? req.uploadedImageUrls : []
+        const data = {
+            ...rawData,
+            newImages: newImages,
+        }
+
         const updatedComment =
             await commentService.updateCommentByUserAndProductService({
                 user_id,

@@ -30,7 +30,6 @@ const DiscountsModel = {
             abortEarly: false,
         })
         if (error) throw error
-        console.log(value)
         const conn = getConnection()
         const [result] = await conn.execute(
             `INSERT INTO ${DISCOUNTS_TABLE_NAME} 

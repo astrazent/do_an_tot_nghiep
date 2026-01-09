@@ -18,7 +18,6 @@ const createProductService = async (body, images) => {
             })
             await Promise.all(imagePromises)
         }
-    
     } catch (error) {
         await ProductsModel.deleteProduct(product.id)
         throw error
@@ -294,7 +293,7 @@ const getInventoryDashboard = async () => {
     return data
 }
 
-const getSoldProductChartByYear = async (year) => {
+const getSoldProductChartByYear = async year => {
     const data = await ProductsModel.getSoldProductChartByYear(year)
     return data
 }
@@ -331,5 +330,5 @@ export const productService = {
     getSoldProductChartByYear,
     getProductStockByCategory,
     getUnsoldProductsThisMonth,
-    getTop5Customers
+    getTop5Customers,
 }

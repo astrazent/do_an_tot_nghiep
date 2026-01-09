@@ -2,7 +2,7 @@ import express from 'express'
 import { boardController } from '~/controllers/boardController'
 const Router = express.Router()
 
-Router.route('/total_products_sold').get(boardController.totalProductsSold) 
+Router.route('/total_products_sold').get(boardController.totalProductsSold)
 
 Router.route('/total_users').get(boardController.totalUsers)
 
@@ -22,15 +22,25 @@ Router.route('/new_users_by_months').get(boardController.NewUsersByMonths)
 
 Router.route('/revenue_by_category').get(boardController.RevenueByCategory)
 
-Router.route('/revenue_by_paymentMethod').get(boardController.RevenueByPaymentMethod)
+Router.route('/revenue_by_paymentMethod').get(
+    boardController.RevenueByPaymentMethod
+)
 
-Router.route('/revenue_by_shipmentMethod').get(boardController.RevenueByShipmentMethod)
+Router.route('/revenue_by_shipmentMethod').get(
+    boardController.RevenueByShipmentMethod
+)
 
-Router.route('/returning_customer_rate').get(boardController.getReturningCustomerRate)
+Router.route('/returning_customer_rate').get(
+    boardController.getReturningCustomerRate
+)
 
-Router.route('/customer_conversion_rate').get(boardController.getCustomerConversionRate)
+Router.route('/customer_conversion_rate').get(
+    boardController.getCustomerConversionRate
+)
 
-Router.route('/order_conversion_rate').get(boardController.getOrderConversionRate)
+Router.route('/order_conversion_rate').get(
+    boardController.getOrderConversionRate
+)
 
 Router.route('/cancel_refund_rate').get(boardController.getCancelRefundRate)
 

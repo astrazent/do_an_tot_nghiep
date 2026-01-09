@@ -83,8 +83,6 @@ const BlogCreateNew = () => {
                         ...prev,
                         [imageDataUrl]: { file, display_order: id }
                     }))
-
-                    console.log('Đã chèn ảnh:', id, file.name)
                 }
                 reader.readAsDataURL(file)
             }
@@ -100,7 +98,6 @@ const BlogCreateNew = () => {
                     input.onchange = () => {
                         const file = input.files?.[0]
                         if (file) {
-                            console.log('Chọn ảnh từ toolbar:', file.name)
                             handleImageUpload(file)
                         }
                     }
@@ -122,7 +119,6 @@ const BlogCreateNew = () => {
                     images.forEach(item => {
                         const file = item.getAsFile()
                         if (file) {
-                            console.log('Paste/drop ảnh:', file.name)
                             handleImageUpload(file)
                         }
                     })
@@ -199,9 +195,6 @@ const BlogCreateNew = () => {
             const imgRegex = new RegExp(`<img[^>]*src="${escapedUrl}"[^>]*>`, 'g')
             processedContent = processedContent.replace(imgRegex, placeholder)
         })
-
-        console.log('Content sau khi xử lý:', processedContent)
-
         const fd = new FormData()
         fd.append('title', title)
         fd.append('slug', slug)

@@ -17,6 +17,7 @@ const Profile = () => {
         province: '',
         district: '',
         ward: '',
+        avatar_url:'',
     })
     const { showAlert } = useAlert()
     const [avatarPreview, setAvatarPreview] = useState('')
@@ -86,6 +87,7 @@ const Profile = () => {
                 province: provinceId,
                 district: districtId,
                 ward: wardId,
+                avatar_url: user.avatar_url ?? ''
             })
 
             if (user.avatar_url) {
@@ -214,12 +216,15 @@ const Profile = () => {
             city: selectedProvince?.Name || '',
             district: selectedDistrict?.Name || '',
             ward: selectedWard?.Name || '',
+            avatar_url: profile.avatar_url,
             provider: 'local',
         }
 
         const formData = new FormData()
         Object.keys(dataToUpdate).forEach(key => {
-            formData.append(key, dataToUpdate[key])
+            if(dataToUpdate[key] !== null && dataToUpdate[key] !== undefined) {
+                formData.append(key, dataToUpdate[key])
+            }
         })
 
         if (avatarFile) {

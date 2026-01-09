@@ -1,17 +1,10 @@
-/**
- * Chức năng: Chứa các business logic (nghiệp vụ chính), tách riêng khỏi controller
- * Tạo file mới:
- *   - Khi có entity cần xử lý logic phức tạp (UserService.js, ProductService.js, OrderService.js)
- *   - Khi có chức năng chung cần tái sử dụng nhiều nơi (AuthService.js, ReportService.js)
- */
-
 import { BoardsModel } from '~/models/boardModel'
-const totalProductsSold = async (date) => {
+const totalProductsSold = async date => {
     const result = await BoardsModel.getTotalProductsSold(date)
     return result
 }
 
-const totalUsers = async (date) => {
+const totalUsers = async date => {
     const result = await BoardsModel.getTotalUsers(date)
     return result
 }
@@ -21,7 +14,7 @@ const totalInventory = async () => {
     return result
 }
 
-const monthlyRevenue = async (date) => {
+const monthlyRevenue = async date => {
     const result = await BoardsModel.getMonthlyRevenue(date)
     return result
 }
@@ -31,22 +24,22 @@ const yearRevenue = async (year) => {
     return result
 }
 
-const FinancialData = async (date) => {
+const FinancialData = async date => {
     const result = await BoardsModel.getFinancialData(date)
     return result
 }
 
-const topBuyingCustomers = async (date) => {
+const topBuyingCustomers = async date => {
     const result = await BoardsModel.getTopCustomers(date)
     return result
 }
 
-const topBuyedProduct = async (date) => {
+const topBuyedProduct = async date => {
     const result = await BoardsModel.getBestSellingProduct(date)
     return result
 }
 
-const OrderCountByStatus = async (date) => {
+const OrderCountByStatus = async date => {
     const result = await BoardsModel.getOrderCountByStatus(date)
     return result
 }
@@ -71,31 +64,30 @@ const RevenueByShipmentMethod = async () => {
     return result
 }
 
-const getReturningCustomerRate = async (date) => {
+const getReturningCustomerRate = async date => {
     const result = await BoardsModel.getReturningCustomerRate(date)
     return result
 }
 
-const getCustomerConversionRate = async (date) => {
+const getCustomerConversionRate = async date => {
     const result = await BoardsModel.getCustomerConversionRate(date)
     return result
 }
 
-const getOrderConversionRate = async (date) => {
+const getOrderConversionRate = async date => {
     const result = await BoardsModel.getOrderConversionRate(date)
     return result
 }
 
-const getCancelRefundRate = async (date) => {
+const getCancelRefundRate = async date => {
     const result = await BoardsModel.getCancelRefundRate(date)
     return result
 }
 
-const getRevenueByLocation = async (date) => {
+const getRevenueByLocation = async date => {
     const result = await BoardsModel.getRevenueByLocation(date)
     return result
 }
-
 
 export const boardService = {
     totalProductsSold,
@@ -115,5 +107,5 @@ export const boardService = {
     getCustomerConversionRate,
     getOrderConversionRate,
     getCancelRefundRate,
-    getRevenueByLocation
+    getRevenueByLocation,
 }

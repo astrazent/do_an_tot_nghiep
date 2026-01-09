@@ -11,7 +11,7 @@ DROP TABLE IF EXISTS Sliders;
 DROP TABLE IF EXISTS DiscountProducts;
 DROP TABLE IF EXISTS Discounts;
 DROP TABLE IF EXISTS CartItems;
-DROP TABLE IF EXISTS CouponsProducts;
+DROP TABLE IF EXISTS CouponProducts;
 DROP TABLE IF EXISTS Coupons;
 DROP TABLE IF EXISTS Products;
 DROP TABLE IF EXISTS Tokens;
@@ -226,9 +226,9 @@ CREATE TABLE
     INDEX idx_coupons_status (status)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- CouponScopes
+-- CouponProducts
 CREATE TABLE 
-    CouponsProducts (
+    CouponProducts (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     coupon_id INT UNSIGNED NOT NULL,
     product_id INT UNSIGNED NULL,

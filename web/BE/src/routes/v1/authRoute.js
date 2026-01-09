@@ -23,4 +23,8 @@ Router.route('/logout').post(authController.logout)
 
 Router.route('/verify').get(verifyToken, authController.validateToken)
 
+Router.route('/forgot-password').post(authController.forgotPassword)
+Router.route('/reset-password/verify').get(authController.verifyResetToken)
+Router.route('/reset-password').post(authController.resetPassword)
+
 export default Router

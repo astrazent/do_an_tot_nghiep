@@ -207,7 +207,6 @@ export const getRelatedProducts = async (slug, limit = 8) => {
         })
 
         const data = response.data.data || { sameCategory: [], coBought: [] }
-
         return {
             sameCategory: Array.isArray(data.sameCategory)
                 ? data.sameCategory.map(transformProductData)

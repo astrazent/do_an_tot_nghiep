@@ -54,7 +54,6 @@ const marketingPost = async file => {
 
 const marketingEmail = async (data, uploadedImageUrls) => {
     if (!N8N_Email_URL) throw new Error('Missing N8N_Email_URL')
-    console.log(data.customers)
     const payload = {
         customers: data.customers ?? [],
         message: data.message ?? '',
@@ -87,7 +86,6 @@ const marketingEmail = async (data, uploadedImageUrls) => {
             )
         }
 
-        // Sau khi parse thành công mới check status
         if (!res.ok) {
             throw new Error(
                 `n8n responded ${res.status}: ${JSON.stringify(json)}`

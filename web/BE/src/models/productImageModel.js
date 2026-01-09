@@ -74,8 +74,6 @@ const ProductImagesModel = {
 
         try {
             await conn.beginTransaction()
-
-            // 1. Lấy product_id từ ảnh được chọn
             const [image] = await conn.execute(
                 `SELECT product_id FROM ${PRODUCT_IMAGES_TABLE_NAME} WHERE id = ?`,
                 [imageId]
@@ -84,14 +82,11 @@ const ProductImagesModel = {
             if (!image[0]) throw new Error('Không tìm thấy ảnh')
 
             const productId = image[0].product_id
-
-            // 2. Đặt tất cả ảnh của sản phẩm về is_main = 0
             await conn.execute(
                 `UPDATE ${PRODUCT_IMAGES_TABLE_NAME} SET is_main = 0 WHERE product_id = ?`,
                 [productId]
             )
 
-            // 3. Đặt ảnh được chọn thành is_main = 1
             await conn.execute(
                 `UPDATE ${PRODUCT_IMAGES_TABLE_NAME} SET is_main = 1 WHERE id = ?`,
                 [imageId]
