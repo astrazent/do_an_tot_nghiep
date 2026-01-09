@@ -7,6 +7,8 @@ const Router = express.Router()
 
 Router.route('/').get(verifyToken, cartItemController.getCartItems)
 
+Router.route('/by_id').get(cartItemController.getCartItemsById)
+
 Router.route('/by_product').get(
     verifyToken,
     cartItemController.getCartItemByProduct

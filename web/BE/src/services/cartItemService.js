@@ -126,6 +126,20 @@ const getCartItemByProductService = async (productId, userId = null) => {
     return cartItem
 }
 
+const getCartItemsById = async (cartItemId) => {
+    console.log('Fetching cart item by ID:', cartItemId);
+    const cartItem = await CartItemsModel.getCartItemById(cartItemId)
+
+    if (!cartItem) {
+        throw new ApiError(
+            StatusCodes.NOT_FOUND,
+            'Không tìm thấy sản phẩm trong giỏ hàng'
+        )
+    }
+
+    return cartItem
+}
+
 export const cartItemService = {
     getCartItemsService,
     addCartItemsService,
@@ -133,4 +147,5 @@ export const cartItemService = {
     deleteCartByUserService,
     getCartItemByProductService,
     updateQuantityCartItemsService,
+    getCartItemsById
 }

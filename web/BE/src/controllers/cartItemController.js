@@ -19,6 +19,18 @@ const getCartItems = async (req, res, next) => {
     }
 }
 
+const getCartItemsById = async (req, res, next) => {
+    try {
+        const data = await cartItemService.getCartItemsById(req.query.cartItemId)
+        return res.status(StatusCodes.OK).json({
+            message: 'Lấy giỏ hàng thành công',
+            data,
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
 const addCartItems = async (req, res, next) => {
     try {
         const userId = req.query.userId
@@ -128,4 +140,5 @@ export const cartItemController = {
     deleteCartItems,
     deleteCartByUser,
     updateQuantityCartItems,
+    getCartItemsById
 }

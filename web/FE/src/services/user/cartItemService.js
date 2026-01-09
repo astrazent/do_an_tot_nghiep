@@ -1,3 +1,4 @@
+import axios from 'axios'
 import api from './api'
 
 const transformCartItem = cartItem => {
@@ -36,6 +37,17 @@ export const getCartItemsByUser = async userId => {
             error.response?.data || error.message
         )
         return []
+    }
+}
+
+export const getCartItemsById = async cartItemId => {
+    try {
+        const response = await axios.get(`http://localhost:2082/v1/cart/by_id`, {
+            params: { cartItemId: cartItemId },
+        })
+        return response.data
+    } catch (error) {
+        throw error
     }
 }
 
