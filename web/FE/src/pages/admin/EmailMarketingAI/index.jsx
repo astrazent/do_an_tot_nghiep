@@ -269,7 +269,7 @@ const EmailAI = () => {
                         disabled={loading || customers.length === 0}
                         className="w-full bg-[#166534] text-white py-4 rounded-lg font-semibold text-base hover:from-green-700 hover:to-green-900 disabled:opacity-60 transition-all shadow-md"
                     >
-                        {loading ? 'Đang gửi...' : 'Gửi Email Marketing'}
+                        {loading ? 'Đang gửi, quá trình có thể mất 1 - 2 phút tùy vào kích thước file...' : 'Gửi Email Marketing'}
                     </button>
                 </form>
             </div>

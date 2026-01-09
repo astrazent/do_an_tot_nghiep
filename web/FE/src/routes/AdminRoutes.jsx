@@ -24,7 +24,7 @@ import Cookies from 'js-cookie'
 
 const ProtectedAdmin = ({ children }) => {
     const location = useLocation()
-    const accessToken = Cookies.get('access_token')
+    const accessToken = Cookies.get('access_token_admin')
 
     if (location.pathname === '/admin/login') {
         return children

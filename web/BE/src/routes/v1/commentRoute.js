@@ -18,7 +18,6 @@ Router.route('/by_product_slug').post(
     verifyToken,
     upload.array('images', 4),
     uploadCloudinary,
-    commentValidation.validateCreateComment,
     commentController.createCommentByProductSlug
 )
 

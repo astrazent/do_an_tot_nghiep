@@ -15,7 +15,7 @@ const Header = ({ onMenuClick }) => {
 
     // Hàm xử lý đăng xuất
     const handleLogout = () => {
-        Cookies.remove('access_token') // Xóa token khỏi cookie
+        Cookies.remove('access_token_admin') // Xóa token khỏi cookie
         navigate('/admin/login', { replace: true })
     }
 

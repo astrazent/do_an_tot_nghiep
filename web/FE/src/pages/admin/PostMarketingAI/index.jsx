@@ -202,7 +202,7 @@ const PostMarketingAI = () => {
                                 className="w-full bg-[#166534] hover:bg-[#134d2a] disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-semibold text-lg py-4 px-8 rounded-xl shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-3"
                             >
                                 {loading ? (
-                                    <>Đang xử lý...</>
+                                    <>Đang xử lý, quá trình có thể mất 1 - 2 phút tùy vào kích thước file...</>
                                 ) : (
                                     <>
                                         Gửi file và đăng bài
