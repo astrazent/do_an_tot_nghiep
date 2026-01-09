@@ -92,8 +92,13 @@ export const useCreateCommentByProductSlug = slugParam => {
         mutationFn: data => createCommentByProductSlug(data),
 
         onSuccess: () => {
-            const queryKey = ['comments', 'by_slug', slug]
-            queryClient.invalidateQueries({ queryKey })
+            queryClient.invalidateQueries({
+                queryKey: ['comments', 'by_slug', slug],
+            })
+
+            queryClient.invalidateQueries({
+                queryKey: ['product', 'by_slug', slug],
+            })
         },
 
         onError: err => {

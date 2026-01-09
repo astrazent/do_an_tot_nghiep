@@ -49,7 +49,6 @@ Router.route('/by_shipment_status').get(
 )
 
 Router.route('/').patch(
-    transactionValidation.validateTransaction,
     transactionController.updateTransaction
 )
 

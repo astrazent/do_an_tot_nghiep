@@ -18,25 +18,25 @@ const ReturnPageVNPay = () => {
     const orderState = useSelector(state => state.order)
     const paymentData = searchParams.has('vnp_TxnRef')
         ? {
-              success: searchParams.get('success') === 'true',
-              code: searchParams.get('code') || '',
-              message: searchParams.get('message') || '',
-              data: {
-                  vnp_Amount: searchParams.get('vnp_Amount') || '',
-                  vnp_BankCode: searchParams.get('vnp_BankCode') || '',
-                  vnp_BankTranNo: searchParams.get('vnp_BankTranNo') || '',
-                  vnp_CardType: searchParams.get('vnp_CardType') || '',
-                  vnp_OrderInfo: searchParams.get('vnp_OrderInfo') || '',
-                  vnp_PayDate: searchParams.get('vnp_PayDate') || '',
-                  vnp_ResponseCode: searchParams.get('vnp_ResponseCode') || '',
-                  vnp_TmnCode: searchParams.get('vnp_TmnCode') || '',
-                  vnp_TransactionNo:
-                      searchParams.get('vnp_TransactionNo') || '',
-                  vnp_TransactionStatus:
-                      searchParams.get('vnp_TransactionStatus') || '',
-                  vnp_TxnRef: searchParams.get('vnp_TxnRef') || '',
-              },
-          }
+            success: searchParams.get('success') === 'true',
+            code: searchParams.get('code') || '',
+            message: searchParams.get('message') || '',
+            data: {
+                vnp_Amount: searchParams.get('vnp_Amount') || '',
+                vnp_BankCode: searchParams.get('vnp_BankCode') || '',
+                vnp_BankTranNo: searchParams.get('vnp_BankTranNo') || '',
+                vnp_CardType: searchParams.get('vnp_CardType') || '',
+                vnp_OrderInfo: searchParams.get('vnp_OrderInfo') || '',
+                vnp_PayDate: searchParams.get('vnp_PayDate') || '',
+                vnp_ResponseCode: searchParams.get('vnp_ResponseCode') || '',
+                vnp_TmnCode: searchParams.get('vnp_TmnCode') || '',
+                vnp_TransactionNo:
+                    searchParams.get('vnp_TransactionNo') || '',
+                vnp_TransactionStatus:
+                    searchParams.get('vnp_TransactionStatus') || '',
+                vnp_TxnRef: searchParams.get('vnp_TxnRef') || '',
+            },
+        }
         : null
 
     const { user, isAuthenticated, loading: userLoading } = useCurrentUser()

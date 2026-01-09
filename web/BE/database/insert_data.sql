@@ -8,7 +8,7 @@ INSERT INTO Admins (username, email, full_name, password_hash, level, descriptio
 ('superadmin', 'superadmin@example.com', 'Nguyen Van A', '$2y$10$examplehash1', 3, 'Quản trị viên cao cấp, toàn quyền trên hệ thống', 1),
 ('admin1', 'admin1@example.com', 'Tran Thi B', '$2y$10$examplehash2', 2, 'Quản lý nội dung và người dùng', 1),
 ('admin2', 'admin2@example.com', 'Le Van C', '$2y$10$examplehash3', 1, 'Hỗ trợ quản lý vận hành', 1),
-('useradmin', 'useradmin@example.com', 'Pham Thi D', '$2y$10$examplehash4', 0, 'Admin cấp thấp, quyền hạn giới hạn', 1);
+('useradmin', 'useradmin@example.com', 'Pham Thi D', '$2a$10$RMTnNJ0gnaUirk7/PnepmusCA8.vZtad.Ty7iBz6/niY9je8Q9y1m', 0, 'Admin cấp thấp, quyền hạn giới hạn', 1);
 
 -- Dữ liệu mẫu cho PostTypes
 INSERT INTO PostTypes (name, slug, description) VALUES
@@ -214,7 +214,7 @@ INSERT INTO Users (`username`,`password_hash`,`provider`,`provider_id`,`email`,`
 ('thuytien','$2a$10$mS3vKfM8b86QdFtAB86KQecZ13j9xg70A3h41/eZDSCSKS7fXte0O','local',NULL,'thuytien@gmail.com','0355123456','Nguyễn Thúc Thùy Tiên','female','15 Hàng Bài','Ha Noi','Quan Hoan Kiem','Phuong Hang Bai','https://cdn2.tuoitre.vn/thumb_w/480/471584752817336320/2025/4/8/csacsacs-17440821489931827411440.png',0),
 ('ngoctrinh','$2a$10$QYKYYBCSJywmw/sKSSoy2uAKJDeFfakXNbVVWzPyfCgTXdFSgYwCa','local',NULL,'ngoct rinh@gmail.com','0368246810','Ngọc Trinh','female','334 Nguyễn Trãi','Ha Noi','Quan Thanh Xuan','Phuong Thanh Xuan Trung','https://media.vov.vn/sites/default/files/styles/large/public/2024-01/ngoc_trinh.jpeg.jpg',1),
 ('quanglinh','$2a$10$o9mNPculqAv1YtdLhVuIKu3oOVv9nf0aTKK2ABmi6GXSd88YVyqxq','local',NULL,'quanglinh@gmail.com','0918777888','Phạm Quang Linh','male','18 Lý Thường Kiệt','Ha Noi','Quan Hoan Kiem','Phuong Phan Chu Trinh','https://images2.thanhnien.vn/quang-linh-vlog.jpg',1),
-('nnn','$2a$10$RMTnNJ0gnaUirk7/PnepmusCA8.vZtad.Ty7iBz6/niY9je8Q9y1m','local',NULL,'hoailinh@gmail.com','0918777882','Hoài Linh','male','18 Lý Thường Kiệt','Thành phố Hà Nội','Quận Thanh Xuân','Phường Thanh Xuân Bắc','https://kenh14cdn.com/hoai-linh.jpg',1);
+('nnn','$2a$10$RMTnNJ0gnaUirk7/PnepmusCA8.vZtad.Ty7iBz6/niY9je8Q9y1m','local',NULL,'hoailinh@gmail.com','0918777882','Hoài Linh','male','18 Lý Thường Kiệt','Thành phố Hà Nội','Quận Thanh Xuân','Phường Thanh Xuân Bắc','https://vcdn1-giaitri.vnecdn.net/2025/08/25/hoai-linh-top-1-1756132802-2224-1756133408.jpg?w=680&h=0&q=100&dpr=2&fit=crop&s=5x16Fw6oj-YlAEY4BEDDhg',1);
 
 -- Dữ liệu mẫu cho Tokens
 INSERT INTO Tokens (`user_id`, `refresh_token`, `device_info`, `ip_address`, `token_started_at`, `token_expired_at`, `is_revoked`, `revoked_at`) VALUES
@@ -1183,10 +1183,10 @@ INSERT INTO Shipments (name, description, base_fee, icon_url, status) VALUES
 -- Dữ liệu mẫu cho Transactions
 INSERT INTO Transactions
 (status, deli_name, deli_phone, deli_email, deli_address, deli_city, deli_district, deli_ward, message, tracking_number, shipping_fee, shipment_status, amount, shipped_at, delivered_at, user_id, payment_id, shipment_id, created_at, updated_at) VALUES
-('pending', 'Nguyen Van A', '0901234567', 'a.nguyen@example.com', '123 Le Loi', 'Ho Chi Minh', 'Quan 1', 'Phuong Ben Nghe', 'Giao giờ hành chính', 'TRK00001', 20000, 'pending', 33020000, NULL, NULL, 1, 1, 1, '2025-12-27 09:15:00', '2025-12-28 10:20:00'),
-('confirmed', 'Tran Thi B', '0902345678', 'b.tran@example.com', '456 Nguyen Trai', 'Ho Chi Minh', 'Quan 3', 'Phuong 5', 'Để hàng ở bảo vệ', 'TRK00002', 15000, 'shipped', 29515000, '2025-09-22 10:00:00', NULL, 2, 2, 2, '2025-12-26 08:00:00', '2025-12-27 09:50:00'),
-('completed', 'Le Van C', '0903456789', 'c.le@example.com', '789 Tran Hung Dao', 'Ho Chi Minh', 'Quan 5', 'Phuong 10', 'Giao nhanh nếu có thể', 'TRK00003', 22000, 'delivered', 21522000, '2025-09-23 09:00:00', '2025-09-24 14:00:00', 3, 3, 3, '2025-12-26 11:30:00', '2025-12-28 14:00:00'),
-('canceled', 'Pham Thi D', '0904567890', NULL, '1010 Cach Mang Thang 8', 'Ho Chi Minh', 'Quan Binh Thanh', 'Phuong 12', 'Không cần gọi điện', 'TRK00004', 25000, 'returned', 5500000, '2025-09-24 11:00:00', NULL, 4, 4, 4, '2025-12-27 12:00:00', '2025-12-28 09:50:00'),
+('pending', 'Nguyen Van A', '0901234567', 'a.nguyen@example.com', '123 Le Loi', 'Ho Chi Minh', 'Quan 1', 'Phuong Ben Nghe', 'Giao giờ hành chính', 'TRK00001', 20000, 'pending', 1020000, NULL, NULL, 1, 1, 1, '2025-12-27 09:15:00', '2025-12-28 10:20:00'),
+('confirmed', 'Tran Thi B', '0902345678', 'b.tran@example.com', '456 Nguyen Trai', 'Ho Chi Minh', 'Quan 3', 'Phuong 5', 'Để hàng ở bảo vệ', 'TRK00002', 15000, 'shipped', 515000, '2025-09-22 10:00:00', NULL, 2, 2, 2, '2025-12-26 08:00:00', '2025-12-27 09:50:00'),
+('completed', 'Le Van C', '0903456789', 'c.le@example.com', '789 Tran Hung Dao', 'Ho Chi Minh', 'Quan 5', 'Phuong 10', 'Giao nhanh nếu có thể', 'TRK00003', 22000, 'delivered', 220000, '2025-09-23 09:00:00', '2025-09-24 14:00:00', 3, 3, 3, '2025-12-26 11:30:00', '2025-12-28 14:00:00'),
+('canceled', 'Pham Thi D', '0904567890', NULL, '1010 Cach Mang Thang 8', 'Ho Chi Minh', 'Quan Binh Thanh', 'Phuong 12', 'Không cần gọi điện', 'TRK00004', 25000, 'returned', 700000, '2025-09-24 11:00:00', NULL, 4, 4, 4, '2025-12-27 12:00:00', '2025-12-28 09:50:00'),
 ('completed', 'Hoang Van E', '0905678901', 'e.hoang@example.com', '2020 Dien Bien Phu', 'Ho Chi Minh', 'Quan Tan Binh', 'Phuong 15', 'Giao ngoài giờ hành chính', 'TRK00005', 30000, 'delivered', 28030000, '2025-09-25 13:00:00', '2025-09-26 16:00:00', 5, 5, 1, '2025-12-26 14:00:00', '2025-12-28 16:20:00'),
 ('confirmed', 'Nguyen Van A', '0901234567', NULL, '123 Le Loi', 'Ho Chi Minh', 'Quan 1', 'Phuong Ben Nghe', 'Đóng gói cẩn thận', 'TRK00006', 15000, 'shipped', 11015000, '2025-09-26 08:00:00', NULL, 1, 2, 2, '2025-12-26 09:15:00', '2025-12-27 07:50:00'),
 ('pending', 'Tran Thi B', '0902345678', 'b.tran@example.com', '456 Nguyen Trai', 'Ho Chi Minh', 'Quan 3', 'Phuong 5', 'Giao tại cửa', 'TRK00007', 20000, 'pending', 1202000, NULL, NULL, 2, 1, 3, '2025-12-28 10:00:00', '2025-12-28 10:00:00'),

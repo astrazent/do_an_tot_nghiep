@@ -16,24 +16,22 @@ const queryClient = new QueryClient()
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID
 
 createRoot(document.getElementById('root')).render(
-    <React.StrictMode>
-        <Provider store={store}>
-            <PersistGate loading={null} persistor={persistor}>
-                <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-                    <ThemeProvider>
-                        <AlertProvider>
-                            <QueryClientProvider client={queryClient}>
-                                <SSEProvider>
-                                    <BrowserRouter>
-                                        <ScrollPageToTop />
-                                        <App />
-                                    </BrowserRouter>
-                                </SSEProvider>
-                            </QueryClientProvider>
-                        </AlertProvider>
-                    </ThemeProvider>
-                </GoogleOAuthProvider>
-            </PersistGate>
-        </Provider>
-    </React.StrictMode>
+    <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+            <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+                <ThemeProvider>
+                    <AlertProvider>
+                        <QueryClientProvider client={queryClient}>
+                            <SSEProvider>
+                                <BrowserRouter>
+                                    <ScrollPageToTop />
+                                    <App />
+                                </BrowserRouter>
+                            </SSEProvider>
+                        </QueryClientProvider>
+                    </AlertProvider>
+                </ThemeProvider>
+            </GoogleOAuthProvider>
+        </PersistGate>
+    </Provider>
 )

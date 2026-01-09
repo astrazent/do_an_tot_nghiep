@@ -21,7 +21,6 @@ const ProductDetail = ({ slug }) => {
         isError,
         error,
     } = useProductBySlug(slug)
-
     const { user, isAuthenticated } = useCurrentUser()
     const dispatch = useDispatch()
     const { showAlert } = useAlert()
@@ -117,7 +116,6 @@ const ProductDetail = ({ slug }) => {
                     ],
                     debug_mode: true,
                 })
-                console.log(Number(product.price))
             } catch (e) {
                 showAlert('Lỗi khi thêm sản phẩm vào giỏ hàng.', {
                     type: 'error',

@@ -1,32 +1,26 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useMemo } from 'react'
 import {
     FiClock,
-    FiCheckCircle,
-    FiXCircle,
     FiMoreVertical,
-    FiPackage,
-    FiChevronRight,
     FiChevronDown,
     FiSearch,
     FiFilter,
     FiShoppingCart,
-    FiX,
     FiEye,
     FiTrash2,
-    FiDollarSign, // Thêm icon tiền tệ
 } from 'react-icons/fi'
 
 import OrderDetailPopup from '../OrderDetailPopup'
 import {
-    getListTransaction,
     updateTransaction,
     getDetailTransaction,
 } from '../../../../services/admin/adminOrderService'
 
 import { formatCurrency } from '~/utils/formatCurrency'
 import Alert from '~/components/shared/Alert'
+import { useListOrder } from '~/hooks/admin/useOrder'
 
-// Skeleton Loading Row - Đã cập nhật layout grid
+// Skeleton Loading Row
 const SkeletonRow = () => (
     <div className="grid grid-cols-12 gap-4 px-6 py-4 border-b border-gray-100 animate-pulse">
         <div className="col-span-2"><div className="h-4 bg-gray-200 rounded w-full"></div></div>
@@ -40,7 +34,7 @@ const SkeletonRow = () => (
     </div>
 )
 
-// Dropdown Status (Giữ nguyên)
+// Dropdown Status
 const DropdownStatus = ({ value, onChange }) => {
     const [open, setOpen] = useState(false)
     const ref = useRef()
@@ -98,7 +92,7 @@ const DropdownStatus = ({ value, onChange }) => {
     )
 }
 
-// Order Status Badge (Giữ nguyên)
+// Order Status Badge
 const OrderStatus = ({ status }) => {
     const getStyle = () => {
         switch (status) {
@@ -127,14 +121,14 @@ const OrderStatus = ({ status }) => {
     )
 }
 
-// Shipment Status Badge (Giữ nguyên)
+// Shipment Status Badge
 const ShipmentStatus = ({ status }) => {
     const getStyle = () => {
         switch (status?.toLowerCase()) {
             case 'pending':
                 return { classes: 'bg-yellow-50 text-yellow-700', dot: 'bg-yellow-500', label: 'Chờ xử lý' };
             case 'shipped':
-                return { classes: 'bg-indigo-50 text-indigo-700', dot: 'bg-indigo-500', label: 'Đã giao VC' }; // Rút gọn label một chút cho vừa
+                return { classes: 'bg-indigo-50 text-indigo-700', dot: 'bg-indigo-500', label: 'Đã giao VC' };
             case 'in_transit':
                 return { classes: 'bg-blue-50 text-blue-700', dot: 'bg-blue-500', label: 'Đang giao' };
             case 'delivered':
@@ -156,7 +150,7 @@ const ShipmentStatus = ({ status }) => {
     );
 };
 
-// --- MỚI: Payment Status Badge ---
+// Payment Status Badge
 const PaymentStatus = ({ status }) => {
     const getStyle = () => {
         switch (status?.toLowerCase()) {
@@ -183,7 +177,7 @@ const PaymentStatus = ({ status }) => {
     );
 };
 
-// Actions Dropdown (Giữ nguyên)
+// Actions Dropdown
 const ActionsDropdown = ({ onViewDetail, onUpdateStatus, onDelete }) => {
     const [open, setOpen] = useState(false)
     const ref = useRef(null)
@@ -241,7 +235,7 @@ const ActionsDropdown = ({ onViewDetail, onUpdateStatus, onDelete }) => {
     )
 }
 
-// ConfirmDeleteModal (Giữ nguyên)
+// ConfirmDeleteModal
 const ConfirmDeleteModal = ({ isOpen, onClose, onConfirm, orderCode }) => {
     if (!isOpen) return null
 
@@ -277,13 +271,12 @@ const ConfirmDeleteModal = ({ isOpen, onClose, onConfirm, orderCode }) => {
     )
 }
 
-// Modal cập nhật trạng thái - Đã thêm Payment Status
+// Modal cập nhật trạng thái
 const UpdateStatusModal = ({ isOpen, onClose, order, onUpdate }) => {
     const [status, setStatus] = useState(order?.status || 'pending')
     const [shipmentStatus, setShipmentStatus] = useState(order?.shipment_status || 'processing')
-    const [paymentStatus, setPaymentStatus] = useState(order?.payment_status || 'pending') // Mới
+    const [paymentStatus, setPaymentStatus] = useState(order?.payment_status || 'pending')
 
-    // Cập nhật state khi order thay đổi
     useEffect(() => {
         if (order) {
             setStatus(order.status || 'pending')
@@ -295,7 +288,6 @@ const UpdateStatusModal = ({ isOpen, onClose, order, onUpdate }) => {
     if (!isOpen || !order) return null
 
     const handleSave = () => {
-        // Gửi cả payment_status lên server
         onUpdate({ 
             status, 
             shipment_status: shipmentStatus,
@@ -346,7 +338,6 @@ const UpdateStatusModal = ({ isOpen, onClose, order, onUpdate }) => {
                         </select>
                     </div>
 
-                    {/* Thêm trường Thanh toán */}
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
                             Trạng thái thanh toán
@@ -384,10 +375,9 @@ const UpdateStatusModal = ({ isOpen, onClose, order, onUpdate }) => {
 }
 
 const OrdersTable = () => {
-    const [orders, setOrders] = useState([])
+    // State UI
     const [selectedOrder, setSelectedOrder] = useState(null)
     const [isPopupOpen, setIsPopupOpen] = useState(false)
-    const [isLoading, setIsLoading] = useState(true)
     const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false)
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
     const [orderToDelete, setOrderToDelete] = useState(null)
@@ -402,49 +392,44 @@ const OrdersTable = () => {
         setTimeout(() => setAlert({ show: false, message: '', type: 'success' }), 2500)
     }
 
-    // Filters
+    // Filters & Pagination
     const [search, setSearch] = useState('')
     const [statusFilter, setStatusFilter] = useState('')
     const [dateFrom, setDateFrom] = useState('')
     const [dateTo, setDateTo] = useState('')
     const [limit, setLimit] = useState(100)
-    const [offset, setOffset] = useState(0)
-
-    // Pagination
+    const [offset, setOffset] = useState(0) // Nếu API hỗ trợ pagination phía server thì dùng, hiện tại code cũ đang fetch all limit 100
     const [currentPage, setCurrentPage] = useState(1)
     const itemsPerPage = 10
 
-    useEffect(() => {
-        const fetchData = async () => {
-            setIsLoading(true)
-            try {
-                const res = await getListTransaction({ limit, offset })
-                setOrders(res.data.map(t => ({ raw: t })))
-            } catch (error) {
-                console.error('Error fetching transactions:', error)
-            } finally {
-                setTimeout(() => setIsLoading(false), 300)
-            }
-        }
-        fetchData()
-    }, [limit, offset])
+    // --- REPLACED: Sử dụng Hook React Query ---
+    // Không còn state [orders, setOrders] hay [isLoading, setIsLoading] thủ công
+    const { data: ordersData, isLoading, refetch } = useListOrder({ limit, offset })
 
-    const filtered = orders.filter(o => {
-        const t = o.raw
-        const searchLower = search.toLowerCase()
+    // Transform data từ React Query sang format cũ ({ raw: t }) để tương thích với phần render bên dưới
+    const orders = useMemo(() => {
+        return ordersData ? ordersData.map(t => ({ raw: t })) : []
+    }, [ordersData])
 
-        const matchSearch =
-            t.tracking_number?.toLowerCase().includes(searchLower) ||
-            t.deli_name?.toLowerCase().includes(searchLower)
+    // --- Logic Filter Client-side (Giữ nguyên) ---
+    const filtered = useMemo(() => {
+        return orders.filter(o => {
+            const t = o.raw
+            const searchLower = search.toLowerCase()
 
-        const matchStatus = statusFilter ? t.status === statusFilter : true
+            const matchSearch =
+                t.tracking_number?.toLowerCase().includes(searchLower) ||
+                t.deli_name?.toLowerCase().includes(searchLower)
 
-        const orderDate = t.created_at?.split('T')[0]
-        const matchFrom = dateFrom ? orderDate >= dateFrom : true
-        const matchTo = dateTo ? orderDate <= dateTo : true
+            const matchStatus = statusFilter ? t.status === statusFilter : true
 
-        return matchSearch && matchStatus && matchFrom && matchTo
-    })
+            const orderDate = t.created_at?.split('T')[0]
+            const matchFrom = dateFrom ? orderDate >= dateFrom : true
+            const matchTo = dateTo ? orderDate <= dateTo : true
+
+            return matchSearch && matchStatus && matchFrom && matchTo
+        })
+    }, [orders, search, statusFilter, dateFrom, dateTo])
 
     const totalPages = Math.ceil(filtered.length / itemsPerPage)
     const currentOrders = filtered.slice(
@@ -460,7 +445,10 @@ const OrdersTable = () => {
         return [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages]
     }
 
+    // --- Handlers ---
+
     const handleViewDetails = async order => {
+        // Có thể cân nhắc dùng React Query cho chi tiết đơn hàng luôn, nhưng giữ nguyên async/await cho đơn giản ở đây
         const res = await getDetailTransaction(order.raw.id)
         setSelectedOrder(res.data)
         setIsPopupOpen(true)
@@ -474,10 +462,11 @@ const OrdersTable = () => {
     const handleSaveUpdate = async (updatedData) => {
         setUpdatingId(selectedOrder.id)
         try {
-            const res = await updateTransaction(selectedOrder.id, updatedData)
-            setOrders(prev =>
-                prev.map(o => (o.raw.id === res.data.id ? { raw: res.data } : o))
-            )
+            await updateTransaction(selectedOrder.id, updatedData)
+            
+            // Thay vì setOrders thủ công, ta gọi refetch() để lấy data mới nhất từ server
+            await refetch() 
+            
             showAlert('Cập nhật trạng thái thành công!', 'success')
         } catch (error) {
             console.error('Lỗi cập nhật trạng thái:', error)
@@ -498,10 +487,13 @@ const OrdersTable = () => {
 
         setDeletingId(orderToDelete.raw.id)
         try {
-            // Giả sử có API deleteTransaction (nếu không có thì comment phần này)
+            // Giả sử có API deleteTransaction
             // await deleteTransaction(orderToDelete.raw.id)
+            
+            // Gọi refetch() để cập nhật lại danh sách sau khi xóa
+            // await refetch()
+
             showAlert('Xóa đơn hàng thành công!', 'success')
-            setOrders(prev => prev.filter(o => o.raw.id !== orderToDelete.raw.id))
         } catch (error) {
             showAlert('Không thể xóa đơn hàng. Vui lòng thử lại.', 'error')
         } finally {
@@ -588,7 +580,7 @@ const OrdersTable = () => {
 
             {/* Data Table */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden pb-4">
-                {/* Header Table - Đã điều chỉnh col-span cho phù hợp 12 cột */}
+                {/* Header Table */}
                 <div className="grid grid-cols-12 gap-4 px-6 py-4 bg-gray-50 border-b border-gray-100 text-xs font-semibold text-gray-500 uppercase tracking-wider">
                     <div className="col-span-2 text-center">Mã đơn hàng</div>
                     <div className="col-span-2 text-center">Người nhận</div>
@@ -596,7 +588,7 @@ const OrdersTable = () => {
                     <div className="col-span-1 text-center">Tổng tiền</div>
                     <div className="col-span-2 text-center">Trạng thái</div>
                     <div className="col-span-2 text-center">Vận chuyển</div>
-                    <div className="col-span-1 text-center">Thanh toán</div> {/* Cột mới */}
+                    <div className="col-span-1 text-center">Thanh toán</div>
                     <div className="col-span-1 text-center">Thao tác</div>
                 </div>
 
@@ -627,13 +619,12 @@ const OrdersTable = () => {
                                 <div className="col-span-2 text-center">
                                     <ShipmentStatus status={order.raw.shipment_status} />
                                 </div>
-                                {/* Column Payment Status */}
                                 <div className="col-span-1 text-center">
                                     <PaymentStatus status={order.raw.payment_status} />
                                 </div>
                                 <div className="col-span-1 flex items-center justify-center">
-                                    {deletingId === order.raw.id ? (
-                                        <div className="w-8 h-8 border-2 border-red-500 border-t-transparent rounded-full animate-spin"></div>
+                                    {deletingId === order.raw.id || updatingId === order.raw.id ? (
+                                        <div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
                                     ) : (
                                         <ActionsDropdown
                                             onViewDetail={() => handleViewDetails(order)}
