@@ -389,24 +389,33 @@ INSERT INTO CartItems (qty_total, price_total, user_id, product_id) VALUES
 
 -- Dữ liệu mẫu cho Discounts
 INSERT INTO Discounts (name, description, value, start_date, end_date, status) VALUES
-('Giảm 10% mùa hè', 'Áp dụng cho tất cả đặc sản mùa hè', 10, '2025-06-01 00:00:00', '2025-08-31 23:59:59', 1),
-('Flash Sale 50k', 'Giảm trực tiếp 50.000 VND cho đơn hàng đặc sản', 50000, '2025-09-20 00:00:00', '2025-09-25 23:59:59', 1),
-('Mua 1 tặng 1', 'Chương trình mua 1 tặng 1 cho một số đặc sản chọn lọc', 100, '2025-10-01 00:00:00', '2025-10-10 23:59:59', 0),
-('Giảm 20% dịp lễ', 'Khuyến mại 20% tất cả đặc sản dịp lễ', 20, '2025-12-20 00:00:00', '2025-12-31 23:59:59', 1),
-('Free Ship 0đ', 'Miễn phí vận chuyển cho đơn hàng đặc sản', 0, '2025-09-01 00:00:00', '2025-09-30 23:59:59', 1);
+('Giảm 10% mùa hè', 'Áp dụng cho tất cả đặc sản mùa hè', 10, '2025-06-01 00:00:00', '2026-03-15 23:59:59', 1),
+('Flash Sale 50k', 'Giảm trực tiếp 50.000 VND cho đơn hàng đặc sản', 50000, '2025-09-20 00:00:00', '2026-03-15 23:59:59', 1),
+('Mua 1 tặng 1', 'Chương trình mua 1 tặng 1 cho một số đặc sản chọn lọc', 100, '2025-10-01 00:00:00', '2026-03-15 23:59:59', 0),
+('Giảm 20% dịp lễ', 'Khuyến mại 20% tất cả đặc sản dịp lễ', 20, '2025-12-20 00:00:00', '2026-03-15 23:59:59', 1),
+('Free Ship 0đ', 'Miễn phí vận chuyển cho đơn hàng đặc sản', 0, '2025-09-01 00:00:00', '2026-03-15 23:59:59', 1);
 
 -- Dữ liệu mẫu cho DiscountProducts
 INSERT INTO DiscountProducts (discount_id, product_id) VALUES
-(1, 1),
-(1, 2),
-(2, 3),
-(2, 4),
-(3, 5),
-(4, 6),
-(4, 7),
-(5, 8),
-(5, 9),
-(5, 10);
+-- Discount 1 (Sản phẩm 11 -> 29)
+(1, 11), (1, 12), (1, 13), (1, 14), (1, 15), (1, 16), (1, 17), (1, 18), (1, 19), (1, 20),
+(1, 21), (1, 22), (1, 23), (1, 24), (1, 25), (1, 26), (1, 27), (1, 28), (1, 29),
+
+-- Discount 2 (Sản phẩm 30 -> 48)
+(2, 30), (2, 31), (2, 32), (2, 33), (2, 34), (2, 35), (2, 36), (2, 37), (2, 38), (2, 39),
+(2, 40), (2, 41), (2, 42), (2, 43), (2, 44), (2, 45), (2, 46), (2, 47), (2, 48),
+
+-- Discount 3 (Sản phẩm 49 -> 67)
+(3, 49), (3, 50), (3, 51), (3, 52), (3, 53), (3, 54), (3, 55), (3, 56), (3, 57), (3, 58),
+(3, 59), (3, 60), (3, 61), (3, 62), (3, 63), (3, 64), (3, 65), (3, 66), (3, 67),
+
+-- Discount 4 (Sản phẩm 68 -> 86)
+(4, 68), (4, 69), (4, 70), (4, 71), (4, 72), (4, 73), (4, 74), (4, 75), (4, 76), (4, 77),
+(4, 78), (4, 79), (4, 80), (4, 81), (4, 82), (4, 83), (4, 84), (4, 85), (4, 86),
+
+-- Discount 5 (Sản phẩm 87 -> 105)
+(5, 87), (5, 88), (5, 89), (5, 90), (5, 91), (5, 92), (5, 93), (5, 94), (5, 95), (5, 96),
+(5, 97), (5, 98), (5, 99), (5, 100), (5, 101), (5, 102), (5, 103), (5, 104), (5, 105);
 
 -- Dữ liệu mẫu cho Sliders
 INSERT INTO Sliders (name, description, image_url, link_url, sort_order, status, start_date, end_date) VALUES
@@ -1083,15 +1092,18 @@ INSERT INTO Comments (rate, content, product_id, user_id, created_at, updated_at
 
 -- CommentImages
 INSERT INTO CommentImages (comment_id, image_url, created_at, updated_at) VALUES
--- Comment của user_id = 11 cho product_id = 1, 2, 3, 4 (giả sử comment_id là 1, 2, 3, 4)
-(1, 'https://fakeimg.pl/250x250/?text=Image1', '2025-10-11 09:00:00', '2025-10-11 09:00:00'),
-(1, 'https://fakeimg.pl/250x250/?text=Image2', '2025-10-11 09:05:00', '2025-10-11 09:05:00'),
-(2, 'https://fakeimg.pl/250x250/?text=Image3', '2025-10-11 10:00:00', '2025-10-11 10:00:00'),
-(2, 'https://fakeimg.pl/250x250/?text=Image4', '2025-10-11 10:05:00', '2025-10-11 10:05:00'),
-(2, 'https://fakeimg.pl/250x250/?text=Image5', '2025-10-11 10:10:00', '2025-10-11 10:10:00'),
-(3, 'https://fakeimg.pl/250x250/?text=Image6', '2025-10-11 11:00:00', '2025-10-11 11:00:00'),
-(4, 'https://fakeimg.pl/250x250/?text=Image7', '2025-10-11 12:00:00', '2025-10-11 12:00:00'),
-(4, 'https://fakeimg.pl/250x250/?text=Image8', '2025-10-11 12:05:00', '2025-10-11 12:05:00');
+-- Comment_id = 1
+(1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860794/BSV/rjat4fsahdstyupbxwz2.jpg', '2025-10-11 09:00:00', '2025-10-11 09:00:00'),
+(1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860795/BSV/naj45ubxqsrrijmtn4ng.jpg', '2025-10-11 09:05:00', '2025-10-11 09:05:00'),
+-- Comment_id = 2
+(2, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860796/BSV/z98ms6imec4puiiwdjlx.jpg', '2025-10-11 10:00:00', '2025-10-11 10:00:00'),
+(2, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860797/BSV/xehgsigox6yjqqzbyb1w.jpg', '2025-10-11 10:05:00', '2025-10-11 10:05:00'),
+(2, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860905/BSV/ycm3koyz7ztssg7lhtzx.jpg', '2025-10-11 10:10:00', '2025-10-11 10:10:00'),
+-- Comment_id = 3
+(3, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860906/BSV/l8gwrxklrwdh8l3i0dng.jpg', '2025-10-11 11:00:00', '2025-10-11 11:00:00'),
+-- Comment_id = 4
+(4, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860907/BSV/wpwszujjdt40fn1pi5lz.jpg', '2025-10-11 12:00:00', '2025-10-11 12:00:00'),
+(4, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860908/BSV/crm5zqbyhamji9zdouty.jpg', '2025-10-11 12:05:00', '2025-10-11 12:05:00');
 
 -- Dữ liệu mẫu bảng AIFeedback
 INSERT INTO AIFeedback (product_id, voter_id, vote, created_at, updated_at) VALUES
@@ -1183,16 +1195,16 @@ INSERT INTO Shipments (name, description, base_fee, icon_url, status) VALUES
 -- Dữ liệu mẫu cho Transactions
 INSERT INTO Transactions
 (status, deli_name, deli_phone, deli_email, deli_address, deli_city, deli_district, deli_ward, message, tracking_number, shipping_fee, shipment_status, amount, shipped_at, delivered_at, user_id, payment_id, shipment_id, created_at, updated_at) VALUES
-('pending', 'Nguyen Van A', '0901234567', 'a.nguyen@example.com', '123 Le Loi', 'Ho Chi Minh', 'Quan 1', 'Phuong Ben Nghe', 'Giao giờ hành chính', 'TRK00001', 20000, 'pending', 1020000, NULL, NULL, 1, 1, 1, '2025-12-27 09:15:00', '2025-12-28 10:20:00'),
-('confirmed', 'Tran Thi B', '0902345678', 'b.tran@example.com', '456 Nguyen Trai', 'Ho Chi Minh', 'Quan 3', 'Phuong 5', 'Để hàng ở bảo vệ', 'TRK00002', 15000, 'shipped', 515000, '2025-09-22 10:00:00', NULL, 2, 2, 2, '2025-12-26 08:00:00', '2025-12-27 09:50:00'),
-('completed', 'Le Van C', '0903456789', 'c.le@example.com', '789 Tran Hung Dao', 'Ho Chi Minh', 'Quan 5', 'Phuong 10', 'Giao nhanh nếu có thể', 'TRK00003', 22000, 'delivered', 220000, '2025-09-23 09:00:00', '2025-09-24 14:00:00', 3, 3, 3, '2025-12-26 11:30:00', '2025-12-28 14:00:00'),
-('canceled', 'Pham Thi D', '0904567890', NULL, '1010 Cach Mang Thang 8', 'Ho Chi Minh', 'Quan Binh Thanh', 'Phuong 12', 'Không cần gọi điện', 'TRK00004', 25000, 'returned', 700000, '2025-09-24 11:00:00', NULL, 4, 4, 4, '2025-12-27 12:00:00', '2025-12-28 09:50:00'),
-('completed', 'Hoang Van E', '0905678901', 'e.hoang@example.com', '2020 Dien Bien Phu', 'Ho Chi Minh', 'Quan Tan Binh', 'Phuong 15', 'Giao ngoài giờ hành chính', 'TRK00005', 30000, 'delivered', 28030000, '2025-09-25 13:00:00', '2025-09-26 16:00:00', 5, 5, 1, '2025-12-26 14:00:00', '2025-12-28 16:20:00'),
-('confirmed', 'Nguyen Van A', '0901234567', NULL, '123 Le Loi', 'Ho Chi Minh', 'Quan 1', 'Phuong Ben Nghe', 'Đóng gói cẩn thận', 'TRK00006', 15000, 'shipped', 11015000, '2025-09-26 08:00:00', NULL, 1, 2, 2, '2025-12-26 09:15:00', '2025-12-27 07:50:00'),
-('pending', 'Tran Thi B', '0902345678', 'b.tran@example.com', '456 Nguyen Trai', 'Ho Chi Minh', 'Quan 3', 'Phuong 5', 'Giao tại cửa', 'TRK00007', 20000, 'pending', 1202000, NULL, NULL, 2, 1, 3, '2025-12-28 10:00:00', '2025-12-28 10:00:00'),
-('completed', 'Le Van C', '0903456789', NULL, '789 Tran Hung Dao', 'Ho Chi Minh', 'Quan 5', 'Phuong 10', 'Nhận hàng tại văn phòng', 'TRK00008', 25000, 'delivered', 64525000, '2025-09-22 14:00:00', '2025-09-23 17:00:00', 3, 3, 4, '2025-12-27 13:00:00', '2025-12-28 16:50:00'),
-('confirmed', 'Pham Thi D', '0904567890', 'd.pham@example.com', '1010 Cach Mang Thang 8', 'Ho Chi Minh', 'Quan Binh Thanh', 'Phuong 12', 'Giao vào buổi sáng', 'TRK00009', 22000, 'shipped', 4202200, '2025-09-25 09:30:00', NULL, 4, 2, 1, '2025-12-26 08:30:00', '2025-12-28 09:20:00'),
-('completed', 'Hoang Van E', '0905678901', 'e.hoang@example.com', '2020 Dien Bien Phu', 'Ho Chi Minh', 'Quan Tan Binh', 'Phuong 15', 'Hàng fragile, cẩn thận', 'TRK00010', 30000, 'delivered', 7503000, '2025-09-24 13:00:00', '2025-09-25 15:00:00', 5, 5, 2, '2025-12-27 12:30:00', '2025-12-28 14:50:00');
+('pending', 'Nguyen Van A', '0901234567', 'a.nguyen@example.com', '123 Le Loi', 'Ho Chi Minh', 'Quan 1', 'Phuong Ben Nghe', 'Giao giờ hành chính', 'TRK00001', 20000, 'pending', 480000, NULL, NULL, 1, 1, 1, '2025-12-27 09:15:00', '2025-12-28 10:20:00'),
+('confirmed', 'Tran Thi B', '0902345678', 'b.tran@example.com', '456 Nguyen Trai', 'Ho Chi Minh', 'Quan 3', 'Phuong 5', 'Để hàng ở bảo vệ', 'TRK00002', 15000, 'shipped', 520000, '2025-09-22 10:00:00', NULL, 2, 2, 2, '2025-12-26 08:00:00', '2025-12-27 09:50:00'),
+('completed', 'Le Van C', '0903456789', 'c.le@example.com', '789 Tran Hung Dao', 'Ho Chi Minh', 'Quan 5', 'Phuong 10', 'Giao nhanh nếu có thể', 'TRK00003', 22000, 'delivered', 430000, '2025-09-23 09:00:00', '2025-09-24 14:00:00', 3, 3, 3, '2025-12-26 11:30:00', '2025-12-28 14:00:00'),
+('canceled', 'Pham Thi D', '0904567890', NULL, '1010 Cach Mang Thang 8', 'Ho Chi Minh', 'Quan Binh Thanh', 'Phuong 12', 'Không cần gọi điện', 'TRK00004', 25000, 'returned', 610000, '2025-09-24 11:00:00', NULL, 4, 4, 4, '2025-12-27 12:00:00', '2025-12-28 09:50:00'),
+('completed', 'Hoang Van E', '0905678901', 'e.hoang@example.com', '2020 Dien Bien Phu', 'Ho Chi Minh', 'Quan Tan Binh', 'Phuong 15', 'Giao ngoài giờ hành chính', 'TRK00005', 30000, 'delivered', 890000, '2025-09-25 13:00:00', '2025-09-26 16:00:00', 5, 5, 1, '2025-12-26 14:00:00', '2025-12-28 16:20:00'),
+('confirmed', 'Nguyen Van A', '0901234567', NULL, '123 Le Loi', 'Ho Chi Minh', 'Quan 1', 'Phuong Ben Nghe', 'Đóng gói cẩn thận', 'TRK00006', 15000, 'shipped', 540000, '2025-09-26 08:00:00', NULL, 1, 2, 2, '2025-12-26 09:15:00', '2025-12-27 07:50:00'),
+('pending', 'Tran Thi B', '0902345678', 'b.tran@example.com', '456 Nguyen Trai', 'Ho Chi Minh', 'Quan 3', 'Phuong 5', 'Giao tại cửa', 'TRK00007', 20000, 'pending', 470000, NULL, NULL, 2, 1, 3, '2025-12-28 10:00:00', '2025-12-28 10:00:00'),
+('completed', 'Le Van C', '0903456789', NULL, '789 Tran Hung Dao', 'Ho Chi Minh', 'Quan 5', 'Phuong 10', 'Nhận hàng tại văn phòng', 'TRK00008', 25000, 'delivered', 680000, '2025-09-22 14:00:00', '2025-09-23 17:00:00', 3, 3, 4, '2025-12-27 13:00:00', '2025-12-28 16:50:00'),
+('confirmed', 'Pham Thi D', '0904567890', 'd.pham@example.com', '1010 Cach Mang Thang 8', 'Ho Chi Minh', 'Quan Binh Thanh', 'Phuong 12', 'Giao vào buổi sáng', 'TRK00009', 22000, 'shipped', 560000, '2025-09-25 09:30:00', NULL, 4, 2, 1, '2025-12-26 08:30:00', '2025-12-28 09:20:00'),
+('completed', 'Hoang Van E', '0905678901', 'e.hoang@example.com', '2020 Dien Bien Phu', 'Ho Chi Minh', 'Quan Tan Binh', 'Phuong 15', 'Hàng fragile, cẩn thận', 'TRK00010', 30000, 'delivered', 750000, '2025-09-24 13:00:00', '2025-09-25 15:00:00', 5, 5, 2, '2025-12-27 12:30:00', '2025-12-28 14:50:00');
 
 -- Dữ liệu mẫu cho OrderItems
 INSERT INTO OrderItems (qty_total, amount_total, transaction_id, product_id) VALUES
