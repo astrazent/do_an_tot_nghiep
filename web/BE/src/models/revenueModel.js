@@ -101,8 +101,8 @@ const RevenueModel = {
         FROM months
         LEFT JOIN Transactions t
             ON MONTH(t.updated_at) = m
-           AND YEAR(t.updated_at) = ?
-           AND t.status = 'completed'
+        AND YEAR(t.updated_at) = ?
+        AND t.status = 'completed'
         GROUP BY m
         ORDER BY m;
         `,

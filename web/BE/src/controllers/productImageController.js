@@ -30,7 +30,6 @@ const createProductImage = async (req, res, next) => {
     }
 }
 
-
 const updateProductImage = async (req, res, next) => {
     try {
         const data = await productImageService.updateProductImage(
@@ -38,7 +37,7 @@ const updateProductImage = async (req, res, next) => {
             req.body
         )
         return res.status(StatusCodes.OK).json({
-            message: "Cập nhật ảnh thành công",
+            message: 'Cập nhật ảnh thành công',
             data,
         })
     } catch (error) {
@@ -49,7 +48,7 @@ const updateProductImage = async (req, res, next) => {
 const deleteProductImage = async (req, res, next) => {
     try {
         const data = await productImageService.deleteProductImage(
-            req.query.imageId,
+            req.query.imageId
         )
         return res.status(StatusCodes.OK).json({
             data,
@@ -63,5 +62,5 @@ export const productImageController = {
     getImageForProduct,
     updateProductImage,
     deleteProductImage,
-    createProductImage
+    createProductImage,
 }

@@ -1,7 +1,7 @@
 import { getConnection } from '../config/mysql.js'
 import Joi from 'joi'
 
-const COUPON_SCOPES_TABLE_NAME = 'CouponScopes'
+const COUPON_SCOPES_TABLE_NAME = 'CouponProducts'
 
 const COUPON_SCOPES_SCHEMA = Joi.object({
     coupon_id: Joi.number().integer().required(),

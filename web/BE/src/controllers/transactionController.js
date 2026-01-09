@@ -255,5 +255,5 @@ export const transactionController = {
     getOrderStats,
     getAverageProcessingTime,
     getCancelRefundRate,
-    getAverageProductRating
+    getAverageProductRating,
 }

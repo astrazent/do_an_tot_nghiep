@@ -3,7 +3,10 @@ import { StatusCodes } from 'http-status-codes'
 
 const createSlider = async (req, res, next) => {
     try {
-        const data = await sliderService.createSliderService(req.body, req.uploadedImageUrls)
+        const data = await sliderService.createSliderService(
+            req.body,
+            req.uploadedImageUrls
+        )
         return res.status(StatusCodes.OK).json({
             message: 'Tạo mới slider thành công',
             data,

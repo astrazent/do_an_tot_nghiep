@@ -207,10 +207,7 @@ const getTransactionsByUserService = async user_id => {
 const getOrderStatusOfTransaction = async () => {
     const data = await TransactionsModel.getTransactionStatusStats()
     if (!data) {
-        throw new ApiError(
-            StatusCodes.NOT_FOUND,
-            'Không tìm thấy dữ liệu'
-        )
+        throw new ApiError(StatusCodes.NOT_FOUND, 'Không tìm thấy dữ liệu')
     }
     return data
 }
@@ -305,5 +302,5 @@ export const transactionService = {
     getOrderStats,
     getAverageProcessingTime,
     getCancelRefundRate,
-    getAverageProductRating
+    getAverageProductRating,
 }

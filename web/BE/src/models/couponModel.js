@@ -2,6 +2,8 @@ import { getConnection } from '../config/mysql.js'
 import Joi from 'joi'
 
 const COUPONS_TABLE_NAME = 'Coupons'
+const COUPON_PRODUCTS_TABLE_NAME = 'CouponProducts'
+const PRODUCTS_TABLE_NAME = 'Products'
 
 const COUPONS_SCHEMA = Joi.object({
     code: Joi.string().max(50).required(),
@@ -69,14 +71,13 @@ const CouponsModel = {
             c.start_date,
             c.end_date,
             c.status,
-            cs.scope_type,
             p.id AS product_id,
             p.name AS product_name,
             p.price AS product_price,
             p.slug AS product_slug
         FROM ${COUPONS_TABLE_NAME} AS c
-        LEFT JOIN CouponScopes AS cs ON cs.coupon_id = c.id
-        LEFT JOIN Products AS p ON p.id = cs.product_id
+        LEFT JOIN ${COUPON_PRODUCTS_TABLE_NAME} AS cp ON cp.coupon_id = c.id
+        LEFT JOIN ${PRODUCTS_TABLE_NAME} AS p ON p.id = cp.product_id
         WHERE c.code = ?
         AND c.status = 1
         AND (c.start_date IS NULL OR c.start_date <= NOW())
@@ -85,7 +86,6 @@ const CouponsModel = {
         `,
             [code]
         )
-
         return rows[0] || null
     },
 
@@ -139,4 +139,10 @@ const CouponsModel = {
     },
 }
 
-export { COUPONS_TABLE_NAME, COUPONS_SCHEMA, CouponsModel }
+export {
+    COUPONS_TABLE_NAME,
+    COUPON_PRODUCTS_TABLE_NAME,
+    PRODUCTS_TABLE_NAME,
+    COUPONS_SCHEMA,
+    CouponsModel,
+}

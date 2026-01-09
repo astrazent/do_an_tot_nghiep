@@ -98,7 +98,7 @@ const CategoriesModel = {
     async listCategories() {
         const conn = getConnection()
         const [rows] = await conn.execute(
-            `SELECT * FROM ${CATEGORIES_TABLE_NAME} ORDER BY id DESC`,
+            `SELECT * FROM ${CATEGORIES_TABLE_NAME} ORDER BY id DESC`
         )
         return rows
     },

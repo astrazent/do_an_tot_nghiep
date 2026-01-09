@@ -2,6 +2,11 @@ import { getConnection } from '../config/mysql.js'
 import Joi from 'joi'
 
 const TRANSACTIONS_TABLE_NAME = 'Transactions'
+const PRODUCTS_TABLE_NAME = 'Products'
+const ORDER_ITEMS_TABLE_NAME = 'OrderItems'
+const PAYMENTS_TABLE_NAME = 'Payments'
+const SHIPMENTS_TABLE_NAME = 'Shipments'
+const COMMENTS_TABLE_NAME = 'Comments'
 
 const TRANSACTIONS_SCHEMA = Joi.object({
     status: Joi.string()
@@ -154,10 +159,10 @@ const TransactionsModel = {
         try {
             const [result] = await conn.execute(
                 `INSERT INTO ${TRANSACTIONS_TABLE_NAME}
-                (status, source, deli_name, deli_phone, deli_address, deli_email, deli_city, deli_district, deli_ward,
-                message, tracking_number, shipping_fee, shipment_status, amount, shipped_at, delivered_at,
-                user_id, payment_id, shipment_id, payment_status)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            (status, source, deli_name, deli_phone, deli_address, deli_email, deli_city, deli_district, deli_ward,
+            message, tracking_number, shipping_fee, shipment_status, amount, shipped_at, delivered_at,
+            user_id, payment_id, shipment_id, payment_status)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                 [
                     value.status,
                     value.source,
@@ -193,10 +198,33 @@ const TransactionsModel = {
                 ])
 
                 await conn.query(
-                    `INSERT INTO OrderItems (qty_total, amount_total, transaction_id, product_id)
-                    VALUES ?`,
+                    `INSERT INTO ${ORDER_ITEMS_TABLE_NAME} (qty_total, amount_total, transaction_id, product_id)
+                VALUES ?`,
                     [orderItemValues]
                 )
+                for (const item of items) {
+                    const [productRows] = await conn.execute(
+                        `SELECT stock_qty FROM ${PRODUCTS_TABLE_NAME} WHERE id = ? FOR UPDATE`,
+                        [item.product_id]
+                    )
+
+                    if (!productRows.length)
+                        throw new Error(
+                            `Sản phẩm ID ${item.product_id} không tồn tại`
+                        )
+
+                    const currentStock = productRows[0].stock_qty
+
+                    if (currentStock < item.qty_total)
+                        throw new Error(
+                            `Sản phẩm ID ${item.product_id} chỉ còn ${currentStock} sản phẩm`
+                        )
+
+                    await conn.execute(
+                        `UPDATE ${PRODUCTS_TABLE_NAME} SET stock_qty = stock_qty - ? WHERE id = ?`,
+                        [item.qty_total, item.product_id]
+                    )
+                }
             }
 
             await conn.commit()
@@ -216,8 +244,8 @@ const TransactionsModel = {
             t.status AS transaction_status,
             t.payment_status,
             t.shipment_status
-            FROM OrderItems oi
-            JOIN Transactions t ON t.id = oi.transaction_id
+            FROM ${ORDER_ITEMS_TABLE_NAME} oi
+            JOIN ${TRANSACTIONS_TABLE_NAME} t ON t.id = oi.transaction_id
             WHERE t.user_id = ? AND oi.product_id = ?`,
             [user_id, product_id]
         )
@@ -239,14 +267,14 @@ const TransactionsModel = {
             SELECT
                 -- số đơn tháng này
                 (SELECT COUNT(*) 
-                 FROM Transactions 
+                 FROM ${TRANSACTIONS_TABLE_NAME} 
                  WHERE MONTH(created_at) = MONTH(NOW())
                  AND YEAR(created_at) = YEAR(NOW())
                 ) AS current_cnt,
 
                 -- số đơn tháng trước
                 (SELECT COUNT(*) 
-                 FROM Transactions 
+                 FROM ${TRANSACTIONS_TABLE_NAME} 
                  WHERE MONTH(created_at) = MONTH(DATE_SUB(NOW(), INTERVAL 1 MONTH))
                  AND YEAR(created_at) = YEAR(DATE_SUB(NOW(), INTERVAL 1 MONTH))
                 ) AS last_cnt
@@ -270,7 +298,7 @@ const TransactionsModel = {
             SELECT
                 -- tháng này (đơn vị: phút)
                 (SELECT AVG(TIMESTAMPDIFF(MINUTE, created_at, delivered_at))
-                 FROM Transactions
+                 FROM ${TRANSACTIONS_TABLE_NAME}
                  WHERE delivered_at IS NOT NULL
                  AND MONTH(created_at) = MONTH(NOW())
                  AND YEAR(created_at) = YEAR(NOW())
@@ -278,7 +306,7 @@ const TransactionsModel = {
 
                 -- tháng trước
                 (SELECT AVG(TIMESTAMPDIFF(MINUTE, created_at, delivered_at))
-                 FROM Transactions
+                 FROM ${TRANSACTIONS_TABLE_NAME}
                  WHERE delivered_at IS NOT NULL
                  AND MONTH(created_at) = MONTH(DATE_SUB(NOW(), INTERVAL 1 MONTH))
                  AND YEAR(created_at) = YEAR(DATE_SUB(NOW(), INTERVAL 1 MONTH))
@@ -303,13 +331,13 @@ const TransactionsModel = {
                 -- tỉ lệ tháng này
                 (
                     (SELECT COUNT(*) 
-                     FROM Transactions
+                     FROM ${TRANSACTIONS_TABLE_NAME}
                      WHERE status IN ('canceled','refunded')
                      AND MONTH(created_at) = MONTH(NOW())
                      AND YEAR(created_at) = YEAR(NOW()))
                     /
                     (SELECT COUNT(*) 
-                     FROM Transactions
+                     FROM ${TRANSACTIONS_TABLE_NAME}
                      WHERE MONTH(created_at) = MONTH(NOW())
                      AND YEAR(created_at) = YEAR(NOW()))
                 ) * 100 AS current_rate,
@@ -317,13 +345,13 @@ const TransactionsModel = {
                 -- tỉ lệ tháng trước
                 (
                     (SELECT COUNT(*) 
-                     FROM Transactions
+                     FROM ${TRANSACTIONS_TABLE_NAME}
                      WHERE status IN ('canceled','refunded')
                      AND MONTH(created_at) = MONTH(DATE_SUB(NOW(), INTERVAL 1 MONTH))
                      AND YEAR(created_at) = YEAR(DATE_SUB(NOW(), INTERVAL 1 MONTH)))
                     /
                     (SELECT COUNT(*) 
-                     FROM Transactions
+                     FROM ${TRANSACTIONS_TABLE_NAME}
                      WHERE MONTH(created_at) = MONTH(DATE_SUB(NOW(), INTERVAL 1 MONTH))
                      AND YEAR(created_at) = YEAR(DATE_SUB(NOW(), INTERVAL 1 MONTH)))
                 ) * 100 AS last_rate
@@ -346,14 +374,14 @@ const TransactionsModel = {
             SELECT
                 -- tháng này
                 (SELECT ROUND(AVG(rate), 2)
-                 FROM Comments
+                 FROM ${COMMENTS_TABLE_NAME}
                  WHERE MONTH(created_at) = MONTH(NOW())
                  AND YEAR(created_at) = YEAR(NOW())
                 ) AS current_rate,
 
                 -- tháng trước
                 (SELECT ROUND(AVG(rate), 2)
-                 FROM Comments
+                 FROM ${COMMENTS_TABLE_NAME}
                  WHERE MONTH(created_at) = MONTH(DATE_SUB(NOW(), INTERVAL 1 MONTH))
                  AND YEAR(created_at) = YEAR(DATE_SUB(NOW(), INTERVAL 1 MONTH))
                 ) AS last_rate
@@ -364,17 +392,15 @@ const TransactionsModel = {
     },
     async getTransactionById(id) {
         const conn = getConnection()
-
-        // Lấy thông tin đơn hàng + shipment + payment
         const [orders] = await conn.execute(
             `
         SELECT 
             t.*,
             s.name AS shipment_name,
             p.method AS payment_method
-        FROM Transactions t
-        LEFT JOIN Shipments s ON s.id = t.shipment_id
-        LEFT JOIN Payments p ON p.id = t.payment_id
+        FROM ${TRANSACTIONS_TABLE_NAME} t
+        LEFT JOIN ${SHIPMENTS_TABLE_NAME} s ON s.id = t.shipment_id
+        LEFT JOIN ${PAYMENTS_TABLE_NAME} p ON p.id = t.payment_id
         WHERE t.id = ?
         `,
             [id]
@@ -383,7 +409,6 @@ const TransactionsModel = {
         const order = orders[0]
         if (!order) return null
 
-        // Lấy danh sách sản phẩm trong đơn
         const [items] = await conn.execute(
             `
         SELECT 
@@ -391,8 +416,8 @@ const TransactionsModel = {
             oi.qty_total AS quantity,
             p.name AS product_name,
             p.price AS price
-        FROM OrderItems oi
-        INNER JOIN Products p ON p.id = oi.product_id
+        FROM ${ORDER_ITEMS_TABLE_NAME} oi
+        INNER JOIN ${PRODUCTS_TABLE_NAME} p ON p.id = oi.product_id
         WHERE oi.transaction_id = ?
         `,
             [id]
@@ -409,12 +434,12 @@ const TransactionsModel = {
 
         const [[{ total }]] = await conn.execute(`
         SELECT COUNT(*) AS total 
-        FROM Transactions
+        FROM ${TRANSACTIONS_TABLE_NAME}
     `)
 
         const [rows] = await conn.execute(`
         SELECT status, COUNT(*) AS count
-        FROM Transactions
+        FROM ${TRANSACTIONS_TABLE_NAME}
         GROUP BY status
     `)
 
@@ -534,11 +559,11 @@ const TransactionsModel = {
             pay.method AS payment_method,
             
             s.name AS shipment_name
-        FROM Transactions t
-        LEFT JOIN OrderItems oi ON t.id = oi.transaction_id
-        LEFT JOIN Products pdt ON oi.product_id = pdt.id
-        LEFT JOIN Payments pay ON t.payment_id = pay.id
-        LEFT JOIN Shipments s ON t.shipment_id = s.id
+        FROM ${TRANSACTIONS_TABLE_NAME} t
+        LEFT JOIN ${ORDER_ITEMS_TABLE_NAME} oi ON t.id = oi.transaction_id
+        LEFT JOIN ${PRODUCTS_TABLE_NAME} pdt ON oi.product_id = pdt.id
+        LEFT JOIN ${PAYMENTS_TABLE_NAME} pay ON t.payment_id = pay.id
+        LEFT JOIN ${SHIPMENTS_TABLE_NAME} s ON t.shipment_id = s.id
         WHERE t.user_id = ?
         ORDER BY t.created_at DESC, oi.id ASC`,
             [user_id]

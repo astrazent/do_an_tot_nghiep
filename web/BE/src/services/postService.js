@@ -82,7 +82,7 @@ const createPostService = async (data, images) => {
         admin_id: data.admin_id,
     })
 
-    for ( const categoryId of data.category_ids ) {
+    for (const categoryId of data.category_ids) {
         await PostCategoriesModel.createLink({
             post_id: post.id,
             category_id: categoryId,
@@ -96,7 +96,7 @@ const createPostService = async (data, images) => {
         display_order: data.images_meta.display_order[index],
     }))
 
-    for( const imgData of postImages) {
+    for (const imgData of postImages) {
         await PostImagesModel.createPostImage(imgData)
     }
 
@@ -123,7 +123,9 @@ const getByIdPostService = async postId => {
 
     const Categories = await PostCategoriesModel.getCategoriesByPost(postId)
     for (const category of Categories) {
-        const postCategory = await CategoriesModel.getCategoryById(category.category_id)
+        const postCategory = await CategoriesModel.getCategoryById(
+            category.category_id
+        )
         post.post_categories.push(postCategory.name)
     }
 

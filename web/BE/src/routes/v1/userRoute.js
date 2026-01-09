@@ -1,9 +1,8 @@
 import express from 'express'
 import { userController } from '../../controllers/userController.js'
 import { verifyToken } from '../../middlewares/authMiddleware.js'
-import multer from 'multer'
+import { uploadCloudinary, upload } from '~/middlewares/uploadCloudinary'
 const Router = express.Router()
-const upload = multer()
 
 Router.route('/').get(userController.getByIdUser)
 
@@ -18,7 +17,8 @@ Router.route('/check_and_update').post(
 
 Router.route('/').patch(
     verifyToken,
-    upload.single('avatar'),
+    upload.array('avatar', 1),
+    uploadCloudinary,
     userController.updateUser
 )
 

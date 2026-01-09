@@ -50,14 +50,19 @@ export const checkPasswordAndUpdate = async (req, res, next) => {
 
 const updateUser = async (req, res, next) => {
     try {
-        const data = await userService.updateUserService(
+        const data = {
+            ...req.body,
+            avatar_url: req.uploadedImageUrls?.[0] || null,
+        }
+
+        const updatedUser = await userService.updateUserService(
             req.query.userId,
-            req.body
+            data
         )
 
         return res.status(StatusCodes.OK).json({
             message: 'Cập nhật thông tin thành công',
-            data,
+            data: updatedUser,
         })
     } catch (error) {
         next(error)
@@ -100,7 +105,6 @@ const getListCustomerByExpense = async (req, res, next) => {
     }
 }
 
-
 export const userController = {
     getByIdUser,
     getListUser,
@@ -108,5 +112,5 @@ export const userController = {
     updateUser,
     deleteUser,
     getDashboardSummary,
-    getListCustomerByExpense
+    getListCustomerByExpense,
 }

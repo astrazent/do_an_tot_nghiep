@@ -1,5 +1,6 @@
 import express from 'express'
 import { sliderController } from '~/controllers/sliderController'
+import { sliderValidation } from '~/validations/sliderValidation.js'
 import { upload, uploadCloudinary } from '~/middlewares/uploadCloudinary'
 
 const Router = express.Router()
@@ -7,6 +8,7 @@ const Router = express.Router()
 Router.route('/').post(
     upload.array('images', 10),
     uploadCloudinary,
+    sliderValidation.validateCreateSlider,
     sliderController.createSlider
 )
 
@@ -17,6 +19,7 @@ Router.route('/list').get(sliderController.getListSlider)
 Router.route('/:sliderId').patch(
     upload.array('images', 10),
     uploadCloudinary,
+    sliderValidation.validateUpdateSlider,
     sliderController.updateSlider
 )
 

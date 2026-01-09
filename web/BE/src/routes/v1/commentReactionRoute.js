@@ -1,9 +1,13 @@
 import express from 'express'
 import { commentReactionController } from '../../controllers/commentReactionController.js'
+import { commentReactionValidation } from '~/validations/commentReactionValidation.js'
 
 const Router = express.Router()
 
-Router.route('/').post(commentReactionController.createOrUpdateReaction)
+Router.route('/').post(
+    commentReactionValidation.validateCreateCommentReaction,
+    commentReactionController.createOrUpdateReaction
+)
 
 Router.route('/').get(commentReactionController.getReactionById)
 

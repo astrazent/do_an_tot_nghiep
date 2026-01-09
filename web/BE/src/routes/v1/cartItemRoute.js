@@ -1,6 +1,8 @@
 import express from 'express'
 import { cartItemController } from '~/controllers/cartItemController'
+import { cartItemValidation } from '~/validations/cartItemValidation'
 import { verifyToken } from '../../middlewares/authMiddleware.js'
+
 const Router = express.Router()
 
 Router.route('/').get(verifyToken, cartItemController.getCartItems)
@@ -10,9 +12,17 @@ Router.route('/by_product').get(
     cartItemController.getCartItemByProduct
 )
 
-Router.route('/').post(verifyToken, cartItemController.addCartItems)
+Router.route('/').post(
+    verifyToken,
+    cartItemValidation.validateCreateCartItem,
+    cartItemController.addCartItems
+)
 
-Router.route('/').patch(verifyToken, cartItemController.updateQuantityCartItems)
+Router.route('/').patch(
+    verifyToken,
+    cartItemValidation.validateUpdateCartItem,
+    cartItemController.updateQuantityCartItems
+)
 
 Router.route('/').delete(verifyToken, cartItemController.deleteCartItems)
 

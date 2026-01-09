@@ -486,36 +486,48 @@ const ProductsModel = {
             const product = productRows[0]
 
             const [categoryRows] = await conn.execute(
-                `SELECT p.*, ${DISCOUNT_CALC_SELECT}
-                FROM ${PRODUCTS_TABLE} p
-                ${DISCOUNT_JOIN_QUERY}
-                WHERE p.category_id = ? AND p.slug != ?
-                GROUP BY p.id
-                ORDER BY p.created_at DESC
-                LIMIT ?`,
+                `SELECT p.*, 
+                    ${DISCOUNT_CALC_SELECT},
+                    GROUP_CONCAT(pi.image_url ORDER BY pi.is_main DESC) AS images
+                    FROM ${PRODUCTS_TABLE} p
+                    LEFT JOIN ${PRODUCT_IMAGES_TABLE} pi ON pi.product_id = p.id
+                    ${DISCOUNT_JOIN_QUERY}
+                    WHERE p.category_id = ? AND p.slug != ?
+                    GROUP BY p.id
+                    ORDER BY p.created_at DESC
+                    LIMIT ?`,
                 [product.category_id, slug, limit]
             )
 
             const [coBoughtRows] = await conn.execute(
-                `SELECT DISTINCT p.*, ${DISCOUNT_CALC_SELECT}
-                FROM ${ORDER_ITEMS_TABLE} oi1
-                INNER JOIN ${ORDER_ITEMS_TABLE} oi2 
-                    ON oi1.transaction_id = oi2.transaction_id 
-                    AND oi2.product_id != oi1.product_id
-                INNER JOIN ${PRODUCTS_TABLE} p 
-                    ON p.id = oi2.product_id
-                INNER JOIN ${PRODUCTS_TABLE} target 
-                    ON target.id = oi1.product_id
-                ${DISCOUNT_JOIN_QUERY}
-                WHERE target.slug = ?
-                GROUP BY p.id
-                LIMIT ?`,
+                `SELECT DISTINCT p.*, 
+                    ${DISCOUNT_CALC_SELECT},
+                    GROUP_CONCAT(pi.image_url ORDER BY pi.is_main DESC) AS images
+                    FROM ${ORDER_ITEMS_TABLE} oi1
+                    INNER JOIN ${ORDER_ITEMS_TABLE} oi2 
+                        ON oi1.transaction_id = oi2.transaction_id 
+                        AND oi2.product_id != oi1.product_id
+                    INNER JOIN ${PRODUCTS_TABLE} p ON p.id = oi2.product_id
+                    INNER JOIN ${PRODUCTS_TABLE} target ON target.id = oi1.product_id
+                    LEFT JOIN ${PRODUCT_IMAGES_TABLE} pi ON pi.product_id = p.id
+                    ${DISCOUNT_JOIN_QUERY}
+                    WHERE target.slug = ?
+                    GROUP BY p.id
+                    LIMIT ?`,
                 [slug, limit]
             )
+            const parseImages = row => ({
+                ...row,
+                images: row.images ? row.images.split(',') : [],
+            })
 
             return {
-                sameCategory: categoryRows.map(calculateProductPrice),
-                coBought: coBoughtRows.map(calculateProductPrice),
+                sameCategory: categoryRows
+                    .map(parseImages)
+                    .map(calculateProductPrice),
+                coBought: coBoughtRows
+                    .map(parseImages)
+                    .map(calculateProductPrice),
             }
         } catch (error) {
             console.error('Lỗi khi lấy sản phẩm liên quan:', error)
@@ -525,25 +537,19 @@ const ProductsModel = {
 
     async getInventoryDashboard() {
         const conn = getConnection()
-
-        // Tổng số sản phẩm
         const [[totalProducts]] = await conn.execute(
             `SELECT COUNT(*) AS total FROM Products`
         )
 
-        // Tổng tồn kho (số sản phẩm có tồn kho > 0)
         const [[totalInStock]] = await conn.execute(
             `SELECT COALESCE(SUM(stock_qty), 0) AS total FROM Products`
         )
-
-        // Số sản phẩm dưới ngưỡng cảnh báo
         const [[lowStock]] = await conn.execute(
             `SELECT COUNT(*) AS total 
-         FROM Products 
-         WHERE stock_qty < low_stock_threshold`
+            FROM Products 
+            WHERE stock_qty < low_stock_threshold`
         )
 
-        // Tổng giá trị kho
         const [[inventoryValue]] = await conn.execute(
             `SELECT SUM(stock_qty * import_price) AS total_value 
          FROM Products`
@@ -593,8 +599,6 @@ const ProductsModel = {
         ORDER BY total_stock DESC;
         `
         )
-
-        // Tính tổng số lượng sản phẩm trong kho để ra phần trăm
         const grandTotal = rows.reduce(
             (sum, row) => sum + Number(row.total_stock),
             0
@@ -644,8 +648,6 @@ const ProductsModel = {
         GROUP BY p.id, p.name, p.stock_qty, p.price, c.name
         ORDER BY p.stock_qty DESC, p.name ASC  -- Tồn nhiều nhất lên đầu
     `)
-
-        // Tính số ngày chưa bán (từ last_sold_date toàn bộ lịch sử)
         const result = rows.map(row => {
             let daysUnsold = 0
             let lastSoldDateStr = null
@@ -657,7 +659,6 @@ const ProductsModel = {
                 )
                 lastSoldDateStr = lastSold.toLocaleDateString('vi-VN')
             } else {
-                // Chưa từng bán → tính từ ngày tạo sản phẩm
                 const createdAt = new Date(row.created_at || Date.now())
                 daysUnsold = Math.ceil(
                     (new Date() - createdAt) / (1000 * 60 * 60 * 24)

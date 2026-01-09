@@ -145,6 +145,26 @@ export const checkPasswordAndUpdateService = async ({
     return safeUser
 }
 
+export const resetPasswordService = async ({ userId, new_password }) => {
+    const user = await UsersModel.getUserById(userId)
+    if (!user) {
+        throw new ApiError(StatusCodes.NOT_FOUND, 'Không tìm thấy user')
+    }
+
+    if (!new_password || new_password.length < 6) {
+        throw new ApiError(
+            StatusCodes.BAD_REQUEST,
+            'Mật khẩu mới không hợp lệ (tối thiểu 6 ký tự)'
+        )
+    }
+
+    const hashedPassword = await bcrypt.hash(new_password, 10)
+    const updatedUser = await UsersModel.resetPassword(userId, hashedPassword)
+
+    const { password_hash, ...safeUser } = updatedUser
+    return safeUser
+}
+
 const findUserByEmailService = async email => {
     const user = await UsersModel.findUserByEmailOrUsername(email)
     return user
@@ -188,7 +208,6 @@ const getDashboardSummary = async date => {
 }
 
 const getListCustomerByExpense = async ({ minSpending }) => {
-    console.log('minSpending', minSpending);
     const result = await UsersModel.getListCustomerByExpense(minSpending)
     return result
 }
@@ -198,11 +217,12 @@ export const userService = {
     loginService,
     getByIdUserService,
     checkPasswordAndUpdateService,
+    resetPasswordService,
     findUserByEmailService,
     registerGoogleUserService,
     getListUserService,
     updateUserService,
     deleteUserService,
     getDashboardSummary,
-    getListCustomerByExpense
+    getListCustomerByExpense,
 }

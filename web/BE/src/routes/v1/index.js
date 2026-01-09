@@ -22,7 +22,7 @@ import userRoutes from './userRoute.js'
 import postTypeRoute from './postTypeRoute.js'
 import postCategoryRoutes from './postCategoryRoute.js'
 import sliderRoute from './sliderRoute.js'
-import couponScope from './couponScope.js'
+import couponScope from './couponScopeRoute.js'
 import marketingRoutes from './marketingAIRouter.js'
 import boardRoutes from './boardRoute.js'
 import RevenueRoutes from './revenueAdminRoute.js'
@@ -60,8 +60,6 @@ Router.use('/marketing', marketingRoutes)
 Router.use('/boards', boardRoutes)
 Router.use('/revenue', RevenueRoutes)
 Router.use('/product_image', productImageRoutes)
-// Router.use('/columns', columnRoutes)
-// Router.use('/cards', cardRoutes)
 
 Router.use('/slider', sliderRoute)
 export const APIs_V1 = Router

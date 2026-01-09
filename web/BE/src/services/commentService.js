@@ -24,12 +24,20 @@ const attachImagesToComments = async comments => {
     }))
 }
 
-const createCommentService = async data => {
-    const comment = await CommentsModel.createComment(data)
+const createCommentService = async (data, uploadedImageUrls = []) => {
+    const payload = {
+        ...data,
+        images: uploadedImageUrls,
+    }
+
+    const comment = await CommentsModel.createComment(payload)
     return comment
 }
 
-const createCommentByProductSlugService = async data => {
+const createCommentByProductSlugService = async (
+    data,
+    uploadedImageUrls = []
+) => {
     const { slug, rate, content, user_id } = data
 
     if (!slug) throw new Error('slug sản phẩm không được để trống')
@@ -41,13 +49,13 @@ const createCommentByProductSlugService = async data => {
         content,
         user_id,
         product_id: product.id,
+        images: uploadedImageUrls,
     }
 
     const comment =
         await CommentsModel.createCommentByUserAndProduct(commentData)
     return comment
 }
-
 const getByIdCommentService = async commentId => {
     const comment = await CommentsModel.getCommentById(commentId)
     if (!comment) {
@@ -105,7 +113,6 @@ const updateCommentByUserAndProductService = async ({
             `Không tìm thấy sản phẩm với slug: ${slug}`
         )
     }
-
     const updated = await CommentsModel.updateCommentByUserAndProduct(
         user_id,
         product.id,

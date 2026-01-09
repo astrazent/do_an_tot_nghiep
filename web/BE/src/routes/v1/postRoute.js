@@ -1,11 +1,14 @@
 import express from 'express'
 import { postController } from '~/controllers/postController'
+import { postValidation } from '~/validations/postValidation.js'
 import { upload, uploadCloudinary } from '~/middlewares/uploadCloudinary'
+
 const Router = express.Router()
 
 Router.route('/').post(
     upload.array('images', 10),
     uploadCloudinary,
+    postValidation.validateCreatePost,
     postController.createPost
 )
 
@@ -21,7 +24,10 @@ Router.route('/related_by_slug').get(postController.getRelatedByPostSlug)
 
 Router.route('/list').get(postController.getListPost)
 
-Router.route('/').patch(postController.updatePost)
+Router.route('/').patch(
+    postValidation.validateUpdatePost,
+    postController.updatePost
+)
 
 Router.route('/').delete(postController.deletePost)
 

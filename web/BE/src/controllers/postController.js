@@ -3,7 +3,10 @@ import { StatusCodes } from 'http-status-codes'
 
 const createPost = async (req, res, next) => {
     try {
-        const data = await postService.createPostService(req.body, req.uploadedImageUrls)
+        const data = await postService.createPostService(
+            req.body,
+            req.uploadedImageUrls
+        )
         return res.status(StatusCodes.OK).json({
             message: 'Tạo mới bài viết thành công',
             data,

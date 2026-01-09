@@ -31,7 +31,7 @@ async function fetchBatchSummary(batch, startIndex = 0) {
             },
             body: JSON.stringify({
                 model: 'deepseek/deepseek-chat-v3.1',
-                max_tokens: 4000,
+                max_tokens: 1600,
                 messages: [
                     {
                         role: 'system',

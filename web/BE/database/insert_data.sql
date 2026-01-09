@@ -64,86 +64,119 @@ INSERT INTO Posts (title, slug, content, author_name, description, status, publi
 ('Sự kiện ẩm thực cuối tuần', 'su-kien-am-thuc-cuoi-tuan', '<p>Xúc xích cốm là món ăn truyền thống đặc sắc của Hà Nội, nổi bật với hương vị độc đáo.</p>\n\n<p>[IMAGE_1]</p>\n\n<p>Thịt heo tươi kết hợp với cốm non tạo ra hương vị dẻo thơm khó quên, phù hợp với mọi bữa ăn gia đình.</p>\n\n<p>[IMAGE_2]</p>\n\n<p>Ngày nay, món ăn này được nhiều quán đặc sản và siêu thị giới thiệu rộng rãi, trở thành lựa chọn yêu thích của nhiều người.</p>', 'Đặng Văn Nam', 'Các sự kiện ẩm thực nổi bật', 1, '2025-10-15 14:00:00', 2, 6),
 ('Món ăn đường phố hấp dẫn', 'mon-an-duong-pho-hap-dan', '<p>Xúc xích cốm là món ăn truyền thống đặc sắc của Hà Nội, nổi bật với hương vị độc đáo.</p>\n\n<p>[IMAGE_1]</p>\n\n<p>Thịt heo tươi kết hợp với cốm non tạo ra hương vị dẻo thơm khó quên, phù hợp với mọi bữa ăn gia đình.</p>\n\n<p>[IMAGE_2]</p>\n\n<p>Ngày nay, món ăn này được nhiều quán đặc sản và siêu thị giới thiệu rộng rãi, trở thành lựa chọn yêu thích của nhiều người.</p>', 'Ngô Văn Bảo', 'Các món ăn đường phố đặc sắc', 1, '2025-10-15 15:30:00', 3, 6);
 
-
 -- Dữ liệu mẫu cho PostImages
-INSERT INTO PostImages (image_url, is_main, post_id, display_order, caption, alt_text) VALUES
-('https://example.com/images/posts/1_main.jpg', 1, 1, 0, 'Ảnh chính bài viết 1', 'Thumbnail bài viết 1'),
-('https://example.com/images/posts/1_1.jpg', 0, 1, 1, 'Ảnh phụ 1 bài viết 1', 'Ảnh phụ 1 bài viết 1'),
-('https://example.com/images/posts/1_2.jpg', 0, 1, 2, 'Ảnh phụ 2 bài viết 1', 'Ảnh phụ 2 bài viết 1'),
-('https://example.com/images/posts/2_main.jpg', 1, 2, 0, 'Ảnh chính bài viết 2', 'Thumbnail bài viết 2'),
-('https://example.com/images/posts/2_1.jpg', 0, 2, 1, 'Ảnh phụ 1 bài viết 2', 'Ảnh phụ 1 bài viết 2'),
-('https://example.com/images/posts/3_main.jpg', 1, 3, 0, 'Ảnh chính bài viết 3', 'Thumbnail bài viết 3'),
-('https://example.com/images/posts/3_1.jpg', 0, 3, 1, 'Ảnh phụ 1 bài viết 3', 'Ảnh phụ 1 bài viết 3'),
-('https://example.com/images/posts/3_2.jpg', 0, 3, 2, 'Ảnh phụ 2 bài viết 3', 'Ảnh phụ 2 bài viết 3'),
-('https://example.com/images/posts/4_main.jpg', 1, 4, 0, 'Ảnh chính bài viết 4', 'Thumbnail bài viết 4'),
-('https://example.com/images/posts/4_1.jpg', 0, 4, 1, 'Ảnh phụ 1 bài viết 4', 'Ảnh phụ 1 bài viết 4'),
-('https://example.com/images/posts/5_main.jpg', 1, 5, 0, 'Ảnh chính bài viết 5', 'Thumbnail bài viết 5'),
-('https://example.com/images/posts/5_1.jpg', 0, 5, 1, 'Ảnh phụ 1 bài viết 5', 'Ảnh phụ 1 bài viết 5'),
-('https://example.com/images/posts/6_main.jpg', 1, 6, 0, 'Ảnh chính bài viết 6', 'Thumbnail bài viết 6'),
-('https://example.com/images/posts/6_1.jpg', 0, 6, 1, 'Ảnh phụ 1 bài viết 6', 'Ảnh phụ 1 bài viết 6'),
-('https://example.com/images/posts/6_2.jpg', 0, 6, 2, 'Ảnh phụ 2 bài viết 6', 'Ảnh phụ 2 bài viết 6'),
-('https://example.com/images/posts/7_main.jpg', 1, 7, 0, 'Ảnh chính bài viết 7', 'Thumbnail bài viết 7'),
-('https://example.com/images/posts/7_1.jpg', 0, 7, 1, 'Ảnh phụ 1 bài viết 7', 'Ảnh phụ 1 bài viết 7'),
-('https://example.com/images/posts/8_main.jpg', 1, 8, 0, 'Ảnh chính bài viết 8', 'Thumbnail bài viết 8'),
-('https://example.com/images/posts/8_1.jpg', 0, 8, 1, 'Ảnh phụ 1 bài viết 8', 'Ảnh phụ 1 bài viết 8'),
-('https://example.com/images/posts/8_2.jpg', 0, 8, 2, 'Ảnh phụ 2 bài viết 8', 'Ảnh phụ 2 bài viết 8'),
-('https://example.com/images/posts/9_main.jpg', 1, 9, 0, 'Ảnh chính bài viết 9', 'Thumbnail bài viết 9'),
-('https://example.com/images/posts/9_1.jpg', 0, 9, 1, 'Ảnh phụ 1 bài viết 9', 'Ảnh phụ 1 bài viết 9'),
-('https://example.com/images/posts/10_main.jpg', 1, 10, 0, 'Ảnh chính bài viết 10', 'Thumbnail bài viết 10'),
-('https://example.com/images/posts/10_1.jpg', 0, 10, 1, 'Ảnh phụ 1 bài viết 10', 'Ảnh phụ 1 bài viết 10'),
-('https://example.com/images/posts/11_main.jpg', 1, 11, 0, 'Ảnh chính bài viết 11', 'Thumbnail bài viết 11'),
-('https://example.com/images/posts/11_1.jpg', 0, 11, 1, 'Ảnh phụ 1 bài viết 11', 'Ảnh phụ 1 bài viết 11'),
-('https://example.com/images/posts/12_main.jpg', 1, 12, 0, 'Ảnh chính bài viết 12', 'Thumbnail bài viết 12'),
-('https://example.com/images/posts/12_1.jpg', 0, 12, 1, 'Ảnh phụ 1 bài viết 12', 'Ảnh phụ 1 bài viết 12'),
-('https://example.com/images/posts/13_main.jpg', 1, 13, 0, 'Ảnh chính bài viết 13', 'Thumbnail bài viết 13'),
-('https://example.com/images/posts/13_1.jpg', 0, 13, 1, 'Ảnh phụ 1 bài viết 13', 'Ảnh phụ 1 bài viết 13'),
-('https://example.com/images/posts/14_main.jpg', 1, 14, 0, 'Ảnh chính bài viết 14', 'Thumbnail bài viết 14'),
-('https://example.com/images/posts/14_1.jpg', 0, 14, 1, 'Ảnh phụ 1 bài viết 14', 'Ảnh phụ 1 bài viết 14'),
-('https://example.com/images/posts/15_main.jpg', 1, 15, 0, 'Ảnh chính bài viết 15', 'Thumbnail bài viết 15'),
-('https://example.com/images/posts/15_1.jpg', 0, 15, 1, 'Ảnh phụ 1 bài viết 15', 'Ảnh phụ 1 bài viết 15'),
-('https://example.com/images/posts/16_main.jpg', 1, 16, 0, 'Ảnh chính bài viết 16', 'Thumbnail bài viết 16'),
-('https://example.com/images/posts/16_1.jpg', 0, 16, 1, 'Ảnh phụ 1 bài viết 16', 'Ảnh phụ 1 bài viết 16'),
-('https://example.com/images/posts/17_main.jpg', 1, 17, 0, 'Ảnh chính bài viết 17', 'Thumbnail bài viết 17'),
-('https://example.com/images/posts/17_1.jpg', 0, 17, 1, 'Ảnh phụ 1 bài viết 17', 'Ảnh phụ 1 bài viết 17'),
-('https://example.com/images/posts/18_main.jpg', 1, 18, 0, 'Ảnh chính bài viết 18', 'Thumbnail bài viết 18'),
-('https://example.com/images/posts/18_1.jpg', 0, 18, 1, 'Ảnh phụ 1 bài viết 18', 'Ảnh phụ 1 bài viết 18'),
-('https://example.com/images/posts/19_main.jpg', 1, 19, 0, 'Ảnh chính bài viết 19', 'Thumbnail bài viết 19'),
-('https://example.com/images/posts/19_1.jpg', 0, 19, 1, 'Ảnh phụ 1 bài viết 19', 'Ảnh phụ 1 bài viết 19'),
-('https://example.com/images/posts/20_main.jpg', 1, 20, 0, 'Ảnh chính bài viết 20', 'Thumbnail bài viết 20'),
-('https://example.com/images/posts/20_1.jpg', 0, 20, 1, 'Ảnh phụ 1 bài viết 20', 'Ảnh phụ 1 bài viết 20'),
-('https://example.com/images/posts/21_main.jpg', 1, 21, 0, 'Ảnh chính bài viết 21', 'Thumbnail bài viết 21'),
-('https://example.com/images/posts/21_1.jpg', 0, 21, 1, 'Ảnh phụ 1 bài viết 21', 'Ảnh phụ 1 bài viết 21'),
-('https://example.com/images/posts/22_main.jpg', 1, 22, 0, 'Ảnh chính bài viết 22', 'Thumbnail bài viết 22'),
-('https://example.com/images/posts/22_1.jpg', 0, 22, 1, 'Ảnh phụ 1 bài viết 22', 'Ảnh phụ 1 bài viết 22'),
-('https://example.com/images/posts/23_main.jpg', 1, 23, 0, 'Ảnh chính bài viết 23', 'Thumbnail bài viết 23'),
-('https://example.com/images/posts/23_1.jpg', 0, 23, 1, 'Ảnh phụ 1 bài viết 23', 'Ảnh phụ 1 bài viết 23'),
-('https://example.com/images/posts/24_main.jpg', 1, 24, 0, 'Ảnh chính bài viết 24', 'Thumbnail bài viết 24'),
-('https://example.com/images/posts/24_1.jpg', 0, 24, 1, 'Ảnh phụ 1 bài viết 24', 'Ảnh phụ 1 bài viết 24'),
-('https://example.com/images/posts/25_main.jpg', 1, 25, 0, 'Ảnh chính bài viết 25', 'Thumbnail bài viết 25'),
-('https://example.com/images/posts/25_1.jpg', 0, 25, 1, 'Ảnh phụ 1 bài viết 25', 'Ảnh phụ 1 bài viết 25'),
-('https://example.com/images/posts/26_main.jpg', 1, 26, 0, 'Ảnh chính bài viết 26', 'Thumbnail bài viết 26'),
-('https://example.com/images/posts/26_1.jpg', 0, 26, 1, 'Ảnh phụ 1 bài viết 26', 'Ảnh phụ 1 bài viết 26'),
-('https://example.com/images/posts/27_main.jpg', 1, 27, 0, 'Ảnh chính bài viết 27', 'Thumbnail bài viết 27'),
-('https://example.com/images/posts/27_1.jpg', 0, 27, 1, 'Ảnh phụ 1 bài viết 27', 'Ảnh phụ 1 bài viết 27'),
-('https://example.com/images/posts/28_main.jpg', 1, 28, 0, 'Ảnh chính bài viết 28', 'Thumbnail bài viết 28'),
-('https://example.com/images/posts/28_1.jpg', 0, 28, 1, 'Ảnh phụ 1 bài viết 28', 'Ảnh phụ 1 bài viết 28'),
-('https://example.com/images/posts/29_main.jpg', 1, 29, 0, 'Ảnh chính bài viết 29', 'Thumbnail bài viết 29'),
-('https://example.com/images/posts/29_1.jpg', 0, 29, 1, 'Ảnh phụ 1 bài viết 29', 'Ảnh phụ 1 bài viết 29'),
-('https://example.com/images/posts/30_main.jpg', 1, 30, 0, 'Ảnh chính bài viết 30', 'Thumbnail bài viết 30'),
-('https://example.com/images/posts/30_1.jpg', 0, 30, 1, 'Ảnh phụ 1 bài viết 30', 'Ảnh phụ 1 bài viết 30'),
-('https://example.com/images/posts/31_main.jpg', 1, 31, 0, 'Ảnh chính bài viết 31', 'Thumbnail bài viết 31'),
-('https://example.com/images/posts/31_1.jpg', 0, 31, 1, 'Ảnh phụ 1 bài viết 31', 'Ảnh phụ 1 bài viết 31'),
-('https://example.com/images/posts/32_main.jpg', 1, 32, 0, 'Ảnh chính bài viết 32', 'Thumbnail bài viết 32'),
-('https://example.com/images/posts/32_1.jpg', 0, 32, 1, 'Ảnh phụ 1 bài viết 32', 'Ảnh phụ 1 bài viết 32'),
-('https://example.com/images/posts/33_main.jpg', 1, 33, 0, 'Ảnh chính bài viết 33', 'Thumbnail bài viết 33'),
-('https://example.com/images/posts/33_1.jpg', 0, 33, 1, 'Ảnh phụ 1 bài viết 33', 'Ảnh phụ 1 bài viết 33'),
-('https://example.com/images/posts/34_main.jpg', 1, 34, 0, 'Ảnh chính bài viết 34', 'Thumbnail bài viết 34'),
-('https://example.com/images/posts/34_1.jpg', 0, 34, 1, 'Ảnh phụ 1 bài viết 34', 'Ảnh phụ 1 bài viết 34'),
-('https://example.com/images/posts/35_main.jpg', 1, 35, 0, 'Ảnh chính bài viết 35', 'Thumbnail bài viết 35'),
-('https://example.com/images/posts/35_1.jpg', 0, 35, 1, 'Ảnh phụ 1 bài viết 35', 'Ảnh phụ 1 bài viết 35'),
-('https://example.com/images/posts/36_main.jpg', 1, 36, 0, 'Ảnh chính bài viết 36', 'Thumbnail bài viết 36'),
-('https://example.com/images/posts/36_1.jpg', 0, 36, 1, 'Ảnh phụ 1 bài viết 36', 'Ảnh phụ 1 bài viết 36');
+INSERT INTO PostImages (post_id, image_url, is_main, display_order, caption, alt_text, created_at, updated_at) VALUES
+(1,'https://i.postimg.cc/wj6wBvPR/images.png',1,0,'Ảnh chính bài viết 1','Thumbnail bài viết 1','2025-12-29 23:14:35','2025-12-30 23:38:49'),
+(1,'https://i.postimg.cc/wj6wBvPR/images.png',0,1,'Ảnh phụ 1 bài viết 1','Ảnh phụ 1 bài viết 1','2025-12-29 23:14:35','2026-01-08 23:45:48'),
+(1,'https://i.postimg.cc/wj6wBvPR/images.png',0,2,'Ảnh phụ 2 bài viết 1','Ảnh phụ 2 bài viết 1','2025-12-29 23:14:35','2026-01-08 23:45:48'),
 
+(2,'https://i.postimg.cc/W4d6DJ7n/11-resize.jpg',1,0,'Ảnh chính bài viết 2','Thumbnail bài viết 2','2025-12-29 23:14:35','2025-12-30 23:40:17'),
+(2,'https://i.postimg.cc/W4d6DJ7n/11-resize.jpg',0,1,'Ảnh phụ 1 bài viết 2','Ảnh phụ 1 bài viết 2','2025-12-29 23:14:35','2026-01-08 23:45:53'),
+
+(3,'https://i.postimg.cc/9FX9R7mW/tai-xuong-(10).jpg',1,0,'Ảnh chính bài viết 3','Thumbnail bài viết 3','2025-12-29 23:14:35','2025-12-30 23:41:08'),
+(3,'https://i.postimg.cc/9FX9R7mW/tai-xuong-(10).jpg',0,1,'Ảnh phụ 1 bài viết 3','Ảnh phụ 1 bài viết 3','2025-12-29 23:14:35','2026-01-08 23:45:59'),
+(3,'https://i.postimg.cc/9FX9R7mW/tai-xuong-(10).jpg',0,2,'Ảnh phụ 2 bài viết 3','Ảnh phụ 2 bài viết 3','2025-12-29 23:14:35','2026-01-08 23:45:59'),
+
+(4,'https://khonggiandep.com.vn/wp-content/uploads/2021/04/Toi-uu-hoa.jpg',1,0,'Ảnh chính bài viết 4','Thumbnail bài viết 4','2025-12-29 23:14:35','2026-01-08 23:44:41'),
+(4,'https://khonggiandep.com.vn/wp-content/uploads/2021/04/Toi-uu-hoa.jpg',0,1,'Ảnh phụ 1 bài viết 4','Ảnh phụ 1 bài viết 4','2025-12-29 23:14:35','2026-01-08 23:46:04'),
+
+(5,'https://i.postimg.cc/hhFP0NFh/tai-xuong-(18).jpg',1,0,'Ảnh chính bài viết 5','Thumbnail bài viết 5','2025-12-29 23:14:35','2025-12-30 23:56:10'),
+(5,'https://i.postimg.cc/hhFP0NFh/tai-xuong-(18).jpg',0,1,'Ảnh phụ 1 bài viết 5','Ảnh phụ 1 bài viết 5','2025-12-29 23:14:35','2026-01-08 23:46:11'),
+
+(6,'https://i.postimg.cc/L5JnDznv/tai-xuong-(17).jpg',1,0,'Ảnh chính bài viết 6','Thumbnail bài viết 6','2025-12-29 23:14:35','2025-12-30 23:55:30'),
+(6,'https://i.postimg.cc/L5JnDznv/tai-xuong-(17).jpg',0,1,'Ảnh phụ 1 bài viết 6','Ảnh phụ 1 bài viết 6','2025-12-29 23:14:35','2026-01-08 23:46:16'),
+(6,'https://i.postimg.cc/L5JnDznv/tai-xuong-(17).jpg',0,2,'Ảnh phụ 2 bài viết 6','Ảnh phụ 2 bài viết 6','2025-12-29 23:14:35','2026-01-08 23:46:16'),
+
+(7,'https://statics.vinpearl.com/dac-san-ha-noi-0_1684417727.jpg',1,0,'Ảnh chính bài viết 7','Thumbnail bài viết 7','2025-12-29 23:14:35','2026-01-08 23:30:25'),
+(7,'https://statics.vinpearl.com/dac-san-ha-noi-0_1684417727.jpg',0,1,'Ảnh phụ 1 bài viết 7','Ảnh phụ 1 bài viết 7','2025-12-29 23:14:35','2026-01-08 23:46:20'),
+
+(8,'https://cuonnroll.com/wp-content/uploads/2019/11/ava.jpg.webp',1,0,'Ảnh chính bài viết 8','Thumbnail bài viết 8','2025-12-29 23:14:35','2026-01-08 23:31:33'),
+(8,'https://cuonnroll.com/wp-content/uploads/2019/11/ava.jpg.webp',0,1,'Ảnh phụ 1 bài viết 8','Ảnh phụ 1 bài viết 8','2025-12-29 23:14:35','2026-01-08 23:46:25'),
+(8,'https://cuonnroll.com/wp-content/uploads/2019/11/ava.jpg.webp',0,2,'Ảnh phụ 2 bài viết 8','Ảnh phụ 2 bài viết 8','2025-12-29 23:14:35','2026-01-08 23:46:25'),
+
+(9,'https://i.postimg.cc/MZBw7PG1/tai-xuong-(14).jpg',1,0,'Ảnh chính bài viết 9','Thumbnail bài viết 9','2025-12-29 23:14:35','2025-12-30 23:48:24'),
+(9,'https://i.postimg.cc/MZBw7PG1/tai-xuong-(14).jpg',0,1,'Ảnh phụ 1 bài viết 9','Ảnh phụ 1 bài viết 9','2025-12-29 23:14:35','2026-01-08 23:46:28'),
+
+(10,'https://i.postimg.cc/J0XRtKyr/tai-xuong-(13).jpg',1,0,'Ảnh chính bài viết 10','Thumbnail bài viết 10','2025-12-29 23:14:35','2025-12-30 23:47:42'),
+(10,'https://i.postimg.cc/J0XRtKyr/tai-xuong-(13).jpg',0,1,'Ảnh phụ 1 bài viết 10','Ảnh phụ 1 bài viết 10','2025-12-29 23:14:35','2026-01-08 23:46:32'),
+
+(11,'https://i.postimg.cc/6683Dfp4/tai-xuong-(12).jpg',1,0,'Ảnh chính bài viết 11','Thumbnail bài viết 11','2025-12-29 23:14:35','2025-12-30 23:46:40'),
+(11,'https://i.postimg.cc/6683Dfp4/tai-xuong-(12).jpg',0,1,'Ảnh phụ 1 bài viết 11','Ảnh phụ 1 bài viết 11','2025-12-29 23:14:35','2026-01-08 23:46:38'),
+
+(12,'https://i.ytimg.com/vi/HPrnWHhxrkw/maxresdefault.jpg',1,0,'Ảnh chính bài viết 12','Thumbnail bài viết 12','2025-12-29 23:14:35','2026-01-08 23:44:02'),
+(12,'https://i.ytimg.com/vi/HPrnWHhxrkw/maxresdefault.jpg',0,1,'Ảnh phụ 1 bài viết 12','Ảnh phụ 1 bài viết 12','2025-12-29 23:14:35','2026-01-08 23:46:41'),
+
+(13,'https://smiletravel.com.vn/wp-content/uploads/2025/01/mien-bac-mon-an-ngon.jpg',1,0,'Ảnh chính bài viết 13','Thumbnail bài viết 13','2025-12-29 23:14:35','2026-01-08 23:32:48'),
+(13,'https://smiletravel.com.vn/wp-content/uploads/2025/01/mien-bac-mon-an-ngon.jpg',0,1,'Ảnh phụ 1 bài viết 13','Ảnh phụ 1 bài viết 13','2025-12-29 23:14:35','2026-01-08 23:46:44'),
+
+(14,'https://bizweb.dktcdn.net/100/349/716/files/dac-san-mien-trung-thumb-1.jpg?v=1742530475712',1,0,'Ảnh chính bài viết 14','Thumbnail bài viết 14','2025-12-29 23:14:35','2026-01-08 23:33:33'),
+(14,'https://bizweb.dktcdn.net/100/349/716/files/dac-san-mien-trung-thumb-1.jpg?v=1742530475712',0,1,'Ảnh phụ 1 bài viết 14','Ảnh phụ 1 bài viết 14','2025-12-29 23:14:35','2026-01-08 23:46:48'),
+
+(15,'https://r2.nucuoimekong.com/wp-content/uploads/mon-ngon-mien-nam.jpg',1,0,'Ảnh chính bài viết 15','Thumbnail bài viết 15','2025-12-29 23:14:35','2026-01-08 23:34:21'),
+(15,'https://r2.nucuoimekong.com/wp-content/uploads/mon-ngon-mien-nam.jpg',0,1,'Ảnh phụ 1 bài viết 15','Ảnh phụ 1 bài viết 15','2025-12-29 23:14:35','2026-01-08 23:46:52'),
+
+(16,'https://images.baodantoc.vn/uploads/2024/Thang-7/Ngay-18/Bang-Ngan/1t41.jpg',1,0,'Ảnh chính bài viết 16','Thumbnail bài viết 16','2025-12-29 23:14:35','2026-01-08 23:34:57'),
+(16,'https://images.baodantoc.vn/uploads/2024/Thang-7/Ngay-18/Bang-Ngan/1t41.jpg',0,1,'Ảnh phụ 1 bài viết 16','Ảnh phụ 1 bài viết 16','2025-12-29 23:14:35','2026-01-08 23:46:56'),
+
+(17,'https://haidangtravel.com/image/blog/am-thuc-tay-nguyen.jpg',1,0,'Ảnh chính bài viết 17','Thumbnail bài viết 17','2025-12-29 23:14:35','2026-01-08 23:36:04'),
+(17,'https://haidangtravel.com/image/blog/am-thuc-tay-nguyen.jpg',0,1,'Ảnh phụ 1 bài viết 17','Ảnh phụ 1 bài viết 17','2025-12-29 23:14:35','2026-01-08 23:46:59'),
+
+(18,'https://statics.vinpearl.com/dac-san-mien-trung-1_1635331847.jpg',1,0,'Ảnh chính bài viết 18','Thumbnail bài viết 18','2025-12-29 23:14:35','2026-01-08 23:36:28'),
+(18,'https://statics.vinpearl.com/dac-san-mien-trung-1_1635331847.jpg',0,1,'Ảnh phụ 1 bài viết 18','Ảnh phụ 1 bài viết 18','2025-12-29 23:14:35','2026-01-08 23:47:02'),
+
+(19,'https://www.btaskee.com/wp-content/uploads/2023/03/cac-mon-canh-ngon.jpg',1,0,'Ảnh chính bài viết 19','Thumbnail bài viết 19','2025-12-29 23:14:35','2026-01-08 23:36:55'),
+(19,'https://www.btaskee.com/wp-content/uploads/2023/03/cac-mon-canh-ngon.jpg',0,1,'Ảnh phụ 1 bài viết 19','Ảnh phụ 1 bài viết 19','2025-12-29 23:14:35','2026-01-08 23:47:05'),
+
+(20,'https://nuocmamtin.com/wp-content/uploads/2022/08/thumbnail-2.jpg',1,0,'Ảnh chính bài viết 20','Thumbnail bài viết 20','2025-12-29 23:14:35','2026-01-08 23:37:15'),
+(20,'https://nuocmamtin.com/wp-content/uploads/2022/08/thumbnail-2.jpg',0,1,'Ảnh phụ 1 bài viết 20','Ảnh phụ 1 bài viết 20','2025-12-29 23:14:35','2026-01-08 23:47:10'),
+
+(21,'https://cdn.tgdd.vn/2021/11/CookDish/tong-hop-28-cach-lam-cac-mon-chien-xu-de-lam-hap-dan-an-la-avt-1200x676.jpg',1,0,'Ảnh chính bài viết 21','Thumbnail bài viết 21','2025-12-29 23:14:35','2026-01-08 23:38:36'),
+(21,'https://cdn.tgdd.vn/2021/11/CookDish/tong-hop-28-cach-lam-cac-mon-chien-xu-de-lam-hap-dan-an-la-avt-1200x676.jpg',0,1,'Ảnh phụ 1 bài viết 21','Ảnh phụ 1 bài viết 21','2025-12-29 23:14:35','2026-01-08 23:47:13'),
+
+(22,'https://i.ytimg.com/vi/T4E8lkcvP10/hq720.jpg',1,0,'Ảnh chính bài viết 22','Thumbnail bài viết 22','2025-12-29 23:14:35','2026-01-08 23:37:52'),
+(22,'https://i.ytimg.com/vi/T4E8lkcvP10/hq720.jpg',0,1,'Ảnh phụ 1 bài viết 22','Ảnh phụ 1 bài viết 22','2025-12-29 23:14:35','2026-01-08 23:47:20'),
+
+(23,'https://bizweb.dktcdn.net/100/603/550/articles/cac-mon-nuong-ngon-anh-bia.jpg',1,0,'Ảnh chính bài viết 23','Thumbnail bài viết 23','2025-12-29 23:14:35','2026-01-08 23:39:01'),
+(23,'https://bizweb.dktcdn.net/100/603/550/articles/cac-mon-nuong-ngon-anh-bia.jpg',0,1,'Ảnh phụ 1 bài viết 23','Ảnh phụ 1 bài viết 23','2025-12-29 23:14:35','2026-01-08 23:47:24'),
+
+(24,'https://i.ytimg.com/vi/wzfcSoeG3_E/maxresdefault.jpg',1,0,'Ảnh chính bài viết 24','Thumbnail bài viết 24','2025-12-29 23:14:35','2026-01-08 23:39:23'),
+(24,'https://i.ytimg.com/vi/wzfcSoeG3_E/maxresdefault.jpg',0,1,'Ảnh phụ 1 bài viết 24','Ảnh phụ 1 bài viết 24','2025-12-29 23:14:35','2026-01-08 23:47:34'),
+
+(25,'https://karofivietnam.com.vn/media/news/0412_loi-ich.jpg',1,0,'Ảnh chính bài viết 25','Thumbnail bài viết 25','2025-12-29 23:14:35','2026-01-08 23:39:44'),
+(25,'https://karofivietnam.com.vn/media/news/0412_loi-ich.jpg',0,1,'Ảnh phụ 1 bài viết 25','Ảnh phụ 1 bài viết 25','2025-12-29 23:14:35','2026-01-08 23:47:39'),
+
+(26,'https://media-cdn-v2.laodong.vn/storage/newsportal/2023/10/8/1251585/Mo-Bung.jpg',1,0,'Ảnh chính bài viết 26','Thumbnail bài viết 26','2025-12-29 23:14:35','2026-01-08 23:40:06'),
+(26,'https://media-cdn-v2.laodong.vn/storage/newsportal/2023/10/8/1251585/Mo-Bung.jpg',0,1,'Ảnh phụ 1 bài viết 26','Ảnh phụ 1 bài viết 26','2025-12-29 23:14:35','2026-01-08 23:47:42'),
+
+(27,'https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/11/12/T10.11.M-Nen_n_a_dng_cac_loi_thc_phm.jpg',1,0,'Ảnh chính bài viết 27','Thumbnail bài viết 27','2025-12-29 23:14:35','2026-01-08 23:40:23'),
+(27,'https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/11/12/T10.11.M-Nen_n_a_dng_cac_loi_thc_phm.jpg',0,1,'Ảnh phụ 1 bài viết 27','Ảnh phụ 1 bài viết 27','2025-12-29 23:14:35','2026-01-08 23:47:47'),
+
+(28,'https://porticoandbridge.com/wp-content/uploads/2023/05/blog6.png',1,0,'Ảnh chính bài viết 28','Thumbnail bài viết 28','2025-12-29 23:14:35','2026-01-08 23:41:11'),
+(28,'https://porticoandbridge.com/wp-content/uploads/2023/05/blog6.png',0,1,'Ảnh phụ 1 bài viết 28','Ảnh phụ 1 bài viết 28','2025-12-29 23:14:35','2026-01-08 23:47:51'),
+
+(29,'https://tamanhhospital.vn/wp-content/uploads/2023/10/xa-stress.jpg',1,0,'Ảnh chính bài viết 29','Thumbnail bài viết 29','2025-12-29 23:14:35','2026-01-08 23:41:27'),
+(29,'https://tamanhhospital.vn/wp-content/uploads/2023/10/xa-stress.jpg',0,1,'Ảnh phụ 1 bài viết 29','Ảnh phụ 1 bài viết 29','2025-12-29 23:14:35','2026-01-08 23:47:54'),
+
+(30,'https://suckhoedoisong.qltns.mediacdn.vn/324455921873985536/2022/12/14/thuc-pham-phong-ung-thu-2-16710086892401444444502.jpg',1,0,'Ảnh chính bài viết 30','Thumbnail bài viết 30','2025-12-29 23:14:35','2026-01-08 23:41:44'),
+(30,'https://suckhoedoisong.qltns.mediacdn.vn/324455921873985536/2022/12/14/thuc-pham-phong-ung-thu-2-16710086892401444444502.jpg',0,1,'Ảnh phụ 1 bài viết 30','Ảnh phụ 1 bài viết 30','2025-12-29 23:14:35','2026-01-08 23:47:58'),
+
+(31,'https://res.klook.com/image/upload/q_85/c_fill,w_750/v1714042111/v1aisfwz1i19ef2j9cj6.jpg',1,0,'Ảnh chính bài viết 31','Thumbnail bài viết 31','2025-12-29 23:14:35','2026-01-08 23:42:04'),
+(31,'https://res.klook.com/image/upload/q_85/c_fill,w_750/v1714042111/v1aisfwz1i19ef2j9cj6.jpg',0,1,'Ảnh phụ 1 bài viết 31','Ảnh phụ 1 bài viết 31','2025-12-29 23:14:35','2026-01-08 23:48:01'),
+
+(32,'https://hotelacademy.vn/wp-content/uploads/2025/02/xu-huong-am-thuc-2025-mau-xam.webp',1,0,'Ảnh chính bài viết 32','Thumbnail bài viết 32','2025-12-29 23:14:35','2026-01-08 23:42:25'),
+(32,'https://hotelacademy.vn/wp-content/uploads/2025/02/xu-huong-am-thuc-2025-mau-xam.webp',0,1,'Ảnh phụ 1 bài viết 32','Ảnh phụ 1 bài viết 32','2025-12-29 23:14:35','2026-01-08 23:48:05'),
+
+(33,'https://dntt.mediacdn.vn/197608888129458176/2023/1/9/2973253201008575027368888519862769220158708n-16732545646092015282612.jpg',1,0,'Ảnh chính bài viết 33','Thumbnail bài viết 33','2025-12-29 23:14:35','2026-01-08 23:42:48'),
+(33,'https://dntt.mediacdn.vn/197608888129458176/2023/1/9/2973253201008575027368888519862769220158708n-16732545646092015282612.jpg',0,1,'Ảnh phụ 1 bài viết 33','Ảnh phụ 1 bài viết 33','2025-12-29 23:14:35','2026-01-08 23:48:08'),
+
+(34,'https://i.postimg.cc/L6q13M1y/tai-xuong-(16).jpg',1,0,'Ảnh chính bài viết 34','Thumbnail bài viết 34','2025-12-29 23:14:35','2025-12-30 23:54:40'),
+(34,'https://i.postimg.cc/L6q13M1y/tai-xuong-(16).jpg',0,1,'Ảnh phụ 1 bài viết 34','Ảnh phụ 1 bài viết 34','2025-12-29 23:14:35','2026-01-08 23:48:11'),
+
+(35,'https://i.postimg.cc/dtD8NybY/tai-xuong-(15).jpg',1,0,'Ảnh chính bài viết 35','Thumbnail bài viết 35','2025-12-29 23:14:35','2025-12-30 23:54:05'),
+(35,'https://i.postimg.cc/dtD8NybY/tai-xuong-(15).jpg',0,1,'Ảnh phụ 1 bài viết 35','Ảnh phụ 1 bài viết 35','2025-12-29 23:14:35','2026-01-08 23:48:14'),
+
+(36,'https://i.postimg.cc/C5cV6tnm/tai-xuong-(8).jpg',1,0,'Ảnh chính bài viết 36','Thumbnail bài viết 36','2025-12-29 23:14:35','2025-12-30 23:35:45'),
+(36,'https://i.postimg.cc/C5cV6tnm/tai-xuong-(8).jpg',0,1,'Ảnh phụ 1 bài viết 36','Ảnh phụ 1 bài viết 36','2025-12-29 23:14:35','2026-01-08 23:48:22');
 
 -- Dữ liệu mẫu cho Categories
 INSERT INTO Categories (id, name, slug, description, parent_id) VALUES
@@ -170,19 +203,18 @@ INSERT INTO PostCategories (post_id, category_id) VALUES
 (8, 8);
 
 -- Dữ liệu mẫu cho Users
-INSERT INTO Users 
-(`username`, `password_hash`, `provider`, `provider_id`, `email`, `phone`, `full_name`, `gender`, `address`, `city`, `district`, `ward`, `avatar_url`, `status`) VALUES
-('nguyen55', '$2a$10$.RiX67BDw3k4Uw22rewLJ.KrZfOD0PdIGqc9DUUl4RZatU61f4gaa', 'local', NULL, 'nguyen55@example.com', '0912345678', 'Phạm Thành Nguyên', 'male', '12B Thanh Xuân Nam', 'Ha Noi', 'Quan Thanh Xuan', 'Phuong Thanh Xuan Nam', 'assets/image/user/avatar/user_1', 1),
-('minhtuan89', '$2a$10$oa596XbyvbHkScXJggYg5uFXWyRNYC.BdDKE6UHeXGWhbVeWM30Wy', 'local', NULL, 'minhtuan89@example.com', '0987654321', 'Trần Minh Tuấn', 'male', '45 Trần Duy Hưng', 'Ha Noi', 'Quan Cau Giay', 'Phuong Trung Hoa', 'assets/image/user/avatar/user_2', 1),
-('hoanglong_hn', '$2a$10$8G72fEPvu.cUDTN50lAk9ef3Hvwae8kC.D11QxMYQr7MBh38bmHhy', 'local', NULL, 'hoanglong.hn@example.com', '0903456789', 'Lê Hoàng Long', 'male', '789 Nguyễn Chí Thanh', 'Ha Noi', 'Quan Dong Da', 'Phuong Lang Thuong', 'assets/image/user/avatar/user_3', 0),
-('maiphuong_95', '$2a$10$WpCHIYYXjYEaTDWx1BYnd.xiS85olPsigfI9W0m3GRrbTN/YK7D6K', 'local', NULL, 'maiphuong95@example.com', '0904567890', 'Phạm Thị Mai Phương', 'female', '101 Láng Hạ', 'Ha Noi', 'Quan Ba Dinh', 'Phuong Thanh Cong', 'assets/image/user/avatar/user_4', 1),
-('quanghuy.dev', '$2a$10$L9.OA7ociHXQAOQE46UUeufy2QOi.sJ3pDgdqNNoJummTA6H5p1c2', 'local', NULL, 'quanghuy.dev@example.com', '0905678901', 'Hoàng Quang Huy', 'male', '202 Tôn Đức Thắng', 'Ha Noi', 'Quan Dong Da', 'Phuong Hang Bot', 'assets/image/user/avatar/user_5', 1),
-('thanhthao_88', '$2a$10$TmrNsumGD2Ttdoxf8LCFcOGwW5iCNJ2n.R6yo612vovsZ4bxIwnwC', 'local', NULL, 'thanhthao_88@example.com', '0915111222', 'Vũ Thanh Thảo', 'female', '55 Nguyễn Lương Bằng', 'Ha Noi', 'Quan Dong Da', 'Phuong Quang Trung', 'assets/image/user/avatar/user_6', 1),
-('duc.anh.le', '$2a$10$fulj8uZoGsYremHzos.eDuApDVHlOdvbc0cx8HAgNDj9rdHVxftE2', 'local', NULL, 'duc.anh.le@example.com', '0978888999', 'Lê Đức Anh', 'male', '88 Lò Đúc', 'Ha Noi', 'Quan Hai Ba Trung', 'Phuong Dong Mac', 'assets/image/user/avatar/user_7', 1),
-('ngocbich2000', '$2a$10$mS3vKfM8b86QdFtAB86KQecZ13j9xg70A3h41/eZDSCSKS7fXte0O', 'local', NULL, 'ngocbich2000@example.com', '0355123456', 'Đặng Ngọc Bích', 'female', '15 Hàng Bài', 'Ha Noi', 'Quan Hoan Kiem', 'Phuong Hang Bai', 'assets/image/user/avatar/user_8', 0),
-('trungdung_it', '$2a$10$QYKYYBCSJywmw/sKSSoy2uAKJDeFfakXNbVVWzPyfCgTXdFSgYwCa', 'local', NULL, 'trungdung_it@example.com', '0368246810', 'Phan Trung Dũng', 'male', '334 Nguyễn Trãi', 'Ha Noi', 'Quan Thanh Xuan', 'Phuong Thanh Xuan Trung', 'assets/image/user/avatar/user_9', 1),
-('linhchi_beauty', '$2a$10$o9mNPculqAv1YtdLhVuIKu3oOVv9nf0aTKK2ABmi6GXSd88YVyqxq', 'local', NULL, 'linhchi_beauty@example.com', '0918777888', 'Ngô Linh Chi', 'female', '18 Lý Thường Kiệt', 'Ha Noi', 'Quan Hoan Kiem', 'Phuong Phan Chu Trinh', 'assets/image/user/avatar/user_10', 1),
-('nnn', '$2a$10$RMTnNJ0gnaUirk7/PnepmusCA8.vZtad.Ty7iBz6/niY9je8Q9y1m', 'local', NULL, 'nnn@example.com', '0918777882', 'Ngô Ngọc Nguyên', 'male', '18 Lý Thường Kiệt', 'Thành phố Hà Nội', 'Quận Thanh Xuân', 'Phường Thanh Xuân Bắc', 'https://avatar.iran.liara.run/public', 1);
+INSERT INTO Users (`username`,`password_hash`,`provider`,`provider_id`,`email`,`phone`,`full_name`,`gender`,`address`,`city`,`district`,`ward`,`avatar_url`,`status`) VALUES
+('hoangnam','$2a$10$.RiX67BDw3k4Uw22rewLJ.KrZfOD0PdIGqc9DUUl4RZatU61f4gaa','local',NULL,'hoangnam@gmail.com','0912345678','Hoàng Nam','male','12B Thanh Xuân Nam','Ha Noi','Quan Thanh Xuan','Phuong Thanh Xuan Nam','https://i.ex-cdn.com/danviet.vn/files/content/2025/12/15/114032532428448_1311331283687385_8086819611126358303_n-1140.jpg',1),
+('phoducnam','$2a$10$oa596XbyvbHkScXJggYg5uFXWyRNYC.BdDKE6UHeXGWhbVeWM30Wy','local',NULL,'phoducnam@gmail.com','0987654321','Phó Đức Nam','male','45 Trần Duy Hưng','Ha Noi','Quan Cau Giay','Phuong Trung Hoa','https://media.vov.vn/sites/default/files/styles/front_large/public/2025-08/Pho-Duc-Nam-Mr-Pips.jpg',1),
+('binhgold','$2a$10$8G72fEPvu.cUDTN50lAk9ef3Hvwae8kC.D11QxMYQr7MBh38bmHhy','local',NULL,'binhgold@gmail.com','0903456789','Bình Gold','male','789 Nguyễn Chí Thanh','Ha Noi','Quan Dong Da','Phuong Lang Thuong','https://media.vov.vn/sites/default/files/styles/large/public/2025-07/binh_gold.jpg',0),
+('chidan','$2a$10$WpCHIYYXjYEaTDWx1BYnd.xiS85olPsigfI9W0m3GRrbTN/YK7D6K','local',NULL,'chidan@gmail.com','0904567890','Chi Dân','male','101 Láng Hạ','Ha Noi','Quan Ba Dinh','Phuong Thanh Cong','https://cdn2.tuoitre.vn/thumb_w/480/471584752817336320/2024/11/10/ca-si-chi-dan-1731220120935967588336.jpg',1),
+('sharkthuy','$2a$10$L9.OA7ociHXQAOQE46UUeufy2QOi.sJ3pDgdqNNoJummTA6H5p1c2','local',NULL,'sharkthuy@gmail.com','0905678901','Nguyễn Ngọc Thủy','female','202 Tôn Đức Thắng','Ha Noi','Quan Dong Da','Phuong Hang Bot','https://media.vov.vn/sites/default/files/styles/large/public/2025-11/z7234084082652_475067ff357d08a06d14359b42d1783e-1837.jpg',1),
+('sharkbinh','$2a$10$TmrNsumGD2Ttdoxf8LCFcOGwW5iCNJ2n.R6yo612vovsZ4bxIwnwC','local',NULL,'sharkbinh@gmail.com','0915111222','Nguyễn Hòa Bình','male','55 Nguyễn Lương Bằng','Ha Noi','Quan Dong Da','Phuong Quang Trung','https://mediabls.mediatech.vn/upload/image/202510/medium/597581_df2ab94767e09137cd020ff780d01d3a.jpg',1),
+('damvinhhung','$2a$10$fulj8uZoGsYremHzos.eDuApDVHlOdvbc0cx8HAgNDj9rdHVxftE2','local',NULL,'damvinhhung@gmail.com','0978888999','Đàm Vĩnh Hưng','male','88 Lò Đúc','Ha Noi','Quan Hai Ba Trung','Phuong Dong Mac','https://media-cdn-v2.laodong.vn/storage/newsportal/2024/7/17/1367616/Dam-Vinh-Hung-Medium.jpeg',1),
+('thuytien','$2a$10$mS3vKfM8b86QdFtAB86KQecZ13j9xg70A3h41/eZDSCSKS7fXte0O','local',NULL,'thuytien@gmail.com','0355123456','Nguyễn Thúc Thùy Tiên','female','15 Hàng Bài','Ha Noi','Quan Hoan Kiem','Phuong Hang Bai','https://cdn2.tuoitre.vn/thumb_w/480/471584752817336320/2025/4/8/csacsacs-17440821489931827411440.png',0),
+('ngoctrinh','$2a$10$QYKYYBCSJywmw/sKSSoy2uAKJDeFfakXNbVVWzPyfCgTXdFSgYwCa','local',NULL,'ngoct rinh@gmail.com','0368246810','Ngọc Trinh','female','334 Nguyễn Trãi','Ha Noi','Quan Thanh Xuan','Phuong Thanh Xuan Trung','https://media.vov.vn/sites/default/files/styles/large/public/2024-01/ngoc_trinh.jpeg.jpg',1),
+('quanglinh','$2a$10$o9mNPculqAv1YtdLhVuIKu3oOVv9nf0aTKK2ABmi6GXSd88YVyqxq','local',NULL,'quanglinh@gmail.com','0918777888','Phạm Quang Linh','male','18 Lý Thường Kiệt','Ha Noi','Quan Hoan Kiem','Phuong Phan Chu Trinh','https://images2.thanhnien.vn/quang-linh-vlog.jpg',1),
+('nnn','$2a$10$RMTnNJ0gnaUirk7/PnepmusCA8.vZtad.Ty7iBz6/niY9je8Q9y1m','local',NULL,'hoailinh@gmail.com','0918777882','Hoài Linh','male','18 Lý Thường Kiệt','Thành phố Hà Nội','Quận Thanh Xuân','Phường Thanh Xuân Bắc','https://kenh14cdn.com/hoai-linh.jpg',1);
 
 -- Dữ liệu mẫu cho Tokens
 INSERT INTO Tokens (`user_id`, `refresh_token`, `device_info`, `ip_address`, `token_started_at`, `token_expired_at`, `is_revoked`, `revoked_at`) VALUES
@@ -198,149 +230,150 @@ INSERT INTO Tokens (`user_id`, `refresh_token`, `device_info`, `ip_address`, `to
 (10, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkxpbmhDaGlCZWF1dHkiLCJpYXQiOjE3NTk0ODQ4MDB9.fake_token_for_user10', 'Safari on iPhone 15 Pro', '172.17.0.5', '2025-10-01 00:00:00', '2026-10-01 00:00:00', FALSE, NULL),
 (11, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ik5nbyBOZ29jIE5ndXllbiIsImlhdCI6MTc1OTQ4NDgwMH0.fake_token_for_user11', 'Chrome on Ubuntu 24.04', '10.0.1.12', '2025-10-01 00:00:00', '2026-10-01 00:00:00', FALSE, NULL);
 
--- Dữ liệu mẫu cho Products với cột import_price
+-- Dữ liệu mẫu cho Products
 INSERT INTO Products (id, name, slug, description, origin_price, price, import_price, buyed, rate_point_total, rate_count, stock_qty, low_stock_threshold, status, ocop_rating, category_id)
-VALUES (1, 'Bánh pía Sóc Trăng', 'banh-pia-soc-trang', 'Bánh pía Sóc Trăng thơm ngon, đặc sản miền Tây với lớp vỏ mỏng và nhân đậu xanh sầu riêng béo ngậy.', 70000.00, 65000.00, 50000.00, 150, 48, 10, 200, 20, 1, 4, 1),
-    (2, 'Bò một nắng Krông Pa', 'bo-mot-nang-krong-pa', 'Đặc sản bò một nắng Krông Pa, thịt bò tươi được tẩm ướp gia vị đậm đà và phơi qua một nắng giòn.', 550000.00, 525000.00, 450000.00, 80, 95, 20, 100, 10, 1, NULL, 1),
-    (3, 'Cà phê Buôn Ma Thuột', 'ca-phe-buon-ma-thuot', 'Cà phê rang xay nguyên chất từ thủ phủ cà phê Buôn Ma Thuột, hương thơm nồng nàn, vị đậm đà.', 150000.00, 135000.00, 110000.00, 250, 190, 40, 300, 30, 1, 4, 1),
-    (4, 'Chả ốc', 'cha-oc', 'Chả ốc dai giòn sần sật, kết hợp giữa thịt ốc tươi và các loại gia vị truyền thống, món ngon khó cưỡng.', 120000.00, 110000.00, 90000.00, 120, 68, 15, 150, 15, 1, NULL, 1),
-    (5, 'Dê chiên giòn Tây Ninh', 'de-chien-gion-tay-ninh', 'Thịt dê tươi được chế biến theo công thức đặc biệt của Tây Ninh, chiên giòn rụm, thơm nức mũi.', 250000.00, 230000.00, 200000.00, 60, 45, 10, 80, 10, 1, NULL, 1),
-    (6, 'Gân bò rau tiến vua', 'gan-bo-rau-tien-vua', 'Món gỏi gân bò giòn sần sật kết hợp với rau tiến vua thanh mát, nước sốt chua ngọt đậm vị.', 180000.00, 175000.00, 150000.00, 90, 88, 20, 120, 10, 1, 3, 1),
-    (7, 'Hạt điều rang muối Bình Phước', 'hat-dieu-rang-muoi-binh-phuoc', 'Hạt điều Bình Phước loại 1, được rang muối thủ công, giữ trọn vị bùi béo và hương thơm tự nhiên.', 300000.00, 280000.00, 240000.00, 300, 240, 50, 400, 40, 1, 4, 1),
-    (8, 'Mắm tép chưng thịt', 'mam-tep-chung-thit', 'Mắm tép chưng thịt đậm đà hương vị truyền thống, sản phẩm sạch, không chất bảo quản, ăn cùng cơm nóng tuyệt ngon.', 160000.00, 150000.00, 130000.00, 180, 145, 30, 250, 25, 1, 4, 1),
-    (9, 'Mật ong rừng U Minh', 'mat-ong-rung-u-minh', 'Mật ong nguyên chất khai thác từ rừng tràm U Minh, có màu vàng óng, hương thơm đặc trưng và vị ngọt thanh.', 800000.00, 750000.00, 650000.00, 100, 115, 25, 100, 10, 1, 4, 1),
-    (10, 'Mè xửng Huế', 'me-xung-hue', 'Đặc sản Mè xửng Huế dẻo thơm, ngọt bùi, là sự hòa quyện của mạch nha, đậu phộng và mè rang.', 50000.00, 45000.00, 35000.00, 400, 285, 60, 500, 50, 1, 3, 1),
-    (11, 'Mọc ốc', 'moc-oc', 'Mọc ốc được làm từ thịt ốc tươi xay nhuyễn, nấm mèo và giò sống, viên mọc dai ngon, đậm đà.', 130000.00, 120000.00, 100000.00, 110, 76, 18, 130, 15, 1, NULL, 1),
-    (12, 'Rượu cần Tây Nguyên', 'ruou-can-tay-nguyen', 'Rượu cần là tinh hoa văn hóa của núi rừng Tây Nguyên, được ủ từ men lá cây và gạo nếp, hương vị độc đáo.', 200000.00, 180000.00, 150000.00, 70, 92, 20, 90, 10, 1, 4, 1),
-    (13, 'Trà sen Tây Hồ', 'tra-sen-tay-ho', 'Trà sen Tây Hồ được ướp hương từ những bông sen Bách Diệp, mang đến hương thơm thanh khiết và tinh tế.', 450000.00, 420000.00, 380000.00, 130, 140, 30, 150, 15, 1, 4, 1),
-    (14, 'Trứng kiến Tây Bắc', 'trung-kien-tay-bac', 'Đặc sản độc đáo của núi rừng Tây Bắc, trứng kiến non béo ngậy, thường dùng để nấu xôi hoặc làm gỏi.', 350000.00, 330000.00, 290000.00, 50, 38, 8, 60, 10, 1, NULL, 1),
-    (15, 'Bề bề rang muối', 'be-be-rang-muoi', 'Bề bề tươi ngon được rang cùng muối và sả ớt, vỏ giòn, thịt ngọt đậm đà, là món nhậu hấp dẫn.', 280000.00, 260000.00, 220000.00, 140, 130, 28, 180, 20, 1, NULL, 2),
-    (16, 'Cá bóp nấu me', 'ca-bop-nau-me', 'Lẩu cá bóp nấu me chua thanh, thịt cá bóp ngọt và chắc, là món ăn giải nhiệt và bổ dưỡng.', 320000.00, 290000.00, 250000.00, 110, 98, 22, 120, 10, 1, 4, 2),
-    (17, 'Cá linh bông', 'ca-linh-bong', 'Cá linh mùa nước nổi, thân nhỏ, xương mềm, thịt ngọt, thường dùng để nấu lẩu hoặc kho lạt.', 180000.00, 165000.00, 140000.00, 200, 175, 38, 250, 25, 1, 3, 2),
-    (18, 'Chả cá Móng', 'cha-ca-mong', 'Chả cá Móng Cái nổi tiếng với độ dai, giòn và hương vị đậm đà từ thịt cá tươi nguyên chất.', 240000.00, 220000.00, 190000.00, 160, 150, 32, 200, 20, 1, NULL, 2),
-    (19, 'Chả cá mực tôm', 'cha-ca-muc-tom', 'Sự kết hợp hoàn hảo giữa cá, mực và tôm tươi, tạo nên món chả dai ngon, đậm vị biển.', 260000.00, 245000.00, 210000.00, 130, 112, 25, 150, 15, 1, NULL, 2),
-    (20, 'Chả mỡ ghẹ', 'cha-mo-ghe', 'Chả mỡ ghẹ béo ngậy, thơm lừng mùi ghẹ tươi, là món ăn độc đáo và đầy dinh dưỡng từ hải sản.', 300000.00, 280000.00, 240000.00, 100, 89, 20, 110, 10, 1, 4, 2),
-    (21, 'Chả mực Hạ Long', 'cha-muc-ha-long', 'Đặc sản trứ danh Hạ Long, chả mực được giã tay dai giòn, thơm nức hương mực mai tươi.', 480000.00, 450000.00, 390000.00, 220, 230, 50, 250, 25, 1, 4, 2),
-    (22, 'Chả tôm', 'cha-tom', 'Chả tôm được làm từ tôm tươi xay nhuyễn, có độ dai và vị ngọt tự nhiên, thích hợp chiên hoặc nấu canh.', 230000.00, 210000.00, 180000.00, 170, 155, 35, 220, 20, 1, NULL, 2),
-    (23, 'Cua Cà Mau', 'cua-ca-mau', 'Cua Cà Mau nổi tiếng chắc thịt, ngọt và nhiều gạch. Sản phẩm được giao sống tận nơi.', 600000.00, 580000.00, 500000.00, 120, 142, 30, 100, 10, 1, 4, 2),
-    (24, 'Gỏi cá trích', 'goi-ca-trich', 'Gỏi cá trích Phú Quốc với cá tươi, dừa nạo và rau thơm, cuốn bánh tráng chấm nước mắm chua ngọt.', 190000.00, 175000.00, 150000.00, 150, 130, 29, 160, 15, 1, 4, 2),
-    (25, 'Hàu nướng mỡ hành', 'hau-nuong-mo-hanh', 'Hàu sữa tươi sống được nướng trên bếp than cùng mỡ hành thơm lừng, đậu phộng béo bùi.', 150000.00, 140000.00, 110000.00, 250, 210, 45, 300, 30, 1, NULL, 2),
-    (26, 'Mực một nắng', 'muc-mot-nang', 'Mực lá được phơi qua đúng một nắng, giữ được độ dẻo, ngọt và hương thơm đặc trưng của biển.', 700000.00, 650000.00, 580000.00, 180, 195, 42, 200, 20, 1, 4, 2),
-    (27, 'Nem hải sản', 'nem-hai-san', 'Nem hải sản với vỏ ngoài giòn tan, bên trong là nhân tôm, cua, ghẹ hòa quyện cùng sốt mayonnaise béo ngậy.', 140000.00, 125000.00, 100000.00, 280, 250, 55, 350, 35, 1, NULL, 2),
-    (28, 'Sá sùng nướng', 'sa-sung-nuong', 'Sá sùng khô, đặc sản quý hiếm của vùng biển Quan Lạn, nướng lên có vị ngọt đậm, dai và thơm.', 900000.00, 880000.00, 780000.00, 70, 85, 18, 80, 10, 1, NULL, 2),
-    (29, 'Tôm sú Bạc Liêu', 'tom-su-bac-lieu', 'Tôm sú Bạc Liêu được nuôi trồng theo mô hình sinh thái, thịt chắc, ngọt và an toàn cho sức khỏe.', 450000.00, 430000.00, 380000.00, 190, 180, 40, 200, 20, 1, 4, 2),
-    (30, 'Ruốc bề bề', 'ruoc-be-be', 'Ruốc làm từ 100% thịt bề bề tươi, sợi ruốc bông, tơi, vị ngọt đậm đà, giàu canxi.', 180000.00, 170000.00, 145000.00, 130, 96, 22, 150, 15, 1, NULL, 3),
-    (31, 'Ruốc cá basa', 'ruoc-ca-basa', 'Ruốc cá basa thơm ngon, không tanh, giàu Omega-3, thích hợp cho cả trẻ em và người lớn.', 120000.00, 110000.00, 90000.00, 200, 158, 35, 250, 25, 1, NULL, 3),
-    (32, 'Ruốc cá lóc', 'ruoc-ca-loc', 'Ruốc cá lóc đồng nguyên chất, sợi vàng ươm, thơm ngon, bổ dưỡng, tốt cho người ốm và trẻ nhỏ.', 160000.00, 150000.00, 130000.00, 180, 140, 30, 200, 20, 1, 3, 3),
-    (33, 'Ruốc cá rô đồng', 'ruoc-ca-ro-dong', 'Ruốc làm từ cá rô đồng tự nhiên, thịt dai, thơm, được sao khô thủ công, giữ trọn vị ngọt của cá.', 170000.00, 155000.00, 135000.00, 150, 110, 25, 180, 15, 1, NULL, 3),
-    (34, 'Ruốc cá thu', 'ruoc-ca-thu', 'Ruốc cá thu giàu dinh dưỡng, thịt cá thơm, sợi ruốc bông, là lựa chọn tuyệt vời cho bữa ăn gia đình.', 250000.00, 235000.00, 200000.00, 210, 190, 40, 250, 25, 1, 4, 3),
-    (35, 'Ruốc mắm Huế', 'ruoc-mam-hue', 'Đặc sản mắm ruốc Huế thơm nồng đặc trưng, dùng để nêm nếm các món bún bò, lẩu hoặc xào nấu.', 80000.00, 70000.00, 55000.00, 300, 245, 50, 400, 40, 1, 3, 3),
-    (36, 'Ruốc tép Đồng Tháp', 'ruoc-tep-dong-thap', 'Ruốc làm từ tép đồng tươi, có màu đỏ tự nhiên, vị ngọt đậm, thơm mùi tép, ăn kèm cơm trắng hoặc cháo.', 140000.00, 130000.00, 110000.00, 220, 180, 40, 300, 30, 1, NULL, 3),
-    (37, 'Ruốc thịt lợn Nam Định', 'ruoc-thit-lon-nam-dinh', 'Ruốc thịt lợn làm theo công thức gia truyền Nam Định, sợi ruốc bông, tơi, vàng óng và thơm ngon.', 320000.00, 290000.00, 250000.00, 350, 320, 65, 400, 40, 1, 4, 3),
-    (38, 'Ruốc tôm Bình Định', 'ruoc-tom-binh-dinh', 'Ruốc tôm Bình Định được làm từ tôm đất tươi, giã tay, có vị ngọt thanh, thơm mùi tôm và màu sắc hấp dẫn.', 280000.00, 260000.00, 220000.00, 240, 220, 48, 300, 30, 1, NULL, 3),
-    (39, 'Ruốc tôm đất Cà Mau', 'ruoc-tom-dat-ca-mau', 'Ruốc làm từ tôm đất Cà Mau 100%, không pha trộn, sợi ruốc dai, ngọt và đậm đà hương vị miền sông nước.', 300000.00, 285000.00, 245000.00, 190, 170, 36, 220, 20, 1, 4, 3),
-    (40, 'Ruốc tôm Hạ Long', 'ruoc-tom-ha-long', 'Ruốc tôm Hạ Long nổi tiếng với sợi ruốc bông, tơi, vị ngọt đậm của tôm he, món quà ý nghĩa từ biển.', 290000.00, 270000.00, 230000.00, 230, 205, 45, 280, 25, 1, 4, 3),
-    (41, 'Ruốc tôm rong biển', 'ruoc-tom-rong-bien', 'Sự kết hợp độc đáo giữa ruốc tôm và rong biển, mang lại hương vị mới lạ và bổ sung nhiều khoáng chất.', 200000.00, 185000.00, 160000.00, 160, 135, 30, 200, 20, 1, NULL, 3),
-    (42, 'Da Gà Chiên Giòn', 'da-ga-chien-gion', 'Da gà được làm sạch, tẩm ướp gia vị đậm đà rồi chiên giòn rụm, là món ăn vặt hấp dẫn khó cưỡng.', 75000.00, 69000.00, 55000.00, 180, 142, 30, 200, 20, 1, NULL, 4),
-    (43, 'Gà Cháy Tỏi', 'ga-chay-toi', 'Thịt gà mềm ngọt hòa quyện với hương thơm nồng nàn của tỏi phi vàng, tạo nên món ăn đưa cơm hấp dẫn.', 180000.00, 169000.00, 145000.00, 150, 115, 25, 150, 15, 1, 3, 4),
-    (44, 'Gà Đông Tảo Ủ Muối', 'ga-dong-tao-u-muoi', 'Đặc sản gà Đông Tảo trứ danh với lớp da giòn, thịt ngọt và chắc, được ủ muối hoa tiêu thơm lừng.', 450000.00, 429000.00, 380000.00, 90, 85, 18, 100, 10, 1, 4, 4),
-    (45, 'Gà Nướng Muối Ớt', 'ga-nuong-muoi-ot', 'Gà ta được tẩm ướp muối ớt cay nồng, nướng trên than hồng cho lớp da vàng giòn, thịt mềm và mọng nước.', 250000.00, 235000.00, 200000.00, 210, 190, 40, 200, 20, 1, 4, 4),
-    (46, 'Gà Nướng Thảo Mộc', 'ga-nuong-thao-moc', 'Hương vị độc đáo từ các loại thảo mộc núi rừng thấm đượm trong từng thớ thịt gà nướng mềm thơm.', 260000.00, 245000.00, 210000.00, 130, 110, 24, 150, 15, 1, NULL, 4),
-    (47, 'Gà Ủ Muối', 'ga-u-muoi', 'Gà ta nguyên con được ủ muối thảo dược, da vàng óng, thịt dai ngọt và giữ trọn hương vị tự nhiên.', 220000.00, 209000.00, 180000.00, 300, 280, 60, 250, 25, 1, 3, 4),
-    (48, 'Gà Ủ Xì Dầu', 'ga-u-xi-dau', 'Món gà ủ xì dầu với công thức đặc biệt, thịt gà mềm thấm vị, đậm đà, hương thơm quyến rũ.', 230000.00, 219000.00, 190000.00, 180, 165, 35, 180, 20, 1, NULL, 4),
-    (49, 'Gà Viên Chiên', 'ga-vien-chien', 'Gà viên chiên vàng giòn bên ngoài, mềm ngọt bên trong, là món ăn vặt yêu thích của mọi lứa tuổi.', 90000.00, 85000.00, 70000.00, 250, 210, 45, 300, 30, 1, NULL, 4),
-    (50, 'Há Cảo Gà', 'ha-cao-ga', 'Lớp vỏ bánh mềm dai bọc lấy nhân thịt gà và rau củ tươi ngon, hấp lên thơm phức, chấm cùng nước tương đậm đà.', 110000.00, 99000.00, 80000.00, 160, 130, 28, 200, 20, 1, NULL, 4),
-    (51, 'Gà Kho Mắm', 'ga-kho-mam', 'Hương vị dân dã mà đậm đà khó quên của món gà kho mắm, thịt gà săn chắc thấm đượm vị mắm thơm nồng.', 150000.00, 139000.00, 115000.00, 190, 175, 38, 220, 20, 1, 3, 4),
-    (52, 'Bánh Hạt Điều', 'banh-hat-dieu', 'Bánh quy bơ giòn tan kết hợp với những hạt điều bùi béo, tạo nên món ăn vặt thơm ngon, dinh dưỡng.', 130000.00, 120000.00, 95000.00, 140, 112, 25, 180, 15, 1, NULL, 5),
-    (53, 'Bánh Thanh Hạnh Nhân', 'banh-thanh-hanh-nhan', 'Những thanh bánh giòn rụm phủ đầy lát hạnh nhân rang vàng, vị ngọt nhẹ, béo bùi tự nhiên.', 150000.00, 139000.00, 110000.00, 200, 185, 40, 250, 25, 1, 3, 5),
-    (54, 'Bánh Thuyền Macca', 'banh-thuyen-macca', 'Đế bánh giòn tan hình chiếc thuyền, bên trên là sự kết hợp của macca, hạt điều, hạnh nhân và bí xanh.', 160000.00, 149000.00, 120000.00, 170, 150, 32, 200, 20, 1, NULL, 5),
-    (55, 'Hạnh Nhân Rang Bơ', 'hanh-nhan-rang-bo', 'Hạnh nhân nhập khẩu được rang cùng bơ và muối, giòn rụm, thơm lừng, là món ăn vặt tốt cho sức khỏe.', 280000.00, 265000.00, 220000.00, 220, 200, 42, 250, 25, 1, NULL, 5),
-    (56, 'Hạt Điều Rang Muối', 'hat-dieu-rang-muoi', 'Hạt điều Bình Phước loại A, hạt to đều, được rang muối thủ công, giữ vị ngọt bùi tự nhiên.', 320000.00, 299000.00, 250000.00, 400, 380, 80, 350, 35, 1, 4, 5),
-    (57, 'Hạt Macca Sấy Nứt Vỏ', 'hat-macca-say-nut-vo', 'Nữ hoàng của các loại hạt, hạt macca sấy khô tự nhiên, nứt vỏ dễ dàng, vị béo ngậy, thơm ngon.', 350000.00, 330000.00, 280000.00, 250, 230, 50, 300, 30, 1, 4, 5),
-    (58, 'Hạt Óc Chó', 'hat-oc-cho', 'Hạt óc chó chứa nhiều Omega-3, tốt cho trí não và tim mạch, vị bùi, béo nhẹ, dễ ăn.', 300000.00, 285000.00, 240000.00, 210, 195, 41, 220, 20, 1, NULL, 5),
-    (59, 'Hạt Sen Sấy Giòn', 'hat-sen-say-gion', 'Hạt sen được sấy giòn bằng công nghệ hiện đại, giữ nguyên giá trị dinh dưỡng, vị bùi, ngọt thanh.', 180000.00, 169000.00, 140000.00, 190, 170, 36, 250, 25, 1, 3, 5),
-    (60, 'Mix 5 Loại Hạt Dinh Dưỡng', 'mix-5-loai-hat-dinh-duong', 'Hỗn hợp 5 loại hạt cao cấp: óc chó, macca, hạnh nhân, hạt điều, bí xanh. Cung cấp năng lượng và dưỡng chất.', 340000.00, 325000.00, 280000.00, 280, 260, 55, 300, 30, 1, NULL, 5),
-    (61, 'Thanh Rong Biển Kẹp Hạt', 'thanh-rong-bien-kep-hat', 'Rong biển sấy giòn kẹp các loại hạt dinh dưỡng, là món ăn vặt lạ miệng, thơm ngon và tốt cho sức khỏe.', 120000.00, 110000.00, 90000.00, 240, 215, 48, 300, 30, 1, NULL, 5),
-    (62, 'Chả Chân Vịt', 'cha-chan-vit', 'Món chả độc đáo làm từ chân vịt rút xương, giòn sần sật, đậm đà gia vị, thích hợp làm món nhậu hoặc ăn chơi.', 140000.00, 129000.00, 110000.00, 130, 105, 23, 150, 15, 1, NULL, 6),
-    (63, 'Chả Vịt Thúy Hạnh', 'cha-vit-thuy-hanh', 'Đặc sản chả vịt Thúy Hạnh nổi tiếng với hương vị thơm ngon đặc trưng, thịt vịt mềm ngọt quyện mỡ hành béo ngậy.', 190000.00, 179000.00, 155000.00, 110, 98, 22, 130, 10, 1, 4, 6),
-    (64, 'Chân Vịt Rút Xương Ủ Muối', 'chan-vit-rut-xuong-u-muoi', 'Chân vịt rút xương tiện lợi, được ủ muối thảo mộc, giòn sần sật, chấm cùng sốt chấm cay cay là hết ý.', 150000.00, 135000.00, 115000.00, 200, 180, 40, 250, 25, 1, NULL, 6),
-    (65, 'Chân Vịt Rút Xương Ủ Xì Dầu', 'chan-vit-rut-xuong-u-xi-dau', 'Chân vịt rút xương ngâm trong nước sốt xì dầu thảo mộc đậm đà, vị mặn ngọt hài hòa, thơm nức.', 155000.00, 140000.00, 120000.00, 180, 160, 35, 220, 20, 1, NULL, 6),
-    (66, 'Mọc Vịt', 'moc-vit', 'Viên mọc làm từ thịt vịt xay nhuyễn, nấm hương và gia vị, dai ngon, ngọt thanh, dùng để nấu canh hoặc thả lẩu.', 130000.00, 119000.00, 99000.00, 150, 125, 28, 180, 15, 1, NULL, 6),
-    (67, 'Pate Gan Vịt', 'pate-gan-vit', 'Pate gan vịt kiểu Pháp béo ngậy, mềm mịn, thơm lừng hương vị của rượu cognac và các loại gia vị hảo hạng.', 250000.00, 230000.00, 190000.00, 100, 90, 20, 120, 10, 1, 4, 6),
-    (68, 'Vịt Quay', 'vit-quay', 'Vịt quay da giòn rụm màu cánh gián, thịt mềm ngọt, được tẩm ướp công phu theo công thức gia truyền.', 350000.00, 329000.00, 280000.00, 160, 145, 30, 150, 15, 1, 3, 6),
-    (69, 'Vịt Tiềm Hạt Sen', 'vit-tiem-hat-sen', 'Món ăn bổ dưỡng với thịt vịt mềm rục, hạt sen bùi thơm và nước dùng ngọt thanh từ các vị thuốc bắc.', 280000.00, 265000.00, 225000.00, 120, 108, 24, 130, 10, 1, NULL, 6),
-    (70, 'Vịt Ủ Xì Dầu', 'vit-u-xi-dau', 'Thịt vịt mềm ngọt thấm đẫm trong nước sốt xì dầu và hoa hồi, quế, thảo quả, hương vị khó quên.', 270000.00, 255000.00, 220000.00, 140, 120, 26, 160, 15, 1, NULL, 6),
-    (71, 'Chả Cá Thác Lác Tươi', 'cha-ca-thac-lac-tuoi', 'Chả cá thác lác nguyên chất, được quết tay dai ngon, không hàn the, ngọt vị cá tự nhiên.', 200000.00, 185000.00, 155000.00, 250, 230, 50, 300, 30, 1, 4, 7),
-    (72, 'Cá Chiên Tẩm Gia Vị Sấy Khô', 'ca-chien-tam-gia-vi-say-kho', 'Cá nục được chiên giòn rồi rim với gia vị mặn ngọt, sau đó sấy khô, món ăn vặt hoặc ăn với cơm đều ngon.', 150000.00, 139000.00, 110000.00, 180, 160, 35, 200, 20, 1, NULL, 7),
-    (73, 'Cá Chua Ngọt Đông Hũ', 'ca-chua-ngot-dong-hu', 'Cá được kho rim chua ngọt đậm đà, đóng trong hũ tiện lợi, chỉ cần hâm nóng là có thể dùng ngay.', 130000.00, 119000.00, 95000.00, 150, 130, 28, 180, 15, 1, 3, 7),
-    (74, 'Cá Hộp', 'ca-hop', 'Cá nục hoặc cá trích sốt cà chua, sản phẩm tiện lợi, giàu dinh dưỡng cho bữa ăn nhanh.', 40000.00, 35000.00, 25000.00, 500, 450, 95, 600, 60, 1, NULL, 7),
-    (75, 'Cá Khô', 'ca-kho', 'Cá lóc hoặc cá sặc khô, được phơi nắng tự nhiên, thịt dai ngọt, dùng để nướng, chiên hoặc làm gỏi.', 250000.00, 230000.00, 190000.00, 200, 185, 40, 250, 25, 1, 3, 7),
-    (76, 'Cá Lóc Rim Me', 'ca-loc-rim-me', 'Thịt cá lóc đồng chiên vàng, rim cùng nước sốt me chua ngọt đậm đà, món ăn hao cơm trứ danh.', 160000.00, 149000.00, 125000.00, 170, 155, 33, 200, 20, 1, NULL, 7),
-    (77, 'Cá Một Nắng', 'ca-mot-nang', 'Cá dứa hoặc cá đù một nắng, thịt dẻo, vị ngọt tự nhiên, không quá khô, chiên lên thơm lừng.', 300000.00, 280000.00, 240000.00, 220, 205, 44, 250, 25, 1, 4, 7),
-    (78, 'Cá Mực Một Nắng Tẩm Gia Vị', 'ca-muc-mot-nang-tam-gia-vi', 'Mực một nắng dẻo ngọt, được tẩm ướp gia vị cay cay mặn mặn, nướng lên thơm nức mũi.', 380000.00, 359000.00, 300000.00, 190, 178, 38, 200, 20, 1, NULL, 7),
-    (79, 'Cá Rim', 'ca-rim', 'Cá cơm hoặc cá bống rim mặn ngọt, món ăn dân dã nhưng đậm đà hương vị quê hương.', 120000.00, 110000.00, 90000.00, 280, 260, 55, 300, 30, 1, NULL, 7),
-    (80, 'Cá Rô Phi Sấy Giòn', 'ca-ro-phi-say-gion', 'Thịt cá rô phi được phi lê, tẩm ướp và sấy giòn tan, có thể ăn liền như snack.', 140000.00, 129000.00, 105000.00, 160, 140, 30, 200, 20, 1, NULL, 7),
-    (81, 'Cá Thu Rim Tỏi Ớt', 'ca-thu-rim-toi-ot', 'Khúc cá thu tươi được chiên vàng, rim trong nước sốt tỏi ớt mặn ngọt, đậm đà, thơm lừng.', 280000.00, 265000.00, 220000.00, 190, 175, 37, 220, 20, 1, 4, 7),
-    (82, 'Chả Cá Thác Lác Hậu Giang', 'cha-ca-thac-lac-hau-giang', 'Đặc sản Hậu Giang, chả cá thác lác dai ngon, thơm mùi thì là, chiên vàng hoặc nấu lẩu đều tuyệt.', 210000.00, 195000.00, 165000.00, 210, 198, 42, 250, 25, 1, 4, 7),
-    (83, 'Chả Cá Thác Lác Tẩm Gia Vị', 'cha-ca-thac-lac-tam-gia-vi', 'Chả cá thác lác đã được quết dai và tẩm ướp gia vị vừa ăn, tiện lợi cho việc chế biến.', 220000.00, 205000.00, 175000.00, 180, 165, 36, 200, 20, 1, NULL, 7),
-    (84, 'Pate Cá Hồi Hạ Long', 'pate-ca-hoi-ha-long', 'Pate làm từ cá hồi tươi vùng biển Hạ Long, béo ngậy, thơm ngon, giàu Omega-3, dùng kèm bánh mì.', 190000.00, 175000.00, 150000.00, 140, 128, 28, 160, 15, 1, 3, 7),
-    (85, 'Chả Giò Chả Lụa', 'cha-gio-cha-lua', 'Combo chả giò và chả lụa truyền thống, được làm từ thịt heo tươi ngon theo công thức gia truyền, thơm ngon, đậm đà.', 180000.00, 169000.00, 140000.00, 250, 235, 50, 300, 30, 1, 4, 8),
-    (86, 'Chân Giò Giả Cầy', 'chan-gio-gia-cay', 'Chân giò heo được thui vàng, nấu cùng riềng, mẻ, mắm tôm, tạo nên hương vị giả cầy đặc trưng, thơm nức mũi.', 220000.00, 205000.00, 175000.00, 180, 168, 36, 200, 20, 1, 3, 8),
-    (87, 'Đặc Sản Chả Chìa Hải Phòng', 'dac-san-cha-chia-hai-phong', 'Chả chìa (chả sả) Hải Phòng, thịt heo băm nhuyễn bọc quanh cây sả, nướng thơm lừng, hương vị khó quên.', 190000.00, 179000.00, 150000.00, 160, 145, 31, 180, 15, 1, 4, 8),
-    (88, 'Đặc Sản Chả Cốm Hà Nội', 'dac-san-cha-com-ha-noi', 'Thức quà của mùa thu Hà Nội, chả cốm dẻo thơm, sự hòa quyện giữa thịt heo xay và những hạt cốm non xanh mướt.', 210000.00, 199000.00, 170000.00, 300, 280, 60, 250, 25, 1, 4, 8),
-    (89, 'Đặc Sản Chả Sụn', 'dac-san-cha-sun', 'Chả sụn giòn sần sật, được làm từ thịt heo và sụn non, chiên vàng hay nướng đều thơm ngon khó cưỡng.', 200000.00, 185000.00, 155000.00, 220, 205, 44, 250, 25, 1, NULL, 8),
-    (90, 'Khâu Nhục Lạng Sơn', 'khau-nhuc-lang-son', 'Món ăn đặc sản Lạng Sơn, thịt ba chỉ được tẩm ướp công phu, hầm mềm tan, béo ngậy mà không ngán.', 250000.00, 235000.00, 200000.00, 150, 140, 30, 150, 15, 1, 3, 8),
-    (91, 'Mắm Nêm Tai Heo', 'mam-nem-tai-heo', 'Tai heo giòn sần sật ngâm trong mắm nêm đậm đà, thêm chút dứa và gia vị, món nhậu hay ăn kèm bún đều tuyệt.', 140000.00, 129000.00, 105000.00, 130, 115, 25, 160, 15, 1, NULL, 8),
-    (92, 'Nem Chua Thanh Hóa', 'nem-chua-thanh-hoa', 'Đặc sản nem chua Thanh Hóa, vị chua thanh, cay nồng của tỏi ớt, thơm mùi lá chuối, món quà quê ý nghĩa.', 90000.00, 80000.00, 65000.00, 400, 380, 85, 500, 50, 1, 4, 8),
-    (93, 'Nem Rán Hà Nội', 'nem-ran-ha-noi', 'Nem rán (chả giò) theo phong vị Hà Nội, vỏ giòn rụm, nhân đầy đặn thịt, mộc nhĩ, miến, chấm nước mắm chua ngọt.', 120000.00, 110000.00, 85000.00, 350, 320, 70, 400, 40, 1, NULL, 8),
-    (94, 'Nem Lụi Nha Trang', 'nem-lui-nha-trang', 'Nem nướng làm từ thịt heo xay, được lụi trên que sả hoặc que tre, nướng than hồng thơm lừng, ăn kèm rau sống và bánh tráng.', 160000.00, 149000.00, 120000.00, 280, 265, 58, 300, 30, 1, 3, 8),
-    (95, 'Pate Gan Heo', 'pate-gan-heo', 'Pate gan heo nhà làm, mềm mịn, béo ngậy, thơm mùi tiêu, không chất bảo quản, hoàn hảo cho bữa sáng.', 150000.00, 135000.00, 110000.00, 210, 198, 42, 250, 25, 1, NULL, 8),
-    (96, 'Tai Heo Cuộn Lưỡi', 'tai-heo-cuon-luoi', 'Món nhậu hấp dẫn với tai heo giòn và lưỡi heo mềm được cuộn chặt, luộc chín, thái mỏng chấm mắm gừng.', 180000.00, 165000.00, 140000.00, 170, 158, 34, 200, 20, 1, NULL, 8),
-    (97, 'Tai Heo Ủ Muối', 'tai-heo-u-muoi', 'Tai heo được làm sạch, ủ muối hoa tiêu, giòn sần sật, thơm mùi gia vị, là món khai vị tuyệt vời.', 170000.00, 159000.00, 135000.00, 190, 175, 38, 220, 20, 1, 3, 8),
-    (98, 'Tai Heo Ủ Xì Dầu', 'tai-heo-u-xi-dau', 'Tai heo ngâm trong nước sốt xì dầu thảo mộc đậm đà, vị mặn ngọt hài hòa, thơm nức mùi hoa hồi, quế.', 175000.00, 162000.00, 140000.00, 160, 145, 31, 180, 15, 1, NULL, 8),
-    (99, 'Thịt Chưng Mắm Tép', 'thit-chung-mam-tep', 'Món ăn hao cơm trứ danh, thịt vai heo xay chưng cùng mắm tép, riềng, hành khô cho đến khi keo lại, thơm lừng.', 190000.00, 175000.00, 150000.00, 240, 225, 48, 260, 25, 1, 4, 8),
-    (100, 'Thịt Heo Sấy Khô', 'thit-heo-say-kho', 'Thịt heo sấy khô kiểu gác bếp, được tẩm ướp gia vị đậm đà, dai ngọt, cay cay, là món nhậu lai rai hấp dẫn.', 350000.00, 329000.00, 280000.00, 200, 190, 40, 220, 20, 1, 3, 8),
-    (101, 'Thịt Heo Xông Khói', 'thit-heo-xong-khoi', 'Thịt ba chỉ heo được ướp gia vị và xông khói bằng gỗ sồi, mang lại hương vị thơm ngon đặc trưng.', 400000.00, 379000.00, 320000.00, 180, 170, 35, 200, 20, 1, NULL, 8),
-    (102, 'Xúc Xích Cốm', 'xuc-xich-com', 'Sự kết hợp độc đáo giữa xúc xích heo và cốm xanh, khi chiên lên vỏ ngoài giòn, bên trong dẻo thơm.', 130000.00, 119000.00, 95000.00, 260, 240, 52, 300, 30, 1, NULL, 8),
-    (103, 'Chả Ngan', 'cha-ngan', 'Chả ngan được làm từ thịt ngan tươi, xay nhuyễn và tẩm ướp gia vị, chiên vàng thơm nức, vị ngọt đậm đà.', 240000.00, 225000.00, 190000.00, 150, 138, 29, 170, 15, 1, 4, 9),
-    (104, 'Ngan Một Nắng', 'ngan-mot-nang', 'Thịt ngan được tẩm ướp gia vị rồi phơi qua một nắng, thịt dẻo, đậm vị, chiên hoặc nướng đều rất ngon.', 280000.00, 260000.00, 220000.00, 120, 110, 24, 140, 10, 1, NULL, 9),
-    (105, 'Ngan Xông Khói', 'ngan-xong-khoi', 'Thịt ức ngan được tẩm ướp và xông khói theo quy trình nghiêm ngặt, thái lát mỏng ăn liền, hương vị hảo hạng.', 320000.00, 299000.00, 260000.00, 140, 130, 28, 150, 15, 1, 3, 9);
+VALUES
+    (1, 'Bánh pía Sóc Trăng', 'banh-pia-soc-trang', 'Bánh pía Sóc Trăng thơm ngon, đặc sản miền Tây với lớp vỏ mỏng và nhân đậu xanh sầu riêng béo ngậy.', 70000.00, 65000.00, 50000.00, 150, 29, 6, 200, 20, 1, 4, 1),
+    (2, 'Bò một nắng Krông Pa', 'bo-mot-nang-krong-pa', 'Đặc sản bò một nắng Krông Pa, thịt bò tươi được tẩm ướp gia vị đậm đà và phơi qua một nắng giòn.', 550000.00, 525000.00, 450000.00, 80, 20, 5, 100, 10, 1, NULL, 1),
+    (3, 'Cà phê Buôn Ma Thuột', 'ca-phe-buon-ma-thuot', 'Cà phê rang xay nguyên chất từ thủ phủ cà phê Buôn Ma Thuột, hương thơm nồng nàn, vị đậm đà.', 150000.00, 135000.00, 110000.00, 250, 23, 6, 300, 30, 1, 4, 1),
+    (4, 'Chả ốc', 'cha-oc', 'Chả ốc dai giòn sần sật, kết hợp giữa thịt ốc tươi và các loại gia vị truyền thống, món ngon khó cưỡng.', 120000.00, 110000.00, 90000.00, 120, 25, 5, 150, 15, 1, NULL, 1),
+    (5, 'Dê chiên giòn Tây Ninh', 'de-chien-gion-tay-ninh', 'Thịt dê tươi được chế biến theo công thức đặc biệt của Tây Ninh, chiên giòn rụm, thơm nức mũi.', 250000.00, 230000.00, 200000.00, 60, 19, 5, 80, 10, 1, NULL, 1),
+    (6, 'Gân bò rau tiến vua', 'gan-bo-rau-tien-vua', 'Món gỏi gân bò giòn sần sật kết hợp với rau tiến vua thanh mát, nước sốt chua ngọt đậm vị.', 180000.00, 175000.00, 150000.00, 90, 7, 3, 120, 10, 1, 3, 1),
+    (7, 'Hạt điều rang muối Bình Phước', 'hat-dieu-rang-muoi-binh-phuoc', 'Hạt điều Bình Phước loại 1, được rang muối thủ công, giữ trọn vị bùi béo và hương thơm tự nhiên.', 300000.00, 280000.00, 240000.00, 300, 25, 5, 400, 40, 1, 4, 1),
+    (8, 'Mắm tép chưng thịt', 'mam-tep-chung-thit', 'Mắm tép chưng thịt đậm đà hương vị truyền thống, sản phẩm sạch, không chất bảo quản, ăn cùng cơm nóng tuyệt ngon.', 160000.00, 150000.00, 130000.00, 180, 15, 4, 250, 25, 1, 4, 1),
+    (9, 'Mật ong rừng U Minh', 'mat-ong-rung-u-minh', 'Mật ong nguyên chất khai thác từ rừng tràm U Minh, có màu vàng óng, hương thơm đặc trưng và vị ngọt thanh.', 800000.00, 750000.00, 650000.00, 100, 21, 5, 100, 10, 1, 4, 1),
+    (10, 'Mè xửng Huế', 'me-xung-hue', 'Đặc sản Mè xửng Huế dẻo thơm, ngọt bùi, là sự hòa quyện của mạch nha, đậu phộng và mè rang.', 50000.00, 45000.00, 35000.00, 400, 27, 6, 500, 50, 1, 3, 1),
+    (11, 'Mọc ốc', 'moc-oc', 'Mọc ốc được làm từ thịt ốc tươi xay nhuyễn, nấm mèo và giò sống, viên mọc dai ngon, đậm đà.', 130000.00, 120000.00, 100000.00, 110, 0, 0, 130, 15, 1, NULL, 1),
+    (12, 'Rượu cần Tây Nguyên', 'ruou-can-tay-nguyen', 'Rượu cần là tinh hoa văn hóa của núi rừng Tây Nguyên, được ủ từ men lá cây và gạo nếp, hương vị độc đáo.', 200000.00, 180000.00, 150000.00, 70, 0, 0, 90, 10, 1, 4, 1),
+    (13, 'Trà sen Tây Hồ', 'tra-sen-tay-ho', 'Trà sen Tây Hồ được ướp hương từ những bông sen Bách Diệp, mang đến hương thơm thanh khiết và tinh tế.', 450000.00, 420000.00, 380000.00, 130, 5, 1, 150, 15, 1, 4, 1),
+    (14, 'Trứng kiến Tây Bắc', 'trung-kien-tay-bac', 'Đặc sản độc đáo của núi rừng Tây Bắc, trứng kiến non béo ngậy, thường dùng để nấu xôi hoặc làm gỏi.', 350000.00, 330000.00, 290000.00, 50, 0, 0, 60, 10, 1, NULL, 1),
+    (15, 'Bề bề rang muối', 'be-be-rang-muoi', 'Bề bề tươi ngon được rang cùng muối và sả ớt, vỏ giòn, thịt ngọt đậm đà, là món nhậu hấp dẫn.', 280000.00, 260000.00, 220000.00, 140, 4, 1, 180, 20, 1, NULL, 2),
+    (16, 'Cá bóp nấu me', 'ca-bop-nau-me', 'Lẩu cá bóp nấu me chua thanh, thịt cá bóp ngọt và chắc, là món ăn giải nhiệt và bổ dưỡng.', 320000.00, 290000.00, 250000.00, 110, 0, 0, 120, 10, 1, 4, 2),
+    (17, 'Cá linh bông', 'ca-linh-bong', 'Cá linh mùa nước nổi, thân nhỏ, xương mềm, thịt ngọt, thường dùng để nấu lẩu hoặc kho lạt.', 180000.00, 165000.00, 140000.00, 200, 0, 0, 250, 25, 1, 3, 2),
+    (18, 'Chả cá Móng', 'cha-ca-mong', 'Chả cá Móng Cái nổi tiếng với độ dai, giòn và hương vị đậm đà từ thịt cá tươi nguyên chất.', 240000.00, 220000.00, 190000.00, 160, 0, 0, 200, 20, 1, NULL, 2),
+    (19, 'Chả cá mực tôm', 'cha-ca-muc-tom', 'Sự kết hợp hoàn hảo giữa cá, mực và tôm tươi, tạo nên món chả dai ngon, đậm vị biển.', 260000.00, 245000.00, 210000.00, 130, 0, 0, 150, 15, 1, NULL, 2),
+    (20, 'Chả mỡ ghẹ', 'cha-mo-ghe', 'Chả mỡ ghẹ béo ngậy, thơm lừng mùi ghẹ tươi, là món ăn độc đáo và đầy dinh dưỡng từ hải sản.', 300000.00, 280000.00, 240000.00, 100, 0, 0, 110, 10, 1, 4, 2),
+    (21, 'Chả mực Hạ Long', 'cha-muc-ha-long', 'Đặc sản trứ danh Hạ Long, chả mực được giã tay dai giòn, thơm nức hương mực mai tươi.', 480000.00, 450000.00, 390000.00, 220, 5, 1, 250, 25, 1, 4, 2),
+    (22, 'Chả tôm', 'cha-tom', 'Chả tôm được làm từ tôm tươi xay nhuyễn, có độ dai và vị ngọt tự nhiên, thích hợp chiên hoặc nấu canh.', 230000.00, 210000.00, 180000.00, 170, 0, 0, 220, 20, 1, NULL, 2),
+    (23, 'Cua Cà Mau', 'cua-ca-mau', 'Cua Cà Mau nổi tiếng chắc thịt, ngọt và nhiều gạch. Sản phẩm được giao sống tận nơi.', 600000.00, 580000.00, 500000.00, 120, 5, 1, 100, 10, 1, 4, 2),
+    (24, 'Gỏi cá trích', 'goi-ca-trich', 'Gỏi cá trích Phú Quốc với cá tươi, dừa nạo và rau thơm, cuốn bánh tráng chấm nước mắm chua ngọt.', 190000.00, 175000.00, 150000.00, 150, 0, 0, 160, 15, 1, 4, 2),
+    (25, 'Hàu nướng mỡ hành', 'hau-nuong-mo-hanh', 'Hàu sữa tươi sống được nướng trên bếp than cùng mỡ hành thơm lừng, đậu phộng béo bùi.', 150000.00, 140000.00, 110000.00, 250, 0, 0, 300, 30, 1, NULL, 2),
+    (26, 'Mực một nắng', 'muc-mot-nang', 'Mực lá được phơi qua đúng một nắng, giữ được độ dẻo, ngọt và hương thơm đặc trưng của biển.', 700000.00, 650000.00, 580000.00, 180, 0, 0, 200, 20, 1, 4, 2),
+    (27, 'Nem hải sản', 'nem-hai-san', 'Nem hải sản với vỏ ngoài giòn tan, bên trong là nhân tôm, cua, ghẹ hòa quyện cùng sốt mayonnaise béo ngậy.', 140000.00, 125000.00, 100000.00, 280, 5, 1, 350, 35, 1, NULL, 2),
+    (28, 'Sá sùng nướng', 'sa-sung-nuong', 'Sá sùng khô, đặc sản quý hiếm của vùng biển Quan Lạn, nướng lên có vị ngọt đậm, dai và thơm.', 900000.00, 880000.00, 780000.00, 70, 0, 0, 80, 10, 1, NULL, 2),
+    (29, 'Tôm sú Bạc Liêu', 'tom-su-bac-lieu', 'Tôm sú Bạc Liêu được nuôi trồng theo mô hình sinh thái, thịt chắc, ngọt và an toàn cho sức khỏe.', 450000.00, 430000.00, 380000.00, 190, 0, 0, 200, 20, 1, 4, 2),
+    (30, 'Ruốc bề bề', 'ruoc-be-be', 'Ruốc làm từ 100% thịt bề bề tươi, sợi ruốc bông, tơi, vị ngọt đậm đà, giàu canxi.', 180000.00, 170000.00, 145000.00, 130, 0, 0, 150, 15, 1, NULL, 3),
+    (31, 'Ruốc cá basa', 'ruoc-ca-basa', 'Ruốc cá basa thơm ngon, không tanh, giàu Omega-3, thích hợp cho cả trẻ em và người lớn.', 120000.00, 110000.00, 90000.00, 200, 0, 0, 250, 25, 1, NULL, 3),
+    (32, 'Ruốc cá lóc', 'ruoc-ca-loc', 'Ruốc cá lóc đồng nguyên chất, sợi vàng ươm, thơm ngon, bổ dưỡng, tốt cho người ốm và trẻ nhỏ.', 160000.00, 150000.00, 130000.00, 180, 0, 0, 200, 20, 1, 3, 3),
+    (33, 'Ruốc cá rô đồng', 'ruoc-ca-ro-dong', 'Ruốc làm từ cá rô đồng tự nhiên, thịt dai, thơm, được sao khô thủ công, giữ trọn vị ngọt của cá.', 170000.00, 155000.00, 135000.00, 150, 0, 0, 180, 15, 1, NULL, 3),
+    (34, 'Ruốc cá thu', 'ruoc-ca-thu', 'Ruốc cá thu giàu dinh dưỡng, thịt cá thơm, sợi ruốc bông, là lựa chọn tuyệt vời cho bữa ăn gia đình.', 250000.00, 235000.00, 200000.00, 210, 0, 0, 250, 25, 1, 4, 3),
+    (35, 'Ruốc mắm Huế', 'ruoc-mam-hue', 'Đặc sản mắm ruốc Huế thơm nồng đặc trưng, dùng để nêm nếm các món bún bò, lẩu hoặc xào nấu.', 80000.00, 70000.00, 55000.00, 300, 0, 0, 400, 40, 1, 3, 3),
+    (36, 'Ruốc tép Đồng Tháp', 'ruoc-tep-dong-thap', 'Ruốc làm từ tép đồng tươi, có màu đỏ tự nhiên, vị ngọt đậm, thơm mùi tép, ăn kèm cơm trắng hoặc cháo.', 140000.00, 130000.00, 110000.00, 220, 0, 0, 300, 30, 1, NULL, 3),
+    (37, 'Ruốc thịt lợn Nam Định', 'ruoc-thit-lon-nam-dinh', 'Ruốc thịt lợn làm theo công thức gia truyền Nam Định, sợi ruốc bông, tơi, vàng óng và thơm ngon.', 320000.00, 290000.00, 250000.00, 350, 5, 1, 400, 40, 1, 4, 3),
+    (38, 'Ruốc tôm Bình Định', 'ruoc-tom-binh-dinh', 'Ruốc tôm Bình Định được làm từ tôm đất tươi, giã tay, có vị ngọt thanh, thơm mùi tôm và màu sắc hấp dẫn.', 280000.00, 260000.00, 220000.00, 240, 0, 0, 300, 30, 1, NULL, 3),
+    (39, 'Ruốc tôm đất Cà Mau', 'ruoc-tom-dat-ca-mau', 'Ruốc làm từ tôm đất Cà Mau 100%, không pha trộn, sợi ruốc dai, ngọt và đậm đà hương vị miền sông nước.', 300000.00, 285000.00, 245000.00, 190, 0, 0, 220, 20, 1, 4, 3),
+    (40, 'Ruốc tôm Hạ Long', 'ruoc-tom-ha-long', 'Ruốc tôm Hạ Long nổi tiếng với sợi ruốc bông, tơi, vị ngọt đậm của tôm he, món quà ý nghĩa từ biển.', 290000.00, 270000.00, 230000.00, 230, 0, 0, 280, 25, 1, 4, 3),
+    (41, 'Ruốc tôm rong biển', 'ruoc-tom-rong-bien', 'Sự kết hợp độc đáo giữa ruốc tôm và rong biển, mang lại hương vị mới lạ và bổ sung nhiều khoáng chất.', 200000.00, 185000.00, 160000.00, 160, 0, 0, 200, 20, 1, NULL, 3),
+    (42, 'Da Gà Chiên Giòn', 'da-ga-chien-gion', 'Da gà được làm sạch, tẩm ướp gia vị đậm đà rồi chiên giòn rụm, là món ăn vặt hấp dẫn khó cưỡng.', 75000.00, 69000.00, 55000.00, 180, 0, 0, 200, 20, 1, NULL, 4),
+    (43, 'Gà Cháy Tỏi', 'ga-chay-toi', 'Thịt gà mềm ngọt hòa quyện với hương thơm nồng nàn của tỏi phi vàng, tạo nên món ăn đưa cơm hấp dẫn.', 180000.00, 169000.00, 145000.00, 150, 0, 0, 150, 15, 1, 3, 4),
+    (44, 'Gà Đông Tảo Ủ Muối', 'ga-dong-tao-u-muoi', 'Đặc sản gà Đông Tảo trứ danh với lớp da giòn, thịt ngọt và chắc, được ủ muối hoa tiêu thơm lừng.', 450000.00, 429000.00, 380000.00, 90, 0, 0, 100, 10, 1, 4, 4),
+    (45, 'Gà Nướng Muối Ớt', 'ga-nuong-muoi-ot', 'Gà ta được tẩm ướp muối ớt cay nồng, nướng trên than hồng cho lớp da vàng giòn, thịt mềm và mọng nước.', 250000.00, 235000.00, 200000.00, 210, 0, 0, 200, 20, 1, 4, 4),
+    (46, 'Gà Nướng Thảo Mộc', 'ga-nuong-thao-moc', 'Hương vị độc đáo từ các loại thảo mộc núi rừng thấm đượm trong từng thớ thịt gà nướng mềm thơm.', 260000.00, 245000.00, 210000.00, 130, 0, 0, 150, 15, 1, NULL, 4),
+    (47, 'Gà Ủ Muối', 'ga-u-muoi', 'Gà ta nguyên con được ủ muối thảo dược, da vàng óng, thịt dai ngọt và giữ trọn hương vị tự nhiên.', 220000.00, 209000.00, 180000.00, 300, 3, 1, 250, 25, 1, 3, 4),
+    (48, 'Gà Ủ Xì Dầu', 'ga-u-xi-dau', 'Món gà ủ xì dầu với công thức đặc biệt, thịt gà mềm thấm vị, đậm đà, hương thơm quyến rũ.', 230000.00, 219000.00, 190000.00, 180, 0, 0, 180, 20, 1, NULL, 4),
+    (49, 'Gà Viên Chiên', 'ga-vien-chien', 'Gà viên chiên vàng giòn bên ngoài, mềm ngọt bên trong, là món ăn vặt yêu thích của mọi lứa tuổi.', 90000.00, 85000.00, 70000.00, 250, 0, 0, 300, 30, 1, NULL, 4),
+    (50, 'Há Cảo Gà', 'ha-cao-ga', 'Lớp vỏ bánh mềm dai bọc lấy nhân thịt gà và rau củ tươi ngon, hấp lên thơm phức, chấm cùng nước tương đậm đà.', 110000.00, 99000.00, 80000.00, 160, 0, 0, 200, 20, 1, NULL, 4),
+    (51, 'Gà Kho Mắm', 'ga-kho-mam', 'Hương vị dân dã mà đậm đà khó quên của món gà kho mắm, thịt gà săn chắc thấm đượm vị mắm thơm nồng.', 150000.00, 139000.00, 115000.00, 190, 0, 0, 220, 20, 1, 3, 4),
+    (52, 'Bánh Hạt Điều', 'banh-hat-dieu', 'Bánh quy bơ giòn tan kết hợp với những hạt điều bùi béo, tạo nên món ăn vặt thơm ngon, dinh dưỡng.', 130000.00, 120000.00, 95000.00, 140, 0, 0, 180, 15, 1, NULL, 5),
+    (53, 'Bánh Thanh Hạnh Nhân', 'banh-thanh-hanh-nhan', 'Những thanh bánh giòn rụm phủ đầy lát hạnh nhân rang vàng, vị ngọt nhẹ, béo bùi tự nhiên.', 150000.00, 139000.00, 110000.00, 200, 0, 0, 250, 25, 1, 3, 5),
+    (54, 'Bánh Thuyền Macca', 'banh-thuyen-macca', 'Đế bánh giòn tan hình chiếc thuyền, bên trên là sự kết hợp của macca, hạt điều, hạnh nhân và bí xanh.', 160000.00, 149000.00, 120000.00, 170, 0, 0, 200, 20, 1, NULL, 5),
+    (55, 'Hạnh Nhân Rang Bơ', 'hanh-nhan-rang-bo', 'Hạnh nhân nhập khẩu được rang cùng bơ và muối, giòn rụm, thơm lừng, là món ăn vặt tốt cho sức khỏe.', 280000.00, 265000.00, 220000.00, 220, 0, 0, 250, 25, 1, NULL, 5),
+    (56, 'Hạt Điều Rang Muối', 'hat-dieu-rang-muoi', 'Hạt điều Bình Phước loại A, hạt to đều, được rang muối thủ công, giữ vị ngọt bùi tự nhiên.', 320000.00, 299000.00, 250000.00, 400, 5, 1, 350, 35, 1, 4, 5),
+    (57, 'Hạt Macca Sấy Nứt Vỏ', 'hat-macca-say-nut-vo', 'Nữ hoàng của các loại hạt, hạt macca sấy khô tự nhiên, nứt vỏ dễ dàng, vị béo ngậy, thơm ngon.', 350000.00, 330000.00, 280000.00, 250, 4, 1, 300, 30, 1, 4, 5),
+    (58, 'Hạt Óc Chó', 'hat-oc-cho', 'Hạt óc chó chứa nhiều Omega-3, tốt cho trí não và tim mạch, vị bùi, béo nhẹ, dễ ăn.', 300000.00, 285000.00, 240000.00, 210, 0, 0, 220, 20, 1, NULL, 5),
+    (59, 'Hạt Sen Sấy Giòn', 'hat-sen-say-gion', 'Hạt sen được sấy giòn bằng công nghệ hiện đại, giữ nguyên giá trị dinh dưỡng, vị bùi, ngọt thanh.', 180000.00, 169000.00, 140000.00, 190, 0, 0, 250, 25, 1, 3, 5),
+    (60, 'Mix 5 Loại Hạt Dinh Dưỡng', 'mix-5-loai-hat-dinh-duong', 'Hỗn hợp 5 loại hạt cao cấp: óc chó, macca, hạnh nhân, hạt điều, bí xanh. Cung cấp năng lượng và dưỡng chất.', 340000.00, 325000.00, 280000.00, 280, 0, 0, 300, 30, 1, NULL, 5),
+    (61, 'Thanh Rong Biển Kẹp Hạt', 'thanh-rong-bien-kep-hat', 'Rong biển sấy giòn kẹp các loại hạt dinh dưỡng, là món ăn vặt lạ miệng, thơm ngon và tốt cho sức khỏe.', 120000.00, 110000.00, 90000.00, 240, 0, 0, 300, 30, 1, NULL, 5),
+    (62, 'Chả Chân Vịt', 'cha-chan-vit', 'Món chả độc đáo làm từ chân vịt rút xương, giòn sần sật, đậm đà gia vị, thích hợp làm món nhậu hoặc ăn chơi.', 140000.00, 129000.00, 110000.00, 130, 0, 0, 150, 15, 1, NULL, 6),
+    (63, 'Chả Vịt Thúy Hạnh', 'cha-vit-thuy-hanh', 'Đặc sản chả vịt Thúy Hạnh nổi tiếng với hương vị thơm ngon đặc trưng, thịt vịt mềm ngọt quyện mỡ hành béo ngậy.', 190000.00, 179000.00, 155000.00, 110, 0, 0, 130, 10, 1, 4, 6),
+    (64, 'Chân Vịt Rút Xương Ủ Muối', 'chan-vit-rut-xuong-u-muoi', 'Chân vịt rút xương tiện lợi, được ủ muối thảo mộc, giòn sần sật, chấm cùng sốt chấm cay cay là hết ý.', 150000.00, 135000.00, 115000.00, 200, 0, 0, 250, 25, 1, NULL, 6),
+    (65, 'Chân Vịt Rút Xương Ủ Xì Dầu', 'chan-vit-rut-xuong-u-xi-dau', 'Chân vịt rút xương ngâm trong nước sốt xì dầu thảo mộc đậm đà, vị mặn ngọt hài hòa, thơm nức.', 155000.00, 140000.00, 120000.00, 180, 0, 0, 220, 20, 1, NULL, 6),
+    (66, 'Mọc Vịt', 'moc-vit', 'Viên mọc làm từ thịt vịt xay nhuyễn, nấm hương và gia vị, dai ngon, ngọt thanh, dùng để nấu canh hoặc thả lẩu.', 130000.00, 119000.00, 99000.00, 150, 0, 0, 180, 15, 1, NULL, 6),
+    (67, 'Pate Gan Vịt', 'pate-gan-vit', 'Pate gan vịt kiểu Pháp béo ngậy, mềm mịn, thơm lừng hương vị của rượu cognac và các loại gia vị hảo hạng.', 250000.00, 230000.00, 190000.00, 100, 4, 1, 120, 10, 1, 4, 6),
+    (68, 'Vịt Quay', 'vit-quay', 'Vịt quay da giòn rụm màu cánh gián, thịt mềm ngọt, được tẩm ướp công phu theo công thức gia truyền.', 350000.00, 329000.00, 280000.00, 160, 4, 1, 150, 15, 1, 3, 6),
+    (69, 'Vịt Tiềm Hạt Sen', 'vit-tiem-hat-sen', 'Món ăn bổ dưỡng với thịt vịt mềm rục, hạt sen bùi thơm và nước dùng ngọt thanh từ các vị thuốc bắc.', 280000.00, 265000.00, 225000.00, 120, 0, 0, 130, 10, 1, NULL, 6),
+    (70, 'Vịt Ủ Xì Dầu', 'vit-u-xi-dau', 'Thịt vịt mềm ngọt thấm đẫm trong nước sốt xì dầu và hoa hồi, quế, thảo quả, hương vị khó quên.', 270000.00, 255000.00, 220000.00, 140, 0, 0, 160, 15, 1, NULL, 6),
+    (71, 'Chả Cá Thác Lác Tươi', 'cha-ca-thac-lac-tuoi', 'Chả cá thác lác nguyên chất, được quết tay dai ngon, không hàn the, ngọt vị cá tự nhiên.', 200000.00, 185000.00, 155000.00, 250, 0, 0, 300, 30, 1, 4, 7),
+    (72, 'Cá Chiên Tẩm Gia Vị Sấy Khô', 'ca-chien-tam-gia-vi-say-kho', 'Cá nục được chiên giòn rồi rim với gia vị mặn ngọt, sau đó sấy khô, món ăn vặt hoặc ăn với cơm đều ngon.', 150000.00, 139000.00, 110000.00, 180, 0, 0, 200, 20, 1, NULL, 7),
+    (73, 'Cá Chua Ngọt Đông Hũ', 'ca-chua-ngot-dong-hu', 'Cá được kho rim chua ngọt đậm đà, đóng trong hũ tiện lợi, chỉ cần hâm nóng là có thể dùng ngay.', 130000.00, 119000.00, 95000.00, 150, 0, 0, 180, 15, 1, 3, 7),
+    (74, 'Cá Hộp', 'ca-hop', 'Cá nục hoặc cá trích sốt cà chua, sản phẩm tiện lợi, giàu dinh dưỡng cho bữa ăn nhanh.', 40000.00, 35000.00, 25000.00, 500, 0, 0, 600, 60, 1, NULL, 7),
+    (75, 'Cá Khô', 'ca-kho', 'Cá lóc hoặc cá sặc khô, được phơi nắng tự nhiên, thịt dai ngọt, dùng để nướng, chiên hoặc làm gỏi.', 250000.00, 230000.00, 190000.00, 200, 0, 0, 250, 25, 1, 3, 7),
+    (76, 'Cá Lóc Rim Me', 'ca-loc-rim-me', 'Thịt cá lóc đồng chiên vàng, rim cùng nước sốt me chua ngọt đậm đà, món ăn hao cơm trứ danh.', 160000.00, 149000.00, 125000.00, 170, 0, 0, 200, 20, 1, NULL, 7),
+    (77, 'Cá Một Nắng', 'ca-mot-nang', 'Cá dứa hoặc cá đù một nắng, thịt dẻo, vị ngọt tự nhiên, không quá khô, chiên lên thơm lừng.', 300000.00, 280000.00, 240000.00, 220, 0, 0, 250, 25, 1, 4, 7),
+    (78, 'Cá Mực Một Nắng Tẩm Gia Vị', 'ca-muc-mot-nang-tam-gia-vi', 'Mực một nắng dẻo ngọt, được tẩm ướp gia vị cay cay mặn mặn, nướng lên thơm nức mũi.', 380000.00, 359000.00, 300000.00, 190, 0, 0, 200, 20, 1, NULL, 7),
+    (79, 'Cá Rim', 'ca-rim', 'Cá cơm hoặc cá bống rim mặn ngọt, món ăn dân dã nhưng đậm đà hương vị quê hương.', 120000.00, 110000.00, 90000.00, 280, 0, 0, 300, 30, 1, NULL, 7),
+    (80, 'Cá Rô Phi Sấy Giòn', 'ca-ro-phi-say-gion', 'Thịt cá rô phi được phi lê, tẩm ướp và sấy giòn tan, có thể ăn liền như snack.', 140000.00, 129000.00, 105000.00, 160, 0, 0, 200, 20, 1, NULL, 7),
+    (81, 'Cá Thu Rim Tỏi Ớt', 'ca-thu-rim-toi-ot', 'Khúc cá thu tươi được chiên vàng, rim trong nước sốt tỏi ớt mặn ngọt, đậm đà, thơm lừng.', 280000.00, 265000.00, 220000.00, 190, 0, 0, 220, 20, 1, 4, 7),
+    (82, 'Chả Cá Thác Lác Hậu Giang', 'cha-ca-thac-lac-hau-giang', 'Đặc sản Hậu Giang, chả cá thác lác dai ngon, thơm mùi thì là, chiên vàng hoặc nấu lẩu đều tuyệt.', 210000.00, 195000.00, 165000.00, 210, 5, 1, 250, 25, 1, 4, 7),
+    (83, 'Chả Cá Thác Lác Tẩm Gia Vị', 'cha-ca-thac-lac-tam-gia-vi', 'Chả cá thác lác đã được quết dai và tẩm ướp gia vị vừa ăn, tiện lợi cho việc chế biến.', 220000.00, 205000.00, 175000.00, 180, 0, 0, 200, 20, 1, NULL, 7),
+    (84, 'Pate Cá Hồi Hạ Long', 'pate-ca-hoi-ha-long', 'Pate làm từ cá hồi tươi vùng biển Hạ Long, béo ngậy, thơm ngon, giàu Omega-3, dùng kèm bánh mì.', 190000.00, 175000.00, 150000.00, 140, 0, 0, 160, 15, 1, 3, 7),
+    (85, 'Chả Giò Chả Lụa', 'cha-gio-cha-lua', 'Combo chả giò và chả lụa truyền thống, được làm từ thịt heo tươi ngon theo công thức gia truyền, thơm ngon, đậm đà.', 180000.00, 169000.00, 140000.00, 250, 0, 0, 300, 30, 1, 4, 8),
+    (86, 'Chân Giò Giả Cầy', 'chan-gio-gia-cay', 'Chân giò heo được thui vàng, nấu cùng riềng, mẻ, mắm tôm, tạo nên hương vị giả cầy đặc trưng, thơm nức mũi.', 220000.00, 205000.00, 175000.00, 180, 0, 0, 200, 20, 1, 3, 8),
+    (87, 'Đặc Sản Chả Chìa Hải Phòng', 'dac-san-cha-chia-hai-phong', 'Chả chìa (chả sả) Hải Phòng, thịt heo băm nhuyễn bọc quanh cây sả, nướng thơm lừng, hương vị khó quên.', 190000.00, 179000.00, 150000.00, 160, 0, 0, 180, 15, 1, 4, 8),
+    (88, 'Đặc Sản Chả Cốm Hà Nội', 'dac-san-cha-com-ha-noi', 'Thức quà của mùa thu Hà Nội, chả cốm dẻo thơm, sự hòa quyện giữa thịt heo xay và những hạt cốm non xanh mướt.', 210000.00, 199000.00, 170000.00, 300, 4, 1, 250, 25, 1, 4, 8),
+    (89, 'Đặc Sản Chả Sụn', 'dac-san-cha-sun', 'Chả sụn giòn sần sật, được làm từ thịt heo và sụn non, chiên vàng hay nướng đều thơm ngon khó cưỡng.', 200000.00, 185000.00, 155000.00, 220, 0, 0, 250, 25, 1, NULL, 8),
+    (90, 'Khâu Nhục Lạng Sơn', 'khau-nhuc-lang-son', 'Món ăn đặc sản Lạng Sơn, thịt ba chỉ được tẩm ướp công phu, hầm mềm tan, béo ngậy mà không ngán.', 250000.00, 235000.00, 200000.00, 150, 0, 0, 150, 15, 1, 3, 8),
+    (91, 'Mắm Nêm Tai Heo', 'mam-nem-tai-heo', 'Tai heo giòn sần sật ngâm trong mắm nêm đậm đà, thêm chút dứa và gia vị, món nhậu hay ăn kèm bún đều tuyệt.', 140000.00, 129000.00, 105000.00, 130, 0, 0, 160, 15, 1, NULL, 8),
+    (92, 'Nem Chua Thanh Hóa', 'nem-chua-thanh-hoa', 'Đặc sản nem chua Thanh Hóa, vị chua thanh, cay nồng của tỏi ớt, thơm mùi lá chuối, món quà quê ý nghĩa.', 90000.00, 80000.00, 65000.00, 400, 5, 1, 500, 50, 1, 4, 8),
+    (93, 'Nem Rán Hà Nội', 'nem-ran-ha-noi', 'Nem rán (chả giò) theo phong vị Hà Nội, vỏ giòn rụm, nhân đầy đặn thịt, mộc nhĩ, miến, chấm nước mắm chua ngọt.', 120000.00, 110000.00, 85000.00, 350, 0, 0, 400, 40, 1, NULL, 8),
+    (94, 'Nem Lụi Nha Trang', 'nem-lui-nha-trang', 'Nem nướng làm từ thịt heo xay, được lụi trên que sả hoặc que tre, nướng than hồng thơm lừng, ăn kèm rau sống và bánh tráng.', 160000.00, 149000.00, 120000.00, 280, 0, 0, 300, 30, 1, 3, 8),
+    (95, 'Pate Gan Heo', 'pate-gan-heo', 'Pate gan heo nhà làm, mềm mịn, béo ngậy, thơm mùi tiêu, không chất bảo quản, hoàn hảo cho bữa sáng.', 150000.00, 135000.00, 110000.00, 210, 0, 0, 250, 25, 1, NULL, 8),
+    (96, 'Tai Heo Cuộn Lưỡi', 'tai-heo-cuon-luoi', 'Món nhậu hấp dẫn với tai heo giòn và lưỡi heo mềm được cuộn chặt, luộc chín, thái mỏng chấm mắm gừng.', 180000.00, 165000.00, 140000.00, 170, 0, 0, 200, 20, 1, NULL, 8),
+    (97, 'Tai Heo Ủ Muối', 'tai-heo-u-muoi', 'Tai heo được làm sạch, ủ muối hoa tiêu, giòn sần sật, thơm mùi gia vị, là món khai vị tuyệt vời.', 170000.00, 159000.00, 135000.00, 190, 0, 0, 220, 20, 1, 3, 8),
+    (98, 'Tai Heo Ủ Xì Dầu', 'tai-heo-u-xi-dau', 'Tai heo ngâm trong nước sốt xì dầu thảo mộc đậm đà, vị mặn ngọt hài hòa, thơm nức mùi hoa hồi, quế.', 175000.00, 162000.00, 140000.00, 160, 0, 0, 180, 15, 1, NULL, 8),
+    (99, 'Thịt Chưng Mắm Tép', 'thit-chung-mam-tep', 'Món ăn hao cơm trứ danh, thịt vai heo xay chưng cùng mắm tép, riềng, hành khô cho đến khi keo lại, thơm lừng.', 190000.00, 175000.00, 150000.00, 240, 0, 0, 260, 25, 1, 4, 8),
+    (100, 'Thịt Heo Sấy Khô', 'thit-heo-say-kho', 'Thịt heo sấy khô kiểu gác bếp, được tẩm ướp gia vị đậm đà, dai ngọt, cay cay, là món nhậu lai rai hấp dẫn.', 350000.00, 329000.00, 280000.00, 200, 4, 1, 220, 20, 1, 3, 8),
+    (101, 'Thịt Heo Xông Khói', 'thit-heo-xong-khoi', 'Thịt ba chỉ heo được ướp gia vị và xông khói bằng gỗ sồi, mang lại hương vị thơm ngon đặc trưng.', 400000.00, 379000.00, 320000.00, 180, 0, 0, 200, 20, 1, NULL, 8),
+    (102, 'Xúc Xích Cốm', 'xuc-xich-com', 'Sự kết hợp độc đáo giữa xúc xích heo và cốm xanh, khi chiên lên vỏ ngoài giòn, bên trong dẻo thơm.', 130000.00, 119000.00, 95000.00, 260, 0, 0, 300, 30, 1, NULL, 8),
+    (103, 'Chả Ngan', 'cha-ngan', 'Chả ngan được làm từ thịt ngan tươi, xay nhuyễn và tẩm ướp gia vị, chiên vàng thơm nức, vị ngọt đậm đà.', 240000.00, 225000.00, 190000.00, 150, 0, 0, 170, 15, 1, 4, 9),
+    (104, 'Ngan Một Nắng', 'ngan-mot-nang', 'Thịt ngan được tẩm ướp gia vị rồi phơi qua một nắng, thịt dẻo, đậm vị, chiên hoặc nướng đều rất ngon.', 280000.00, 260000.00, 220000.00, 120, 0, 0, 140, 10, 1, NULL, 9),
+    (105, 'Ngan Xông Khói', 'ngan-xong-khoi', 'Thịt ức ngan được tẩm ướp và xông khói theo quy trình nghiêm ngặt, thái lát mỏng ăn liền, hương vị hảo hạng.', 320000.00, 299000.00, 260000.00, 140, 0, 0, 150, 15, 1, 3, 9);
 
 -- Dữ liệu mẫu cho Coupons
 INSERT INTO Coupons 
 (code, description, type, value, max_value, min_order_value, quantity, used_count, start_date, end_date, status)
 VALUES
-('MTAY10', 'Áp dụng cho các sản phẩm đặc sản miền Tây như bánh pía, mật ong U Minh.', 1, 10, NULL, 100000, 100, 0, '2025-10-01', '2025-12-31', 1),
+('MTAY10', 'Áp dụng cho các sản phẩm đặc sản miền Tây như bánh pía, mật ong U Minh.', 1, 10, NULL, 100000, 100, 0, '2025-10-01', '2026-02-28', 1),
 
-('MBIEN20K', 'Áp dụng cho các sản phẩm hải sản vùng biển như chả mực, tôm sú.', 1, 20000, NULL, 150000, 80, 0, '2025-10-01', '2025-12-30', 1),
+('MBIEN20K', 'Áp dụng cho các sản phẩm hải sản vùng biển như chả mực, tôm sú.', 1, 20000, NULL, 150000, 80, 0, '2025-10-01', '2026-02-28', 1),
 
-('MTRUNGSHIP', 'Áp dụng cho các đơn hàng đặc sản miền Trung như ruốc Huế, ruốc cá.', 0, 100, NULL, 100000, 150, 0, '2025-10-05', '2025-12-31', 1),
+('MTRUNGSHIP', 'Áp dụng cho các đơn hàng đặc sản miền Trung như ruốc Huế, ruốc cá.', 0, 100, NULL, 100000, 150, 0, '2025-10-05', '2026-02-28', 1),
 
-('MBAC15', 'Giảm giá các sản phẩm miền Bắc như gà Đông Tảo, gà cháy tỏi.', 1, 15, NULL, 120000, 100, 0, '2025-10-10', '2025-12-25', 1),
+('MBAC15', 'Giảm giá các sản phẩm miền Bắc như gà Đông Tảo, gà cháy tỏi.', 1, 15, NULL, 120000, 100, 0, '2025-10-10', '2026-02-28', 1),
 
-('DINHDUONG50K', 'Giảm 50,000đ cho các loại hạt dinh dưỡng cao cấp.', 1, 50000, NULL, 200000, 200, 0, '2025-10-01', '2025-12-31', 1),
+('DINHDUONG50K', 'Giảm 50,000đ cho các loại hạt dinh dưỡng cao cấp.', 1, 50000, NULL, 200000, 200, 0, '2025-10-01', '2026-02-28', 1),
 
-('VITSHIP', 'Áp dụng miễn phí vận chuyển cho các món đặc sản từ vịt như chả vịt, pate gan vịt.', 0, 100, NULL, 80000, 120, 0, '2025-10-01', '2025-12-31', 1);
+('VITSHIP', 'Áp dụng miễn phí vận chuyển cho các món đặc sản từ vịt như chả vịt, pate gan vịt.', 0, 100, NULL, 80000, 120, 0, '2025-10-01', '2026-02-28', 1);
 
--- Dữ liệu mẫu cho CouponScopes
-INSERT INTO CouponScopes (coupon_id, scope_type, product_id) VALUES
+-- Dữ liệu mẫu cho CouponProducts
+INSERT INTO CouponProducts (coupon_id, product_id) VALUES
 -- Giảm 10% toàn shop
-(1, 0, NULL),
+(1, NULL),
 
 -- Giảm 20k toàn shop
-(2, 0, NULL),
+(2, NULL),
 
 -- Miễn phí ship toàn shop
-(3, 0, NULL),
+(3, NULL),
 
 -- Giảm 15% toàn shop
-(4, 0, NULL),
+(4, NULL),
 
 -- Giảm 50k toàn shop
-(5, 0, NULL),
+(5, NULL),
 
 -- Miễn phí ship toàn shop
-(6, 0, NULL);
+(6, NULL);
 
 -- Dữ liệu mẫu cho CartItems
 INSERT INTO CartItems (qty_total, price_total, user_id, product_id) VALUES
@@ -376,539 +409,593 @@ INSERT INTO DiscountProducts (discount_id, product_id) VALUES
 (5, 10);
 
 -- Dữ liệu mẫu cho Sliders
-INSERT INTO Sliders (name, image_url, link_url, description, sort_order, status)
-VALUES
-('Khuyến mãi mùa hè', 'https://via.placeholder.com/800x300?text=Summer+Sale', '/sale/summer', 'Giảm giá sốc lên đến 50% cho toàn bộ sản phẩm mùa hè', 1, 1),
-('Đặc sản bán chạy', 'https://via.placeholder.com/800x300?text=Best+Sellers', '/collections/best-sellers', 'Top sản phẩm được yêu thích nhất trong tháng', 2, 1),
-('Mới ra mắt', 'https://via.placeholder.com/800x300?text=New+Arrivals', '/collections/new-arrivals', 'Khám phá bộ sưu tập sản phẩm mới nhất', 3, 1),
-('Ưu đãi cuối tuần', 'https://via.placeholder.com/800x300?text=Weekend+Deals', '/sale/weekend', 'Giảm giá đặc biệt chỉ trong cuối tuần này', 4, 1),
-('Sản phẩm nổi bật', 'https://via.placeholder.com/800x300?text=Featured+Products', '/collections/featured', 'Những sản phẩm được đánh giá cao và đáng mua nhất', 5, 1);
+INSERT INTO Sliders (name, description, image_url, link_url, sort_order, status, start_date, end_date) VALUES
+('Khuyến mãi mùa hè', 'Giảm giá sốc lên đến 50% cho toàn bộ sản phẩm mùa hè', 'https://bepsachviet.com/wp-content/uploads/2025/09/Banner-combo-vit-1400x526.jpg', 'http://localhost:5173/category/san-pham-tu-vit', 1, 1, '2026-01-06 07:00:00', '2026-01-22 07:00:00'),
+('Đặc sản bán chạy', 'Top sản phẩm được yêu thích nhất trong tháng', 'https://bepsachviet.com/wp-content/uploads/2025/09/123-456-7890-1-1400x526.png', 'http://localhost:5173/product/ruoc-tom-binh-dinh', 2, 1, NULL, NULL),
+('Mới ra mắt', 'Khám phá bộ sưu tập sản phẩm mới nhất', 'https://bepsachviet.com/wp-content/uploads/2025/02/3.png', 'http://localhost:5173/product/nem-lui-nha-trang', 3, 1, NULL, NULL),
+('Ưu đãi cuối tuần', 'Giảm giá đặc biệt chỉ trong cuối tuần này', 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767891002/BSV/gnjenqdygujop5fjx6rr.jpg', 'http://localhost:5173/product/cha-ca-thac-lac-hau-giang', 4, 0, '2026-01-08 07:00:00', '2026-01-22 07:00:00'),
+('Sản phẩm nổi bật', 'Những sản phẩm được đánh giá cao và đáng mua nhất', 'https://bepsachviet.com/wp-content/uploads/2023/09/Maroon-and-Yellow-Modern-Food-Promotion-Banner-Landscape-1.png', 'http://localhost:5173/product/ga-u-muoi', 5, 0, NULL, NULL);
 
 -- Dữ liệu mẫu cho ProductImages
-INSERT INTO ProductImages (is_main, image_url, product_id, alt_text)
-VALUES
-    -- Bánh pía Sóc Trăng (1)
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/banh-pia-soc-trang/banh-pia-soc-trang-1.jpg', 1, 'Ảnh chi tiết bánh pía Sóc Trăng'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/banh-pia-soc-trang/banh-pia-soc-trang-2.jpg', 1, 'Cận cảnh nhân bánh pía Sóc Trăng'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/banh-pia-soc-trang/banh-pia-soc-trang-3.jpeg', 1, 'Bánh pía Sóc Trăng được đóng gói'),
-    (1, 'assets/image/shared/product/cac-thuc-pham-khac/banh-pia-soc-trang/banh-pia-soc-trang-ctpk.jpeg', 1, 'Ảnh đại diện sản phẩm Bánh pía Sóc Trăng'),
-    -- Bò một nắng Krông Pa (2)
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/bo-mot-nang-rong-pa/bo-mot-nang-rong-pa-1.jpg', 2, 'Thớ thịt bò một nắng Krông Pa'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/bo-mot-nang-rong-pa/bo-mot-nang-rong-pa-2.jpg', 2, 'Bò một nắng Krông Pa sau khi nướng'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/bo-mot-nang-rong-pa/bo-mot-nang-rong-pa-3.jpg', 2, 'Bò một nắng ăn kèm muối kiến vàng'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/bo-mot-nang-rong-pa/bo-mot-nang-rong-pa-4.jpg', 2, 'Sản phẩm bò một nắng Krông Pa hút chân không'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/bo-mot-nang-rong-pa/bo-mot-nang-rong-pa-5.jpg', 2, 'Đặc sản bò một nắng Krông Pa'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/bo-mot-nang-rong-pa/bo-mot-nang-rong-pa-6.jpg', 2, 'Món bò một nắng nướng trên than'),
-    (1, 'assets/image/shared/product/cac-thuc-pham-khac/bo-mot-nang-rong-pa/bo-mot-nang-rong-pa-ctpk.jpg', 2, 'Ảnh đại diện sản phẩm Bò một nắng Krông Pa'),
-    -- Cà phê Buôn Ma Thuột (3)
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/ca-phe-buon-ma-thuot/ca-phe-buon-ma-thuot-1.jpg', 3, 'Hạt cà phê Buôn Ma Thuột rang'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/ca-phe-buon-ma-thuot/ca-phe-buon-ma-thuot-2.jpg', 3, 'Ly cà phê pha phin'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/ca-phe-buon-ma-thuot/ca-phe-buon-ma-thuot-3.jpg', 3, 'Bao bì sản phẩm cà phê Buôn Ma Thuột'),
-    (1, 'assets/image/shared/product/cac-thuc-pham-khac/ca-phe-buon-ma-thuot/ca-phe-buon-ma-thuot-ctpk.jpg', 3, 'Ảnh đại diện sản phẩm Cà phê Buôn Ma Thuột'),
-    -- Chả ốc (4)
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/cha-oc-nua/cha-oc-nua-1.jpg', 4, 'Chả ốc chiên vàng'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/cha-oc-nua/cha-oc-nua-2.jpg', 4, 'Chả ốc ăn kèm rau thơm'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/cha-oc-nua/cha-oc-nua-3.png', 4, 'Chả ốc tươi chưa chế biến'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/cha-oc-nua/cha-oc-nua-4.jpg', 4, 'Món bún chả ốc'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/cha-oc-nua/cha-oc-nua-5.jpg', 4, 'Cận cảnh miếng chả ốc'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/cha-oc-nua/cha-oc-nua-6.jpg', 4, 'Chả ốc được bày trên đĩa'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/cha-oc-nua/cha-oc-nua-7.jpg', 4, 'Thành phẩm chả ốc'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/cha-oc-nua/cha-oc-nua-8.jpg', 4, 'Chả ốc ăn với nước chấm'),
-    (1, 'assets/image/shared/product/cac-thuc-pham-khac/cha-oc-nua/cha-oc-nua-ctpk.jpg', 4, 'Ảnh đại diện sản phẩm Chả ốc'),
-    -- Dê chiên giòn Tây Ninh (5)
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/de-chien-gion-tay-ninh/de-chien-gion-tay-ninh-1.jpg', 5, 'Món dê chiên giòn Tây Ninh'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/de-chien-gion-tay-ninh/de-chien-gion-tay-ninh-2.jpg', 5, 'Dê chiên giòn ăn kèm rau sống'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/de-chien-gion-tay-ninh/de-chien-gion-tay-ninh-3.jpg', 5, 'Cận cảnh miếng thịt dê chiên giòn'),
-    (1, 'assets/image/shared/product/cac-thuc-pham-khac/de-chien-gion-tay-ninh/de-chien-gion-tay-ninh-ctpk.jpg', 5, 'Ảnh đại diện sản phẩm Dê chiên giòn Tây Ninh'),
-    -- Gân bò rau tiến vua (6)
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/gan-bo-rau-tien-vua/gan-bo-rau-tien-vua-1.jpg', 6, 'Món gân bò ngâm rau tiến vua'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/gan-bo-rau-tien-vua/gan-bo-rau-tien-vua-2.png', 6, 'Gân bò và rau tiến vua đóng hũ'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/gan-bo-rau-tien-vua/gan-bo-rau-tien-vua-3.jpg', 6, 'Gân bò rau tiến vua bày ra đĩa'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/gan-bo-rau-tien-vua/gan-bo-rau-tien-vua-4.jpg', 6, 'Cận cảnh gân bò ngâm'),
-    (1, 'assets/image/shared/product/cac-thuc-pham-khac/gan-bo-rau-tien-vua/gan-bo-rau-tien-vua-ctpk.jpeg', 6, 'Ảnh đại diện sản phẩm Gân bò rau tiến vua'),
-    -- Hạt điều rang muối Bình Phước (7)
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/hat-dieu-rang-muoi-binh-phuoc/hat-dieu-rang-muoi-binh-phuoc-1.jpg', 7, 'Hạt điều rang muối còn vỏ lụa'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/hat-dieu-rang-muoi-binh-phuoc/hat-dieu-rang-muoi-binh-phuoc-2.jpg', 7, 'Hạt điều rang muối tách vỏ'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/hat-dieu-rang-muoi-binh-phuoc/hat-dieu-rang-muoi-binh-phuoc-3.jpg', 7, 'Hạt điều đóng hộp'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/hat-dieu-rang-muoi-binh-phuoc/hat-dieu-rang-muoi-binh-phuoc-4.jpg', 7, 'Đặc sản hạt điều Bình Phước'),
-    (1, 'assets/image/shared/product/cac-thuc-pham-khac/hat-dieu-rang-muoi-binh-phuoc/hat-dieu-rang-muoi-binh-phuoc-ctpk.jpg', 7, 'Ảnh đại diện sản phẩm Hạt điều rang muối Bình Phước'),
-    -- Mắm tép chưng thịt (8)
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/mam-tep-chung-thit/mam-tep-chung-thit-1.png', 8, 'Mắm tép chưng thịt trong hũ thủy tinh'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/mam-tep-chung-thit/mam-tep-chung-thit-2.jpg', 8, 'Mắm tép chưng thịt ăn với cơm trắng'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/mam-tep-chung-thit/mam-tep-chung-thit-3.jpg', 8, 'Cận cảnh mắm tép chưng thịt'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/mam-tep-chung-thit/mam-tep-chung-thit-4.jpg', 8, 'Mắm tép chưng thịt và dưa chuột'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/mam-tep-chung-thit/mam-tep-chung-thit-5.jpg', 8, 'Sản phẩm mắm tép chưng thịt'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/mam-tep-chung-thit/mam-tep-chung-thit-6.jpg', 8, 'Chế biến mắm tép chưng thịt'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/mam-tep-chung-thit/mam-tep-chung-thit-7.jpg', 8, 'Món ăn từ mắm tép chưng thịt'),
-    (1, 'assets/image/shared/product/cac-thuc-pham-khac/mam-tep-chung-thit/mam-tep-chung-thit-ctpk.jpg', 8, 'Ảnh đại diện sản phẩm Mắm tép chưng thịt'),
-    -- Mật ong rừng U Minh (9)
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/mat-ong-rung-u-minh/mat-ong-rung-u-minh-1.jpg', 9, 'Mật ong rừng U Minh nguyên chất'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/mat-ong-rung-u-minh/mat-ong-rung-u-minh-2.jpg', 9, 'Mật ong và sáp ong U Minh'),
-    (1, 'assets/image/shared/product/cac-thuc-pham-khac/mat-ong-rung-u-minh/mat-ong-rung-u-minh-ctpk.jpg', 9, 'Ảnh đại diện sản phẩm Mật ong rừng U Minh'),
-    -- Mè xửng Huế (10)
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/me-sung-hue/me-sung-hue-1.jpg', 10, 'Đặc sản mè xửng Huế'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/me-sung-hue/me-sung-hue-2.jpg', 10, 'Mè xửng giòn Huế'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/me-sung-hue/me-sung-hue-3.jpg', 10, 'Thưởng thức mè xửng với trà'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/me-sung-hue/me-sung-hue-4.jpg', 10, 'Các loại mè xửng Huế'),
-    (1, 'assets/image/shared/product/cac-thuc-pham-khac/me-sung-hue/me-sung-hue-ctpk.jpg', 10, 'Ảnh đại diện sản phẩm Mè xửng Huế'),
-    -- Mọc ốc (11)
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/moc-oc/moc-oc-1.jpg', 11, 'Mọc ốc đã chế biến'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/moc-oc/moc-oc-2.jpg', 11, 'Mọc ốc tươi'),
-    (1, 'assets/image/shared/product/cac-thuc-pham-khac/moc-oc/moc-oc-ctpk.png', 11, 'Ảnh đại diện sản phẩm Mọc ốc'),
-    -- Rượu cần Tây Nguyên (12)
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/ruou-can-tay-nguyen/ruou-can-tay-nguyen-1.jpg', 12, 'Bình rượu cần Tây Nguyên'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/ruou-can-tay-nguyen/ruou-can-tay-nguyen-2.jpg', 12, 'Uống rượu cần'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/ruou-can-tay-nguyen/ruou-can-tay-nguyen-3.jpg', 12, 'Đặc sản rượu cần Tây Nguyên'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/ruou-can-tay-nguyen/ruou-can-tay-nguyen-4.jpg', 12, 'Các loại bình rượu cần'),
-    (1, 'assets/image/shared/product/cac-thuc-pham-khac/ruou-can-tay-nguyen/ruou-can-tay-nguyen-ctpk.jpg', 12, 'Ảnh đại diện sản phẩm Rượu cần Tây Nguyên'),
-    -- Trà sen Tây Hồ (13)
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/tra-sen-tay-ho/tra-sen-tay-ho-1.jpg', 13, 'Bông sen để ướp trà'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/tra-sen-tay-ho/tra-sen-tay-ho-2.jpg', 13, 'Ấm trà sen Tây Hồ'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/tra-sen-tay-ho/tra-sen-tay-ho-3.jpg', 13, 'Quy trình ướp trà sen'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/tra-sen-tay-ho/tra-sen-tay-ho-4.jpg', 13, 'Trà sen và hoa sen'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/tra-sen-tay-ho/tra-sen-tay-ho-5.jpg', 13, 'Hộp trà sen Tây Hồ'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/tra-sen-tay-ho/tra-sen-tay-ho-6.jpg', 13, 'Thưởng thức trà sen'),
-    (1, 'assets/image/shared/product/cac-thuc-pham-khac/tra-sen-tay-ho/tra-sen-tay-ho-ctpk.jpg', 13, 'Ảnh đại diện sản phẩm Trà sen Tây Hồ'),
-    -- Trứng kiến Tây Bắc (14)
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/trung-kien-tay-bac/trung-kien-tay-bac-1.jpg', 14, 'Món xôi trứng kiến Tây Bắc'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/trung-kien-tay-bac/trung-kien-tay-bac-2.jpg', 14, 'Trứng kiến non'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/trung-kien-tay-bac/trung-kien-tay-bac-3.jpg', 14, 'Bánh trứng kiến'),
-    (0, 'assets/image/shared/product/cac-thuc-pham-khac/trung-kien-tay-bac/trung-kien-tay-bac-4.jpg', 14, 'Cận cảnh trứng kiến Tây Bắc'),
-    (1, 'assets/image/shared/product/cac-thuc-pham-khac/trung-kien-tay-bac/trung-kien-tay-bac-ctpk.jpg', 14, 'Ảnh đại diện sản phẩm Trứng kiến Tây Bắc'),
-    -- Bề bề rang muối (15)
-    (0, 'assets/image/shared/product/hai-san/be-be-rang-muoi/be-be-rang-muoi-1.jpg', 15, 'Món bề bề rang muối ớt'),
-    (0, 'assets/image/shared/product/hai-san/be-be-rang-muoi/be-be-rang-muoi-2.jpg', 15, 'Bề bề rang muối sả'),
-    (0, 'assets/image/shared/product/hai-san/be-be-rang-muoi/be-be-rang-muoi-3.jpg', 15, 'Đĩa bề bề rang muối hấp dẫn'),
-    (0, 'assets/image/shared/product/hai-san/be-be-rang-muoi/be-be-rang-muoi-4.jpg', 15, 'Cận cảnh bề bề rang muối'),
-    (0, 'assets/image/shared/product/hai-san/be-be-rang-muoi/be-be-rang-muoi-5.jpg', 15, 'Bề bề tươi'),
-    (1, 'assets/image/shared/product/hai-san/be-be-rang-muoi/be-be-rang-muoi-hs.jpg', 15, 'Ảnh đại diện sản phẩm Bề bề rang muối'),
-    -- Cá bóp nấu me (16)
-    (0, 'assets/image/shared/product/hai-san/ca-bop-nau-me/ca-bop-nau-me-1.jpg', 16, 'Canh chua cá bóp nấu me'),
-    (0, 'assets/image/shared/product/hai-san/ca-bop-nau-me/ca-bop-nau-me-2.jpg', 16, 'Nguyên liệu nấu cá bóp nấu me'),
-    (0, 'assets/image/shared/product/hai-san/ca-bop-nau-me/ca-bop-nau-me-3.jpg', 16, 'Bát canh cá bóp nấu me'),
-    (0, 'assets/image/shared/product/hai-san/ca-bop-nau-me/ca-bop-nau-me-4.jpg', 16, 'Lẩu cá bóp nấu me'),
-    (1, 'assets/image/shared/product/hai-san/ca-bop-nau-me/ca-bop-nau-me-hs.jpg', 16, 'Ảnh đại diện sản phẩm Cá bóp nấu me'),
-    -- Cá linh bông (17)
-    (0, 'assets/image/shared/product/hai-san/ca-linh-bong/ca-linh-bong-1.jpg', 17, 'Lẩu mắm cá linh bông điên điển'),
-    (0, 'assets/image/shared/product/hai-san/ca-linh-bong/ca-linh-bong-2.jpg', 17, 'Cá linh kho'),
-    (0, 'assets/image/shared/product/hai-san/ca-linh-bong/ca-linh-bong-3.jpg', 17, 'Cá linh tươi'),
-    (0, 'assets/image/shared/product/hai-san/ca-linh-bong/ca-linh-bong-4.jpg', 17, 'Cá linh chiên giòn'),
-    (0, 'assets/image/shared/product/hai-san/ca-linh-bong/ca-linh-bong-5.jpg', 17, 'Đặc sản cá linh mùa nước nổi'),
-    (1, 'assets/image/shared/product/hai-san/ca-linh-bong/ca-linh-bong-hs.jpg', 17, 'Ảnh đại diện sản phẩm Cá linh bông'),
-    -- Chả cá Móng Cái (18)
-    (0, 'assets/image/shared/product/hai-san/cha-ca-mong/cha-ca-mong-1.png', 18, 'Chả cá Móng Cái chiên'),
-    (0, 'assets/image/shared/product/hai-san/cha-ca-mong/cha-ca-mong-2.jpg', 18, 'Bún chả cá Móng Cái'),
-    (0, 'assets/image/shared/product/hai-san/cha-ca-mong/cha-ca-mong-3.jpg', 18, 'Chả cá Móng Cái tươi'),
-    (1, 'assets/image/shared/product/hai-san/cha-ca-mong/cha-ca-mong-hs.jpg', 18, 'Ảnh đại diện sản phẩm Chả cá Móng Cái'),
-    -- Chả cá mực tôm (19)
-    (0, 'assets/image/shared/product/hai-san/cha-ca-muc-tom/cha-ca-muc-tom-1.png', 19, 'Chả cá mực tôm chiên'),
-    (0, 'assets/image/shared/product/hai-san/cha-ca-muc-tom/cha-ca-muc-tom-2.jpg', 19, 'Thành phần chả cá mực tôm'),
-    (0, 'assets/image/shared/product/hai-san/cha-ca-muc-tom/cha-ca-muc-tom-3.jpg', 19, 'Chả cá mực tôm ăn kèm'),
-    (1, 'assets/image/shared/product/hai-san/cha-ca-muc-tom/cha-ca-muc-tom-hs.jpg', 19, 'Ảnh đại diện sản phẩm Chả cá mực tôm'),
-    -- Chả mỡ ghẹ (20)
-    (0, 'assets/image/shared/product/hai-san/cha-mo-ghe/cha-mo-ghe-1.jpg', 20, 'Món chả mỡ ghẹ chiên'),
-    (0, 'assets/image/shared/product/hai-san/cha-mo-ghe/cha-mo-ghe-2.jpg', 20, 'Cận cảnh miếng chả mỡ ghẹ'),
-    (0, 'assets/image/shared/product/hai-san/cha-mo-ghe/cha-mo-ghe-3.jpg', 20, 'Chả mỡ ghẹ tươi'),
-    (1, 'assets/image/shared/product/hai-san/cha-mo-ghe/cha-mo-ghe-hs.jpg', 20, 'Ảnh đại diện sản phẩm Chả mỡ ghẹ'),
-    -- Chả mực Hạ Long (21)
-    (0, 'assets/image/shared/product/hai-san/cha-muc-ha-long/cha-muc-ha-long-1.png', 21, 'Chả mực Hạ Long giã tay'),
-    (0, 'assets/image/shared/product/hai-san/cha-muc-ha-long/cha-muc-ha-long-2.png', 21, 'Chả mực Hạ Long chiên vàng'),
-    (0, 'assets/image/shared/product/hai-san/cha-muc-ha-long/cha-muc-ha-long-3.png', 21, 'Bánh cuốn chả mực'),
-    (0, 'assets/image/shared/product/hai-san/cha-muc-ha-long/cha-muc-ha-long-4.png', 21, 'Xôi trắng chả mực'),
-    (0, 'assets/image/shared/product/hai-san/cha-muc-ha-long/cha-muc-ha-long-5.png', 21, 'Chả mực tươi'),
-    (0, 'assets/image/shared/product/hai-san/cha-muc-ha-long/cha-muc-ha-long-6.png', 21, 'Đóng gói chả mực Hạ Long'),
-    (0, 'assets/image/shared/product/hai-san/cha-muc-ha-long/cha-muc-ha-long-7.png', 21, 'Cận cảnh miếng chả mực'),
-    (1, 'assets/image/shared/product/hai-san/cha-muc-ha-long/cha-muc-ha-long-hs.jpg', 21, 'Ảnh đại diện sản phẩm Chả mực Hạ Long'),
-    -- Chả tôm (22)
-    (0, 'assets/image/shared/product/hai-san/cha-tom/cha-tom-1.jpg', 22, 'Chả tôm Thanh Hóa'),
-    (0, 'assets/image/shared/product/hai-san/cha-tom/cha-tom-2.jpg', 22, 'Chả tôm nướng'),
-    (0, 'assets/image/shared/product/hai-san/cha-tom/cha-tom-3.jpg', 22, 'Chả tôm tươi'),
-    (1, 'assets/image/shared/product/hai-san/cha-tom/cha-tom-hs.jpg', 22, 'Ảnh đại diện sản phẩm Chả tôm'),
-    -- Cua Cà Mau (23)
-    (0, 'assets/image/shared/product/hai-san/cua-ca-mau/cua-ca-mau-1.jpg', 23, 'Cua Cà Mau hấp'),
-    (0, 'assets/image/shared/product/hai-san/cua-ca-mau/cua-ca-mau-2.jpg', 23, 'Cua Cà Mau rang me'),
-    (0, 'assets/image/shared/product/hai-san/cua-ca-mau/cua-ca-mau-3.jpg', 23, 'Cua thịt Cà Mau'),
-    (0, 'assets/image/shared/product/hai-san/cua-ca-mau/cua-ca-mau-4.jpg', 23, 'Cua gạch Cà Mau'),
-    (0, 'assets/image/shared/product/hai-san/cua-ca-mau/cua-ca-mau-5.jpg', 23, 'Cua Cà Mau tươi sống'),
-    (1, 'assets/image/shared/product/hai-san/cua-ca-mau/cua-ca-mau-hs.jpg', 23, 'Ảnh đại diện sản phẩm Cua Cà Mau'),
-    -- Gỏi cá trích (24)
-    (0, 'assets/image/shared/product/hai-san/goi-ca-trich/goi-ca-trich-1.jpg', 24, 'Đặc sản gỏi cá trích Phú Quốc'),
-    (0, 'assets/image/shared/product/hai-san/goi-ca-trich/goi-ca-trich-2.jpg', 24, 'Cách cuốn gỏi cá trích'),
-    (0, 'assets/image/shared/product/hai-san/goi-ca-trich/goi-ca-trich-3.jpg', 24, 'Gỏi cá trích và rau sống'),
-    (0, 'assets/image/shared/product/hai-san/goi-ca-trich/goi-ca-trich-4.jpg', 24, 'Nước chấm gỏi cá trích'),
-    (0, 'assets/image/shared/product/hai-san/goi-ca-trich/goi-ca-trich-5.jpg', 24, 'Cá trích tươi'),
-    (1, 'assets/image/shared/product/hai-san/goi-ca-trich/goi-ca-trich-hs.jpg', 24, 'Ảnh đại diện sản phẩm Gỏi cá trích'),
-    -- Hàu nướng mỡ hành (25)
-    (0, 'assets/image/shared/product/hai-san/hau-nuong-mo-hanh/hau-nuong-mo-hanh-1.jpg', 25, 'Hàu nướng mỡ hành trên bếp than'),
-    (0, 'assets/image/shared/product/hai-san/hau-nuong-mo-hanh/hau-nuong-mo-hanh-2.jpg', 25, 'Đĩa hàu nướng mỡ hành'),
-    (0, 'assets/image/shared/product/hai-san/hau-nuong-mo-hanh/hau-nuong-mo-hanh-3.jpg', 25, 'Hàu nướng phô mai'),
-    (0, 'assets/image/shared/product/hai-san/hau-nuong-mo-hanh/hau-nuong-mo-hanh-4.jpg', 25, 'Hàu sữa tươi'),
-    (1, 'assets/image/shared/product/hai-san/hau-nuong-mo-hanh/hau-nuong-mo-hanh-hs.jpg', 25, 'Ảnh đại diện sản phẩm Hàu nướng mỡ hành'),
-    -- Mực một nắng (26)
-    (0, 'assets/image/shared/product/hai-san/muc-mot-nang/muc-mot-nang-1.jpg', 26, 'Mực một nắng nướng'),
-    (0, 'assets/image/shared/product/hai-san/muc-mot-nang/muc-mot-nang-2.jpg', 26, 'Mực một nắng chiên'),
-    (0, 'assets/image/shared/product/hai-san/muc-mot-nang/muc-mot-nang-3.jpg', 26, 'Mực một nắng tươi'),
-    (0, 'assets/image/shared/product/hai-san/muc-mot-nang/muc-mot-nang-4.jpg', 26, 'Đóng gói mực một nắng'),
-    (0, 'assets/image/shared/product/hai-san/muc-mot-nang/muc-mot-nang-5.png', 26, 'Phơi mực một nắng'),
-    (1, 'assets/image/shared/product/hai-san/muc-mot-nang/muc-mot-nang-hs.jpg', 26, 'Ảnh đại diện sản phẩm Mực một nắng'),
-    -- Nem hải sản (27)
-    (0, 'assets/image/shared/product/hai-san/nem-hai-san/nem-hai-san-1.jpg', 27, 'Nem hải sản chiên giòn'),
-    (0, 'assets/image/shared/product/hai-san/nem-hai-san/nem-hai-san-2.jpg', 27, 'Cắt đôi nem hải sản'),
-    (0, 'assets/image/shared/product/hai-san/nem-hai-san/nem-hai-san-3.jpg', 27, 'Nem hải sản chưa chiên'),
-    (0, 'assets/image/shared/product/hai-san/nem-hai-san/nem-hai-san-4.jpg', 27, 'Nem hải sản sốt mayonnaise'),
-    (0, 'assets/image/shared/product/hai-san/nem-hai-san/nem-hai-san-5.jpg', 27, 'Nhân nem hải sản'),
-    (1, 'assets/image/shared/product/hai-san/nem-hai-san/nem-hai-san-hs.jpg', 27, 'Ảnh đại diện sản phẩm Nem hải sản'),
-    -- Sá sùng nướng (28)
-    (0, 'assets/image/shared/product/hai-san/sa-sung-nuong/sa-sung-nuong-1.jpg', 28, 'Sá sùng nướng'),
-    (0, 'assets/image/shared/product/hai-san/sa-sung-nuong/sa-sung-nuong-2.jpg', 28, 'Sá sùng khô'),
-    (0, 'assets/image/shared/product/hai-san/sa-sung-nuong/sa-sung-nuong-3.jpg', 28, 'Sá sùng tươi'),
-    (1, 'assets/image/shared/product/hai-san/sa-sung-nuong/sa-sung-nuong-hs.jpg', 28, 'Ảnh đại diện sản phẩm Sá sùng'),
-    -- Tôm sú Bạc Liêu (29)
-    (0, 'assets/image/shared/product/hai-san/tom-su-bac-lieu/tom-su-bac-lieu-1.jpg', 29, 'Tôm sú hấp'),
-    (0, 'assets/image/shared/product/hai-san/tom-su-bac-lieu/tom-su-bac-lieu-2.jpg', 29, 'Tôm sú nướng'),
-    (0, 'assets/image/shared/product/hai-san/tom-su-bac-lieu/tom-su-bac-lieu-3.jpg', 29, 'Tôm sú tươi Bạc Liêu'),
-    (0, 'assets/image/shared/product/hai-san/tom-su-bac-lieu/tom-su-bac-lieu-4.png', 29, 'Tôm sú Bạc Liêu đông lạnh'),
-    (0, 'assets/image/shared/product/hai-san/tom-su-bac-lieu/tom-su-bac-lieu-5.jpg', 29, 'Đặc sản tôm sú Bạc Liêu'),
-    (1, 'assets/image/shared/product/hai-san/tom-su-bac-lieu/tom-su-bac-lieu-hs.jpg', 29, 'Ảnh đại diện sản phẩm Tôm sú Bạc Liêu'),
-    -- Ruốc bề bề (30)
-    (0, 'assets/image/shared/product/ruoc/ruoc-be-be/ruoc-be-be-1.jpg', 30, 'Ruốc bề bề tơi xốp'),
-    (0, 'assets/image/shared/product/ruoc/ruoc-be-be/ruoc-be-be-2.jpg', 30, 'Ruốc bề bề đóng hũ'),
-    (0, 'assets/image/shared/product/ruoc/ruoc-be-be/ruoc-be-be-3.jpg', 30, 'Cận cảnh sợi ruốc bề bề'),
-    (1, 'assets/image/shared/product/ruoc/ruoc-be-be/ruoc-be-be-r.jpg', 30, 'Ảnh đại diện sản phẩm Ruốc bề bề'),
-    -- Ruốc cá basa (31)
-    (0, 'assets/image/shared/product/ruoc/ruoc-ca-basa/ruoc-ca-basa-1.jpg', 31, 'Ruốc cá basa cho bé'),
-    (0, 'assets/image/shared/product/ruoc/ruoc-ca-basa/ruoc-ca-basa-2.jpg', 31, 'Ruốc cá basa vàng ươm'),
-    (0, 'assets/image/shared/product/ruoc/ruoc-ca-basa/ruoc-ca-basa-3.jpg', 31, 'Hũ ruốc cá basa'),
-    (1, 'assets/image/shared/product/ruoc/ruoc-ca-basa/ruoc-ca-basa-r.jpg', 31, 'Ảnh đại diện sản phẩm Ruốc cá basa'),
-    -- Ruốc cá lóc (32)
-    (0, 'assets/image/shared/product/ruoc/ruoc-ca-loc/ruoc-ca-loc-1.jpg', 32, 'Ruốc cá lóc đồng'),
-    (0, 'assets/image/shared/product/ruoc/ruoc-ca-loc/ruoc-ca-loc-hs-2.jpg', 32, 'Cháo ruốc cá lóc'),
-    (0, 'assets/image/shared/product/ruoc/ruoc-ca-loc/ruoc-ca-loc-hs-3.jpg', 32, 'Sợi ruốc cá lóc'),
-    (1, 'assets/image/shared/product/ruoc/ruoc-ca-loc/ruoc-ca-loc-r.jpg', 32, 'Ảnh đại diện sản phẩm Ruốc cá lóc'),
-    -- Ruốc cá rô đồng (33)
-    (0, 'assets/image/shared/product/ruoc/ruoc-ca-ro-dong/ruoc-ca-ro-dong-1.jpg', 33, 'Ruốc cá rô đồng tự làm'),
-    (0, 'assets/image/shared/product/ruoc/ruoc-ca-ro-dong/ruoc-ca-ro-dong-2.jpg', 33, 'Cận cảnh ruốc cá rô'),
-    (0, 'assets/image/shared/product/ruoc/ruoc-ca-ro-dong/ruoc-ca-ro-dong-3.jpg', 33, 'Ruốc cá rô đồng thơm ngon'),
-    (0, 'assets/image/shared/product/ruoc/ruoc-ca-ro-dong/ruoc-ca-ro-dong-4.jpg', 33, 'Ruốc cá rô ăn với cơm'),
-    (0, 'assets/image/shared/product/ruoc/ruoc-ca-ro-dong/ruoc-ca-ro-dong-5.jpg', 33, 'Hũ ruốc cá rô đồng'),
-    (1, 'assets/image/shared/product/ruoc/ruoc-ca-ro-dong/ruoc-ca-ro-dong-r.jpg', 33, 'Ảnh đại diện sản phẩm Ruốc cá rô đồng'),
-    -- Ruốc cá thu (34)
-    (0, 'assets/image/shared/product/ruoc/ruoc-ca-thu/ruoc-ca-thu-1.jpg', 34, 'Ruốc cá thu cho bé ăn dặm'),
-    (0, 'assets/image/shared/product/ruoc/ruoc-ca-thu/ruoc-ca-thu-2.jpg', 34, 'Ruốc cá thu xé sợi'),
-    (0, 'assets/image/shared/product/ruoc/ruoc-ca-thu/ruoc-ca-thu-3.jpg', 34, 'Ruốc cá thu đóng hộp'),
-    (0, 'assets/image/shared/product/ruoc/ruoc-ca-thu/ruoc-ca-thu-4.jpg', 34, 'Thịt cá thu làm ruốc'),
-    (1, 'assets/image/shared/product/ruoc/ruoc-ca-thu/ruoc-ca-thu-r.jpg', 34, 'Ảnh đại diện sản phẩm Ruốc cá thu'),
-    -- Ruốc mắm Huế (35)
-    (0, 'assets/image/shared/product/ruoc/ruoc-mam-hue/ruoc-mam-hue-1.jpg', 35, 'Đặc sản mắm ruốc Huế'),
-    (0, 'assets/image/shared/product/ruoc/ruoc-mam-hue/ruoc-mam-hue-2.jpg', 35, 'Thịt kho mắm ruốc'),
-    (0, 'assets/image/shared/product/ruoc/ruoc-mam-hue/ruoc-mam-hue-3.jpg', 35, 'Mắm ruốc Huế nguyên chất'),
-    (1, 'assets/image/shared/product/ruoc/ruoc-mam-hue/ruoc-mam-hue-r.jpg', 35, 'Ảnh đại diện sản phẩm Mắm ruốc Huế'),
-    -- Ruốc tép Đồng Tháp (36)
-    (0, 'assets/image/shared/product/ruoc/ruoc-tep-dong-thap/ruoc-tep-dong-thap-1.jpg', 36, 'Ruốc tép đồng'),
-    (0, 'assets/image/shared/product/ruoc/ruoc-tep-dong-thap/ruoc-tep-dong-thap-2.jpg', 36, 'Ruốc tép ăn với xôi'),
-    (0, 'assets/image/shared/product/ruoc/ruoc-tep-dong-thap/ruoc-tep-dong-thap-3.jpg', 36, 'Cận cảnh ruốc tép'),
-    (1, 'assets/image/shared/product/ruoc/ruoc-tep-dong-thap/ruoc-tep-dong-thap-r.jpg', 36, 'Ảnh đại diện sản phẩm Ruốc tép Đồng Tháp'),
-    -- Ruốc thịt lợn Nam Định (37)
-    (0, 'assets/image/shared/product/ruoc/ruoc-thit-lon-nam-dinh/ruoc-thit-lon-nam-dinh-1.jpg', 37, 'Ruốc thịt lợn sợi vàng'),
-    (0, 'assets/image/shared/product/ruoc/ruoc-thit-lon-nam-dinh/ruoc-thit-lon-nam-dinh-2.jpg', 37, 'Ruốc thịt lợn ăn với bánh mì'),
-    (0, 'assets/image/shared/product/ruoc/ruoc-thit-lon-nam-dinh/ruoc-thit-lon-nam-dinh-3.jpg', 37, 'Ruốc thịt lợn làm tại nhà'),
-    (0, 'assets/image/shared/product/ruoc/ruoc-thit-lon-nam-dinh/ruoc-thit-lon-nam-dinh-4.jpg', 37, 'Sợi ruốc bông'),
-    (0, 'assets/image/shared/product/ruoc/ruoc-thit-lon-nam-dinh/ruoc-thit-lon-nam-dinh-5.jpg', 37, 'Ruốc thịt lợn Nam Định'),
-    (1, 'assets/image/shared/product/ruoc/ruoc-thit-lon-nam-dinh/ruoc-thit-lon-nam-dinh-r.jpg', 37, 'Ảnh đại diện sản phẩm Ruốc thịt lợn Nam Định'),
-    -- Ruốc tôm Bình Định (38)
-    (0, 'assets/image/shared/product/ruoc/ruoc-tom-binh-dinh/ruoc-tom-binh-dinh-1.jpg', 38, 'Ruốc tôm Bình Định màu cam tự nhiên'),
-    (0, 'assets/image/shared/product/ruoc/ruoc-tom-binh-dinh/ruoc-tom-binh-dinh-1.png', 38, 'Hũ ruốc tôm Bình Định'),
-    (0, 'assets/image/shared/product/ruoc/ruoc-tom-binh-dinh/ruoc-tom-binh-dinh-2.jpg', 38, 'Cận cảnh ruốc tôm'),
-    (0, 'assets/image/shared/product/ruoc/ruoc-tom-binh-dinh/ruoc-tom-binh-dinh-3.jpg', 38, 'Ruốc tôm ăn kèm'),
-    (0, 'assets/image/shared/product/ruoc/ruoc-tom-binh-dinh/ruoc-tom-binh-dinh-4.jpg', 38, 'Tôm tươi làm ruốc'),
-    (0, 'assets/image/shared/product/ruoc/ruoc-tom-binh-dinh/ruoc-tom-binh-dinh-5.jpg', 38, 'Đặc sản ruốc tôm'),
-    (1, 'assets/image/shared/product/ruoc/ruoc-tom-binh-dinh/ruoc-tom-binh-dinh-r.jpg', 38, 'Ảnh đại diện sản phẩm Ruốc tôm Bình Định'),
-    -- Ruốc tôm đất Cà Mau (39)
-    (0, 'assets/image/shared/product/ruoc/ruoc-tom-dat-ca-mau/ruoc-tom-dat-ca-mau-1.jpg', 39, 'Ruốc tôm đất Cà Mau thơm ngon'),
-    (0, 'assets/image/shared/product/ruoc/ruoc-tom-dat-ca-mau/ruoc-tom-dat-ca-mau-2.jpg', 39, 'Tôm đất làm ruốc'),
-    (1, 'assets/image/shared/product/ruoc/ruoc-tom-dat-ca-mau/ruoc-tom-dat-ca-mau-r.jpg', 39, 'Ảnh đại diện sản phẩm Ruốc tôm đất Cà Mau'),
-    -- Ruốc tôm Hạ Long (40)
-    (0, 'assets/image/shared/product/ruoc/ruoc-tom-ha-long/ruoc-tom-ha-long-1.jpg', 40, 'Ruốc tôm Hạ Long đặc sản'),
-    (0, 'assets/image/shared/product/ruoc/ruoc-tom-ha-long/ruoc-tom-ha-long-2.jpg', 40, 'Ruốc tôm ăn với cháo'),
-    (0, 'assets/image/shared/product/ruoc/ruoc-tom-ha-long/ruoc-tom-ha-long-3.jpg', 40, 'Hộp ruốc tôm Hạ Long'),
-    (1, 'assets/image/shared/product/ruoc/ruoc-tom-ha-long/ruoc-tom-ha-long-r.jpg', 40, 'Ảnh đại diện sản phẩm Ruốc tôm Hạ Long'),
-    -- Ruốc tôm rong biển (41)
-    (0, 'assets/image/shared/product/ruoc/ruoc-tom-rong-bien/ruoc-tom-rong-bien-1.jpg', 41, 'Ruốc tôm rong biển cho bé'),
-    (0, 'assets/image/shared/product/ruoc/ruoc-tom-rong-bien/ruoc-tom-rong-bien-2.jpg', 41, 'Thành phần ruốc tôm rong biển'),
-    (0, 'assets/image/shared/product/ruoc/ruoc-tom-rong-bien/ruoc-tom-rong-bien-3.jpg', 41, 'Sợi ruốc tôm rong biển'),
-    (1, 'assets/image/shared/product/ruoc/ruoc-tom-rong-bien/ruoc-tom-rong-bien-r.jpg', 41, 'Ảnh đại diện sản phẩm Ruốc tôm rong biển'),
-    -- Da Gà Chiên Giòn (42)
-    (0, 'assets/image/shared/product/ga/da-ga-chien-gion/da-ga-chien-gion-1.jpg', 42, 'Da gà chiên giòn vị mắm tỏi'),
-    (0, 'assets/image/shared/product/ga/da-ga-chien-gion/da-ga-chien-gion-2.jpg', 42, 'Da gà chiên giòn đóng hộp'),
-    (1, 'assets/image/shared/product/ga/da-ga-chien-gion/da-ga-chien-gion-g.png', 42, 'Ảnh đại diện sản phẩm Da Gà Chiên Giòn'),
-    -- Gà Cháy Tỏi (43)
-    (0, 'assets/image/shared/product/ga/ga-chay-toi/ga-chay-toi-1.png', 43, 'Món gà cháy tỏi thơm lừng'),
-    (0, 'assets/image/shared/product/ga/ga-chay-toi/ga-chay-toi-2.jpg', 43, 'Cận cảnh miếng gà cháy tỏi'),
-    (1, 'assets/image/shared/product/ga/ga-chay-toi/ga-chay-toi-g.png', 43, 'Ảnh đại diện sản phẩm Gà Cháy Tỏi'),
-    -- Gà Đông Tảo Ủ Muối (44)
-    (0, 'assets/image/shared/product/ga/ga-dong-tao-u-muoi/ga-dong-tao-u-muoi-1.jpg', 44, 'Đặc sản gà Đông Tảo ủ muối'),
-    (0, 'assets/image/shared/product/ga/ga-dong-tao-u-muoi/ga-dong-tao-u-muoi-2.jpg', 44, 'Gà Đông Tảo ủ muối da giòn'),
-    (1, 'assets/image/shared/product/ga/ga-dong-tao-u-muoi/ga-dong-tao-u-muoi-g.png', 44, 'Ảnh đại diện sản phẩm Gà Đông Tảo Ủ Muối'),
-    -- Gà Nướng Muối Ớt (45)
-    (0, 'assets/image/shared/product/ga/ga-nuong-muoi-ot/ga-nuong-muoi-ot-1.jpg', 45, 'Gà nướng muối ớt nguyên con'),
-    (0, 'assets/image/shared/product/ga/ga-nuong-muoi-ot/ga-nuong-muoi-ot-2.jpg', 45, 'Gà nướng muối ớt trên bếp than'),
-    (0, 'assets/image/shared/product/ga/ga-nuong-muoi-ot/ga-nuong-muoi-ot-3.jpg', 45, 'Gà nướng muối ớt chặt miếng'),
-    (1, 'assets/image/shared/product/ga/ga-nuong-muoi-ot/ga-nuong-muoi-ot-g.jpg', 45, 'Ảnh đại diện sản phẩm Gà Nướng Muối Ớt'),
-    -- Gà Nướng Thảo Mộc (46)
-    (0, 'assets/image/shared/product/ga/ga-nuong-thao-moc/ga-nuong-thao-moc-1.jpg', 46, 'Gà nướng thảo mộc kiểu Âu'),
-    (0, 'assets/image/shared/product/ga/ga-nuong-thao-moc/ga-nuong-thao-moc-2.jpg', 46, 'Gà nướng thảo mộc với rau củ'),
-    (0, 'assets/image/shared/product/ga/ga-nuong-thao-moc/ga-nuong-thao-moc-3.jpg', 46, 'Gà nướng thảo mộc nguyên con'),
-    (1, 'assets/image/shared/product/ga/ga-nuong-thao-moc/ga-nuong-thao-moc-g.jpg', 46, 'Ảnh đại diện sản phẩm Gà Nướng Thảo Mộc'),
-    -- Gà Ủ Muối (47)
-    (0, 'assets/image/shared/product/ga/ga-u-muoi/ga-u-muoi-1.jpg', 47, 'Gà ủ muối hoa tiêu da vàng'),
-    (0, 'assets/image/shared/product/ga/ga-u-muoi/ga-u-muoi-2.jpg', 47, 'Gà ủ muối chặt miếng'),
-    (0, 'assets/image/shared/product/ga/ga-u-muoi/ga-u-muoi-3.jpg', 47, 'Gà ủ muối hút chân không'),
-    (1, 'assets/image/shared/product/ga/ga-u-muoi/ga-u-muoi-g.jpg', 47, 'Ảnh đại diện sản phẩm Gà Ủ Muối'),
-    -- Gà Ủ Xì Dầu (48)
-    (0, 'assets/image/shared/product/ga/ga-u-xi-dau/ga-u-xi-dau-1.jpg', 48, 'Gà ủ xì dầu hấp'),
-    (0, 'assets/image/shared/product/ga/ga-u-xi-dau/ga-u-xi-dau-2.jpg', 48, 'Màu sắc hấp dẫn của gà ủ xì dầu'),
-    (0, 'assets/image/shared/product/ga/ga-u-xi-dau/ga-u-xi-dau-3.jpg', 48, 'Gà ủ xì dầu nguyên con'),
-    (1, 'assets/image/shared/product/ga/ga-u-xi-dau/ga-u-xi-dau-g.jpg', 48, 'Ảnh đại diện sản phẩm Gà Ủ Xì Dầu'),
-    -- Gà Viên Chiên (49)
-    (0, 'assets/image/shared/product/ga/ga-vien-chien/ga-vien-chien-1.jpg', 49, 'Gà viên chiên xù'),
-    (0, 'assets/image/shared/product/ga/ga-vien-chien/ga-vien-chien-2.jpg', 49, 'Gà viên chiên sốt chua ngọt'),
-    (0, 'assets/image/shared/product/ga/ga-vien-chien/ga-vien-chien-3.jpg', 49, 'Gà viên chiên đông lạnh'),
-    (1, 'assets/image/shared/product/ga/ga-vien-chien/ga-vien-chien-g.jpg', 49, 'Ảnh đại diện sản phẩm Gà Viên Chiên'),
-    -- Há Cảo Gà (50)
-    (0, 'assets/image/shared/product/ga/ha-cao-ga/ha-cao-ga-1.jpg', 50, 'Há cảo gà hấp'),
-    (0, 'assets/image/shared/product/ga/ha-cao-ga/ha-cao-ga-2.jpg', 50, 'Há cảo gà chiên'),
-    (1, 'assets/image/shared/product/ga/ha-cao-ga/ha-cao-ga-g.jpg', 50, 'Ảnh đại diện sản phẩm Há Cảo Gà'),
-    -- Gà Kho Mắm (51)
-    (0, 'assets/image/shared/product/ga/ga-kho-mam/ga-kho-mam-1.jpg', 51, 'Món gà kho mắm đậm đà'),
-    (0, 'assets/image/shared/product/ga/ga-kho-mam/ga-kho-mam-2.jpg', 51, 'Gà kho mắm gừng'),
-    (0, 'assets/image/shared/product/ga/ga-kho-mam/ga-kho-mam-3.jpg', 51, 'Gà kho mắm ăn với cơm'),
-    (1, 'assets/image/shared/product/ga/ga-kho-mam/ga-kho-mam-g.jpg', 51, 'Ảnh đại diện sản phẩm Gà Kho Mắm'),
-    -- Bánh Hạt Điều (52)
-    (0, 'assets/image/shared/product/hat/banh-hat-dieu/banh-hat-dieu-1.jpg', 52, 'Bánh ngói hạt điều'),
-    (0, 'assets/image/shared/product/hat/banh-hat-dieu/banh-hat-dieu-2.jpg', 52, 'Bánh quy hạt điều'),
-    (1, 'assets/image/shared/product/hat/banh-hat-dieu/banh-hat-dieu-h.jpg', 52, 'Ảnh đại diện sản phẩm Bánh Hạt Điều'),
-    -- Bánh Thanh Hạnh Nhân (53)
-    (0, 'assets/image/shared/product/hat/banh-thanh-hanh-nhan/banh-thanh-hanh-nhan-1.jpg', 53, 'Bánh thanh hạt hạnh nhân'),
-    (0, 'assets/image/shared/product/hat/banh-thanh-hanh-nhan/banh-thanh-hanh-nhan-2.jpg', 53, 'Thanh bánh hạnh nhân dinh dưỡng'),
-    (1, 'assets/image/shared/product/hat/banh-thanh-hanh-nhan/banh-thanh-hanh-nhan-h.jpg', 53, 'Ảnh đại diện sản phẩm Bánh Thanh Hạnh Nhân'),
-    -- Bánh Thuyền Macca (54)
-    (0, 'assets/image/shared/product/hat/banh-thuyen-macca/banh-thuyen-macca-1.jpg', 54, 'Bánh thuyền mix hạt macca'),
-    (0, 'assets/image/shared/product/hat/banh-thuyen-macca/banh-thuyen-macca-2.jpg', 54, 'Cận cảnh bánh thuyền macca'),
-    (0, 'assets/image/shared/product/hat/banh-thuyen-macca/banh-thuyen-macca-3.jpg', 54, 'Hộp bánh thuyền macca'),
-    (1, 'assets/image/shared/product/hat/banh-thuyen-macca/banh-thuyen-macca-h.jpg', 54, 'Ảnh đại diện sản phẩm Bánh Thuyền Macca'),
-    -- Hạnh Nhân (55)
-    (0, 'assets/image/shared/product/hat/hanh-nhan/hanh-nhan-1.png', 55, 'Hạnh nhân rang bơ'),
-    (0, 'assets/image/shared/product/hat/hanh-nhan/hanh-nhan-2.jpg', 55, 'Hạnh nhân tự nhiên'),
-    (1, 'assets/image/shared/product/hat/hanh-nhan/hanh-nhan-h.jpg', 55, 'Ảnh đại diện sản phẩm Hạnh Nhân'),
-    -- Hạt Điều (56)
-    (0, 'assets/image/shared/product/hat/hat-dieu/hat-dieu-1.jpg', 56, 'Hạt điều rang muối'),
-    (0, 'assets/image/shared/product/hat/hat-dieu/hat-dieu-2.jpg', 56, 'Hạt điều tươi'),
-    (1, 'assets/image/shared/product/hat/hat-dieu/hat-dieu-h.png', 56, 'Ảnh đại diện sản phẩm Hạt Điều'),
-    -- Hạt Macca (57)
-    (0, 'assets/image/shared/product/hat/hat-macca/hat-macca-1.png', 57, 'Hạt macca nứt vỏ'),
-    (0, 'assets/image/shared/product/hat/hat-macca/hat-macca-2.png', 57, 'Nhân hạt macca'),
-    (0, 'assets/image/shared/product/hat/hat-macca/hat-macca-3.jpg', 57, 'Hạt macca Việt Nam'),
-    (1, 'assets/image/shared/product/hat/hat-macca/hat-macca-h.png', 57, 'Ảnh đại diện sản phẩm Hạt Macca'),
-    -- Hạt Óc Chó (58)
-    (0, 'assets/image/shared/product/hat/hat-oc-cho/hat-oc-cho-1.jpg', 58, 'Quả óc chó'),
-    (0, 'assets/image/shared/product/hat/hat-oc-cho/hat-oc-cho-2.jpg', 58, 'Nhân hạt óc chó'),
-    (1, 'assets/image/shared/product/hat/hat-oc-cho/hat-oc-cho-h.png', 58, 'Ảnh đại diện sản phẩm Hạt Óc Chó'),
-    -- Hạt Sen Sấy (59)
-    (0, 'assets/image/shared/product/hat/hat-sen-say/hat-sen-say-1.png', 59, 'Hạt sen sấy giòn'),
-    (0, 'assets/image/shared/product/hat/hat-sen-say/hat-sen-say-2.jpg', 59, 'Hạt sen sấy ăn liền'),
-    (0, 'assets/image/shared/product/hat/hat-sen-say/hat-sen-say-3.jpg', 59, 'Đóng gói hạt sen sấy'),
-    (1, 'assets/image/shared/product/hat/hat-sen-say/hat-sen-say-h.jpg', 59, 'Ảnh đại diện sản phẩm Hạt Sen Sấy'),
-    -- Mix 5 Loại Hạt Dinh Dưỡng (60)
-    (0, 'assets/image/shared/product/hat/mix-5-loai-hat-dinh-duong/mix-5-loai-hat-dinh-duong-1.png', 60, 'Hỗn hợp các loại hạt dinh dưỡng'),
-    (0, 'assets/image/shared/product/hat/mix-5-loai-hat-dinh-duong/mix-5-loai-hat-dinh-duong-2.jpg', 60, 'Hạt dinh dưỡng mix'),
-    (0, 'assets/image/shared/product/hat/mix-5-loai-hat-dinh-duong/mix-5-loai-hat-dinh-duong-3.jpg', 60, 'Hộp hạt mix 5 loại'),
-    (1, 'assets/image/shared/product/hat/mix-5-loai-hat-dinh-duong/mix-5-loai-hat-dinh-duong-h.png', 60, 'Ảnh đại diện sản phẩm Mix 5 Loại Hạt Dinh Dưỡng'),
-    -- Thanh Rong Biển Kẹp Hạt (61)
-    (0, 'assets/image/shared/product/hat/thanh-rong-bien-kep-hat/thanh-rong-bien-kep-hat-1.jpg', 61, 'Thanh rong biển kẹp hạt dinh dưỡng'),
-    (0, 'assets/image/shared/product/hat/thanh-rong-bien-kep-hat/thanh-rong-bien-kep-hat-2.jpg', 61, 'Cận cảnh thanh rong biển kẹp hạt'),
-    (0, 'assets/image/shared/product/hat/thanh-rong-bien-kep-hat/thanh-rong-bien-kep-hat-3.jpg', 61, 'Snack rong biển kẹp hạt'),
-    (1, 'assets/image/shared/product/hat/thanh-rong-bien-kep-hat/thanh-rong-bien-kep-hat-h.jpg', 61, 'Ảnh đại diện sản phẩm Thanh Rong Biển Kẹp Hạt'),
-    -- Chả Chân Vịt (62)
-    (0, 'assets/image/shared/product/vit/cha-chan-vit/cha-chan-vit-1.png', 62, 'Chả chân vịt rút xương'),
-    (0, 'assets/image/shared/product/vit/cha-chan-vit/cha-chan-vit-2.png', 62, 'Món ngon từ chả chân vịt'),
-    (0, 'assets/image/shared/product/vit/cha-chan-vit/cha-chan-vit-3.png', 62, 'Cận cảnh chả chân vịt'),
-    (1, 'assets/image/shared/product/vit/cha-chan-vit/cha-chan-vit-v.png', 62, 'Ảnh đại diện sản phẩm Chả Chân Vịt'),
-    -- Chả Vịt Thúy Hạnh (63)
-    (0, 'assets/image/shared/product/vit/cha-vit-thuy-manh/cha-vit-thuy-hanh-2.png', 63, 'Chả vịt Thúy Hạnh chiên'),
-    (0, 'assets/image/shared/product/vit/cha-vit-thuy-manh/cha-vit-thuy-manh-1.png', 63, 'Đặc sản chả vịt Thúy Hạnh'),
-    (1, 'assets/image/shared/product/vit/cha-vit-thuy-manh/cha-vit-thuy-manh-v.jpg', 63, 'Ảnh đại diện sản phẩm Chả Vịt Thúy Hạnh'),
-    -- Chân Vịt Rút Xương Ủ Muối (64)
-    (0, 'assets/image/shared/product/vit/chan-vit-rut-xuong-u-muoi/chan-vit-rut-xuong-u-muoi-1.jpg', 64, 'Chân vịt rút xương ủ muối hoa tiêu'),
-    (0, 'assets/image/shared/product/vit/chan-vit-rut-xuong-u-muoi/chan-vit-rut-xuong-u-muoi-2.jpg', 64, 'Chân vịt ủ muối ăn liền'),
-    (0, 'assets/image/shared/product/vit/chan-vit-rut-xuong-u-muoi/chan-vit-rut-xuong-u-muoi-3.jpg', 64, 'Chân vịt ủ muối đóng gói'),
-    (1, 'assets/image/shared/product/vit/chan-vit-rut-xuong-u-muoi/chan-vit-rut-xuong-u-muoi-v.jpg', 64, 'Ảnh đại diện sản phẩm Chân Vịt Rút Xương Ủ Muối'),
-    -- Chân Vịt Rút Xương Ủ Xì Dầu (65)
-    (0, 'assets/image/shared/product/vit/chan-vit-rut-xuong-u-xi-dau/chan-vit-rut-xuong-u-xi-dau-1.jpg', 65, 'Chân vịt rút xương ủ xì dầu đậm vị'),
-    (0, 'assets/image/shared/product/vit/chan-vit-rut-xuong-u-xi-dau/chan-vit-rut-xuong-u-xi-dau-2.jpg', 65, 'Món nhậu chân vịt ủ xì dầu'),
-    (1, 'assets/image/shared/product/vit/chan-vit-rut-xuong-u-xi-dau/chan-vit-rut-xuong-u-xi-dau-v.jpg', 65, 'Ảnh đại diện sản phẩm Chân Vịt Rút Xương Ủ Xì Dầu'),
-    -- Mọc Vịt (66)
-    (0, 'assets/image/shared/product/vit/moc-vit/moc-vit-1.png', 66, 'Mọc vịt tươi'),
-    (0, 'assets/image/shared/product/vit/moc-vit/moc-vit-2.png', 66, 'Canh mọc vịt'),
-    (0, 'assets/image/shared/product/vit/moc-vit/moc-vit-3.png', 66, 'Mọc vịt chiên'),
-    (1, 'assets/image/shared/product/vit/moc-vit/moc-vit-v.png', 66, 'Ảnh đại diện sản phẩm Mọc Vịt'),
-    -- Pate Gan Vịt (67)
-    (0, 'assets/image/shared/product/vit/pate-gan-vit/pate-gan-vit-1.png', 67, 'Pate gan vịt kiểu Pháp'),
-    (0, 'assets/image/shared/product/vit/pate-gan-vit/pate-gan-vit-2.png', 67, 'Pate gan vịt ăn với bánh mì'),
-    (1, 'assets/image/shared/product/vit/pate-gan-vit/pate-gan-vit-v.jpg', 67, 'Ảnh đại diện sản phẩm Pate Gan Vịt'),
-    -- Vịt Quay (68)
-    (0, 'assets/image/shared/product/vit/vit-quay/vit-quay-1.jpg', 68, 'Vịt quay Bắc Kinh'),
-    (0, 'assets/image/shared/product/vit/vit-quay/vit-quay-2.jpg', 68, 'Vịt quay chặt miếng'),
-    (0, 'assets/image/shared/product/vit/vit-quay/vit-quay-3.jpg', 68, 'Vịt quay da giòn'),
-    (1, 'assets/image/shared/product/vit/vit-quay/vit-quay-v.jpg', 68, 'Ảnh đại diện sản phẩm Vịt Quay'),
-    -- Vịt Tiềm Hạt Sen (69)
-    (0, 'assets/image/shared/product/vit/vit-tiem-hat-sen/vit-tiem-hat-sen-1.jpg', 69, 'Món vịt tiềm hạt sen thuốc bắc'),
-    (0, 'assets/image/shared/product/vit/vit-tiem-hat-sen/vit-tiem-hat-sen-2.jpg', 69, 'Vịt tiềm hạt sen bổ dưỡng'),
-    (1, 'assets/image/shared/product/vit/vit-tiem-hat-sen/vit-tiem-hat-sen-v.jpg', 69, 'Ảnh đại diện sản phẩm Vịt Tiềm Hạt Sen'),
-    -- Vịt Ủ Xì Dầu (70)
-    (0, 'assets/image/shared/product/vit/vit-u-xi-dau/vit-u-xi-dau-1.png', 70, 'Vịt ủ xì dầu nguyên con'),
-    (0, 'assets/image/shared/product/vit/vit-u-xi-dau/vit-u-xi-dau-2.png', 70, 'Thịt vịt ủ xì dầu mềm thơm'),
-    (1, 'assets/image/shared/product/vit/vit-u-xi-dau/vit-u-xi-dau-v.png', 70, 'Ảnh đại diện sản phẩm Vịt Ủ Xì Dầu'),
-    -- Chả Cá Thác Lác Tươi (71)
-    (0, 'assets/image/shared/product/ca/cha-ca-thac-lac-tuoi/cha-ca-thac-lac-tuoi-1.jpg', 71, 'Chả cá thác lác tươi quết dai'),
-    (0, 'assets/image/shared/product/ca/cha-ca-thac-lac-tuoi/cha-ca-thac-lac-tuoi-2.jpg', 71, 'Chả cá thác lác chiên'),
-    (0, 'assets/image/shared/product/ca/cha-ca-thac-lac-tuoi/cha-ca-thac-lac-tuoi-3.jpeg', 71, 'Canh khổ qua chả cá thác lác'),
-    (0, 'assets/image/shared/product/ca/cha-ca-thac-lac-tuoi/cha-ca-thac-lac-tuoi-4.jpeg', 71, 'Chả cá thác lác viên'),
-    (0, 'assets/image/shared/product/ca/cha-ca-thac-lac-tuoi/cha-ca-thac-lac-tuoi-5.jpg', 71, 'Cá thác lác tươi'),
-    (1, 'assets/image/shared/product/ca/cha-ca-thac-lac-tuoi/cha-ca-thac-lac-tuoi-c.jpg', 71, 'Ảnh đại diện sản phẩm Chả Cá Thác Lác Tươi'),
-    -- Cá Chiên Tẩm Gia Vị Sấy Khô (72)
-    (0, 'assets/image/shared/product/ca/ca-chien-tam-gia-vi-say-kho/ca-chien-tam-gia-vi-say-kho-1.jpg', 72, 'Cá chiên tẩm gia vị ăn liền'),
-    (0, 'assets/image/shared/product/ca/ca-chien-tam-gia-vi-say-kho/ca-chien-tam-gia-vi-say-kho-2.jpg', 72, 'Snack cá chiên tẩm gia vị'),
-    (1, 'assets/image/shared/product/ca/ca-chien-tam-gia-vi-say-kho/ca-chien-tam-gia-vi-say-kho-c.jpg', 72, 'Ảnh đại diện sản phẩm Cá Chiên Tẩm Gia Vị Sấy Khô'),
-    -- Cá Chua Ngọt Đông Hũ (73)
-    (1, 'assets/image/shared/product/ca/ca-chua-ngot-dong-hu/ca-chua-ngot-dong-hu-c.jpg', 73, 'Ảnh đại diện sản phẩm Cá Chua Ngọt Đông Hũ'),
-    -- Cá Hộp (74)
-    (1, 'assets/image/shared/product/ca/ca-hop/ca-hop-c.jpg', 74, 'Ảnh đại diện sản phẩm Cá Hộp'),
-    -- Cá Khô (75)
-    (0, 'assets/image/shared/product/ca/ca-kho/ca-kho-1.jpg', 75, 'Các loại cá khô'),
-    (0, 'assets/image/shared/product/ca/ca-kho/ca-kho-2.jpg', 75, 'Khô cá lóc'),
-    (0, 'assets/image/shared/product/ca/ca-kho/ca-kho-3.jpg', 75, 'Khô cá sặc'),
-    (1, 'assets/image/shared/product/ca/ca-kho/ca-kho-c.jpg', 75, 'Ảnh đại diện sản phẩm Cá Khô'),
-    -- Cá Lóc Rim Me (76)
-    (0, 'assets/image/shared/product/ca/ca-loc-rim-me/ca-loc-rim-me-1.jpg', 76, 'Món cá lóc rim me chua ngọt'),
-    (0, 'assets/image/shared/product/ca/ca-loc-rim-me/ca-loc-rim-me-2.jpg', 76, 'Cá lóc rim me đậm đà'),
-    (1, 'assets/image/shared/product/ca/ca-loc-rim-me/ca-loc-rim-me-c.jpg', 76, 'Ảnh đại diện sản phẩm Cá Lóc Rim Me'),
-    -- Cá Một Nắng (77)
-    (0, 'assets/image/shared/product/ca/ca-mot-nang/ca-mot-nang-2.jpg', 77, 'Cá một nắng chiên'),
-    (1, 'assets/image/shared/product/ca/ca-mot-nang/ca-mot-nang-c.png', 77, 'Ảnh đại diện sản phẩm Cá Một Nắng'),
-    (0, 'assets/image/shared/product/ca/ca-mot-nang/ca-mot-nang-1.jpg', 77, 'Phơi cá một nắng'),
-    -- Cá Mực Một Nắng Tẩm Gia Vị (78)
-    (1, 'assets/image/shared/product/ca/ca-muc-mot-nang-tam-gia-vi/ca-muc-mot-nang-tam-gia-vi-c.jpg', 78, 'Ảnh đại diện sản phẩm Cá Mực Một Nắng Tẩm Gia Vị'),
-    (1, 'assets/image/shared/product/ca/ca-muc-mot-nang-tam-gia-vi/ca-muc-mot-nang-tam-gia-vi-1.jpg', 78, 'Cá mực tẩm gia vị nướng'),
-    -- Cá Rim (79)
-    (0, 'assets/image/shared/product/ca/ca-rim/ca-rim-1.jpg', 79, 'Cá cơm rim'),
-    (0, 'assets/image/shared/product/ca/ca-rim/ca-rim-2.jpg', 79, 'Cá nục rim'),
-    (0, 'assets/image/shared/product/ca/ca-rim/ca-rim-3.jpg', 79, 'Cá rim mặn ngọt'),
-    (1, 'assets/image/shared/product/ca/ca-rim/ca-rim-c.jpg', 79, 'Ảnh đại diện sản phẩm Cá Rim'),
-    -- Cá Rô Phi Sấy Giòn (80)
-    (0, 'assets/image/shared/product/ca/ca-ro-phi-say-gion/ca-ro-phi-say-gion-1.jpg', 80, 'Cá rô phi sấy giòn ăn liền'),
-    (0, 'assets/image/shared/product/ca/ca-ro-phi-say-gion/ca-ro-phi-say-gion-2.jpg', 80, 'Snack cá rô phi sấy giòn'),
-    (1, 'assets/image/shared/product/ca/ca-ro-phi-say-gion/ca-ro-phi-say-gion-c.jpg', 80, 'Ảnh đại diện sản phẩm Cá Rô Phi Sấy Giòn'),
-    -- Cá Thu Rim Tỏi Ớt (81)
-    (0, 'assets/image/shared/product/ca/ca-thu-rim-toi-ot/ca-thu-rim-toi-ot-1.jpg', 81, 'Món cá thu rim tỏi ớt'),
-    (1, 'assets/image/shared/product/ca/ca-thu-rim-toi-ot/ca-thu-rim-toi-ot-c.jpg', 81, 'Ảnh đại diện sản phẩm Cá Thu Rim Tỏi Ớt'),
-    -- Chả Cá Thác Lác Hậu Giang (82)
-    (0, 'assets/image/shared/product/ca/cha-ca-thac-lac-hau-giang/cha-ca-thac-lac-hau-giang-1.jpg', 82, 'Đặc sản chả cá thác lác Hậu Giang'),
-    (1, 'assets/image/shared/product/ca/cha-ca-thac-lac-hau-giang/cha-ca-thac-lac-hau-giang-c.jpg', 82, 'Ảnh đại diện sản phẩm Chả Cá Thác Lác Hậu Giang'),
-    -- Chả Cá Thác Lác Tươi Tẩm Gia Vị (83)
-    (0, 'assets/image/shared/product/ca/cha-ca-thac-lac-tuoi-tam-gia-vi/cha-ca-thac-lac-tuoi-tam-gia-vi-1.jpg', 83, 'Chả cá thác lác tẩm gia vị'),
-    (0, 'assets/image/shared/product/ca/cha-ca-thac-lac-tuoi-tam-gia-vi/cha-ca-thac-lac-tuoi-tam-gia-vi-2.jpg', 83, 'Chả cá tẩm gia vị chiên'),
-    (0, 'assets/image/shared/product/ca/cha-ca-thac-lac-tuoi-tam-gia-vi/cha-ca-thac-lac-tuoi-tam-gia-vi-3.jpg', 83, 'Nguyên liệu chả cá thác lác'),
-    (0, 'assets/image/shared/product/ca/cha-ca-thac-lac-tuoi-tam-gia-vi/cha-ca-thac-lac-tuoi-tam-gia-vi-5.jpg', 83, 'Chả cá thác lác tẩm  Cà Mau'),
-    (1, 'assets/image/shared/product/ca/cha-ca-thac-lac-tuoi-tam-gia-vi/cha-ca-thac-lac-tuoi-tam-gia-vi-c.jpg', 83, 'Ảnh đại diện sản phẩm Chả Cá Thác Lác Tươi Tẩm Gia Vị'),
-    -- Pate Cá Hồi Hạ Long (84)
-    (0, 'assets/image/shared/product/ca/pa-te-ca-hoi-ha-long/pa-te-ca-hoi-ha-long-1.jpg', 84, 'Pate cá hồi Hạ Long'),
-    (1, 'assets/image/shared/product/ca/pa-te-ca-hoi-ha-long/pa-te-ca-hoi-ha-long-c.jpg', 84, 'Ảnh đại diện sản phẩm Pate Cá Hồi Hạ Long'),
-    -- Chả Giò Chả Lụa (85)
-    (0, 'assets/image/shared/product/heo/cha-gio-cha-lua/cha-gio-cha-lua-1.jpg', 85, 'Chả giò và chả lụa'),
-    (1, 'assets/image/shared/product/heo/cha-gio-cha-lua/cha-gio-cha-lua-h.jpg', 85, 'Ảnh đại diện sản phẩm Chả Giò Chả Lụa'),
-    -- Chân Giò Giả Cầy (86)
-    (0, 'assets/image/shared/product/heo/chan-gio-gia-cay/chan-gio-gia-cay-1.jpg', 86, 'Món chân giò giả cầy'),
-    (1, 'assets/image/shared/product/heo/chan-gio-gia-cay/chan-gio-gia-cay-h.jpg', 86, 'Ảnh đại diện sản phẩm Chân Giò Giả Cầy'),
-    -- Đặc Sản Chả Mực Hải Phòng (87)
-    (0, 'assets/image/shared/product/heo/dac-san-cha-chia-hai-phong/dac-san-cha-chia-hai-phong-1.jpg', 87, 'Đặc sản chả chìa Hải Phòng'),
-    (1, 'assets/image/shared/product/heo/dac-san-cha-chia-hai-phong/dac-san-cha-chia-hai-phong-h.jpg', 87, 'Ảnh đại diện sản phẩm Chả Chìa Hải Phòng'),
-    -- Đặc Sản Chả Cốm Hà Nội (88)
-    (0, 'assets/image/shared/product/heo/dac-san-cha-com-ha-noi/dac-san-cha-com-ha-noi-1.jpg', 88, 'Chả cốm Hà Nội chiên'),
-    (0, 'assets/image/shared/product/heo/dac-san-cha-com-ha-noi/dac-san-cha-com-ha-noi-2.jpg', 88, 'Bún đậu mắm tôm chả cốm'),
-    (0, 'assets/image/shared/product/heo/dac-san-cha-com-ha-noi/dac-san-cha-com-ha-noi-3.jpg', 88, 'Chả cốm tươi'),
-    (0, 'assets/image/shared/product/heo/dac-san-cha-com-ha-noi/dac-san-cha-com-ha-noi-4.jpg', 88, 'Chả cốm làng Vòng'),
-    (0, 'assets/image/shared/product/heo/dac-san-cha-com-ha-noi/dac-san-cha-com-ha-noi-5.jpg', 88, 'Cận cảnh miếng chả cốm'),
-    (0, 'assets/image/shared/product/heo/dac-san-cha-com-ha-noi/dac-san-cha-com-ha-noi-6.jpg', 88, 'Chả cốm và cốm tươi'),
-    (1, 'assets/image/shared/product/heo/dac-san-cha-com-ha-noi/dac-san-cha-com-ha-noi-h.jpg', 88, 'Ảnh đại diện sản phẩm Chả Cốm Hà Nội'),
-    -- Đặc Sản Chả Sụn (89)
-    (0, 'assets/image/shared/product/heo/dac-san-cha-sun/dac-san-cha-sun-1.jpg', 89, 'Chả sụn nướng'),
-    (0, 'assets/image/shared/product/heo/dac-san-cha-sun/dac-san-cha-sun-2.jpg', 89, 'Chả sụn chiên'),
-    (1, 'assets/image/shared/product/heo/dac-san-cha-sun/dac-san-cha-sun-h.jpg', 89, 'Ảnh đại diện sản phẩm Chả Sụn'),
-    -- Khâu Nhục Lạng Sơn (90)
-    (0, 'assets/image/shared/product/heo/khau-nhuc-lang-son/khau-nhuc-lang-son-1.png', 90, 'Đặc sản khâu nhục Lạng Sơn'),
-    (0, 'assets/image/shared/product/heo/khau-nhuc-lang-son/khau-nhuc-lang-son-2.png', 90, 'Khâu nhục hấp'),
-    (1, 'assets/image/shared/product/heo/khau-nhuc-lang-son/khau-nhuc-lang-son-h.jpg', 90, 'Ảnh đại diện sản phẩm Khâu Nhục Lạng Sơn'),
-    -- Mắm Heo (91)
-    (0, 'assets/image/shared/product/heo/mam-heo/mam-heo-1.jpg', 91, 'Mắm thịt heo'),
-    (1, 'assets/image/shared/product/heo/mam-heo/mam-heo-h.jpg', 91, 'Ảnh đại diện sản phẩm Mắm Heo'),
-    -- Nem Chua (92)
-    (0, 'assets/image/shared/product/heo/nem-chua/nem-chua-1.jpg', 92, 'Nem chua Thanh Hóa'),
-    (1, 'assets/image/shared/product/heo/nem-chua/nem-chua-h.jpg', 92, 'Ảnh đại diện sản phẩm Nem Chua'),
-    -- Nem Hà Nội (93)
-    (0, 'assets/image/shared/product/heo/nem-ha-noi/nem-ha-noi-1.jpg', 93, 'Nem rán Hà Nội'),
-    (0, 'assets/image/shared/product/heo/nem-ha-noi/nem-ha-noi-2.jpg', 93, 'Nem chua rán Hà Nội'),
-    (0, 'assets/image/shared/product/heo/nem-ha-noi/nem-ha-noi-3.jpg', 93, 'Bún chả nem Hà Nội'),
-    (1, 'assets/image/shared/product/heo/nem-ha-noi/nem-ha-noi-h.jpg', 93, 'Ảnh đại diện sản phẩm Nem Hà Nội'),
-    -- Nem Lụi Nha Trang (94)
-    (0, 'assets/image/shared/product/heo/nem-lui-nha-trang/nem-lui-nha-trang-3.jpg', 94, 'Nem lụi nướng Nha Trang'),
-    (1, 'assets/image/shared/product/heo/nem-lui-nha-trang/nem-lui-nha-trang-h.jpg', 94, 'Ảnh đại diện sản phẩm Nem Lụi Nha Trang'),
-    -- Pate Gan Heo (95)
-    (1, 'assets/image/shared/product/heo/pa-te-gan-heo/pa-te-gan-heo-h.jpg', 95, 'Ảnh đại diện sản phẩm Pate Gan Heo'),
-    -- Tai Heo Cuộn Lưỡi (96)
-    (0, 'assets/image/shared/product/heo/tai-heo-cuon-luoi/tai-heo-cuon-luoi-1.jpg', 96, 'Món tai heo cuộn lưỡi'),
-    (0, 'assets/image/shared/product/heo/tai-heo-cuon-luoi/tai-heo-cuon-luoi-2.jpg', 96, 'Tai heo cuộn lưỡi thái lát'),
-    (0, 'assets/image/shared/product/heo/tai-heo-cuon-luoi/tai-heo-cuon-luoi-3.jpg', 96, 'Giò tai lưỡi'),
-    (0, 'assets/image/shared/product/heo/tai-heo-cuon-luoi/tai-heo-cuon-luoi-4.jpg', 96, 'Nguyên liệu tai heo cuộn lưỡi'),
-    (0, 'assets/image/shared/product/heo/tai-heo-cuon-luoi/tai-heo-cuon-luoi-5.jpg', 96, 'Tai heo cuộn lưỡi ăn kèm'),
-    (0, 'assets/image/shared/product/heo/tai-heo-cuon-luoi/tai-heo-cuon-luoi-6.jpg', 96, 'Cận cảnh tai heo cuộn lưỡi'),
-    (1, 'assets/image/shared/product/heo/tai-heo-cuon-luoi/tai-heo-cuon-luoi-h.jpg', 96, 'Ảnh đại diện sản phẩm Tai Heo Cuộn Lưỡi'),
-    -- Tai Heo Ủ Muối (97)
-    (0, 'assets/image/shared/product/heo/tai-heo-u-muoi/tai-heo-u-muoi-1.png', 97, 'Tai heo ủ muối giòn sần sật'),
-    (0, 'assets/image/shared/product/heo/tai-heo-u-muoi/tai-heo-u-muoi-2.jpg', 97, 'Tai heo ủ muối thái mỏng'),
-    (1, 'assets/image/shared/product/heo/tai-heo-u-muoi/tai-heo-u-muoi-h.jpg', 97, 'Ảnh đại diện sản phẩm Tai Heo Ủ Muối'),
-    -- Tai Heo Ủ Xì Dầu (98)
-    (0, 'assets/image/shared/product/heo/tai-heo-u-xi-dau/tai-heo-u-xi-dau-1.jpg', 98, 'Tai heo ủ xì dầu đậm vị'),
-    (0, 'assets/image/shared/product/heo/tai-heo-u-xi-dau/tai-heo-u-xi-dau-2.jpg', 98, 'Tai heo ủ xì dầu ăn liền'),
-    (1, 'assets/image/shared/product/heo/tai-heo-u-xi-dau/tai-heo-u-xi-dau-h.jpeg', 98, 'Ảnh đại diện sản phẩm Tai Heo Ủ Xì Dầu'),
-    -- Thịt Chưng Mắm Tép (99)
-    (0, 'assets/image/shared/product/heo/thit-chung-mam-tep/thit-chung-mam-tep-1.jpg', 99, 'Thịt chưng mắm tép ăn với cơm'),
-    (0, 'assets/image/shared/product/heo/thit-chung-mam-tep/thit-chung-mam-tep-2.jpg', 99, 'Hũ thịt chưng mắm tép'),
-    (1, 'assets/image/shared/product/heo/thit-chung-mam-tep/thit-chung-mam-tep-h.jpg', 99, 'Ảnh đại diện sản phẩm Thịt Chưng Mắm Tép'),
-    -- Thịt Heo Sấy Khô (100)
-    (0, 'assets/image/shared/product/heo/thit-heo-say-kho/thit-heo-say-kho-1.jpg', 100, 'Khô heo cháy tỏi'),
-    (0, 'assets/image/shared/product/heo/thit-heo-say-kho/thit-heo-say-kho-2.jpg', 100, 'Thịt heo sấy khô miếng'),
-    (1, 'assets/image/shared/product/heo/thit-heo-say-kho/thit-heo-say-kho-h.jpg', 100, 'Ảnh đại diện sản phẩm Thịt Heo Sấy Khô'),
-    -- Thịt Heo Xông Khói (101)
-    (0, 'assets/image/shared/product/heo/thit-heo-xong-khoi/thit-heo-xong-khoi-1.png', 101, 'Thịt heo xông khói thái lát'),
-    (1, 'assets/image/shared/product/heo/thit-heo-xong-khoi/thit-heo-xong-khoi-h.jpg', 101, 'Ảnh đại diện sản phẩm Thịt Heo Xông Khói'),
-    -- Xúc Xích Cốm (102)
-    (0, 'assets/image/shared/product/heo/xuc-xich-com/xuc-xich-com-1.jpg', 102, 'Xúc xích cốm chiên'),
-    (0, 'assets/image/shared/product/heo/xuc-xich-com/xuc-xich-com-2.jpg', 102, 'Xúc xích cốm tươi'),
-    (0, 'assets/image/shared/product/heo/xuc-xich-com/xuc-xich-com-3.jpg', 102, 'Cận cảnh xúc xích cốm'),
-    (0, 'assets/image/shared/product/heo/xuc-xich-com/xuc-xich-com-4.jpg', 102, 'Xúc xích cốm ăn kèm'),
-    (0, 'assets/image/shared/product/heo/xuc-xich-com/xuc-xich-com-5.jpg', 102, 'Đặc sản xúc xích cốm'),
-    (1, 'assets/image/shared/product/heo/xuc-xich-com/xuc-xich-com-h.jpg', 102, 'Ảnh đại diện sản phẩm Xúc Xích Cốm'),
-    -- Chả Ngan (103)
-    (0, 'assets/image/shared/product/ngan/cha-ngan/cha-ngan-1.jpg', 103, 'Chả ngan nướng'),
-    (0, 'assets/image/shared/product/ngan/cha-ngan/cha-ngan-2.jpg', 103, 'Bún chả ngan'),
-    (0, 'assets/image/shared/product/ngan/cha-ngan/cha-ngan-3.jpg', 103, 'Chả ngan viên'),
-    (1, 'assets/image/shared/product/ngan/cha-ngan/cha-ngan-n.jpg', 103, 'Ảnh đại diện sản phẩm Chả Ngan'),
-    -- Ngan Một Nắng (104)
-    (1, 'assets/image/shared/product/ngan/ngan-mot-nang/bo-kho-mot-nang-n.jpg', 104, 'Ảnh đại diện sản phẩm Ngan Một Nắng'),
-    (0, 'assets/image/shared/product/ngan/ngan-mot-nang/ngan-mot-nang-1.jpg', 104, 'Thịt ngan một nắng'),
-    -- Ngan Xông Khói (105)
-    (0, 'assets/image/shared/product/ngan/ngan-xong-khoi/ngan-xong-khoi-1.jpg', 105, 'Thịt ngan xông khói'),
-    (1, 'assets/image/shared/product/ngan/ngan-xong-khoi/ngan-xong-khoi-n.jpg', 105, 'Ảnh đại diện sản phẩm Ngan Xông Khói');
+INSERT INTO ProductImages (is_main, image_url, product_id, alt_text) VALUES
+    -- Sản phẩm ID 1
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767112956/BSV/lolo50xfh3uklxxyxbfn.jpg', 1, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767112958/BSV/c506w64gkuog7yx80eoy.jpg', 1, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767112958/BSV/gwginzbzxcssrdvlxoof.jpg', 1, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767112959/BSV/dk6ousbn4sp5xrbe1hex.jpg', 1, NULL),
+    
+    -- Sản phẩm ID 2
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861683/BSV/qfu6jmmlbvn9hogyw27x.jpg', 2, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861683/BSV/yaeexibaa2oibfglw5br.jpg', 2, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861684/BSV/e6wy3tsspwm5v9qs1ymy.jpg', 2, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861685/BSV/mryayll4fe4gjqvaqa7e.jpg', 2, NULL),
+    
+    -- Sản phẩm ID 3
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767113021/BSV/illcoed3owvaqm8v4iz6.jpg', 3, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767113021/BSV/pptwymannygd4pbuuxne.jpg', 3, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767113022/BSV/oyeit6yikzrxiqcconne.jpg', 3, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767113023/BSV/jenpjudjagq7tdombg3u.jpg', 3, NULL),
+    
+    -- Sản phẩm ID 4
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767111107/BSV/fr8tv44ssuhl08yzazl5.jpg', 4, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767111109/BSV/dnc6swstyun0ilsj2yyj.png', 4, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767111110/BSV/jsxiylzxneskfg9acxai.jpg', 4, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767111111/BSV/whiu0d3azgl1w1pxnmoc.jpg', 4, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767111111/BSV/b3iegdo7nxuviouqqgwt.jpg', 4, NULL),
+    
+    -- Sản phẩm ID 5
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861757/BSV/p3boiw2uc7h9x5ir6ltf.jpg', 5, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861758/BSV/fr0y65bfi8nm6i39w20l.jpg', 5, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861759/BSV/raxcoiehx7qkmwwphmaz.jpg', 5, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861759/BSV/kiidjkn4a9qriq1ysjci.jpg', 5, NULL),
+    
+    -- Sản phẩm ID 6
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767113079/BSV/uia1tyc1rdcto2hnqhae.jpg', 6, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767113080/BSV/llkppnshdwbv2a34xqln.png', 6, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767113081/BSV/jo4gymrviwawbicwbkaa.jpg', 6, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767113082/BSV/a8fb2artzack7mj23msi.jpg', 6, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767113084/BSV/um6mg11w4fhxwcl4rkfd.jpg', 6, NULL),
+    
+    -- Sản phẩm ID 7
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859816/BSV/nxjuaz64f9riku8byzum.jpg', 7, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859817/BSV/avq9y9rajtr05k1nv6fb.jpg', 7, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859817/BSV/urehiasuew16korxdd02.jpg', 7, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859818/BSV/k9tfiii3wcgywstwvbh9.jpg', 7, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859819/BSV/jhlmc3qeickgcr2upr7x.jpg', 7, NULL),
+    
+    -- Sản phẩm ID 8
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861605/BSV/blfzcb4mngt6jbkewozq.jpg', 8, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861606/BSV/sc4ku9nw285pshjkbcms.jpg', 8, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861607/BSV/nqyjjypxxhsmg2sakdji.jpg', 8, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861608/BSV/f513zsg9beyvnws15zow.jpg', 8, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861609/BSV/sz53vldqtqykhx5gwnfg.jpg', 8, NULL),
+    
+    -- Sản phẩm ID 9
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861707/BSV/qucnyrxwverzaxlb6hi4.jpg', 9, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861708/BSV/iawbyge4ei93ncgxnxat.jpg', 9, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861709/BSV/f6cuvy5wjjrltqvoeufn.jpg', 9, NULL),
+    
+    -- Sản phẩm ID 10
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861565/BSV/kn9tworud71vcm89zxq4.jpg', 10, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861567/BSV/xjhekkfg7zgmfleoqylj.jpg', 10, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861568/BSV/uwkbf4pnfktnwositgt8.jpg', 10, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861569/BSV/wrumjbuibvp78dmqgiue.jpg', 10, NULL),
+    
+    -- Sản phẩm ID 11
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861658/BSV/htmprlwswrhctp1pw8lk.jpg', 11, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861659/BSV/kqioxttu80tmr4gblxcl.jpg', 11, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861660/BSV/ggjo8ruzuxufvfw3xusd.png', 11, NULL),
+    
+    -- Sản phẩm ID 12
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861541/BSV/vovgy2xvwwbqesovequo.jpg', 12, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861542/BSV/tppo4tgnkbusicxouh6d.jpg', 12, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861543/BSV/fs08tthkosv9acwamjfs.jpg', 12, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861544/BSV/woyf2mcqoqfap93gemwm.jpg', 12, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861545/BSV/p85klgt4zlgngnoagit7.jpg', 12, NULL),
+    
+    -- Sản phẩm ID 13
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861632/BSV/wg9r2q32nm1oislzjykv.jpg', 13, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861632/BSV/iq3xdd2nppdvviii5j7n.jpg', 13, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861634/BSV/il9dxzighs6maqkhaue4.jpg', 13, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861635/BSV/tafmephh8aedb2acidyd.jpg', 13, NULL),
+    
+    -- Sản phẩm ID 14
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861735/BSV/h4jfxtmgb15bssikieok.jpg', 14, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861736/BSV/pidpitztkp5akdkmot3p.jpg', 14, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861736/BSV/wiznzuewbwfmvi3z7ttr.jpg', 14, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861737/BSV/nfi2te5vhakmfeo2lxqw.jpg', 14, NULL),
+    
+    -- Sản phẩm ID 15
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861268/BSV/m4io7zqijxyesl3din03.jpg', 15, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861269/BSV/b1t9enot6ct0bkwawkmr.jpg', 15, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861271/BSV/xdof3k8xbxe8kc1gyghv.jpg', 15, NULL),
+    
+    -- Sản phẩm ID 16
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861441/BSV/kdsocgblldq04k2kegm4.jpg', 16, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861442/BSV/kjhyaox3v1mdimtnq5ar.jpg', 16, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861443/BSV/mrcojnl7ueqfkdjybt20.jpg', 16, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861443/BSV/rvqfw1essbwqeefqyw1k.jpg', 16, NULL),
+    
+    -- Sản phẩm ID 17
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861204/BSV/hzypzghuippjzyjmrffz.jpg', 17, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861205/BSV/miaeavtnfxzz0bjco6ly.jpg', 17, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861205/BSV/eepsu5pc5jlgejhgczdh.jpg', 17, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861208/BSV/zuewcmqw326rtailytnc.jpg', 17, NULL),
+    
+    -- Sản phẩm ID 18
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861394/BSV/zgnbapxlft4aqwaqqbk4.jpg', 18, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861395/BSV/x8qwgjb9z9nqh2qyqgx1.jpg', 18, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861396/BSV/drmasrwnswbwej6yjaos.jpg', 18, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861397/BSV/oilwofd1jzawyd1mcyco.jpg', 18, NULL),
+    
+    -- Sản phẩm ID 19
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861102/BSV/xdyvx2yk2hvejm1upz1x.png', 19, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861103/BSV/yi6ttimhyie78pspapj7.jpg', 19, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861104/BSV/n5cucjiqlodhounf41v8.jpg', 19, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861106/BSV/ows2r9rkwxekebzit6il.jpg', 19, NULL),
+    
+    -- Sản phẩm ID 20
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767110904/BSV/rwpfzmi6o80b8uucrekb.jpg', 20, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767110905/BSV/yeahvvg15keh8kijsoyx.jpg', 20, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767110906/BSV/mmhokyax6fmpq46xn7gc.jpg', 20, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767110907/BSV/ddc4edaknokmtswxilhn.jpg', 20, NULL),
+    
+    -- Sản phẩm ID 21
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861045/BSV/d5tqwvse10tlhf70kvr0.png', 21, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861047/BSV/dsv2s5popz7neyi93ltx.png', 21, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861047/BSV/ywn5uetmlxzg5wmnqjxl.png', 21, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861048/BSV/qtkdwzqtjoxblgx34jxw.png', 21, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861049/BSV/ty4ama15ywdkckhre1k3.jpg', 21, NULL),
+    
+    -- Sản phẩm ID 22
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861303/BSV/lj4p3eh56i2xah22xu6o.jpg', 22, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861304/BSV/dulwkewfw8wt3yprri6z.jpg', 22, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861305/BSV/yhnmzdtfuut4aecdwmzi.jpg', 22, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861306/BSV/nw8stzbfvg2ke1kd8ahy.jpg', 22, NULL),
+    
+    -- Sản phẩm ID 23
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861474/BSV/ce6nglmfjnefqfo4kafv.jpg', 23, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861475/BSV/wczdsrxcslsgjax7puyd.jpg', 23, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861476/BSV/dxetanztdiclpg6k9oxz.jpg', 23, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861477/BSV/aqtd6ahmp9jub00dgn6k.jpg', 23, NULL),
+    
+    -- Sản phẩm ID 24
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861238/BSV/q79912khww1vpnx8jrsy.jpg', 24, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861239/BSV/bvqiwrmbqjtam3wvmm16.jpg', 24, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861240/BSV/nz8qznm4grmd1tkzpjhm.jpg', 24, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861240/BSV/p4mghwux5ux3blpj45ye.jpg', 24, NULL),
+    
+    -- Sản phẩm ID 25
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861419/BSV/ztw1fa0lffiq1yqjf5rb.jpg', 25, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861420/BSV/ixrrliykjae8jakvcpk5.jpg', 25, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861420/BSV/q7nfsfwtzxm9ehizlrmt.jpg', 25, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861421/BSV/liboyou6hyv3aputj11i.jpg', 25, NULL),
+    
+    -- Sản phẩm ID 26
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861176/BSV/qfmypwwyjriyl8jopdld.jpg', 26, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861176/BSV/vfibdbmqqo9fodjhyflu.png', 26, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861177/BSV/ijuasu1oqri3cnjafvdb.jpg', 26, NULL),
+    
+    -- Sản phẩm ID 27
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861366/BSV/exg0xuq4uknoqsjgc5la.jpg', 27, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861367/BSV/egxnxn0zhvjgbynauosi.jpg', 27, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861367/BSV/hle4uktnieosd6x94cei.jpg', 27, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861368/BSV/yl3fax9kyxiqnpdlcbgi.jpg', 27, NULL),
+    
+    -- Sản phẩm ID 28
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861073/BSV/yt2iiq8guanwu0kg3dw2.jpg', 28, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861074/BSV/v3vqbmbubhayzzj635ix.jpg', 28, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861075/BSV/xznel25rwswrfqb4g0wn.jpg', 28, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861076/BSV/e8kr6hzj4vlhlpdk31ga.jpg', 28, NULL),
+    
+    -- Sản phẩm ID 29
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861330/BSV/hu4bgqkndpilyieuwvhr.jpg', 29, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861331/BSV/od1brxalwdkaougfvlvp.png', 29, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861332/BSV/eqfeoru1rhrsfrn7crnm.jpg', 29, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767861333/BSV/pujzijek0pqwmvk7rbmp.jpg', 29, NULL),
+    
+    -- Sản phẩm ID 30
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860794/BSV/rjat4fsahdstyupbxwz2.jpg', 30, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860795/BSV/naj45ubxqsrrijmtn4ng.jpg', 30, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860796/BSV/z98ms6imec4puiiwdjlx.jpg', 30, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860797/BSV/xehgsigox6yjqqzbyb1w.jpg', 30, NULL),
+    
+    -- Sản phẩm ID 31
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860905/BSV/ycm3koyz7ztssg7lhtzx.jpg', 31, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860906/BSV/l8gwrxklrwdh8l3i0dng.jpg', 31, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860907/BSV/wpwszujjdt40fn1pi5lz.jpg', 31, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860908/BSV/crm5zqbyhamji9zdouty.jpg', 31, NULL),
+    
+    -- Sản phẩm ID 32
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860751/BSV/hgenrbheg1xvfteofft1.jpg', 32, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860751/BSV/vkvvae6m4c2hbbnvq9di.jpg', 32, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860752/BSV/klkvbjar9ldhhsn4e0u0.jpg', 32, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860753/BSV/gj1j81pnwgyhmeuocrab.jpg', 32, NULL),
+    
+    -- Sản phẩm ID 33
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860862/BSV/pg8cbxbzxjsce2vr42nj.jpg', 33, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860863/BSV/nl0c940bvnnzbnypf8yr.jpg', 33, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860864/BSV/mcmvkjajecyl5pb9uyxw.jpg', 33, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860864/BSV/brirr3ffsqsruu9l4ya2.jpg', 33, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860865/BSV/cjjoq8yn8gzn8775j3wy.jpg', 33, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860866/BSV/eixmvhli635i7jt1tt5s.jpg', 33, NULL),
+    
+    -- Sản phẩm ID 34
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860977/BSV/yd0ds0heyo91glvmyomm.jpg', 34, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860978/BSV/tz4bkjmpgijmjec2zl2c.jpg', 34, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860979/BSV/imwv4jcuaol9tbdhr1nl.jpg', 34, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860979/BSV/pc04hibop4fwyyexabng.jpg', 34, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860980/BSV/zte0skepk7knlxcczgpz.jpg', 34, NULL),
+    
+    -- Sản phẩm ID 35
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860843/BSV/djld7mhvzktitvqafepn.jpg', 35, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860844/BSV/cpef5b07ffpwgsjxuh9b.jpg', 35, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860844/BSV/rbfcracuule7xp96lozh.jpg', 35, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860845/BSV/u2ahiiaxxicd11aispkr.jpg', 35, NULL),
+    
+    -- Sản phẩm ID 36
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860946/BSV/tuitpccw5elrvjjnyobg.jpg', 36, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860948/BSV/olx5rijuoitjnsguapik.jpg', 36, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860951/BSV/vkhlgguzjsuz6g5qgups.jpg', 36, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860952/BSV/m9htpxcdghg3rqbgpkzq.jpg', 36, NULL),
+    
+    -- Sản phẩm ID 37
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860818/BSV/rhvm7uumaphcow8i3eca.jpg', 37, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860819/BSV/smk6zc0hx51pdqju77pd.jpg', 37, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860820/BSV/l0o5deqnemjwo7hisagi.jpg', 37, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860821/BSV/fzmvb1kpt09zjbkyxmrb.jpg', 37, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860822/BSV/jzcv32ifkc8eus3lpmpy.jpg', 37, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860823/BSV/xwjnk8xix0krxceujyqv.jpg', 37, NULL),
+    
+    -- Sản phẩm ID 38
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860925/BSV/mhqazzmfzzuastk2lsdc.jpg', 38, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860927/BSV/mfru5gvpmcftet6qzums.png', 38, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860928/BSV/kwaktidvhrgex8aqulwh.jpg', 38, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860928/BSV/eif3ok8qgkccuq0ryced.jpg', 38, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860929/BSV/gzn16vmgdoaiomo7rov8.jpg', 38, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860930/BSV/p7ywiapbk3hkkhzq9vxo.jpg', 38, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860930/BSV/evxukykcwan9hnr5ftcj.jpg', 38, NULL),
+    
+    -- Sản phẩm ID 39
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860774/BSV/j9lciyjtggnsa2pqmxgz.jpg', 39, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860775/BSV/mmlyvww2kmu00saspivr.jpg', 39, NULL),
+    
+    -- Sản phẩm ID 40
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860886/BSV/kcjhudwypcnr98dbagez.jpg', 40, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860887/BSV/naqytfskn9xxwxg1z4nt.jpg', 40, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860888/BSV/vpcrfvhwxfpcvouqmxss.jpg', 40, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860889/BSV/whi6rqwxksbjxi563x0d.jpg', 40, NULL),
+    
+    -- Sản phẩm ID 41
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860997/BSV/ydqxqxrf9eb5ctfsa7fn.jpg', 41, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860997/BSV/a5hjtkgyoup91bhibg22.jpg', 41, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860998/BSV/tvk0xpprthyemwbxgrrl.jpg', 41, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860999/BSV/me02d73ca8j962poiyd6.jpg', 41, NULL),
+    
+    -- Sản phẩm ID 42
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860610/BSV/szh0u3zy3nkev1vzgr0s.jpg', 42, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860610/BSV/pabwoyvj09o4kqoijtxk.jpg', 42, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860611/BSV/nazswe8rvl4pikgpfbs2.webp', 42, NULL),
+    
+    -- Sản phẩm ID 43
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860690/BSV/t8r8solgfuqdrm8s5va4.webp', 43, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860690/BSV/hf4cu9i7xpwfgv8ftr93.jpg', 43, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860691/BSV/wg7rbufpext5ymlhmleq.webp', 43, NULL),
+    
+    -- Sản phẩm ID 44
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860567/BSV/hlvjkay6doaqfmbzvukc.jpg', 44, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860568/BSV/kmeney5rvcykudqklq18.jpg', 44, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860569/BSV/yx4wypbptqcilisgoiat.png', 44, NULL),
+    
+    -- Sản phẩm ID 45
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860670/BSV/hit3scnmuqgy7uadaw3s.jpg', 45, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860671/BSV/enupkugny3rrgqz5grzp.jpg', 45, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860672/BSV/frnxmwy3ot4pndnfarvc.jpg', 45, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860672/BSV/mlkc3fho0zyhwemb0nul.jpg', 45, NULL),
+    
+    -- Sản phẩm ID 46
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860543/BSV/ie1dirqppylscafqmbmr.jpg', 46, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860544/BSV/q4yfd0pz06t9g9ysjzy2.jpg', 46, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860544/BSV/hdx7tvtmmbiydmrxkppl.jpg', 46, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860545/BSV/io7zzy8kdtgjy1gzeyos.jpg', 46, NULL),
+    
+    -- Sản phẩm ID 47
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860649/BSV/dre1omgg0efzlgtg8m2a.jpg', 47, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860650/BSV/rzazxgotlxugmgvlxagh.jpg', 47, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860651/BSV/ruwcei4jhvtfryoqzyg5.jpg', 47, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860651/BSV/ehfmi1b2p0hibcuqu9ck.jpg', 47, NULL),
+    
+    -- Sản phẩm ID 48
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860520/BSV/fdmlwfhu0evxkmarriif.jpg', 48, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860520/BSV/eysgcj2ui8ddk0ueimix.jpg', 48, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860521/BSV/aifh5qsnse0hcn3esk6w.jpg', 48, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860522/BSV/hn6vi8c9sr3xwq1p3fto.jpg', 48, NULL),
+    
+    -- Sản phẩm ID 49
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860628/BSV/wv8bhydoahlsdtywdiki.jpg', 49, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860629/BSV/fqu2wqh6xrwr8kxj99ts.jpg', 49, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860629/BSV/qwnw27ilsp56tuzvfhbj.jpg', 49, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860630/BSV/jcdj53nc1gtfmldrer6j.jpg', 49, NULL),
+    
+    -- Sản phẩm ID 50
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860716/BSV/t2hnffhtd9cipy48w7ov.jpg', 50, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860717/BSV/m7yelnpnhmbczkodxbv3.jpg', 50, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860717/BSV/noogh3pztaklejcp7wh4.jpg', 50, NULL),
+    
+    -- Sản phẩm ID 51
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860589/BSV/nv2osg9r2ym0dtx6cpad.jpg', 51, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860590/BSV/watihk4qegbn8xkmcmo0.jpg', 51, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860591/BSV/o3pymt9k2pzs8xqdywgf.jpg', 51, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860592/BSV/ju2lzbn9adiggfluijex.jpg', 51, NULL),
+    
+    -- Sản phẩm ID 52
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767111154/BSV/xoah5ym1wbw6hp1g5dua.jpg', 52, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767111156/BSV/e2bgptxexwhmmlmwb3zx.jpg', 52, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767111158/BSV/yuyahponhvr4c3j3e4fe.jpg', 52, NULL),
+    
+    -- Sản phẩm ID 53
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860134/BSV/h9tzusyxu1ulygb9valh.jpg', 53, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860135/BSV/mkzkxngk0lrjxzsbh5ds.jpg', 53, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860136/BSV/psrkodmw11ynqv0dveey.jpg', 53, NULL),
+    
+    -- Sản phẩm ID 54
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860225/BSV/kdjxsuswzkl3ianmwsl3.jpg', 54, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860226/BSV/a2gvajqcivfwo4ux0gfv.jpg', 54, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860227/BSV/res7gkgfygwcjv6juw5q.jpg', 54, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860228/BSV/elnqtuqouirvc0pkupbl.jpg', 54, NULL),
+    
+    -- Sản phẩm ID 55
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860116/BSV/j4zsb2peazilff5qcb6w.jpg', 55, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860116/BSV/hqhqr3t8uriz8m0ksqcs.jpg', 55, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860117/BSV/ii0plpk3bp0pymfg35en.jpg', 55, NULL),
+    
+    -- Sản phẩm ID 56
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859935/BSV/midhypvarodrxwbavruq.jpg', 56, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859936/BSV/ikjduxe67h4mv4xys9yl.jpg', 56, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859937/BSV/cavpr53boaym7brcpgh0.png', 56, NULL),
+    
+    -- Sản phẩm ID 57
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860035/BSV/csaops1ldf9g0ppdr2j3.png', 57, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860036/BSV/mhu09e6nffrf58idbife.webp', 57, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860036/BSV/vjm7ce8hijohxk9do6vc.jpg', 57, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860037/BSV/hiwe6zcyabe6vqqcojvp.png', 57, NULL),
+    
+    -- Sản phẩm ID 58
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859847/BSV/agxhgiwgj2bysesabze7.jpg', 58, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859847/BSV/ws3j0myrytof4tqs7jcz.jpg', 58, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859848/BSV/whey32jyfzxlutqxjo5f.png', 58, NULL),
+    
+    -- Sản phẩm ID 59
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767111265/BSV/thq63ee3jzoxfarkksrw.webp', 59, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767111266/BSV/jbm2jmcpags1bfsz6tir.jpg', 59, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767111269/BSV/o33gwf9kofdqxkiq2lcd.jpg', 59, NULL),
+    
+    -- Sản phẩm ID 60
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860193/BSV/sdqemip7zqiwl0b8oj9f.webp', 60, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860193/BSV/b2usdj3l5fakv1obughy.jpg', 60, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860194/BSV/nicupie30bouppa8enyh.jpg', 60, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860194/BSV/xdpbxo5ubfwjamfjog9j.webp', 60, NULL),
+    
+    -- Sản phẩm ID 61
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860259/BSV/mn0vxhmr3tc3dyfce3tt.jpg', 61, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860259/BSV/yfq4qqp6fm8rfwlky68t.jpg', 61, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860260/BSV/hxeujiso77s9pwx58bou.jpg', 61, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767860261/BSV/tjken8tl71utvcbxnit8.jpg', 61, NULL),
+    
+    -- Sản phẩm ID 62
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859604/BSV/u3nijasryfcvasdsj32u.png', 62, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859606/BSV/cp7yfgjaqc6i2sovoyjl.jpg', 62, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859607/BSV/wfxelhc1cn4eyfgn6per.jpg', 62, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859608/BSV/i1fxx4f8rsot9uuiodng.png', 62, NULL),
+    
+    -- Sản phẩm ID 63
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859695/BSV/qouk09zjtbmvipzyn8ih.png', 63, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859695/BSV/unowqtl4tq9hfuivi1xq.png', 63, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859697/BSV/wye5qeqewaoogevb0zrk.jpg', 63, NULL),
+    
+    -- Sản phẩm ID 64
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859581/BSV/saequjourh2sej0jx23a.jpg', 64, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859582/BSV/icsl9bi142lrv3giv8aq.jpg', 64, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859584/BSV/wztec0gfn5o5ifueyhnn.jpg', 64, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859585/BSV/skhqksows882ks5ywd9s.jpg', 64, NULL),
+    
+    -- Sản phẩm ID 65
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859673/BSV/ljsjd3u8xipljttvvzbv.jpg', 65, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859674/BSV/kdkz6filj8jae5gplye8.jpg', 65, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859675/BSV/fttt7cwjmgwm72v2rvep.jpg', 65, NULL),
+    
+    -- Sản phẩm ID 66
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859741/BSV/n8uvjd2reinehmj2riwm.png', 66, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859742/BSV/lb6jeopzatgypii9td4j.png', 66, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859744/BSV/xa1hpzp0zdct5nycxt5q.png', 66, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859746/BSV/lxgt6vxmtgf5lyli8p11.png', 66, NULL),
+    
+    -- Sản phẩm ID 67
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859653/BSV/gbpzojwnzdh325htmrel.jpg', 67, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859655/BSV/utibgvy1aumtlf3ccidh.png', 67, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859656/BSV/zrl5n8nkmnsishr86lky.jpg', 67, NULL),
+    
+    -- Sản phẩm ID 68
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767110967/BSV/ouzun6ikp6kcn54ih8m7.jpg', 68, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767110967/BSV/wj5dtcciscurrckx9ufo.jpg', 68, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767110968/BSV/il6yy3xmyjh2y3or1hvc.jpg', 68, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767110969/BSV/traohondawwmjziptdbg.jpg', 68, NULL),
+    
+    -- Sản phẩm ID 69
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859630/BSV/z3mbvdheeskjrprhos9a.jpg', 69, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859631/BSV/v1yogrdovbhi5ppn1qbp.jpg', 69, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859634/BSV/oe0nm35bcetfcbesq4nk.jpg', 69, NULL),
+    
+    -- Sản phẩm ID 70
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859716/BSV/mpnagohudwx3zyrhsoa3.png', 70, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859717/BSV/yaqjm8fipsow5ynovgia.png', 70, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859717/BSV/ygsfi9iofotlrf2fbwiq.png', 70, NULL),
+    
+    -- Sản phẩm ID 71
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859238/BSV/z7tliszs052tx7aikkku.jpg', 71, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859240/BSV/sb3sbboxqcyhggpnz90d.jpg', 71, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859242/BSV/vhkoifmo0eusy4hzxyix.jpg', 71, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859242/BSV/frybseo1xuvjrnmw9vtk.jpg', 71, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859243/BSV/t2zelg8bivg5tzmuiz2g.jpg', 71, NULL),
+    
+    -- Sản phẩm ID 72
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859513/BSV/kywanwlx0ddfryfzwj7s.jpg', 72, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859515/BSV/er6a267ltd3hvivahnb6.jpg', 72, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859516/BSV/uhiivftzoknzdh7ti5re.jpg', 72, NULL),
+    
+    -- Sản phẩm ID 73
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859461/BSV/uzyalliiy8jrqtizvmg4.jpg', 73, NULL),
+    
+    -- Sản phẩm ID 74
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859329/BSV/kyngiztckbp8kkhsbeuf.jpg', 74, NULL),
+    
+    -- Sản phẩm ID 75
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859412/BSV/cai4abuazxznge2cltww.jpg', 75, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859413/BSV/iwu7xo5qkstwtbznzazg.jpg', 75, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859414/BSV/vtnpuflizxzszub5jrku.jpg', 75, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859415/BSV/oqkcy34aghlxonvx2p1d.jpg', 75, NULL),
+    
+    -- Sản phẩm ID 76
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859207/BSV/hzqjvbrpqwvzyncoymy5.jpg', 76, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859208/BSV/bugetvxkupzcboefd8it.jpg', 76, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859209/BSV/xyp0g6uire3ue2lfxoa6.jpg', 76, NULL),
+    
+    -- Sản phẩm ID 77
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859542/BSV/vyadw7ppvrdtqqbkjosd.jpg', 77, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859543/BSV/yzuzznaog1d6whrzsnjk.jpg', 77, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859544/BSV/v6e5smn7xbm90jpwskmk.png', 77, NULL),
+    
+    -- Sản phẩm ID 78
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859268/BSV/hhovsdgzae1n5vuuuzzs.jpg', 78, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859269/BSV/gtu06yrmxtol47fpvkxp.jpg', 78, NULL),
+    
+    -- Sản phẩm ID 79
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767113942/BSV/mnbv99pns6h4zcqossk4.jpg', 79, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767113943/BSV/mg6pa3l8bldj6ou8zgj6.jpg', 79, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767113943/BSV/rbg9tfcshnqs1sfkkvwk.jpg', 79, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767113945/BSV/ng3tyfjnljnz2z7s7qlg.jpg', 79, NULL),
+    
+    -- Sản phẩm ID 80
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859129/BSV/c2t1nlc10kelpuoah9nz.jpg', 80, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859130/BSV/dh9ts08nibhpmftjwk2w.jpg', 80, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859130/BSV/flecd7nhcnhyu48wxccp.jpg', 80, NULL),
+    
+    -- Sản phẩm ID 81
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859361/BSV/ntr2b0hnzifgwdpuga6p.jpg', 81, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859362/BSV/dw6ywl6illy77kwzilxw.jpg', 81, NULL),
+    
+    -- Sản phẩm ID 82
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859439/BSV/qkcd7in6brivycelc98v.jpg', 82, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859440/BSV/ebamufvyhtu4zop1mh7w.jpg', 82, NULL),
+    
+    -- Sản phẩm ID 83
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859295/BSV/bdkup6cmxbqmusqrdvj0.jpg', 83, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859297/BSV/hmlzg9aak5eqkfuicnen.jpg', 83, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859297/BSV/jf4l1c0tpwgxrsvvarp0.jpg', 83, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767859298/BSV/i709euxb8kxwyq3fpfbh.jpg', 83, NULL),
+    
+    -- Sản phẩm ID 84
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767110843/BSV/yyk2tx4tq9ecxp8sjalx.jpg', 84, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767110844/BSV/ftagp4lnzrahsroa24d6.jpg', 84, NULL),
+    
+    -- Sản phẩm ID 85
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858674/BSV/a9db8boiva9qq6ybsoak.jpg', 85, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858675/BSV/e4qlblvaq901lqiwfq06.jpg', 85, NULL),
+    
+    -- Sản phẩm ID 86
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858870/BSV/v90eljjm0bz664utano9.jpg', 86, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858871/BSV/k8j6e7rjihex08fxzueb.jpg', 86, NULL),
+    
+    -- Sản phẩm ID 87
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858523/BSV/ks8hl61zwyw7cgkf1ze7.jpg', 87, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858524/BSV/iz1ymgvhxrb4ckremt2g.jpg', 87, NULL),
+    
+    -- Sản phẩm ID 88
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858839/BSV/gs0ppjpv1avsdmqpmb9v.jpg', 88, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858840/BSV/ksrukq7fehgcn2fut2z4.jpg', 88, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858841/BSV/kpwyn14vgpci5syyxzux.jpg', 88, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858842/BSV/wiybewlntgxaslobwhcu.jpg', 88, NULL),
+    
+    -- Sản phẩm ID 89
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858481/BSV/rzax6piig6ofdxvkp7g3.jpg', 89, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858482/BSV/stoplgxehufcknn83plm.jpg', 89, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858482/BSV/lvdyh5ybpiqhtkd1gzvv.jpg', 89, NULL),
+    
+    -- Sản phẩm ID 90
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858804/BSV/ul5j1abujyfl66snbmmp.png', 90, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858805/BSV/fpkmlojmk1vdg3ypba5v.png', 90, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858806/BSV/kmlklmpzpa3l60j7mabg.jpg', 90, NULL),
+    
+    -- Sản phẩm ID 91
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858293/BSV/wkua9yd9pzqdjgtgkw9w.jpg', 91, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858294/BSV/zuvexpsu92u7ztwve6af.jpg', 91, NULL),
+    
+    -- Sản phẩm ID 92
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858707/BSV/dhu3bw87tswsqewjhtzm.jpg', 92, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858708/BSV/b3ufpnorzpmwx9ii6igc.jpg', 92, NULL),
+    
+    -- Sản phẩm ID 93
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858954/BSV/nbz6oeptrfq9ucawcppm.jpg', 93, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858956/BSV/wuo6twm0sxx9bwubiofd.jpg', 93, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858956/BSV/rzcsxoceydv36kdm5nir.jpg', 93, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858957/BSV/ocdfi5keyldxc2sqxp4u.jpg', 93, NULL),
+    
+    -- Sản phẩm ID 94
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858556/BSV/xc7xypuboivrivhgcxmp.jpg', 94, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858557/BSV/aqejtr8gj3ggfnqgjqbn.jpg', 94, NULL),
+    
+    -- Sản phẩm ID 95
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858250/BSV/lyymbgqe4bvziwwwwj6y.jpg', 95, NULL),
+    
+    -- Sản phẩm ID 96
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858364/BSV/kc4hgwkjhcrrayf8rzln.jpg', 96, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858366/BSV/sjwmpu7ujis7qjyl2qmq.jpg', 96, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858367/BSV/hsqfaas2y5fxfipfbb7k.jpg', 96, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858368/BSV/jakaim2lp6m2dek9omw7.jpg', 96, NULL),
+    
+    -- Sản phẩm ID 97
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767857916/BSV/c67lznvedu4gdjp9bhgh.png', 97, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767857917/BSV/yvphiywxqejmvy2yuwjy.jpg', 97, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767857919/BSV/zf8oaycsex7bkwla595o.jpg', 97, NULL),
+    
+    -- Sản phẩm ID 98
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858326/BSV/fyv2pzwxlbutjc9s6nyk.jpg', 98, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858327/BSV/jdzcx1qaysgn0bkyuwyd.jpg', 98, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858328/BSV/xcxr8ktyuiy4jbjkkhp8.jpg', 98, NULL),
+    
+    -- Sản phẩm ID 99
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858763/BSV/fkuoat0fjyqryzys3bnb.jpg', 99, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858764/BSV/nj7hba9c6wnj83qwwbil.jpg', 99, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858764/BSV/copjuxyh0zer51aiu3tq.jpg', 99, NULL),
+    
+    -- Sản phẩm ID 100
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767111212/BSV/zjos3acwlutr4ylsmddq.jpg', 100, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767111213/BSV/gmc5gejreuvt3hlp52xf.jpg', 100, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767111214/BSV/vg4wlelysxtnkbrngepc.jpg', 100, NULL),
+    
+    -- Sản phẩm ID 101
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858415/BSV/qa1hyt0hbvqpohjpgyvp.png', 101, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858416/BSV/w2tbykatsdsxzbrlpdg9.jpg', 101, NULL),
+    
+    -- Sản phẩm ID 102
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858923/BSV/jynydctcxvbdvnzcbelw.jpg', 102, NULL),
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858923/BSV/a4hgigpzwdrhenhfx7ud.jpg', 102, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858924/BSV/oew7kjxhhz6dv8gbbno4.jpg', 102, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767858925/BSV/epozbvgdadrbgh5g1j4m.jpg', 102, NULL),
+    
+    -- Sản phẩm ID 103
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767857765/BSV/i95gl1ysnkzxyjo2gmvk.jpg', 103, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767857767/BSV/svpuflzi9j5sl68fhurm.jpg', 103, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767857768/BSV/frqtzfkzjrx7ekowiivx.jpg', 103, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767857768/BSV/z2mgeyhv1megv4e7w3px.jpg', 103, NULL),
+    
+    -- Sản phẩm ID 104
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767857655/BSV/idpwpbakccm302epwfjd.jpg', 104, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767857656/BSV/fztdgpfctpzeenqbe8cj.jpg', 104, NULL),
+    
+    -- Sản phẩm ID 105
+    (1, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767857699/BSV/nufnbf8c9bepvqrqn7nc.jpg', 105, NULL),
+    (0, 'https://res.cloudinary.com/dratk1jhg/image/upload/v1767857700/BSV/dlfziy0xwdar1zietw0g.jpg', 105, NULL);
 
 -- Dữ liệu mẫu cho Comments đã được sửa để tuân thủ UNIQUE KEY (user_id, product_id)
 INSERT INTO Comments (rate, content, product_id, user_id, created_at, updated_at, likes, dislikes) VALUES
@@ -1094,18 +1181,18 @@ INSERT INTO Shipments (name, description, base_fee, icon_url, status) VALUES
 ('J&T Express', 'Giao hàng nhanh, phù hợp nội thành và ngoại thành', 22000, 'https://i.pinimg.com/474x/29/4d/14/294d1488cebbfd40db530843c96dc68e.jpg', 1);
 
 -- Dữ liệu mẫu cho Transactions
-INSERT INTO Transactions 
-(status, deli_name, deli_phone, deli_email, deli_address, deli_city, deli_district, deli_ward, message, tracking_number, shipping_fee, shipment_status, amount, shipped_at, delivered_at, user_id, payment_id, shipment_id) VALUES
-('pending', 'Nguyen Van A', '0901234567', 'a.nguyen@example.com', '123 Le Loi', 'Ho Chi Minh', 'Quan 1', 'Phuong Ben Nghe', 'Giao giờ hành chính', 'TRK00001', 20000, 'pending', 33020000, NULL, NULL, 1, 1, 1),
-('confirmed', 'Tran Thi B', '0902345678', 'b.tran@example.com', '456 Nguyen Trai', 'Ho Chi Minh', 'Quan 3', 'Phuong 5', 'Để hàng ở bảo vệ', 'TRK00002', 15000, 'shipped', 29515000, '2025-09-22 10:00:00', NULL, 2, 2, 2),
-('completed', 'Le Van C', '0903456789', 'c.le@example.com', '789 Tran Hung Dao', 'Ho Chi Minh', 'Quan 5', 'Phuong 10', 'Giao nhanh nếu có thể', 'TRK00003', 22000, 'delivered', 21522000, '2025-09-23 09:00:00', '2025-09-24 14:00:00', 3, 3, 3),
-('canceled', 'Pham Thi D', '0904567890', NULL, '1010 Cach Mang Thang 8', 'Ho Chi Minh', 'Quan Binh Thanh', 'Phuong 12', 'Không cần gọi điện', 'TRK00004', 25000, 'returned', 5500000, '2025-09-24 11:00:00', NULL, 4, 4, 4),
-('completed', 'Hoang Van E', '0905678901', 'e.hoang@example.com', '2020 Dien Bien Phu', 'Ho Chi Minh', 'Quan Tan Binh', 'Phuong 15', 'Giao ngoài giờ hành chính', 'TRK00005', 30000, 'delivered', 28030000, '2025-09-25 13:00:00', '2025-09-26 16:00:00', 5, 5, 1),
-('confirmed', 'Nguyen Van A', '0901234567', NULL, '123 Le Loi', 'Ho Chi Minh', 'Quan 1', 'Phuong Ben Nghe', 'Đóng gói cẩn thận', 'TRK00006', 15000, 'shipped', 11015000, '2025-09-26 08:00:00', NULL, 1, 2, 2),
-('pending', 'Tran Thi B', '0902345678', 'b.tran@example.com', '456 Nguyen Trai', 'Ho Chi Minh', 'Quan 3', 'Phuong 5', 'Giao tại cửa', 'TRK00007', 20000, 'pending', 1202000, NULL, NULL, 2, 1, 3),
-('completed', 'Le Van C', '0903456789', NULL, '789 Tran Hung Dao', 'Ho Chi Minh', 'Quan 5', 'Phuong 10', 'Nhận hàng tại văn phòng', 'TRK00008', 25000, 'delivered', 64525000, '2025-09-22 14:00:00', '2025-09-23 17:00:00', 3, 3, 4),
-('confirmed', 'Pham Thi D', '0904567890', 'd.pham@example.com', '1010 Cach Mang Thang 8', 'Ho Chi Minh', 'Quan Binh Thanh', 'Phuong 12', 'Giao vào buổi sáng', 'TRK00009', 22000, 'shipped', 4202200, '2025-09-25 09:30:00', NULL, 4, 2, 1),
-('completed', 'Hoang Van E', '0905678901', 'e.hoang@example.com', '2020 Dien Bien Phu', 'Ho Chi Minh', 'Quan Tan Binh', 'Phuong 15', 'Hàng fragile, cẩn thận', 'TRK00010', 30000, 'delivered', 7503000, '2025-09-24 13:00:00', '2025-09-25 15:00:00', 5, 5, 2);
+INSERT INTO Transactions
+(status, deli_name, deli_phone, deli_email, deli_address, deli_city, deli_district, deli_ward, message, tracking_number, shipping_fee, shipment_status, amount, shipped_at, delivered_at, user_id, payment_id, shipment_id, created_at, updated_at) VALUES
+('pending', 'Nguyen Van A', '0901234567', 'a.nguyen@example.com', '123 Le Loi', 'Ho Chi Minh', 'Quan 1', 'Phuong Ben Nghe', 'Giao giờ hành chính', 'TRK00001', 20000, 'pending', 33020000, NULL, NULL, 1, 1, 1, '2025-12-27 09:15:00', '2025-12-28 10:20:00'),
+('confirmed', 'Tran Thi B', '0902345678', 'b.tran@example.com', '456 Nguyen Trai', 'Ho Chi Minh', 'Quan 3', 'Phuong 5', 'Để hàng ở bảo vệ', 'TRK00002', 15000, 'shipped', 29515000, '2025-09-22 10:00:00', NULL, 2, 2, 2, '2025-12-26 08:00:00', '2025-12-27 09:50:00'),
+('completed', 'Le Van C', '0903456789', 'c.le@example.com', '789 Tran Hung Dao', 'Ho Chi Minh', 'Quan 5', 'Phuong 10', 'Giao nhanh nếu có thể', 'TRK00003', 22000, 'delivered', 21522000, '2025-09-23 09:00:00', '2025-09-24 14:00:00', 3, 3, 3, '2025-12-26 11:30:00', '2025-12-28 14:00:00'),
+('canceled', 'Pham Thi D', '0904567890', NULL, '1010 Cach Mang Thang 8', 'Ho Chi Minh', 'Quan Binh Thanh', 'Phuong 12', 'Không cần gọi điện', 'TRK00004', 25000, 'returned', 5500000, '2025-09-24 11:00:00', NULL, 4, 4, 4, '2025-12-27 12:00:00', '2025-12-28 09:50:00'),
+('completed', 'Hoang Van E', '0905678901', 'e.hoang@example.com', '2020 Dien Bien Phu', 'Ho Chi Minh', 'Quan Tan Binh', 'Phuong 15', 'Giao ngoài giờ hành chính', 'TRK00005', 30000, 'delivered', 28030000, '2025-09-25 13:00:00', '2025-09-26 16:00:00', 5, 5, 1, '2025-12-26 14:00:00', '2025-12-28 16:20:00'),
+('confirmed', 'Nguyen Van A', '0901234567', NULL, '123 Le Loi', 'Ho Chi Minh', 'Quan 1', 'Phuong Ben Nghe', 'Đóng gói cẩn thận', 'TRK00006', 15000, 'shipped', 11015000, '2025-09-26 08:00:00', NULL, 1, 2, 2, '2025-12-26 09:15:00', '2025-12-27 07:50:00'),
+('pending', 'Tran Thi B', '0902345678', 'b.tran@example.com', '456 Nguyen Trai', 'Ho Chi Minh', 'Quan 3', 'Phuong 5', 'Giao tại cửa', 'TRK00007', 20000, 'pending', 1202000, NULL, NULL, 2, 1, 3, '2025-12-28 10:00:00', '2025-12-28 10:00:00'),
+('completed', 'Le Van C', '0903456789', NULL, '789 Tran Hung Dao', 'Ho Chi Minh', 'Quan 5', 'Phuong 10', 'Nhận hàng tại văn phòng', 'TRK00008', 25000, 'delivered', 64525000, '2025-09-22 14:00:00', '2025-09-23 17:00:00', 3, 3, 4, '2025-12-27 13:00:00', '2025-12-28 16:50:00'),
+('confirmed', 'Pham Thi D', '0904567890', 'd.pham@example.com', '1010 Cach Mang Thang 8', 'Ho Chi Minh', 'Quan Binh Thanh', 'Phuong 12', 'Giao vào buổi sáng', 'TRK00009', 22000, 'shipped', 4202200, '2025-09-25 09:30:00', NULL, 4, 2, 1, '2025-12-26 08:30:00', '2025-12-28 09:20:00'),
+('completed', 'Hoang Van E', '0905678901', 'e.hoang@example.com', '2020 Dien Bien Phu', 'Ho Chi Minh', 'Quan Tan Binh', 'Phuong 15', 'Hàng fragile, cẩn thận', 'TRK00010', 30000, 'delivered', 7503000, '2025-09-24 13:00:00', '2025-09-25 15:00:00', 5, 5, 2, '2025-12-27 12:30:00', '2025-12-28 14:50:00');
 
 -- Dữ liệu mẫu cho OrderItems
 INSERT INTO OrderItems (qty_total, amount_total, transaction_id, product_id) VALUES

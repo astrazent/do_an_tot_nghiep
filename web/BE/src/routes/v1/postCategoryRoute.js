@@ -1,8 +1,13 @@
 import express from 'express'
 import { postCategoryController } from '~/controllers/postCategoryController'
+import { postCategoryValidation } from '~/validations/postCategoryValidation.js'
+
 const Router = express.Router()
 
-Router.route('/').post(postCategoryController.create)
+Router.route('/').post(
+    postCategoryValidation.validateCreatePostCategory,
+    postCategoryController.create
+)
 
 Router.route('/').get(postCategoryController.getById)
 
@@ -12,7 +17,10 @@ Router.route('/by_post').get(postCategoryController.getListCategoryByPost)
 
 Router.route('/by_category').get(postCategoryController.getListPostByCategory)
 
-Router.route('/').patch(postCategoryController.update)
+Router.route('/').patch(
+    postCategoryValidation.validateUpdatePostCategory,
+    postCategoryController.update
+)
 
 Router.route('/').delete(postCategoryController.deleted)
 

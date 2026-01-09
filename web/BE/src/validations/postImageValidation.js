@@ -2,32 +2,32 @@ import Joi from 'joi'
 import { StatusCodes } from 'http-status-codes'
 import ApiError from '~/utils/ApiError'
 
-const CREATE_PRODUCT_IMAGE_SCHEMA = Joi.object({
+const CREATE_POST_IMAGE_SCHEMA = Joi.object({
     is_main: Joi.number().integer().valid(0, 1).required().messages({
         'number.base': 'is_main phải là số',
         'any.only': 'is_main chỉ nhận 0 hoặc 1',
         'any.required': 'is_main là bắt buộc',
     }),
+    display_order: Joi.number().integer().optional().messages({
+        'number.base': 'display_order phải là số',
+    }),
     image_url: Joi.string().max(255).required().messages({
         'string.empty': 'Image URL không được để trống',
         'string.max': 'Image URL tối đa 255 ký tự',
     }),
-    product_id: Joi.number().integer().required().messages({
-        'number.base': 'Product ID phải là số',
-        'any.required': 'Product ID là bắt buộc',
-    }),
-    alt_text: Joi.string().max(100).allow(null, '').messages({
-        'string.max': 'Alt text tối đa 100 ký tự',
+    post_id: Joi.number().integer().required().messages({
+        'number.base': 'Post ID phải là số',
+        'any.required': 'Post ID là bắt buộc',
     }),
 })
 
-const UPDATE_PRODUCT_IMAGE_SCHEMA = CREATE_PRODUCT_IMAGE_SCHEMA.fork(
-    Object.keys(CREATE_PRODUCT_IMAGE_SCHEMA.describe().keys),
-    field => field.optional()
+const UPDATE_POST_IMAGE_SCHEMA = CREATE_POST_IMAGE_SCHEMA.fork(
+    Object.keys(CREATE_POST_IMAGE_SCHEMA.describe().keys),
+    f => f.optional()
 )
 
-function validateCreateProductImage(req, res, next) {
-    const { error, value } = CREATE_PRODUCT_IMAGE_SCHEMA.validate(req.body, {
+function validateCreatePostImage(req, res, next) {
+    const { error, value } = CREATE_POST_IMAGE_SCHEMA.validate(req.body, {
         abortEarly: false,
         stripUnknown: true,
     })
@@ -45,8 +45,8 @@ function validateCreateProductImage(req, res, next) {
     return next()
 }
 
-function validateUpdateProductImage(req, res, next) {
-    const { error, value } = UPDATE_PRODUCT_IMAGE_SCHEMA.validate(req.body, {
+function validateUpdatePostImage(req, res, next) {
+    const { error, value } = UPDATE_POST_IMAGE_SCHEMA.validate(req.body, {
         abortEarly: false,
         stripUnknown: true,
     })
@@ -64,7 +64,7 @@ function validateUpdateProductImage(req, res, next) {
     return next()
 }
 
-export const productImageValidation = {
-    validateCreateProductImage,
-    validateUpdateProductImage,
+export const postImageValidation = {
+    validateCreatePostImage,
+    validateUpdatePostImage,
 }

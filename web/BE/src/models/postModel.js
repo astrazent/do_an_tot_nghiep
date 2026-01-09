@@ -273,7 +273,7 @@ const PostsModel = {
         `
                 break
 
-            default: 
+            default:
                 sql = `
             SELECT 
                 p.*,

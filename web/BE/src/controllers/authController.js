@@ -9,6 +9,8 @@ import {
     verifyRefreshToken,
 } from '~/utils/token.js'
 import { verifyGoogleToken } from '~/utils/providerAuth.js'
+import { sendResetPasswordEmail } from '~/services/mailService.js'
+import jwt from 'jsonwebtoken'
 
 const register = async (req, res, next) => {
     try {
@@ -249,6 +251,99 @@ export const validateToken = (req, res, next) => {
     }
 }
 
+export const forgotPassword = async (req, res, next) => {
+    try {
+        const { email } = req.body
+        if (!email) {
+            throw new ApiError(StatusCodes.BAD_REQUEST, 'Thiếu email')
+        }
+
+        const user = await userService.findUserByEmailService(email)
+        if (!user) {
+            return res.status(StatusCodes.OK).json({
+                message: 'Nếu email tồn tại, link reset đã được gửi',
+            })
+        }
+        const resetToken = jwt.sign(
+            {
+                userId: user._id,
+                email: user.email,
+                type: 'reset_password',
+            },
+            env.RESET_PASSWORD_SECRET,
+            { expiresIn: env.RESET_PASSWORD_EXPIRES }
+        )
+
+        const resetLink = `${env.FE_BASE_URL}/reset-password?token=${resetToken}`
+
+        await sendResetPasswordEmail(user.email, resetLink)
+
+        res.status(StatusCodes.OK).json({
+            message: 'Email reset mật khẩu đã được gửi',
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
+export const verifyResetToken = async (req, res, next) => {
+    try {
+        const { token } = req.query
+        if (!token) {
+            throw new ApiError(StatusCodes.BAD_REQUEST, 'Thiếu token')
+        }
+
+        const decoded = jwt.verify(token, env.RESET_PASSWORD_SECRET)
+
+        if (decoded.type !== 'reset_password') {
+            throw new ApiError(StatusCodes.UNAUTHORIZED, 'Token không hợp lệ')
+        }
+
+        res.status(StatusCodes.OK).json({
+            valid: true,
+            email: decoded.email,
+        })
+    } catch (error) {
+        next(
+            new ApiError(
+                StatusCodes.UNAUTHORIZED,
+                'Token không hợp lệ hoặc đã hết hạn'
+            )
+        )
+    }
+}
+
+export const resetPassword = async (req, res, next) => {
+    try {
+        const { token, newPassword } = req.body
+        if (!token || !newPassword) {
+            throw new ApiError(StatusCodes.BAD_REQUEST, 'Thiếu dữ liệu')
+        }
+
+        const decoded = jwt.verify(token, env.RESET_PASSWORD_SECRET)
+
+        if (decoded.type !== 'reset_password') {
+            throw new ApiError(StatusCodes.UNAUTHORIZED, 'Token không hợp lệ')
+        }
+
+        await userService.resetPasswordService({
+            userId: 10,
+            new_password: '12345678',
+        })
+
+        res.status(StatusCodes.OK).json({
+            message: 'Đổi mật khẩu thành công',
+        })
+    } catch (error) {
+        next(
+            new ApiError(
+                StatusCodes.UNAUTHORIZED,
+                'Token không hợp lệ hoặc đã hết hạn'
+            )
+        )
+    }
+}
+
 export const authController = {
     validateToken,
     refreshToken,
@@ -256,4 +351,7 @@ export const authController = {
     login,
     loginGoogle,
     logout,
+    resetPassword,
+    forgotPassword,
+    verifyResetToken,
 }
