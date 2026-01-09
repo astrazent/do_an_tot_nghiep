@@ -223,7 +223,7 @@ const ProductDetail = ({ slug }) => {
             </div>
 
             <div className="my-6 flex items-baseline gap-4">
-                {originalPrice && (
+                {originalPrice && salePrice && originalPrice > salePrice && (
                     <span className="text-gray-400 line-through text-lg">
                         {originalPrice.toLocaleString('vi-VN')}₫
                     </span>

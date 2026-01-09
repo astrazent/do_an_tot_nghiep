@@ -12,6 +12,7 @@ import { useUpdateCartItem } from '~/hooks/user/useCartItem'
 import { useDeleteCartItem } from '~/hooks/user/useCartItem'
 import { useCreateTransaction } from '~/hooks/user/useTransaction'
 import { useDeleteCartByUser } from '~/hooks/user/useCartItem'
+import { useCouponByCode } from '~/hooks/user/useCoupon'
 import { useNavigate } from 'react-router-dom'
 import { useAlert } from '~/contexts/AlertContext'
 import { FiShoppingCart } from 'react-icons/fi'
@@ -33,8 +34,13 @@ const LoggedInCart = () => {
 
     const { mutate: updateItem } = useUpdateCartItem(userId)
     const { mutate: deleteItem } = useDeleteCartItem(userId)
-
     const [couponCode, setCouponCode] = useState('')
+    const [appliedCouponCode, setAppliedCouponCode] = useState('')
+    const [couponDiscount, setCouponDiscount] = useState(0)
+    const [couponMessage, setCouponMessage] = useState({ type: '', text: '' })
+    const { data: couponData, isLoading: isCouponLoading } =
+        useCouponByCode(appliedCouponCode)
+
     const [isPopupOpen, setIsPopupOpen] = useState(false)
 
     const items = useMemo(() => {
@@ -48,6 +54,118 @@ const LoggedInCart = () => {
             quantity: item.qty,
         }))
     }, [cartData])
+
+    const subtotal = useMemo(
+        () => items.reduce((acc, item) => acc + item.price * item.quantity, 0),
+        [items]
+    )
+    useEffect(() => {
+        if (!couponData) {
+            if (appliedCouponCode) {
+                setCouponMessage({
+                    type: 'error',
+                    text: 'Mã giảm giá không hợp lệ.',
+                })
+                setCouponDiscount(0)
+            }
+            return
+        }
+        const coupon = couponData
+        const now = new Date()
+        const startDate = new Date(coupon.start_date)
+        const endDate = new Date(coupon.end_date)
+        const minOrderValue = parseFloat(coupon.min_order_value)
+
+        if (coupon.status !== 1 || now < startDate || now > endDate) {
+            setCouponMessage({
+                type: 'error',
+                text: 'Mã đã hết hạn hoặc không hợp lệ.',
+            })
+            setCouponDiscount(0)
+            return
+        }
+        if (subtotal < minOrderValue) {
+            setCouponMessage({
+                type: 'error',
+                text: `Cần mua tối thiểu ${formatCurrency(minOrderValue)} để áp dụng.`,
+            })
+            setCouponDiscount(0)
+            return
+        }
+
+        if (coupon.type === 1) {
+            let discount = 0
+            const couponValue = parseFloat(coupon.value)
+
+            if (couponValue <= 100) {
+                // Giảm theo %
+                discount = (subtotal * couponValue) / 100
+
+                if (
+                    coupon.max_value &&
+                    discount > parseFloat(coupon.max_value)
+                ) {
+                    discount = parseFloat(coupon.max_value)
+                }
+            } else {
+                // Giảm tiền mặt trực tiếp (nếu value > 100 thường là số tiền)
+                discount = couponValue
+            }
+
+            setCouponDiscount(discount)
+            setCouponMessage({
+                type: 'success',
+                text: 'Áp dụng mã thành công!',
+            })
+        } else {
+            setCouponMessage({
+                type: 'error',
+                text: 'Mã không áp dụng cho sản phẩm.',
+            })
+            setCouponDiscount(0)
+        }
+    }, [couponData, subtotal, appliedCouponCode])
+
+    const handleApplyCoupon = () => {
+        if (!couponCode.trim()) {
+            setCouponMessage({
+                type: 'error',
+                text: 'Vui lòng nhập mã giảm giá.',
+            })
+            setCouponDiscount(0)
+            return
+        }
+
+        setCouponMessage({ type: '', text: '' })
+        setCouponDiscount(0)
+
+        // Invalidate để đảm bảo fetch lại nếu user nhập lại mã cũ
+        queryClient.invalidateQueries(['coupon', 'by_code', couponCode])
+
+        setAppliedCouponCode('')
+        setTimeout(() => {
+            setAppliedCouponCode(couponCode)
+
+            // Tracking GA4 khi apply coupon
+            if (items.length > 0) {
+                const ga4Items = items.map(item => ({
+                    item_id: String(item.productId),
+                    item_name: item.name,
+                    price: Number(item.price),
+                    quantity: Number(item.quantity),
+                }))
+
+                ReactGA.event('select_promotion', {
+                    promotion_id: couponData?.id || couponCode,
+                    promotion_name: couponData?.code || couponCode,
+                    items: ga4Items,
+                    debug_mode: true,
+                })
+            }
+        }, 0)
+    }
+
+    // --- Kết thúc logic Coupon ---
 
     const { mutate: deleteCartByUser } = useDeleteCartByUser({
         onSuccess: () => {
@@ -105,8 +223,6 @@ const LoggedInCart = () => {
         setIsPopupOpen(false)
     }
 
-    const discount = 0
-
     const handleQuantityChange = (cartItemId, newQuantity) => {
         const itemToUpdate = items.find(item => item.id === cartItemId)
         if (itemToUpdate && newQuantity > 0) {
@@ -141,11 +257,6 @@ const LoggedInCart = () => {
         deleteItem(cartItemId)
     }
 
-    const subtotal = useMemo(
-        () => items.reduce((acc, item) => acc + item.price * item.quantity, 0),
-        [items]
-    )
-
     useEffect(() => {
         if (cartLoading) return
         if (!items || items.length === 0) return
@@ -163,13 +274,13 @@ const LoggedInCart = () => {
             items: ga4Items,
             debug_mode: true,
         })
-    }, [cartLoading])
+    }, [cartLoading, items.length, subtotal])
 
     const tax = useMemo(
         () => Math.ceil((subtotal * 0.1) / 1000) * 1000,
         [subtotal]
     )
-    const total = subtotal - discount + tax
+    const total = subtotal - couponDiscount + tax
 
     if (userLoading || cartLoading) {
         return <div className="cart-status">Đang tải giỏ hàng...</div>
@@ -229,11 +340,14 @@ const LoggedInCart = () => {
                 </div>
                 <OrderSummary
                     subtotal={formatCurrency(subtotal)}
-                    discount={formatCurrency(discount)}
+                    discount={formatCurrency(couponDiscount)}
                     tax={formatCurrency(tax)}
                     total={formatCurrency(total)}
                     couponCode={couponCode}
                     setCouponCode={setCouponCode}
+                    onApplyCoupon={handleApplyCoupon} // Thêm handler
+                    couponMessage={couponMessage}     // Thêm message state
+                    isCouponLoading={isCouponLoading} // Thêm loading state
                     onMakePurchase={handleOpenPopup}
                 />
             </div>
