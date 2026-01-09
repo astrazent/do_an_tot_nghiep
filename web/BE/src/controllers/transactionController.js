@@ -15,6 +15,7 @@ const addTransaction = async (req, res, next) => {
 
 const addChatBotTransaction = async (req, res, next) => {
     try {
+        console.log('Received chatbot transaction request:', req.body)
         const data = await transactionService.addChatBotTransactionService(
             req.body
         )

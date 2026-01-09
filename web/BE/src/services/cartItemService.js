@@ -129,7 +129,7 @@ const getCartItemByProductService = async (productId, userId = null) => {
 const getCartItemsById = async (cartItemId) => {
     console.log('Fetching cart item by ID:', cartItemId);
     const cartItem = await CartItemsModel.getCartItemById(cartItemId)
-
+    
     if (!cartItem) {
         throw new ApiError(
             StatusCodes.NOT_FOUND,

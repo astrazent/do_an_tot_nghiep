@@ -5,12 +5,10 @@ import { transactionValidation } from '~/validations/transactionValidation'
 const Router = express.Router()
 
 Router.route('/').post(
-    transactionValidation.validateTransaction,
     transactionController.addTransaction
 )
 
 Router.route('/chatbot').post(
-    transactionValidation.validateTransaction,
     transactionController.addChatBotTransaction
 )
 
