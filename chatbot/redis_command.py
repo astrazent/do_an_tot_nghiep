@@ -131,18 +131,17 @@ def clear_all_redis():
 
 #Lấy toàn bộ danh sách
 # products = get_all_json("shipment")
-
 # for item in products:
 #     print(item["key"], item["data"])
 #     break
 # Lấy tổng số key
 # all_data = get_all_json_no_prefix()
-
 # print(len(all_data), "JSON keys found")
 
-
 # xoá toàn bộ redis
-clear_all_redis()
+# clear_all_redis()
+
+# get_all_json("shipments")
 
 # Liệt kê toàn bộ index
 # print(redis_client.execute_command("FT._LIST"))
@@ -156,3 +155,52 @@ clear_all_redis()
 # for i in range(5):
 #     llm = get_llm(i)
 #     print(f"LLM {i}: {get_api_key(llm)}")
+
+
+def get_value_by_key(key: str):
+    """
+    Lấy value của 1 key bất kỳ trong Redis, hỗ trợ tất cả type:
+    - JSON, String, Hash, List, Set, ZSet
+    """
+    key_type = redis_client.type(key)
+
+    if key_type == "json":
+        try:
+            value = redis_client.json().get(key)
+        except Exception:
+            value = None
+
+    elif key_type == "string":
+        value = redis_client.get(key)
+
+    elif key_type == "hash":
+        value = redis_client.hgetall(key)
+
+    elif key_type == "list":
+        value = redis_client.lrange(key, 0, -1)
+
+    elif key_type == "set":
+        value = list(redis_client.smembers(key))
+
+    elif key_type == "zset":
+        value = redis_client.zrange(key, 0, -1, withscores=True)
+
+    else:
+        value = None
+
+    return {
+        "key": key,
+        "type": key_type,
+        "value": value
+    }
+
+# Ví dụ dùng:
+result = get_value_by_key("purchase-info/6-85")
+print(result)
+
+
+# lấy toàn bộ key trong redis
+# print(redis_client.keys("*"))
+
+# Liệt kê toàn bộ index
+# print(redis_client.execute_command("FT._LIST")) # Index giúp truy xuất dữ liệu nhanh hơn và hiệu quả hơn, đặc biệt khi làm việc với lượng dữ liệu lớn.

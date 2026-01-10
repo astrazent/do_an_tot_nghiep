@@ -86,45 +86,75 @@ def serialize_raw_value(val):
 
 
 def sync_json_to_redis(api_data, key_prefix, id_field, index_name=None, index_schema=None):
+    """
+    Lưu dữ liệu JSON vào Redis và tạo index nếu được cung cấp.
+
+    Args:
+        api_data: Dữ liệu JSON từ API hoặc list các dict.
+        key_prefix: Prefix dùng cho key Redis, ví dụ 'product', 'shipment'.
+        id_field: Tên field trong JSON dùng làm ID duy nhất.
+        index_name: Tên index RedisSearch (nếu muốn tạo index).
+        index_schema: Schema của index (TextField, NumericField, TagField,...).
+
+    Returns:
+        int: số lượng bản ghi đã lưu thành công.
+    """
+
+    # Nếu api_data là dict (thường từ API trả về {"data": [...]})
     if isinstance(api_data, dict):
-        items = api_data.get("data", [])
+        items = api_data.get("data", [])  # lấy danh sách data
     else:
-        items = api_data
+        items = api_data  # nếu là list, dùng trực tiếp
 
-    saved = 0
+    saved = 0  # đếm số bản ghi đã lưu
 
+    # Duyệt từng item trong danh sách
     for item in items:
-        record_id = item.get(id_field)
+        record_id = item.get(id_field)  # lấy ID của bản ghi
         if not record_id:
-            continue
+            continue  
 
         redis_key = f"{key_prefix}:{record_id}"
-        clean_data = {key: serialize_raw_value(value) for key, value in item.items()}
-        redis_client.json().set(redis_key, Path.root_path(), clean_data)
-        saved += 1
 
+        # Chuẩn hóa dữ liệu trước khi lưu (convert str số → float, giữ datetime, ...)
+        clean_data = {key: serialize_raw_value(value) for key, value in item.items()}
+
+        # Lưu JSON vào Redis sử dụng RedisJSON
+        redis_client.json().set(redis_key, Path.root_path(), clean_data)
+
+        saved += 1  # tăng số lượng bản ghi đã lưu
+
+    # Nếu có index_name và index_schema, tạo index RedisSearch
     if index_name and index_schema:
         try:
+            # Kiểm tra xem index đã tồn tại chưa
             redis_client.ft(index_name).info()
         except Exception:
+            # Nếu chưa tồn tại, tạo index mới
             redis_client.ft(index_name).create_index(
-                index_schema,
-                definition=IndexDefinition(prefix=[f"{key_prefix}:"], index_type=IndexType.JSON)
+                index_schema,  # schema định nghĩa các field cần index
+                definition=IndexDefinition(
+                    prefix=[f"{key_prefix}:"] ,  # chỉ index các key có prefix này
+                    index_type=IndexType.JSON     # index dữ liệu JSON
+                )
             )
 
+    # Trả về số lượng bản ghi đã lưu thành công
     return saved
 
 def generate_product_chunks():
+    # Lấy dữ liệu sản phẩm từ API chatbot
     url = f"{BASE_URL}/products/chatbot?limit=150&offset=0"
     response = requests.get(url)
     res = response.json()
     products = res.get("data", [])
+    # Lưu dữ liệu vào Redis và tạo index (nếu chưa có)
     saved = sync_json_to_redis(
     api_data=products,
     key_prefix="product",
     id_field="id",
     index_name="products_idx",
-    index_schema=PRODUCT_SCHEMA
+    index_schema=PRODUCT_SCHEMA # index_schema là định nghĩa các field của dữ liệu JSON mà Redis sẽ tạo index để tìm kiếm nhanh.
     )
     print("Saved products to redis:", saved)
     chunks = []
@@ -133,7 +163,8 @@ def generate_product_chunks():
         rate_count = p.get("rate_count", 0) or 0
         rate_total = p.get("rate_point_total", 0) or 0
         rate_avg = (rate_total / rate_count) if rate_count else 0
-
+        
+        # Tạo danh sách tags (từ khóa) để tìm kiếm nhanh
         tags = []
         if p.get("product_name"):
             tags.extend(p["product_name"].lower().split())
@@ -142,7 +173,8 @@ def generate_product_chunks():
         if p.get("category_name"):
             tags.append(p["category_name"].lower())
         tags = list(set(tags))
-
+        
+        # 3.3 Tạo text content chính, dùng cho LLM hoặc hiển thị
         text_content = f"""
         Tên sản phẩm: {p.get("product_name")}
         Mô tả sản phẩm: {p.get("product_description") or "Không có mô tả"}
@@ -163,9 +195,10 @@ def generate_product_chunks():
                 "ngày_bắt_đầu": format_datetime(p.get("discount_start_date")),
                 "ngày_kết_thúc": format_datetime(p.get("discount_end_date"))
             }
-
+            
+        # Tạo metadata cho chunk
         metadata = {
-            "id": p.get("id"),
+            "id": p.get("id"), # dùng để định danh tài liệu, phục vụ cho query
             "tồn_kho": f"{p.get('stock_qty')} sản phẩm",
             "trạng_thái": "đang_kinh_doanh" if p.get("product_status") == 1 else "ngừng_kinh_doanh",
             "điểm_trung_bình": rate_avg,
@@ -174,7 +207,8 @@ def generate_product_chunks():
             "url": p.get("main_image_url"),
             "khuyến_mãi": [discount] if discount else []
         }
-
+        
+        # 3.6 Thêm chunk vào danh sách
         chunks.append({
             "text": text_content,
             "metadata": metadata

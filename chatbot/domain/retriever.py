@@ -13,7 +13,7 @@ class UTF8TextLoader(TextLoader):
     def __init__(self, file_path):
         super().__init__(file_path, encoding='utf-8')
 
-class Retriever(MultiVectorRetriever):
+class Retriever(MultiVectorRetriever): #nó chịu trách nhiệm lấy tài liệu liên quan từ kho dữ liệu vector và docstore
     embedding: HuggingFaceEmbeddings
 
     def __init__(self, collection_name: str, embedding_model: str = 'BAAI/bge-m3'):

@@ -68,26 +68,6 @@ def end_conversation(
     db.refresh(conversation)
     return conversation
 
-# @router.post("/messages", response_model=schemas.MessageResponse)
-# def add_message(
-#     message: schemas.MessageCreateWithConversation,
-#     db: Session = Depends(get_db),
-#     current_user: int = Depends(oauth2.get_current_user)
-# ):
-#     import time
-#     # Chờ 3 giây để FE test loading
-#     time.sleep(3)
-
-#     vn_tz = timezone(timedelta(hours=7))
-#     bot_msg = {
-#         "conversation_id": 1,  # có thể để tĩnh cho debug
-#         "sender": "bot",
-#         "content": f"[DEBUG] Bạn vừa gửi: {getattr(message, 'content', '')}",
-#         "created_at": datetime.now(vn_tz).isoformat()
-#     }
-
-#     return bot_msg
-
 @router.post("/messages", response_model=schemas.MessageResponse)
 def add_message(
     message: schemas.MessageCreateWithConversation,
@@ -233,6 +213,12 @@ def add_message(
     if len(history) > 10:
         JSON.set(redis_key, Path(".messages"), history[-10:])
 
+    # Ưu điểm của Stream:
+    # Hỗ trợ Consumer Groups, giúp nhiều worker xử lý song song mà không bỏ lỡ message.
+    # FIFO + giữ lịch sử.
+    # Hỗ trợ ack (xác nhận đã xử lý message).
+    # Dễ dàng retry message khi worker crash.
+    # Hỗ trợ nhiều consumer song song mà không trùng lặp.
     redis_client.xadd(
         STREAM,
         {
