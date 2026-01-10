@@ -86,7 +86,6 @@ const FloatingContactBar = () => {
 
     const [isCreating, setIsCreating] = useState(false)
     const [newTitle, setNewTitle] = useState('')
-    const [pendingMessages, setPendingMessages] = useState([])
 
     const messagesEndRef = useRef(null)
     const chatRef = useRef(null)
@@ -154,7 +153,6 @@ const FloatingContactBar = () => {
         setView('chat')
         setShowOptions(false)
         setIsCreating(false)
-        setPendingMessages([])
 
         ReactGA.event('select_content', {
             content_type: 'chatbot',
@@ -196,21 +194,6 @@ const FloatingContactBar = () => {
         const content = inputText
         setInputText('')
 
-        // Add pending messages to local state
-        const userMessage = {
-            sender: 'user',
-            content: content,
-            created_at: new Date().toISOString(),
-            isPending: true,
-        }
-        const thinkingMessage = {
-            sender: 'bot',
-            content: 'Đang suy nghĩ...',
-            isThinking: true,
-            isPending: true,
-        }
-        setPendingMessages([userMessage, thinkingMessage])
-
         createMessageMutation.mutate(content, {
             onSuccess: (data) => {
                 queryClient.setQueryData(['conversations'], (oldConversations) => {
@@ -248,12 +231,6 @@ const FloatingContactBar = () => {
                     queryClient.invalidateQueries({ queryKey: ['conversations'] })
                 }, 3000)
             },
-            onError: (error) => {
-                // On error, remove pending messages and show error
-                setPendingMessages([])
-                console.error('Failed to send message:', error)
-                // Optionally show an error toast/notification here
-            },
         })
     }
 
@@ -281,7 +258,6 @@ const FloatingContactBar = () => {
                 setShowOptions(false)
                 setConversationToDelete(null)
                 setIsDeleteModalOpen(false)
-                setPendingMessages([])
             },
         })
     }
@@ -488,9 +464,18 @@ const FloatingContactBar = () => {
             ? [...activeConversation.messages]
             : []
 
-        // Add pending messages that are being sent
-        if (pendingMessages.length > 0) {
-            messagesToRender = [...messagesToRender, ...pendingMessages]
+        if (createMessageMutation.isPending) {
+            messagesToRender.push({
+                sender: 'user',
+                content: createMessageMutation.variables,
+                created_at: new Date().toISOString(),
+            })
+
+            messagesToRender.push({
+                sender: 'bot',
+                content: 'Đang suy nghĩ...',
+                isThinking: true,
+            })
         }
 
         return (

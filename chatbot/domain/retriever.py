@@ -106,38 +106,9 @@ class Retriever(MultiVectorRetriever):
 
         return unique_docs
 
-    # def multi_query(self, queries: list[str], top_k: int) -> list[Document]:
-    #     retrieved_results = self.map().invoke(queries)
-    #     documents = self.deduplicate_documents(retrieved_results)
-    #     return self.re_ranking(documents, top_k)
-    
     def multi_query(self, queries: list[str], top_k: int) -> list[Document]:
-        from sklearn.metrics.pairwise import cosine_similarity
-        import numpy as np
-        # Thử gọi map().invoke để lấy document
         retrieved_results = self.map().invoke(queries)
         documents = self.deduplicate_documents(retrieved_results)
-
-        # Nếu không có document nào, fallback bằng cosine similarity
-        if not documents:
-            # Lấy embedding của query đầu tiên (hoặc trung bình embedding nhiều query)
-            query_embedding = self.embedding.embed_query(queries[0])  # [dim]
-            
-            # Lấy embedding của tất cả document trong vectorstore
-            all_docs = self.vectorstore.get_all_documents()  # cần implement method trả về list[Document]
-            if not all_docs:
-                return []  # vectorstore trống, không còn cách nào khác
-
-            doc_embeddings = np.array([self.embedding.embed_query(d.page_content) for d in all_docs])  # [num_docs, dim]
-            
-            # Tính cosine similarity query với từng document
-            similarities = cosine_similarity([query_embedding], doc_embeddings)[0]  # shape = (num_docs,)
-            print(similarities)
-            # Lấy top_k document có similarity cao nhất
-            top_indices = similarities.argsort()[::-1][:top_k]
-            documents = [all_docs[i] for i in top_indices]
-
-        # Re-ranking các document trước khi trả về
         return self.re_ranking(documents, top_k)
 
     def re_ranking(self, documents: list[Document], top_k: int | None = None, k: int = 60):

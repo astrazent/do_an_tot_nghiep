@@ -3,20 +3,20 @@
     "text": "Tên sản phẩm: Bánh pía Sóc Trăng\n        Mô tả sản phẩm: Bánh pía Sóc Trăng thơm ngon, đặc sản miền Tây với lớp vỏ mỏng và nhân đậu xanh sầu riêng béo ngậy.\n        Giá gốc: 70000.00 VND\n        Giá bán: 70000 VND\n        Danh mục: Thực phẩm khác\n        Mô tả danh mục: Tổng hợp các món ăn, sản vật đặc trưng của các địa phương trên cả nước.",
     "metadata": {
       "id": 1,
-      "tồn_kho": "199 sản phẩm",
+      "tồn_kho": "198 sản phẩm",
       "trạng_thái": "đang_kinh_doanh",
       "điểm_trung_bình": 4.833333333333333,
       "số_lượt_đánh_giá": 6,
       "từ_khóa": [
-        "pía",
-        "soc",
         "banh",
+        "soc",
+        "pía",
         "bánh",
-        "pia",
-        "sóc",
-        "trang",
         "thực phẩm khác",
-        "trăng"
+        "trang",
+        "trăng",
+        "pia",
+        "sóc"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767112956/BSV/lolo50xfh3uklxxyxbfn.jpg",
       "khuyến_mãi": []
@@ -31,16 +31,16 @@
       "điểm_trung_bình": 4.0,
       "số_lượt_đánh_giá": 5,
       "từ_khóa": [
-        "bò",
         "nắng",
-        "bo",
-        "mot",
-        "pa",
-        "một",
-        "nang",
+        "krông",
+        "bò",
         "krong",
+        "nang",
         "thực phẩm khác",
-        "krông"
+        "mot",
+        "một",
+        "bo",
+        "pa"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767861683/BSV/qfu6jmmlbvn9hogyw27x.jpg",
       "khuyến_mãi": []
@@ -55,16 +55,16 @@
       "điểm_trung_bình": 3.8333333333333335,
       "số_lượt_đánh_giá": 6,
       "từ_khóa": [
-        "ma",
-        "thuot",
         "ca",
         "cà",
         "buôn",
-        "phe",
+        "ma",
         "phê",
         "buon",
+        "thuot",
         "thực phẩm khác",
-        "thuột"
+        "thuột",
+        "phe"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767113021/BSV/illcoed3owvaqm8v4iz6.jpg",
       "khuyến_mãi": []
@@ -80,10 +80,10 @@
       "số_lượt_đánh_giá": 5,
       "từ_khóa": [
         "chả",
-        "ốc",
-        "thực phẩm khác",
+        "cha",
         "oc",
-        "cha"
+        "thực phẩm khác",
+        "ốc"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767111109/BSV/dnc6swstyun0ilsj2yyj.png",
       "khuyến_mãi": []
@@ -98,16 +98,16 @@
       "điểm_trung_bình": 3.8,
       "số_lượt_đánh_giá": 5,
       "từ_khóa": [
-        "tây",
-        "de",
-        "chien",
-        "ninh",
         "chiên",
-        "gion",
         "dê",
+        "de",
         "thực phẩm khác",
         "giòn",
-        "tay"
+        "ninh",
+        "tây",
+        "tay",
+        "chien",
+        "gion"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767861758/BSV/fr0y65bfi8nm6i39w20l.jpg",
       "khuyến_mãi": []
@@ -122,15 +122,15 @@
       "điểm_trung_bình": 2.3333333333333335,
       "số_lượt_đánh_giá": 3,
       "từ_khóa": [
-        "bò",
-        "bo",
         "tien",
-        "gân",
-        "rau",
-        "tiến",
+        "bò",
         "vua",
+        "thực phẩm khác",
+        "gân",
         "gan",
-        "thực phẩm khác"
+        "bo",
+        "rau",
+        "tiến"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767113079/BSV/uia1tyc1rdcto2hnqhae.jpg",
       "khuyến_mãi": []
@@ -145,18 +145,18 @@
       "điểm_trung_bình": 5.0,
       "số_lượt_đánh_giá": 5,
       "từ_khóa": [
-        "điều",
-        "rang",
-        "muối",
-        "phước",
-        "hat",
-        "muoi",
-        "bình",
         "dieu",
-        "thực phẩm khác",
-        "hạt",
+        "rang",
         "phuoc",
-        "binh"
+        "phước",
+        "binh",
+        "muối",
+        "hạt",
+        "bình",
+        "hat",
+        "thực phẩm khác",
+        "điều",
+        "muoi"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767859817/BSV/avq9y9rajtr05k1nv6fb.jpg",
       "khuyến_mãi": []
@@ -171,15 +171,15 @@
       "điểm_trung_bình": 3.75,
       "số_lượt_đánh_giá": 4,
       "từ_khóa": [
-        "thịt",
         "tép",
         "mam",
-        "chưng",
-        "chung",
-        "mắm",
         "tep",
+        "chung",
         "thực phẩm khác",
-        "thit"
+        "thịt",
+        "thit",
+        "chưng",
+        "mắm"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767861605/BSV/blfzcb4mngt6jbkewozq.jpg",
       "khuyến_mãi": []
@@ -194,14 +194,14 @@
       "điểm_trung_bình": 4.2,
       "số_lượt_đánh_giá": 5,
       "từ_khóa": [
-        "rừng",
-        "rung",
         "ong",
-        "minh",
+        "rừng",
         "u",
-        "thực phẩm khác",
         "mat",
-        "mật"
+        "mật",
+        "thực phẩm khác",
+        "rung",
+        "minh"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767861709/BSV/f6cuvy5wjjrltqvoeufn.jpg",
       "khuyến_mãi": []
@@ -216,13 +216,13 @@
       "điểm_trung_bình": 4.5,
       "số_lượt_đánh_giá": 6,
       "từ_khóa": [
-        "xung",
-        "me",
         "hue",
+        "huế",
         "mè",
         "thực phẩm khác",
         "xửng",
-        "huế"
+        "me",
+        "xung"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767861565/BSV/kn9tworud71vcm89zxq4.jpg",
       "khuyến_mãi": []
@@ -237,11 +237,11 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "mọc",
-        "ốc",
-        "thực phẩm khác",
         "moc",
-        "oc"
+        "oc",
+        "thực phẩm khác",
+        "mọc",
+        "ốc"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767861658/BSV/htmprlwswrhctp1pw8lk.jpg",
       "khuyến_mãi": []
@@ -256,15 +256,15 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "tây",
-        "rượu",
-        "cần",
         "nguyen",
         "can",
         "ruou",
+        "cần",
         "thực phẩm khác",
+        "tây",
         "tay",
-        "nguyên"
+        "nguyên",
+        "rượu"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767861542/BSV/tppo4tgnkbusicxouh6d.jpg",
       "khuyến_mãi": []
@@ -279,14 +279,14 @@
       "điểm_trung_bình": 5.0,
       "số_lượt_đánh_giá": 1,
       "từ_khóa": [
-        "tây",
-        "ho",
-        "hồ",
         "trà",
-        "sen",
         "tra",
+        "ho",
         "thực phẩm khác",
-        "tay"
+        "tây",
+        "tay",
+        "hồ",
+        "sen"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767861632/BSV/wg9r2q32nm1oislzjykv.jpg",
       "khuyến_mãi": []
@@ -301,15 +301,15 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "tây",
-        "kien",
-        "bắc",
-        "trứng",
         "bac",
-        "trung",
+        "kiến",
+        "kien",
         "thực phẩm khác",
+        "bắc",
+        "tây",
         "tay",
-        "kiến"
+        "trung",
+        "trứng"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767861737/BSV/nfi2te5vhakmfeo2lxqw.jpg",
       "khuyến_mãi": []
@@ -325,11 +325,11 @@
       "số_lượt_đánh_giá": 1,
       "từ_khóa": [
         "rang",
-        "muoi",
-        "muối",
+        "be",
         "bề",
+        "muối",
         "hải sản",
-        "be"
+        "muoi"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767861271/BSV/xdof3k8xbxe8kc1gyghv.jpg",
       "khuyến_mãi": []
@@ -344,14 +344,14 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "ca",
-        "me",
-        "bop",
-        "hải sản",
-        "nau",
         "bóp",
+        "ca",
+        "cá",
+        "bop",
+        "nau",
         "nấu",
-        "cá"
+        "hải sản",
+        "me"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767861443/BSV/mrcojnl7ueqfkdjybt20.jpg",
       "khuyến_mãi": []
@@ -366,12 +366,12 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "ca",
-        "hải sản",
-        "bong",
         "bông",
-        "linh",
-        "cá"
+        "ca",
+        "cá",
+        "bong",
+        "hải sản",
+        "linh"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767861204/BSV/hzypzghuippjzyjmrffz.jpg",
       "khuyến_mãi": []
@@ -386,13 +386,13 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "cá",
         "ca",
-        "móng",
-        "chả",
-        "hải sản",
         "mong",
-        "cha"
+        "chả",
+        "cá",
+        "cha",
+        "hải sản",
+        "móng"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767861396/BSV/drmasrwnswbwej6yjaos.jpg",
       "khuyến_mãi": []
@@ -407,15 +407,15 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "cá",
         "ca",
         "chả",
-        "hải sản",
-        "tôm",
-        "tom",
+        "cá",
+        "cha",
         "muc",
+        "tom",
         "mực",
-        "cha"
+        "tôm",
+        "hải sản"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767861104/BSV/n5cucjiqlodhounf41v8.jpg",
       "khuyến_mãi": []
@@ -430,13 +430,13 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "ghẹ",
-        "ghe",
         "chả",
-        "mo",
-        "hải sản",
+        "ghẹ",
+        "cha",
         "mỡ",
-        "cha"
+        "hải sản",
+        "ghe",
+        "mo"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767110904/BSV/rwpfzmi6o80b8uucrekb.jpg",
       "khuyến_mãi": []
@@ -452,13 +452,13 @@
       "số_lượt_đánh_giá": 1,
       "từ_khóa": [
         "chả",
-        "hải sản",
+        "cha",
         "muc",
-        "hạ",
         "long",
-        "ha",
         "mực",
-        "cha"
+        "ha",
+        "hải sản",
+        "hạ"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767861047/BSV/ywn5uetmlxzg5wmnqjxl.png",
       "khuyến_mãi": []
@@ -474,10 +474,10 @@
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
         "chả",
-        "hải sản",
-        "tôm",
+        "cha",
         "tom",
-        "cha"
+        "tôm",
+        "hải sản"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767861304/BSV/dulwkewfw8wt3yprri6z.jpg",
       "khuyến_mãi": []
@@ -511,13 +511,13 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "trích",
         "ca",
-        "hải sản",
+        "cá",
+        "goi",
         "gỏi",
         "trich",
-        "goi",
-        "cá"
+        "hải sản",
+        "trích"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767861239/BSV/bvqiwrmbqjtam3wvmm16.jpg",
       "khuyến_mãi": []
@@ -532,15 +532,15 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "hàu",
-        "mo",
-        "hau",
-        "hải sản",
         "hành",
-        "mỡ",
-        "nướng",
         "hanh",
-        "nuong"
+        "mỡ",
+        "hàu",
+        "hải sản",
+        "nướng",
+        "nuong",
+        "hau",
+        "mo"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767861419/BSV/ztw1fa0lffiq1yqjf5rb.jpg",
       "khuyến_mãi": []
@@ -556,12 +556,12 @@
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
         "nắng",
-        "mot",
-        "hải sản",
-        "một",
-        "nang",
         "muc",
-        "mực"
+        "mực",
+        "nang",
+        "hải sản",
+        "mot",
+        "một"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767861176/BSV/qfmypwwyjriyl8jopdld.jpg",
       "khuyến_mãi": []
@@ -577,11 +577,11 @@
       "số_lượt_đánh_giá": 1,
       "từ_khóa": [
         "sản",
-        "hải sản",
-        "nem",
+        "san",
         "hai",
+        "hải sản",
         "hải",
-        "san"
+        "nem"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767861367/BSV/egxnxn0zhvjgbynauosi.jpg",
       "khuyến_mãi": []
@@ -596,13 +596,13 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "sa",
+        "sá",
+        "sùng",
         "hải sản",
         "nướng",
-        "sùng",
+        "sa",
         "nuong",
-        "sung",
-        "sá"
+        "sung"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767861075/BSV/xznel25rwswrfqb4g0wn.jpg",
       "khuyến_mãi": []
@@ -617,15 +617,15 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "su",
-        "sú",
-        "lieu",
-        "hải sản",
-        "bac",
-        "tôm",
-        "tom",
         "liêu",
-        "bạc"
+        "bạc",
+        "bac",
+        "su",
+        "lieu",
+        "tom",
+        "tôm",
+        "hải sản",
+        "sú"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767861330/BSV/hu4bgqkndpilyieuwvhr.jpg",
       "khuyến_mãi": []
@@ -640,9 +640,9 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "ruốc",
         "be",
         "bề",
+        "ruốc",
         "ruoc"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767860797/BSV/xehgsigox6yjqqzbyb1w.jpg",
@@ -659,10 +659,10 @@
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
         "ca",
-        "basa",
-        "ruoc",
+        "cá",
         "ruốc",
-        "cá"
+        "ruoc",
+        "basa"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767860908/BSV/crm5zqbyhamji9zdouty.jpg",
       "khuyến_mãi": []
@@ -678,11 +678,11 @@
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
         "ca",
-        "loc",
-        "ruoc",
+        "cá",
         "ruốc",
-        "lóc",
-        "cá"
+        "ruoc",
+        "loc",
+        "lóc"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767860753/BSV/gj1j81pnwgyhmeuocrab.jpg",
       "khuyến_mãi": []
@@ -697,14 +697,14 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "ro",
-        "dong",
         "ca",
+        "cá",
+        "dong",
         "rô",
-        "ruoc",
-        "ruốc",
         "đồng",
-        "cá"
+        "ruốc",
+        "ruoc",
+        "ro"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767860864/BSV/mcmvkjajecyl5pb9uyxw.jpg",
       "khuyến_mãi": []
@@ -720,10 +720,10 @@
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
         "ca",
-        "ruoc",
-        "ruốc",
+        "cá",
         "thu",
-        "cá"
+        "ruốc",
+        "ruoc"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767860979/BSV/pc04hibop4fwyyexabng.jpg",
       "khuyến_mãi": []
@@ -739,11 +739,11 @@
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
         "mam",
+        "huế",
+        "ruốc",
         "ruoc",
         "mắm",
-        "ruốc",
-        "hue",
-        "huế"
+        "hue"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767860843/BSV/djld7mhvzktitvqafepn.jpg",
       "khuyến_mãi": []
@@ -759,13 +759,13 @@
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
         "tép",
-        "dong",
-        "ruoc",
-        "ruốc",
-        "tep",
-        "đồng",
         "tháp",
-        "thap"
+        "tep",
+        "dong",
+        "thap",
+        "đồng",
+        "ruốc",
+        "ruoc"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767860946/BSV/tuitpccw5elrvjjnyobg.jpg",
       "khuyến_mãi": []
@@ -780,15 +780,15 @@
       "điểm_trung_bình": 5.0,
       "số_lượt_đánh_giá": 1,
       "từ_khóa": [
-        "thịt",
-        "lợn",
-        "lon",
+        "định",
         "ruoc",
-        "nam",
-        "ruốc",
-        "dinh",
+        "thịt",
         "thit",
-        "định"
+        "lon",
+        "ruốc",
+        "nam",
+        "lợn",
+        "dinh"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767860818/BSV/rhvm7uumaphcow8i3eca.jpg",
       "khuyến_mãi": []
@@ -803,14 +803,14 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "bình",
-        "tôm",
-        "ruoc",
-        "tom",
-        "ruốc",
-        "dinh",
         "binh",
-        "định"
+        "tom",
+        "định",
+        "tôm",
+        "bình",
+        "ruốc",
+        "ruoc",
+        "dinh"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767860928/BSV/kwaktidvhrgex8aqulwh.jpg",
       "khuyến_mãi": []
@@ -827,13 +827,13 @@
       "từ_khóa": [
         "ca",
         "cà",
+        "dat",
         "mau",
-        "tôm",
-        "ruoc",
         "tom",
-        "ruốc",
+        "tôm",
         "đất",
-        "dat"
+        "ruốc",
+        "ruoc"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767860775/BSV/mmlyvww2kmu00saspivr.jpg",
       "khuyến_mãi": []
@@ -848,13 +848,13 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "tôm",
-        "ruoc",
         "tom",
-        "ruốc",
-        "hạ",
         "long",
-        "ha"
+        "ha",
+        "tôm",
+        "ruốc",
+        "ruoc",
+        "hạ"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767860888/BSV/vpcrfvhwxfpcvouqmxss.jpg",
       "khuyến_mãi": []
@@ -869,13 +869,13 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "biển",
+        "bien",
         "rong",
-        "tôm",
-        "ruoc",
         "tom",
+        "tôm",
+        "biển",
         "ruốc",
-        "bien"
+        "ruoc"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767860997/BSV/ydqxqxrf9eb5ctfsa7fn.jpg",
       "khuyến_mãi": []
@@ -890,14 +890,14 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "sản phẩm từ gà",
-        "ga",
-        "chien",
-        "gion",
         "chiên",
+        "ga",
         "da",
         "gà",
-        "giòn"
+        "sản phẩm từ gà",
+        "giòn",
+        "chien",
+        "gion"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767860610/BSV/pabwoyvj09o4kqoijtxk.jpg",
       "khuyến_mãi": []
@@ -912,13 +912,13 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "sản phẩm từ gà",
-        "ga",
-        "toi",
-        "chay",
-        "cháy",
         "tỏi",
-        "gà"
+        "ga",
+        "gà",
+        "toi",
+        "sản phẩm từ gà",
+        "chay",
+        "cháy"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767860691/BSV/wg7rbufpext5ymlhmleq.webp",
       "khuyến_mãi": []
@@ -933,17 +933,17 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "ủ",
-        "dong",
-        "tao",
-        "muối",
-        "muoi",
-        "sản phẩm từ gà",
         "ga",
         "đông",
         "tảo",
+        "gà",
+        "tao",
         "u",
-        "gà"
+        "dong",
+        "muối",
+        "sản phẩm từ gà",
+        "ủ",
+        "muoi"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767860568/BSV/kmeney5rvcykudqklq18.jpg",
       "khuyến_mãi": []
@@ -958,15 +958,15 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "muối",
-        "muoi",
-        "sản phẩm từ gà",
         "ga",
+        "gà",
         "ớt",
+        "muối",
+        "sản phẩm từ gà",
         "nướng",
-        "nuong",
         "ot",
-        "gà"
+        "nuong",
+        "muoi"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767860671/BSV/enupkugny3rrgqz5grzp.jpg",
       "khuyến_mãi": []
@@ -981,15 +981,15 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
+        "ga",
+        "thảo",
+        "gà",
+        "mộc",
         "moc",
         "sản phẩm từ gà",
-        "ga",
-        "mộc",
         "nướng",
         "nuong",
-        "thao",
-        "gà",
-        "thảo"
+        "thao"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767860543/BSV/ie1dirqppylscafqmbmr.jpg",
       "khuyến_mãi": []
@@ -1004,13 +1004,13 @@
       "điểm_trung_bình": 3.0,
       "số_lượt_đánh_giá": 1,
       "từ_khóa": [
+        "ga",
+        "gà",
         "ủ",
         "muối",
-        "muoi",
         "sản phẩm từ gà",
-        "ga",
         "u",
-        "gà"
+        "muoi"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767860650/BSV/rzazxgotlxugmgvlxagh.jpg",
       "khuyến_mãi": []
@@ -1025,15 +1025,15 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "ủ",
-        "xi",
-        "sản phẩm từ gà",
         "ga",
-        "dau",
         "dầu",
-        "u",
         "gà",
-        "xì"
+        "dau",
+        "xi",
+        "u",
+        "xì",
+        "sản phẩm từ gà",
+        "ủ"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767860522/BSV/hn6vi8c9sr3xwq1p3fto.jpg",
       "khuyến_mãi": []
@@ -1048,13 +1048,13 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "vien",
-        "sản phẩm từ gà",
-        "ga",
-        "chien",
         "chiên",
         "viên",
-        "gà"
+        "ga",
+        "gà",
+        "sản phẩm từ gà",
+        "vien",
+        "chien"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767860628/BSV/wv8bhydoahlsdtywdiki.jpg",
       "khuyến_mãi": []
@@ -1064,18 +1064,18 @@
     "text": "Tên sản phẩm: Há Cảo Gà\n        Mô tả sản phẩm: Lớp vỏ bánh mềm dai bọc lấy nhân thịt gà và rau củ tươi ngon, hấp lên thơm phức, chấm cùng nước tương đậm đà.\n        Giá gốc: 110000.00 VND\n        Giá bán: 110000 VND\n        Danh mục: Sản phẩm từ gà\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt gà.",
     "metadata": {
       "id": 50,
-      "tồn_kho": "200 sản phẩm",
+      "tồn_kho": "197 sản phẩm",
       "trạng_thái": "đang_kinh_doanh",
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "há",
-        "cảo",
-        "sản phẩm từ gà",
         "ga",
-        "cao",
+        "gà",
         "ha",
-        "gà"
+        "sản phẩm từ gà",
+        "cảo",
+        "há",
+        "cao"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767860717/BSV/noogh3pztaklejcp7wh4.jpg",
       "khuyến_mãi": []
@@ -1090,12 +1090,12 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "sản phẩm từ gà",
         "ga",
+        "gà",
         "mam",
+        "sản phẩm từ gà",
         "kho",
-        "mắm",
-        "gà"
+        "mắm"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767860590/BSV/watihk4qegbn8xkmcmo0.jpg",
       "khuyến_mãi": []
@@ -1110,13 +1110,13 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "điều",
-        "hat",
         "banh",
-        "bánh",
         "dieu",
+        "hạt",
+        "hat",
+        "bánh",
         "các loại hạt",
-        "hạt"
+        "điều"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767111154/BSV/xoah5ym1wbw6hp1g5dua.jpg",
       "khuyến_mãi": []
@@ -1131,14 +1131,14 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "nhan",
-        "nhân",
         "banh",
         "hanh",
-        "bánh",
-        "hạnh",
         "thanh",
-        "các loại hạt"
+        "nhan",
+        "bánh",
+        "các loại hạt",
+        "nhân",
+        "hạnh"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767860136/BSV/psrkodmw11ynqv0dveey.jpg",
       "khuyến_mãi": []
@@ -1153,11 +1153,11 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "macca",
         "banh",
+        "macca",
         "bánh",
-        "thuyen",
         "các loại hạt",
+        "thuyen",
         "thuyền"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767860226/BSV/a2gvajqcivfwo4ux0gfv.jpg",
@@ -1173,14 +1173,14 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "bo",
         "rang",
-        "nhan",
-        "nhân",
+        "bơ",
         "hanh",
-        "hạnh",
+        "nhan",
         "các loại hạt",
-        "bơ"
+        "bo",
+        "nhân",
+        "hạnh"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767860116/BSV/j4zsb2peazilff5qcb6w.jpg",
       "khuyến_mãi": []
@@ -1195,14 +1195,14 @@
       "điểm_trung_bình": 5.0,
       "số_lượt_đánh_giá": 1,
       "từ_khóa": [
-        "điều",
+        "dieu",
         "rang",
         "muối",
+        "hạt",
         "hat",
-        "muoi",
-        "dieu",
         "các loại hạt",
-        "hạt"
+        "điều",
+        "muoi"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767859935/BSV/midhypvarodrxwbavruq.jpg",
       "khuyến_mãi": []
@@ -1217,16 +1217,16 @@
       "điểm_trung_bình": 4.0,
       "số_lượt_đánh_giá": 1,
       "từ_khóa": [
-        "say",
-        "hat",
-        "nut",
-        "sấy",
-        "macca",
+        "vỏ",
         "vo",
-        "nứt",
-        "các loại hạt",
+        "macca",
+        "say",
         "hạt",
-        "vỏ"
+        "hat",
+        "các loại hạt",
+        "nứt",
+        "nut",
+        "sấy"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767860035/BSV/csaops1ldf9g0ppdr2j3.png",
       "khuyến_mãi": []
@@ -1242,12 +1242,12 @@
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
         "cho",
-        "hat",
         "chó",
-        "óc",
-        "các loại hạt",
         "hạt",
-        "oc"
+        "hat",
+        "oc",
+        "các loại hạt",
+        "óc"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767859847/BSV/ws3j0myrytof4tqs7jcz.jpg",
       "khuyến_mãi": []
@@ -1263,13 +1263,13 @@
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
         "say",
+        "hạt",
         "hat",
-        "giòn",
-        "sấy",
-        "gion",
-        "sen",
         "các loại hạt",
-        "hạt"
+        "giòn",
+        "gion",
+        "sấy",
+        "sen"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767111265/BSV/thq63ee3jzoxfarkksrw.webp",
       "khuyến_mãi": []
@@ -1284,16 +1284,16 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "loai",
-        "mix",
-        "hat",
         "dưỡng",
-        "duong",
-        "các loại hạt",
-        "dinh",
-        "5",
         "hạt",
-        "loại"
+        "loai",
+        "hat",
+        "các loại hạt",
+        "duong",
+        "5",
+        "mix",
+        "loại",
+        "dinh"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767860193/BSV/sdqemip7zqiwl0b8oj9f.webp",
       "khuyến_mãi": []
@@ -1309,14 +1309,14 @@
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
         "bien",
-        "hat",
         "kep",
-        "biển",
+        "kẹp",
         "rong",
         "thanh",
-        "kẹp",
-        "các loại hạt",
-        "hạt"
+        "hạt",
+        "hat",
+        "biển",
+        "các loại hạt"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767860260/BSV/hxeujiso77s9pwx58bou.jpg",
       "khuyến_mãi": []
@@ -1331,13 +1331,13 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "chân",
-        "chả",
         "vịt",
         "vit",
+        "chả",
+        "cha",
         "chan",
-        "sản phẩm từ vịt",
-        "cha"
+        "chân",
+        "sản phẩm từ vịt"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767859604/BSV/u3nijasryfcvasdsj32u.png",
       "khuyến_mãi": []
@@ -1352,15 +1352,15 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "chả",
         "vịt",
+        "thúy",
+        "vit",
+        "chả",
+        "cha",
         "hanh",
         "hạnh",
-        "vit",
         "thuy",
-        "thúy",
-        "sản phẩm từ vịt",
-        "cha"
+        "sản phẩm từ vịt"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767859697/BSV/wye5qeqewaoogevb0zrk.jpg",
       "khuyến_mãi": []
@@ -1375,19 +1375,19 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "ủ",
-        "muối",
-        "muoi",
-        "chân",
         "vịt",
-        "rut",
-        "xương",
         "vit",
-        "chan",
+        "rút",
         "u",
-        "xuong",
+        "chan",
+        "muối",
         "sản phẩm từ vịt",
-        "rút"
+        "xương",
+        "chân",
+        "xuong",
+        "rut",
+        "ủ",
+        "muoi"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767859582/BSV/icsl9bi142lrv3giv8aq.jpg",
       "khuyến_mãi": []
@@ -1402,21 +1402,21 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "ủ",
-        "xi",
-        "chân",
         "vịt",
-        "rut",
-        "xương",
         "vit",
-        "chan",
+        "rút",
         "dầu",
-        "u",
         "dau",
+        "xi",
+        "u",
+        "chan",
         "xì",
-        "xuong",
         "sản phẩm từ vịt",
-        "rút"
+        "xương",
+        "chân",
+        "xuong",
+        "rut",
+        "ủ"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767859674/BSV/kdkz6filj8jae5gplye8.jpg",
       "khuyến_mãi": []
@@ -1431,10 +1431,10 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "mọc",
         "vịt",
         "vit",
         "moc",
+        "mọc",
         "sản phẩm từ vịt"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767859746/BSV/lxgt6vxmtgf5lyli8p11.png",
@@ -1450,9 +1450,9 @@
       "điểm_trung_bình": 4.0,
       "số_lượt_đánh_giá": 1,
       "từ_khóa": [
-        "pate",
         "vịt",
         "vit",
+        "pate",
         "gan",
         "sản phẩm từ vịt"
       ],
@@ -1470,8 +1470,8 @@
       "số_lượt_đánh_giá": 1,
       "từ_khóa": [
         "vịt",
-        "vit",
         "quay",
+        "vit",
         "sản phẩm từ vịt"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767110967/BSV/ouzun6ikp6kcn54ih8m7.jpg",
@@ -1487,14 +1487,14 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "tiem",
-        "hat",
         "vịt",
-        "sen",
-        "vit",
         "tiềm",
+        "vit",
         "hạt",
-        "sản phẩm từ vịt"
+        "hat",
+        "sản phẩm từ vịt",
+        "tiem",
+        "sen"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767859630/BSV/z3mbvdheeskjrprhos9a.jpg",
       "khuyến_mãi": []
@@ -1509,15 +1509,15 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "ủ",
-        "xi",
         "vịt",
-        "dau",
         "vit",
         "dầu",
+        "dau",
+        "xi",
         "u",
         "xì",
-        "sản phẩm từ vịt"
+        "sản phẩm từ vịt",
+        "ủ"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767859716/BSV/mpnagohudwx3zyrhsoa3.png",
       "khuyến_mãi": []
@@ -1532,17 +1532,17 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "tuoi",
         "ca",
-        "cha",
         "chả",
-        "lac",
-        "thac",
+        "cá",
+        "cha",
+        "lác",
         "thác",
         "tươi",
+        "lac",
         "sản phẩm từ cá",
-        "lác",
-        "cá"
+        "thac",
+        "tuoi"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767859240/BSV/sb3sbboxqcyhggpnz90d.jpg",
       "khuyến_mãi": []
@@ -1557,20 +1557,20 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "vị",
-        "tẩm",
-        "say",
-        "ca",
-        "tam",
-        "sấy",
-        "chien",
         "chiên",
-        "vi",
-        "kho",
         "khô",
+        "ca",
+        "cá",
+        "vi",
+        "tẩm",
         "gia",
+        "say",
+        "vị",
+        "kho",
+        "tam",
+        "chien",
         "sản phẩm từ cá",
-        "cá"
+        "sấy"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767859513/BSV/kywanwlx0ddfryfzwj7s.jpg",
       "khuyến_mãi": []
@@ -1585,16 +1585,16 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "dong",
-        "ca",
-        "sản phẩm từ cá",
-        "hũ",
-        "đông",
-        "ngot",
-        "chua",
-        "hu",
         "ngọt",
-        "cá"
+        "ca",
+        "đông",
+        "cá",
+        "dong",
+        "chua",
+        "hũ",
+        "ngot",
+        "sản phẩm từ cá",
+        "hu"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767859461/BSV/uzyalliiy8jrqtizvmg4.jpg",
       "khuyến_mãi": []
@@ -1609,11 +1609,11 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "hop",
         "ca",
-        "hộp",
+        "cá",
         "sản phẩm từ cá",
-        "cá"
+        "hop",
+        "hộp"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767859329/BSV/kyngiztckbp8kkhsbeuf.jpg",
       "khuyến_mãi": []
@@ -1628,11 +1628,11 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "ca",
-        "kho",
         "khô",
-        "sản phẩm từ cá",
-        "cá"
+        "ca",
+        "cá",
+        "kho",
+        "sản phẩm từ cá"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767859412/BSV/cai4abuazxznge2cltww.jpg",
       "khuyến_mãi": []
@@ -1648,12 +1648,12 @@
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
         "ca",
-        "me",
-        "loc",
-        "rim",
-        "lóc",
+        "cá",
         "sản phẩm từ cá",
-        "cá"
+        "loc",
+        "lóc",
+        "me",
+        "rim"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767859209/BSV/xyp0g6uire3ue2lfxoa6.jpg",
       "khuyến_mãi": []
@@ -1670,11 +1670,11 @@
       "từ_khóa": [
         "nắng",
         "ca",
+        "cá",
+        "nang",
         "mot",
         "một",
-        "nang",
-        "sản phẩm từ cá",
-        "cá"
+        "sản phẩm từ cá"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767859544/BSV/v6e5smn7xbm90jpwskmk.png",
       "khuyến_mãi": []
@@ -1689,20 +1689,20 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "vị",
-        "tẩm",
         "nắng",
         "ca",
+        "cá",
+        "vi",
+        "tẩm",
+        "gia",
+        "muc",
+        "mực",
+        "vị",
+        "nang",
         "tam",
         "mot",
         "một",
-        "nang",
-        "vi",
-        "muc",
-        "gia",
-        "mực",
-        "sản phẩm từ cá",
-        "cá"
+        "sản phẩm từ cá"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767859268/BSV/hhovsdgzae1n5vuuuzzs.jpg",
       "khuyến_mãi": []
@@ -1718,9 +1718,9 @@
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
         "ca",
-        "rim",
+        "sản phẩm từ cá",
         "cá",
-        "sản phẩm từ cá"
+        "rim"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767113943/BSV/rbg9tfcshnqs1sfkkvwk.jpg",
       "khuyến_mãi": []
@@ -1735,16 +1735,16 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "ro",
-        "say",
         "ca",
+        "cá",
+        "say",
         "rô",
-        "sấy",
-        "gion",
-        "phi",
         "giòn",
+        "ro",
         "sản phẩm từ cá",
-        "cá"
+        "phi",
+        "sấy",
+        "gion"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767859130/BSV/flecd7nhcnhyu48wxccp.jpg",
       "khuyến_mãi": []
@@ -1759,15 +1759,15 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
+        "tỏi",
         "ca",
+        "cá",
         "ớt",
         "toi",
-        "thu",
-        "tỏi",
-        "rim",
         "ot",
+        "thu",
         "sản phẩm từ cá",
-        "cá"
+        "rim"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767859361/BSV/ntr2b0hnzifgwdpuga6p.jpg",
       "khuyến_mãi": []
@@ -1783,17 +1783,17 @@
       "số_lượt_đánh_giá": 1,
       "từ_khóa": [
         "ca",
-        "cha",
         "chả",
-        "hậu",
-        "lac",
-        "hau",
-        "giang",
-        "thac",
-        "thác",
-        "sản phẩm từ cá",
+        "cá",
+        "cha",
         "lác",
-        "cá"
+        "thác",
+        "giang",
+        "lac",
+        "thac",
+        "sản phẩm từ cá",
+        "hậu",
+        "hau"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767859439/BSV/qkcd7in6brivycelc98v.jpg",
       "khuyến_mãi": []
@@ -1808,20 +1808,20 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "vị",
-        "tẩm",
         "ca",
-        "cha",
-        "tam",
         "chả",
-        "lac",
-        "vi",
-        "thac",
+        "cá",
+        "cha",
+        "lác",
+        "tẩm",
         "thác",
         "gia",
+        "vi",
+        "vị",
+        "lac",
+        "tam",
         "sản phẩm từ cá",
-        "lác",
-        "cá"
+        "thac"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767859298/BSV/i709euxb8kxwyq3fpfbh.jpg",
       "khuyến_mãi": []
@@ -1837,14 +1837,14 @@
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
         "ca",
+        "cá",
         "pate",
-        "hoi",
-        "hạ",
         "long",
         "ha",
+        "hoi",
         "hồi",
         "sản phẩm từ cá",
-        "cá"
+        "hạ"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767110843/BSV/yyk2tx4tq9ecxp8sjalx.jpg",
       "khuyến_mãi": []
@@ -1859,13 +1859,13 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "chả",
-        "giò",
-        "lua",
-        "gio",
         "lụa",
+        "chả",
+        "cha",
         "sản phẩm từ heo",
-        "cha"
+        "giò",
+        "gio",
+        "lua"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767858675/BSV/e4qlblvaq901lqiwfq06.jpg",
       "khuyến_mãi": []
@@ -1880,15 +1880,15 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "chân",
-        "giò",
-        "cầy",
-        "chan",
-        "gio",
         "cay",
         "sản phẩm từ heo",
         "gia",
-        "giả"
+        "chan",
+        "giả",
+        "giò",
+        "chân",
+        "cầy",
+        "gio"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767858871/BSV/k8j6e7rjihex08fxzueb.jpg",
       "khuyến_mãi": []
@@ -1903,19 +1903,19 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "phòng",
-        "sản",
-        "chia",
-        "đặc",
         "chả",
-        "phong",
-        "dac",
-        "hai",
-        "sản phẩm từ heo",
+        "sản",
         "chìa",
-        "hải",
+        "cha",
+        "sản phẩm từ heo",
         "san",
-        "cha"
+        "hai",
+        "phong",
+        "hải",
+        "chia",
+        "phòng",
+        "dac",
+        "đặc"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767858523/BSV/ks8hl61zwyw7cgkf1ze7.jpg",
       "khuyến_mãi": []
@@ -1930,19 +1930,19 @@
       "điểm_trung_bình": 4.0,
       "số_lượt_đánh_giá": 1,
       "từ_khóa": [
-        "sản",
-        "noi",
-        "đặc",
         "chả",
-        "cốm",
-        "dac",
-        "nội",
-        "hà",
+        "sản",
+        "cha",
+        "noi",
         "sản phẩm từ heo",
         "ha",
-        "com",
         "san",
-        "cha"
+        "nội",
+        "dac",
+        "com",
+        "hà",
+        "cốm",
+        "đặc"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767858839/BSV/gs0ppjpv1avsdmqpmb9v.jpg",
       "khuyến_mãi": []
@@ -1957,15 +1957,15 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "sản",
-        "đặc",
         "chả",
-        "dac",
-        "sụn",
-        "sun",
+        "sản",
+        "cha",
         "sản phẩm từ heo",
+        "sun",
         "san",
-        "cha"
+        "sụn",
+        "dac",
+        "đặc"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767858482/BSV/lvdyh5ybpiqhtkd1gzvv.jpg",
       "khuyến_mãi": []
@@ -1981,14 +1981,14 @@
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
         "sơn",
-        "lạng",
-        "khâu",
-        "son",
+        "lang",
+        "sản phẩm từ heo",
         "khau",
+        "khâu",
         "nhục",
         "nhuc",
-        "sản phẩm từ heo",
-        "lang"
+        "lạng",
+        "son"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767858804/BSV/ul5j1abujyfl66snbmmp.png",
       "khuyến_mãi": []
@@ -2003,13 +2003,13 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
+        "sản phẩm từ heo",
         "mam",
-        "tai",
-        "heo",
         "nêm",
-        "mắm",
+        "tai",
         "nem",
-        "sản phẩm từ heo"
+        "mắm",
+        "heo"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767858294/BSV/zuvexpsu92u7ztwve6af.jpg",
       "khuyến_mãi": []
@@ -2024,12 +2024,12 @@
       "điểm_trung_bình": 5.0,
       "số_lượt_đánh_giá": 1,
       "từ_khóa": [
-        "hoa",
-        "chua",
-        "nem",
         "sản phẩm từ heo",
+        "hoa",
         "thanh",
-        "hóa"
+        "chua",
+        "hóa",
+        "nem"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767858707/BSV/dhu3bw87tswsqewjhtzm.jpg",
       "khuyến_mãi": []
@@ -2045,13 +2045,13 @@
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
         "ran",
-        "nội",
-        "nem",
-        "hà",
+        "noi",
         "sản phẩm từ heo",
         "ha",
-        "noi",
-        "rán"
+        "nội",
+        "nem",
+        "rán",
+        "hà"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767858956/BSV/wuo6twm0sxx9bwubiofd.jpg",
       "khuyến_mãi": []
@@ -2066,12 +2066,12 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "lụi",
+        "sản phẩm từ heo",
+        "nha",
         "lui",
         "nem",
-        "sản phẩm từ heo",
         "trang",
-        "nha"
+        "lụi"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767858556/BSV/xc7xypuboivrivhgcxmp.jpg",
       "khuyến_mãi": []
@@ -2086,9 +2086,9 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "gan",
-        "sản phẩm từ heo",
         "pate",
+        "sản phẩm từ heo",
+        "gan",
         "heo"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767858250/BSV/lyymbgqe4bvziwwwwj6y.jpg",
@@ -2104,13 +2104,13 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "lưỡi",
+        "heo",
+        "cuộn",
+        "sản phẩm từ heo",
         "luoi",
         "tai",
-        "heo",
         "cuon",
-        "sản phẩm từ heo",
-        "cuộn"
+        "lưỡi"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767858367/BSV/hsqfaas2y5fxfipfbb7k.jpg",
       "khuyến_mãi": []
@@ -2126,12 +2126,12 @@
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
         "ủ",
-        "muối",
-        "muoi",
-        "tai",
-        "heo",
         "sản phẩm từ heo",
-        "u"
+        "muối",
+        "tai",
+        "muoi",
+        "u",
+        "heo"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767857916/BSV/c67lznvedu4gdjp9bhgh.png",
       "khuyến_mãi": []
@@ -2146,15 +2146,15 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "ủ",
-        "xi",
-        "tai",
-        "heo",
-        "dau",
         "dầu",
-        "u",
+        "dau",
+        "xi",
         "sản phẩm từ heo",
-        "xì"
+        "u",
+        "xì",
+        "tai",
+        "ủ",
+        "heo"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767858328/BSV/xcxr8ktyuiy4jbjkkhp8.jpg",
       "khuyến_mãi": []
@@ -2169,15 +2169,15 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "thịt",
         "tép",
-        "chung",
-        "chưng",
-        "mam",
-        "mắm",
-        "tep",
         "sản phẩm từ heo",
-        "thit"
+        "mam",
+        "tep",
+        "chung",
+        "thịt",
+        "thit",
+        "chưng",
+        "mắm"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767858763/BSV/fkuoat0fjyqryzys3bnb.jpg",
       "khuyến_mãi": []
@@ -2192,14 +2192,14 @@
       "điểm_trung_bình": 4.0,
       "số_lượt_đánh_giá": 1,
       "từ_khóa": [
-        "thịt",
-        "say",
-        "sấy",
-        "kho",
-        "heo",
-        "sản phẩm từ heo",
         "khô",
-        "thit"
+        "sản phẩm từ heo",
+        "say",
+        "kho",
+        "thịt",
+        "thit",
+        "sấy",
+        "heo"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767111212/BSV/zjos3acwlutr4ylsmddq.jpg",
       "khuyến_mãi": []
@@ -2214,14 +2214,14 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "thịt",
+        "khói",
         "khoi",
         "xông",
-        "heo",
-        "xong",
         "sản phẩm từ heo",
-        "khói",
-        "thit"
+        "thit",
+        "thịt",
+        "xong",
+        "heo"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767858415/BSV/qa1hyt0hbvqpohjpgyvp.png",
       "khuyến_mãi": []
@@ -2236,13 +2236,13 @@
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "cốm",
-        "xích",
-        "xuc",
-        "xúc",
         "sản phẩm từ heo",
         "com",
-        "xich"
+        "xích",
+        "xich",
+        "xúc",
+        "xuc",
+        "cốm"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767858923/BSV/a4hgigpzwdrhenhfx7ud.jpg",
       "khuyến_mãi": []
@@ -2252,14 +2252,14 @@
     "text": "Tên sản phẩm: Chả Ngan\n        Mô tả sản phẩm: Chả ngan được làm từ thịt ngan tươi, xay nhuyễn và tẩm ướp gia vị, chiên vàng thơm nức, vị ngọt đậm đà.\n        Giá gốc: 240000.00 VND\n        Giá bán: 240000 VND\n        Danh mục: Sản phẩm từ ngan\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt ngan.",
     "metadata": {
       "id": 103,
-      "tồn_kho": "170 sản phẩm",
+      "tồn_kho": "167 sản phẩm",
       "trạng_thái": "đang_kinh_doanh",
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "chả",
         "sản phẩm từ ngan",
         "cha",
+        "chả",
         "ngan"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767857765/BSV/i95gl1ysnkzxyjo2gmvk.jpg",
@@ -2276,11 +2276,11 @@
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
         "nắng",
+        "ngan",
         "sản phẩm từ ngan",
-        "mot",
-        "một",
         "nang",
-        "ngan"
+        "mot",
+        "một"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767857655/BSV/idpwpbakccm302epwfjd.jpg",
       "khuyến_mãi": []
@@ -2290,17 +2290,17 @@
     "text": "Tên sản phẩm: Ngan Xông Khói\n        Mô tả sản phẩm: Thịt ức ngan được tẩm ướp và xông khói theo quy trình nghiêm ngặt, thái lát mỏng ăn liền, hương vị hảo hạng.\n        Giá gốc: 320000.00 VND\n        Giá bán: 320000 VND\n        Danh mục: Sản phẩm từ ngan\n        Mô tả danh mục: Các món ăn ngon được chế biến từ thịt ngan.",
     "metadata": {
       "id": 105,
-      "tồn_kho": "150 sản phẩm",
+      "tồn_kho": "148 sản phẩm",
       "trạng_thái": "đang_kinh_doanh",
       "điểm_trung_bình": 0,
       "số_lượt_đánh_giá": 0,
       "từ_khóa": [
-        "sản phẩm từ ngan",
-        "xông",
-        "xong",
-        "ngan",
         "khói",
-        "khoi"
+        "khoi",
+        "xông",
+        "ngan",
+        "sản phẩm từ ngan",
+        "xong"
       ],
       "url": "https://res.cloudinary.com/dratk1jhg/image/upload/v1767857699/BSV/nufnbf8c9bepvqrqn7nc.jpg",
       "khuyến_mãi": []
