@@ -42,7 +42,7 @@ Hệ thống được phát triển dựa trên mô hình website bán hàng tr�
 - Quản lý doanh thu
 - Thống kê dữ liệu bán hàng
 - Phân tích dữ liệu kho
-- 
+  
 ---
 
 ### Chức năng AI và Marketing
